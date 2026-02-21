@@ -347,8 +347,8 @@ Run the complete test suite:
 
 **Expected Output:**
 ```bash
-Total: 2200 tests
-Passed: 2200 ✅
+Total: {N} tests
+Passed: {N} ✅
 Failed: 0
 Skipped: 0
 
@@ -530,7 +530,7 @@ Key changes:
 - {File 2}: {What changed and why}
 
 Testing:
-- All unit tests passing (2200/2200)
+- All unit tests passing ({N}/{N})
 - Epic smoke testing passed
 - Epic QC Validation Loop passed (3 consecutive clean rounds)
 ```
@@ -853,19 +853,19 @@ Testing: {test count} tests passing. {any notable test highlights}
 **Example output to user:**
 > Here's a recommended squash commit message for the PR:
 > ```
-> feat/SHAMT-10: Refactor player_data_fetcher — CLI args, DI, E2E mode
+> feat/SHAMT-10: Refactor data_exporter — CLI args, DI, E2E mode
 >
 > Features implemented:
-> - F01: Replace hardcoded paths with argparse CLI args (17 args)
+> - F01: Replace hardcoded paths with argparse CLI args
 > - F01: Replace subprocess calls with direct imports
 > - F01: Add --e2e-test mode writing to /tmp
 >
 > Key changes:
-> - Eliminated pydantic_settings dependency
-> - PlayerDataFetcher now accepts injected config object
+> - Eliminated hardcoded config dependency
+> - DataExporter now accepts injected config object
 > - E2E test mode writes to /tmp to avoid contaminating data/
 >
-> Testing: 2,710 tests passing. Full E2E run validated.
+> Testing: {N} tests passing. Full E2E run validated.
 > ```
 
 **8d. Wait for User to Merge PR**

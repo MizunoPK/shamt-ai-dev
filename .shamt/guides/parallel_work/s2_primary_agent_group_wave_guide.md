@@ -345,11 +345,11 @@ I'm joining as a secondary agent to help with S2 parallelization for the {epic_n
 
 **Group 2 Features (parallel with me):**
 - Feature 02: [module]_logging (Secondary-A - me)
-- Feature 03: player_data_fetcher_logging (Secondary-B)
-- Feature 04: accuracy_sim_logging (Secondary-C)
-- Feature 05: win_rate_sim_logging (Secondary-D)
-- Feature 06: historical_data_compiler_logging (Secondary-E)
-- Feature 07: schedule_fetcher_logging (Secondary-F)
+- Feature 03: api_client_logging (Secondary-B)
+- Feature 04: data_processor_logging (Secondary-C)
+- Feature 05: report_generator_logging (Secondary-D)
+- Feature 06: cache_manager_logging (Secondary-E)
+- Feature 07: scheduler_logging (Secondary-F)
 
 ## My Task
 
@@ -411,11 +411,11 @@ I'm joining as a secondary agent to help with S2 parallelization for the {epic_n
 
 **Group 2 features ready to start:**
 - Feature 02: [module]_logging
-- Feature 03: player_data_fetcher_logging
-- Feature 04: accuracy_sim_logging
-- Feature 05: win_rate_sim_logging
-- Feature 06: historical_data_compiler_logging
-- Feature 07: schedule_fetcher_logging
+- Feature 03: api_client_logging
+- Feature 04: data_processor_logging
+- Feature 05: report_generator_logging
+- Feature 06: cache_manager_logging
+- Feature 07: scheduler_logging
 
 **Dependencies satisfied:**
 - All Group 2 features need Feature 01's spec (API reference)
@@ -611,11 +611,11 @@ grep "READY_FOR_SYNC" feature_0[2-7]_*/STATUS
 
 # Expected output (all true):
 # feature_02_[module]_logging/STATUS:READY_FOR_SYNC: true
-# feature_03_player_data_fetcher_logging/STATUS:READY_FOR_SYNC: true
-# feature_04_accuracy_sim_logging/STATUS:READY_FOR_SYNC: true
-# feature_05_win_rate_sim_logging/STATUS:READY_FOR_SYNC: true
-# feature_06_historical_data_compiler_logging/STATUS:READY_FOR_SYNC: true
-# feature_07_schedule_fetcher_logging/STATUS:READY_FOR_SYNC: true
+# feature_03_api_client_logging/STATUS:READY_FOR_SYNC: true
+# feature_04_data_processor_logging/STATUS:READY_FOR_SYNC: true
+# feature_05_report_generator_logging/STATUS:READY_FOR_SYNC: true
+# feature_06_cache_manager_logging/STATUS:READY_FOR_SYNC: true
+# feature_07_scheduler_logging/STATUS:READY_FOR_SYNC: true
 ```
 
 #### Step 3.3: Run S2.P2 for Group 2

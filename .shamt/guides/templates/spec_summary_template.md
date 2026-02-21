@@ -94,11 +94,11 @@ This feature updates the accuracy simulation system to load player data from JSO
 - {Measurable indicator 3 with threshold}
 
 {Example:}
-- Week coverage: 18/18 weeks accessible (100%)
-- Data sanity: <10% of actual_points are 0.0 for completed weeks
-- Variance check: std_dev > 0 for all player actual_points arrays
-- Realistic range: All actual_points between 0-60 for typical players
-- Performance: Simulation runtime within 10% of CSV baseline
+- Data coverage: {N}/{N} periods accessible (100%)
+- Data sanity: <10% of actual_values are 0.0 for completed periods
+- Variance check: std_dev > 0 for all record actual_value arrays
+- Realistic range: All actual_values within expected domain range
+- Performance: Processing runtime within 10% of baseline
 
 ---
 
@@ -111,9 +111,9 @@ This feature updates the accuracy simulation system to load player data from JSO
 ❌ {Another failure pattern}
 
 {Example:}
-❌ >90% of actual_points are 0.0 (wrong week offset - loading week N instead of N+1)
-❌ getattr(player, 'week_N_points') returns None (old API still used, consumption code not updated)
-❌ Only weeks 17-18 work while weeks 1-16 have all zeros (week offset not generalized)
+❌ >90% of actual_values are 0.0 (wrong period offset - loading period N instead of N+1)
+❌ getattr(record, '{field_name}') returns None (old API still used, consumption code not updated)
+❌ Only periods N-1 and N work while other periods have all zeros (offset not generalized)
 ❌ Simulation crashes when loading JSON files
 ❌ Simulation results >50% different from CSV baseline (major logic error)
 
@@ -154,10 +154,10 @@ This feature updates the accuracy simulation system to load player data from JSO
 - {Integration point 3}
 
 {Example:}
-- AccuracySimulationManager._load_player_data() - modified to use JSON loader
-- PlayerManager (JSON loader) - provides week-specific player data
-- ParallelAccuracyRunner - consumes updated player data from AccuracySimulationManager
-- Feature 01 (win rate sim) - shares JSON loading patterns, must align on week offset logic
+- DataProcessor._load_records() - modified to use JSON loader
+- RecordManager (JSON loader) - provides period-specific record data
+- ParallelProcessor - consumes updated records from DataProcessor
+- Feature 01 (report gen) - shares JSON loading patterns, must align on period offset logic
 
 ---
 
@@ -169,9 +169,9 @@ This feature updates the accuracy simulation system to load player data from JSO
 - {Dependency 2}
 
 {Example:}
-- JSON player data files exist in simulation/sim_data/2025/weeks/week_{NN}/ folders
-- PlayerManager supports JSON loading (if not, must implement)
-- Week offset pattern understood (week N projected from week_N, actual from week_N+1)
+- Data files exist in {data_dir}/{period}/ folders
+- Data loader supports the required format (if not, must implement)
+- Offset pattern understood (period N projected from period_N, actual from period_N+1)
 
 ---
 

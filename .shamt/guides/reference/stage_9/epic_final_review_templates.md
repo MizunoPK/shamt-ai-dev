@@ -78,7 +78,7 @@ This reference provides all templates needed during S9.P3 (Epic Final Review):
 ## S9.P3 - Epic PR Review Results
 
 **Date:** 2025-01-02
-**Epic:** integrate_new_player_data_into_simulation
+**Epic:** add_json_export_format
 **Review Rounds:** 3 rounds total
 **Final Status:** PASSED (Rounds 2-3 both clean)
 
@@ -93,7 +93,7 @@ This reference provides all templates needed during S9.P3 (Epic Final Review):
 **Total issues found and fixed:** 3
 **Epic-level concerns addressed:** Extracted shared CSV loading logic to utils/csv_utils.py, added epic integration test
 
-**pr_review_issues.md file:** `SHAMT-3-integrate_new_player_data_into_simulation/pr_review_issues.md`
+**pr_review_issues.md file:** `SHAMT-3-add_json_export_format/pr_review_issues.md`
 
 **Epic is ready for Step 8 (Final Verification)**
 ```

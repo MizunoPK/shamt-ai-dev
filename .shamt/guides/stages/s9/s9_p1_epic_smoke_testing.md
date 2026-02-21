@@ -296,13 +296,13 @@ Test that epic-level workflows can be initiated:
 
 ```bash
 ## Test help includes all feature modes
-python run_script.py --help
+python [run_script].py --help
 ## (verify all features' modes/options appear)
 
 ## Test each feature's mode is accessible
-python run_script.py --mode feature_01_mode --help
-python run_script.py --mode feature_02_mode --help
-python run_script.py --mode feature_03_mode --help
+python [run_script].py --mode feature_01_mode --help
+python [run_script].py --mode feature_02_mode --help
+python [run_script].py --mode feature_03_mode --help
 ```
 
 **Pass:** All feature modes accessible, help complete
@@ -333,7 +333,7 @@ From epic_smoke_test_plan.md, execute each scenario:
 **Execute:**
 ```bash
 ## Step-by-step or combined workflow
-python run_script.py --complete-draft-workflow --data-folder ./data
+python [run_script].py --complete-draft-workflow --data-folder ./data
 ```
 
 ### Step 2: CRITICAL - Verify Epic Output DATA VALUES

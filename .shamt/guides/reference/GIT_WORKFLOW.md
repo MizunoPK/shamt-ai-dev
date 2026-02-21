@@ -180,8 +180,8 @@ git push origin --delete {work_type}/SHAMT-{number}
 **Format:** `.shamt/epics/SHAMT-{N}-{epic_name}/`
 
 **Examples:**
-- `.shamt/epics/SHAMT-1-improve_draft_helper/`
-- `.shamt/epics/SHAMT-3-integrate_new_player_data_into_simulation/`
+- `.shamt/epics/SHAMT-1-add_dark_mode_to_cli/`
+- `.shamt/epics/SHAMT-3-add_json_export_format/`
 
 **Original Request File:** `.shamt/epics/requests/{epic_name}.txt` (no SHAMT number)
 

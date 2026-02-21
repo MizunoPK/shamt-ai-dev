@@ -64,11 +64,11 @@ This epic integrates JSON player data files into both the win rate simulation an
 - {Measurable metric 3 with threshold}
 
 {Example:}
-- Week coverage: 18/18 weeks accessible (100% coverage)
-- Data completeness: >90% of players have non-zero actual_points for completed weeks
-- Simulation accuracy: Mean absolute error improved by >=10% vs CSV baseline
+- Data coverage: {N}/{N} periods accessible (100% coverage)
+- Data completeness: >90% of records have non-zero actual_values for completed periods
+- Accuracy: Error metric improved by >=10% vs baseline
 - Test coverage: 100% test pass rate maintained
-- Performance: Simulation runtime within 10% of CSV baseline
+- Performance: Processing runtime within 10% of baseline
 
 ---
 
@@ -81,10 +81,10 @@ This epic integrates JSON player data files into both the win rate simulation an
 ❌ {Symptom of failure 3}
 
 {Example:}
-❌ >90% of actual_points are 0.0 (data loading issue - week offset bug)
-❌ Only weeks 17-18 work while other weeks have zeros (week offset logic missing)
-❌ Simulations crash when using JSON files but work with CSV
-❌ Simulation results drastically different from CSV baseline (>50% variance)
+❌ >90% of actual_values are 0.0 (data loading issue - period offset bug)
+❌ Only last 1-2 periods work while earlier periods have zeros (offset logic missing)
+❌ Processing crashes when using new format but works with old format
+❌ Results drastically different from baseline (>50% variance)
 ❌ Critical features from epic request not implemented
 
 ---
@@ -97,10 +97,10 @@ This epic integrates JSON player data files into both the win rate simulation an
 - {Item 3 included in epic}
 
 {Example:}
-✅ Loading JSON files from simulation/sim_data/{year}/weeks/week_{NN}/ folders
-✅ Week offset logic (week N loads projected from week_N, actual from week_N+1)
-✅ Integration with both win rate and accuracy simulation systems
-✅ Comprehensive smoke testing for all 18 weeks
+✅ Loading data files from {data_dir}/{period}/ folders
+✅ Offset logic (period N loads projected from period_N, actual from period_N+1)
+✅ Integration with both subsystem A and subsystem B
+✅ Comprehensive smoke testing for all {N} periods
 
 ❌ **Out of Scope (What is NOT included):**
 - {Item 1 NOT included in epic}

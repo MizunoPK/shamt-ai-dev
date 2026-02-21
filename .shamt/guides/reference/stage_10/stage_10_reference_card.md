@@ -149,19 +149,19 @@ Three sections (Major features, Key changes, Testing):
 
 ### Example:
 ```text
-feat/SHAMT-1: Add ADP integration and projection system to draft helper
+feat/SHAMT-1: Add JSON export format and configurable output paths
 
 Major features:
-- Integrate ADP data from FantasyPros API
-- Add injury assessment to player projections
-- Implement schedule strength analysis
+- Add JSON export alongside existing CSV export
+- Support configurable output directory via CLI arg
+- Add export history tracking
 
 Key changes:
-- player_data_fetcher.py: Add ADP API integration
-- projection_engine.py: Add injury/schedule multipliers
+- data_exporter.py: Add JSON serialization support
+- output_manager.py: Add configurable path handling
 
 Testing:
-- All unit tests passing (2200/2200)
+- All unit tests passing ({N}/{N})
 - Epic smoke testing passed
 - Epic QC Validation Loop passed
 ```

@@ -258,7 +258,7 @@ else
     echo ""
     echo "Structure has critical issues that must be fixed."
     echo ""
-    echo "See analysis: .shamt/epics/KAI-8-logging_refactoring/research/"
+    echo "See analysis: .shamt/epics/SHAMT-8-logging_refactoring/research/"
     echo "             PARALLEL_S2_STRUCTURE_INCONSISTENCY_ANALYSIS.md"
     exit 1
 fi

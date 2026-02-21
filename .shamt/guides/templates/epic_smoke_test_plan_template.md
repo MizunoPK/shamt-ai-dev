@@ -26,7 +26,7 @@
 **The epic is successful if:**
 
 1. {Measurable criterion 1}
-   - Example: "All 6 position files (QB, RB, WR, TE, K, DST) created in data/player_data/"
+   - Example: "All output files created in data/output/{category}/"
 
 2. {Measurable criterion 2}
    - Example: "Each position file contains >100 players with complete stats"

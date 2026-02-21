@@ -3,7 +3,7 @@
 # Runs before manual audit to catch common structural issues
 #
 # Coverage: 11 of 18 dimensions (D1, D3, D8, D9, D10, D11, D13, D14, D16, D17, D18)
-# Estimated: 45-55% of typical issues (based on KAI-7 Round 1-2 data)
+# Estimated: 45-55% of typical issues (based on SHAMT-7 Round 1-2 data)
 # NOT Checked: D2 (Terminology - requires pattern-specific search, see dimension guide)
 #
 # Last Updated: 2026-02-19 (D18 Addition)

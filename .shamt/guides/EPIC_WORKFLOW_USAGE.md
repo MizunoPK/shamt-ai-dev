@@ -154,8 +154,7 @@ Key activities:
 Key activities:
 - Run unit tests (100% pass required)
 - Verify all documentation
-- S10.P1 Guide Updates (MANDATORY — see `stages/s10/s10_p1_guide_update_workflow.md`)
-- S10.P2 Changelog Writing (if guide improvements are universal)
+- S10.P1 Guide Updates (MANDATORY — analyze lessons, propose changes, get user approval, apply, write changelog if universal)
 - Commit epic work
 - Move epic to `done/` folder
 - Update `EPIC_TRACKER.md`

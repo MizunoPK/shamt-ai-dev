@@ -45,8 +45,8 @@
 
 **Files Examined:**
 - `[run_script].py:45-120` - Main entry point, no debug flags found
-- `simulation/accuracy.py:200-350` - Calculation core, minimal logging
-- `simulation/winrate.py:180-290` - Similar pattern, no debug output
+- `[module]/core.py:200-350` - Calculation core, minimal logging
+- `[module]/runner.py:180-290` - Similar pattern, no debug output
 
 **Findings:**
 - No debug logging in critical calculation paths
@@ -79,12 +79,12 @@ What specifically is frustrating about debugging?
 **Research Focus:** Progress visibility and performance
 
 **Files Examined:**
-- `simulation/accuracy.py:1-50` - No progress callbacks
-- `simulation/winrate.py:1-50` - Same pattern
-- `simulation/runner.py:100-200` - Main loop, no progress reporting
+- `[module]/core.py:1-50` - No progress callbacks
+- `[module]/runner.py:1-50` - Same pattern
+- `[module]/executor.py:100-200` - Main loop, no progress reporting
 
 **Findings:**
-- Simulations run 10,000 iterations with no progress output
+- Processing runs {N} iterations with no progress output
 - No way to know if simulation is stuck vs working
 - No partial results saved (all-or-nothing)
 - Average run time: 15-20 minutes with no feedback
@@ -127,27 +127,27 @@ Should debug mode affect all simulations, or just specific types?
 **Research Focus:** Logging infrastructure and data subsetting
 
 **Files Examined:**
-- `utils/logger.py:1-100` - Existing logger, not used in simulations
-- `data/player_data.json:1-50` - 2500+ players in file
-- `simulation/config.py:20-80` - No subset options
+- `utils/logger.py:1-100` - Existing logger, not used in processing modules
+- `data/records.json:1-50` - {N}+ records in file
+- `[module]/config.py:20-80` - No subset options
 
 **Findings:**
-- Logger exists but not used in simulation modules
-- Running on full 2500-player dataset even for debugging
-- No config option to limit player count
+- Logger exists but not used in processing modules
+- Running on full {N}-record dataset even for debugging
+- No config option to limit record count
 - Config already has verbose flag (unused)
 
 **Questions for User:**
 
 **Question 4: Subset Size**
-For debugging, how many players should the "small subset" include?
+For debugging, how many records should the "small subset" include?
 
-**Context:** Full dataset is 2500+ players.
+**Context:** Full dataset is {N}+ records.
 
 **Options:**
-- Option A: 10 players (very fast, but might miss edge cases)
-- Option B: 50 players (reasonable coverage, quick)
-- Option C: 100 players (better coverage, ~30 seconds)
+- Option A: 10 records (very fast, but might miss edge cases)
+- Option B: 50 records (reasonable coverage, quick)
+- Option C: 100 records (better coverage, ~30 seconds)
 - Option D: Let me specify the number
 
 ---
@@ -354,12 +354,12 @@ Add a debug mode to simulations with:
 ### Iteration 3 - Technical Research
 
 **Files Examined:**
-- `[module]/classes/FantasyTeam.py` - Has record tracking
-- `simulation/` - Has projection capabilities
+- `[module]/classes/[EntityClass].py` - Has record tracking
+- `[module]/projections/` - Has projection capabilities
 
 **Findings:**
-- Team records are tracked
-- Projection logic exists in simulation module
+- Entity records are tracked
+- Projection logic exists in projections module
 - Need to combine team records + projections
 
 **Questions for User:** None - scope is now clear.

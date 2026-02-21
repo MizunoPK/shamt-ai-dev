@@ -323,8 +323,8 @@ feature_01_player_integration/
 epic_name/
 ├── EPIC_README.md
 ├── epic_smoke_test_plan.md
-├── feature_01_player_integration/
-├── feature_02_accuracy_simulation/
+├── feature_01_{name}/
+├── feature_02_{name}/
 └── debugging/                          ← Created during epic testing
     ├── ISSUES_CHECKLIST.md
     ├── investigation_rounds.md

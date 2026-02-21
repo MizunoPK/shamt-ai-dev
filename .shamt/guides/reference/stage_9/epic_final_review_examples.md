@@ -138,10 +138,10 @@ BAD:
 - Mark Scope & Changes as PASS
 
 GOOD:
-- Re-read integrate_new_player_data_into_simulation.txt
-- User requested: "Integrate ADP data" ✅
-- User requested: "Add matchup projections" ✅
-- User requested: "Track performance" ✅
+- Re-read add_json_export_format.txt
+- User requested: "Export records as JSON" ✅
+- User requested: "Support configurable output path" ✅
+- User requested: "Track export history" ✅
 - Epic delivered all 3 ✅
 - No undocumented features added ✅
 - Mark Scope & Changes as PASS

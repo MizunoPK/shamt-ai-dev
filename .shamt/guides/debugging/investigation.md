@@ -168,7 +168,7 @@ Blocks feature functionality - cannot calculate player scores
 **Test Output:**
 ```
 AssertionError: Expected float, got None
-  File: simulation/accuracy/AccuracySimulationManager.py:89
+  File: {module}/{ClassName}.py:{line_number}
 ```markdown
 
 ---

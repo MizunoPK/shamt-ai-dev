@@ -152,25 +152,25 @@ Replace CSV-based player data loading with JSON format for both win rate and acc
 - [ ] Both simulation types (win rate & accuracy) load player data from JSON files
 - [ ] All 18 weeks of data are accessible and used correctly for both simulations
 - [ ] Actual points for all players across all 18 weeks contain realistic non-zero values
-- [ ] Projected points for all players across all 18 weeks contain realistic non-zero values
-- [ ] Simulations produce equivalent or better results compared to CSV version
-- [ ] No regression in existing simulation functionality
-- [ ] All 2,200+ unit tests continue to pass
+- [ ] Projected values for all records across all {N} periods contain realistic non-zero values
+- [ ] Processing produces equivalent or better results compared to baseline
+- [ ] No regression in existing functionality
+- [ ] All unit tests continue to pass
 
 ## Success Indicators
-- Actual points have <1% zero values across all weeks/players
-- Projected points have <1% zero values across all weeks/players
-- Mean absolute error (MAE) calculations complete successfully for all 18 weeks
-- Win rate simulations complete 10,000 iterations without errors
-- Standard deviation > 0 for both actual and projected points (values have variance)
+- Actual values have <1% zero values across all periods/records
+- Projected values have <1% zero values across all periods/records
+- Error metric calculations complete successfully for all {N} periods
+- Processing completes {N} iterations without errors
+- Standard deviation > 0 for both actual and projected values (values have variance)
 
 ## Failure Patterns
-❌ >90% of actual_points are 0.0 (data loading issue)
-❌ Only week 17-18 work while other weeks have zeros (week offset bug)
-❌ Calculations return NaN or skip all players (consumption code not updated)
+❌ >90% of actual_values are 0.0 (data loading issue)
+❌ Only last 1-2 periods work while other periods have zeros (offset bug)
+❌ Calculations return NaN or skip all records (consumption code not updated)
 ❌ "attribute not found" errors during execution (old API still used)
 ❌ Mean or standard deviation = 0 (all same value - calculation error)
-❌ Only 1-2 players have non-zero values out of 2500 total
+❌ Only 1-2 records have non-zero values out of {N} total
 ```
 
 **Why this would have caught Feature 02 bug:**
@@ -209,7 +209,7 @@ Users cannot predict playoff outcomes or evaluate playoff scenarios during the s
 - FantasyTeam ([module]/classes/FantasyTeam.py)
 - ConfigManager ([module]/util/ConfigManager.py)
 - New PlayoffProjector module (to be created)
-- Simulator (simulation/) - may need playoff-specific logic
+- Calculation engine ([module]/core/) - may need feature-specific logic
 
 **Similar Existing Features:**
 - Starter helper mode (similar projection logic)

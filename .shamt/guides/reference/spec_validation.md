@@ -134,13 +134,13 @@ Before starting S2.5:
 
 **Example:**
 ```markdown
-Requirement: "Use week_18 folders for actual points in week 17"
+Requirement: "Use period_N+1 folders for actual values from period N"
 
 Code Investigation:
-- File: simulation/json_exporter.py lines 303-312
-- Finding: "actuals for weeks 1 to N-1, 0.0 for N to 17"
-- Interpretation: Week_N folder has 0.0 for week N actuals
-- Implication: Must use week_N+1 to get week N actuals
+- File: {module}/data_exporter.py lines 303-312
+- Finding: "actuals for periods 1 to N-1, 0.0 for N onwards"
+- Interpretation: period_N folder has 0.0 for period N actuals
+- Implication: Must use period_N+1 to get period N actuals
 ```
 
 #### 3B: Data Investigation (MANDATORY)
@@ -154,30 +154,30 @@ import json
 from pathlib import Path
 
 ## Load REAL data files (not test fixtures)
-week_01 = json.load(open('simulation/sim_data/2021/weeks/week_01/qb_data.json'))
-week_02 = json.load(open('simulation/sim_data/2021/weeks/week_02/qb_data.json'))
+period_01 = json.load(open('{data_dir}/period_01/records.json'))
+period_02 = json.load(open('{data_dir}/period_02/records.json'))
 
 ## Print ACTUAL values (not just check "exists")
-print(f"Week 1 actuals in week_01: {week_01[0]['actual_points'][0]}")
-print(f"Week 1 actuals in week_02: {week_02[0]['actual_points'][0]}")
+print(f"Period 1 actuals in period_01: {period_01[0]['actual_value'][0]}")
+print(f"Period 1 actuals in period_02: {period_02[0]['actual_value'][0]}")
 
-## Compare multiple weeks to understand pattern
-week_03 = json.load(open('simulation/sim_data/2021/weeks/week_03/qb_data.json'))
-print(f"Week 2 actuals in week_03: {week_03[0]['actual_points'][1]}")
+## Compare multiple periods to understand pattern
+period_03 = json.load(open('{data_dir}/period_03/records.json'))
+print(f"Period 2 actuals in period_03: {period_03[0]['actual_value'][1]}")
 ```
 
 **Document Findings:**
 ```markdown
 Data Investigation Results:
 
-File: simulation/sim_data/2021/weeks/week_01/qb_data.json
-- actual_points[0] (week 1): 0.0
+File: {data_dir}/period_01/records.json
+- actual_value[0] (period 1): 0.0
 
-File: simulation/sim_data/2021/weeks/week_02/qb_data.json
-- actual_points[0] (week 1): 33.6
+File: {data_dir}/period_02/records.json
+- actual_value[0] (period 1): 33.6
 
-Pattern: Week_N folder has 0.0 for week N, week_N+1 has real value
-Conclusion: Must load week_N+1 for week N actuals
+Pattern: period_N folder has 0.0 for period N, period_N+1 has real value
+Conclusion: Must load period_N+1 for period N actuals
 ```
 
 #### 3C: Pattern Recognition
@@ -212,10 +212,10 @@ Conclusion: This is a GENERAL PATTERN, not week 17 special case
 
 | Assumption | Verified How | Evidence | Valid? |
 |------------|--------------|----------|--------|
-| Week_N folder has week N actuals | Manual data inspection | week_01[0]['actual_points'][0] = 0.0 | ❌ FALSE |
-| Week_N+1 folder has week N actuals | Manual data inspection | week_02[0]['actual_points'][0] = 33.6 | ✅ TRUE |
-| Pattern applies to all weeks | Tested weeks 1,2,17 | All follow same pattern | ✅ TRUE |
-| PlayerManager handles conversion | Code inspection | PlayerManager.py line 327 hardcodes path | ❌ Partial |
+| period_N folder has period N actuals | Manual data inspection | period_01[0]['actual_value'][0] = 0.0 | ❌ FALSE |
+| period_N+1 folder has period N actuals | Manual data inspection | period_02[0]['actual_value'][0] = 33.6 | ✅ TRUE |
+| Pattern applies to all periods | Tested periods 1,2,N | All follow same pattern | ✅ TRUE |
+| DataLoader handles conversion | Code inspection | DataLoader.py line 327 hardcodes path | ❌ Partial |
 ```
 
 **Rules:**
@@ -504,16 +504,16 @@ Result: Catastrophic bug that survived 7 stages
 
 S2.5:
 1. Close spec.md ✅
-2. Re-read epic: "week_17 folders for projected, week_18 for actual"
-3. Question: "Why week 17? Is this special or pattern?"
-4. Investigate code: json_exporter.py shows week_N has 0.0 for week N
+2. Re-read epic: "period_N folders for projected, period_N+1 for actual"
+3. Question: "Why period N? Is this special or pattern?"
+4. Investigate code: data_exporter.py shows period_N has 0.0 for period N
 5. Manual inspection:
    ```python
-   week_01[0]['actual_points'][0]  # 0.0
-   week_02[0]['actual_points'][0]  # 33.6
+   period_01[0]['actual_value'][0]  # 0.0
+   period_02[0]['actual_value'][0]  # 33.6
    ```
-6. Realize: Pattern applies to ALL weeks
-7. Compare with spec: "Spec says 'no code changes' but need week_N+1!"
+6. Realize: Pattern applies to ALL periods
+7. Compare with spec: "Spec says 'no code changes' but need period_N+1!"
 8. Document discrepancy
 9. Report to user
 10. Update spec: "Load week_N for projected, week_N+1 for actual"

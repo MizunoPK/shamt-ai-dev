@@ -14,7 +14,7 @@
 8. [Critical Questions Checklist](#critical-questions-checklist)
 9. [Time Estimate](#time-estimate)
 10. [Output Artifacts](#output-artifacts)
-11. [Example: Feature 02 Should Have Done This](#example-feature-02-should-have-done-this)
+11. [Example: What Should Have Happened](#example-what-should-have-happened)
 12. [Integration with Other Stages](#integration-with-other-stages)
 13. [Why 30 Seconds of Data Inspection Saves Days](#why-30-seconds-of-data-inspection-saves-days)
 14. [Remember](#remember)
@@ -54,35 +54,35 @@ Hands-On Data Inspection is complete when you have opened actual data files, pri
 
 ## Why This Stage Exists
 
-**Historical Evidence:** Feature 02 (Accuracy Sim) had a catastrophic bug that survived implementation and testing:
+**Historical Evidence:** A feature in a previous project had a catastrophic bug that survived implementation and testing:
 
 **The Assumption (WRONG):**
 ```text
-"Week_N folder contains week N actual points"
+"period_N folder contains period N actual values"
 ```
 
 **The Reality:**
 ```python
-- week_01/qb_data.json
-week_01[0]['actual_points'][0]  # 0.0 (week 1 not complete yet)
+# period_01/records.json
+period_01[0]['actual_value'][0]  # 0.0 (period 1 not complete yet)
 
-- week_02/qb_data.json
-week_02[0]['actual_points'][0]  # 33.6 (week 1 complete)
+# period_02/records.json
+period_02[0]['actual_value'][0]  # 33.6 (period 1 now complete)
 ```
 
 **The Consequences:**
-- Implemented code that loaded week_N for both projected and actual
-- All actual_points were 0.0
-- MAE calculations were meaningless
-- Smoke tests showed "(0 have non-zero actual points)" - marked PASS anyway
+- Implemented code that loaded period_N for both projected and actual values
+- All actual_values were 0.0
+- Error calculations were meaningless
+- Smoke tests showed "(0 have non-zero actual values)" - marked PASS anyway
 - Bug survived 7 stages, caught by user in final review
 
 **The Prevention:**
 Opening a Python REPL and running 3 commands would have caught this bug in 30 seconds:
 ```python
 import json
-week_01 = json.load(open('simulation/sim_data/2021/weeks/week_01/qb_data.json'))
-print(week_01[0]['actual_points'][0])  # 0.0 → Assumption is WRONG
+period_01 = json.load(open('{data_dir}/period_01/records.json'))
+print(period_01[0]['actual_value'][0])  # 0.0 → Assumption is WRONG
 ```
 
 **This stage is MANDATORY** to prevent implementing code based on wrong assumptions.
@@ -131,14 +131,14 @@ Open the files. Print the values. Verify your assumptions.
 ```markdown
 ## Data Dependencies Identified
 
-**File 1:** simulation/sim_data/2021/weeks/week_01/qb_data.json
-- Fields accessed: projected_points, actual_points
-- Array indices: [week_num - 1]
+**File 1:** {data_dir}/period_01/records.json
+- Fields accessed: {projected_field}, {actual_field}
+- Array indices: [period_num - 1]
 - Expected: projected > 0, actual might be 0 or > 0
 
-**File 2:** simulation/sim_data/2021/weeks/week_02/qb_data.json
-- Fields accessed: actual_points
-- Array indices: [week_num - 1]
+**File 2:** {data_dir}/period_02/records.json
+- Fields accessed: {actual_field}
+- Array indices: [period_num - 1]
 - Expected: actual > 0
 
 [Repeat for each file]
@@ -169,8 +169,8 @@ python
 **Action:** Load the ACTUAL data files your code will use (NOT test fixtures)
 
 **CRITICAL RULES:**
-- Use PRODUCTION data paths (simulation/sim_data/2021/...)
-- Do NOT use test fixture paths (tests/fixtures/...)
+- Use PRODUCTION data paths (e.g., `data/periods/...`)
+- Do NOT use test fixture paths (e.g., `tests/fixtures/...`)
 - Load MULTIPLE files (to understand patterns)
 - Use paths from spec.md (verify spec assumptions)
 
@@ -179,35 +179,35 @@ python
 import json
 from pathlib import Path
 
-- Load multiple weeks to understand pattern
-week_01_path = Path('simulation/sim_data/2021/weeks/week_01/qb_data.json')
-week_02_path = Path('simulation/sim_data/2021/weeks/week_02/qb_data.json')
-week_03_path = Path('simulation/sim_data/2021/weeks/week_03/qb_data.json')
+# Load multiple periods to understand pattern
+period_01_path = Path('{data_dir}/period_01/records.json')
+period_02_path = Path('{data_dir}/period_02/records.json')
+period_03_path = Path('{data_dir}/period_03/records.json')
 
-with open(week_01_path) as f:
-    week_01 = json.load(f)
+with open(period_01_path) as f:
+    period_01 = json.load(f)
 
-with open(week_02_path) as f:
-    week_02 = json.load(f)
+with open(period_02_path) as f:
+    period_02 = json.load(f)
 
-with open(week_03_path) as f:
-    week_03 = json.load(f)
+with open(period_03_path) as f:
+    period_03 = json.load(f)
 ```
 
 **Common Mistake:**
 ```python
-- WRONG - only loads one file
-week_01 = json.load(open('week_01/qb_data.json'))
-- Can't see patterns with one data point
+# WRONG - only loads one file
+period_01 = json.load(open('period_01/records.json'))
+# Can't see patterns with one data point
 ```
 
 **Right:**
 ```python
-- RIGHT - loads multiple files
-week_01 = json.load(open('simulation/sim_data/2021/weeks/week_01/qb_data.json'))
-week_02 = json.load(open('simulation/sim_data/2021/weeks/week_02/qb_data.json'))
-week_03 = json.load(open('simulation/sim_data/2021/weeks/week_03/qb_data.json'))
-- Can compare values across files to understand pattern
+# RIGHT - loads multiple files
+period_01 = json.load(open('{data_dir}/period_01/records.json'))
+period_02 = json.load(open('{data_dir}/period_02/records.json'))
+period_03 = json.load(open('{data_dir}/period_03/records.json'))
+# Can compare values across files to understand pattern
 ```
 
 ---
@@ -224,20 +224,20 @@ week_03 = json.load(open('simulation/sim_data/2021/weeks/week_03/qb_data.json'))
 
 **Example - WRONG:**
 ```python
-- This tells you NOTHING about the actual values
-print('actual_points' in week_01[0])  # True
-- You now know the key exists, but not what value it contains
+# This tells you NOTHING about the actual values
+print('actual_value' in period_01[0])  # True
+# You now know the key exists, but not what value it contains
 ```
 
 **Example - RIGHT:**
 ```python
-- This shows you the ACTUAL data
-print(f"Week 1 actuals in week_01 folder: {week_01[0]['actual_points'][0]}")  # 0.0
-print(f"Week 1 actuals in week_02 folder: {week_02[0]['actual_points'][0]}")  # 33.6
-print(f"Week 2 actuals in week_02 folder: {week_02[0]['actual_points'][1]}")  # 0.0
-print(f"Week 2 actuals in week_03 folder: {week_03[0]['actual_points'][1]}")  # 22.4
+# This shows you the ACTUAL data
+print(f"Period 1 actuals in period_01 folder: {period_01[0]['actual_value'][0]}")  # 0.0
+print(f"Period 1 actuals in period_02 folder: {period_02[0]['actual_value'][0]}")  # 33.6
+print(f"Period 2 actuals in period_02 folder: {period_02[0]['actual_value'][1]}")  # 0.0
+print(f"Period 2 actuals in period_03 folder: {period_03[0]['actual_value'][1]}")  # 22.4
 
-- Now you can see the PATTERN: week_N has 0.0 for week N, week_N+1 has real values
+# Now you can see the PATTERN: period_N has 0.0 for period N, period_N+1 has real values
 ```
 
 ---
@@ -260,46 +260,46 @@ For each assumption, create a verification test:
 
 **Example:**
 
-**Assumption 1:** "Week_N folder contains week N actual points"
+**Assumption 1:** "period_N folder contains period N actual values"
 ```python
-- Verification Command:
-week_01 = json.load(open('simulation/sim_data/2021/weeks/week_01/qb_data.json'))
-actual_week_1_in_week_01 = week_01[0]['actual_points'][0]
-print(f"Week 1 actual in week_01: {actual_week_1_in_week_01}")
+# Verification Command:
+period_01 = json.load(open('{data_dir}/period_01/records.json'))
+actual_period_1_in_period_01 = period_01[0]['actual_value'][0]
+print(f"Period 1 actual in period_01: {actual_period_1_in_period_01}")
 
-- Result:
-- Week 1 actual in week_01: 0.0
+# Result:
+# Period 1 actual in period_01: 0.0
 
-- Conclusion:
-- ❌ INVALID - Week_N folder has 0.0 for week N actuals
+# Conclusion:
+# ❌ INVALID - period_N folder has 0.0 for period N actuals
 ```
 
-**Assumption 2:** "Week_N+1 folder contains week N actual points"
+**Assumption 2:** "period_N+1 folder contains period N actual values"
 ```python
-- Verification Command:
-week_02 = json.load(open('simulation/sim_data/2021/weeks/week_02/qb_data.json'))
-actual_week_1_in_week_02 = week_02[0]['actual_points'][0]
-print(f"Week 1 actual in week_02: {actual_week_1_in_week_02}")
+# Verification Command:
+period_02 = json.load(open('{data_dir}/period_02/records.json'))
+actual_period_1_in_period_02 = period_02[0]['actual_value'][0]
+print(f"Period 1 actual in period_02: {actual_period_1_in_period_02}")
 
-- Result:
-- Week 1 actual in week_02: 33.6
+# Result:
+# Period 1 actual in period_02: 33.6
 
-- Conclusion:
-- ✅ VALID - Week_N+1 folder has real week N actuals
+# Conclusion:
+# ✅ VALID - period_N+1 folder has real period N actuals
 ```
 
-**Assumption 3:** "This pattern applies to all weeks (not just week 17)"
+**Assumption 3:** "This pattern applies to all periods (not just a special case)"
 ```python
-- Verification Command:
-week_03 = json.load(open('simulation/sim_data/2021/weeks/week_03/qb_data.json'))
-actual_week_2_in_week_03 = week_03[0]['actual_points'][1]
-print(f"Week 2 actual in week_03: {actual_week_2_in_week_03}")
+# Verification Command:
+period_03 = json.load(open('{data_dir}/period_03/records.json'))
+actual_period_2_in_period_03 = period_03[0]['actual_value'][1]
+print(f"Period 2 actual in period_03: {actual_period_2_in_period_03}")
 
-- Result:
-- Week 2 actual in week_03: 22.4
+# Result:
+# Period 2 actual in period_03: 22.4
 
-- Conclusion:
-- ✅ VALID - Pattern applies to ALL weeks, not special case
+# Conclusion:
+# ✅ VALID - Pattern applies to ALL periods, not special case
 ```
 
 ---
@@ -309,33 +309,33 @@ print(f"Week 2 actual in week_03: {actual_week_2_in_week_03}")
 **Action:** Verify that data values are in realistic ranges
 
 **Why This Matters:**
-- Prevents implementing code that produces all zeros (Feature 02 bug)
+- Prevents implementing code that produces all zeros (historical bug above)
 - Catches edge cases (negative values, nulls, extremely large values)
-- Validates that data makes sense for domain (NFL scoring)
+- Validates that data makes sense for your domain
 
 **Method:**
 ```python
-- Get statistical distribution of values
+# Get statistical distribution of values
 import statistics
 
-- Collect all actual points for week 1 from week_02 folder
-week_1_actuals = [player['actual_points'][0] for player in week_02
-                  if len(player['actual_points']) > 0]
+# Collect all actual values for period 1 from period_02 folder
+period_1_actuals = [record['actual_value'][0] for record in period_02
+                    if len(record['actual_value']) > 0]
 
-print(f"Count: {len(week_1_actuals)}")
-print(f"Min: {min(week_1_actuals)}")
-print(f"Max: {max(week_1_actuals)}")
-print(f"Mean: {statistics.mean(week_1_actuals)}")
-print(f"Median: {statistics.median(week_1_actuals)}")
-print(f"Std Dev: {statistics.stdev(week_1_actuals)}")
+print(f"Count: {len(period_1_actuals)}")
+print(f"Min: {min(period_1_actuals)}")
+print(f"Max: {max(period_1_actuals)}")
+print(f"Mean: {statistics.mean(period_1_actuals)}")
+print(f"Median: {statistics.median(period_1_actuals)}")
+print(f"Std Dev: {statistics.stdev(period_1_actuals)}")
 
-- Count zeros
-zero_count = sum(1 for val in week_1_actuals if val == 0.0)
-zero_percentage = (zero_count / len(week_1_actuals)) * 100
+# Count zeros
+zero_count = sum(1 for val in period_1_actuals if val == 0.0)
+zero_percentage = (zero_count / len(period_1_actuals)) * 100
 print(f"Zero percentage: {zero_percentage:.1f}%")
 
-- Sample of non-zero values
-non_zero = [val for val in week_1_actuals if val > 0][:10]
+# Sample of non-zero values
+non_zero = [val for val in period_1_actuals if val > 0][:10]
 print(f"Sample non-zero values: {non_zero}")
 ```
 
@@ -343,15 +343,15 @@ print(f"Sample non-zero values: {non_zero}")
 ```markdown
 ## Value Range Analysis
 
-**Week 1 Actuals (from week_02 folder):**
-- Count: 250 players
-- Min: 0.0, Max: 48.2
-- Mean: 8.5, Median: 6.2
-- Std Dev: 7.3
-- Zero percentage: 35% (reasonable - not all players played)
-- Sample values: [33.6, 22.4, 18.9, 15.2, 12.7, ...]
+**Period 1 Actuals (from period_02 folder):**
+- Count: {N} records
+- Min: 0.0, Max: {max_val}
+- Mean: {mean}, Median: {median}
+- Std Dev: {std_dev}
+- Zero percentage: {X}% (reasonable if not all records have values)
+- Sample values: [{val1}, {val2}, ...]
 
-**Conclusion:** Values are realistic for NFL scoring
+**Conclusion:** Values are realistic for your domain
 ```
 
 **Red Flags That Should FAIL This Stage:**
@@ -359,7 +359,7 @@ print(f"Sample non-zero values: {non_zero}")
 - Std Dev = 0 (all same value)
 - Min = Max (no variance)
 - All values are 0.0
-- Values outside realistic range (e.g., 10,000 points for QB)
+- Values outside realistic range for your domain
 
 ---
 
@@ -368,51 +368,53 @@ print(f"Sample non-zero values: {non_zero}")
 **Action:** Verify that data across multiple files follows expected patterns
 
 **Why This Matters:**
-- Catches schema changes mid-season
+- Catches schema changes mid-dataset
 - Validates that patterns are consistent
 - Ensures implementation won't break on certain files
 
 **Method:**
 ```python
-- Check schema consistency across weeks
-def check_schema(week_data, week_num):
+# Check schema consistency across periods
+def check_schema(period_data, period_num):
     """Verify data structure is consistent."""
-    sample = week_data[0]
+    sample = period_data[0]
 
-    required_keys = ['id', 'name', 'position', 'team',
-                     'projected_points', 'actual_points']
+    # Replace these with your actual required fields
+    required_keys = ['id', 'name', '{field_1}', '{field_2}',
+                     'projected_value', 'actual_value']
 
     for key in required_keys:
         if key not in sample:
-            print(f"❌ Week {week_num}: Missing key '{key}'")
+            print(f"❌ Period {period_num}: Missing key '{key}'")
             return False
 
-    # Verify array lengths
-    proj_len = len(sample['projected_points'])
-    act_len = len(sample['actual_points'])
+    # Verify array lengths match expected
+    proj_len = len(sample['projected_value'])
+    act_len = len(sample['actual_value'])
+    expected_length = {N}  # Replace with your expected array length
 
-    if proj_len != 17:
-        print(f"⚠️  Week {week_num}: projected_points has {proj_len} items (expected 17)")
+    if proj_len != expected_length:
+        print(f"⚠️  Period {period_num}: projected_value has {proj_len} items (expected {expected_length})")
 
-    if act_len != 17:
-        print(f"⚠️  Week {week_num}: actual_points has {act_len} items (expected 17)")
+    if act_len != expected_length:
+        print(f"⚠️  Period {period_num}: actual_value has {act_len} items (expected {expected_length})")
 
-    print(f"✅ Week {week_num}: Schema valid")
+    print(f"✅ Period {period_num}: Schema valid")
     return True
 
-- Test multiple weeks
-check_schema(week_01, 1)
-check_schema(week_02, 2)
-check_schema(week_03, 3)
+# Test multiple periods
+check_schema(period_01, 1)
+check_schema(period_02, 2)
+check_schema(period_03, 3)
 ```
 
 **Document Findings:**
 ```markdown
 ## Schema Consistency Check
 
-Verified weeks 1-3:
+Verified periods 1-3:
 - ✅ All have required keys
-- ✅ All have 17-item arrays
+- ✅ All have {N}-item arrays
 - ✅ Data types consistent
 
 Pattern verified across all sampled files.
@@ -436,55 +438,55 @@ Pattern verified across all sampled files.
 ### Commands Run
 
 \`\`\`python
-- Load data files
+# Load data files
 import json
-week_01 = json.load(open('simulation/sim_data/2021/weeks/week_01/qb_data.json'))
-week_02 = json.load(open('simulation/sim_data/2021/weeks/week_02/qb_data.json'))
+period_01 = json.load(open('{data_dir}/period_01/records.json'))
+period_02 = json.load(open('{data_dir}/period_02/records.json'))
 
-- Print actual values
-print(f"Week 1 actuals in week_01: {week_01[0]['actual_points'][0]}")  # 0.0
-print(f"Week 1 actuals in week_02: {week_02[0]['actual_points'][0]}")  # 33.6
+# Print actual values
+print(f"Period 1 actuals in period_01: {period_01[0]['actual_value'][0]}")  # 0.0
+print(f"Period 1 actuals in period_02: {period_02[0]['actual_value'][0]}")  # 33.6
 \`\`\`
 
 ### Assumptions Tested
 
 | Assumption | Verification | Result | Valid? |
 |------------|--------------|--------|--------|
-| Week_N has week N actuals | Printed week_01[0]['actual_points'][0] | 0.0 | ❌ FALSE |
-| Week_N+1 has week N actuals | Printed week_02[0]['actual_points'][0] | 33.6 | ✅ TRUE |
-| Pattern applies to all weeks | Tested weeks 1, 2, 3 | Consistent | ✅ TRUE |
+| period_N has period N actuals | Printed period_01[0]['actual_value'][0] | 0.0 | ❌ FALSE |
+| period_N+1 has period N actuals | Printed period_02[0]['actual_value'][0] | 33.6 | ✅ TRUE |
+| Pattern applies to all periods | Tested periods 1, 2, 3 | Consistent | ✅ TRUE |
 
 ### Value Range Analysis
 
-**Week 1 Actuals (from week_02):**
-- Count: 250, Min: 0.0, Max: 48.2
-- Mean: 8.5, Median: 6.2, Std Dev: 7.3
-- Zero percentage: 35% (realistic)
+**Period 1 Actuals (from period_02):**
+- Count: {N}, Min: 0.0, Max: {max}
+- Mean: {mean}, Median: {median}, Std Dev: {std}
+- Zero percentage: {X}% (realistic for your domain)
 
 ### Key Findings
 
-1. **Week_N folder has 0.0 for week N actuals** (verified empirically)
-2. **Week_N+1 folder has real week N actuals** (verified empirically)
-3. **Pattern is consistent across all weeks** (tested weeks 1-3)
-4. **Values are in realistic range for NFL** (verified statistics)
+1. **period_N folder has 0.0 for period N actuals** (verified empirically)
+2. **period_N+1 folder has real period N actuals** (verified empirically)
+3. **Pattern is consistent across all periods** (tested periods 1-3)
+4. **Values are in realistic range for your domain** (verified statistics)
 
 ### Implementation Impact
 
 **Spec.md claimed:** "No special handling needed"
-**Reality:** MUST load week_N+1 folder for actual points
+**Reality:** MUST load period_N+1 folder for actual values
 
 **Code changes required:**
-- Load TWO folders (week_N and week_N+1)
-- Create TWO PlayerManager instances
-- Get projections from week_N, actuals from week_N+1
+- Load TWO folders (period_N and period_N+1)
+- Create TWO data loader instances
+- Get projected values from period_N, actuals from period_N+1
 
 ---
 
 ### Discrepancies with Spec
 
-**Discrepancy 1:** Spec says week_N has week N actuals
-- **Spec claim:** "JSON arrays already handle week 17/18"
-- **Data shows:** Week_N has 0.0 for week N actuals
+**Discrepancy 1:** Spec says period_N has period N actuals
+- **Spec claim:** "Arrays already handle offset"
+- **Data shows:** period_N has 0.0 for period N actuals
 - **Impact:** Spec conclusion "no code changes needed" is WRONG
 
 **Recommendation:** STOP - Report to user, update spec.md
@@ -528,10 +530,10 @@ between the actual data and our spec.md/implementation_plan.md.
 
 **Evidence:**
 \`\`\`python
-- Commands run:
+# Commands run:
 [Python commands you ran]
 
-- Output:
+# Output:
 [Actual output showing the contradiction]
 \`\`\`
 
@@ -640,87 +642,87 @@ S5.5 is complete when:
 
 **Wrong:**
 ```python
-print('actual_points' in week_01[0])  # True
-- Conclusion: "Data exists, looks good"
+print('actual_value' in period_01[0])  # True
+# Conclusion: "Data exists, looks good"
 ```
 
 **Right:**
 ```python
-print(f"Actual value: {week_01[0]['actual_points'][0]}")  # 0.0
-- Conclusion: "Key exists but value is 0.0 - investigate why"
+print(f"Actual value: {period_01[0]['actual_value'][0]}")  # 0.0
+# Conclusion: "Key exists but value is 0.0 - investigate why"
 ```
 
 ### ❌ Pitfall 2: Only Loading One File
 
 **Wrong:**
 ```python
-week_01 = json.load(open('week_01/qb_data.json'))
-print(week_01[0]['actual_points'][0])  # 0.0
-- Conclusion: "Week 1 actuals are 0.0" (but is this the pattern or special case?)
+period_01 = json.load(open('period_01/records.json'))
+print(period_01[0]['actual_value'][0])  # 0.0
+# Conclusion: "Period 1 actuals are 0.0" (but is this the pattern or special case?)
 ```
 
 **Right:**
 ```python
-week_01 = json.load(open('week_01/qb_data.json'))
-week_02 = json.load(open('week_02/qb_data.json'))
-week_03 = json.load(open('week_03/qb_data.json'))
-print(f"Week 1 in week_01: {week_01[0]['actual_points'][0]}")  # 0.0
-print(f"Week 1 in week_02: {week_02[0]['actual_points'][0]}")  # 33.6
-print(f"Week 2 in week_03: {week_03[0]['actual_points'][1]}")  # 22.4
-- Conclusion: "Pattern is week_N has 0.0, week_N+1 has real values"
+period_01 = json.load(open('period_01/records.json'))
+period_02 = json.load(open('period_02/records.json'))
+period_03 = json.load(open('period_03/records.json'))
+print(f"Period 1 in period_01: {period_01[0]['actual_value'][0]}")  # 0.0
+print(f"Period 1 in period_02: {period_02[0]['actual_value'][0]}")  # 33.6
+print(f"Period 2 in period_03: {period_03[0]['actual_value'][1]}")  # 22.4
+# Conclusion: "Pattern is period_N has 0.0, period_N+1 has real values"
 ```
 
 ### ❌ Pitfall 3: Using Test Fixtures Instead of Real Data
 
 **Wrong:**
 ```python
-- Test fixtures might have simplified/fake data
-data = json.load(open('tests/fixtures/sample_week.json'))
+# Test fixtures might have simplified/fake data
+data = json.load(open('tests/fixtures/sample_data.json'))
 ```
 
 **Right:**
 ```python
-- Real production data shows actual behavior
-data = json.load(open('simulation/sim_data/2021/weeks/week_01/qb_data.json'))
+# Real production data shows actual behavior
+data = json.load(open('{data_dir}/period_01/records.json'))
 ```
 
 ### ❌ Pitfall 4: Trusting Variable Names
 
 **Wrong:**
 ```python
-- Variable name suggests it has week 1 actuals
-week_1_actual_points = week_01[0]['actual_points'][0]
-print(week_1_actual_points)  # 0.0
-- Conclusion: "Week 1 actuals are 0.0, maybe no games played?"
+# Variable name suggests it has period 1 actuals
+period_1_actual_values = period_01[0]['actual_value'][0]
+print(period_1_actual_values)  # 0.0
+# Conclusion: "Period 1 actuals are 0.0, maybe no data yet?"
 ```
 
 **Right:**
 ```python
-- Don't trust names - verify the actual values
-week_1_actual_in_week_01 = week_01[0]['actual_points'][0]  # 0.0
-week_1_actual_in_week_02 = week_02[0]['actual_points'][0]  # 33.6
-- Conclusion: "week_01 folder name is misleading - has 0.0, not real actuals"
+# Don't trust names - verify the actual values
+period_1_actual_in_period_01 = period_01[0]['actual_value'][0]  # 0.0
+period_1_actual_in_period_02 = period_02[0]['actual_value'][0]  # 33.6
+# Conclusion: "period_01 folder name is misleading - has 0.0, not real actuals"
 ```
 
 ### ❌ Pitfall 5: Silently Fixing Discrepancies
 
 **Wrong:**
 ```python
-- Find discrepancy
-print(week_01[0]['actual_points'][0])  # 0.0 (expected > 0)
-- Conclusion: "Spec is wrong, I'll fix it and continue"
-- [Updates spec.md and implementation_plan.md silently]
-- [Proceeds to S6]
+# Find discrepancy
+print(period_01[0]['actual_value'][0])  # 0.0 (expected > 0)
+# Conclusion: "Spec is wrong, I'll fix it and continue"
+# [Updates spec.md and implementation_plan.md silently]
+# [Proceeds to S6]
 ```
 
 **Right:**
 ```python
-- Find discrepancy
-print(week_01[0]['actual_points'][0])  # 0.0 (expected > 0)
-- Conclusion: "Spec is wrong - STOP and report to user"
-- [Documents discrepancy with evidence]
-- [Reports to user with 3 options]
-- [Waits for user decision]
+# Find discrepancy
+print(period_01[0]['actual_value'][0])  # 0.0 (expected > 0)
+# Conclusion: "Spec is wrong - STOP and report to user"
+# [Documents discrepancy with evidence]
+# [Reports to user with 3 options]
+# [Waits for user decision]
 ```
 
 ---
@@ -804,14 +806,15 @@ After S5.5:
 
 ---
 
-## Example: Feature 02 Should Have Done This
+## Example: What Should Have Happened
 
 **What Actually Happened (WRONG):**
 
 S5 → S6 (skipped data inspection)
-- Assumed week_N folder has week N actuals
+- Assumed period_N folder has period N actuals
 - Implemented based on assumption
 - All actuals were 0.0
+- Error calculations were meaningless
 - Bug survived to user final review
 
 **What Should Have Happened (RIGHT):**
@@ -820,31 +823,31 @@ S5 → **S5.5 (Data Inspection)** → S6
 
 **S5.5 Process:**
 ```python
-- Step 1: Load actual data
+# Step 1: Load actual data
 import json
-week_01 = json.load(open('simulation/sim_data/2021/weeks/week_01/qb_data.json'))
-week_02 = json.load(open('simulation/sim_data/2021/weeks/week_02/qb_data.json'))
+period_01 = json.load(open('{data_dir}/period_01/records.json'))
+period_02 = json.load(open('{data_dir}/period_02/records.json'))
 
-- Step 2: Test assumption
-print(f"Week 1 actuals in week_01: {week_01[0]['actual_points'][0]}")  # 0.0
-print(f"Week 1 actuals in week_02: {week_02[0]['actual_points'][0]}")  # 33.6
+# Step 2: Test assumption
+print(f"Period 1 actuals in period_01: {period_01[0]['actual_value'][0]}")  # 0.0
+print(f"Period 1 actuals in period_02: {period_02[0]['actual_value'][0]}")  # 33.6
 
-- Step 3: Realize assumption is WRONG
-- week_01 folder does NOT have week 1 actuals (has 0.0)
-- week_02 folder DOES have week 1 actuals (has 33.6)
+# Step 3: Realize assumption is WRONG
+# period_01 folder does NOT have period 1 actuals (has 0.0)
+# period_02 folder DOES have period 1 actuals (has 33.6)
 
-- Step 4: Report to user
-- "Spec.md says 'no code changes needed' but data shows we need week_N+1"
+# Step 4: Report to user
+# "Spec.md says 'no code changes needed' but data shows we need period_N+1"
 
-- Step 5: User chooses Option A (fix spec, restart S5)
+# Step 5: User chooses Option A (fix spec, restart S5)
 
-- Step 6: Update spec.md with correct data model
+# Step 6: Update spec.md with correct data model
 
-- Step 7: Restart S5 with correct understanding
+# Step 7: Restart S5 with correct understanding
 
-- Step 8: Re-run S5.5 to verify fixes
+# Step 8: Re-run S5.5 to verify fixes
 
-- Step 9: Proceed to S6 with validated assumptions
+# Step 9: Proceed to S6 with validated assumptions
 ```
 
 **Result:** Bug caught before writing any code.
@@ -865,8 +868,8 @@ print(f"Week 1 actuals in week_02: {week_02[0]['actual_points'][0]}")  # 33.6
 
 **S6 (Implementation Execution):**
 - Implements based on implementation_plan.md
-- Assumes implementation plan is correct (validated by 5a.5)
-- If 5a.5 skipped, may implement wrong solution
+- Assumes implementation plan is correct (validated by S5.5)
+- If S5.5 skipped, may implement wrong solution
 
 ---
 
@@ -875,8 +878,8 @@ print(f"Week 1 actuals in week_02: {week_02[0]['actual_points'][0]}")  # 33.6
 **Time to catch bug in S5.5:** 30 seconds
 ```python
 import json
-week_01 = json.load(open('simulation/sim_data/2021/weeks/week_01/qb_data.json'))
-print(week_01[0]['actual_points'][0])  # 0.0 → "Wait, this should be > 0!"
+period_01 = json.load(open('{data_dir}/period_01/records.json'))
+print(period_01[0]['actual_value'][0])  # 0.0 → "Wait, this should be > 0!"
 ```
 
 **Time to fix bug caught in S5.5:** 30 minutes
@@ -885,7 +888,7 @@ print(week_01[0]['actual_points'][0])  # 0.0 → "Wait, this should be > 0!"
 - Proceed to S6 with correct plan
 
 **Time to fix bug caught in S9 (Epic QC):** 4+ hours
-- Debug why MAE is wrong
+- Debug why error calculations are wrong
 - Trace through implementation
 - Realize data loading is wrong
 - Fix code
@@ -940,7 +943,7 @@ Open the files. Print the values. Verify every assumption.
 - [ ] **Assumptions Verified:**
   - Every data assumption from spec.md tested against real data
   - Data location verified (which folder/file contains what data)
-  - Data offset verified (week_N contains week N or week N-1?)
+  - Data offset verified (does period_N contain period N data or period N-1?)
   - Data completeness verified (are expected values present or null/zero?)
 
 - [ ] **Discrepancies Documented:**
@@ -973,4 +976,4 @@ Open the files. Print the values. Verify every assumption.
 
 ---
 
-*This stage was created after Feature 02's catastrophic failure. Opening a Python REPL for 30 seconds would have prevented a bug that survived 7 stages.*
+*This stage was created after a feature's catastrophic data-loading bug survived 7 stages before being caught by the user. Opening a Python REPL for 30 seconds would have prevented the bug entirely.*
