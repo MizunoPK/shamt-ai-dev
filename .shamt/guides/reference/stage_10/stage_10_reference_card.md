@@ -330,7 +330,7 @@ Agent waits for user to review and merge the Pull Request in GitHub.
 ## File Outputs
 
 **Step 4:**
-- Updated guide files (in guides_v2/)
+- Updated guide files (in .shamt/guides/)
 - Updated CLAUDE.md (if workflow changed)
 
 **Step 6:**

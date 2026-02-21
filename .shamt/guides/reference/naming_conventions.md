@@ -307,7 +307,7 @@ See `stages/s6/s6_execution.md` for execution details.
 - ✅ Correct: `S5.P1`, `S5.P1.I2`
 - ❌ Wrong: `S5 Phase 1`, `S5.P1`, `5.1` (without prefix)
 
-**Rule 2: File paths are relative to guides_v2/ directory**
+**Rule 2: File paths are relative to .shamt/guides/ directory**
 - ✅ Correct: `stages/s5/s5_v2_validation_loop.md`
 - ❌ Wrong: `.shamt/guides/stages/s5/s5_v2_validation_loop.md`
 
@@ -484,7 +484,7 @@ s5_v2_validation_loop.md
 
 **Wrong:**
 ```markdown
-See `C:\Users\...\.shamt/epics\guides_v2\stages\s5\s5_v2_validation_loop.md`
+See `C:\Users\...\.shamt/epics\.shamt/guides\stages\s5\s5_v2_validation_loop.md`
 See `.shamt/guides/stages/s5/s5_v2_validation_loop.md`
 ```
 
@@ -493,7 +493,7 @@ See `.shamt/guides/stages/s5/s5_v2_validation_loop.md`
 See `stages/s5/s5_v2_validation_loop.md`
 ```
 
-**Why:** Paths are relative to `guides_v2/` directory.
+**Why:** Paths are relative to `.shamt/guides/` directory.
 
 ---
 
@@ -583,7 +583,7 @@ See `stages/s5/s5_v2_validation_loop.md`
 
 ### Cross-References
 - [ ] All references use S#.P#.I# notation (no old formats)
-- [ ] File paths are relative to `guides_v2/` directory
+- [ ] File paths are relative to `.shamt/guides/` directory
 - [ ] File paths use backticks
 - [ ] Terminology matches level (Stage for S#, Phase for S#.P#, Iteration for S#.P#.I#)
 
@@ -638,7 +638,7 @@ See `stages/s5/s5_v2_validation_loop.md`
 2. **Match level terminology:** Stage (S#), Phase (S#.P#), Iteration (S#.P#.I#)
 3. **Follow filename patterns:** `s{N}_p{M}_i{K}_{name}.md` based on level
 4. **Show full hierarchy in headers:** Level 3 shows S# → S#.P# → S#.P#.I#
-5. **Use relative paths:** From `guides_v2/` directory, with backticks
+5. **Use relative paths:** From `.shamt/guides/` directory, with backticks
 6. **Reserve terminology:** Stage/Phase/Iteration for hierarchy only
 
 **For more information:**

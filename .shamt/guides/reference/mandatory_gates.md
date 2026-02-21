@@ -200,7 +200,6 @@
 - Cannot proceed to S5 without user approval of ALL questions
 
 **Why it matters:**
-- Addresses guide-updates.txt #2: "Require ALL checklist items to be confirmed by the user"
 - Prevents autonomous agent resolution of uncertainties
 - Ensures user visibility into ALL questions before implementation planning
 - Stops agents from "researching and deciding" without user input
@@ -290,7 +289,6 @@
 - Cannot proceed to S5 without user approval
 
 **Why it matters:**
-- Addresses guide-updates.txt #10: "Have the testing plan be presented to the user and confirmed for each feature and the epic as a whole. Do this EARLY so that the agent knows how to test the work itself."
 - Agent knows EXACTLY how to test work BEFORE creating implementation plans
 - User can adjust test strategy early (S4 vs S5 v2 Phase 2)
 - Prevents creating implementation plans without knowing testing requirements

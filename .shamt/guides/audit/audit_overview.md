@@ -21,7 +21,7 @@
 
 ## What This Audit Covers
 
-This audit ensures **consistency, accuracy, and completeness** across all guides_v2 files AND related external files.
+This audit ensures **consistency, accuracy, and completeness** across all .shamt/guides files AND related external files.
 
 ### The 18 Audit Dimensions
 

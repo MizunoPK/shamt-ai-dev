@@ -1,7 +1,7 @@
 # Audit Guide Router
 
 **Version:** 3.0 (Modular)
-**Purpose:** Navigate the audit process for ensuring guides_v2 consistency and accuracy
+**Purpose:** Navigate the audit process for ensuring .shamt/guides consistency and accuracy
 **Last Updated:** 2026-02-06
 
 ---

@@ -130,7 +130,7 @@ Epic cleanup typically takes 15-30 minutes.
 │                                                                  │
 │ 10. ⚠️ UPDATE CLAUDE.md IF GUIDES IMPROVED                       │
 │    - Check epic_lessons_learned.md for guide improvements       │
-│    - Update guides_v2/ files if needed                          │
+│    - Update .shamt/guides/ files if needed                          │
 │    - Update CLAUDE.md if workflow changed                       │
 │                                                                  │
 │ 11. ⚠️ VERIFY EPIC IS TRULY COMPLETE                            │
@@ -391,7 +391,7 @@ echo %ERRORLEVEL%  # On Windows
 3. **Update documentation** if root cause differs from assumptions
 4. **Document investigation** in epic_lessons_learned.md
 
-**See:** `STAGE_7_ORIGINAL_BACKUP.md` lines 398-505 for detailed investigation protocol.
+Use your best judgment to investigate the root cause empirically before drawing conclusions.
 
 ---
 
@@ -513,7 +513,7 @@ git add {file1} {file2} {file3}
 
 ## Stage epic folder (all files)
 git add .shamt/epics/{epic_name}/
-```text
+```
 
 **5c. Create Commit with Clear Message**
 
@@ -589,7 +589,7 @@ mkdir .shamt/epics/done
 
 **Check current epic count:**
 ```bash
-## Count directories in done/ (excluding guides_v2)
+## Count epic directories in done/
 ls -d .shamt/epics/done/*/ | wc -l
 ```
 
@@ -1064,7 +1064,6 @@ The epic is now complete and ready for user review!
 - `reference/stage_10/commit_message_examples.md` - Commit message format and examples
 - `reference/stage_10/epic_completion_template.md` - EPIC_README.md completion template
 - `reference/stage_10/lessons_learned_examples.md` - Lesson extraction and application guide
-- `STAGE_7_ORIGINAL_BACKUP.md` - Original guide with all inline examples
 
 ---
 

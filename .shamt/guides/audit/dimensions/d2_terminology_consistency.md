@@ -117,7 +117,7 @@ grep -n "S[0-9][a-z]" README.md | head -5    # Shows old notation
 ```json
 
 **Historical Issue:**
-- D2 scripts searched `guides_v2/` BUT primary focus was on stages/ directory
+- D2 scripts searched `.shamt/guides/` BUT primary focus was on stages/ directory
 - Root files were not explicitly called out for manual validation
 - Result: Old notation persisted in README.md, EPIC_WORKFLOW_USAGE.md undetected
 
@@ -304,19 +304,19 @@ echo "=== Finding Old Notation ==="
 
 # Old letter-based notation
 echo "Checking for S[0-9][a-z] patterns..."
-grep -rn "\bS[0-9][a-z]\b" --include="*.md" guides_v2/
+grep -rn "\bS[0-9][a-z]\b" --include="*.md" .shamt/guides/
 
 # Old "Stage Xa" format
 echo "Checking for 'Stage Xa' patterns..."
-grep -rn "Stage [0-9][a-z]" --include="*.md" guides_v2/
+grep -rn "Stage [0-9][a-z]" --include="*.md" .shamt/guides/
 
 # Standalone letter notation
 echo "Checking for standalone 'Xa' patterns..."
-grep -rn "\b[5-9][a-z]\b" --include="*.md" guides_v2/ | grep -v "S[0-9]"
+grep -rn "\b[5-9][a-z]\b" --include="*.md" .shamt/guides/ | grep -v "S[0-9]"
 
 # All caps variants
 echo "Checking for STAGE_Xa patterns..."
-grep -rn "STAGE_[0-9][a-z]" --include="*.md" guides_v2/
+grep -rn "STAGE_[0-9][a-z]" --include="*.md" .shamt/guides/
 ```bash
 
 ### Script 2: Validate Notation Format
@@ -330,15 +330,15 @@ echo "=== Validating Notation Format ==="
 
 # Check for missing dots
 echo "Checking for S#P# (missing dot)..."
-grep -rn "S[0-9][A-Z][0-9]" --include="*.md" guides_v2/ | grep -v "S[0-9]\.[A-Z]"
+grep -rn "S[0-9][A-Z][0-9]" --include="*.md" .shamt/guides/ | grep -v "S[0-9]\.[A-Z]"
 
 # Check for wrong separators
 echo "Checking for S#-P# (wrong separator)..."
-grep -rn "S[0-9]-[A-Z]" --include="*.md" guides_v2/
+grep -rn "S[0-9]-[A-Z]" --include="*.md" .shamt/guides/
 
 # Check for spaces
 echo "Checking for S# P# (spaces)..."
-grep -rn "S[0-9] [A-Z][0-9]" --include="*.md" guides_v2/
+grep -rn "S[0-9] [A-Z][0-9]" --include="*.md" .shamt/guides/
 ```
 
 ### Script 3: File Name Validation
@@ -351,13 +351,13 @@ grep -rn "S[0-9] [A-Z][0-9]" --include="*.md" guides_v2/
 echo "=== Validating File Names ==="
 
 # Files in stages/ should start with s#_
-find guides_v2/stages/s[0-9] -name "*.md" ! -name "s[0-9]*" -print
+find .shamt/guides/stages/s[0-9] -name "*.md" ! -name "s[0-9]*" -print
 
 # Should use underscores, not dashes
-find guides_v2/stages -name "*-*-*.md" -print
+find .shamt/guides/stages -name "*-*-*.md" -print
 
 # Should be lowercase
-find guides_v2/stages -name "*[A-Z]*.md" ! -name "README.md" -print
+find .shamt/guides/stages -name "*[A-Z]*.md" ! -name "README.md" -print
 ```bash
 
 ---
@@ -618,7 +618,7 @@ sed -i 's/Last Updated:.*$/Last Updated: 2026-02-04/g' README.md
 ```bash
 
 **Why This Was Missed:**
-- D2 scripts searched `guides_v2/` BUT agents focused on stages/ directory
+- D2 scripts searched `.shamt/guides/` BUT agents focused on stages/ directory
 - Root files not explicitly flagged for manual validation
 - **High-impact oversight** - these files have highest visibility
 

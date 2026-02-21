@@ -154,7 +154,7 @@ This document captures lessons specific to THIS feature's development. This is s
 
 ## Guide Improvements Needed
 
-{Specific improvements needed for guides_v2/ based on THIS feature's experience}
+{Specific improvements needed for .shamt/guides/ based on THIS feature's experience}
 
 **S5 Implementation Planning:**
 - stages/s5/s5_v2_validation_loop.md: {Improvement 1 or "None"}

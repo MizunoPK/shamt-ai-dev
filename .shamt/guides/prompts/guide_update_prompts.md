@@ -161,8 +161,7 @@ I've analyzed all lessons learned from this epic and created prioritized guide u
 2. Apply user modifications where provided
 3. Create separate commit for guide updates
 4. Update reference/guide_update_tracking.md
-5. Update guide-updates.txt if any items addressed
-6. Proceed to S10 Step 7 (Final Commit & PR)
+5. Proceed to S10 Step 7 (Final Commit & PR)
 
 Applying guide updates...
 ```

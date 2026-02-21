@@ -26,7 +26,7 @@
 This document captures:
 - **Cross-feature insights** (patterns observed across multiple features)
 - **Systemic issues** (problems affecting multiple features)
-- **Guide improvements** (updates needed for guides_v2/)
+- **Guide improvements** (updates needed for .shamt/guides/)
 - **Workflow refinements** (process improvements for future epics)
 
 **This is separate from per-feature lessons_learned.md files** (which capture feature-specific insights).

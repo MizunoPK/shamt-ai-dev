@@ -35,7 +35,7 @@ I'm beginning S10 (Epic Cleanup).
   - All feature README.md files complete
 - **Update Guides** (if lessons identified):
   - Review epic_lessons_learned.md "Guide Improvements Needed"
-  - Update guides_v2/ files if improvements identified
+  - Update .shamt/guides/ files if improvements identified
   - Update CLAUDE.md if workflow changed
   - Document guide updates
 - **⚠️ USER TESTING (MANDATORY GATE - BEFORE COMMIT)**:

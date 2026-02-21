@@ -34,7 +34,7 @@
 3. **Code Block Completeness** - All code blocks have a closing triple-backtick (no unclosed blocks)
 
 **Coverage:**
-- All `.md` files in guides_v2 (stages/, reference/, templates/, prompts/, parallel_work/, debugging/)
+- All `.md` files in .shamt/guides (stages/, reference/, templates/, prompts/, parallel_work/, debugging/)
 - Excludes: audit/outputs/ and audit/round_*.md (temporary audit logs)
 
 **Key Distinction from D9 (Intra-File Consistency):**

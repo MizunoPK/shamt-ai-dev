@@ -545,9 +545,6 @@ List all explicit user requests, then verify EACH is in spec:
 
 ### Why This Step Exists
 
-**From guide-updates.txt #2:**
-> "Require ALL checklist items to be confirmed by the user. Stop resolving anything on their own, including things the agent thinks is straightforward"
-
 **Purpose:**
 - User sees ALL questions/uncertainties before implementation planning
 - User provides answers to ALL questions

@@ -125,7 +125,7 @@ grep -h "stages/s[0-9].*\.md\|templates/.*\.md\|reference/.*\.md" \
 
 **Historical Issue:**
 - Root-level files were NOT checked in original audit implementation
-- D1 only searched `guides_v2/stages` directory
+- D1 only searched `.shamt/guides/stages` directory
 - Result: README.md references could be broken without detection
 
 ### Type 1: Direct File Paths
@@ -314,7 +314,7 @@ cd .shamt/guides
 grep -rhn "\[.*\]([^)#]*\.md)" . --include="*.md" | \
   grep -oE '\(([^)]+\.md)\)' | tr -d '()' | sort -u > /tmp/md_links.txt
 
-# Validate each resolved path (relative to guides_v2/)
+# Validate each resolved path (relative to .shamt/guides/)
 while read path; do
   full="$path"
   [ "${path:0:1}" != "/" ] && full=".shamt/guides/$path"
@@ -339,7 +339,7 @@ echo "=== Validating File Paths ==="
 
 # Extract all paths
 grep -rh "stages/s[0-9].*\.md\|templates/.*\.md\|reference/.*\.md" \
-  --include="*.md" guides_v2/ | \
+  --include="*.md" .shamt/guides/ | \
   grep -o "[a-z_/]*\.md" | \
   sort -u > /tmp/all_paths.txt
 
@@ -377,17 +377,17 @@ fi
 
 # Check all directories AND root-level files
 {
-  find guides_v2/stages guides_v2/templates guides_v2/reference \
-       guides_v2/debugging guides_v2/missed_requirement guides_v2/parallel_work \
-       guides_v2/prompts guides_v2/audit -name "*.md" 2>/dev/null
+  find .shamt/guides/stages .shamt/guides/templates .shamt/guides/reference \
+       .shamt/guides/debugging .shamt/guides/missed_requirement .shamt/guides/parallel_work \
+       .shamt/guides/prompts .shamt/guides/audit -name "*.md" 2>/dev/null
   # Add root-level files explicitly
-  ls guides_v2/*.md 2>/dev/null
+  ls .shamt/guides/*.md 2>/dev/null
 } | while read source_file; do
   # Extract paths from this file
   grep -o "stages/s[0-9][^)]*\.md\|templates/[^)]*\.md\|reference/[^)]*\.md\|debugging/[^)]*\.md" \
     "$source_file" | sort -u | while read ref_path; do
-    # Check if referenced file exists (relative to guides_v2/)
-    full_path="guides_v2/$ref_path"
+    # Check if referenced file exists (relative to .shamt/guides/)
+    full_path=".shamt/guides/$ref_path"
     if [ ! -f "$full_path" ]; then
       echo "BROKEN in $source_file"
       echo "  References: $ref_path"
@@ -408,14 +408,14 @@ done
 echo "=== Validating Stage Numbers ==="
 
 # Find references to stage numbers > 10
-grep -rn "S\(1[1-9]\|[2-9][0-9]\)" --include="*.md" guides_v2/ | \
+grep -rn "S\(1[1-9]\|[2-9][0-9]\)" --include="*.md" .shamt/guides/ | \
   grep -v "S10" | \
   while read line; do
     echo "❌ INVALID STAGE: $line"
   done
 
 # Find old notation (5a, 5b, etc)
-grep -rn "\bS[0-9][a-z]\b\|Stage [0-9][a-z]" --include="*.md" guides_v2/ | \
+grep -rn "\bS[0-9][a-z]\b\|Stage [0-9][a-z]" --include="*.md" .shamt/guides/ | \
   while read line; do
     echo "⚠️  OLD NOTATION: $line"
   done
@@ -632,7 +632,7 @@ Content: "audit/README.md (modular audit system entry point)"
 ```
 
 **Why This Was Missed:**
-- Original D1 validation only searched `guides_v2/stages/`
+- Original D1 validation only searched `.shamt/guides/stages/`
 - Root-level files (README, EPIC_WORKFLOW_USAGE, prompts_reference) were not checked
 - **High-impact gap** - these are entry point files
 

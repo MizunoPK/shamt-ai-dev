@@ -124,7 +124,7 @@ CLAUDE.md (project root)
 
 **CLAUDE.md:**
 - [ ] Stage Workflows section references existing stage guides
-- [ ] Reference links point to existing files in guides_v2/
+- [ ] Reference links point to existing files in .shamt/guides/
 - [ ] No broken links to moved/renamed files
 
 **Search Commands:**
@@ -151,7 +151,7 @@ done
 
 **Red Flags:**
 - README.md references "stages/s4/s4_testing.md" but file is "s4_feature_testing_strategy.md"
-- CLAUDE.md references "guides_v2/old_guide.md" that was deleted
+- CLAUDE.md references ".shamt/guides/old_guide.md" that was deleted
 - prompts_reference_v2.md references prompt files that don't exist
 
 **Automated:** ⚠️ Partial (can check file existence, cannot validate semantic match)
@@ -314,7 +314,7 @@ templates/discovery_template.md
 # Find all file references in templates
 grep -rn "see.*\.md\|refer to.*\.md\|\`.*\.md\`" templates/
 
-# For each reference, check if file exists in guides_v2
+# For each reference, check if file exists in .shamt/guides
 for ref in $(grep -oE '\`[^`]+\.md\`' templates/*.md | tr -d '`'); do
   if [ ! -f ".shamt/guides/$ref" ] && [ ! -f "$ref" ]; then
     echo "BROKEN REFERENCE in template: $ref"
@@ -650,7 +650,7 @@ echo "Checking cross-references in guides..."
 refs=$(grep -roh '\`[^`]*\.md\`' stages/ reference/ templates/ | tr -d '`' | sort -u)
 
 for ref in $refs; do
-  # Try relative to guides_v2
+  # Try relative to .shamt/guides
   if [ ! -f ".shamt/guides/$ref" ] && \
      [ ! -f "$ref" ] && \
      [ ! -f ".shamt/guides/stages/$ref" ]; then

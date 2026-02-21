@@ -100,7 +100,7 @@ S10.5 is complete when all proposals have been reviewed by user, approved change
    - Document approved, modified, and rejected proposals
    - Update metrics section
 
-7. ⚠️ Scope: ENTIRE guides_v2/ directory + CLAUDE.md
+7. ⚠️ Scope: ENTIRE .shamt/guides/ directory + CLAUDE.md
    - 🚨 CRITICAL: "Guides" = EVERY FILE in .shamt/guides/
    - This includes: stages/, reference/, templates/, debugging/,
      missed_requirement/, prompts/, and ALL root-level .md files
@@ -552,31 +552,73 @@ git commit -m "docs(tracking): Update guide tracking for SHAMT-{N}-{epic_name}"
 
 ---
 
-### Step 8: Update guide-updates.txt (If Applicable)
+### Step 8: Consider Writing a Shamt Changelog Entry
 
-**Purpose:** If any approved changes relate to items in guide-updates.txt, update their status
+**Purpose:** If guide improvements are universal enough to benefit other projects, contribute them back to the Shamt master repo via a changelog entry.
 
-**Actions:**
+**When to write a changelog:**
+- The improvement addresses a genuine gap or error in the guide system
+- The change would benefit any project using Shamt (not just this project's tech stack)
+- The improvement is to core workflow steps, gates, or clarifications — not project-specific examples
 
-8.1. **Check if any proposals address guide-updates.txt items:**
-- Read .shamt/epics/guide-updates.txt
-- Check if any approved proposals relate to ❌ NOT ADDRESSED or ⚠️ PARTIALLY ADDRESSED items
+**When NOT to write a changelog:**
+- The change is domain-specific (only makes sense for this project's language/framework)
+- The change is minor wording tweaks with no functional impact
+- The change contradicts a deliberate Shamt design decision
 
-8.2. **If relevant, update guide-updates.txt:**
-- Update item status (e.g., ❌ → ⚠️ or ⚠️ → ✅)
-- Add documentation of what was implemented
-- Add reference to epic that drove the change
+**If a changelog is warranted:**
 
-8.3. **Commit if updated:**
-```bash
-git add .shamt/epics/guide-updates.txt
-git commit -m "docs(guide-updates): Update status for items addressed in SHAMT-{N}-{epic_name}"
+8.1. Write a changelog entry in `.shamt/changelogs/outbound/` using this template:
+
+```markdown
+# Shamt Changelog Entry
+
+**Entry ID:** {EPIC_TAG}-CHANGELOG-{NNN}
+**Date:** YYYY-MM-DD
+**Source Project:** {project name}
+**Author:** {agent}
+
+## Guide(s) Affected
+- [.shamt/guides/path/to/guide.md] — [section]
+
+## Change Type
+- [ ] Core functionality change
+- [ ] New guide or section added
+- [ ] Clarification / wording improvement
+- [ ] Bug fix (guide was incorrect or contradictory)
+- [ ] Structural/organizational change
+
+## Summary
+[1-3 sentences: what changed]
+
+## Rationale
+[Why this change was made — what problem it solves]
+
+## Universality Assessment
+- [ ] Universal — likely beneficial to all Shamt versions
+- [ ] Partially universal — see notes below
+- [ ] Child-specific — included for awareness only
+
+**Notes:** [context for the applying agent]
+
+## How to Apply
+[Guidance for an agent applying this to a different version of the guides]
 ```
 
+8.2. Update `.shamt/changelogs/outbound/CHANGELOG_INDEX.md` — add a row at the top:
+
+```markdown
+| {EPIC_TAG}-CHANGELOG-{NNN} | YYYY-MM-DD | [one-line summary] | No |
+```
+
+8.3. Inform the user: "I've written a changelog entry in `.shamt/changelogs/outbound/`. When ready, you can submit it to the Shamt master repo."
+
+**If no changelog is warranted:** Note "No changelog written — changes are project-specific" in your completion announcement and proceed.
+
 **Checkpoint:**
-- [ ] guide-updates.txt checked
-- [ ] Relevant items updated (if any)
-- [ ] Commit created (if updated)
+- [ ] Assessed whether guide improvements are universal
+- [ ] Changelog written (if applicable) or reason noted (if not)
+- [ ] `outbound/CHANGELOG_INDEX.md` updated (if changelog written)
 
 ---
 
@@ -628,7 +670,7 @@ Use prompt from prompts/guide_update_prompts.md "After Applying Changes" section
 - [ ] All approved/modified proposals applied to guides
 - [ ] Separate commit created for guide updates
 - [ ] reference/guide_update_tracking.md updated
-- [ ] guide-updates.txt updated (if applicable)
+- [ ] Changelog written to `outbound/` (or decision to skip documented)
 - [ ] EPIC_README.md shows S10.5 complete
 - [ ] Ready to proceed to S10 Step 7
 

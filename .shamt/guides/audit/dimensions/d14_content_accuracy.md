@@ -155,12 +155,12 @@ git log --since="2025-12-30" --oneline stages/ reference/ | wc -l
 ```bash
 # Find all count claims
 grep -rn "[0-9]\+ template\|[0-9]\+ stage\|[0-9]\+ dimension\|[0-9]\+ iteration" \
-  --include="*.md" guides_v2/
+  --include="*.md" .shamt/guides/
 
 # Extract specific claims
-grep -rn "19 template" guides_v2/
-grep -rn "10 stage" guides_v2/
-grep -rn "16 dimension" guides_v2/
+grep -rn "19 template" .shamt/guides/
+grep -rn "10 stage" .shamt/guides/
+grep -rn "16 dimension" .shamt/guides/
 ```
 
 **Validation:**
@@ -184,9 +184,9 @@ ls audit/dimensions/d*.md | wc -l  # Should match claimed dimension count (if "f
 **Search Commands:**
 ```bash
 # Find iteration count claims
-grep -rn "S[0-9]\.P[0-9] has [0-9]\+ iteration" guides_v2/
-grep -rn "S[0-9] has [0-9]\+ round\|phase" guides_v2/
-grep -rn "[0-9]\+ iterations total" guides_v2/
+grep -rn "S[0-9]\.P[0-9] has [0-9]\+ iteration" .shamt/guides/
+grep -rn "S[0-9] has [0-9]\+ round\|phase" .shamt/guides/
+grep -rn "[0-9]\+ iterations total" .shamt/guides/
 ```bash
 
 **Validation:**
@@ -214,7 +214,7 @@ ls stages/s5/s5_p*.md | grep -o "s5_p[0-9]" | sort -u | wc -l  # Should match ro
 ```bash
 # Find all script/file references
 grep -rn "Run [a-z_]*\.sh\|Read [A-Z_]*\.md\|Use templates/" \
-  --include="*.md" guides_v2/
+  --include="*.md" .shamt/guides/
 ```
 
 **Validation:**
@@ -239,11 +239,11 @@ done < referenced_files.txt
 ```bash
 # Find capability claims
 grep -rn "automated.*[0-9]\+%\|catch.*[0-9]\+%\|Checks [0-9] of [0-9]" \
-  --include="*.md" guides_v2/ -i
+  --include="*.md" .shamt/guides/ -i
 
 # Find requirement claims
 grep -rn "minimum [0-9]\+\|required.*[0-9]\+\|enforced" \
-  --include="*.md" guides_v2/ -i
+  --include="*.md" .shamt/guides/ -i
 ```markdown
 
 **Validation:**
@@ -448,7 +448,7 @@ echo "=== Iteration Count Validation ==="
 
 # S5 should have 22 iterations total
 ACTUAL_S5_ITERATIONS=$(grep -rn "I[0-9]\{1,2\}:" stages/s5/ | grep -o "I[0-9]\{1,2\}" | sort -u | wc -l)
-CLAIMED_S5_ITERATIONS=$(grep -rn "22 iteration" guides_v2/ | wc -l)
+CLAIMED_S5_ITERATIONS=$(grep -rn "22 iteration" .shamt/guides/ | wc -l)
 
 if [ "$ACTUAL_S5_ITERATIONS" -ne 22 ] && [ "$CLAIMED_S5_ITERATIONS" -gt 0 ]; then
   echo "⚠️  S5 iteration count mismatch:"
@@ -458,7 +458,7 @@ fi
 
 # S2.P1 should have 3 iterations
 ACTUAL_S2P1_ITERATIONS=$(ls stages/s2/s2_p1_i*.md 2>/dev/null | wc -l)
-CLAIMED_S2P1_ITERATIONS=$(grep -rn "S2\.P1.*3 iteration" guides_v2/ | wc -l)
+CLAIMED_S2P1_ITERATIONS=$(grep -rn "S2\.P1.*3 iteration" .shamt/guides/ | wc -l)
 
 if [ "$ACTUAL_S2P1_ITERATIONS" -ne 3 ] && [ "$CLAIMED_S2P1_ITERATIONS" -gt 0 ]; then
   echo "⚠️  S2.P1 iteration count mismatch:"
@@ -546,7 +546,7 @@ done
 
 ```markdown
 STEP 1: Extract all count claims from guides
-$ grep -rn "[0-9]\+ template\|[0-9]\+ iteration\|[0-9]\+ dimension" guides_v2/
+$ grep -rn "[0-9]\+ template\|[0-9]\+ iteration\|[0-9]\+ dimension" .shamt/guides/
 
 STEP 2: Count actual files for each claim
 $ find templates -name "*.md" | wc -l  # Verify template count
@@ -557,14 +557,14 @@ STEP 3: Compare claimed vs actual
 - Mismatch? → ❌ Add to fix list
 
 STEP 4: For mismatches, update all locations
-$ grep -rl "19 template" guides_v2/ | xargs sed -i 's/19 template/23 template/g'
+$ grep -rl "19 template" .shamt/guides/ | xargs sed -i 's/19 template/23 template/g'
 ```
 
 **For capability claims:**
 
 ```markdown
 STEP 1: Extract capability claims
-$ grep -rn "automated.*[0-9]\+%\|Checks [0-9] of [0-9]" guides_v2/
+$ grep -rn "automated.*[0-9]\+%\|Checks [0-9] of [0-9]" .shamt/guides/
 
 STEP 2: Verify each claim manually
 - "Checks 6 of 16 dimensions" → Check pre_audit_checks.sh has 6 CHECK blocks
@@ -675,7 +675,7 @@ Actual Count: 23 templates
 **Fix:**
 ```bash
 # Find all locations with "19 templates"
-grep -rl "19 template" guides_v2/
+grep -rl "19 template" .shamt/guides/
 
 # Update to correct count
 sed -i 's/19 template/23 template/g' stages/s1/s1_epic_planning.md
@@ -748,7 +748,7 @@ Reality: Only 2 dimensions fully implemented (D1, D2)
 
 ```bash
 # Find all count claims
-grep -rn "[0-9]\+ \(template\|iteration\|dimension\|stage\|phase\)" guides_v2/
+grep -rn "[0-9]\+ \(template\|iteration\|dimension\|stage\|phase\)" .shamt/guides/
 
 # Check Last Updated dates in root files
 grep -n "Last Updated" README.md EPIC_WORKFLOW_USAGE.md prompts_reference_v2.md
@@ -763,7 +763,7 @@ ls -d stages/s* | wc -l
 ls audit/dimensions/d*.md | wc -l
 
 # Find capability claims
-grep -rn "automat.*[0-9]\+%\|Checks [0-9] of [0-9]" guides_v2/ -i
+grep -rn "automat.*[0-9]\+%\|Checks [0-9] of [0-9]" .shamt/guides/ -i
 ```
 
 ---

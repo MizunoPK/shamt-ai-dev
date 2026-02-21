@@ -23,7 +23,7 @@
 ## 🎯 Quick Reference Card (Always Visible)
 
 **Current Stage:** Stage X - {stage name}
-**Active Guide:** `guides_v2/{guide_name}.md`
+**Active Guide:** `.shamt/guides/{guide_name}.md`
 **Last Guide Read:** {YYYY-MM-DD HH:MM}
 
 **Stage Workflow:**
@@ -44,7 +44,7 @@ Plan  Deep Dive  Check  Strategy  (per feature)   QC
 5. {Rule 5 from current guide}
 
 **Before Proceeding to Next Step:**
-- [ ] Read guide: `guides_v2/{current_guide}.md`
+- [ ] Read guide: `.shamt/guides/{current_guide}.md`
 - [ ] Acknowledge critical requirements
 - [ ] Verify prerequisites from guide
 - [ ] Update this Quick Reference Card

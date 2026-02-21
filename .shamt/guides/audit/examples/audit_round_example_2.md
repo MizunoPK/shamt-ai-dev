@@ -290,7 +290,7 @@ See: `../../reference/common_mistakes.md`
 
 **After:**
 ```markdown
-See: `reference/common_mistakes.md` (from guides_v2 root)
+See: `reference/common_mistakes.md` (from .shamt/guides root)
 ```
 
 **File:** s3_epic_planning_approval.md:89

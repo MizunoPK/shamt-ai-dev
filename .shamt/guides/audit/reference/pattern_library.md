@@ -30,7 +30,7 @@
 
 **Copy-paste patterns directly into your shell:**
 ```bash
-# Navigate to guides_v2 directory first
+# Navigate to .shamt/guides directory first
 cd .shamt/guides/audit
 
 # Then run any pattern from this library
@@ -112,7 +112,7 @@ grep -rn "\.\./.*\.md" --include="*.md" . | head -30
 
 ```bash
 # Check root files for old notation (HIGH PRIORITY)
-cd ..  # Move to guides_v2
+cd ..  # Move to .shamt/guides
 grep -n "\bS[0-9][a-z]\b\|Stage [0-9][a-z]" \
   README.md EPIC_WORKFLOW_USAGE.md prompts_reference_v2.md
 cd audit  # Return to audit

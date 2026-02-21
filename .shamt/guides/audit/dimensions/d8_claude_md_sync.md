@@ -6,7 +6,7 @@
 **Priority:** HIGH
 **Last Updated:** 2026-02-04
 
-**Focus:** Ensure root CLAUDE.md file stays synchronized with guides_v2 folder content and structure
+**Focus:** Ensure root CLAUDE.md file stays synchronized with .shamt/guides folder content and structure
 **Typical Issues Found:** 5-15 per major workflow change
 
 ---
@@ -26,10 +26,10 @@
 
 ## What This Checks
 
-**CLAUDE.md Synchronization** validates that the root project instructions file (`CLAUDE.md`) accurately reflects the guides_v2 system:
+**CLAUDE.md Synchronization** validates that the root project instructions file (`CLAUDE.md`) accurately reflects the .shamt/guides system:
 
 ✅ **File Path References:**
-- All paths mentioned in CLAUDE.md exist in guides_v2/
+- All paths mentioned in CLAUDE.md exist in .shamt/guides/
 - Stage guide references point to correct files
 - Template references are current
 - Reference material paths are accurate
@@ -102,7 +102,7 @@ Result: Agent expects 28 iterations, looks for I23-I28 which don't exist
 
 **Search Command:**
 ```bash
-# Extract all guides_v2 file paths from CLAUDE.md
+# Extract all .shamt/guides file paths from CLAUDE.md
 grep -n ".shamt/guides/" CLAUDE.md | \
   grep -o ".shamt/guides/[^)\"' ]*\.md" | \
   sort -u > /tmp/claude_paths.txt
@@ -702,12 +702,12 @@ CLAUDE.md contradicts guide ❌
 **Overlap:** Both check file paths
 
 **Difference:**
-- D1: Checks paths WITHIN guides_v2 folder
-- D8: Checks paths FROM CLAUDE.md TO guides_v2 folder
+- D1: Checks paths WITHIN .shamt/guides folder
+- D8: Checks paths FROM CLAUDE.md TO .shamt/guides folder
 
 **Workflow:**
-1. Run D1 first (validate guides_v2 internal consistency)
-2. Run D8 second (validate CLAUDE.md points to correct guides_v2 files)
+1. Run D1 first (validate .shamt/guides internal consistency)
+2. Run D8 second (validate CLAUDE.md points to correct .shamt/guides files)
 
 ---
 
