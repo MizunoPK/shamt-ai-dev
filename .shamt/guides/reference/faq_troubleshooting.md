@@ -152,15 +152,14 @@ A: Specific enough to create implementation_plan.md in S5:
 **Too vague:** "Add better scoring"
 **Good:** "Modify [domain algorithm] to weight rank priority by position: QB weight 0.8, RB/WR weight 1.0, TE weight 1.2"
 
-**Q: When do I move from Phase 0 to Phase 1 to Phase 2 in S2?**
+**Q: When do I move between iterations in S2.P1?**
 
-A: Follow the guide progression:
-- **Phase 0 (Discovery Context Review):** Review DISCOVERY.md, verify spec has context
-- **Phase 1 (Research):** Feature-specific research, codebase exploration, research audit
-- **Phase 2 (Specification):** Write spec.md, create traceability matrix, alignment check
-- **Phase 3+ (Refinement):** Interactive questions, scope management, user approval
+A: Follow the S2.P1 iteration progression (guide: `s2_p1_spec_creation_refinement.md`):
+- **S2.P1.I1 (Feature-Level Discovery):** Review DISCOVERY.md, targeted research, research completeness audit (Gate 1)
+- **S2.P1.I2 (Checklist Resolution):** Resolve checklist questions with user, update spec in real-time
+- **S2.P1.I3 (Refinement & Alignment):** Scope adjustment, cross-feature comparison, alignment check (Gate 2), user approval (Gate 3)
 
-All phases are mandatory - don't skip.
+All iterations are mandatory - don't skip.
 
 ---
 
@@ -370,14 +369,14 @@ A: NO - Epic QC is mandatory:
 
 **Q: User found bugs during testing - what do I do?**
 
-A: Follow S10 bug fix protocol:
+A: User testing occurs in S9 (Step 6), not S10. Follow the S9 bug fix protocol:
 1. Document ALL bugs in epic debugging/ISSUES_CHECKLIST.md
 2. Create bugfix folders for each bug
 3. Fix ALL bugs (each follows S2 → S5 → S6 → S7)
-4. After ALL bugs fixed → RESTART S9 (not S10)
-5. Complete S9 validation again
-6. Return to S10 user testing
-7. ZERO bugs required to commit
+4. After ALL bugs fixed → RESTART S9 from S9.P1 (Epic Smoke Testing)
+5. Complete ALL S9 steps again (S9.P1 → S9.P2 → S9.P3)
+6. User re-tests in S9 Step 6 — ZERO bugs required
+7. Only then proceed to S10
 
 **Q: Can I commit if "only minor bugs" remain?**
 
@@ -597,7 +596,7 @@ Context window limit reached → Session compacted
 
 **Indicators:**
 - User says "I found a bug during testing"
-- S10 user testing revealed issues
+- S9 user testing revealed issues (user testing occurs in S9, not S10)
 - Need systematic bug tracking and fixes
 
 **Entry point:** `stages/s5/s5_bugfix_workflow.md`

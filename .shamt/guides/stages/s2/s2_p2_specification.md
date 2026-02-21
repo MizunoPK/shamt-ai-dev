@@ -1,4 +1,4 @@
-# S2: Feature Deep Dives
+# S2.P2: Specification Phase
 ## S2.P2: Specification Phase
 
 **Guide Version:** 1.0
@@ -658,7 +658,7 @@ Update Agent Status in feature README.md:
 
 1. **If checklist complete with zero NEW questions:**
    - Skip S2.P3 (Refinement Phase) entirely
-   - Proceed directly to S5 (Implementation Planning)
+   - Proceed to S3 → S4 → S5 (first-time), or directly to S5 (rework mid-epic — see Next Stage)
    - Note: Phase 6 (Acceptance Criteria) still required before S5
 
 2. **If NEW questions arise:**
@@ -674,8 +674,13 @@ Update Agent Status in feature README.md:
 
 **After completing Specification Phase + Gate 2:**
 
+> **Context:** The path forward depends on where you are in the epic lifecycle:
+> - **First-time S2 (initial feature specs):** After all features complete S2, proceed to **S3** (Cross-Feature Sanity Check), then **S4** (Feature Testing Strategy), then **S5**. Do NOT jump directly to S5.
+> - **Rework / mid-epic (returning from S5–S8 loop):** S3 and S4 are already complete — proceed directly to **S5** (Implementation Planning).
+
 **Option A: No new questions (most common):**
-→ **Proceed to:** S5 (Implementation Planning)
+→ **First-time:** All features complete S2 → proceed to S3 → S4 → S5
+→ **Rework:** Proceed directly to S5 (Implementation Planning)
 → **Skip:** S2.P3 if checklist is complete
 
 **Option B: New questions discovered:**

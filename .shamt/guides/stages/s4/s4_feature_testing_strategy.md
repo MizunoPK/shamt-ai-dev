@@ -17,6 +17,22 @@
 
 ---
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Critical Rules](#critical-rules)
+- [Prerequisites Checklist](#prerequisites-checklist)
+- [Stage Structure](#stage-structure)
+- [Workflow Overview](#workflow-overview)
+- [Navigation](#navigation)
+- [Exit Criteria](#exit-criteria)
+- [Common Mistakes to Avoid](#common-mistakes-to-avoid)
+- [README Agent Status Update Requirements](#readme-agent-status-update-requirements)
+- [Prerequisites for S5](#prerequisites-for-s5)
+- [Next Stage](#next-stage)
+
+---
+
 ## Overview
 
 **What is this stage?**

@@ -42,7 +42,7 @@
 S10.P1 is the mandatory guide improvement workflow where you analyze lessons learned from the epic and propose specific guide updates to help future agents, with user approval for each change individually.
 
 **When do you use this guide?**
-- S10 user testing passed (Gate 7.2 - zero bugs found)
+- S9 user testing passed (S9 Step 6 - zero bugs found)
 - All lessons_learned.md files are complete
 - Before creating final epic commit
 
@@ -57,7 +57,7 @@ S10.P1 is the mandatory guide improvement workflow where you analyze lessons lea
 20-45 minutes (depends on number of lessons and proposals)
 
 **Exit Condition:**
-S10.5 is complete when all proposals have been reviewed by user, approved changes applied to guides, separate commit created, and tracking updated
+S10.P1 is complete when all proposals have been reviewed by user, approved changes applied to guides, separate commit created, and tracking updated
 
 ---
 
@@ -114,16 +114,16 @@ S10.5 is complete when all proposals have been reviewed by user, approved change
 
 ## Prerequisites Checklist
 
-**Verify BEFORE starting S10.5:**
+**Verify BEFORE starting S10.P1:**
 
-- [ ] S10 user testing passed (Gate 7.2)
-- [ ] Zero bugs found by user
+- [ ] S9 user testing passed (S9 Step 6) — user reported ZERO bugs
+- [ ] S9 complete (EPIC_README.md shows S9 ✅ COMPLETE)
 - [ ] epic_lessons_learned.md exists and is complete
 - [ ] All feature lessons_learned.md files exist and are complete
 - [ ] Ready to analyze lessons and create proposals
 
 **If any prerequisite fails:**
-- ❌ STOP - Do NOT proceed with S10.5
+- ❌ STOP - Do NOT proceed with S10.P1
 - Return to previous step to complete prerequisites
 
 ---
@@ -189,7 +189,7 @@ Note:
 
 | Lesson Pattern | Likely Affected Guide(s) |
 |----------------|--------------------------|
-| Missed requirement in spec | stages/s2/s2_p2_specification.md |
+| Missed requirement in spec | stages/s2/s2_p1_spec_creation_refinement.md |
 | Wrong interface assumed | stages/s5/s5_v2_validation_loop.md (Dimension 2) |
 | Algorithm traceability incomplete | stages/s5/s5_v2_validation_loop.md (Dimension 3) |
 | Integration gap not identified | stages/s5/s5_v2_validation_loop.md (Dimension 7) |
@@ -622,7 +622,7 @@ git commit -m "docs(tracking): Update guide tracking for SHAMT-{N}-{epic_name}"
 
 ---
 
-### Step 9: Mark S10.5 Complete
+### Step 9: Mark S10.P1 Complete
 
 **Purpose:** Update EPIC_README.md and announce completion
 
@@ -639,11 +639,11 @@ git commit -m "docs(tracking): Update guide tracking for SHAMT-{N}-{epic_name}"
 **Current Guide:** stages/s10/s10_epic_cleanup.md
 **Guide Last Read:** NOT YET (will read when starting Step 7)
 
-**Progress:** S10.5 complete (guide updates applied)
+**Progress:** S10.P1 complete (guide updates applied)
 **Next Action:** Proceed to S10 Step 7 (Final Commit & Pull Request)
 **Blockers:** None
 
-**S10.5 Summary:**
+**S10.P1 Summary:**
 - Proposals: {N} ({approved} approved, {modified} modified, {rejected} rejected)
 - Guides updated: {N} files
 - Commits: {N} (guide updates + tracking)
@@ -655,7 +655,7 @@ Use prompt from prompts/guide_update_prompts.md "After Applying Changes" section
 
 **Checkpoint:**
 - [ ] EPIC_README.md updated
-- [ ] Agent Status shows S10.5 complete
+- [ ] Agent Status shows S10.P1 complete
 - [ ] Next action is S10 Step 7
 - [ ] Completion announced to user
 
@@ -663,7 +663,7 @@ Use prompt from prompts/guide_update_prompts.md "After Applying Changes" section
 
 ## Exit Criteria
 
-**S10.5 is complete when:**
+**S10.P1 is complete when:**
 - [ ] All lessons_learned.md files analyzed
 - [ ] GUIDE_UPDATE_PROPOSAL.md created with all proposals
 - [ ] User reviewed all proposals individually
@@ -671,7 +671,7 @@ Use prompt from prompts/guide_update_prompts.md "After Applying Changes" section
 - [ ] Separate commit created for guide updates
 - [ ] reference/guide_update_tracking.md updated
 - [ ] Changelog written to `outbound/` (or decision to skip documented)
-- [ ] EPIC_README.md shows S10.5 complete
+- [ ] EPIC_README.md shows S10.P1 complete
 - [ ] Ready to proceed to S10 Step 7
 
 **Next Stage:** S10 Step 7 (Final Commit & Pull Request)
@@ -790,7 +790,7 @@ Adding historical context shows future agents WHY this dimension exists and what
 
 ---
 
-## Return to Parent Guide
+## Next Phase
 
 **This is a sub-workflow of S10 (Epic Cleanup).**
 

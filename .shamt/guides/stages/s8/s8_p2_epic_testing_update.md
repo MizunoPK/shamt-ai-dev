@@ -321,14 +321,14 @@ Testing Plan Update is complete when epic_smoke_test_plan.md reflects actual imp
 2. **Identify integration points discovered during implementation:**
    ```markdown
    ## Integration Points Found
-   
+
    **Feature:** feature_01_rank_integration
-   
+
    1. **RecordManager.calculate_total_score()**
       - Discovery: Now multiplies score by rank_multiplier
       - Impact: Affects all modes that calculate scores
       - Source: [module]/util/RecordManager.py:145-167
-   
+
    2. **ConfigManager.load_league_config()**
       - Discovery: Loads rank_multiplier_ranges from config
       - Impact: Config validation must include rank priority keys
@@ -741,7 +741,7 @@ integration points (RecordManager → ConfigManager), and edge case behaviors
 (missing data, rank 0, rank > 250) that weren't captured in S4 plan.
 
 Ensures S9 epic QC tests actual implementation, not assumptions.
-```text
+```
 
 ---
 
@@ -810,7 +810,7 @@ Steps:
   2. Call RecordManager.calculate_total_score(item)
   3. Verify: Final score includes rank_multiplier boost
 Expected: score > base_score (multiplier applied)
-```text
+```
 
 ---
 
@@ -884,7 +884,8 @@ Before completing S8.P2, verify:
 
 **See:** `reference/s8_p2_testing_examples.md` for complete examples
 
-
+**Before S8.P2 (Epic Testing Update):**
+```markdown
 **The epic is successful if:**
 
 1. Draft recommendations incorporate all planned scoring multipliers (rank priority, rating, schedule, injury, bye week)
@@ -1004,6 +1005,19 @@ Before completing S8.P2, verify:
 - Ready for S9 to execute evolved test plan
 
 **Why this matters:** Test plans based on assumptions miss integration points discovered during implementation. S8.P2 (Epic Testing Update) ensures the test plan reflects what was actually built, making S9 epic QC accurate and effective.
+
+---
+
+## Next Phase
+
+**After completing S8.P2, proceed to:**
+- **If features remain:** S5 — Implementation Planning for next feature
+  - **Guide:** `stages/s5/s5_v2_validation_loop.md`
+- **If all features complete:** S9 — Epic Final QC
+  - **Guide:** `stages/s9/s9_epic_final_qc.md`
+
+**See also:**
+- `stages/s8/s8_p1_cross_feature_alignment.md` — S8.P1 (Cross-Feature Alignment, precedes this guide)
 
 ---
 

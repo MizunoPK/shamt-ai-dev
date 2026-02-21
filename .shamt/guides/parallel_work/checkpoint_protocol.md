@@ -8,6 +8,23 @@
 
 ---
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Checkpoint File Format](#checkpoint-file-format)
+- [Checkpoint Update Trigger Mechanism](#checkpoint-update-trigger-mechanism)
+- [Checkpoint Creation (First Time)](#checkpoint-creation-first-time)
+- [Checkpoint Update Protocol](#checkpoint-update-protocol)
+- [Stale Detection](#stale-detection)
+- [Recovery Procedures](#recovery-procedures)
+- [Checkpoint Backup Strategy](#checkpoint-backup-strategy)
+- [Integration with Guides](#integration-with-guides)
+- [Error Handling](#error-handling)
+- [Performance Characteristics](#performance-characteristics)
+- [Summary](#summary)
+
+---
+
 ## Overview
 
 When agents work in parallel during S2, sessions can crash or lose context due to:
@@ -43,12 +60,12 @@ The checkpoint system provides **recoverable state** so work can resume without 
     "feature_01_player_json/checklist.md",
     "EPIC_README.md"
   ],
-  "recovery_instructions": "Resume from S2.P2 Specification Phase. spec.md partially complete (70% done). Continue from Requirements Section 5.",
+  "recovery_instructions": "Resume from S2.P1.I2 (Checklist Resolution). spec.md partially complete (70% done). Continue from Requirements Section 5.",
   "current_step": "Writing spec.md Requirements Section 5 (Error Handling)",
   "completed_steps": [
-    "S2.P1 complete",
-    "S2.P2 Phase 0: Read guide",
-    "S2.P2 Phase 1: Requirements Sections 1-4 written"
+    "S2.P1.I1 complete (Gate 1 passed)",
+    "S2.P1.I2: Read guide",
+    "S2.P1.I2: Requirements Sections 1-4 written"
   ],
   "next_steps": [
     "Complete Requirements Section 5",
@@ -69,7 +86,7 @@ The checkpoint system provides **recoverable state** so work can resume without 
 - `agent_type`: primary or secondary
 - `session_id`: Unique ID for this session (generated at start)
 - `feature`: Which feature this agent owns
-- `stage`: Current stage (S2.P1, S2.P2, S2.P3)
+- `stage`: Current stage (S2.P1)
 - `phase`: Human-readable phase name
 - `last_checkpoint`: When this checkpoint was last updated
 - `next_checkpoint_expected`: When next update expected (15 min from last)
@@ -148,9 +165,9 @@ cat > agent_checkpoints/secondary_a.json <<EOF
     "Created checkpoint file"
   ],
   "next_steps": [
-    "Read S2.P1 guide",
-    "Phase 0: Discovery Context Review",
-    "Phase 1: Targeted Research"
+    "Read S2.P1 guide (s2_p1_spec_creation_refinement.md)",
+    "S2.P1.I1 Step 1: Discovery Context Review",
+    "S2.P1.I1 Step 2: Targeted Research"
   ],
   "coordination_state": {
     "last_inbox_check": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
@@ -209,7 +226,7 @@ cat > "$CHECKPOINT_FILE" <<EOF
   "next_steps": [
     "Complete Acceptance Criteria",
     "Write checklist.md questions",
-    "Transition to S2.P3"
+    "Complete S2.P1 I3 Refinement & Alignment and signal completion"
   ],
   "coordination_state": {
     "last_inbox_check": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
@@ -365,7 +382,7 @@ check_stale_agents() {
 **Next Steps:**
 1. Complete Acceptance Criteria section
 2. Finish checklist.md questions
-3. Transition to S2.P3
+3. Complete S2.P1 I3 Refinement & Alignment and signal completion
 
 I'll continue where I left off...
 ```
@@ -475,7 +492,7 @@ restore_checkpoint() {
 
 ## Integration with Guides
 
-### In S2.P1, S2.P2, S2.P3 Guides
+### In S2.P1 Guide (s2_p1_spec_creation_refinement.md)
 
 **Add checkpoint update steps:**
 
@@ -489,7 +506,7 @@ restore_checkpoint() {
 2. **Update these fields:**
    - `last_checkpoint`: Current timestamp
    - `next_checkpoint_expected`: +15 minutes
-   - `stage`: Current stage (S2.P1, S2.P2, S2.P3)
+   - `stage`: Current stage (S2.P1)
    - `current_step`: What you're working on right now
    - `completed_steps`: Add any newly completed steps
    - `files_modified`: Add any files you've edited

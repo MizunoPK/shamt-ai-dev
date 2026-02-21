@@ -7,6 +7,17 @@
 
 ---
 
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Staleness Thresholds](#staleness-thresholds)
+3. [Detection Protocol](#detection-protocol)
+4. [Recovery Procedures](#recovery-procedures)
+5. [Prevention Best Practices](#prevention-best-practices)
+6. [Summary](#summary)
+
+---
+
 ## Overview
 
 During parallel S2 work, agents may crash, hang, or become unresponsive. The **Stale Agent Protocol** ensures:
@@ -428,7 +439,7 @@ AGENT_ID: xyz789
 - Confirmed EPIC_README.md updated
 - Feature 02 work can proceed
 
-**Next:** Complete S2.P2, signal when ready for S2.P3
+**Next:** Complete S2.P1 I3 Refinement & Alignment, then signal completion
 
 **Acknowledge:** No action needed
 ```

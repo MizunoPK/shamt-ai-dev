@@ -343,7 +343,7 @@ grep -rn "\bS5[a-e]\b" stages --include="*.md" | wc -l
 6. Apply chosen fix immediately
 
 **Decision Framework:**
-```text
+~~~text
 Issue requires investigation
   ↓
 Read files, analyze context (15-30 min)
@@ -351,7 +351,7 @@ Read files, analyze context (15-30 min)
   │   └─ YES → Apply fix immediately
   └─ Still uncertain?
       └─ ASK USER with analysis + options
-```
+~~~
 
 **Examples of Investigation (DO THIS):**
 
@@ -401,11 +401,11 @@ Read files, analyze context (15-30 min)
 ```json
 
 **❌ NEVER DO THIS:**
-```text
+~~~text
 "Issue X requires file reading → Defer to Round 3"
 "Issue Y requires 12 hours → Defer to post-audit"
 "Issue Z is complex → Mark for later"
-```
+~~~
 
 **✅ ALWAYS DO THIS:**
 ```text

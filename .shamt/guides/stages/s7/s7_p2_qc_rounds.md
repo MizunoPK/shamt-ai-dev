@@ -224,7 +224,7 @@ VALIDATION COMPLETE → Proceed to S7.P3 (Final Review)
 
 ## Round 2 (Reverse Review)
 ...
-```text
+~~~text
 
 **Time Savings:** 60-180 min per bug (no restart overhead)
 
@@ -516,6 +516,17 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 **If any criterion unchecked:** Complete missing items before proceeding
 
 ---
+
+## Next Phase
+
+**After completing S7.P2 (3 consecutive clean rounds), proceed to:**
+- **Phase:** S7.P3 — Final Review
+- **Guide:** `stages/s7/s7_p3_final_review.md`
+
+**See also:**
+- `stages/s7/s7_p1_smoke_testing.md` — S7.P1 (Smoke Testing, must pass before QC rounds)
+- `reference/validation_loop_s7_feature_qc.md` — Full validation loop protocol for S7
+
 ---
 
 **END OF STAGE S7.P2 GUIDE**

@@ -69,7 +69,7 @@ For each guide affected:
 1. **STOP immediately** — do not attempt to resolve autonomously
 2. Present the conflict clearly to the user:
 
-```
+```text
 CONFLICT FOUND in [guide path]
 
 Master changelog proposes:

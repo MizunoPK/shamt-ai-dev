@@ -60,7 +60,7 @@ Epic Cleanup is the final stage where you commit all changes, verify documentati
 - ✅ CLAUDE.md updated if workflow changes made
 
 **Time Estimate:**
-Epic cleanup typically takes 15-30 minutes.
+Epic cleanup typically takes 85-130 minutes (including S10.P1 guide updates). Without guide updates, approximately 40-60 minutes.
 
 **Critical Success Factors:**
 1. Run unit tests BEFORE committing (100% pass required)

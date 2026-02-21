@@ -498,9 +498,9 @@ AssignmentBatchResponseVO already uses String for beginDateTime/endDateTime fiel
 
 ---
 
-## Next Stage
+## Per-Feature Continuation
 
-**After completing Validation Phase:**
+**After completing Validation Phase for this feature:**
 
 → **Proceed to:** stages/s2/s2_p3_refinement.md
 
@@ -538,6 +538,17 @@ AssignmentBatchResponseVO already uses String for beginDateTime/endDateTime fiel
 - Fewer implementation surprises (validated against codebase)
 - Better alignment with existing patterns
 - More complete requirements before implementation
+
+---
+
+## Next Phase
+
+**After completing S2.P2.5 for all features, proceed to:**
+- **Stage:** S3 — Epic Planning Approval
+- **Guide:** `stages/s3/s3_epic_planning_approval.md`
+
+**See also:**
+- `stages/s2/s2_p1_spec_creation_refinement.md` — Primary S2 guide (spec creation)
 
 ---
 

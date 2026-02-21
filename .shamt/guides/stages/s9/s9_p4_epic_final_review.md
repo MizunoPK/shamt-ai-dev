@@ -1,5 +1,4 @@
-# S9: Epic-Level Final QC
-## S9.P4: Epic Final Review
+# S9.P4: Epic Final Review
 
 **Part of:** Epic-Driven Development Workflow v2
 **Prerequisites:** S9.P3 complete (User Testing passed with ZERO bugs)
@@ -14,7 +13,7 @@
 1. [S9.P4: Epic Final Review](#s9p4-epic-final-review)
 2. [🚨 MANDATORY READING PROTOCOL](#-mandatory-reading-protocol)
 3. [Quick Start](#quick-start)
-4. [Critical Rules for S9.P3](#critical-rules-for-s9p3)
+4. [Critical Rules for S9.P4](#critical-rules-for-s9p4)
 5. [Prerequisites](#prerequisites)
 6. [STEP 6: Epic PR Review (Multi-Round with Fresh Eyes)](#step-6-epic-pr-review-multi-round-with-fresh-eyes)
 7. [STEP 7: Handle Issues (If Any Discovered)](#step-7-handle-issues-if-any-discovered)
@@ -24,7 +23,6 @@
 11. [Reference Files](#reference-files)
 12. [Prerequisites for Next Stage](#prerequisites-for-next-stage)
 13. [Summary](#summary)
-14. [Exit Criteria](#exit-criteria)
 
 ---
 ## 🚨 MANDATORY READING PROTOCOL
@@ -156,11 +154,11 @@ Prerequisites Met?
 
 ---
 
-## Critical Rules for S9.P3
+## Critical Rules for S9.P4
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
-│ CRITICAL RULES - S9.P3 (Epic Final Review)               │
+│ CRITICAL RULES - S9.P4 (Epic Final Review)               │
 └─────────────────────────────────────────────────────────────┘
 
 1. ⚠️ Epic-level PR review focuses on CROSS-FEATURE concerns
@@ -304,7 +302,7 @@ S9.P2's 12-dimension validation provides strong coverage of many PR review categ
 
 **This is NOT feature-level review:**
 - S7 (Testing & Review) already reviewed individual feature correctness
-- S9.P3 reviews EPIC-WIDE concerns:
+- S9.P4 reviews EPIC-WIDE concerns:
   - Architectural consistency ACROSS features
   - Code duplication BETWEEN features
   - Cross-feature integration quality
@@ -519,9 +517,9 @@ Mark S9 complete, including:
 
 **Step 8.3: Update epic_lessons_learned.md**
 
-**See:** Template 9 (S9.P3 Lessons Learned)
+**See:** Template 9 (S9.P4 Lessons Learned)
 
-Add S9.P3 insights:
+Add S9.P4 insights:
 - What went well
 - What could be improved
 - Issues found & resolved
@@ -534,8 +532,8 @@ Add S9.P3 insights:
 
 **See:** Template 10 (Agent Status Update)
 
-Mark S9.P3 complete and prepare for S10:
-- Current stage: S9.P3
+Mark S9.P4 complete and prepare for S10:
+- Current stage: S9.P4
 - Status: COMPLETE
 - S9 summary (all parts, results)
 - Next stage: stages/s10/s10_epic_cleanup.md
@@ -543,14 +541,14 @@ Mark S9.P3 complete and prepare for S10:
 
 **Step 8.5: Completion Indicator**
 
-**S9.P3 is COMPLETE when ALL of these are true:**
+**S9.P4 is COMPLETE when ALL of these are true:**
 - ✅ All 3 steps finished (6, 7, 8)
 - ✅ Epic PR review passed (all 11 categories)
 - ✅ All issues resolved (bug fixes complete OR no issues found)
 - ✅ No pending issues or bug fixes
 - ✅ EPIC_README.md Epic Progress Tracker updated
-- ✅ epic_lessons_learned.md updated with S9.P3 insights
-- ✅ EPIC_README.md Agent Status shows S9.P3 complete
+- ✅ epic_lessons_learned.md updated with S9.P4 insights
+- ✅ EPIC_README.md Agent Status shows S9.P4 complete
 - ✅ All tests passing (100% pass rate)
 - ✅ Ready to proceed to S10
 
@@ -563,7 +561,7 @@ Mark S9.P3 complete and prepare for S10:
 **You MUST re-read this guide when:**
 
 ### 1. After Session Compaction
-- Conversation compacted while in S9.P3
+- Conversation compacted while in S9.P4
 - Re-read to restore context
 - Check EPIC_README.md Agent Status to see which step you're on
 - Continue from documented checkpoint
@@ -600,7 +598,7 @@ Mark S9.P3 complete and prepare for S10:
 
 ## Completion Criteria
 
-**S9.P3 is COMPLETE when ALL of the following are true:**
+**S9.P4 is COMPLETE when ALL of the following are true:**
 
 ### Epic PR Review (Step 6)
 - [ ] All 11 categories reviewed: ✅ PASSED
@@ -628,8 +626,8 @@ Mark S9.P3 complete and prepare for S10:
 - [ ] All issues resolved (no pending issues or bug fixes)
 - [ ] All unit tests passing (100% pass rate)
 - [ ] EPIC_README.md Epic Progress Tracker updated (S9 marked complete)
-- [ ] epic_lessons_learned.md updated with S9.P3 insights
-- [ ] EPIC_README.md Agent Status shows S9.P3 complete
+- [ ] epic_lessons_learned.md updated with S9.P4 insights
+- [ ] EPIC_README.md Agent Status shows S9.P4 complete
 
 ### Overall S9 Completion
 - [ ] S9.P1 complete (Epic Smoke Testing passed)
@@ -669,7 +667,7 @@ Mark S9.P3 complete and prepare for S10:
 
 **Before proceeding to S10 (Epic Cleanup), verify:**
 
-### S9.P3 Completion
+### S9.P4 Completion
 - [ ] STEP 6 (Epic PR Review) complete: All 11 categories PASSED
 - [ ] STEP 7 (Handle Issues) complete OR skipped (no issues)
 - [ ] STEP 8 (Final Verification) complete: All verification items checked
@@ -683,9 +681,9 @@ Mark S9.P3 complete and prepare for S10:
 - [ ] All bug fix folders (if any) show S7 (Testing & Review) complete
 
 ### Documentation Complete
-- [ ] epic_lessons_learned.md updated with S9.P3 insights
+- [ ] epic_lessons_learned.md updated with S9.P4 insights
 - [ ] EPIC_README.md Epic Progress Tracker shows S9 complete
-- [ ] EPIC_README.md Agent Status shows S9.P3 complete
+- [ ] EPIC_README.md Agent Status shows S9.P4 complete
 - [ ] PR review results documented
 
 ### Quality Gates Passed
@@ -703,7 +701,7 @@ Mark S9.P3 complete and prepare for S10:
 
 ## Summary
 
-**S9.P3 - Epic Final Review is the final validation before epic completion:**
+**S9.P4 - Epic Final Review is the final validation before epic completion:**
 
 **Key Activities:**
 1. **Epic PR Review (Step 6):** Apply 11-category checklist to epic-wide changes
@@ -723,7 +721,7 @@ Mark S9.P3 complete and prepare for S10:
 
 **Critical Distinctions:**
 - **Feature-level PR review (S7 (Testing & Review)):** Reviews individual features in isolation
-- **Epic-level PR review (S9.P3):** Reviews cross-feature consistency, architectural cohesion, epic scope
+- **Epic-level PR review (S9.P4):** Reviews cross-feature consistency, architectural cohesion, epic scope
 
 **Success Criteria:**
 - Epic PR review passed (all 11 categories)
@@ -744,23 +742,8 @@ Mark S9.P3 complete and prepare for S10:
 
 **See:** `reference/stage_9/epic_final_review_examples.md` for detailed examples of each mistake and best practices
 
-**Next Stage:** stages/s10/s10_epic_cleanup.md - Final commits, PR creation, user review, move epic to done/
+**Remember:** S9.P4 is the LAST CHANCE to catch epic-level issues before shipping. Thoroughness here prevents post-completion rework and ensures epic delivers on user's vision.
 
-**Remember:** S9.P3 is the LAST CHANCE to catch epic-level issues before shipping. Thoroughness here prevents post-completion rework and ensures epic delivers on user's vision.
-
-
-## Exit Criteria
-
-**S9.P4 (Epic Final Review) is complete when ALL of these are true:**
-
-- [ ] All review steps complete
-- [ ] Epic documentation verified
-- [ ] Ready to proceed to S10 (Epic Cleanup)
-
-**If any criterion unchecked:** Complete missing items before proceeding
-
----
----
 
 ## Next Stage
 

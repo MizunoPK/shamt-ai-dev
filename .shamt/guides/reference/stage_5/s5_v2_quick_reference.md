@@ -28,7 +28,7 @@
 | **D1** | Requirements Completeness | All spec items covered | Every requirement has implementation tasks |
 | **D2** | Interface & Dependency Verification | Integration points correct | Verify all imports, method signatures, data contracts |
 | **D3** | Algorithm Traceability | Logic implementation | Map each algorithm step to implementation tasks |
-| **D4** | Task Specification Quality | Implementation clarity | Each task has clear what/how/output (Gate 3a) |
+| **D4** | Task Specification Quality | Implementation clarity | Each task has clear what/how/output (Gate 4a) |
 | **D5** | Data Flow & Consumption | Data transformation path | Track data from input → processing → output |
 | **D6** | Error Handling & Edge Cases | Robustness coverage | Identify failure modes, validation, boundary cases |
 | **D7** | Integration & Compatibility | Cross-feature coherence | Check for conflicts with existing features |
@@ -49,7 +49,7 @@
 | I1 | `s5_p1_i1_requirements.md` | Requirements coverage | **D1** | Requirements Completeness |
 | I2 | `s5_p1_i2_algorithms.md` | Algorithm mapping | **D3** | Algorithm Traceability |
 | I3 | `s5_p1_i3_integration.md` | Interface verification | **D2** | Interface & Dependency Verification |
-| I4 (Gate 4a) | Embedded in I2 | TODO specification | **D4** | Task Specification Quality (Gate 3a) |
+| I4 (Gate 4a) | Embedded in I2 | TODO specification | **D4** | Task Specification Quality (Gate 4a) |
 | I5 | `s5_p1_i3_iter5_dataflow.md` | Data transformations | **D5** | Data Flow & Consumption |
 | I5a | `s5_p1_i3_iter5a_downstream.md` | Data consumers | **D5** | Data Flow & Consumption |
 | I6 | `s5_p1_i3_iter6_errorhandling.md` | Error scenarios | **D6** | Error Handling & Edge Cases |
@@ -96,7 +96,7 @@
 ## Common Mappings (Quick Lookup)
 
 **Looking for Gates?**
-- Gate 3a (TODO spec) → Dimension 4
+- Gate 4a (TODO spec) → Dimension 4
 - Gate 7a (Compatibility) → Dimension 7
 - Gate 23a (Spec audit) → Dimension 11
 - Gate 24 (GO/NO-GO) → Dimension 10
@@ -116,7 +116,7 @@
 
 **Looking for task quality checks?**
 - See Dimension 4 (Task Specification Quality)
-- Embeds Gate 3a checks
+- Embeds Gate 4a checks
 
 ---
 

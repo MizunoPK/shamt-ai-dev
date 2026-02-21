@@ -10,6 +10,20 @@
 
 ---
 
+## Table of Contents
+
+- [When to Use This Protocol vs Debugging Protocol](#when-to-use-this-protocol-vs-debugging-protocol)
+- [Mandatory Reading Protocol](#mandatory-reading-protocol)
+- [Quick Start](#quick-start)
+- [Critical Rules](#critical-rules)
+- [Missed Requirement Handling Phases (Overview)](#missed-requirement-handling-phases-overview)
+- [File Structure](#file-structure)
+- [Which Phase Should I Use?](#which-phase-should-i-use)
+- [Common Scenarios](#common-scenarios)
+- [Summary](#summary)
+
+---
+
 ## 🔀 When to Use This Protocol vs Debugging Protocol
 
 **Use MISSED REQUIREMENT PROTOCOL when:**

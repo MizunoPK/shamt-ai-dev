@@ -48,7 +48,7 @@ I'm reading `stages/s2/s2_feature_deep_dive.md` to ensure I follow the complete 
 **🚨 If parallelization was NOT assessed and epic has 2+ features:**
 STOP - Return to S1 Step 5.8-5.9 before proceeding with S2.
 
-**I'll now proceed with Phase 1 (Targeted Research for THIS feature only)...**
+**I'll now proceed with S2.P1.I1 (Feature-Level Discovery for THIS feature only)...**
 
 **Updating feature README Agent Status:**
 - Current Phase: PLANNING
@@ -57,25 +57,25 @@ STOP - Return to S1 Step 5.8-5.9 before proceeding with S2.
 - Critical Rules: "NEVER assume - confirm with user first", "Targeted research only", "ONE question at a time", "Only confirmed info in spec.md", "Checklist all [x] required"
 - Next Action: Begin targeted research for {feature_name}
 
-Starting Phase 1...
+Starting S2.P1.I1...
 ```
 
 ---
 
-## User Checklist Approval (Gate 2 - 🚨 MANDATORY)
+## User Checklist Approval (Gate 3 - 🚨 MANDATORY)
 
-**User says:** Agent detects Phase 2.5 complete (Spec-to-Epic Alignment Check PASSED) OR user asks "what's in the checklist?"
+**User says:** Agent detects S2.P1.I3 complete (Spec-to-Epic Alignment Check PASSED) OR user asks "what's in the checklist?"
 
-**Prerequisite:** Phase 2.5 (Spec-to-Epic Alignment Check) PASSED, checklist.md created with questions
+**Prerequisite:** S2.P1.I3 (Spec-to-Epic Alignment Check) PASSED, checklist.md created with questions
 
 **🚨 MANDATORY CHECKPOINT - USER MUST ANSWER ALL CHECKLIST QUESTIONS BEFORE PROCEEDING**
 
 **Agent MUST respond:**
 
 ```bash
-Phase 2.5 (Spec-to-Epic Alignment Check) has passed. I've created checklist.md with {N} questions that need your input before we can proceed to implementation planning.
+S2.P1.I3 (Spec-to-Epic Alignment Check) has passed. I've created checklist.md with {N} questions that need your input before we can proceed to implementation planning.
 
-**This is Gate 2 (User Checklist Approval) - a mandatory checkpoint to ensure you see all uncertainties before implementation.**
+**This is Gate 3 (User Checklist Approval) - a mandatory checkpoint to ensure you see all uncertainties before implementation.**
 
 **Checklist Summary:**
 - Functional Questions: {count}
@@ -129,7 +129,7 @@ Updated checklist.md: Question {Q#} marked [x] with your answer documented
 {If all questions answered:}
 All {N} questions answered! ✅
 
-Gate 2 (User Checklist Approval) status: ✅ PASSED
+Gate 3 (User Checklist Approval) status: ✅ PASSED
 
 I'm documenting your approval in checklist.md...
 

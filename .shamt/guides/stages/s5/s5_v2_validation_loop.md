@@ -59,14 +59,7 @@
 1. [📊 TRACKING & DOCUMENTATION](#-tracking-documentation)
    - [Update Agent Status](#update-agent-status)
    - [Validation Loop Log](#validation-loop-log)
-1. [🎓 LESSONS LEARNED & BEST PRACTICES](#-lessons-learned-best-practices)
-   - [Best Practice 1: Trust the Process](#best-practice-1-trust-the-process)
-   - [Best Practice 2: Fresh Eyes Are Critical](#best-practice-2-fresh-eyes-are-critical)
-   - [Best Practice 3: Conservative Issue Flagging](#best-practice-3-conservative-issue-flagging)
-   - [Best Practice 4: One Dimension Can Affect Others](#best-practice-4-one-dimension-can-affect-others)
-   - [Best Practice 5: Use Different Reading Patterns](#best-practice-5-use-different-reading-patterns)
 1. [📚 REFERENCE](#-reference)
-1. [Summary](#summary)
 
 ---
 
@@ -559,7 +552,7 @@ Each round follows this pattern:
 
 ---
 
-#### **Dimension 4: Task Specification Quality** (EMBEDS Gate 3a)
+#### **Dimension 4: Task Specification Quality** (EMBEDS Gate 4a)
 
 **What to Check:**
 - [ ] Every task has requirement reference (which spec section)
@@ -727,14 +720,14 @@ Each round follows this pattern:
 
 ---
 
-#### **Dimension 11: Spec Alignment & Cross-Validation** (EMBEDS Gate 12a)
+#### **Dimension 11: Spec Alignment & Cross-Validation** (EMBEDS Gates 23a, 25)
 
 **What to Check:**
 - [ ] spec.md validated against epic notes (no contradictions)
 - [ ] spec.md validated against EPIC_TICKET.md (all epic requirements reflected)
 - [ ] spec.md validated against SPEC_SUMMARY.md (summary matches detail)
 - [ ] Zero discrepancies found
-- [ ] **Cross-Dimension Validation (Gate 12a):**
+- [ ] **Cross-Dimension Validation (see Gate 24 in D10):**
   - All dimensions 1-10 have passed (no outstanding issues)
   - All evidence artifacts present in implementation_plan.md
   - Plan is implementation-ready (confidence >= MEDIUM)
@@ -1224,69 +1217,7 @@ Next: Present implementation_plan.md to user (Gate 5)
 
 ### Validation Loop Log
 
-**Use template:** `VALIDATION_LOOP_LOG_S5_template.md`
-
-**Track for each round:**
-- Timestamp
-- Reading pattern used
-- Issues found (by dimension)
-- Fixes applied
-- Clean count status
-- Next action
-
-**Why this matters:** If session interrupted, log shows exactly where to resume.
-
----
-
-## 🎓 LESSONS LEARNED & BEST PRACTICES
-
-### Best Practice 1: Trust the Process
-
-**Lesson:** If you find 15 issues in Round 1, don't panic. This is normal and expected.
-
-**Why:** Draft was only 70% quality. Validation loop designed to systematically find and fix all issues.
-
-**Action:** Fix all 15 issues, continue to Round 2. Issues will decrease each round.
-
----
-
-### Best Practice 2: Fresh Eyes Are Critical
-
-**Lesson:** Taking a 2-5 minute break between rounds significantly improves issue detection.
-
-**Why:** Mental model from previous round creates blind spots. Break clears the model.
-
-**Action:** Actually take the break. Don't rush. Quality > speed.
-
----
-
-### Best Practice 3: Conservative Issue Flagging
-
-**Lesson:** When in doubt, flag it as an issue. Better to over-flag than under-flag.
-
-**Why:** If it's not really an issue, next round will be clean anyway. If it IS an issue and you skip it, you might never catch it.
-
-**Action:** Assume everything is wrong until proven right.
-
----
-
-### Best Practice 4: One Dimension Can Affect Others
-
-**Lesson:** Fixing issue in Dimension 3 (Algorithms) might create issue in Dimension 7 (Integration).
-
-**Why:** Dimensions are interconnected. That's why we validate ALL dimensions EVERY round.
-
-**Action:** Never assume fixing one dimension won't affect others. Always re-validate everything.
-
----
-
-### Best Practice 5: Use Different Reading Patterns
-
-**Lesson:** Reading the same way every round causes pattern blindness. Vary the pattern.
-
-**Why:** Forward reading catches some issues, reverse reading catches others, spot-checks catch still others.
-
-**Action:** Follow suggested reading patterns for each round (sequential, reverse, spot-check, etc.)
+Use `VALIDATION_LOOP_LOG_S5_template.md` to track each round: timestamp, reading pattern, issues found (by dimension), fixes applied, clean count, next action. If session interrupted, log shows exactly where to resume.
 
 ---
 
@@ -1298,24 +1229,19 @@ Next: Present implementation_plan.md to user (Gate 5)
 - `templates/implementation_plan_template.md` - Starting template
 - `templates/VALIDATION_LOOP_LOG_S5_template.md` - Tracking template
 
-**Next Stage:**
-- After Gate 5 approval: `stages/s6/s6_execution.md`
+---
+
+## Next Phase
+
+**After completing S5 (Implementation Planning):**
+
+- Gate 5 approval received from user
+- Implementation plan finalized and user-approved
+- Proceed to: `stages/s6/s6_execution.md` (Implementation Execution)
+
+**See also:** `prompts_reference_v2.md` → "Starting S6" prompt
 
 ---
 
-## Summary
-
-**S5 v2 Validation Loop:**
-- **Extends:** Master Validation Loop Protocol (7 universal dimensions)
-- **Adds:** 11 implementation planning-specific dimensions
-- **Total:** 18 dimensions checked every round
-- **Process:** 3 consecutive clean rounds required
-- **Time:** 4.5-7 hours (draft + validation + user approval)
-- **Quality:** 99%+ implementation-ready plan
-
-**Key Principle:**
-> "Every implementation plan must be validated against both universal quality dimensions (empirical verification, completeness, consistency, traceability, clarity, alignment, standards) AND implementation-specific dimensions (requirements coverage, interface verification, algorithm traceability, task quality, data flow, error handling, integration, test coverage, performance, implementation readiness, spec alignment) before proceeding to execution."
-
----
 
 **This guide is complete and ready for use. Begin with Phase 1: Draft Creation when S4 is complete and spec.md is finalized.**

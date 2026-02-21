@@ -171,17 +171,17 @@ S6 is complete when all implementation tasks from implementation_plan.md are imp
 │            STAGE 6 WORKFLOW (Implementation Execution)       │
 └──────────────────────────────────────────────────────────────┘
 
-Step 1: Create Implementation Checklist (MANDATORY FIRST)
-   ├─ Extract all tasks from implementation_plan.md
-   ├─ Create checklist in implementation_checklist.md
-   ├─ Link each requirement to implementation task
-   └─ ⚠️ DO NOT PROCEED TO STEP 2 WITHOUT THIS FILE CREATED
-
-Step 2: Interface Verification Protocol
+Step 1: Interface Verification Protocol (MANDATORY FIRST)
    ├─ Read ALL external dependency source code
    ├─ Copy-paste exact method signatures
    ├─ Document verified interfaces
    └─ Create interface contract table
+
+Step 2: Create Implementation Checklist
+   ├─ Extract all tasks from implementation_plan.md
+   ├─ Create checklist in implementation_checklist.md
+   ├─ Link each requirement to implementation task
+   └─ ⚠️ DO NOT PROCEED TO STEP 3 WITHOUT THIS FILE CREATED
 
 Step 3: Phase-by-Phase Implementation
    ├─ For EACH phase (from implementation_plan.md "Implementation Phasing"):

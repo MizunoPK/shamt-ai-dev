@@ -7,6 +7,16 @@
 
 ---
 
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Sync Point 1: S2 → S3](#sync-point-1-s2--s3-all-agents-complete-s2)
+3. [Sync Point 2: S4 → S5](#sync-point-2-s4--s5-primary-completes-s3s4)
+4. [Prevention Best Practices](#prevention-best-practices)
+5. [Summary](#summary)
+
+---
+
 ## Overview
 
 During parallel S2 work, agents must synchronize at specific points:
@@ -81,9 +91,9 @@ The **Sync Timeout Protocol** handles scenarios where agents don't reach sync po
 
 | Agent | Feature | STATUS | Checkpoint Stage | Completion Message | Ready? |
 |-------|---------|--------|------------------|-------------------|--------|
-| Primary | Feature 01 | COMPLETE | S2.P3 | N/A (self) | YES |
-| Secondary-A | Feature 02 | COMPLETE | S2.P3 | Received 14:00 | YES |
-| Secondary-B | Feature 03 | IN_PROGRESS | S2.P3 | Not received | NO |
+| Primary | Feature 01 | COMPLETE | S2.P1 | N/A (self) | YES |
+| Secondary-A | Feature 02 | COMPLETE | S2.P1 | Received 14:00 | YES |
+| Secondary-B | Feature 03 | IN_PROGRESS | S2.P1 | Not received | NO |
 
 **Step 2: Identify Blockers**
 
@@ -118,12 +128,12 @@ BLOCKERS: Waiting for user answer to Question 8
 - Feature 03 (Secondary-B): IN_PROGRESS (you)
 
 **Your Status:**
-- Current stage: S2.P3
+- Current stage: S2.P1
 - Last checkpoint: 2026-01-17 14:25 (5 min ago) - ACTIVE
 - Blockers: {from STATUS file}
 
 **Next Steps:**
-1. Provide ETA for S2.P3 completion
+1. Provide ETA for S2.P1 completion
 2. If blocked, escalate immediately (don't wait)
 3. If need help, request assistance
 

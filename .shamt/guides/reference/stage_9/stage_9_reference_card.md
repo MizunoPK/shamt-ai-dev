@@ -323,7 +323,7 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 - [ ] Original epic goals validated and achieved
 - [ ] Ready to proceed to S10 (Epic Cleanup)
 
-**Next Stage:** S10 (Epic Cleanup) - user testing, commit, archive
+**Next Stage:** S10 (Epic Cleanup) - unit tests, guide updates, commit, archive
 
 ---
 

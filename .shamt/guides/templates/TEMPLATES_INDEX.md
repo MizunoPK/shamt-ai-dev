@@ -1,6 +1,6 @@
 # Templates Index
 
-**Last Updated:** 2026-01-02
+**Last Updated:** 2026-02-20
 **Location:** `.shamt/guides/templates/`
 
 ---
@@ -28,22 +28,67 @@
 | Template | Filename | Use When |
 |----------|----------|----------|
 | [Feature README](#feature-readme) | `feature_readme_template.md` | Creating feature folder |
+| [Feature Research Notes](#feature-research-notes) | `FEATURE_RESEARCH_NOTES_template.md` | Recording feature-level research during Discovery Phase (S2.P1.I1) |
 | [Spec Summary](#spec-summary) | `spec_summary_template.md` | Validating feature understanding (Phase 6) |
 | [Feature Spec](#feature-spec) | `feature_spec_template.md` | Writing detailed feature specification |
 | [Feature Checklist](#feature-checklist) | `feature_checklist_template.md` | Tracking feature decisions |
 | [Feature Lessons Learned](#feature-lessons-learned) | `feature_lessons_learned_template.md` | Creating feature-level lessons document |
+
+### S3: Cross-Feature Alignment
+
+| Template | Filename | Use When |
+|----------|----------|----------|
+| [Cross-Feature Sanity Check](#cross-feature-sanity-check) | `cross_feature_sanity_check_template.md` | Comparing features for conflicts or duplications during S3 review |
+
+### S4: Feature Testing Strategy
+
+| Template | Filename | Use When |
+|----------|----------|----------|
+| [Feature Test Strategy](#feature-test-strategy) | `feature_test_strategy_template.md` | Creating test strategy before implementation (>90% coverage goal) |
 
 ### S5: TODO Creation (Implementation Planning)
 
 | Template | Filename | Use When |
 |----------|----------|----------|
 | [Implementation Plan](#implementation-plan) | `implementation_plan_template.md` | Creating user-approved build guide through S5 v2 Validation Loop |
+| [Validation Loop Log (S5)](#validation-loop-log-s5) | `VALIDATION_LOOP_LOG_S5_template.md` | Tracking S5 implementation planning validation loop progress |
 
 ### S6: Implementation Execution
 
 | Template | Filename | Use When |
 |----------|----------|----------|
 | [Implementation Checklist](#implementation-checklist) | `implementation_checklist_template.md` | Tracking progress during implementation |
+
+### S7: Testing & Review
+
+| Template | Filename | Use When |
+|----------|----------|----------|
+| [PR Review Issues](#pr-review-issues) | `pr_review_issues_template.md` | Tracking issues found during PR review |
+
+### S10: Epic Cleanup
+
+| Template | Filename | Use When |
+|----------|----------|----------|
+| [Guide Update Proposal](#guide-update-proposal) | `guide_update_proposal_template.md` | Proposing guide improvements discovered during epic work (SHAMT-{N} format) |
+| [PR Review Issues](#pr-review-issues) | `pr_review_issues_template.md` | Tracking issues found during PR review (also used in S7) |
+
+### Parallel Work
+
+| Template | Filename | Use When |
+|----------|----------|----------|
+| [Handoff Package (S2)](#handoff-package-s2) | `handoff_package_s2_template.md` | Creating handoff package for secondary agents in parallel S2 work |
+
+### Debugging
+
+| Template | Filename | Use When |
+|----------|----------|----------|
+| [Debugging Guide Update Recommendations](#debugging-guide-updates) | `debugging_guide_update_recommendations_template.md` | Documenting guide update recommendations from debugging sessions |
+
+### General / Multi-Stage
+
+| Template | Filename | Use When |
+|----------|----------|----------|
+| [Validation Loop Log](#validation-loop-log) | `VALIDATION_LOOP_LOG_template.md` | Tracking validation loop progress for any stage |
 
 ### Bug Fix Workflow
 
@@ -166,6 +211,73 @@
 
 ---
 
+### Additional Workflow Files
+
+#### Feature Research Notes
+- **File:** `FEATURE_RESEARCH_NOTES_template.md`
+- **Created:** S2.P1.I1 (Feature-Level Discovery)
+- **Purpose:** Recording feature-level research findings during the discovery phase; source of truth for research before spec writing
+- **Size:** ~367 lines
+- **When to use:** S2.P1.I1 discovery phase for each feature
+
+#### Feature Test Strategy
+- **File:** `feature_test_strategy_template.md`
+- **Created:** S4
+- **Purpose:** Planning unit tests, integration tests, edge cases, and config scenarios with >90% coverage goal before implementation
+- **Size:** ~259 lines
+- **When to use:** S4 start (creates `test_strategy.md` in feature folder)
+
+#### Cross-Feature Sanity Check
+- **File:** `cross_feature_sanity_check_template.md`
+- **Created:** S3
+- **Purpose:** Comparing features for conflicts, duplications, or integration gaps during S3 cross-feature review
+- **Size:** ~75 lines
+- **When to use:** S3 cross-feature review before epic plan approval
+
+#### Validation Loop Log (S5)
+- **File:** `VALIDATION_LOOP_LOG_S5_template.md`
+- **Created:** S5 (start of Validation Loop)
+- **Purpose:** Tracking S5 implementation planning validation loop progress across all 11 dimensions and consecutive clean rounds
+- **Size:** ~205 lines
+- **When to use:** S5 Validation Loop initialization
+
+#### Validation Loop Log
+- **File:** `VALIDATION_LOOP_LOG_template.md`
+- **Created:** Any stage requiring a validation loop
+- **Purpose:** General-purpose validation loop tracking for QC rounds in any stage
+- **Size:** ~205 lines
+- **When to use:** Any stage validation loop (non-S5)
+
+#### PR Review Issues
+- **File:** `pr_review_issues_template.md`
+- **Created:** S7 or S10 PR review
+- **Purpose:** Tracking issues found during PR review with priority classification (P0/P1/P2)
+- **Size:** ~175 lines
+- **When to use:** S7.P3 Final Review or S10 PR creation
+
+#### Guide Update Proposal
+- **File:** `guide_update_proposal_template.md`
+- **Created:** S10 (S10.P1 Guide Updates)
+- **Purpose:** Proposing guide improvements discovered during epic work, using SHAMT-{N} numbering format
+- **Size:** ~257 lines
+- **When to use:** S10.P1 when creating guide update proposals
+
+#### Debugging Guide Update Recommendations
+- **File:** `debugging_guide_update_recommendations_template.md`
+- **Created:** During or after debugging sessions
+- **Purpose:** Documenting guide update recommendations with P0/P1/P2 priority classification from debugging insights
+- **Size:** ~280 lines
+- **When to use:** Debugging Protocol Step 5 (Root Cause Analysis) when guide improvements are identified
+
+#### Handoff Package (S2)
+- **File:** `handoff_package_s2_template.md`
+- **Created:** S2 parallel work setup (Primary Agent)
+- **Purpose:** Handoff package for secondary agents in parallel S2 work; contains context, epic info, and feature assignment
+- **Size:** ~242 lines
+- **When to use:** Parallel S2 work — Primary Agent creates one per secondary agent
+
+---
+
 ## How to Use Templates
 
 ### Step 1: Find the Right Template
@@ -215,6 +327,7 @@ Read .shamt/guides/templates/{template_name}.md
 | Feature Test Strategy | ~259 | No | No |
 | Handoff Package (S2) | ~242 | No | No |
 | Validation Loop Log | ~205 | No | No |
+| Validation Loop Log (S5) | ~411 | No | No |
 | PR Review Issues | ~175 | No | No |
 | Guide Update Proposal | ~257 | No | No |
 | Debugging Guide Updates | ~280 | No | No |
@@ -233,7 +346,7 @@ Read .shamt/guides/templates/{template_name}.md
 1. Create epic folder
 2. Use **Epic README** template
 3. Use **Discovery** template (S1.P3 - mandatory Discovery Phase)
-4. Complete Discovery Loop until no new questions
+4. Complete Discovery Loop (exit after 3 consecutive clean rounds with zero issues/gaps)
 5. Get user approval of Discovery findings
 6. Create feature breakdown (based on Discovery)
 7. Use **Epic Ticket** template (get user validation)

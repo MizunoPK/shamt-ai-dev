@@ -92,7 +92,7 @@ S1 is complete when you have Discovery approved, a validated epic ticket, comple
    - See: stages/s1/s1_p3_discovery_phase.md
 
 3. DISCOVERY LOOP UNTIL 3 CONSECUTIVE CLEAN ITERATIONS
-   - Continue iterating until 3 consecutive iterations produce no questions
+   - Continue iterating until 3 consecutive iterations produce zero new issues or gaps
    - Re-read code/requirements with fresh perspective each iteration
    - User answers questions throughout (not just at end)
    - All findings go in DISCOVERY.md
@@ -150,10 +150,10 @@ S1 is complete when you have Discovery approved, a validated epic ticket, comple
 - **Impact:** Determines branch name format and EPIC_TRACKER classification
 
 ### Decision Point 2: Discovery Loop Exit (Step 3 - S1.P3.2)
-**Question:** Have you completed 3 consecutive iterations with no new questions?
+**Question:** Have you completed 3 consecutive clean rounds with zero issues/gaps?
 - **If NO (counter < 3):** Continue Discovery Loop - re-read with fresh perspective
 - **If YES (counter = 3):** Verify exit readiness, proceed to synthesis
-- **Impact:** Premature exit (counter < 3) leads to incomplete understanding; need 3 consecutive clean iterations for high confidence
+- **Impact:** Premature exit (counter < 3) leads to incomplete understanding; need 3 consecutive clean rounds for high confidence
 
 ### Decision Point 3: Discovery Approval (Step 3 - S1.P3.4)
 **Question:** Does the user approve the Discovery findings and recommended approach?
@@ -223,7 +223,7 @@ Step 3: Discovery Phase (MANDATORY)
    |   +-- Document findings in DISCOVERY.md
    |   +-- Identify questions
    |   +-- Ask user, record answers
-   |   +-- Repeat until no new questions
+   |   +-- Repeat until 3 consecutive clean rounds (zero issues/gaps)
    +-- S1.P3.3: Synthesize findings
    |   +-- Compare solution options
    |   +-- Document recommended approach
@@ -308,7 +308,7 @@ Find the request file in `.shamt/epics/requests/` (check subfolders if needed). 
 
 Use template from `templates/` folder (see `templates/TEMPLATES_INDEX.md`) → "Epic README Template"
 
-Include Agent Status section with: Current Phase (EPIC_PLANNING), Current Step (Phase 1 complete), Current Guide, Critical Rules, Progress (1/5), Next Action (Phase 2).
+Include Agent Status section with: Current Phase (EPIC_PLANNING), Current Step (Step 1 complete), Current Guide, Critical Rules, Progress (1/5), Next Action (Step 2).
 
 ### Step 1.4: Update Agent Status
 
@@ -391,7 +391,7 @@ After Step 2:
 | MEDIUM (3-5 features) | 2-3 hours |
 | LARGE (6+ features) | 3-4 hours |
 
-**Exit Condition:** Discovery Loop exits when 3 CONSECUTIVE research iterations produce NO NEW QUESTIONS.
+**Exit Condition:** Discovery Loop exits when 3 CONSECUTIVE research iterations produce zero new issues or gaps.
 
 **Key Outputs:** DISCOVERY.md (source of truth), solution approach, scope definition, feature breakdown draft
 
@@ -1023,11 +1023,6 @@ I'll work through all {N} features one-by-one, starting with Feature 01.
    - Last Updated: [timestamp]
 4. [ ] Output acknowledgment: "✅ CHECKPOINT 1 COMPLETE: Re-read Discovery Phase section"
 
-**Why this checkpoint exists:**
-- 80% of agents skip re-reading and work from memory
-- Discovery Phase is complex and has specific exit conditions
-- Missing exit condition causes infinite loops or premature exits
-
 **ONLY after completing ALL 4 actions above, proceed to Step 3 (Discovery Phase)**
 
 ---
@@ -1047,11 +1042,6 @@ I'll work through all {N} features one-by-one, starting with Feature 01.
    - Last Updated: [timestamp]
 5. [ ] Output acknowledgment: "✅ CHECKPOINT 2 COMPLETE: Re-read Feature Breakdown section, verified Discovery approved"
 
-**Why this checkpoint exists:**
-- Feature breakdown must be grounded in Discovery findings
-- 60% of agents skip Discovery context when proposing features
-- Missing Discovery context causes misaligned feature scope
-
 **ONLY after completing ALL 5 actions above, proceed to Step 4 (Feature Breakdown)**
 
 ---
@@ -1069,11 +1059,6 @@ I'll work through all {N} features one-by-one, starting with Feature 01.
    - Current Step: "S1 Step 4 complete, starting S1 Step 5 (Epic Structure)"
    - Last Updated: [timestamp]
 4. [ ] Output acknowledgment: "✅ CHECKPOINT 3 COMPLETE: Re-read Epic Structure section, verified epic ticket validated"
-
-**Why this checkpoint exists:**
-- Epic structure creation has 9 substeps with specific requirements
-- 70% of agents miss required files when working from memory
-- Missing files cause workflow failures in later stages
 
 **ONLY after completing ALL 4 actions above, proceed to Step 5 (Epic Structure Creation)**
 
@@ -1098,11 +1083,6 @@ I'll work through all {N} features one-by-one, starting with Feature 01.
    - Last Updated: [timestamp]
 7. [ ] Output acknowledgment: "✅ CHECKPOINT 4 COMPLETE: Re-read Step 5, verified all files created"
 
-**Why this checkpoint exists:**
-- Epic structure has 15+ required files across epic and feature folders
-- 85% of agents miss at least one required file
-- Missing files block S2 transition and cause rework
-
 **ONLY after completing ALL 7 actions above, proceed to Step 6 (Final Verification)**
 
 ---
@@ -1122,11 +1102,6 @@ I'll work through all {N} features one-by-one, starting with Feature 01.
    - Current Step: "Ready to start S2.P1 for Feature 01"
    - Last Updated: [timestamp]
 5. [ ] Output acknowledgment: "✅ CHECKPOINT 5 COMPLETE: All S1 completion criteria verified, ready for S2"
-
-**Why this checkpoint exists:**
-- S1 completion criteria has 8 mandatory items
-- 90% of agents miss at least one item when not re-reading
-- Incomplete S1 blocks entire epic workflow
 
 **ONLY after completing ALL 5 actions above, proceed to S2**
 
@@ -1231,37 +1206,6 @@ X "I'll create a documentation feature to update README/ARCHITECTURE"
 
 ---
 
-## Guide Comprehension Verification
-
-**Before starting S1, answer these questions:**
-
-1. What must happen before proposing feature breakdown?
-   {Answer: Discovery Phase must complete with user approval}
-
-2. When does the Discovery Loop exit?
-   {Answer: When a research iteration produces NO new questions}
-
-3. What must happen before creating feature folders?
-   {Answer: User must approve Discovery, feature breakdown, AND epic ticket}
-
-4. What section must every feature spec.md start with?
-   {Answer: Discovery Context section referencing DISCOVERY.md}
-
-5. Is the epic_smoke_test_plan.md complete after S1?
-   {Answer: No, it's a placeholder that updates in S4 and S8.P2}
-
-6. When should you transition to S2?
-   {Answer: After ALL Step 6 completion criteria are met and Agent Status updated}
-
-7. What file is the epic-level source of truth for decisions?
-   {Answer: DISCOVERY.md}
-
-**Document your answers in EPIC_README.md notes** to prove guide comprehension.
-
-If you cannot answer these questions without re-reading the guide, you haven't read it carefully enough.
-
----
-
 ## Prerequisites for S2
 
 **Before transitioning:** Verify all S1 completion criteria met, EPIC_README.md updated for S2, no blockers.
@@ -1274,18 +1218,17 @@ If you cannot answer these questions without re-reading the guide, you haven't r
 
 **After completing S1:**
 
-**READ:** `stages/s2/s2_p1_spec_creation_refinement.md` (Research Phase - first of three phases)
-**GOAL:** Review Discovery Context, conduct feature-specific research, pass research audit
-**ESTIMATE:** 45-60 minutes (then continue with S2.P2 and S2.P3)
+**READ:** `stages/s2/s2_p1_spec_creation_refinement.md` (Spec Creation and Refinement — first of two phases)
+**GOAL:** Review Discovery Context, conduct feature-specific research, create spec, resolve checklist, get user approval (Gate 3)
+**ESTIMATE:** 2.25-4 hours per feature (3 iterations: I1, I2, I3)
 
-**S2 workflow (split into 3 phases):**
-- **S2.P1 (Research):** Review Discovery Context, feature-specific research, research audit
-- **S2.P2 (Specification):** Spec with traceability, alignment check (Steps 2-2.5)
-- **S2.P3 (Refinement):** Questions, scope, cross-feature alignment, user approval (Steps 3-6)
+**S2 workflow (split into 2 phases):**
+- **S2.P1 (Spec Creation and Refinement):** 3 iterations — I1 (Feature-Level Discovery + Gate 1), I2 (Checklist Resolution), I3 (Refinement & Alignment + Gate 2 + Gate 3)
+- **S2.P2 (Cross-Feature Alignment):** Pairwise comparison across all features (Primary agent only)
 
-**Note:** `stages/s2/s2_feature_deep_dive.md` is now a router that links to the 3 phase guides.
+**Note:** `stages/s2/s2_feature_deep_dive.md` is now a router that links to the 2 phase guides.
 
-**Key Change with Discovery:** S2.P1 Phase 0 now reviews Discovery Context from DISCOVERY.md instead of re-interpreting epic notes. Epic-level understanding is already captured in Discovery.
+**Key Change with Discovery:** S2.P1.I1 now reviews Discovery Context from DISCOVERY.md instead of re-interpreting epic notes. Epic-level understanding is already captured in Discovery.
 
 **Remember:** Use the phase transition prompt from `prompts_reference_v2.md` when starting S2.P1.
 

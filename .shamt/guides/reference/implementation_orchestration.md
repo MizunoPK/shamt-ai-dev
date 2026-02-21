@@ -8,6 +8,20 @@
 
 ---
 
+## Table of Contents
+
+1. [Feature Lifecycle Overview](#feature-lifecycle-overview)
+2. [S6: Implementation Execution](#s6-implementation-execution)
+3. [S7: Post-Implementation](#s7-post-implementation)
+4. [S8.P1: Post-Feature Alignment](#s8p1-post-feature-alignment)
+5. [S8.P2: Testing Plan Update](#s8p2-testing-plan-update)
+6. [Epic Progress Tracker Management](#epic-progress-tracker-management)
+7. [Common Decision Points](#common-decision-points)
+8. [Quick Checklist: "Where Am I?"](#quick-checklist-where-am-i)
+9. [Summary](#summary)
+
+---
+
 ## Feature Lifecycle Overview
 
 ```text

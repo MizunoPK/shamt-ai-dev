@@ -78,8 +78,8 @@
 |-------|------|----------|---------------|------------------|
 | S1 | None | - | User confirmation recommended | No |
 | S2 | Gate 1: Research Audit | S2.P1 | All 4 categories with evidence | Yes (Redo research) |
-| S2 | Gate 2: Spec Alignment | S2.P2 | Zero scope creep + zero missing | Yes (Revise spec) |
-| S2 | Gate 3: Checklist Approval | S2.P2 | User answers ALL questions (100%) | Yes (Revise/Re-present) |
+| S2 | Gate 2: Spec Alignment | S2.P1.I3 | Zero scope creep + zero missing | Yes (Revise spec) |
+| S2 | Gate 3: Checklist Approval | S2.P1.I3 | User answers ALL questions (100%) | Yes (Revise/Re-present) |
 | S3 | Gate 4.5: Epic Plan Approval | S3.P3 | User approves complete plan | Yes (S3) |
 | S5 | Gate 4a: Dimension 4 Validation | S5 v2 Validation Loop | All tasks have acceptance criteria | Yes (Fix + redo) |
 | S5 | Gate 7a: Backward Compatibility | S5 v2 Validation Loop | Compatibility strategy documented | Yes (Fix + redo) |
@@ -109,10 +109,10 @@
 
 ## S2: Feature Deep Dive (4 gates per feature - NEW: Checklist Approval added)
 
-### Gate 1: Phase 1.5 - Research Completeness Audit
+### Gate 1: S2.P1.I1 - Research Completeness Audit
 
 **Location:** stages/s2/s2_p1_spec_creation_refinement.md
-**When:** After completing targeted research (Phase 1)
+**When:** During S2.P1.I1 (Feature-Level Discovery), embedded in the Validation Loop
 
 **What it checks:**
 1. **Component Research:** Have you found the code components mentioned in epic?
@@ -131,19 +131,19 @@
 - Code snippets showing what you found
 
 **If FAIL:**
-- Return to Phase 1 (Targeted Research)
+- Return to S2.P1.I1 (Feature-Level Discovery) and continue research
 - Research the gaps identified
-- Re-run Phase 1.5 audit
-- Must PASS before proceeding to Phase 2
+- Re-run Research Completeness Audit
+- Must PASS before proceeding to S2.P1.I2
 
 **Why it matters:** Ensures research is thorough before writing spec (prevents spec based on assumptions)
 
 ---
 
-### Gate 2: Phase 2.5 - Spec-to-Epic Alignment Check
+### Gate 2: S2.P1.I3 - Spec-to-Epic Alignment Check
 
-**Location:** stages/s2/s2_p2_specification.md
-**When:** After updating spec.md and checklist.md (Phase 2)
+**Location:** stages/s2/s2_p1_spec_creation_refinement.md (S2.P1.I3)
+**When:** After completing I1 (Discovery) and I2 (Checklist Resolution), at iteration I3
 
 **What it checks:**
 1. **Scope Creep Detection:** Requirements in spec.md NOT in epic notes
@@ -161,8 +161,8 @@
 **If FAIL:**
 - Remove scope creep (delete extra requirements), OR
 - Add missing requirements (include what epic requested)
-- Re-run Phase 2.5 alignment check
-- Must PASS before proceeding to Phase 3
+- Re-run alignment check
+- Must PASS before Gate 3 (Checklist Approval)
 
 **Why it matters:** Prevents implementing features user didn't request (scope creep) or missing what they did request
 
@@ -170,7 +170,7 @@
 
 ### Gate 3: User Checklist Approval (🚨 NEW MANDATORY GATE)
 
-**Location:** stages/s2/s2_p2_specification.md (S2.P2)
+**Location:** stages/s2/s2_p1_spec_creation_refinement.md (S2.P1.I3)
 **When:** After Gate 2 (Spec-to-Epic Alignment Check) passes
 
 **What it checks:**
@@ -211,8 +211,8 @@
 
 ### Gate 4: User Approval (Acceptance Criteria)
 
-**Location:** stages/s2/s2_p3_refinement.md (S2.P3)
-**When:** After creating acceptance criteria
+**Location:** stages/s2/s2_p1_spec_creation_refinement.md (S2.P1.I3 — embedded in Gate 3)
+**When:** During S2.P1.I3, as part of Gate 3 (User Checklist Approval includes acceptance criteria review)
 
 **What it checks:**
 - User explicitly approves acceptance criteria
@@ -232,7 +232,7 @@
 
 ## S3: Cross-Feature Sanity Check (1 gate per epic)
 
-### Gate 1: User Sign-Off on Complete Epic Plan
+### Gate 4.5: Epic Plan Approval
 
 **Location:** stages/s3/s3_epic_planning_approval.md
 **When:** After all features planned and conflicts resolved
@@ -610,7 +610,7 @@
 
 **If FAIL:**
 - Fix issues
-- **Restart from S10.P1 Step 1** (Import Test)
+- **Restart from S7.P1 Step 1** (Import Test)
 - Must re-run all 3 parts
 
 **Why it matters:** Ensures feature actually works end-to-end with real data before Validation Loop
@@ -745,7 +745,7 @@
 - S10: 0 formal gates (but checkpoints 7.1 and 7.2 are critical)
 
 **Gates with Evidence Requirements:** 7
-- Phase 1.5: File paths, line numbers
+- Gate 1 (S2.P1.I1 Research Audit): File paths, line numbers
 - Dimension 4 validation: Task count, criteria count
 - Validation Round (multiple dimensions): 4 parts with specific numbers
 - Dimension 11 validation: Three-way comparison results
@@ -753,8 +753,8 @@
 - Validation Loop: 3 consecutive clean rounds
 
 **Gates with Restart Protocol:** 6
-- Phase 1.5 → Phase 1
-- Phase 2.5 → Phase 2
+- Gate 1 (S2.P1.I1) → Return to S2.P1.I1 research
+- Gate 2 (S2.P1.I3 Alignment) → Revise spec and re-check
 - Dimension 4 validation → Iteration 4
 - Validation Round (multiple dimensions) → Validation Round (multiple dimensions)
 - Smoke Part 3 → Smoke Part 1

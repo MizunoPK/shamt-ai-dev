@@ -9,6 +9,18 @@
 
 ---
 
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Overview](#overview)
+- [S3.P1: Epic Testing Strategy Development](#s3p1-epic-testing-strategy-development-45-60-min)
+- [S3.P2: Epic Documentation Refinement](#s3p2-epic-documentation-refinement-20-30-min)
+- [S3.P3: Epic Plan Approval](#s3p3-epic-plan-approval-10-15-min)
+- [Exit Criteria](#exit-criteria)
+- [Next: S4 (Feature Testing Strategy)](#next-s4-feature-testing-strategy)
+
+---
+
 ## Prerequisites
 
 **Before starting S3:**
@@ -281,7 +293,7 @@ Await user decision before proceeding.
 
 ---
 
-## Next: S4 (Feature Testing Strategy)
+## Next Stage
 
 **After S3 complete:**
 

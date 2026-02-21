@@ -1,19 +1,19 @@
-# STAGE 2b: Specification Phase - Detailed Examples
+# S2.P1: Spec Creation - Detailed Examples
 
 **Guide Version:** 1.0
 **Created:** 2026-01-10
-**Purpose:** Detailed examples and templates for Specification Phase execution
-**Prerequisites:** Read stages/s2/s2_p2_specification.md first
-**Main Guide:** stages/s2/s2_p2_specification.md
+**Purpose:** Detailed examples and templates for S2.P1 spec creation and alignment execution
+**Prerequisites:** Read stages/s2/s2_p1_spec_creation_refinement.md first
+**Main Guide:** stages/s2/s2_p1_spec_creation_refinement.md
 
 ---
 
 ## Table of Contents
 
 1. [Purpose](#purpose)
-2. [Phase 2 Examples: Spec & Checklist with Traceability](#phase-2-examples-spec--checklist-with-traceability)
-3. [Phase 2.5 Examples: Spec-to-Epic Alignment Check](#phase-25-examples-spec-to-epic-alignment-check)
-4. [Gate 2 Examples: User Checklist Approval](#gate-2-examples-user-checklist-approval)
+2. [S2.P1 Examples: Spec & Checklist with Traceability](#s2p1-examples-spec--checklist-with-traceability)
+3. [S2.P1.I3 Examples: Spec-to-Epic Alignment Check (Gate 2)](#s2p1i3-examples-spec-to-epic-alignment-check-gate-2)
+4. [Gate 3 Examples: User Checklist Approval](#gate-3-examples-user-checklist-approval)
 5. [Success Criteria Summary](#success-criteria-summary)
 
 ---
@@ -30,7 +30,7 @@ This reference provides detailed examples for executing Specification Phase (S2.
 
 ---
 
-## Phase 2 Examples: Spec & Checklist with Traceability
+## S2.P1 Examples: Spec & Checklist with Traceability
 
 ### Example 1: Components Affected Section (with sources)
 
@@ -96,7 +96,7 @@ This reference provides detailed examples for executing Specification Phase (S2.
    - **Source:** Derived requirement (all new features require tests)
    - **Traceability:** Standard practice (100% test coverage required per project standards)
    - **Purpose:** Test rank multiplier calculation and integration
-   - **Pattern:** Follow test_RecordManager_scoring.py structure (verified in Phase 1)
+   - **Pattern:** Follow test_RecordManager_scoring.py structure (verified in S2.P1.I1)
 
 4. `tests/[module]/loaders/test_rank_loader.py` (NEW)
    - **Source:** Derived requirement (new loader requires tests)
@@ -130,7 +130,7 @@ This reference provides detailed examples for executing Specification Phase (S2.
 - Invalid rank value: TBD validation (checklist Q2 - valid range?)
 
 **Dependencies:**
-- csv_utils.read_csv_with_validation() (exists, verified in Phase 1)
+- csv_utils.read_csv_with_validation() (exists, verified in S2.P1.I1)
 - rank_loader.load_rank_data() (new, to be created)
 
 ---
@@ -446,16 +446,16 @@ C. **No logging** (silent default to 1.0 multiplier)
 ## Questions NOT to Ask (Should Have Researched)
 
 **❌ BAD QUESTION: "Which file contains RecordManager?"**
-→ This should have been found in Phase 1 research
+→ This should have been found in S2.P1.I1 research
 
 **❌ BAD QUESTION: "Does RecordManager have a scoring method?"**
-→ This should have been verified in Phase 1.5 audit
+→ This should have been verified in S2.P1.I1 Gate 1 audit
 
 **❌ BAD QUESTION: "What's the pattern for adding new multipliers?"**
 → This should have been documented by reading injury penalty code
 
 **❌ BAD QUESTION: "How do we load CSV files?"**
-→ This should have been researched (csv_utils exists, verified in Phase 1)
+→ This should have been researched (csv_utils exists, verified in S2.P1.I1)
 
 **Good questions ask about:**
 ✅ User preferences (Option A vs B vs C)
@@ -466,12 +466,12 @@ C. **No logging** (silent default to 1.0 multiplier)
 
 ---
 
-## Phase 2.5 Examples: Spec-to-Epic Alignment Check
+## S2.P1.I3 Examples: Spec-to-Epic Alignment Check (Gate 2)
 
 ### Example 1: Alignment Check - PASSING
 
 ```markdown
-## Phase 2.5 Alignment Summary
+## S2.P1.I3 Alignment Summary (Gate 2)
 
 ### Requirement Source Verification
 
@@ -577,9 +577,9 @@ C. **No logging** (silent default to 1.0 multiplier)
 - Missing requirements added: 0 requirements
 - Final requirement count: 5 (all traced to sources)
 
-**Ready for S2.P3:** ✅ YES
+**Ready for Gate 3:** ✅ YES
 
-**Next Action:** Present checklist to user (Gate 2) or proceed to S2.P3 Phase 3
+**Next Action:** Present checklist to user (Gate 3 - User Checklist Approval)
 ```
 
 ---
@@ -587,7 +587,7 @@ C. **No logging** (silent default to 1.0 multiplier)
 ### Example 2: Alignment Check - FAILED (Scope Creep Detected)
 
 ```markdown
-## Phase 2.5 Alignment Summary - FAILED EXAMPLE
+## S2.P1.I3 Alignment Summary (Gate 2) - FAILED EXAMPLE
 
 ### Requirement Source Verification
 
@@ -636,8 +636,8 @@ C. **No logging** (silent default to 1.0 multiplier)
 1. REMOVE Requirement 6 from spec.md
 2. REMOVE Requirement 7 from spec.md
 3. Add note to questions.md: "User deferred historical tracking and auto-updates to future"
-4. Re-run Phase 2.5 alignment check
-5. Do NOT proceed to S2.P3 until PASSED
+4. Re-run S2.P1.I3 alignment check (Gate 2)
+5. Do NOT proceed to Gate 3 until PASSED
 
 **Lesson:** Read "Out of Scope" section in Discovery Context. User explicitly said what NOT to include.
 ```
@@ -647,7 +647,7 @@ C. **No logging** (silent default to 1.0 multiplier)
 ### Example 3: Alignment Check - FAILED (Missing Requirement)
 
 ```markdown
-## Phase 2.5 Alignment Summary - FAILED EXAMPLE
+## S2.P1.I3 Alignment Summary (Gate 2) - FAILED EXAMPLE
 
 ### Missing Requirements Check
 
@@ -686,17 +686,17 @@ C. **No logging** (silent default to 1.0 multiplier)
    - Source: Epic Request (line 28)
    - Describe what UI changes are needed
    - Components affected: Draft mode UI classes
-2. Research draft UI code (might need mini Phase 1)
+2. Research draft UI code (might need mini S2.P1.I1 research)
 3. Update checklist with UI-related questions
-4. Re-run Phase 2.5 alignment check
-5. Do NOT proceed to S2.P3 until PASSED
+4. Re-run S2.P1.I3 alignment check (Gate 2)
+5. Do NOT proceed to Gate 3 until PASSED
 
 **Lesson:** Read ALL explicit requests in Discovery Context. Missing even one means spec is incomplete.
 ```
 
 ---
 
-## Gate 2 Examples: User Checklist Approval
+## Gate 3 Examples: User Checklist Approval
 
 ### Example: Presenting Checklist for Approval
 
@@ -816,10 +816,10 @@ User provided answers for all 6 questions. Preferred config-based approach for m
 
 ## Success Criteria Summary
 
-**Specification Phase (S2.P2) passes when:**
+**S2.P1 passes when:**
 
-✅ **Phase 2 (Spec & Checklist):**
-- spec.md has Discovery Context section (from S2.P1)
+✅ **S2.P1.I1-I2 (Spec & Checklist):**
+- spec.md has Discovery Context section (from S2.P1.I1)
 - All requirements have traceability (Epic Request/User Answer/Derived)
 - Components Affected section lists exact files/lines
 - Data Structures section describes formats
@@ -827,21 +827,21 @@ User provided answers for all 6 questions. Preferred config-based approach for m
 - checklist.md has valid questions (user preferences, edge cases, unknowns)
 - Zero assumptions in spec (all TBD items in checklist)
 
-✅ **Phase 2.5 (Alignment Check):**
+✅ **S2.P1.I3 (Alignment Check — Gate 2):**
 - All requirements verified against Discovery Context
 - No scope creep (no features user didn't ask for)
 - No missing requirements (all user requests in spec)
 - All sources valid (Epic/Derived, not "assumptions")
 - PASSED result documented
 
-✅ **Phase 2.6 (Gate 2):**
+✅ **S2.P1.I3 (Gate 3):**
 - checklist.md presented to user
 - User answered ALL questions
 - spec.md updated with user answers
 - Approval documented with timestamp
-- Gate 2 PASSED
+- Gate 3 PASSED
 
-**Ready for S2.P3 or S5 when all phases complete.**
+**Ready for S2.P2 (Cross-Feature Alignment) or S5 when S2.P1 complete.**
 
 ---
 

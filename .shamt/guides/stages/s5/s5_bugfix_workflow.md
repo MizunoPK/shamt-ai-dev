@@ -1,4 +1,4 @@
-# STAGE 5: Bug Fix Workflow Guide (V2)
+# S5: Bug Fix Workflow Guide (V2)
 
 **Purpose:** Handle bugs or missing scope discovered during epic implementation with a streamlined workflow that minimizes disruption to ongoing feature work.
 
@@ -771,6 +771,18 @@ Action:
 - Same validation rigor as features
 - Priority determines interruption timing
 - Epic docs updated for resumability
+
+---
+
+## Next Phase
+
+**After completing bug fix workflow (S2 → S5 → S6 → S7 complete):**
+
+- Bug fix validated and user-confirmed
+- Proceed to: `stages/s6/s6_execution.md` (if returning to interrupted feature)
+- OR return to wherever the epic was paused (see EPIC_README.md Agent Status)
+
+**See also:** `prompts_reference_v2.md` → "Resuming In-Progress Epic" prompt
 
 ---
 

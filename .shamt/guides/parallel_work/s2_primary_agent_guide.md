@@ -8,6 +8,25 @@
 
 ---
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Workflow Overview](#workflow-overview)
+- [Phase 1: S1 Epic Planning (Solo)](#phase-1-s1-epic-planning-solo)
+- [Phase 2: Determine Parallelization Mode](#phase-2-determine-parallelization-mode)
+- [Phase 3: Offer Parallel Work to User](#phase-3-offer-parallel-work-to-user)
+- [Phase 4: Generate Handoff Packages](#phase-4-generate-handoff-packages)
+- [Phase 5: Parallel S2 Work](#phase-5-parallel-s2-work)
+- [Phase 6: Sync Point — All Features Complete S2](#phase-6-sync-point--all-features-complete-s2)
+- [Phase 7: S3 Cross-Feature Sanity Check (Solo)](#phase-7-s3-cross-feature-sanity-check-solo)
+- [Phase 8: S4 Epic Testing Strategy (Solo)](#phase-8-s4-epic-testing-strategy-solo)
+- [Phase 9: Notify Secondary Agents of S3/S4 Completion](#phase-9-notify-secondary-agents-of-s3s4-completion)
+- [Common Scenarios](#common-scenarios)
+- [Tools and References](#tools-and-references)
+- [Summary Checklist](#summary-checklist)
+
+---
+
 ## Overview
 
 When S2 parallelization is enabled, the Primary agent has **dual responsibilities**:
@@ -348,9 +367,9 @@ You'll need to open 2 new Claude Code sessions (one for each secondary agent).
 
 In NEW Claude Code session #1, enter:
 
-```text
+~~~text
 You are a secondary agent for SHAMT-{N} for feature 02
-```
+~~~
 
 The agent will locate the epic folder automatically, find `feature_02_{name}/HANDOFF_PACKAGE.md`, and self-configure.
 
@@ -360,9 +379,9 @@ The agent will locate the epic folder automatically, find `feature_02_{name}/HAN
 
 In NEW Claude Code session #2, enter:
 
-```text
+~~~text
 You are a secondary agent for SHAMT-{N} for feature 03
-```
+~~~
 
 The agent will locate the epic folder automatically, find `feature_03_{name}/HANDOFF_PACKAGE.md`, and self-configure.
 
@@ -411,26 +430,16 @@ done
 
 ### Responsibility 1: Feature 01 Implementation
 
-**Work on your feature (S2.P1 → S2.P2 → S2.P3):**
+**Work on your feature (S2.P1 only — Cross-Feature Alignment S2.P2 runs after all secondaries complete):**
 
 1. **Execute S2.P1 for Feature 01:**
    - Follow guide: `stages/s2/s2_p1_spec_creation_refinement.md`
-   - Complete research phase
+   - Complete all 3 iterations (I1: Discovery, I2: Checklist Resolution, I3: Refinement & Alignment)
    - Update checkpoint every 15 min
    - Update EPIC_README.md progress section
    - Update STATUS file
 
-2. **Execute S2.P2 for Feature 01:**
-   - Follow guide: `stages/s2/s2_p2_specification.md`
-   - Write spec.md
-   - Create checklist.md
-   - Update checkpoint, EPIC_README, STATUS
-
-3. **Execute S2.P3 for Feature 01:**
-   - Follow guide: `stages/s2/s2_p3_refinement.md`
-   - Refine spec
-   - Finalize checklist
-   - Complete S2 for Feature 01
+**Note:** The old 3-phase structure (S2.P1 Research → S2.P2 Specification → S2.P3 Refinement) has been superseded. All spec work is now consolidated in `s2_p1_spec_creation_refinement.md` (3 iterations). After Feature 01 S2.P1 is complete and secondaries have completed their S2.P1, Primary runs S2.P2 (`s2_p2_cross_feature_alignment.md`) solo before proceeding to S3.
 
 **Work in 45-minute blocks:**
 - 45 min: Deep work on Feature 01
@@ -536,19 +545,19 @@ done
 
 ```text
 10:00-10:15: Generate handoff packages, wait for secondary agents
-10:15-11:00: Feature 01 S2.P1 work (45 min)
+10:15-11:00: Feature 01 S2.P1 I1 Discovery (45 min)
 11:00-11:15: Coordination (check inboxes, STATUS files) (15 min)
-11:15-12:00: Feature 01 S2.P2 work (45 min)
+11:15-12:00: Feature 01 S2.P1 I2 Checklist Resolution (45 min)
 12:00-12:15: Coordination + escalation response (15 min)
-12:15-13:00: Feature 01 S2.P2 continued (45 min)
+12:15-13:00: Feature 01 S2.P1 I2 continued (45 min)
 13:00-13:15: Coordination (15 min)
-13:15-14:00: Feature 01 S2.P3 work (45 min)
-14:00-14:15: Feature 01 complete, coordination (15 min)
-14:15-14:30: Wait for Secondary-A and Secondary-B to complete
-14:30: All features complete S2
+13:15-14:00: Feature 01 S2.P1 I3 Refinement & Alignment (45 min)
+14:00-14:15: Feature 01 S2.P1 complete, coordination (15 min)
+14:15-14:30: Wait for Secondary-A and Secondary-B to complete S2.P1
+14:30: All features complete S2.P1 — Primary runs S2.P2 Cross-Feature Alignment
 
 Total: 2.5 hours
-- Feature 01 work: ~3 hours (normal S2 time)
+- Feature 01 work: ~3 hours (normal S2.P1 time for 3 iterations)
 - Coordination: ~30 min (20% overhead, within target)
 ```
 
@@ -556,7 +565,7 @@ Total: 2.5 hours
 
 ## Phase 6: Sync Point - All Features Complete S2
 
-**When all features complete S2.P3:**
+**When all features complete S2.P1:**
 
 ### Step 1: Verify Completion
 
@@ -570,9 +579,9 @@ for STATUS_FILE in feature_*/STATUS; do
 done
 
 # All should show:
-# feature_01: S2.P3, Ready: true
-# feature_02: S2.P3, Ready: true
-# feature_03: S2.P3, Ready: true
+# feature_01: S2.P1, Ready: true
+# feature_02: S2.P1, Ready: true
+# feature_03: S2.P1, Ready: true
 ```
 
 ### Step 2: Update Sync Status
@@ -586,7 +595,7 @@ done
 **Status:** ALL COMPLETE (3 of 3 features)
 **Timestamp:** 2026-01-15 14:30
 
-| Feature | Agent | S2.P3 Complete | Timestamp |
+| Feature | Agent | S2.P1 Complete | Timestamp |
 |---------|-------|----------------|-----------|
 | feature_01 | Primary | ✅ YES | 14:00 |
 | feature_02 | Secondary-A | ✅ YES | 14:25 |
@@ -736,7 +745,7 @@ I'll now proceed with S5 (Implementation Planning) for Feature 01...
 ### Scenario 4: You Complete Feature 01 First
 
 **Workflow:**
-1. Complete S2.P3 for Feature 01
+1. Complete S2.P1 for Feature 01 (all 3 iterations)
 2. Update STATUS: `READY_FOR_SYNC: true`
 3. Update Sync Status: "1 of 3 complete"
 4. Continue monitoring secondary agents

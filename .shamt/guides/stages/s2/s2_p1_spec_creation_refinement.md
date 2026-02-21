@@ -9,6 +9,18 @@
 
 ---
 
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Overview](#overview)
+- [S2.P1.I1: Feature-Level Discovery](#s2p1i1-feature-level-discovery-60-90-min)
+- [S2.P1.I2: Checklist Resolution](#s2p1i2-checklist-resolution-45-90-min)
+- [S2.P1.I3: Refinement & Alignment](#s2p1i3-refinement--alignment-30-60-min)
+- [Exit Criteria](#exit-criteria)
+- [Next: S2.P2](#next-s2p2-primary-agent-only)
+
+---
+
 ## Prerequisites
 
 **Before starting S2.P1:**
@@ -315,7 +327,7 @@ Primary agent reviews during coordination heartbeat (every 15 minutes).
 
 ---
 
-## Next: S2.P2 (Primary Agent Only)
+## Next Phase
 
 **After S2.P1 complete:**
 

@@ -8,6 +8,24 @@
 
 ---
 
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Channel Structure](#channel-structure)
+3. [Message Format](#message-format)
+4. [Message Sending Protocol](#message-sending-protocol)
+5. [Message Reading Protocol](#message-reading-protocol)
+6. [Message Inbox Check Frequency](#message-inbox-check-frequency)
+7. [Common Message Types](#common-message-types)
+8. [Message Archiving](#message-archiving)
+9. [Inbox Management Best Practices](#inbox-management-best-practices)
+10. [Integration with Guides](#integration-with-guides)
+11. [Error Handling](#error-handling)
+12. [Performance Characteristics](#performance-characteristics)
+13. [Summary](#summary)
+
+---
+
 ## Overview
 
 When multiple agents work in parallel during S2, they need to communicate for:
@@ -58,8 +76,8 @@ agent_comms/
 ## Message 4 (2026-01-15 14:00) ✅ READ
 **Subject:** User answered your question
 **Action:** Check feature_02/checklist.md - Question 5 answered
-**Next:** Complete S2.P3, then signal completion
-**Acknowledge:** Reply when S2.P3 complete
+**Next:** Complete S2.P1 I3 Refinement & Alignment, then signal completion
+**Acknowledge:** Reply when S2.P1 complete
 
 ## Message 3 (2026-01-15 12:30) ⏳ UNREAD
 **Subject:** Proceeding with Feature 01
@@ -293,7 +311,7 @@ Stuck For: 25 minutes
 **Subject:** User answered your question
 **Action:** Check feature_02/checklist.md - Question 5 answered
 **Details:** User said: "Yes, apply penalty to all offensive items on team"
-**Next:** Update spec.md with this requirement, complete S2.P3
+**Next:** Update spec.md with this requirement, complete S2.P1
 **Acknowledge:** Reply when updated
 ```
 
@@ -303,7 +321,7 @@ Stuck For: 25 minutes
 
 ```markdown
 ## Message 7 (2026-01-15 14:25) ⏳ UNREAD
-**Subject:** S2.P3 Complete for Feature 02
+**Subject:** S2.P1 Complete for Feature 02
 **Action:** I've completed S2 for Feature 02
 **Details:**
 - spec.md complete (all requirements documented)
@@ -415,7 +433,7 @@ EOF
 
 ## Integration with Guides
 
-### In S2.P1, S2.P2, S2.P3 Guides
+### In S2.P1 Guide (s2_p1_spec_creation_refinement.md)
 
 **Add inbox check steps:**
 
@@ -554,7 +572,7 @@ fi
 
 ### Message Type 4: Cross-Feature Alignment Issue
 
-**When to use:** During S2.P3 Phase 5, when you find issue in another feature
+**When to use:** During S2.P1 I3 (Refinement & Alignment), when you find issue in another feature
 
 **Template:**
 ```markdown
@@ -570,7 +588,7 @@ fi
 
 **Urgency:** {LOW/MEDIUM/HIGH}
 
-**Context:** Found during S2.P3 Phase 5 (Cross-Feature Alignment) for Feature {N}
+**Context:** Found during S2.P1 I3 (Refinement & Alignment) for Feature {N}
 ```
 
 **Response SLA:**

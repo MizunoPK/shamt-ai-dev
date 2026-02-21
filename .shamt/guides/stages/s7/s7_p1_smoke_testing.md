@@ -718,4 +718,15 @@ for p in raw_data:
 ---
 ---
 
+## Next Phase
+
+**After completing S7.P1 (Smoke Testing):**
+
+- Smoke testing passed (all 3 parts clean, REAL data verified)
+- Proceed to: `stages/s7/s7_p2_qc_rounds.md` (QC Rounds)
+
+**See also:** `prompts_reference_v2.md` → "Starting S7.P2" prompt
+
+---
+
 **END OF STAGE S7.P1 GUIDE**

@@ -1008,4 +1008,17 @@ Decision: Remove out-of-scope code or get user approval
 
 ---
 
+## Next Phase
+
+**After completing S7.P3 (Final Review):**
+
+- PR review complete (zero critical issues)
+- Lessons learned captured and guides updated
+- Feature is COMPLETE and production-ready
+- Proceed to: `stages/s8/s8_p1_cross_feature_alignment.md` (Cross-Feature Alignment)
+
+**See also:** `prompts_reference_v2.md` → "Starting S8" prompt
+
+---
+
 *End of stages/s7/s7_p3_final_review.md*

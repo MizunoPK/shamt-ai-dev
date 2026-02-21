@@ -12,10 +12,12 @@ This file is the index for all phase transition prompts. Prompts are organized b
 |-------|-------------|-------------|
 | S1 | `prompts/s1_prompts.md` | Starting Epic Planning, Starting Discovery Phase |
 | S2 | `prompts/s2_prompts.md` | Starting Feature Deep Dive, Starting Spec Creation |
-| S2.P2.5 | `prompts/s2_p2.5_prompts.md` | Spec Validation prompts |
 | S3 | `prompts/s3_prompts.md` | Starting Cross-Feature Alignment |
 | S4 | `prompts/s4_prompts.md` | Starting Feature Testing Strategy |
-| S5–S8 | `prompts/s5_s8_prompts.md` | Implementation Plan, Execution, Testing, Alignment |
+| S5 | `prompts/s5_s8_prompts.md` | Implementation Plan (S5 v2 Validation Loop), Gate 5 Approval |
+| S6 | `prompts/s5_s8_prompts.md` | Starting Execution, Resuming After Compaction |
+| S7 | `prompts/s5_s8_prompts.md` | Smoke Testing, QC Rounds, Final Review |
+| S8 | `prompts/s5_s8_prompts.md` | Cross-Feature Alignment, Testing Plan Update |
 | S9 | `prompts/s9_prompts.md` | Epic Final QC prompts |
 | S10 | `prompts/s10_prompts.md` | Starting Epic Cleanup, Guide Updates |
 | Guide Updates | `prompts/guide_update_prompts.md` | Presenting proposals, after applying changes |

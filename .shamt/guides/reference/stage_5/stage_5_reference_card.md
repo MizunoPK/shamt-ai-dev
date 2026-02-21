@@ -27,7 +27,7 @@ STAGE 5: Implementation Planning (4.5-7 hours typical, 6-8 validation rounds)
         │   ├─ D1: Requirements Completeness
         │   ├─ D2: Interface & Dependency Verification
         │   ├─ D3: Algorithm Traceability
-        │   ├─ D4: Task Specification Quality ← EMBEDS Gate 3a
+        │   ├─ D4: Task Specification Quality ← EMBEDS Gate 4a
         │   ├─ D5: Data Flow & Consumption
         │   ├─ D6: Error Handling & Edge Cases
         │   ├─ D7: Integration & Compatibility
@@ -97,13 +97,13 @@ Next Feature (loop S5→S6→S7→S8) OR STAGE 6 (if all features done)
 
 ### S5: TODO Creation (4 gates)
 
-**Gate 1: Iteration 4a - TODO Specification Audit**
+**Gate 4a: Iteration 4a - TODO Specification Audit**
 - **Location:** stages/s5/s5_v2_validation_loop.md
 - **Criteria:** ALL TODO tasks have acceptance criteria
 - **Evidence:** Task count, criteria count, 100% coverage
 - **If FAIL:** Add missing acceptance criteria, re-run Iteration 4a
 
-**Gate 2 (Gate 23a): Pre-Implementation Spec Audit**
+**Gate 23a: Pre-Implementation Spec Audit**
 - **Location:** stages/s5/s5_v2_validation_loop.md (Dimension 11)
 - **Embedded in:** Dimension 11 (Spec Alignment & Cross-Validation)
 - **Criteria:** ALL 5 PARTS must PASS with 100% metrics
@@ -115,7 +115,7 @@ Next Feature (loop S5→S6→S7→S8) OR STAGE 6 (if all features done)
 - **Evidence:** Cite specific numbers (N requirements, M tasks, coverage %)
 - **If FAIL:** Fix issues immediately, re-validate in next round
 
-**Gate 3 (Gate 25): Spec Validation Check**
+**Gate 25: Spec Validation Check**
 - **Location:** stages/s5/s5_v2_validation_loop.md (Dimension 11)
 - **Embedded in:** Dimension 11 (Spec Alignment & Cross-Validation)
 - **Criteria:** Spec.md matches ALL three validated sources (epic notes + epic ticket + spec summary)
@@ -124,7 +124,7 @@ Next Feature (loop S5→S6→S7→S8) OR STAGE 6 (if all features done)
 - **Critical:** Prevents spec misinterpretation bugs
 - **If FAIL:** User decides next action (fix spec + restart, fix spec + continue, discuss)
 
-**Gate 4 (Gate 24): Implementation Readiness (GO/NO-GO)**
+**Gate 24: Implementation Readiness (GO/NO-GO)**
 - **Location:** stages/s5/s5_v2_validation_loop.md (Dimension 10)
 - **Embedded in:** Dimension 10 (Implementation Readiness)
 - **Criteria:** GO decision required (confidence >= MEDIUM, all embedded gates PASSED, checklists complete)

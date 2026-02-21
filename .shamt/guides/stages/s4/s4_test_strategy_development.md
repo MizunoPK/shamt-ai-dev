@@ -24,6 +24,15 @@
 
 ---
 
+## Prerequisites
+
+- [ ] S3 complete (Epic Planning Approval, Gate 4.5 passed)
+- [ ] S4 router guide read (`stages/s4/s4_feature_testing_strategy.md`)
+- [ ] Feature `spec.md` finalized (Gate 3 passed)
+- [ ] Feature README.md Agent Status updated with this guide name + timestamp
+
+---
+
 ## Overview
 
 **What is this guide?**
@@ -748,23 +757,6 @@ Identify configuration dependencies and plan configuration-related tests (defaul
 
 ---
 
-## Next: Iteration 4 (Validation Loop)
-
-**After completing Iterations 1-3:**
-
-📖 **READ:** `stages/s4/s4_validation_loop.md` (Iteration 4)
-🎯 **GOAL:** Validate test strategy with 3 consecutive clean rounds
-⏱️ **ESTIMATE:** 15-20 minutes
-🔍 **REFERENCE:** `reference/validation_loop_test_strategy.md`
-
-**Iteration 4 will:**
-- Validate test strategy completeness
-- Find gaps in coverage
-- Verify all requirements have tests
-- Exit when 3 consecutive clean rounds achieved
-- Create final test_strategy.md file
-
-
 ## Exit Criteria
 
 **Iteration 1-3 (S4.I1-I3) is complete when ALL of these are true:**
@@ -776,6 +768,16 @@ Identify configuration dependencies and plan configuration-related tests (defaul
 **If any criterion unchecked:** Complete missing items before proceeding
 
 ---
+
+## Next Phase
+
+**After completing S4 Iterations 1–3, proceed to:**
+- **Phase:** S4.I4 — Test Strategy Validation Loop
+- **Guide:** `reference/validation_loop_test_strategy.md`
+
+**See also:**
+- `stages/s4/s4_feature_testing_strategy.md` — Primary S4 guide (overview and structure)
+
 ---
 
 *End of stages/s4/s4_test_strategy_development.md*

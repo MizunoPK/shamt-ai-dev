@@ -360,7 +360,7 @@ ls feature_{N}_{name}/test_strategy.md
 
 ---
 
-## Next: S5 (Implementation Planning)
+## Next Stage
 
 **After completing S4.I4:**
 

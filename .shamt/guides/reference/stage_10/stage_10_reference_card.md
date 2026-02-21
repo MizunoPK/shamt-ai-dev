@@ -2,7 +2,7 @@
 
 **Purpose:** One-page summary for final epic completion and archival
 **Use Case:** Quick lookup when committing changes and archiving epic
-**Total Time:** 40-80 minutes (includes S10.P1 guide updates)
+**Total Time:** 85-130 minutes (includes S10.P1 guide updates)
 **Note:** User testing completed in S9 (Step 6) before S10 begins
 
 ---
@@ -38,25 +38,36 @@ STEP 4: Guide Update from Lessons Learned (20-45 min) ← S10.P1 MANDATORY
     ├─ Create separate commit for guide updates
     └─ Update guide_update_tracking.md
     ↓
-STEP 5: Final Commit & Pull Request (5-10 min)
+STEP 5: Final Commit — Epic Implementation (5-10 min)
     ├─ Review changes (git status, git diff)
     ├─ Stage all epic-related changes
-    ├─ Create commit: "{commit_type}/SHAMT-{number}: {message}"
-    ├─ Push branch to remote (git push origin {work_type}/SHAMT-{number})
-    ├─ Create Pull Request using gh CLI
-    ├─ Wait for user to review and merge PR
-    └─ Update .shamt/epics/EPIC_TRACKER.md after user merges
+    └─ Create commit: "{commit_type}/SHAMT-{number}: {message}"
     ↓
-STEP 6: Move Epic to done/ Folder (2 min)
+STEP 6: Move Epic to done/ Folder (5 min)
     ├─ Create done/ folder if doesn't exist
-    ├─ Move entire epic folder: mv {epic}/ done/{epic}/
+    ├─ Clean up done/ (max 10 epics, delete oldest if needed)
+    ├─ Move entire epic folder using git mv
     ├─ Verify move successful
-    └─ Leave original epic request (.txt) in .shamt/epics/requests/
+    ├─ Leave original .txt in .shamt/epics/requests/
+    └─ Commit the folder move
     ↓
-STEP 7: Final Verification & Completion (2 min)
-    ├─ Verify epic in done/ folder
-    ├─ Verify git clean state
-    ├─ Update EPIC_README.md with completion summary
+STEP 7: Update .shamt/epics/EPIC_TRACKER.md (5 min)
+    ├─ Move epic from Active to Completed table
+    ├─ Add epic detail section
+    ├─ Increment Next Available Number
+    └─ Commit the EPIC_TRACKER.md update
+    ↓
+STEP 8: Push Branch and Create Pull Request (5 min)
+    ├─ Verify working tree clean, then push all commits
+    ├─ Create Pull Request using gh CLI
+    ├─ Recommend squash commit message to user
+    ├─ Wait for user to review and merge PR
+    └─ Sync local main after merge
+    ↓
+STEP 9: Final Verification & Completion (5 min)
+    ├─ Verify all commits pushed
+    ├─ Verify PR created
+    ├─ Verify git working tree clean
     └─ Epic COMPLETE! 🎉
 ```
 
@@ -70,9 +81,11 @@ STEP 7: Final Verification & Completion (2 min)
 | 2 | 5-10 min | Run unit tests (100% pass) | ✅ YES |
 | 3 | 5-10 min | Documentation verification | No |
 | 4 | 20-45 min | Guide updates (S10.P1, user approval) | No |
-| 5 | 5-10 min | Final commit, create PR, merge | No |
-| 6 | 2 min | Move epic to done/ | No |
-| 7 | 2 min | Final verification | No |
+| 5 | 5-10 min | Final commit (epic implementation) | No |
+| 6 | 5 min | Move epic to done/ folder (git mv + commit) | No |
+| 7 | 5 min | Update .shamt/epics/EPIC_TRACKER.md + commit | No |
+| 8 | 5 min | Push branch + create PR + wait for merge | No |
+| 9 | 5 min | Final verification | No |
 
 **Note:** User testing was moved to S9 (Step 6) - S10 only begins after user testing passes with zero bugs.
 
@@ -80,7 +93,9 @@ STEP 7: Final Verification & Completion (2 min)
 
 ## Mandatory Gates (1 Required in S10)
 
-### Gate 1: Unit Tests - 100% Pass (Step 2)
+**Note:** This is an S10-local gate (labeled S10-Gate-A to avoid conflict with global Gate 1 defined in reference/mandatory_gates.md).
+
+### S10-Gate-A: Unit Tests - 100% Pass (Step 2)
 **Location:** stages/s10/s10_epic_cleanup.md Step 2
 **What it checks:**
 - All unit tests passing
@@ -168,48 +183,41 @@ Testing:
 
 ---
 
-## Git Workflow (Step 6)
+## Git Workflow (Steps 5-8)
 
-### 6.1: Review Changes
+### Step 5: Epic Implementation Commit
 ```bash
-git status       # See all modified files
-git diff         # See all changes
-```
-
-### 6.2: Stage Changes
-```bash
+git status       # Review all modified files
+git diff         # Review all changes
 git add .shamt/epics/SHAMT-{N}-{epic_name}/
 git add <any other changed files>
-```
-
-### 6.3: Commit
-```bash
 git commit -m "{commit_type}/SHAMT-{number}: {message}"
 ```
 
-### 6.4: Push Branch to Remote
+### Step 6: Move Epic Folder and Commit
 ```bash
-git push origin {work_type}/SHAMT-{number}
+git mv .shamt/epics/SHAMT-{N}-{epic_name} .shamt/epics/done/SHAMT-{N}-{epic_name}
+git commit -m "chore/SHAMT-{N}: Move completed epic to done/ folder"
 ```
 
-### 6.5: Create Pull Request
+### Step 7: Update EPIC_TRACKER and Commit
 ```bash
+# Edit .shamt/epics/EPIC_TRACKER.md (move epic to Completed, add details, increment number)
+git add .shamt/epics/EPIC_TRACKER.md
+git commit -m "chore/SHAMT-{N}: Update EPIC_TRACKER with completed epic"
+```
+
+### Step 8: Push Branch and Create Pull Request
+```bash
+git status       # Verify working tree clean
+git push origin {work_type}/SHAMT-{number}
 gh pr create --base main --head {work_type}/SHAMT-{number} \
   --title "{commit_type}/SHAMT-{number}: Complete {epic_name} epic" \
   --body "{Epic summary, features, tests, review instructions}"
+# Recommend squash commit message to user, then wait for merge
+# After merge:
+git checkout main && git fetch origin && git reset --hard origin/main
 ```
-
-See USER_PR_REVIEW_GUIDE.md for user review options.
-
-### 6.6: Wait for User to Merge PR
-Agent waits for user to review and merge the Pull Request in GitHub.
-
-### 6.7: Update .shamt/epics/EPIC_TRACKER.md (After User Merges)
-- Pull latest: git checkout main && git pull origin main
-- Move epic from Active to Completed table
-- Add epic detail section
-- Increment "Next Available Number"
-- Commit and push .shamt/epics/EPIC_TRACKER.md
 
 ---
 
@@ -218,11 +226,11 @@ Agent waits for user to review and merge the Pull Request in GitHub.
 - ✅ S9 MUST be complete before S10
 - ✅ Run unit tests BEFORE committing (100% pass required)
 - ✅ Verify ALL documentation complete
-- ✅ User testing is MANDATORY (BEFORE commit)
+- ✅ User testing completed in S9 (Step 6) — S10 begins only after user reports ZERO bugs
 - ✅ Commit message must use new format ({commit_type}/SHAMT-{number})
 - ✅ Push branch and create PR for user review
 - ✅ Wait for user to review and merge PR
-- ✅ Update .shamt/epics/EPIC_TRACKER.md AFTER user merges
+- ✅ Update .shamt/epics/EPIC_TRACKER.md in Step 7 (before creating PR in Step 8)
 - ✅ Move ENTIRE epic folder (not individual features)
 - ✅ Update CLAUDE.md if guides improved
 - ✅ Verify epic is TRULY complete
@@ -231,10 +239,10 @@ Agent waits for user to review and merge the Pull Request in GitHub.
 
 ## Common Pitfalls
 
-### ❌ Pitfall 1: Skipping User Testing
-**Problem:** "All tests pass, I'll skip user testing"
-**Impact:** User finds bugs in production, rework required
-**Solution:** User testing is MANDATORY (Step 5), cannot skip
+### ❌ Pitfall 1: Starting S10 Before User Testing Passes
+**Problem:** "All unit tests pass, I'll proceed to S10 commit"
+**Impact:** User finds bugs after commit, rework required
+**Solution:** User testing is completed in S9 Step 6 (ZERO bugs required). S10 only begins after S9 is fully complete.
 
 ### ❌ Pitfall 2: Committing with Failing Tests
 **Problem:** "I'll fix the tests later"
@@ -264,7 +272,7 @@ Agent waits for user to review and merge the Pull Request in GitHub.
 ### ❌ Pitfall 7: Not Updating .shamt/epics/EPIC_TRACKER.md
 **Problem:** "I'll update EPIC_TRACKER later"
 **Impact:** Active epics list out of date, SHAMT number conflicts
-**Solution:** Update .shamt/epics/EPIC_TRACKER.md immediately after merge (Step 6.6)
+**Solution:** Update .shamt/epics/EPIC_TRACKER.md in Step 7 (before creating PR in Step 8)
 
 ---
 
@@ -295,34 +303,42 @@ Agent waits for user to review and merge the Pull Request in GitHub.
 
 **Step 4 → Step 5:**
 - [ ] ALL lessons_learned.md files found (epic + features + bugfixes)
-- [ ] Lessons extracted from EACH file
-- [ ] Master checklist created
-- [ ] ALL lessons applied to guides (100%)
-- [ ] CLAUDE.md updated (if workflow changed)
+- [ ] Proposals created and individually approved by user
+- [ ] Approved changes applied to guides
+- [ ] Separate commit created for guide updates
+- [ ] guide_update_tracking.md updated
 
 **Step 5 → Step 6:**
-- [ ] User tested complete system
-- [ ] User testing passed with ZERO bugs
-- [ ] If bugs found: Bug fixes complete + S9 restarted
-- [ ] User approval obtained
-- [ ] Ready to commit
+- [ ] git status and git diff reviewed
+- [ ] All epic-related changes staged
+- [ ] Epic implementation commit created with clear message
+- [ ] Commit verified (git log)
 
 **Step 6 → Step 7:**
-- [ ] All changes committed
-- [ ] Branch pushed to remote
-- [ ] Pull Request created for user review
-- [ ] User has merged PR to main
-- [ ] .shamt/epics/EPIC_TRACKER.md updated
+- [ ] done/ folder exists (created if needed)
+- [ ] done/ cleaned up (max 10 epics maintained)
+- [ ] Entire epic folder moved using git mv
+- [ ] Move verified (folder structure intact)
+- [ ] Original .txt still in .shamt/epics/requests/
+- [ ] Folder move committed
 
 **Step 7 → Step 8:**
-- [ ] Epic folder moved to done/
-- [ ] Move successful (verified)
-- [ ] Original .txt file still in .shamt/epics/requests/
+- [ ] Epic moved from Active to Completed in EPIC_TRACKER.md
+- [ ] Epic detail section added
+- [ ] Next Available Number incremented
+- [ ] EPIC_TRACKER.md update committed
 
-**Step 8 → Complete:**
-- [ ] Epic verified in done/ folder
-- [ ] Git clean state verified
-- [ ] EPIC_README.md updated with completion summary
+**Step 8 → Step 9:**
+- [ ] Working tree clean (git status)
+- [ ] All commits pushed to remote branch
+- [ ] Pull Request created
+- [ ] Squash commit message recommended to user
+- [ ] User reviewed and merged PR
+- [ ] Local main synced (git reset --hard origin/main)
+
+**Step 9 → Complete:**
+- [ ] Epic visible in done/ folder (post-merge)
+- [ ] Git working tree clean
 - [ ] Epic COMPLETE!
 
 ---
@@ -331,19 +347,24 @@ Agent waits for user to review and merge the Pull Request in GitHub.
 
 **Step 4:**
 - Updated guide files (in .shamt/guides/)
-- Updated CLAUDE.md (if workflow changed)
+- GUIDE_UPDATE_PROPOSAL.md (in epic folder)
+- Updated guide_update_tracking.md
+
+**Step 5:**
+- Git commit (epic implementation work)
 
 **Step 6:**
-- Git commit (with epic changes)
-- Updated .shamt/epics/EPIC_TRACKER.md
-- Git history shows epic completion
+- `.shamt/epics/done/SHAMT-{N}-{epic_name}/` (entire epic folder moved via git mv)
+- `.shamt/epics/requests/{epic_name}.txt` (original request, stays in place)
+- Git commit (epic folder move)
 
 **Step 7:**
-- `.shamt/epics/done/SHAMT-{N}-{epic_name}/` (entire epic folder moved)
-- `.shamt/epics/requests/{epic_name}.txt` (original request, stays in .shamt/epics/requests/)
+- Updated .shamt/epics/EPIC_TRACKER.md (epic moved to Completed, number incremented)
+- Git commit (.shamt/epics/EPIC_TRACKER.md update)
 
 **Step 8:**
-- Final EPIC_README.md with completion summary
+- Remote branch with all commits pushed
+- Pull Request created for user review
 
 ---
 
@@ -361,15 +382,17 @@ Agent waits for user to review and merge the Pull Request in GitHub.
 ## Exit Conditions
 
 **S10 is complete when:**
-- [ ] All 7 steps complete (1-7)
+- [ ] All 9 steps complete (1-9)
 - [ ] Pre-cleanup verification passed
 - [ ] Unit tests passed (100%)
 - [ ] Documentation verified complete
-- [ ] Guides updated (all lessons applied)
-- [ ] User testing passed (ZERO bugs)
-- [ ] Final commit created and pushed
-- [ ] .shamt/epics/EPIC_TRACKER.md updated
-- [ ] Epic folder moved to done/
+- [ ] Guides updated via S10.P1 (user-approved proposals applied)
+- [ ] Epic implementation commit created
+- [ ] Epic folder moved to done/ (git mv + committed)
+- [ ] .shamt/epics/EPIC_TRACKER.md updated and committed
+- [ ] All commits pushed to remote branch
+- [ ] Pull Request created and merged by user
+- [ ] Local main synced
 - [ ] Git clean state
 - [ ] Epic COMPLETE and archived!
 
@@ -377,4 +400,4 @@ Agent waits for user to review and merge the Pull Request in GitHub.
 
 ---
 
-**Last Updated:** 2026-01-04
+**Last Updated:** 2026-02-21

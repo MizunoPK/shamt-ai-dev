@@ -14,6 +14,24 @@ S5 (Implementation Planning) → S6 (Implementation Execution) → S7 (Testing &
 
 ---
 
+## Table of Contents
+
+- [Mandatory Reading Protocol](#-mandatory-reading-protocol)
+- [Overview](#overview)
+- [Critical Rules](#-critical-rules)
+- [Critical Decisions Summary](#critical-decisions-summary)
+- [Prerequisites Checklist](#prerequisites-checklist)
+- [Workflow Overview](#workflow-overview)
+- [Quick Navigation](#quick-navigation)
+- [Step 5: Alignment Validation Loop](#step-5-alignment-validation-loop-mandatory)
+- [Exit Criteria](#exit-criteria)
+- [Mandatory Checkpoint 1](#-mandatory-checkpoint-1)
+- [Prerequisites for Next Stage](#prerequisites-for-next-stage)
+- [Summary](#summary)
+- [Next Phase](#next-phase)
+
+---
+
 ## 🚨 MANDATORY READING PROTOCOL
 
 **BEFORE starting Cross-Feature Alignment, you MUST:**

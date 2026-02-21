@@ -104,14 +104,14 @@ Before 2025, the workflow used S5a notation. This was changed to S5.P1 for clari
 ## Common Mistakes
 
 ❌ WRONG:
-```bash
+~~~bash
 git reset --hard  # Destroys uncommitted work
-```
+~~~
 
 ✅ CORRECT:
-```bash
+~~~bash
 git stash  # Saves uncommitted work
-```text
+~~~
 ```
 
 **Action:** Document as intentional, do NOT fix

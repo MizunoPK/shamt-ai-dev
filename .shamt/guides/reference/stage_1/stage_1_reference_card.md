@@ -78,10 +78,12 @@ STEP 6: Transition to S2 (5 min)
 
 ## Mandatory Gates
 
-### Gate 1: Discovery Phase Approval (Step 3)
+**Note:** These are S1-local gates (labeled S1-A, S1-B, S1-C to avoid conflict with global Gate 1/2/3 defined in reference/mandatory_gates.md).
+
+### S1-Gate-A: Discovery Phase Approval (Step 3)
 **Location:** stages/s1/s1_p3_discovery_phase.md S1.P3.4
 **What it checks:**
-- Discovery Loop completed (no new questions emerged)
+- Discovery Loop completed (3 consecutive clean rounds, zero issues/gaps)
 - Recommended approach documented
 - Scope defined (in scope / out of scope)
 - User approves findings and approach
@@ -89,7 +91,7 @@ STEP 6: Transition to S2 (5 min)
 **Pass Criteria:** User explicitly approves Discovery findings
 **If FAIL:** Continue Discovery Loop with additional research
 
-### Gate 2: Feature Breakdown Approval (Step 4)
+### S1-Gate-B: Feature Breakdown Approval (Step 4)
 **Location:** stages/s1/s1_epic_planning.md Step 4
 **What it checks:**
 - Feature breakdown based on Discovery findings
@@ -99,7 +101,7 @@ STEP 6: Transition to S2 (5 min)
 **Pass Criteria:** User explicitly confirms feature breakdown
 **If FAIL:** User provides feedback, agent revises breakdown, re-proposes
 
-### Gate 3: Epic Ticket Validation (Step 4)
+### S1-Gate-C: Epic Ticket Validation (Step 4)
 **Location:** stages/s1/s1_epic_planning.md Step 4.6-4.7
 **What it checks:**
 - Epic ticket accurately reflects user's desired outcomes
@@ -157,12 +159,12 @@ STEP 6: Transition to S2 (5 min)
 ### Pitfall 1: Skipping Discovery Phase
 **Problem:** Jumping to feature breakdown without Discovery
 **Impact:** Features based on assumptions, wrong scope, rework later
-**Solution:** Discovery is MANDATORY - complete Loop until no new questions
+**Solution:** Discovery is MANDATORY - complete Loop until 3 consecutive clean rounds (zero issues/gaps)
 
 ### Pitfall 2: Ending Discovery Prematurely
 **Problem:** Stopping Discovery based on time, not question exhaustion
 **Impact:** Missed requirements, wrong approach, inadequate understanding
-**Solution:** Exit ONLY when research produces no new questions
+**Solution:** Exit ONLY when 3 consecutive clean rounds produce zero issues/gaps
 
 ### Pitfall 3: Not Seeding Specs with Discovery Context
 **Problem:** Creating feature specs without Discovery Context section
@@ -198,7 +200,7 @@ STEP 6: Transition to S2 (5 min)
 
 **Step 3 -> Step 4:**
 - [ ] DISCOVERY.md created and complete
-- [ ] Discovery Loop completed (no new questions)
+- [ ] Discovery Loop completed (3 consecutive clean rounds, zero issues/gaps)
 - [ ] Recommended approach documented
 - [ ] Scope defined (in scope / out of scope)
 - [ ] User approved Discovery findings

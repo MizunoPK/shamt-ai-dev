@@ -7,9 +7,9 @@
 
 ## Starting S10.P1: Guide Update from Lessons Learned (MANDATORY)
 
-**User says:** Agent detects S10 user testing passed (Gate 7.2), OR user says "apply lessons to guides"
+**User says:** Agent detects S9 user testing passed (S9 Step 6), OR user says "apply lessons to guides"
 
-**Prerequisite:** S10 user testing passed (zero bugs), all lessons_learned.md files complete
+**Prerequisite:** S9 user testing passed (zero bugs), all lessons_learned.md files complete
 
 **Agent MUST respond:**
 
@@ -50,7 +50,7 @@ I'm reading `stages/s10/s10_p1_guide_update_workflow.md` to apply lessons learne
 - User has full control over guide evolution
 
 **Prerequisites I'm verifying:**
-✅ S10 user testing passed (Gate 7.2)
+✅ S9 user testing passed (S9 Step 6)
 ✅ All lessons_learned.md files complete
 ✅ Ready to analyze lessons and create proposal
 

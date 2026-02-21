@@ -26,7 +26,7 @@ I'm reading `stages/s1/s1_epic_planning.md` to ensure I follow the complete epic
 
 **Critical Discovery Phase Requirements:**
 - Discovery is MANDATORY for every epic
-- Discovery Loop continues until NO NEW QUESTIONS emerge
+- Discovery Loop continues until 3 consecutive clean rounds with zero issues/gaps
 - User answers questions throughout Discovery
 - DISCOVERY.md becomes epic-level source of truth
 - Feature folders NOT created until Discovery approved
@@ -43,7 +43,7 @@ I'm reading `stages/s1/s1_epic_planning.md` to ensure I follow the complete epic
 - Current Step: Step 1 - Initial Setup
 - Current Guide: stages/s1/s1_epic_planning.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
-- Critical Rules: "Discovery is mandatory", "Loop until no questions", "User approves Discovery before features"
+- Critical Rules: "Discovery is mandatory", "3 consecutive clean rounds required to exit", "User approves Discovery before features"
 - Next Action: Create git branch and epic folder structure
 
 Starting Step 1...
@@ -67,13 +67,13 @@ I'm reading `stages/s1/s1_p3_discovery_phase.md` to ensure I follow the Discover
   - Document findings in DISCOVERY.md
   - Identify questions
   - Ask user, record answers
-  - Repeat until NO NEW QUESTIONS emerge
+  - Repeat until 3 consecutive clean rounds with zero issues/gaps
 - S1.P3.3: Synthesize findings
 - S1.P3.4: User approval of recommended approach
 
 **Critical Discovery Rules:**
 - Discovery is MANDATORY (no exceptions)
-- Continue loop until research produces no new questions
+- Continue loop until 3 consecutive clean rounds with zero issues/gaps (Validation Loop)
 - All findings and answers go in DISCOVERY.md
 - User answers questions throughout (not just at end)
 - Feature breakdown informed by Discovery findings
@@ -88,7 +88,7 @@ I'm reading `stages/s1/s1_p3_discovery_phase.md` to ensure I follow the Discover
 - Current Step: S1.P3 - Discovery Phase
 - Current Guide: stages/s1/s1_p3_discovery_phase.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
-- Critical Rules: "Loop until no questions", "Document all findings", "User approves before features"
+- Critical Rules: "3 consecutive clean rounds to exit loop", "Document all findings", "User approves before features"
 - Next Action: Create DISCOVERY.md and extract initial questions
 
 Starting S1.P3.1...
@@ -141,7 +141,7 @@ Please answer so I can continue research.
 
 ## Discovery Phase Complete
 
-**When:** Discovery Loop exits (no new questions), ready for synthesis
+**When:** Discovery Loop exits (3 consecutive clean rounds with zero issues/gaps), ready for synthesis
 
 **Agent MUST respond:**
 

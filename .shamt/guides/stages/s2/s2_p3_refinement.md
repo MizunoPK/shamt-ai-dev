@@ -1,4 +1,4 @@
-# S2: Feature Deep Dives
+# S2.P3: Refinement Phase
 ## S2.P3: Refinement Phase
 
 **File:** `s2_p3_refinement.md`
@@ -716,7 +716,7 @@ Acceptance Criteria includes: behavior changes, files modified, data structures,
 
 If yes: I'll mark approval and proceed to next feature/S3
 If changes needed: Let me know what to modify
-```text
+~~~text
 
 **Examples:** See `reference/stage_2/refinement_examples.md` → Phase 6 Examples
 
@@ -865,7 +865,7 @@ If changes needed: Let me know what to modify
 
 ---
 
-## Next Steps
+## Next Stage
 
 **After Refinement Phase completes:**
 

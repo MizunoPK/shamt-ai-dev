@@ -1,8 +1,8 @@
-# STAGE 2a: Research Phase - Detailed Examples
+# S2.P1.I1: Feature-Level Discovery - Detailed Examples
 
 **Guide Version:** 1.0
 **Created:** 2026-01-10
-**Purpose:** Detailed examples and templates for Research Phase execution
+**Purpose:** Detailed examples and templates for S2.P1.I1 Feature-Level Discovery execution
 **Prerequisites:** Read stages/s2/s2_p1_spec_creation_refinement.md first
 **Main Guide:** stages/s2/s2_p1_spec_creation_refinement.md
 
@@ -11,9 +11,9 @@
 ## Table of Contents
 
 1. [Purpose](#purpose)
-2. [Phase 0 Examples: Discovery Context Review](#phase-0-examples-discovery-context-review)
-3. [Phase 1 Examples: Targeted Research](#phase-1-examples-targeted-research)
-4. [Phase 1.5 Examples: Research Completeness Audit](#phase-15-examples-research-completeness-audit)
+2. [S2.P1.I1 Step 1 Examples: Discovery Context Review](#s2p1i1-step-1-examples-discovery-context-review)
+3. [S2.P1.I1 Step 2 Examples: Targeted Research](#s2p1i1-step-2-examples-targeted-research)
+4. [S2.P1.I1 Gate 1 Examples: Research Completeness Audit](#s2p1i1-gate-1-examples-research-completeness-audit)
 5. [Anti-Patterns to Avoid](#anti-patterns-to-avoid)
 6. [Success Criteria Summary](#success-criteria-summary)
 
@@ -31,7 +31,7 @@ This reference provides detailed examples for executing Research Phase (S2.P1). 
 
 ---
 
-## Phase 0 Examples: Discovery Context Review
+## S2.P1.I1 Step 1 Examples: Discovery Context Review
 
 ### Example 1: Complete Discovery Context Analysis
 
@@ -175,7 +175,7 @@ Data source: "[ranking source] CSV" - Line 22
 
 ---
 
-## Phase 1 Examples: Targeted Research
+## S2.P1.I1 Step 2 Examples: Targeted Research
 
 ### Example 1: Research Checklist (Grounded in Epic)
 
@@ -447,18 +447,18 @@ Christian McCaffrey,RB,CAR,380.2
 - Line numbers: Cited for all code references
 - Actual code snippets: Copied method signatures, example implementations
 
-**Ready for Phase 1.5 audit.**
+**Ready for S2.P1.I1 Gate 1 audit.**
 
 ---
 
 **Next Steps:**
-- Phase 1.5: Verify research completeness
-- S2.P2 Phase 2: Update spec.md with findings
+- S2.P1.I1 Gate 1: Verify research completeness
+- S2.P1.I2: Update spec.md with findings, resolve checklist questions
 ```
 
 ---
 
-## Phase 1.5 Examples: Research Completeness Audit
+## S2.P1.I1 Gate 1 Examples: Research Completeness Audit
 
 ### Example 1: Complete Audit with PASSING Results
 
@@ -694,16 +694,16 @@ Source: [module]/util/DataRecord.py lines 15-25
 
 **Question 4.1:** Have I re-read the epic notes file in THIS phase?
 
-❌ BAD: "I read it in Phase 0, don't need to read again"
-✅ GOOD: "Re-read in Phase 0 at 2026-01-02 10:15, extracted user requests"
+❌ BAD: "I read it at S2.P1.I1 start, don't need to read again"
+✅ GOOD: "Re-read at S2.P1.I1 start at 2026-01-02 10:15, extracted user requests"
 
-**My answer:** Yes, re-read epic notes in Phase 0:
+**My answer:** Yes, re-read epic notes at S2.P1.I1 start:
 - File: .shamt/epics/SHAMT-1-improve_recommendation_engine/improve_recommendation_engine_notes.txt
 - Read timestamp: 2026-01-02 10:15
 - Extracted user quotes with line numbers
 - Created Discovery Context section in spec.md
 
-**Evidence:** Phase 0 completion timestamp in Agent Status: 2026-01-02 10:20
+**Evidence:** S2.P1.I1 start timestamp in Agent Status: 2026-01-02 10:20
 
 ---
 
@@ -750,7 +750,7 @@ All of these are agent assumptions → Added to checklist as questions
 
 ---
 
-## Phase 1.5 Audit Summary
+## S2.P1.I1 Gate 1 Audit Summary
 
 **Category 1 (Component Knowledge):** ✅ PASSED
 **Category 2 (Pattern Knowledge):** ✅ PASSED
@@ -831,11 +831,11 @@ All of these are agent assumptions → Added to checklist as questions
 
 **Verification Result for Category 1:** ❌ FAILED
 
-**Must return to Phase 1 and:**
+**Must return to S2.P1.I1 and:**
 1. Find exact file paths for all components
 2. READ source code (not just search)
 3. Document actual signatures with evidence
-4. Re-run audit after research complete
+4. Re-run Gate 1 audit after research complete
 
 **DO NOT PROCEED TO S2.P2**
 ```markdown
@@ -899,56 +899,56 @@ Read timestamp: 2026-01-02 10:30
 
 ---
 
-### Anti-Pattern 3: Skipping Phase 0
+### Anti-Pattern 3: Skipping Discovery Context Review (S2.P1.I1 Step 1)
 
 ❌ **WRONG:**
 ```
 I remember from S1 that user wants Rank integration. I'll start researching RecordManager now.
 
-{Jumps straight to Phase 1 without re-reading epic}
+{Jumps straight to research without re-reading epic}
 ```markdown
 
 ✅ **CORRECT:**
 ```
-**Phase 0: Discovery Context Review**
+**S2.P1.I1 Step 1: Discovery Context Review**
 
 Even though I worked on S1, I'm re-reading epic notes now to ensure I understand user intent.
 
 {Reviews DISCOVERY.md from S1}
 {Verifies spec has Discovery Context section}
 {Notes relevant findings and user answers}
-{THEN proceeds to Phase 1}
+{THEN proceeds to targeted research}
 
-**Why:** Context windows have limits. Session compaction may have lost details. Always review DISCOVERY.md in Phase 0.
+**Why:** Context windows have limits. Session compaction may have lost details. Always review DISCOVERY.md at S2.P1.I1 start.
 
 ---
 
 ## Success Criteria Summary
 
-**Research Phase (S2.P1) passes when:**
+**S2.P1.I1 passes when:**
 
-✅ **Phase 0 (Discovery Context Review):**
+✅ **S2.P1.I1 Step 1 (Discovery Context Review):**
 - DISCOVERY.md reviewed (not relied on memory)
 - Relevant Discovery findings noted for this feature
 - Discovery Context section verified in spec.md
 - Feature's scope from Discovery documented
 - Out-of-scope items identified
 
-✅ **Phase 1 (Targeted Research):**
+✅ **S2.P1.I1 Step 2 (Targeted Research):**
 - Research grounded in epic intent (not generic)
 - Components mentioned by user researched FIRST
 - Source code READ (not just searched)
 - Evidence collected (file paths, line numbers, code snippets)
 - Research findings documented in epic/research/{FEATURE_NAME}_DISCOVERY.md
 
-✅ **Phase 1.5 (Audit):**
+✅ **S2.P1.I1 Gate 1 (Research Completeness Audit):**
 - All 4 categories answered with evidence
 - Can cite exact files, lines, signatures
 - Can describe patterns from actual code
 - Can identify assumptions vs. user requests
 - Overall result: PASSED
 
-**Ready for S2.P2 when all 3 phases complete with evidence.**
+**Ready for S2.P1.I2 (Checklist Resolution) when Gate 1 complete with evidence.**
 
 ---
 

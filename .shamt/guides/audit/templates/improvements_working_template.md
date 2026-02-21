@@ -67,7 +67,7 @@ the process in `stages/stage_5_loop_decision.md` → "End-of-Round: Improvements
 [Impact on audit quality, agent effectiveness, or guide accuracy]
 
 **Example (if applicable):**
-```
+```text
 Before: [current state]
 After:  [proposed state]
 ```

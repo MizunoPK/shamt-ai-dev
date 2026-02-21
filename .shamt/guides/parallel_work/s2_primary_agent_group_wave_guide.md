@@ -436,14 +436,14 @@ I'm joining as a secondary agent to help with S2 parallelization for the {epic_n
 **Please open 6 new Claude Code sessions and give each one this minimal startup instruction:**
 
 ### Secondary-A: Feature 02
-```text
+~~~text
 You are a secondary agent for SHAMT-{N} for feature 02
-```
+~~~
 
 ### Secondary-B: Feature 03
-```text
+~~~text
 You are a secondary agent for SHAMT-{N} for feature 03
-```
+~~~
 
 [Continue for all Group 2 features, incrementing the feature number each time...]
 

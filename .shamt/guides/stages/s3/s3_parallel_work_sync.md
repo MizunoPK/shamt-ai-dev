@@ -68,7 +68,7 @@
    - File: `feature_{N}_{name}/STATUS`
 
 2. **Verify required fields:**
-   - `STAGE: S2.P3`
+   - `STAGE: S2.P1`
    - `STATUS: COMPLETE`
    - `READY_FOR_SYNC: true`
    - `BLOCKERS: none`
@@ -89,8 +89,8 @@
    - File: `agent_checkpoints/{secondary_agent_id}.json`
 
 2. **Verify checkpoint fields:**
-   - `status: "WAITING_FOR_SYNC"`
-   - `stage: "S2.P3"`
+   - `status: "COMPLETE"`
+   - `stage: "S2.P1"`
    - `ready_for_next_stage: true`
    - `last_checkpoint` within last 30 minutes (not stale)
 
@@ -164,9 +164,9 @@ Create sync verification record in `epic/research/S3_SYNC_VERIFICATION_{DATE}.md
 - [x] Feature 04: COMPLETE, READY_FOR_SYNC: true
 
 ### Checkpoints
-- [x] Secondary-A: WAITING_FOR_SYNC, last update {timestamp} ({minutes} min ago)
-- [x] Secondary-B: WAITING_FOR_SYNC, last update {timestamp} ({minutes} min ago)
-- [x] Secondary-C: WAITING_FOR_SYNC, last update {timestamp} ({minutes} min ago)
+- [x] Secondary-A: COMPLETE, last update {timestamp} ({minutes} min ago)
+- [x] Secondary-B: COMPLETE, last update {timestamp} ({minutes} min ago)
+- [x] Secondary-C: COMPLETE, last update {timestamp} ({minutes} min ago)
 
 ### Feature Specs
 - [x] Feature 01: All sections complete, user approved
@@ -207,12 +207,12 @@ Create sync verification record in `epic/research/S3_SYNC_VERIFICATION_{DATE}.md
      ## Message {N} ({TIMESTAMP}) ⏳ UNREAD
      **Subject:** S3 Starting - Sync Point Reached
      **Action:** All features verified complete, S3 beginning now
-     **Details:** 
+     **Details:**
      - All {N} features completed S2 successfully
      - Sync verification passed
      - Primary now running S3 (Cross-Feature Sanity Check)
      - You should WAIT - do NOT proceed to S3
-     
+
      **Next:** After S3 completes, you'll receive notification to proceed to S4
      **Acknowledge:** No action needed, this is informational only
      ```
@@ -243,7 +243,7 @@ Create sync verification record in `epic/research/S3_SYNC_VERIFICATION_{DATE}.md
 
 - [ ] All secondary agents sent completion messages (Step 0.1)
 - [ ] All feature STATUS files show COMPLETE and READY_FOR_SYNC (Step 0.2)
-- [ ] All agent checkpoints show WAITING_FOR_SYNC status (Step 0.3)
+- [ ] All agent checkpoints show COMPLETE status (Step 0.3)
 - [ ] All feature specs have required sections complete (Step 0.4)
 - [ ] All feature checklists fully resolved with user approval (Step 0.4)
 - [ ] Sync verification document created (Step 0.5)
@@ -256,7 +256,7 @@ Create sync verification record in `epic/research/S3_SYNC_VERIFICATION_{DATE}.md
 
 ---
 
-## Next
+## Next Phase
 
 **After sync verification complete:** Proceed to S3.P1 (Prepare Comparison Matrix)
 

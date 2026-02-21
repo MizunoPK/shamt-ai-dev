@@ -9,6 +9,16 @@
 
 ---
 
+## Table of Contents
+
+1. [Purpose](#purpose)
+2. [Phase 6 Examples: Acceptance Criteria & User Approval](#phase-6-examples-acceptance-criteria--user-approval)
+   - [Example 1: Complete Acceptance Criteria](#example-1-complete-acceptance-criteria)
+   - [Example 2: User Approval Process](#example-2-user-approval-process)
+3. [Success Criteria Summary](#success-criteria-summary)
+
+---
+
 ## Purpose
 
 This reference provides detailed examples specifically for **Phase 6: Acceptance Criteria & User Approval** of the Refinement Phase (S2.P3).

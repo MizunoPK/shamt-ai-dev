@@ -172,9 +172,9 @@ When errors occur, what information do you need?
 
 ---
 
-### S1.P3.2: Discovery Loop - Iteration 4
+### S1.P3.2: Discovery Loop - Iteration 4 (Clean Round 1 of 3)
 
-**Research Focus:** Verify no more questions emerge
+**Research Focus:** Validate DISCOVERY.md for completeness — check for gaps, inconsistencies, missing scope
 
 **Files Examined:**
 - Re-reviewed all simulation modules
@@ -183,10 +183,14 @@ When errors occur, what information do you need?
 
 **Findings:**
 - Existing verbose flag could be repurposed for debug mode
-- All questions answered - no new questions emerged
+- All questions answered — zero issues/gaps found this round
 - Clear picture of what needs to be built
 
-**Questions for User:** None - Discovery Loop complete.
+**Questions for User:** None
+
+**Clean Round Counter:** 1 of 3 — two more clean rounds needed before exit.
+
+*(Note: Example 1 abbreviates iterations 5 and 6 for brevity — both produced zero issues/gaps, reaching counter = 3 and triggering Discovery Loop exit.)*
 
 ---
 
@@ -255,7 +259,7 @@ Add a debug mode to simulations with:
 
 ---
 
-## Example 2: Discovery Loop Exit (No More Questions)
+## Example 2: Discovery Loop Exit (3 Consecutive Clean Rounds)
 
 **Epic Request:** "Add JSON export for item rankings"
 
@@ -281,7 +285,7 @@ Add a debug mode to simulations with:
 
 ---
 
-### Iteration 2 - Research
+### Iteration 2 - Research (Clean Round 1 of 3)
 
 **Files Examined:**
 - Re-reviewed export.py patterns
@@ -289,11 +293,45 @@ Add a debug mode to simulations with:
 
 **Findings:**
 - Pattern is clear: copy CSV export, change serialization
-- Simple scope, no new questions emerged
+- Simple scope, zero issues/gaps found this round
 
 **Questions for User:** None
 
-**Discovery Loop Exit:** Research produced no new questions.
+**Clean Round Counter:** 1 of 3 — continuing loop.
+
+---
+
+### Iteration 3 - Research (Clean Round 2 of 3)
+
+**Files Examined:**
+- Checked integration points (data pipeline, file I/O layer)
+- Verified no naming conflicts with existing exports
+
+**Findings:**
+- Integration points confirmed — no changes required
+- Zero issues/gaps found this round
+
+**Questions for User:** None
+
+**Clean Round Counter:** 2 of 3 — continuing loop.
+
+---
+
+### Iteration 4 - Research (Clean Round 3 of 3)
+
+**Files Examined:**
+- Final review: error handling patterns, test coverage expectations
+- Confirmed scope boundary (export only, no UI changes)
+
+**Findings:**
+- No new integration concerns
+- Zero issues/gaps found this round
+
+**Questions for User:** None
+
+**Clean Round Counter:** 3 of 3 — exit criterion met.
+
+**Discovery Loop Exit:** 3 consecutive clean rounds with zero issues/gaps completed.
 
 ---
 

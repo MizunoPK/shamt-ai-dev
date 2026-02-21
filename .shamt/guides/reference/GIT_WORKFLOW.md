@@ -1,8 +1,20 @@
 # Git Branching Workflow
 
-This document describes the git branching workflow for epic development in the [Project Name] project.
+This document describes the git branching workflow for epic development in the SHAMT project.
 
 **Key Principle:** All epic work must be done on feature branches (not directly on main).
+
+---
+
+## Table of Contents
+
+1. [Branch Management](#branch-management)
+2. [Naming Conventions](#naming-conventions)
+3. [.shamt/epics/EPIC_TRACKER.md Management](#shamtepicsepic_trackermd-management)
+4. [Common Scenarios](#common-scenarios)
+5. [Best Practices](#best-practices)
+6. [Troubleshooting](#troubleshooting)
+7. [See Also](#see-also)
 
 ---
 
@@ -130,7 +142,6 @@ EOF
 **Step 4: User reviews and merges PR**
 - User reviews PR in GitHub UI, VS Code extension, or CLI
 - User approves and merges when satisfied
-- See `.shamt/epics/USER_PR_REVIEW_GUIDE.md` for review options
 
 **Step 5: Update .shamt/epics/EPIC_TRACKER.md** (after user merges PR)
 ```bash
@@ -423,6 +434,5 @@ git push origin epic/SHAMT-{number}
 ## See Also
 
 - `.shamt/epics/EPIC_TRACKER.md` - Epic tracking and SHAMT number assignment
-- `.shamt/epics/USER_PR_REVIEW_GUIDE.md` - PR review options for users
 - `CLAUDE.md` - Complete epic development workflow
 - `.shamt/guides/stages/s10/s10_epic_cleanup.md` - S10 guide (includes PR creation)

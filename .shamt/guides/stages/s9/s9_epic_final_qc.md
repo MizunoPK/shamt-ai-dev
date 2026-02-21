@@ -469,7 +469,7 @@ Ready to begin Step 1: Pre-QC Verification.
 
 ---
 
-## Next Stage After S9
+## Next Stage
 
 **When S9 complete:**
 - Transition to S10 (Epic Cleanup)

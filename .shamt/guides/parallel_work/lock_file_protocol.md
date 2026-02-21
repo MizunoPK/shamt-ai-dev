@@ -8,6 +8,26 @@
 
 ---
 
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Lock File Format](#lock-file-format)
+3. [Lock Acquisition Protocol](#lock-acquisition-protocol)
+4. [Performing Locked Operation](#performing-locked-operation)
+5. [Lock Release Protocol](#lock-release-protocol)
+6. [Lock Timeout Behavior](#lock-timeout-behavior)
+7. [Lock Files in S2 Parallelization](#lock-files-in-s2-parallelization)
+8. [Lock Retry Logic](#lock-retry-logic)
+9. [Sectioned EPIC_README.md](#sectioned-epic_readmemd)
+10. [Common Lock Scenarios](#common-lock-scenarios)
+11. [Lock Debugging](#lock-debugging)
+12. [Integration with Guides](#integration-with-guides)
+13. [Performance Characteristics](#performance-characteristics)
+14. [Error Handling](#error-handling)
+15. [Summary](#summary)
+
+---
+
 ## Overview
 
 When multiple agents work in parallel during S2, they need to update shared files like `EPIC_README.md`. Without coordination, simultaneous writes would cause:
@@ -439,7 +459,7 @@ echo "Lock force-released"
 
 ## Integration with Guides
 
-### In S2.P1, S2.P2, S2.P3 Guides
+### In S2.P1 Guide (s2_p1_spec_creation_refinement.md)
 
 **Add lock protocol steps:**
 

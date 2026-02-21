@@ -801,4 +801,16 @@ STOP - DO NOT PROCEED TO S9.P3 YET
 
 ---
 
+## Next Phase
+
+**After completing S9.P2 (3 consecutive clean rounds), proceed to:**
+- **Phase:** S9.P3 — User Testing
+- **Guide:** `stages/s9/s9_p3_user_testing.md`
+
+**See also:**
+- `stages/s9/s9_p1_epic_smoke_testing.md` — S9.P1 (Epic Smoke Test, must pass before QC rounds)
+- `reference/validation_loop_master_protocol.md` — Full validation loop protocol for S9
+
+---
+
 **END OF S9.P2 GUIDE**

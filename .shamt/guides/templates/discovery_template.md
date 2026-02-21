@@ -88,7 +88,7 @@
 
 ---
 
-{Continue for each iteration until no new questions emerge}
+{Continue for each iteration until 3 consecutive clean rounds with zero issues/gaps}
 
 ### Iteration {N} ({YYYY-MM-DD HH:MM}) - FINAL
 

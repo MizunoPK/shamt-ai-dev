@@ -6,6 +6,22 @@
 
 ---
 
+## Table of Contents
+
+1. [Real-World Examples](#real-world-examples)
+   - [Example 1: Good Feature Breakdown](#example-1-good-feature-breakdown)
+   - [Example 2: Bad Feature Breakdown](#example-2-bad-feature-breakdown)
+   - [Example 3: Feature vs Epic Confusion](#example-3-feature-vs-epic-confusion)
+   - [Example 4: Session Compaction Recovery](#example-4-session-compaction-recovery)
+   - [Example 5: Epic Ticket Example - Feature 02](#example-5-epic-ticket-example---feature-02)
+   - [Example 6: Multi-Feature Epic Analysis](#example-6-multi-feature-epic-analysis)
+   - [Example 7: Epic Ticket Template - Standard](#example-7-epic-ticket-template---standard)
+   - [Example 8: Feature Breakdown Presentation](#example-8-feature-breakdown-presentation)
+   - [Example 9: Common Breakdown Scenarios](#example-9-common-breakdown-scenarios)
+   - [Example 10: Epic Size Classification](#example-10-epic-size-classification)
+
+---
+
 ## Real-World Examples
 
 ### Example 1: Good Feature Breakdown

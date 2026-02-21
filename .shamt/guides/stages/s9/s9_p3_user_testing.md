@@ -1,5 +1,4 @@
-# S9: Epic-Level Final QC
-## S9.P3: User Testing & Bug Fix Protocol
+# S9.P3: User Testing & Bug Fix Protocol
 
 **Purpose:** Have the user test the complete epic after QC rounds pass to catch real-world issues before final review and commit.
 
@@ -601,6 +600,17 @@ User-reported bugs follow the epic debugging protocol:
 - Real-world validation ensures epic works
 - User approval builds confidence
 - Final quality gate before commit
+
+---
+
+## Next Phase
+
+**After completing S9.P3 (User Testing):**
+
+- User testing passed (user confirmed "No bugs found")
+- Proceed to: `stages/s9/s9_p4_epic_final_review.md` (Epic Final Review)
+
+**See also:** `prompts_reference_v2.md` → "Starting S9.P4" prompt
 
 ---
 

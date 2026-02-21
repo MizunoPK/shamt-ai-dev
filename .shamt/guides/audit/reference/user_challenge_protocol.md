@@ -134,17 +134,17 @@ You're absolutely right - let me provide concrete evidence.
 [Repeat for 5-10 examples showing actual changes]
 
 **Git Commits:**
-```bash
+~~~bash
 git log --oneline | head -5
 [show actual commits with audit fixes]
-```
+~~~
 
 **Verification:**
-```bash
+~~~bash
 # Re-run discovery pattern
 grep -rn "pattern" --include="*.md" .
 # Output: [show zero or documented remaining instances]
-```text
+~~~
 
 If you cannot provide this evidence, loop back immediately.
 ```
@@ -408,12 +408,12 @@ Why did I miss this?
 ### Before Fixes
 
 **Discovery Results:**
-```bash
+~~~bash
 $ grep -rn "pattern" --include="*.md" .
 file1.md:10: [match content]
 file2.md:25: [match content]
 [... showing N_found matches]
-```
+~~~
 **Total Found:** N_found instances
 
 ### Fixes Applied
@@ -433,19 +433,19 @@ file2.md:25: [match content]
 ### After Fixes (Verification)
 
 **Verification Results:**
-```bash
+~~~bash
 $ grep -rn "pattern" --include="*.md" .
 [zero output OR documented intentional cases]
-```
+~~~
 **Total Remaining:** 0 (or N with explanations)
 
 ### Git Evidence
 
-```bash
+~~~bash
 $ git log --oneline | grep -i audit
 abc123 feat/audit: Apply Round 3 fixes - notation standardization (70 files)
 def456 feat/audit: Apply Round 2 fixes - file paths (15 files)
-```markdown
+~~~
 
 ### Spot-Check Results
 

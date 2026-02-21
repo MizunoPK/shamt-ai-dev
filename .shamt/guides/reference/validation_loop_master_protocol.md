@@ -21,6 +21,7 @@
 10. [How Scenario-Specific Loops Extend This Master](#how-scenario-specific-loops-extend-this-master)
 11. [Templates](#templates)
 
+
 ---
 
 ## Overview
@@ -1188,82 +1189,7 @@ Round 3: Check ALL 7 dimensions + scenario-specific
 
 ### Example: S5 Implementation Planning Loop
 
-**Full Guide:** `stages/s5/s5_v2_validation_loop.md`
-
-**Structure:**
-```markdown
-## Validation Loop: Implementation Planning (S5)
-
-**Extends:** Master Validation Loop Protocol
-**See:** reference/validation_loop_master_protocol.md
-
-## Master Dimensions (7) - Always Checked
-
-1. ✅ Empirical Verification
-2. ✅ Completeness
-3. ✅ Internal Consistency
-4. ✅ Traceability
-5. ✅ Clarity & Specificity
-6. ✅ Upstream Alignment
-7. ✅ Standards Compliance
-
-**See master protocol for checklists**
-
----
-
-## S5-Specific Dimensions (5) - Implementation Context
-
-### Dimension 8: Algorithm Traceability
-[Specific to implementation plans]
-[Checklist for tracing algorithm steps to spec]
-
-### Dimension 9: Integration Gap Check
-[Specific to implementation plans]
-[Checklist for external dependencies]
-
-### Dimension 10: E2E Data Flow
-[Specific to implementation plans]
-[Checklist for data flow completeness]
-
-### Dimension 11: TODO Specificity
-[Specific to implementation plans]
-[Checklist for actionable TODOs]
-
-### Dimension 12: Error Handling Coverage
-[Specific to implementation plans]
-[Checklist for error scenarios]
-
----
-
-## Total Dimensions: 12 (7 master + 5 S5-specific)
-
-## Validation Process
-[Same as master: 3 consecutive clean rounds, zero deferred issues]
-```
-
-### Scenario-Specific Dimension Examples
-
-**S2 Spec Validation:**
-- Dimension 8: Research Completeness (all unknowns researched)
-- Dimension 9: Question Quality (checklist has valid questions)
-
-**S4 Test Strategy:**
-- Dimension 8: Test Coverage (>90% requirement coverage)
-- Dimension 9: Edge Case Enumeration (all edge cases identified)
-- Dimension 10: Test Specificity (tests are concrete, not vague)
-
-**S7 Validation Loop:**
-- Dimension 8: Cross-Feature Integration (integration points work)
-- Dimension 9: Data Flow Validation (data flows correctly)
-- Dimension 10: Error Propagation (errors propagate correctly)
-
-**S9 Epic QC:**
-- Dimension 8: Epic-Level Integration (all features work together)
-- Dimension 9: Epic Cohesion (architectural consistency)
-- Dimension 10: Epic Success Criteria (original goals met)
-- Dimension 11: Performance Validation (meets performance targets)
-
----
+**Full Guide:** `stages/s5/s5_v2_validation_loop.md` — 11 implementation planning dimensions (7 master + 4 S5-specific) covering requirements coverage, interface verification, algorithm traceability, task quality, data flow, error handling, integration, test coverage, performance, implementation readiness, and spec alignment.
 
 ## Templates
 
@@ -1317,27 +1243,6 @@ Round 3: Check ALL 7 dimensions + scenario-specific
 **Fixed:** [ ] Yes [Timestamp]
 **Verified in Round:** {N}
 ```
-
----
-
-## Summary
-
-**Master Validation Loop Protocol provides:**
-- ✅ 7 universal dimensions (apply to ALL validation contexts)
-- ✅ Core process (3 consecutive clean rounds, zero deferred issues)
-- ✅ Systematic approach (all dimensions every round)
-- ✅ Quality guarantee (fresh eyes, complete re-reading)
-- ✅ Extensibility (scenario-specific loops add dimensions)
-
-**Next Steps:**
-1. Apply this master protocol to your validation scenario
-2. Add scenario-specific dimensions (2-8 typical)
-3. Follow round-by-round execution
-4. Document in validation log
-5. Exit when 3 consecutive clean rounds achieved
-
-**Key Principle:**
-> "Never assume - always verify. Check everything, every round, until 3 consecutive rounds are clean."
 
 ---
 

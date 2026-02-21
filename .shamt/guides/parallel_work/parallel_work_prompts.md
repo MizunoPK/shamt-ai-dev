@@ -7,6 +7,21 @@
 
 ---
 
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Prompt 1: Primary Agent - Starting Parallel S2](#prompt-1-primary-agent---starting-parallel-s2)
+3. [Prompt 2: Secondary Agent - Joining Parallel S2](#prompt-2-secondary-agent---joining-parallel-s2)
+4. [Prompt 3: Coordination Heartbeat (Primary)](#prompt-3-coordination-heartbeat-primary)
+5. [Prompt 4: Coordination Heartbeat (Secondary)](#prompt-4-coordination-heartbeat-secondary)
+6. [Prompt 5: Sync Point Verification (Primary, before S3)](#prompt-5-sync-point-verification-primary-before-s3)
+7. [Prompt 6: Stale Agent Detected (Primary)](#prompt-6-stale-agent-detected-primary)
+8. [Prompt 7: Sync Timeout (Primary at S2→S3)](#prompt-7-sync-timeout-primary-at-s2s3)
+9. [Prompt 8: Sync Timeout (Secondary at S4→S5)](#prompt-8-sync-timeout-secondary-at-s4s5)
+10. [Summary: Prompt Usage](#summary-prompt-usage)
+
+---
+
 ## Overview
 
 This file contains **mandatory acknowledgment prompts** for parallel work during S2. These prompts ensure agents:
@@ -138,7 +153,7 @@ Starting Stage: S2.P1 (Feature Deep Dive - Research Phase)
 
 ✅ I will escalate blockers to Primary within 15 minutes
 
-✅ After completing S2.P3, I will:
+✅ After completing S2.P1 (all 3 iterations), I will:
    - Send completion message to Primary
    - Update STATUS: READY_FOR_SYNC = true
    - Update checkpoint: WAITING_FOR_SYNC
@@ -156,7 +171,7 @@ Starting Stage: S2.P1 (Feature Deep Dive - Research Phase)
 
 ## Prompt 3: Coordination Heartbeat (Primary)
 
-**When to use:** Every 15 minutes during S2.P1, S2.P2, or S2.P3
+**When to use:** Every 15 minutes during S2.P1
 
 **Acknowledgment required:** No (procedural reminder)
 
@@ -199,7 +214,7 @@ Coordination complete. Resuming Feature 01 work...
 
 ## Prompt 4: Coordination Heartbeat (Secondary)
 
-**When to use:** Every 15 minutes during S2.P1, S2.P2, or S2.P3
+**When to use:** Every 15 minutes during S2.P1
 
 **Acknowledgment required:** No (procedural reminder)
 
@@ -234,7 +249,7 @@ Coordination complete. Resuming feature work...
 
 ## Prompt 5: Sync Point Verification (Primary, before S3)
 
-**When to use:** After Primary completes Feature 01 S2.P3, before starting S3
+**When to use:** After Primary completes Feature 01 S2.P1 and all secondaries signal READY_FOR_SYNC, before starting S3
 
 **Acknowledgment required:** Yes (MANDATORY GATE)
 

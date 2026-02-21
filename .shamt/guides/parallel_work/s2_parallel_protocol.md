@@ -18,7 +18,6 @@
 7. [File Structure](#file-structure)
 8. [User Experience](#user-experience)
 9. [Troubleshooting](#troubleshooting)
-10. [Integration Guide](#integration-guide)
 
 ---
 
@@ -74,9 +73,9 @@ SAVINGS: 4 hours (14% epic-level reduction)
 ### Scope
 
 **Parallelizable:**
-- ✅ S2.P1: Research Phase
-- ✅ S2.P2: Specification Phase
-- ✅ S2.P3: Refinement Phase
+- ✅ S2.P1: Spec Creation & Refinement (all 3 iterations — I1 Discovery, I2 Checklist, I3 Refinement)
+
+**Note:** The old 3-phase structure (S2.P1 Research, S2.P2 Specification, S2.P3 Refinement) has been superseded. All spec work is now in S2.P1 (`s2_p1_spec_creation_refinement.md`). S2.P2 Cross-Feature Alignment is run by Primary only after all agents complete S2.P1.
 
 **Sequential (Unchanged):**
 - ❌ S1: Epic Planning (Primary only)
@@ -389,9 +388,7 @@ Ready to start? Please paste the handoff packages.
 #### Primary Responsibilities
 
 **85% Feature 01 work:**
-- Execute S2.P1 for Feature 01
-- Execute S2.P2 for Feature 01
-- Execute S2.P3 for Feature 01
+- Execute S2.P1 for Feature 01 (all 3 iterations using `s2_p1_spec_creation_refinement.md`)
 
 **15% Coordination:**
 - Check inboxes every 15 min
@@ -410,9 +407,7 @@ Repeat
 #### Secondary Responsibilities
 
 **90% Feature work:**
-- Execute S2.P1 for assigned feature
-- Execute S2.P2 for assigned feature
-- Execute S2.P3 for assigned feature
+- Execute S2.P1 for assigned feature (all 3 iterations using `s2_p1_spec_creation_refinement.md`)
 
 **10% Coordination:**
 - Update checkpoint every 15 min
@@ -521,7 +516,7 @@ Next: Continuing S2.P2
 
 ### Phase 6: Sync Point - S2 Complete
 
-**When all features complete S2.P3:**
+**When all features complete S2.P1:**
 
 #### Step 1: Verify All Complete
 
@@ -748,8 +743,8 @@ READY_FOR_SYNC: false
 **Responsibilities:**
 
 1. **Feature 01 Owner:**
-   - Complete S2.P1 → S2.P2 → S2.P3 for Feature 01
-   - Same workflow as secondaries, but on main feature
+   - Complete S2.P1 for Feature 01 (all 3 iterations)
+   - After all secondaries complete, run S2.P2 Cross-Feature Alignment (Primary only)
 
 2. **Coordinator:**
    - Generate handoff packages
@@ -777,8 +772,8 @@ READY_FOR_SYNC: false
 **Responsibilities:**
 
 1. **Feature Owner:**
-   - Complete S2.P1 → S2.P2 → S2.P3 for assigned feature
-   - Full S2 workflow for one feature
+   - Complete S2.P1 for assigned feature (all 3 iterations)
+   - Full S2.P1 workflow for one feature
 
 2. **Communicator:**
    - Update checkpoint every 15 min
@@ -820,7 +815,7 @@ READY_FOR_SYNC: false
 
 ### Sync Point 2: After S2 → Before S3
 
-**Trigger:** All agents complete S2.P3
+**Trigger:** All agents complete S2.P1
 
 **Status Checks:**
 ```bash
@@ -950,7 +945,7 @@ User:
 User sees (in each session):
 - Primary: "Working on Feature 01 S2.P2..."
 - Secondary-A: "Working on Feature 02 S2.P1..."
-- Secondary-B: "Working on Feature 03 S2.P3..."
+- Secondary-B: "Working on Feature 03 S2.P1 I3 (Refinement)..."
 
 **Step 6: Agents Complete**
 
@@ -1090,94 +1085,6 @@ You can close this session or keep open to monitor.
 
 ---
 
-## Integration Guide
-
-### Integrating S2 Parallelization into Epic Workflow
-
-**Prerequisites:**
-- All infrastructure guides created (lock, comms, checkpoint)
-- Templates created (handoff package, STATUS)
-- Agent guides created (Primary, Secondary)
-
-**Integration Steps:**
-
-1. **Update S1 Guide:**
-   - Add: Feature parallelization analysis
-   - Add: Parallel work offering step
-   - Add: Handoff generation step
-
-2. **Update S2 Router Guide:**
-   - Add: Agent role detection
-   - Add: Routing to Primary vs Secondary guides
-   - Add: Parallel work awareness
-
-3. **Update S2.P1 Guide:**
-   - Add: Checkpoint update steps
-   - Add: Inbox check steps
-   - Add: STATUS update steps
-   - Add: EPIC_README.md lock protocol
-
-4. **Update S2.P2 Guide:**
-   - Same as S2.P1
-
-5. **Update S2.P3 Guide:**
-   - Add: Completion signal step
-   - Add: READY_FOR_SYNC update
-   - Add: Wait for sync instructions
-
-6. **Update S3 Guide:**
-   - Add: Sync verification step
-   - Add: Check all features complete
-   - Add: Notification to secondaries
-
-7. **Update EPIC_README Template:**
-   - Add: Sectioning (BEGIN/END markers)
-   - Add: Agent Assignment table
-   - Add: Sync Status section
-
-8. **Update EPIC_WORKFLOW_USAGE.md:**
-   - Add: S2 parallelization section
-   - Add: User instructions
-   - Add: Time savings examples
-
-9. **Update CLAUDE.md:**
-   - Add: Quick reference for parallel work
-   - Add: When to use S2 parallelization
-   - Add: Coordination overview
-
-10. **Create Prompts:**
-    - Add: Parallel work offering prompt
-    - Add: Agent role transition prompts
-    - Add: Completion signal prompts
-
-### Testing the Integration
-
-**Pilot Epic:**
-- 2-3 features
-- Minimal dependencies
-- User available for 4 hours
-
-**Test Plan:**
-1. Run S1 normally
-2. Offer parallel work
-3. Generate handoffs
-4. Start secondary agents
-5. Monitor parallel S2 work
-6. Check coordination (locks, messages, checkpoints)
-7. Verify sync point
-8. Complete S3/S4 normally
-9. Measure time savings
-10. Document issues
-
-**Success Criteria:**
-- Time savings ≥40%
-- Coordination overhead <15%
-- Zero data loss
-- Zero conflicts
-- All agents complete successfully
-
----
-
 ## Performance Metrics
 
 ### Time Savings
@@ -1252,17 +1159,6 @@ You can close this session or keep open to monitor.
 4. **Respond to escalations within 15 min** (Primary)
 5. **Use time blocks** (45 min work, 15 min coordination)
 6. **Trust the protocols** (locks, messages, checkpoints)
-
-### Next Steps
-
-**For broader adoption:**
-1. Test with pilot epic (2-3 features)
-2. Measure savings and overhead
-3. Iterate on guides based on learnings
-4. Scale to all epics with 3+ features
-5. Consider S5-S8 parallelization next (higher value, higher complexity)
-
----
 
 ## Structure Validation
 

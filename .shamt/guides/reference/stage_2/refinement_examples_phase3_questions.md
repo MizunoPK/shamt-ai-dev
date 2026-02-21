@@ -9,6 +9,17 @@
 
 ---
 
+## Table of Contents
+
+1. [Purpose](#purpose)
+2. [Phase 3 Examples: Interactive Question Resolution](#phase-3-examples-interactive-question-resolution)
+   - [Example 1: Complete Question-Answer Cycle](#example-1-complete-question-answer-cycle)
+   - [Example 2: User Requests Clarification](#example-2-user-requests-clarification)
+   - [Example 3: User Suggests Alternative](#example-3-user-suggests-alternative)
+3. [Phase 4 Examples: Dynamic Scope Adjustment](#phase-4-examples-dynamic-scope-adjustment)
+
+---
+
 ## Purpose
 
 This reference provides detailed examples specifically for **Phase 3: Interactive Question Resolution** of the Refinement Phase (S2.P3).

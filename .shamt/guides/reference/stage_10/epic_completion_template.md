@@ -177,7 +177,7 @@ Before considering epic completion summary complete:
 - [ ] Test pass rate is 100% (verified with recent test run)
 - [ ] Epic location shows done/ folder path
 - [ ] Original request location is correct (still in root)
-- [ ] If user testing found bugs, added "S10 - User Testing Results" section
+- [ ] User testing completed in S9 (Step 6) — ZERO bugs reported (prerequisite for S10)
 - [ ] EPIC_README.md saved in done/ folder (not root)
 
 ---

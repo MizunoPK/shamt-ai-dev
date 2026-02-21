@@ -4,7 +4,22 @@
 
 **Role:** Feature owner (single feature)
 
-**Stages:** S2.P1 → S2.P2 → S2.P3 (parallel with Primary and other secondaries)
+**Stages:** S2.P1 → S2.P2 (parallel with Primary and other secondaries)
+
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Startup Workflow](#startup-workflow)
+- [S2 Work Workflow](#s2-work-workflow)
+- [Coordination Heartbeat (Every 15 Minutes)](#coordination-heartbeat-every-15-minutes)
+- [Escalation Workflow](#escalation-workflow)
+- [Completion Signal](#completion-signal)
+- [Waiting for Primary (After S2 Complete)](#waiting-for-primary-after-s2-complete)
+- [Common Scenarios](#common-scenarios)
+- [Tools and References](#tools-and-references)
+- [Summary Checklist](#summary-checklist)
 
 ---
 
@@ -88,7 +103,7 @@ Starting Stage: S2.P1 (Feature Deep Dive - Research Phase)
 - STATUS: feature_02_team_penalty/STATUS
 
 **Sync Points:**
-- After S2.P3 complete: Signal completion, WAIT for Primary to run S3
+- After S2.P1 complete: Signal completion, WAIT for Primary to run S2.P2 (Cross-Feature Alignment) and S3
 - After Primary completes S3: Proceed to implementation (sequential)
 
 Begin S2.P1 now.
@@ -309,9 +324,7 @@ acquire_lock "epic_readme" "$SESSION_ID" "Adding Secondary-A progress section"
 **Next Action:** Begin S2.P1 Research Phase
 
 **S2 Progress:**
-- ⏳ S2.P1 (Research Phase) - Starting
-- ⏳ S2.P2 (Specification Phase) - Not Started
-- ⏳ S2.P3 (Refinement Phase) - Not Started
+- ⏳ S2.P1 (Spec Creation & Refinement — 3 iterations) - Starting
 <!-- END SECONDARY-A PROGRESS -->
 ```
 
@@ -383,37 +396,17 @@ Reading guide: stages/s2/s2_p1_spec_creation_refinement.md...
    - Wait for Primary response
 
 3. **After completing S2.P1:**
-   - Update checkpoint: `stage: S2.P2`
-   - Update STATUS: `STAGE: S2.P2`
+   - Update checkpoint: `stage: done`
+   - Update STATUS: `STAGE: done`
    - Update EPIC_README.md: S2.P1 complete
-   - Proceed to S2.P2
+   - Signal completion to Primary
 
-### S2.P2: Specification Phase
-
-**Follow guide:** `stages/s2/s2_p2_specification.md`
-
-**Additional coordination steps:**
-- Same as S2.P1 (checkpoints, inbox, status, epic readme)
-- Escalate if spec ambiguities can't be resolved
-- Signal if user questions needed
-
-**After completing S2.P2:**
-- Update coordination files
-- Proceed to S2.P3
-
-### S2.P3: Refinement Phase
-
-**Follow guide:** `stages/s2/s2_p3_refinement.md`
-
-**Additional coordination steps:**
-- Same as S2.P1 and S2.P2
-- Finalize spec and checklist
-- Prepare for sync
-
-**After completing S2.P3:**
+**After completing S2.P1:**
 - **Signal completion to Primary**
 - Update STATUS: `READY_FOR_SYNC: true`
-- WAIT for Primary to run S3
+- WAIT for Primary to run S2.P2 (Cross-Feature Alignment) and S3
+
+**Note:** S2 for Secondary agents consists only of S2.P1 (`s2_p1_spec_creation_refinement.md`). The Cross-Feature Alignment phase (S2.P2) is run by the Primary agent after all secondaries complete S2.P1. The old 3-phase structure (S2.P1 Research → S2.P2 Specification → S2.P3 Refinement) has been superseded — all spec work is now consolidated in `s2_p1_spec_creation_refinement.md`.
 
 ---
 
@@ -509,15 +502,13 @@ EOF
 ## Feature 02 Progress (Secondary-A)
 
 **Last Updated:** 2026-01-15 12:30
-**Current Stage:** S2.P2 (Specification Phase - In Progress)
-**Current Step:** Writing spec.md Acceptance Criteria
+**Current Stage:** S2.P1.I2 (Checklist Resolution - In Progress)
+**Current Step:** Resolving checklist questions from I1 Discovery
 **Blockers:** None
-**Next Action:** Complete Acceptance Criteria, create checklist.md
+**Next Action:** Complete checklist resolution, proceed to I3 Refinement
 
 **S2 Progress:**
-- ✅ S2.P1 (Research Phase) - Complete
-- 🔄 S2.P2 (Specification Phase) - In Progress (70% done)
-- ⏳ S2.P3 (Refinement Phase) - Not Started
+- 🔄 S2.P1 (Spec Creation & Refinement) - In Progress (I2 of 3)
 <!-- END SECONDARY-A PROGRESS -->
 ```
 
@@ -607,7 +598,7 @@ echo "Next heartbeat in 15 minutes"
 
 ## Completion Signal
 
-### After Completing S2.P3
+### After Completing S2.P1
 
 **Step 1: Finalize All Files**
 - spec.md complete
@@ -617,20 +608,20 @@ echo "Next heartbeat in 15 minutes"
 
 **Step 2: Update STATUS**
 ```text
-STAGE: S2.P3
-PHASE: Refinement - Complete
+STAGE: S2.P1
+PHASE: Spec Creation & Refinement - Complete
 STATUS: COMPLETE
 READY_FOR_SYNC: true
-NEXT_ACTION: Waiting for Primary to run S3
+NEXT_ACTION: Waiting for Primary to run S2.P2 (Cross-Feature Alignment) and S3
 ```
 
 **Step 3: Update Checkpoint**
 ```json
-"stage": "S2.P3",
-"phase": "Refinement - Complete",
+"stage": "S2.P1",
+"phase": "Spec Creation & Refinement - Complete",
 "status": "COMPLETE",
 "can_resume": false,
-"recovery_instructions": "S2 complete for this feature. Waiting for Primary S3."
+"recovery_instructions": "S2.P1 complete for this feature. Waiting for Primary S2.P2 and S3."
 ```
 
 **Step 4: Update EPIC_README.md**
@@ -639,22 +630,20 @@ NEXT_ACTION: Waiting for Primary to run S3
 ## Feature 02 Progress (Secondary-A)
 
 **Last Updated:** 2026-01-15 14:25
-**Current Stage:** S2.P3 (COMPLETE)
-**Current Step:** Waiting for Primary to run S3
+**Current Stage:** S2.P1 (COMPLETE)
+**Current Step:** Waiting for Primary to run S2.P2 Cross-Feature Alignment
 **Blockers:** None
-**Next Action:** Awaiting S3 completion
+**Next Action:** Awaiting S2.P2/S3 completion
 
 **S2 Progress:**
-- ✅ S2.P1 (Research Phase) - Complete
-- ✅ S2.P2 (Specification Phase) - Complete
-- ✅ S2.P3 (Refinement Phase) - Complete
+- ✅ S2.P1 (Spec Creation & Refinement — 3 iterations) - Complete
 <!-- END SECONDARY-A PROGRESS -->
 ```
 
 **Step 5: Send Completion Message**
 ```markdown
 ## Message X (2026-01-15 14:25) ⏳ UNREAD
-**Subject:** S2.P3 Complete for Feature 02
+**Subject:** S2.P1 Complete for Feature 02
 **Status:** feature_02_team_penalty S2 complete
 **Files Ready:**
 - spec.md (complete, all requirements documented)
@@ -774,7 +763,7 @@ Next: Implementation (S5-S8) will be sequential
 - [ ] Sent initial message to Primary
 
 **During S2:**
-- [ ] Working on S2.P1 → S2.P2 → S2.P3
+- [ ] Working on S2.P1 (all 3 iterations: I1 Discovery, I2 Checklist, I3 Refinement)
 - [ ] Updating checkpoint every 15 min
 - [ ] Checking inbox every 15 min
 - [ ] Updating STATUS file every 15 min
@@ -782,7 +771,7 @@ Next: Implementation (S5-S8) will be sequential
 - [ ] Escalating when blocked >30 min
 
 **Completion:**
-- [ ] S2.P3 complete
+- [ ] S2.P1 complete (all 3 iterations)
 - [ ] spec.md finalized
 - [ ] checklist.md finalized
 - [ ] All coordination files updated

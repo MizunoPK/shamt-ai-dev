@@ -8,6 +8,22 @@
 
 ---
 
+## Table of Contents
+
+1. [What is the Validation Loop?](#what-is-the-validation-loop)
+2. [Validation Loop Structure](#validation-loop-structure)
+3. [Universal Critical Rules](#universal-critical-rules)
+4. [Round 1](#round-1-scope-specific---see-implementation-guides)
+5. [Round 2](#round-2-scope-specific---see-implementation-guides)
+6. [Round 3](#round-3-scope-specific---see-implementation-guides)
+7. [Common Validation Patterns](#common-validation-patterns)
+8. [Common Mistakes to Avoid](#common-mistakes-to-avoid)
+9. [Restart Decision Tree](#restart-decision-tree)
+10. [Scope-Specific Differences](#scope-specific-differences)
+11. [Summary](#summary)
+
+---
+
 ## What is the Validation Loop?
 
 **Definition:** The Validation Loop is an iterative quality control process that checks ALL dimensions every round until 3 consecutive clean rounds are achieved.

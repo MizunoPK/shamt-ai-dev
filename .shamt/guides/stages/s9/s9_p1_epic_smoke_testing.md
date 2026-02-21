@@ -602,4 +602,15 @@ print("✅ Interface compatibility verified")
 ---
 ---
 
+## Next Phase
+
+**After completing S9.P1 (Epic Smoke Testing):**
+
+- Epic smoke testing passed (all 4 parts clean, REAL data verified)
+- Proceed to: `stages/s9/s9_p2_epic_qc_rounds.md` (Epic QC Rounds)
+
+**See also:** `prompts_reference_v2.md` → "Starting S9.P2" prompt
+
+---
+
 **END OF S9.P1 GUIDE**

@@ -65,8 +65,8 @@
 ## Usage Instructions
 
 **When to copy these rules:**
-- Beginning of S2.P2 (Specification Phase)
-- Beginning of S2.P3 (Refinement Phase)
+- Beginning of S2.P1 (Spec Creation and Refinement)
+- Beginning of S2.P2 (Cross-Feature Alignment)
 - Beginning of S4 (Feature Testing Strategy)
 - Beginning of S6 (Execution)
 
@@ -83,9 +83,8 @@
 ---
 
 **Referenced by:**
-- `stages/s2/s2_p2_specification.md`
-- `stages/s2/s2_p2_5_spec_validation.md`
-- `stages/s2/s2_p3_refinement.md`
+- `stages/s2/s2_p1_spec_creation_refinement.md`
+- `stages/s2/s2_p2_cross_feature_alignment.md`
 - `stages/s4/s4_feature_testing_strategy.md`
 - `stages/s6/s6_execution.md`
 
