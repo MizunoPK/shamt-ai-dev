@@ -44,13 +44,13 @@ When this feature is complete, the following will be true:
 1. rank data can be loaded from CSV file at `data/priority_rankings.csv`
    - File format: Name, Position, OverallRank columns
    - Loaded automatically during RecordManager initialization
-   - Players matched using name+position normalization (via Feature 05 utility)
+   - Items matched using name+category normalization (via Feature 05 utility)
 
 2. Draft recommendations incorporate rank multipliers
    - High rank priority items (1-50) get 15% scoring boost
    - Mid rank priority items (51-100) get 8% scoring boost
    - Lower rank priority items get smaller or no boost
-   - Players without rank data use neutral 1.0x multiplier
+   - Items without rank data use neutral 1.0x multiplier
 
 3. Command-line flag `--use-rank` available
    - When enabled: Requires rank priority CSV (fails if missing)
@@ -178,14 +178,14 @@ When this feature is complete, the following will be true:
 ### API/Interface Changes
 
 **New Public Methods:**
-1. `ADPDataLoader.load_rank_data(filepath: Path) -> Dict[str, int]`
+1. `RankDataLoader.load_rank_data(filepath: Path) -> Dict[str, int]`
    - Purpose: Load rank data from CSV file
    - Parameters:
      - filepath: Path to rank priority CSV (required columns: Name, Position, OverallRank)
    - Returns: Dictionary mapping item key to rank value
    - Raises: FileNotFoundError if file missing, ValueError if invalid format
 
-2. `ADPDataLoader.load_rank_data_with_fallback(filepath: Path, require: bool = False) -> Dict[str, int]`
+2. `RankDataLoader.load_rank_data_with_fallback(filepath: Path, require: bool = False) -> Dict[str, int]`
    - Purpose: Load rank data with optional graceful degradation
    - Parameters:
      - filepath: Path to rank priority CSV

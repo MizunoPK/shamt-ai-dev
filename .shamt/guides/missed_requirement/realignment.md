@@ -22,7 +22,7 @@
 1. [PHASE 4: S4 - Epic Testing Strategy Update](#phase-4-s4-epic-testing-strategy-update)
    - [Update epic_smoke_test_plan.md](#update-epicsmoketestplanmd)
    - [Step 1: Add Scenarios for New/Updated Feature](#step-1-add-scenarios-for-newupdated-feature)
-1. [Epic Integration Test: Item Scoring with Attribute Status](#epic-integration-test-player-scoring-with-injury-status)
+1. [Epic Integration Test: Item Scoring with Attribute Status](#epic-integration-test-item-scoring-with-attribute-status)
    - [Step 2: Update Existing Scenarios](#step-2-update-existing-scenarios)
 1. [Epic Integration Test: Draft Recommendations (UPDATED)](#epic-integration-test-draft-recommendations-updated)
    - [Step 3: Identify Integration Points](#step-3-identify-integration-points)

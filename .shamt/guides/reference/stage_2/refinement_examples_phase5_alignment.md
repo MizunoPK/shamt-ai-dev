@@ -50,7 +50,7 @@ This reference provides detailed examples specifically for **Phase 5: Cross-Feat
 **Feature 01 modifies:**
 - RecordManager (calculate_total_score method)
 - DataRecord (add rank_value field)
-- ADPDataLoader (new file)
+- RankDataLoader (new file)
 
 **Overlap Analysis:**
 - ⚠️ Both modify RecordManager.calculate_total_score()
@@ -229,7 +229,7 @@ class DataRecord:
 **Feature 01 modifies:**
 - RecordManager (calculate_total_score method)
 - DataRecord (add rank_value field)
-- ADPDataLoader (new file)
+- RankDataLoader (new file)
 - **ConfigManager (add rank multiplier config)**
 
 **Overlap Analysis:**

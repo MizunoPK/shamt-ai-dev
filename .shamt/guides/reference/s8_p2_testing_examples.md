@@ -43,7 +43,7 @@ def calculate_total_score(self, item: DataRecord) -> float:
 - Calculate scores
 - Check scores are reasonable
 
-**Expected result:** Players have scores
+**Expected result:** Items have scores
 ```
 
 **S8.P2 (Epic Testing Update) updates:**
@@ -67,7 +67,7 @@ def calculate_total_score(self, item: DataRecord) -> float:
    - **[UPDATED S8.P2 (Epic Testing Update) - feature_01]:** Verify final_score = projected_value * rank_multiplier
 
 **Expected result:**
-- Players have scores
+- Items have scores
 - **[UPDATED S8.P2 (Epic Testing Update) - feature_01]:** All rank_multiplier values between 0.85-1.50
 - **[UPDATED S8.P2 (Epic Testing Update) - feature_01]:** All rank_score values between 0-100
 - **[UPDATED S8.P2 (Epic Testing Update) - feature_01]:** Math verifies: final_score = projected * multiplier

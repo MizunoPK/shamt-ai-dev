@@ -165,7 +165,7 @@ def _load_stats(self, csv_path):
     """
     df = pd.read_csv(csv_path)
     normalized_name = self._normalize_item_name(self.name)
-    player_stats = df[df['PlayerName'] == normalized_name]
+    player_stats = df[df['ItemName'] == normalized_name]
 
     if player_stats.empty:
         self.stats = {}

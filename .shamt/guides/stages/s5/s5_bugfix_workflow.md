@@ -529,7 +529,7 @@ python run_[module].py --help
 ## Run scenario that triggered bug
 ## Verify bug no longer occurs
 python run_[module].py --mode draft
-## Check: Players with missing rank work correctly
+## Check: Items with missing rank work correctly
 ```
 
 ---

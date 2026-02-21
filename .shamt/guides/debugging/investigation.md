@@ -413,7 +413,7 @@ logger.info(f"Loading stats from: {csv_path}")
 logger.info(f"CSV columns: {df.columns.tolist()}")
 logger.info(f"CSV shape: {df.shape}")
 logger.info(f"Looking for item: {self.name}")
-logger.info(f"Players in CSV: {df['PlayerName'].unique()[:5]}")  # First 5
+logger.info(f"Items in CSV: {df['ItemName'].unique()[:5]}")  # First 5
 logger.info(f"Stats after filter: {player_stats.shape}")
 logger.info(f"Parsed stats dict: {self.stats}")
 ```markdown
@@ -516,7 +516,7 @@ INFO: Loading stats from: data/item_stats.csv
 INFO: CSV columns: ['Week', 'PlayerName', 'StatValue', 'Position']
 INFO: CSV shape: (544, 4)
 INFO: Looking for item: Record-A
-INFO: Players in CSV: ['Record-A', 'J.Allen', 'L.Jackson', 'J.Herbert', 'D.Prescott']
+INFO: Items in CSV: ['Record-A', 'J.Allen', 'L.Jackson', 'J.Herbert', 'D.Prescott']
 INFO: Stats after filter: (0, 4)
 INFO: Parsed stats dict: {}
 ```markdown

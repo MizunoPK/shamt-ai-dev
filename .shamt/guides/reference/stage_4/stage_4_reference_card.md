@@ -147,7 +147,7 @@ python run_[module].py --mode draft
 - "Feature works"
 - "Recommendations are better"
 - "No errors occur"
-- "Players are ranked correctly"
+- "Items are ranked correctly"
 
 ### ✅ Measurable (S4)
 - "All 4 features create expected output files (list files)"

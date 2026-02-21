@@ -300,7 +300,7 @@ items = player_mgr.get_all_items()
 
 ## Verify data format
 assert len(items) > 0, "Feature 01 returned no data"
-assert hasattr(items[0], 'rank'), "Players missing rank field"
+assert hasattr(items[0], 'rank'), "Items missing rank field"
 
 ## Pass to Feature 02
 rating_sys = RatingSystem()

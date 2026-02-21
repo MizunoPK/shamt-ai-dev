@@ -562,7 +562,7 @@ None - all S4 scenarios still relevant
    - Check logs for INFO message: "Item J.Smith missing rank, using default"
 
 **Expected result:**
-- Players missing rank data get neutral multiplier (1.0)
+- Items missing rank data get neutral multiplier (1.0)
 - No ERROR or WARNING logs
 - No crashes or exceptions
 - Missing rank priority does not exclude item from recommendations

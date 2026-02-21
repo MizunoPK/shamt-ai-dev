@@ -64,7 +64,7 @@ Discovery: We forgot to add export functionality
 Currently: Debugging issue_01_null_scoring (feature_01/debugging/)
 
 Discovery: Root cause is missing validation layer
-- Players without position data should be validated earlier
+- Items without category data should be validated earlier
 - This functionality was assumed to exist but doesn't
 - Solution is clear: Need input validation feature
 ```
