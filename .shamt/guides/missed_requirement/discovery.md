@@ -43,7 +43,7 @@
 ```text
 Currently: feature_02_projection_system (S6 - Implementation)
 
-Discovery: We forgot to include player injury status tracking
+Discovery: We forgot to include item attribute status tracking
 - Projections should account for injury status
 - This was in original epic intent but not in any feature spec
 - Solution is clear: Need injury status field + API integration
@@ -161,7 +161,7 @@ What priority level? {User input}
 
 ## Sequence Position
 Current epic sequence:
-1. feature_01_adp_integration (COMPLETE)
+1. feature_01_rank_integration (COMPLETE)
 2. feature_02_projection_system (IN PROGRESS - S6)
 3. feature_03_performance_tracker (NOT STARTED)
 4. feature_04_matchup_analysis (NOT STARTED)
@@ -299,7 +299,7 @@ When planning complete:
 
 | # | Requirement | Action | Priority | Status | Created | Notes |
 |---|-------------|--------|----------|--------|---------|-------|
-| 1 | Player injury tracking | New feature_05 | High | S2 | 2026-01-04 | Inserting after feature_02 |
+| 1 | Item attribute tracking | New feature_05 | High | S2 | 2026-01-04 | Inserting after feature_02 |
 ```
 
 ### Update Current Status section
@@ -310,7 +310,7 @@ When planning complete:
 **Last Updated:** {YYYY-MM-DD HH:MM}
 
 **Missed Requirement Handling:**
-- Requirement: Player injury tracking
+- Requirement: Item attribute tracking
 - Action: Creating new feature_05_injury_tracking
 - Priority: High
 - Sequence: Insert after feature_02 (before feature_03)
@@ -329,7 +329,7 @@ When planning complete:
 
 | Feature | S2 | S3 | S4 | S5 | S6 | S7 | S8.P1 | S8.P2 |
 |---------|---------|---------|---------|----------|----------|----------|----------|----------|
-| feature_01_adp_integration | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| feature_01_rank_integration | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | feature_02_projection_system | ✅ | ✅ | ✅ | ✅ | 🔄 | ◻️ | ◻️ | ◻️ |
 | feature_03_performance_tracker | ✅ | ✅ | ✅ | ◻️ | ◻️ | ◻️ | ◻️ | ◻️ |
 | feature_04_matchup_analysis | ✅ | ✅ | ✅ | ◻️ | ◻️ | ◻️ | ◻️ | ◻️ |

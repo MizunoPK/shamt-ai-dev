@@ -135,22 +135,22 @@ These 2 dimensions are specific to spec refinement validation:
 ```markdown
 checklist.md:
 - [ ] Q1: What file is ConfigManager in?
-- [ ] Q2: What parameters does get_adp_multiplier take?
-- [ ] Q3: Where is the player data stored?
+- [ ] Q2: What parameters does get_rank_multiplier take?
+- [ ] Q3: Where is the record data stored?
 ← These should have been RESEARCHED, not asked
 ```
 
 ✅ **CORRECT - Valid checklist questions (uncertainties):**
 ```markdown
 checklist.md (after research complete):
-- [ ] Q1: Should we cache ADP data, or reload every time?
+- [ ] Q1: Should we cache rank data, or reload every time?
 - [ ] Q2: What timeout should we use for file operations?
 - [ ] Q3: Should multipliers be configurable or hardcoded?
 
 RESEARCH_NOTES.md shows:
 - ConfigManager located: [module]/util/ConfigManager.py:234
-- get_adp_multiplier signature: (self, adp: int) -> Tuple[float, int]
-- Player data stored: data/players_2024.csv (verified with ls)
+- get_rank_multiplier signature: (self, rank: int) -> Tuple[float, int]
+- Record data stored: data/records.csv (verified with ls)
 ```
 
 ❌ **WRONG - Assumption instead of research:**
@@ -158,7 +158,7 @@ RESEARCH_NOTES.md shows:
 spec.md:
 ## Components Affected
 - ConfigManager (probably in [module]/util/)
-- Uses get_adp_multiplier (probably returns float)
+- Uses get_rank_multiplier (probably returns float)
 
 Source: Assumption
 ```
@@ -168,7 +168,7 @@ Source: Assumption
 spec.md:
 ## Components Affected
 - ConfigManager ([module]/util/ConfigManager.py:23)
-  - Method: get_adp_multiplier(self, adp: int) -> Tuple[float, int]
+  - Method: get_rank_multiplier(self, rank: int) -> Tuple[float, int]
   - Verified: Read tool, lines 234-256
 
 Source: Verified from source code (2026-02-10)
@@ -207,25 +207,25 @@ Evidence: ConfigManager.py:234
 
 ❌ **WRONG - Scope creep:**
 ```markdown
-Epic Request: "Load ADP data and calculate multipliers"
+Epic Request: "Load rank data and calculate multipliers"
 
 spec.md Requirements:
-1. Load ADP data from CSV (Epic request line 12) [x]
-2. Calculate multipliers based on ADP (Epic request line 13) [x]
+1. Load rank data from CSV (Epic request line 12) [x]
+2. Calculate multipliers based on rank priority (Epic request line 13) [x]
 3. Generate visualization dashboard ← NOT REQUESTED (scope creep)
 4. Export to multiple formats ← NOT REQUESTED (scope creep)
 ```
 
 ✅ **CORRECT - Scope match:**
 ```markdown
-Epic Request: "Load ADP data and calculate multipliers"
+Epic Request: "Load rank data and calculate multipliers"
 
 spec.md Requirements:
-1. Load ADP data from CSV
+1. Load rank data from CSV
    Source: Epic request line 12
-2. Validate ADP values
+2. Validate rank values
    Source: Derived from requirement 1 (must validate before use)
-3. Calculate multipliers based on ADP
+3. Calculate multipliers based on rank priority
    Source: Epic request line 13
 4. Return multiplier values
    Source: Derived from requirement 3 (output requirement)
@@ -456,10 +456,10 @@ System must handle timeout after 30 seconds.
 
 ❌ **WRONG:**
 ```markdown
-Epic Request: "Load player data and calculate scores"
+Epic Request: "Load record data and calculate scores"
 
 spec.md:
-1. Load player data [x]
+1. Load record data [x]
 2. Calculate scores [x]
 3. Generate PDF reports ← NOT REQUESTED
 4. Send email notifications ← NOT REQUESTED
@@ -467,10 +467,10 @@ spec.md:
 
 ✅ **CORRECT:**
 ```markdown
-Epic Request: "Load player data and calculate scores"
+Epic Request: "Load record data and calculate scores"
 
 spec.md In-Scope:
-1. Load player data
+1. Load record data
    Source: Epic request line 10
 2. Calculate scores
    Source: Epic request line 12
@@ -489,7 +489,7 @@ Out of Scope (future):
 ❌ **WRONG:**
 ```markdown
 checklist.md:
-- [ ] What file is PlayerManager in?
+- [ ] What file is RecordManager in?
 - [ ] What are the parameters for load_players()?
 - [ ] Where is the config file located?
 ← Should have researched these, not asked user
@@ -498,12 +498,12 @@ checklist.md:
 ✅ **CORRECT:**
 ```markdown
 After research (RESEARCH_NOTES.md):
-- PlayerManager: [module]/util/PlayerManager.py:23
-- load_players(): No parameters, returns List[FantasyPlayer]
+- RecordManager: [module]/util/RecordManager.py:23
+- load_players(): No parameters, returns List[DataRecord]
 - Config file: data/league_config.json
 
 checklist.md (valid uncertainties only):
-- [ ] Should we cache player data?
+- [ ] Should we cache record data?
 - [ ] What timeout for file operations?
 - [ ] Should config be validated on load?
 ```
@@ -528,8 +528,8 @@ Requirement 3: System must handle errors
 - KeyError: Raise with missing key name, log at ERROR level
 
 Requirement 5: Performance targets
-- Data load: < 2 seconds for 1000 players
-- Calculation: < 100ms for single player
+- Data load: < 2 seconds for 1000 items
+- Calculation: < 100ms for single item
 - Memory: < 50MB for typical dataset
 ```
 

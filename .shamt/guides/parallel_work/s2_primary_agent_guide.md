@@ -61,7 +61,7 @@ Wave Assignment                                     Run S3 when all complete
 
    **Example:**
    ```text
-   Feature 01: Player JSON integration (no dependencies)
+   Feature 01: JSON data integration (no dependencies)
    Feature 02: Team penalty scoring (depends on Feature 01)
    Feature 03: Scoring algorithm update (no dependencies)
 
@@ -161,7 +161,7 @@ TIME SAVINGS: 4 hours (67% reduction in S2 time)
 ✅ S1 (Epic Planning) complete!
 
 I've identified 3 features for this epic:
-- feature_01: Player JSON integration (2 hours S2)
+- feature_01: JSON data integration (2 hours S2)
 - feature_02: Team penalty scoring (2 hours S2)
 - feature_03: Scoring algorithm update (2 hours S2)
 
@@ -466,7 +466,7 @@ done
 4. **Check STATUS Files:**
    ```bash
    # Check all feature STATUS files
-   cat feature_01_player_json/STATUS
+   cat feature_01_json_integration/STATUS
    cat feature_02_team_penalty/STATUS
    cat feature_03_scoring_update/STATUS
 

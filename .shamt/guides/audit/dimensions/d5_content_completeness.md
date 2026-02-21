@@ -812,7 +812,7 @@ feature_01_[data_fetcher]/spec.md:8:[Describe the purpose of this feature]
 
 # After
 ## Purpose
-Enable users to fetch player data from ESPN API with configurable
+Enable users to export record data in configurable formats with
 date ranges and data types (stats, projections, rankings).
 ```
 

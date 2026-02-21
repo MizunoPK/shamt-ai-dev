@@ -63,9 +63,9 @@ git checkout -b fix/SHAMT-3   # Bug fix work
 
 **Examples:**
 ```bash
-git commit -m "feat/SHAMT-1: Add ADP integration to PlayerManager"
-git commit -m "feat/SHAMT-1: Implement draft helper recommendations"
-git commit -m "fix/SHAMT-1: Fix player name validation in draft mode"
+git commit -m "feat/SHAMT-1: Add Rank integration to RecordManager"
+git commit -m "feat/SHAMT-1: Implement recommendation engine recommendations"
+git commit -m "fix/SHAMT-1: Fix item name validation in draft mode"
 ```
 
 **When to Commit:**
@@ -122,7 +122,7 @@ gh pr create --base main --head epic/SHAMT-1 \
 1. Review feature changes in [module]/recommendation_engine.py
 2. Check updated tests in tests/[module]/test_recommendation_engine.py
 3. Run: {TEST_COMMAND}
-4. Test draft helper: python run_[module].py (select Draft Helper mode)
+4. Test recommendation engine: python run_[module].py (select Draft Helper mode)
 EOF
 )"
 ```
@@ -199,9 +199,9 @@ git push origin --delete {work_type}/SHAMT-{number}
 
 **Examples:**
 ```bash
-feat/SHAMT-1: Add ADP integration to PlayerManager
+feat/SHAMT-1: Add Rank integration to RecordManager
 feat/SHAMT-1: Implement confidence [domain algorithm]
-fix/SHAMT-1: Fix null pointer in player validation
+fix/SHAMT-1: Fix null pointer in item validation
 ```
 
 **Rules:**
@@ -214,11 +214,11 @@ fix/SHAMT-1: Fix null pointer in player validation
 
 **Commit Body (optional but recommended):**
 ```bash
-git commit -m "feat/SHAMT-1: Add ADP integration to PlayerManager" -m "
-- Integrate ADP data from [data-fetcher]
-- Add get_player_by_adp() method
-- Update recommendation algorithm to use ADP
-- Add 15 unit tests for ADP functionality
+git commit -m "feat/SHAMT-1: Add Rank integration to RecordManager" -m "
+- Integrate rank data from [data-fetcher]
+- Add get_item_by_rank() method
+- Update recommendation algorithm to use rank priority
+- Add 15 unit tests for rank priority functionality
 "
 ```
 
@@ -261,7 +261,7 @@ git commit -m "feat/SHAMT-1: Add ADP integration to PlayerManager" -m "
 ```bash
 git checkout -b epic/SHAMT-1
 - Work on feature 01
-git commit -m "feat/SHAMT-1: Complete feature 01 - ADP integration"
+git commit -m "feat/SHAMT-1: Complete feature 01 - Rank integration"
 - Work on feature 02
 git commit -m "feat/SHAMT-1: Complete feature 02 - confidence scoring"
 - Work on feature 03
@@ -287,7 +287,7 @@ git pull origin main
 git checkout -b fix/SHAMT-{new-number}
 
 - Fix the bug
-git commit -m "fix/SHAMT-{new-number}: Fix critical bug in player scoring"
+git commit -m "fix/SHAMT-{new-number}: Fix critical bug in item scoring"
 
 - Create PR for hotfix
 gh pr create --base main --head fix/SHAMT-{new-number} ...
@@ -347,7 +347,7 @@ git push origin epic/SHAMT-{number} --force-with-lease
 
 **✅ DO:**
 - Use imperative mood ("Add" not "Added")
-- Be specific ("Fix null pointer in player validation" not "Fix bug")
+- Be specific ("Fix null pointer in item validation" not "Fix bug")
 - Reference SHAMT number in every commit
 - Keep first line under 100 characters
 

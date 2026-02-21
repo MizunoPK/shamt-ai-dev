@@ -110,7 +110,7 @@ GOOD:
 ✅ Correctness: PASS (verified cross-feature workflows)
 ✅ Code Quality: PASS (checked consistency across features)
 ✅ Architecture: PASS (verified Manager pattern used in ALL features)
-  - Feature 01: ADPManager ✅
+  - Feature 01: RankManager ✅
   - Feature 02: MatchupManager ✅
   - Feature 03: PerformanceTracker ✅
   - Design pattern: Manager pattern used consistently ✅
@@ -258,7 +258,7 @@ Step 8.1: Verification Checklist
 
 **Context:**
 - Epic: Improve Draft Helper
-- Features: 3 (ADP Integration, Matchup System, Performance Tracking)
+- Features: 3 (rank priority Integration, Matchup System, Performance Tracking)
 - S9.P1 complete: Epic smoke testing passed
 - S9.P2 complete: Validation Loop passed (3 consecutive clean rounds)
 - Now starting S9.P3: Epic Final Review
@@ -271,19 +271,19 @@ Step 8.1: Verification Checklist
 
 ```python
 ## Verify cross-feature workflow correctness
-from feature_01.adp_manager import ADPManager
+from feature_01.rank_manager import RankManager
 from feature_02.matchup_manager import MatchupManager
-from [module].util.FantasyPlayer import FantasyPlayer
+from [module].util.DataRecord import DataRecord
 
 ## Test integration correctness
-adp_mgr = ADPManager(data_folder=Path("data"))
+rank_mgr = RankManager(data_folder=Path("data"))
 matchup_mgr = MatchupManager(data_folder=Path("data"))
 
-player = FantasyPlayer("Patrick Mahomes", "QB", 300.0)
-adp_mult, adp_rank = adp_mgr.get_adp_data("Patrick Mahomes")
-matchup_diff = matchup_mgr.get_matchup_difficulty("Patrick Mahomes", week=5)
+item = DataRecord("Record-A", "QB", 300.0)
+rank_mult, priority_rank = rank_mgr.get_rank_data("Record-A")
+matchup_diff = matchup_mgr.get_matchup_difficulty("Record-A", week=5)
 
-final_score = player.score * adp_mult * matchup_diff
+final_score = item.score * rank_mult * matchup_diff
 ## Verify: 300 * 1.2 * 0.9 = 324
 assert 320 <= final_score <= 330, "Integration calculation incorrect"
 ```
@@ -297,7 +297,7 @@ assert 320 <= final_score <= 330, "Integration calculation incorrect"
 ```python
 ## Check architectural consistency
 ## Feature 01:
-class ADPManager:  # ✅ Manager pattern
+class RankManager:  # ✅ Manager pattern
     def __init__(self, data_folder: Path):
         self.data_folder = data_folder
 

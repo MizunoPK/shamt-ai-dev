@@ -46,7 +46,7 @@ This reference provides detailed examples specifically for **Phase 4: Dynamic Sc
 **Checklist Breakdown:**
 - Data loading: 8 items
 - Trade evaluation logic: 12 items
-- Multi-player trade handling: 15 items
+- Multi-item trade handling: 15 items
 - UI integration: 7 items
 
 **Proposed Split:**
@@ -62,11 +62,11 @@ I recommend splitting this into 2 separate features:
   - UI integration for simple trades (5 items)
 - Rationale: Foundational functionality, most common use case
 
-**Feature 02b: Multi-Player Trade Support**
-- Scope: Complex trades (3+ players per side)
+**Feature 02b: Multi-Item Trade Support**
+- Scope: Complex trades (3+ items per side)
 - Checklist items: ~15 items
 - Includes:
-  - Multi-player evaluation logic (10 items)
+  - Multi-item evaluation logic (10 items)
   - Advanced UI for complex trades (5 items)
 - Rationale: Advanced functionality, builds on 02a
 - Dependency: Must implement 02a first
@@ -107,12 +107,12 @@ I recommend splitting this into 2 separate features:
    - feature_02b_multi_player_trades/
 2. Split spec.md content:
    - 02a: Basic evaluation logic (20 items)
-   - 02b: Multi-player support (15 items)
+   - 02b: Multi-item support (15 items)
 3. Updated EPIC_README.md Feature Tracking:
    | Feature | Name | S2 Complete |
    |---------|------|------------------|
    | 02a | Basic Trade Evaluator | [ ] |
-   | 02b | Multi-Player Trades | [ ] |
+   | 02b | Multi-Item Trades | [ ] |
 4. Updated feature dependencies in specs
 
 **Next Steps:**
@@ -126,22 +126,22 @@ I recommend splitting this into 2 separate features:
 ### Example 2: New Work Discovered - Create Separate Feature
 
 ```markdown
-## New Work Discovered: Player Name Matching Utility
+## New Work Discovered: Item Name Matching Utility
 
 **What We Found:**
 
-During question resolution for Feature 01 (ADP Integration), we discovered a need for player name matching logic. User confirmed need to:
-- Normalize player names (remove periods, extra spaces)
+During question resolution for Feature 01 (rank priority Integration), we discovered a need for item name matching logic. User confirmed need to:
+- Normalize item names (remove periods, extra spaces)
 - Handle common variations ("A.J. Brown" vs "AJ Brown")
-- Match across multiple data sources (ADP CSV, injury reports, etc.)
+- Match across multiple data sources (rank priority CSV, attribute reports, etc.)
 
 **Current Feature:**
-Feature 01: ADP Integration
-- Original scope: Load ADP data, integrate into scoring
+Feature 01: rank priority Integration
+- Original scope: Load rank data, integrate into scoring
 - Current checklist: 18 items
 
 **New Work:**
-Player Name Matching Utility
+Item Name Matching Utility
 - Normalize names for consistent matching
 - Handle initials, spacing variations, suffixes (Jr., Sr.)
 - Provide utility function used by multiple features
@@ -152,15 +152,15 @@ Player Name Matching Utility
 This new work should be its own feature because:
 1. **Independent subsystem:** Can be developed and tested independently
 2. **Reusable:** Will be used by multiple features:
-   - Feature 01: ADP Integration (match ADP CSV to players)
-   - Feature 02: Injury Risk (match injury reports to players)
-   - Feature 03: Schedule Strength (match team schedules to players)
+   - Feature 01: rank priority Integration (match rank priority CSV to items)
+   - Feature 02: Injury Risk (match attribute reports to items)
+   - Feature 03: Schedule Strength (match team schedules to items)
 3. **Clear interface:** Single utility function with well-defined inputs/outputs
 4. **Testing isolation:** Can thoroughly test matching logic separately
 
 **Recommendation:**
 
-Create new Feature 05: Player Name Matching Utility
+Create new Feature 05: Item Name Matching Utility
 
 **Scope:**
 - Name normalization function
@@ -182,7 +182,7 @@ Create new Feature 05: Player Name Matching Utility
 **Alternative:**
 
 Keep matching logic in Feature 01:
-- Pros: Keeps all ADP logic together
+- Pros: Keeps all rank priority logic together
 - Cons: Duplicated code when Features 02 and 03 need same logic
 - Cons: Harder to maintain (changes in 3 places)
 
@@ -200,8 +200,8 @@ Keep matching logic in Feature 01:
 2. Updated EPIC_README.md Feature Tracking:
    | Feature | Name | S2 Complete | Priority |
    |---------|------|------------------|----------|
-   | 05 | Player Name Matching | [ ] | HIGH (blocks 01,02,03) |
-   | 01 | ADP Integration | [ ] | MEDIUM (after 05) |
+   | 05 | Item Name Matching | [ ] | HIGH (blocks 01,02,03) |
+   | 01 | rank priority Integration | [ ] | MEDIUM (after 05) |
    | 02 | Injury Risk | [ ] | MEDIUM (after 05) |
 3. Updated feature dependencies:
    - Feature 01 spec.md: Added "Depends on: Feature 05"

@@ -325,13 +325,13 @@ Document feature dependencies and integration points:
 **Good questions ask about:**
 - ✅ User preferences (fuzzy vs strict matching, option A vs B)
 - ✅ Business logic not specified in epic (multiplier formula, impact level)
-- ✅ Edge case handling not mentioned (missing player behavior, error handling)
+- ✅ Edge case handling not mentioned (missing item behavior, error handling)
 - ✅ External data formats (CSV column names, API structure)
 
 **Bad questions (should have researched in S2.P1):**
 - ❌ "Which class should we modify?" → Research in Phase 1
 - ❌ "What's the current [domain algorithm]?" → Read code in Phase 1
-- ❌ "Does PlayerManager have method X?" → Verify in Phase 1.5 audit
+- ❌ "Does RecordManager have method X?" → Verify in Phase 1.5 audit
 - ❌ "How do we load CSV files?" → Research existing utilities
 
 **Checklist Template:**

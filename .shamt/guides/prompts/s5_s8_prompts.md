@@ -362,9 +362,9 @@ I'm reading `stages/s7/s7_p1_smoke_testing.md` to ensure I follow the 3-part smo
 - **Part 3: E2E Execution Test** (CRITICAL - verify OUTPUT DATA VALUES)
   - Run feature with REAL data (not mocks)
   - **Verify ACTUAL DATA VALUES** (not just file existence)
-  - Example: df['score'].between(0, 500).all() AND df['projected_points'].sum() > 0
+  - Example: df['score'].between(0, 500).all() AND df['projected_value'].sum() > 0
   - BAD: assert Path("output.csv").exists()  # Structure only
-  - GOOD: assert df['projected_points'].sum() > 0  # Data values
+  - GOOD: assert df['projected_value'].sum() > 0  # Data values
 - **Re-Reading Checkpoint**:
   - After Part 2, re-read "What Passes" criteria
   - After Part 3, re-read DATA VALUES examples

@@ -105,13 +105,13 @@ df = pd.read_csv(output_file)
 
 ## Verify data quality
 assert len(df) > 0, "Output file is empty"
-assert not df['projected_points'].isnull().all(), "All projected_points are null"
-assert df['projected_points'].sum() > 0, "All projected_points are zero"
+assert not df['projected_value'].isnull().all(), "All projected_value are null"
+assert df['projected_value'].sum() > 0, "All projected_value are zero"
 
 ## Verify data makes sense
 top_player = df.iloc[0]
-assert top_player['projected_points'] > 100, "Top player has unreasonably low score"
-assert top_player['player_name'] != "", "Player name is empty"
+assert top_item['projected_value'] > 100, "Top item has unreasonably low score"
+assert top_item['item_name'] != "", "Item name is empty"
 ```
 
 ### 3. If ANY Part Fails, RE-RUN ALL PARTS
@@ -228,10 +228,10 @@ for pos in positions:
         data = json.load(f)
     assert len(data) > 0, f"{pos} file is empty"
 
-    # Check first player has updated data
-    first_player = data[0]
-    assert first_player['adp'] != 170.0, f"{pos} ADP not updated (still placeholder)"
-    assert first_player['adp'] > 0, f"{pos} ADP is invalid"
+    # Check first item has updated data
+    first_item = data[0]
+    assert first_item['rank'] != 170.0, f"{pos} rank priority not updated (still placeholder)"
+    assert first_item['rank'] > 0, f"{pos} rank priority is invalid"
 ```
 
 **What This Catches:**
@@ -314,7 +314,7 @@ assert Path("output.csv").exists()
 ## CORRECT - verifies data values
 df = pd.read_csv("output.csv")
 assert df['score'].between(0, 500).all()
-assert df['projected_points'].sum() > 0
+assert df['projected_value'].sum() > 0
 ```
 
 ### ❌ Mistake 2: Using Test Fixtures for Part 3
@@ -341,8 +341,8 @@ real_data = pd.read_csv("data/real_players.csv")  # Real data
 assert len(df) > 0  # File has rows, but all zeros
 
 ## CORRECT - verify data values are reasonable
-assert df['projected_points'].sum() > 0  # Not all zeros
-assert df['adp'].min() > 0  # Not placeholder values
+assert df['projected_value'].sum() > 0  # Not all zeros
+assert df['rank'].min() > 0  # Not placeholder values
 ```
 
 ---

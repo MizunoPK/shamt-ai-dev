@@ -91,14 +91,14 @@ STEP 6: Mark Complete (2 min + user approval time)
 ```markdown
 ## Epic Success Criteria
 - All 4 features create expected output files
-- FantasyPlayer has all new fields (adp_value, injury_status, schedule_strength)
+- DataRecord has all new fields (rank_value, attribute_status, schedule_strength)
 - Final recommendations include all multipliers
 
 ## Test 1: End-to-End Integration
 ```
 python run_[module].py --mode draft
 ```markdown
-**Expected:** recommendations.csv with 3 new columns (adp_multiplier, injury_multiplier, schedule_strength)
+**Expected:** recommendations.csv with 3 new columns (rank_multiplier, attribute_multiplier, schedule_strength)
 ```
 
 ### S8.P2 Version (Refined)
@@ -116,17 +116,17 @@ python run_[module].py --mode draft
 
 ### Type 1: Shared Data Structures
 **What:** Multiple features modify same class/file
-**Example:** Features 1, 2, 3 all add fields to FantasyPlayer
+**Example:** Features 1, 2, 3 all add fields to DataRecord
 **Test Need:** Verify all fields present after all features run
 
 ### Type 2: Computational Dependencies
 **What:** Feature B depends on Feature A's calculations
-**Example:** Feature 4 (recommendations) needs Feature 1's ADP multiplier
+**Example:** Feature 4 (recommendations) needs Feature 1's rank multiplier
 **Test Need:** Verify calculation order and result propagation
 
 ### Type 3: File Dependencies
 **What:** Feature B reads file created by Feature A
-**Example:** Feature 4 reads data/rankings/adp.csv created by Feature 1
+**Example:** Feature 4 reads data/rankings/priority.csv created by Feature 1
 **Test Need:** Verify file exists, format correct, data valid
 
 ### Type 4: Configuration Dependencies
@@ -153,7 +153,7 @@ python run_[module].py --mode draft
 - "All 4 features create expected output files (list files)"
 - "Recommendations.csv has 3 new columns (name them)"
 - "0 errors in console output during E2E test"
-- "Top 10 players include ADP rank ≤ 15"
+- "Top 10 items include rank priority rank ≤ 15"
 
 ---
 

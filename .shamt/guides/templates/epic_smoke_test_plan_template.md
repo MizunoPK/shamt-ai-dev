@@ -29,10 +29,10 @@
    - Example: "All output files created in data/output/{category}/"
 
 2. {Measurable criterion 2}
-   - Example: "Each position file contains >100 players with complete stats"
+   - Example: "Each position file contains >100 items with complete stats"
 
 3. {Measurable criterion 3}
-   - Example: "Draft recommendations include ADP multipliers and matchup difficulty"
+   - Example: "Draft recommendations include rank multipliers and matchup difficulty"
 
 4. {Measurable criterion 4}
    - Example: "Performance tracking data persisted to CSV with accuracy scores"
@@ -51,7 +51,7 @@
 |------|-------|---------|--------------|-----|
 | {YYYY-MM-DD} | S1 | (initial) | Initial plan created | Epic planning based on assumptions |
 | {YYYY-MM-DD} | S4 | (all features) | Updated based on deep dives | Discovered {N} integration points, refined scenarios |
-| {YYYY-MM-DD} | S8.P2 | feature_01 | Added ADP integration scenarios | Feature 1 implementation revealed specific multiplier ranges |
+| {YYYY-MM-DD} | S8.P2 | feature_01 | Added Rank integration scenarios | Feature 1 implementation revealed specific multiplier ranges |
 | {YYYY-MM-DD} | S8.P2 | feature_02 | Added matchup cross-check scenarios | Feature 2 integration with Feature 1 needs validation |
 | {YYYY-MM-DD} | S8.P2 | feature_03 | Added performance tracking E2E tests | Feature 3 implementation added CSV persistence |
 
@@ -126,7 +126,7 @@ python run_{epic_main}.py --mode {mode} --week {N} --iterations {N}
 - Command completes successfully (exit code 0)
 - Output files created: {list expected files}
 - **DATA VERIFICATION (CRITICAL):**
-  - File 1: {specific data check - e.g., "df['adp_multiplier'].between(0.5, 1.5).all()"}
+  - File 1: {specific data check - e.g., "df['rank_multiplier'].between(0.5, 1.5).all()"}
   - File 2: {specific data check - e.g., "len(df) > 100"}
   - File 3: {specific data check - e.g., "df['final_score'].notna().all()"}
 
@@ -155,14 +155,14 @@ python run_{epic_main}.py --mode {mode} --{edge_case_flag}
 **What to test:** Verify Feature 01 data correctly consumed by Feature 02
 
 **How to test:**
-1. {Step 1 - e.g., "Run Feature 01 to generate ADP data"}
-2. {Step 2 - e.g., "Run Feature 02 with ADP data enabled"}
+1. {Step 1 - e.g., "Run Feature 01 to generate rank data"}
+2. {Step 2 - e.g., "Run Feature 02 with rank data enabled"}
 3. {Step 3 - e.g., "Verify both features' effects in final output"}
 
 **Expected result:**
-- Feature 01 output: {specific data - e.g., "adp_multiplier calculated for all players"}
-- Feature 02 consumption: {specific check - e.g., "final_score reflects both ADP and matchup"}
-- Integration point: {specific validation - e.g., "adp_multiplier * matchup_difficulty applied correctly"}
+- Feature 01 output: {specific data - e.g., "rank_multiplier calculated for all items"}
+- Feature 02 consumption: {specific check - e.g., "final_score reflects both rank priority and matchup"}
+- Integration point: {specific validation - e.g., "rank_multiplier * matchup_difficulty applied correctly"}
 
 **Scenario 7: Feature 01 ↔ Feature 03 Integration**
 

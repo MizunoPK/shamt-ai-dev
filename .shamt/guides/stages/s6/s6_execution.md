@@ -232,7 +232,7 @@ External Dependencies to Verify:
 **DO NOT ASSUME - OPEN THE FILE AND READ IT**
 
 ```bash
-## Example: Verify ConfigManager.get_adp_multiplier
+## Example: Verify ConfigManager.get_rank_multiplier
 code [module]/util/ConfigManager.py:234
 ```
 
@@ -240,12 +240,12 @@ code [module]/util/ConfigManager.py:234
 
 ```python
 ## [module]/util/ConfigManager.py:234
-def get_adp_multiplier(self, adp: int) -> Tuple[float, int]:
+def get_rank_multiplier(self, rank: int) -> Tuple[float, int]:
     """
-    Calculate ADP multiplier based on ADP ranking.
+    Calculate rank multiplier based on rank value.
 
     Args:
-        adp (int): ADP ranking (1-500)
+        rank (int): rank value (1-500)
 
     Returns:
         Tuple[float, int]: (multiplier, rating)
@@ -269,17 +269,17 @@ Create `feature_{N}_{name}_interface_contracts.md`:
 
 ---
 
-## Interface 1: ConfigManager.get_adp_multiplier
+## Interface 1: ConfigManager.get_rank_multiplier
 
 **Source:** [module]/util/ConfigManager.py:234
 
 **Signature:**
 ```
-def get_adp_multiplier(self, adp: int) -> Tuple[float, int]
+def get_rank_multiplier(self, rank: int) -> Tuple[float, int]
 ```markdown
 
 **Parameters:**
-- `adp` (int): ADP ranking value
+- `rank` (int): rank value value
   - Valid range: 1-500
   - Type: int (NOT float, NOT str)
 
@@ -293,8 +293,8 @@ def get_adp_multiplier(self, adp: int) -> Tuple[float, int]
 
 **Example Usage Found:**
 ```
-## [module]/util/PlayerManager.py:456
-multiplier, rating = self.config.get_adp_multiplier(player_adp)
+## [module]/util/RecordManager.py:456
+multiplier, rating = self.config.get_rank_multiplier(item_rank)
 ```markdown
 
 **Verified:** ✅ Interface matches implementation_plan.md assumptions
@@ -309,8 +309,8 @@ multiplier, rating = self.config.get_adp_multiplier(player_adp)
 5. **Verify assumptions match reality:**
 
 Check implementation tasks:
-- implementation_plan.md assumed: `get_adp_multiplier(adp: int) -> Tuple[float, int]`
-- Actual interface: `get_adp_multiplier(self, adp: int) -> Tuple[float, int]`
+- implementation_plan.md assumed: `get_rank_multiplier(rank: int) -> Tuple[float, int]`
+- Actual interface: `get_rank_multiplier(self, rank: int) -> Tuple[float, int]`
 - ✅ MATCH
 
 **If mismatch found:**
@@ -356,46 +356,46 @@ Read spec.md sections:
 
 ### Objective Requirements
 
-- [ ] **REQ-1:** Load ADP data from data/rankings/adp.csv
+- [ ] **REQ-1:** Load rank data from data/rankings/priority.csv
   - Implementation Task: Task 1
-  - Implementation: PlayerManager.load_adp_data()
+  - Implementation: RecordManager.load_rank_data()
   - Verified: {Check after implementing Task 1}
 
-- [ ] **REQ-2:** Match players to ADP rankings
+- [ ] **REQ-2:** Match items to rank values
   - Implementation Task: Task 2
-  - Implementation: PlayerManager._match_player_to_adp()
+  - Implementation: RecordManager._match_item_to_rank()
   - Verified: {Check after implementing Task 2}
 
 ---
 
 ### Algorithm Requirements
 
-- [ ] **ALG-1:** Use default multiplier 1.0 if player not in ADP data
+- [ ] **ALG-1:** Use default multiplier 1.0 if item not in rank data
   - Spec: Algorithms section, step 2c
   - Implementation Task: Task 2
-  - Implementation: PlayerManager._match_player_to_adp() returns None
+  - Implementation: RecordManager._match_item_to_rank() returns None
   - Verified: {Check after implementing}
 
-- [ ] **ALG-2:** Call ConfigManager.get_adp_multiplier for matched players
+- [ ] **ALG-2:** Call ConfigManager.get_rank_multiplier for matched items
   - Spec: Algorithms section, step 3
   - Implementation Task: Task 3
-  - Implementation: PlayerManager._calculate_adp_multiplier()
+  - Implementation: RecordManager._calculate_rank_multiplier()
   - Verified: {Check after implementing}
 
 ---
 
 ### Edge Case Requirements
 
-- [ ] **EDGE-1:** Handle ADP file not found gracefully
+- [ ] **EDGE-1:** Handle rank file not found gracefully
   - Spec: Edge Cases section, case 3
   - Implementation Task: Task 11
-  - Implementation: PlayerManager.load_adp_data() try/except
+  - Implementation: RecordManager.load_rank_data() try/except
   - Verified: {Check after implementing}
 
-- [ ] **EDGE-2:** Handle invalid ADP value (<1 or >500)
+- [ ] **EDGE-2:** Handle invalid rank value (<1 or >500)
   - Spec: Edge Cases section, case 2
   - Implementation Task: Task 3
-  - Implementation: PlayerManager._calculate_adp_multiplier() validation
+  - Implementation: RecordManager._calculate_rank_multiplier() validation
   - Verified: {Check after implementing}
 
 ---
@@ -466,72 +466,72 @@ Read spec.md sections:
 
 > **Why this matters:** If only the import is removed but referencing code remains, the code fails at runtime with a `NameError` — not at import time. Phase checkpoints that only test `--help` or import will NOT catch this. The bug appears only when the affected code path runs.
 
-2. **Example: Implementing Task 1 (Load ADP Data)**
+2. **Example: Implementing Task 1 (Load Rank Data)**
 
 **Read spec (Algorithms section):**
-> "Load ADP data from data/rankings/adp.csv"
+> "Load rank data from data/rankings/priority.csv"
 
 **Read implementation_plan.md Task 1 acceptance criteria:**
 ```markdown
-- [ ] Function load_adp_data() created in PlayerManager
-- [ ] Reads file from path: data/rankings/adp.csv
+- [ ] Function load_rank_data() created in RecordManager
+- [ ] Reads file from path: data/rankings/priority.csv
 - [ ] Returns List[Tuple[str, str, int]]
 - [ ] Handles FileNotFoundError gracefully
-- [ ] Validates CSV has required columns: Name, Position, ADP
+- [ ] Validates CSV has required columns: Name, Position, rank priority
 - [ ] Logs number of rows loaded
 ```
 
 **Implement:**
 
 ```python
-## [module]/util/PlayerManager.py
+## [module]/util/RecordManager.py
 
-def load_adp_data(self) -> List[Tuple[str, str, int]]:
+def load_rank_data(self) -> List[Tuple[str, str, int]]:
     """
-    Load ADP (Average Draft Position) data from CSV file.
+    Load rank (external rank priority) data from CSV file.
 
     Returns:
-        List[Tuple[str, str, int]]: List of (Name, Position, ADP) tuples
+        List[Tuple[str, str, int]]: List of (Name, Position, rank priority) tuples
 
     Example:
-        >>> adp_data = pm.load_adp_data()
-        >>> adp_data[0]
+        >>> rank_data = pm.load_rank_data()
+        >>> rank_data[0]
         ('Christian McCaffrey', 'RB', 1)
     """
-    filepath = self.data_folder / "rankings" / "adp.csv"
+    filepath = self.data_folder / "rankings" / "priority.csv"
 
     try:
         # Read CSV with validation (from csv_utils)
         df = read_csv_with_validation(
             filepath,
-            required_columns=['Name', 'Position', 'ADP'],
+            required_columns=['Name', 'Position', 'Rank'],
             encoding='utf-8'
         )
 
         # Convert to list of tuples
-        adp_data = [
-            (row['Name'], row['Position'], int(row['ADP']))
+        rank_data = [
+            (row['Name'], row['Position'], int(row['Rank']))
             for _, row in df.iterrows()
         ]
 
         # Log success
-        self.logger.info(f"Loaded {len(adp_data)} ADP rankings from {filepath}")
+        self.logger.info(f"Loaded {len(rank_data)} rank values from {filepath}")
 
-        return adp_data
+        return rank_data
 
     except FileNotFoundError:
         # Graceful degradation (spec.md Edge Cases, case 3)
-        self.logger.error(f"ADP file not found: {filepath}")
+        self.logger.error(f"rank file not found: {filepath}")
         return []  # Return empty list (not None, not crash)
 
     except Exception as e:
         # Unexpected error
-        self.logger.error(f"Error loading ADP data: {e}", exc_info=True)
+        self.logger.error(f"Error loading rank data: {e}", exc_info=True)
         return []
 ```
 
 **Verify against spec:**
-- ✅ Loads from data/rankings/adp.csv (spec requirement)
+- ✅ Loads from data/rankings/priority.csv (spec requirement)
 - ✅ Returns List[Tuple[str, str, int]] (implementation_plan.md acceptance criteria)
 - ✅ Handles FileNotFoundError (spec Edge Cases, case 3)
 - ✅ Validates columns (implementation_plan.md acceptance criteria)
@@ -540,8 +540,8 @@ def load_adp_data(self) -> List[Tuple[str, str, int]]:
 **Check off in implementation_checklist.md:**
 
 ```markdown
-- [x] **REQ-1:** Load ADP data from data/rankings/adp.csv
-  - Implemented: PlayerManager.load_adp_data()
+- [x] **REQ-1:** Load rank data from data/rankings/priority.csv
+  - Implemented: RecordManager.load_rank_data()
   - Verified: 2025-12-30 15:45 (matches spec exactly)
 ```
 
@@ -555,15 +555,15 @@ def load_adp_data(self) -> List[Tuple[str, str, int]]:
 
 ```bash
 ## Run tests for Phase 1 (Data Loading)
-python -m pytest tests/[module]/util/test_PlayerManager_adp.py::test_load_adp_data_success -v
-python -m pytest tests/[module]/util/test_PlayerManager_adp.py::test_load_adp_data_file_not_found -v
+python -m pytest tests/[module]/util/test_RecordManager_rank.py::test_load_rank_data_success -v
+python -m pytest tests/[module]/util/test_RecordManager_rank.py::test_load_rank_data_file_not_found -v
 ```
 
 2. **Verify 100% pass rate:**
 
 ```bash
-tests/[module]/util/test_PlayerManager_adp.py::test_load_adp_data_success PASSED
-tests/[module]/util/test_PlayerManager_adp.py::test_load_adp_data_file_not_found PASSED
+tests/[module]/util/test_RecordManager_rank.py::test_load_rank_data_success PASSED
+tests/[module]/util/test_RecordManager_rank.py::test_load_rank_data_file_not_found PASSED
 
 ========================= 2 passed in 0.15s =========================
 ```
@@ -605,11 +605,11 @@ Add to feature README.md:
 
 ```python
 ## Quick manual verification
-from [module].util.PlayerManager import PlayerManager
-pm = PlayerManager(data_folder="data/")
-adp_data = pm.load_adp_data()
-print(f"Loaded {len(adp_data)} ADP rankings")
-print(f"First entry: {adp_data[0]}")
+from [module].util.RecordManager import RecordManager
+pm = RecordManager(data_folder="data/")
+rank_data = pm.load_rank_data()
+print(f"Loaded {len(rank_data)} rank values")
+print(f"First entry: {rank_data[0]}")
 ## Expected: Loaded 200+ rankings, First entry valid tuple
 ```
 
@@ -649,13 +649,13 @@ Each phase:
 ```markdown
 ## Config Change Impact Analysis
 
-**Config Key Added:** "adp_multiplier_ranges"
+**Config Key Added:** "rank_multiplier_ranges"
 
 **Backward Compatibility:**
 - If key missing in old config: Use default value (empty dict)
 - Code handles missing key: Yes (get with default)
   ```
-  adp_ranges = config.get("adp_multiplier_ranges", {})
+  rank_ranges = config.get("rank_multiplier_ranges", {})
   ```markdown
 
 **Migration Path:**
@@ -663,7 +663,7 @@ Each phase:
 - User can optionally add key for customization
 
 **Consumers:**
-- ConfigManager.get_adp_multiplier() - only consumer
+- ConfigManager.get_rank_multiplier() - only consumer
 - Handles missing key gracefully
 
 **Verification:**
@@ -676,7 +676,7 @@ Each phase:
 Search for all code that reads this config:
 
 ```bash
-grep -r "adp_multiplier_ranges" --include="*.py"
+grep -r "rank_multiplier_ranges" --include="*.py"
 ```
 
 Verify each consumer handles both old and new config.
@@ -744,8 +744,8 @@ Run complete test suite for this feature:
 
 ```bash
 ## Run ALL tests for this feature
-python -m pytest tests/[module]/util/test_PlayerManager_adp.py -v
-python -m pytest tests/integration/test_adp_integration.py -v
+python -m pytest tests/[module]/util/test_RecordManager_rank.py -v
+python -m pytest tests/integration/test_rank_integration.py -v
 ```
 
 **Required:** 100% pass rate
@@ -774,7 +774,7 @@ Run feature end-to-end:
 
 ```bash
 python run_[module].py --mode draft
-## Verify: Loads ADP data, calculates scores, generates recommendations
+## Verify: Loads rank data, calculates scores, generates recommendations
 ```
 
 **Expected:** No errors, feature works end-to-end
@@ -827,7 +827,7 @@ python run_[module].py --mode draft
 ❌ "I'll update implementation_checklist.md when all coding is done"
    ✅ STOP - Update in REAL-TIME as you implement
 
-❌ "ConfigManager.get_adp_multiplier probably returns float"
+❌ "ConfigManager.get_rank_multiplier probably returns float"
    ✅ STOP - Verify from interface contracts (it returns Tuple[float, int])
 
 ❌ "I'll skip mini-QC, the tests passed"
@@ -847,15 +847,15 @@ python run_[module].py --mode draft
 
 ## Real-World Example
 
-**Feature:** ADP Integration
+**Feature:** rank priority Integration
 
 **Step 1: Core Data Loading**
 
-1. Read spec requirement: "Load ADP data from CSV"
+1. Read spec requirement: "Load rank data from CSV"
 2. Keep spec.md VISIBLE while coding
-3. Implement load_adp_data() method
+3. Implement load_rank_data() method
 4. Check off REQ-1 in implementation_checklist.md
-5. Run tests: test_load_adp_data_* (2 tests)
+5. Run tests: test_load_rank_data_* (2 tests)
    - Result: 2/2 PASSED ✅
 7. Mini-QC: Quick smoke test
    - Loaded 200 rankings ✅
@@ -863,14 +863,14 @@ python run_[module].py --mode draft
 
 **Step 2: Matching Logic**
 
-1. Read spec algorithm: "Match player to ADP ranking"
+1. Read spec algorithm: "Match item to rank ranking"
 2. Keep spec.md VISIBLE
-3. Implement _match_player_to_adp() method
+3. Implement _match_item_to_rank() method
 4. Check off REQ-2, ALG-1 in implementation_checklist.md
-5. Run tests: test_match_player_* (3 tests)
+5. Run tests: test_match_item_* (3 tests)
    - Result: 3/3 PASSED ✅
 7. Mini-QC: Verify matching works
-   - Test player matched correctly ✅
+   - Test item matched correctly ✅
 8. Proceed to Phase 3
 
 {Continue for all phases}

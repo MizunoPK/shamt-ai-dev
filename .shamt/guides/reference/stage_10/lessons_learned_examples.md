@@ -36,7 +36,7 @@ S10.P1 (Guide Update from Lessons Learned) requires finding ALL lessons learned 
 ```markdown
 ## Epic Lessons Learned: improve_recommendation_engine
 
-**Epic Overview:** Enhanced draft helper with ADP integration, matchup analysis, and performance tracking
+**Epic Overview:** Enhanced recommendation engine with Rank integration, matchup analysis, and performance tracking
 **Date Range:** 2025-12-15 - 2025-12-30
 **Total Features:** 3
 
@@ -51,7 +51,7 @@ S10.P1 (Guide Update from Lessons Learned) requires finding ALL lessons learned 
 
 **What Could Be Improved:**
 - Initial time estimates were too optimistic (15 days actual vs 10 days estimated)
-- Should have identified ADP data source earlier
+- Should have identified rank data source earlier
 
 **Guide Improvements Needed:**
 - stages/s1/s1_epic_planning.md: Add reminder to verify data sources during planning
@@ -62,12 +62,12 @@ S10.P1 (Guide Update from Lessons Learned) requires finding ALL lessons learned 
 
 ## S2 Lessons Learned (Per Feature)
 
-### Feature 01: ADP Integration
+### Feature 01: rank priority Integration
 
 **What Went Well:**
 - Deep dive identified CSV format mismatch early
-- Consumption tracing revealed all PlayerManager dependencies
-- Interface verification caught ESPN API changes
+- Consumption tracing revealed all RecordManager dependencies
+- Interface verification caught external API changes
 
 **What Could Be Improved:**
 - Could have created more edge case tests (only identified 8, needed 12)
@@ -141,12 +141,12 @@ S10.P1 (Guide Update from Lessons Learned) requires finding ALL lessons learned 
 
 ## Example 2: feature lessons_learned.md Structure
 
-**File:** `.shamt/epics/done/{epic_name}/feature_01_adp_integration/lessons_learned.md`
+**File:** `.shamt/epics/done/{epic_name}/feature_01_rank_integration/lessons_learned.md`
 
 ```markdown
-## Feature Lessons Learned: ADP Integration
+## Feature Lessons Learned: rank priority Integration
 
-**Feature:** feature_01_adp_integration
+**Feature:** feature_01_rank_integration
 **Epic:** improve_recommendation_engine
 **Date Range:** 2025-12-16 - 2025-12-22
 
@@ -156,7 +156,7 @@ S10.P1 (Guide Update from Lessons Learned) requires finding ALL lessons learned 
 
 **What Went Well:**
 - Found CSV loader utility quickly using grep
-- Interface verification caught ESPN API version change
+- Interface verification caught external API version change
 
 **What Could Be Improved:**
 - Could have documented CSV format earlier
@@ -172,7 +172,7 @@ S10.P1 (Guide Update from Lessons Learned) requires finding ALL lessons learned 
 
 **What Went Well:**
 - Algorithm traceability matrix revealed missing validation step
-- Validation Loop (multiple dimensions) caught spec ambiguity about ADP missing data
+- Validation Loop (multiple dimensions) caught spec ambiguity about rank priority missing data
 
 **What Could Be Improved:**
 - None - S5 worked well
@@ -299,7 +299,7 @@ find .shamt/epics/done/{epic_name} -name "lessons_learned.md" -type f
 **Expected Results:**
 ```text
 .shamt/epics/done/improve_recommendation_engine/epic_lessons_learned.md
-.shamt/epics/done/improve_recommendation_engine/feature_01_adp_integration/lessons_learned.md
+.shamt/epics/done/improve_recommendation_engine/feature_01_rank_integration/lessons_learned.md
 .shamt/epics/done/improve_recommendation_engine/feature_02_matchup_system/lessons_learned.md
 .shamt/epics/done/improve_recommendation_engine/feature_03_performance_tracker/lessons_learned.md
 .shamt/epics/done/improve_recommendation_engine/bugfix_high_point_calculation/lessons_learned.md
@@ -365,7 +365,7 @@ Combine ALL lessons from ALL files:
   - Section: Iteration 4
   - Update: Add nested algorithm traceability example
 
-**Source: feature_01_adp_integration/lessons_learned.md (2 lessons)**
+**Source: feature_01_rank_integration/lessons_learned.md (2 lessons)**
 - [ ] Lesson 4: Document CSV format early
   - Guide: stages/s2/s2_feature_deep_dive.md
   - Section: Phase 1
@@ -402,7 +402,7 @@ For each lesson in master checklist:
 
 3. **Add improvement:**
    - Add new example showing nested algorithm tracing
-   - Example: "calculate_adp_score() calls get_adp_rank() and apply_multiplier()"
+   - Example: "calculate_rank_score() calls get_priority_rank() and apply_multiplier()"
 
 4. **Update guide using Edit tool:**
    ```text

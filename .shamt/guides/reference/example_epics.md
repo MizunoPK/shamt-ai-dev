@@ -14,9 +14,9 @@
 **SHAMT Number:** SHAMT-1 (always use as first epic example)
 
 **Features:**
-1. **feature_01_adp_integration** - Integrate Average Draft Position data
+1. **feature_01_rank_integration** - Integrate external rank priority data
 2. **feature_02_matchup_system** - Add matchup difficulty ratings
-3. **feature_03_performance_tracker** - Track player accuracy vs projections
+3. **feature_03_performance_tracker** - Track item accuracy vs projections
 
 **Characteristics:**
 - Medium complexity
@@ -36,8 +36,8 @@
 **SHAMT Number:** SHAMT-2
 
 **Features:**
-1. **feature_01_name_validation** - Validate player names
-2. **feature_02_stats_validation** - Validate player statistics
+1. **feature_01_name_validation** - Validate item names
+2. **feature_02_stats_validation** - Validate item statistics
 
 **Characteristics:**
 - Low complexity

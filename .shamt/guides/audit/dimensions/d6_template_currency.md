@@ -205,7 +205,7 @@ File: templates/epic_ticket_template.md
 ## Example Epic Ticket
 
 **Features:**
-1. Feature 01: Player Fetcher
+1. Feature 01: Data Exporter
    - spec.md, implementation.md, tests.md
 
 [Old structure - current structure uses implementation_plan.md and implementation_checklist.md]

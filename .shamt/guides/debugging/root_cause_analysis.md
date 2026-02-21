@@ -105,7 +105,7 @@ WHY #1: Why did this bug occur?
 → {Technical answer - e.g., "Null pointer exception in calculate_score()"}
 
 WHY #2: Why did that technical issue exist?
-→ {Implementation answer - e.g., "Missing null check for injured players"}
+→ {Implementation answer - e.g., "Missing null check for injured items"}
 
 WHY #3: Why was that missing from implementation?
 → {Planning answer - e.g., "Edge case not identified in implementation_plan.md"}
@@ -114,7 +114,7 @@ WHY #4: Why wasn't that edge case identified?
 → {Process answer - e.g., "Iteration 9 (Edge Case Analysis) didn't consider injury status"}
 
 WHY #5: Why didn't Iteration 9 catch it?
-→ {Guide gap - e.g., "s5_v2_validation_loop.md doesn't mention checking player status fields"}
+→ {Guide gap - e.g., "s5_v2_validation_loop.md doesn't mention checking item status fields"}
 ```
 
 **Continue until you reach a PROCESS or GUIDE gap (not just technical cause).**
@@ -226,7 +226,7 @@ WHY #5: Why didn't Iteration 9 catch it?
 
 **Additions/changes in BOLD for clarity:**
 - Add new checkpoint: **"Verify all entity status fields (active, injured, etc.)"**
-- Add to iteration 9 checklist: **"[ ] Player status edge cases (injured, bye week, inactive)"**
+- Add to iteration 9 checklist: **"[ ] Item status edge cases (unavailable, on hold, inactive)"**
 ```markdown
 
 **Rationale:**
@@ -234,7 +234,7 @@ This bug ({brief description}) occurred because {reason}. Adding this checkpoint
 
 **Impact if Not Fixed:**
 {What happens if this guide gap remains}
-- Future epics will likely encounter same bug with player status
+- Future epics will likely encounter same bug with item status
 - Wasted debugging time (estimated {X} hours per epic)
 - User frustration
 ```

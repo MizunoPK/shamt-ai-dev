@@ -66,11 +66,11 @@ Missed Requirement Protocol treats missing scope as real features - either creat
   - During S10 (User testing)
 - You KNOW what needs to be built (solution is clear, just wasn't in original spec)
 - Need to add missing functionality as a proper feature
-- Example: "We forgot to add player injury status tracking"
+- Example: "We forgot to add item attribute status tracking"
 
 **When NOT to use this protocol?**
 - Unknown bugs requiring investigation (use debugging/debugging_protocol.md instead)
-- Example: "Player scores are sometimes wrong but we don't know why"
+- Example: "Item scores are sometimes wrong but we don't know why"
 - Missing scope discovered BEFORE any feature enters S5 (just update specs directly during S2/3/4)
 
 **Key Outputs:**

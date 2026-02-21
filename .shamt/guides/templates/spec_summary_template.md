@@ -27,7 +27,7 @@
 {Focus on OUTCOMES and USER VALUE, not implementation details}
 
 {Example:}
-This feature updates the accuracy simulation system to load player data from JSON files instead of CSV files. The JSON files contain week-by-week projected and actual points for all players across all 18 weeks of the season. This enables historical accuracy backtesting by comparing projected points (from week N) against actual points (from week N+1).
+This feature updates the data processing system to load record data from JSON files instead of CSV files. The JSON files contain period-by-period projected and actual values for all records across all {N} periods. This enables historical accuracy analysis by comparing projected values (from period N) against actual values (from period N+1).
 
 ---
 
@@ -40,10 +40,10 @@ This feature updates the accuracy simulation system to load player data from JSO
 - {User-facing capability 3}
 
 {Example:}
-- Run accuracy simulations using comprehensive JSON player data (not limited CSV data)
-- Backtest accuracy across all 18 weeks of the 2025 season
-- See realistic actual points (non-zero values) for all players in completed weeks
-- Compare projected vs actual points for every player every week
+- Run analysis using comprehensive JSON record data (not limited CSV data)
+- Backtest accuracy across all {N} periods
+- See realistic actual values (non-zero) for all records in completed periods
+- Compare projected vs actual values for every record every period
 
 ---
 
@@ -56,10 +56,10 @@ This feature updates the accuracy simulation system to load player data from JSO
 - {High-level change 3}
 
 {Example:}
-- Week offset logic implemented: week N loads projected from week_N folder, actual from week_N+1 folder
-- JSON file loading replaces CSV loading in AccuracySimulationManager
-- Player data structure updated to access week-specific points via getattr(player, f'week_{N}_points')
-- All 18 weeks accessible (not just weeks 17-18)
+- Period offset logic implemented: period N loads projected from period_N folder, actual from period_N+1 folder
+- JSON file loading replaces CSV loading in DataProcessingManager
+- Record data structure updated to access period-specific values via getattr(record, f'period_{N}_values')
+- All {N} periods accessible (not just the last 1-2)
 
 ---
 
@@ -75,11 +75,11 @@ This feature updates the accuracy simulation system to load player data from JSO
 {Add 5-8 acceptance criteria}
 
 {Example:}
-- [ ] All 18 weeks accessible with non-zero actual and projected points
-- [ ] Week offset handled correctly (week N actual comes from week N+1 folder, not week N)
-- [ ] AccuracySimulationManager loads JSON files (not CSV files)
-- [ ] Player objects have week-specific points accessible via getattr()
-- [ ] Simulation results comparable to CSV baseline (within 10% variance)
+- [ ] All {N} periods accessible with non-zero actual and projected values
+- [ ] Period offset handled correctly (period N actual comes from period N+1 folder, not period N)
+- [ ] DataProcessingManager loads JSON files (not CSV files)
+- [ ] Record objects have period-specific values accessible via getattr()
+- [ ] Processing results comparable to CSV baseline (within 10% variance)
 - [ ] All unit tests pass (100% pass rate)
 - [ ] Smoke testing passes (import, entry point, E2E execution with data validation)
 
@@ -113,7 +113,7 @@ This feature updates the accuracy simulation system to load player data from JSO
 {Example:}
 ❌ >90% of actual_values are 0.0 (wrong period offset - loading period N instead of N+1)
 ❌ getattr(record, '{field_name}') returns None (old API still used, consumption code not updated)
-❌ Only periods N-1 and N work while other periods have all zeros (offset not generalized)
+❌ Only the last 1-2 periods work while other periods have all zeros (offset not generalized)
 ❌ Simulation crashes when loading JSON files
 ❌ Simulation results >50% different from CSV baseline (major logic error)
 
@@ -127,9 +127,9 @@ This feature updates the accuracy simulation system to load player data from JSO
 - {Item 3 included}
 
 {Example:}
-✅ JSON file loading for accuracy simulation (AccuracySimulationManager)
-✅ Week offset logic for all 18 weeks
-✅ Player data structure updates for week-specific access
+✅ JSON file loading for data processing (DataProcessingManager)
+✅ Period offset logic for all {N} periods
+✅ Record data structure updates for period-specific access
 ✅ Unit tests and smoke tests for JSON loading
 
 ❌ **Out of Scope (What is NOT included in this feature):**
@@ -138,10 +138,10 @@ This feature updates the accuracy simulation system to load player data from JSO
 - {Item 3 NOT included}
 
 {Example:}
-❌ Win rate simulation updates (that's a separate feature)
+❌ Processing pipeline updates for other modules (separate features)
 ❌ UI changes for displaying results
 ❌ JSON file generation (uses existing files)
-❌ Support for seasons other than 2025
+❌ Support for historical data from prior configurations
 
 ---
 

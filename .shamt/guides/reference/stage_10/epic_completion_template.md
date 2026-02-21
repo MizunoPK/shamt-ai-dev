@@ -158,7 +158,7 @@ If bugs were found and fixed during user testing, add this section to EPIC_READM
 
 **Bug Fixes Created During User Testing:**
 - bugfix_high_point_calculation/: Fixed incorrect trade value calculation
-- bugfix_medium_display_format/: Corrected multi-player trade display
+- bugfix_medium_display_format/: Corrected multi-item trade display
 
 **S9 Re-Validation:** ✅ PASSED (after bug fixes)
 ```

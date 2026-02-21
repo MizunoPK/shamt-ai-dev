@@ -105,7 +105,7 @@ Epic: "Add injury data tracking"
 
 Feature 1: Injury Data Ingestion (fetch from injury API)
 Feature 2: Injury Data Normalization (clean/categorize)
-Feature 3: Injury Data Storage (add to player records)
+Feature 3: Attribute Data Storage (add to item records)
 Feature 4: Injury Risk Integration (use in recommendations)
 ```
 
@@ -197,9 +197,9 @@ Feature 4 (aggregation) ← depends on Features 1, 2, 3
 
 **Example:**
 ```text
-Epic: "Enhance player rankings"
+Epic: "Enhance item rankings"
 
-Feature 1: ADP Integration (average draft position)
+Feature 1: rank priority Integration (average draft position)
 Feature 2: Expert Rankings Integration (consensus rankings)
 Feature 3: Injury Risk Integration (injury data)
 Feature 4: Combined Recommendation Engine (aggregate all)
@@ -245,11 +245,11 @@ Feature 4 (integration) ← depends on Features 1, 2, 3
 
 **Example:**
 ```text
-Epic: "Integrate draft helper with [domain analyzer]"
+Epic: "Integrate recommendation engine with [domain analyzer]"
 
 Feature 1: Draft Helper Updates (expose draft data)
 Feature 2: Trade Analyzer Updates (expose trade logic)
-Feature 3: Shared Player Evaluation (common utilities)
+Feature 3: Shared Item Evaluation (common utilities)
 Feature 4: Draft-Trade Integration (connect both systems)
 ```
 
@@ -299,7 +299,7 @@ Epic: "Add interactive draft board"
 
 Feature 1: Draft State API (backend data/logic)
 Feature 2: Draft Board UI (visual components)
-Feature 3: Mode Integration (add to draft helper)
+Feature 3: Mode Integration (add to recommendation engine)
 Feature 4: Draft Preferences (user settings)
 ```
 
@@ -383,7 +383,7 @@ Feature 1: JSON Export Capability (12 items)
 **BAD:**
 ```text
 Feature 1: Complete Draft Enhancement (150 items)
-- ADP integration
+- Rank integration
 - Expert rankings
 - Injury risk
 - Recommendation updates
@@ -393,7 +393,7 @@ Feature 1: Complete Draft Enhancement (150 items)
 
 **BETTER:**
 ```text
-Feature 1: ADP Integration (25 items)
+Feature 1: rank priority Integration (25 items)
 Feature 2: Expert Rankings (20 items)
 Feature 3: Injury Risk (15 items)
 Feature 4: Recommendation Engine (30 items)
@@ -425,15 +425,15 @@ Feature 3: Recommendation Updates (clear scope: integrate data)
 
 **BAD:**
 ```text
-Feature 1: Recommendation Engine (needs ADP data)
-Feature 2: ADP Integration (provides ADP data)
+Feature 1: Recommendation Engine (needs rank data)
+Feature 2: rank priority Integration (provides rank data)
 ```
 
 **WHY BAD:** Wrong order, Feature 1 can't work without Feature 2
 
 **BETTER:**
 ```text
-Feature 1: ADP Integration (foundation - no dependencies)
+Feature 1: rank priority Integration (foundation - no dependencies)
 Feature 2: Recommendation Engine (depends on Feature 1)
 ```
 
@@ -443,7 +443,7 @@ Feature 2: Recommendation Engine (depends on Feature 1)
 
 **BAD:**
 ```text
-Feature 1: Player Manager Updates (depends on Feature 2)
+Feature 1: Record Manager Updates (depends on Feature 2)
 Feature 2: Draft Helper Updates (depends on Feature 1)
 ```
 
@@ -451,8 +451,8 @@ Feature 2: Draft Helper Updates (depends on Feature 1)
 
 **BETTER:**
 ```text
-Feature 1: Shared Player Utilities (foundation - no dependencies)
-Feature 2: Player Manager Updates (depends on Feature 1)
+Feature 1: Shared Item Utilities (foundation - no dependencies)
+Feature 2: Record Manager Updates (depends on Feature 1)
 Feature 3: Draft Helper Updates (depends on Features 1, 2)
 ```
 
@@ -472,9 +472,9 @@ Feature 3: Draft Helper Updates (depends on Features 1, 2)
 
 **Example:**
 ```text
-COMBINED (BAD): "Data Integration" (ADP + Rankings + Injuries)
+COMBINED (BAD): "Data Integration" (rank priority + Rankings + Injuries)
 SPLIT (GOOD):
-- Feature 1: ADP Integration
+- Feature 1: rank priority Integration
 - Feature 2: Expert Rankings Integration
 - Feature 3: Injury Risk Integration
 ```
@@ -507,8 +507,8 @@ COMBINED (GOOD): "JSON Export" (5 items)
 
 **GOOD Names:**
 ```text
-feature_01_adp_integration
-feature_02_injury_risk_assessment
+feature_01_rank_integration
+feature_02_attribute_risk_assessment
 feature_03_recommendation_engine_updates
 ```
 
@@ -528,7 +528,7 @@ feature_04_FeatureStuff (not snake_case)
 2. **Use snake_case** (not camelCase or kebab-case)
 3. **Be specific** (not "updates", "improvements", "misc")
 4. **Keep concise** (2-4 words max)
-5. **Match epic domain** (if epic is "draft_helper", features should relate to drafting)
+5. **Match epic domain** (if epic is "recommendation_engine", features should relate to drafting)
 
 **Examples:**
 
@@ -536,7 +536,7 @@ feature_04_FeatureStuff (not snake_case)
 Epic: improve_recommendation_engine
 
 ✅ GOOD:
-- feature_01_adp_integration
+- feature_01_rank_integration
 - feature_02_injury_assessment
 - feature_03_schedule_analysis
 
@@ -570,7 +570,7 @@ Feature 3 ─┘
 ```
 
 **Use when:** Multiple independent sources + integration layer
-**Example:** Multi-source data epic (ADP, rankings, injuries → combined engine)
+**Example:** Multi-source data epic (rank priority, rankings, injuries → combined engine)
 
 ---
 
@@ -635,11 +635,11 @@ Total: ~20 items
 
 **Example:**
 ```text
-Feature: ADP Integration
+Feature: rank priority Integration
 - API client (5 items)
 - Data normalization (6 items)
 - Storage updates (5 items)
-- PlayerManager integration (4 items)
+- RecordManager integration (4 items)
 - Configuration (3 items)
 - Unit tests (12 items)
 - Integration tests (5 items)
@@ -662,7 +662,7 @@ Feature: Recommendation Engine Overhaul
 - Algorithm redesign (10 items)
 - Data aggregation (8 items)
 - Scoring logic (12 items)
-- PlayerManager updates (6 items)
+- RecordManager updates (6 items)
 - Configuration system (5 items)
 - UI updates (4 items)
 - Unit tests (20 items)

@@ -93,13 +93,13 @@ Plan unit tests, integration tests, and edge cases with traceability to requirem
 **Error Conditions:**
 - CSV file not found → FileNotFoundError
 - CSV malformed → ParsingError
-- Player name is None/empty → ValueError
+- Item name is None/empty → ValueError
 
 **Edge Cases:**
 - priority rank = 1 (best) → multiplier = 1.99
 - priority rank = 200 (worst) → multiplier = 0.0
-- Player not in list → multiplier = 1.0 (neutral)
-- Multiple players with same name → use first match
+- Item not in list → multiplier = 1.0 (neutral)
+- Multiple items with same name → use first match
 ```
 
 3. **Create initial test coverage matrix**
@@ -155,14 +155,14 @@ For each requirement, create test case list:
 
 #### Unit Tests (Function-Level)
 
-**Test 1.1: test_calculate_rank_multiplier_best_player**
+**Test 1.1: test_calculate_rank_multiplier_best_item**
 - **Purpose:** Verify priority rank 1 produces maximum multiplier
 - **Setup:** Mock rank data with item at rank 1
 - **Input:** item_name="Record-A", priority_rank=1
 - **Expected:** rank_multiplier = 1.99
 - **Links to:** R1 (Rank Multiplier calculation)
 
-**Test 1.2: test_calculate_rank_multiplier_worst_player**
+**Test 1.2: test_calculate_rank_multiplier_worst_item**
 - **Purpose:** Verify priority rank 200 produces minimum multiplier
 - **Setup:** Mock rank data with item at rank 200
 - **Input:** item_name="Record-Z", priority_rank=200
@@ -176,7 +176,7 @@ For each requirement, create test case list:
 - **Expected:** rank_multiplier = (200-100)/100 = 1.0
 - **Links to:** R1 (Rank Multiplier calculation)
 
-**Test 1.4: test_calculate_rank_multiplier_player_not_found**
+**Test 1.4: test_calculate_rank_multiplier_item_not_found**
 - **Purpose:** Verify missing item returns neutral multiplier
 - **Setup:** Mock rank data without item
 - **Input:** item_name="Unknown Item"
@@ -295,8 +295,8 @@ Systematically identify ALL edge cases using boundary analysis and error path en
 - Special characters: "Item-B", "T.J. Hockenson" → Should handle
 
 **Expected Behavior:**
-- Empty → ValueError("Player name cannot be empty")
-- None → ValueError("Player name cannot be None")
+- Empty → ValueError("Item name cannot be empty")
+- None → ValueError("Item name cannot be None")
 - Special chars → Handle correctly (normalize for matching)
 - Very long → Truncate or handle (per spec)
 
@@ -345,13 +345,13 @@ Systematically identify ALL edge cases using boundary analysis and error path en
 **Test 1.11: test_rank_empty_item_name**
 - **Purpose:** Verify empty name raises error
 - **Input:** item_name=""
-- **Expected:** ValueError("Player name cannot be empty")
+- **Expected:** ValueError("Item name cannot be empty")
 - **Links to:** R1 (Input validation)
 
 **Test 1.12: test_rank_none_item_name**
 - **Purpose:** Verify None name raises error
 - **Input:** item_name=None
-- **Expected:** ValueError("Player name cannot be None")
+- **Expected:** ValueError("Item name cannot be None")
 - **Links to:** R1 (Input validation)
 
 **Test 1.13: test_rank_very_long_item_name**
@@ -447,7 +447,7 @@ Systematically identify ALL edge cases using boundary analysis and error path en
 | CSV file empty | Data validation | ValueError | Test 1.17 |
 | CSV file malformed | Data validation | ParsingError | Test 1.18 |
 | Item not in rank list | Business logic | Return neutral (1.0) | Test 1.4 |
-| Multiple players same name | Data quality | Use first or aggregate | Test 1.9 |
+| Multiple items same name | Data quality | Use first or aggregate | Test 1.9 |
 | Special chars in name | Data quality | Normalize and match | Test 1.10 |
 | CSV file not found | File system | FileNotFoundError | Test 1.8 |
 
@@ -528,7 +528,7 @@ Identify configuration dependencies and plan configuration-related tests (defaul
 - **Default:** true
 - **If missing:** Assume true (feature enabled)
 - **If invalid (not boolean):** Raise ConfigError("rank_multiplier_enabled must be boolean")
-- **Impact:** If false, multiplier = 1.0 (neutral) for all players
+- **Impact:** If false, multiplier = 1.0 (neutral) for all items
 
 **2. rank_data_source (string)**
 - **Purpose:** Path to rank data CSV file
@@ -610,7 +610,7 @@ Identify configuration dependencies and plan configuration-related tests (defaul
 **Test 3.4: test_rank_feature_disabled**
 - **Purpose:** Verify disabling feature sets neutral multiplier
 - **Setup:** Set rank_multiplier_enabled = false
-- **Expected:** All players get multiplier = 1.0 (neutral)
+- **Expected:** All items get multiplier = 1.0 (neutral)
 - **Links to:** R1 (Feature toggle)
 
 ---

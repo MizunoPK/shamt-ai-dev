@@ -325,7 +325,7 @@ From epic_smoke_test_plan.md, execute each scenario:
 **Example scenario:**
 ```markdown
 ### Scenario 1: Complete Draft Workflow
-1. Fetch player data (Feature 01)
+1. Fetch record data (Feature 01)
 2. Apply ratings (Feature 02)
 3. Generate recommendations (Feature 03)
 ```
@@ -357,8 +357,8 @@ with open(epic_output) as f:
 ## Verify data from ALL features integrated correctly
 assert len(data) > 0, "Epic output is empty"
 
-## Verify Feature 01 data present (player info)
-assert all('player_name' in p for p in data), "Missing player names (Feature 01)"
+## Verify Feature 01 data present (item info)
+assert all('player_name' in p for p in data), "Missing item names (Feature 01)"
 
 ## Verify Feature 02 data present (ratings)
 assert all('rating' in p for p in data), "Missing ratings (Feature 02)"
@@ -389,9 +389,9 @@ From `epic_smoke_test_plan.md`, identify cross-feature integration scenarios:
 
 **Example integration points:**
 ```markdown
-- Feature 01 → Feature 02: Player data passed to rating system
+- Feature 01 → Feature 02: Record data passed to rating system
 - Feature 02 → Feature 03: Ratings used in recommendations
-- Feature 03 → Feature 01: Recommendations update player rankings
+- Feature 03 → Feature 01: Recommendations update item rankings
 ```
 
 ### Step 2: Execute Integration Scenarios
@@ -400,19 +400,19 @@ For EACH integration point, verify data flows correctly:
 
 ```python
 ## Integration Test: Feature 01 → Feature 02
-from feature_01.PlayerDataManager import PlayerDataManager
+from feature_01.RecordManager import DataRecordDataManager
 from feature_02.RatingSystem import RatingSystem
 
 ## Get data from Feature 01
 player_mgr = PlayerDataManager()
-players = player_mgr.get_all_players()
+items = player_mgr.get_all_items()
 
 ## Pass to Feature 02
 rating_sys = RatingSystem()
-rated_players = rating_sys.apply_ratings(players)
+rated_players = rating_sys.apply_ratings(items)
 
 ## Verify integration works
-assert len(rated_players) == len(players), "Data lost in integration"
+assert len(rated_players) == len(items), "Data lost in integration"
 assert all(hasattr(p, 'rating') for p in rated_players), "Ratings not applied"
 assert rated_players[0].rating > 0, "Rating values invalid"
 
@@ -430,7 +430,7 @@ try:
     rating_sys.apply_ratings(invalid_data)
     assert False, "Should have raised error for invalid data"
 except ValueError as e:
-    assert "Invalid player data" in str(e), "Error message unclear"
+    assert "Invalid record data" in str(e), "Error message unclear"
     print("✅ Error propagation works correctly")
 ```
 
@@ -440,10 +440,10 @@ Ensure features use compatible interfaces:
 
 ```python
 ## Verify Feature 02 accepts Feature 01's output format
-from feature_01.PlayerDataManager import Player
+from feature_01.RecordManager import DataRecord
 from feature_02.RatingSystem import RatingSystem
 
-sample_player = Player(name="Test", position="QB")
+sample_item = DataRecord(name="Test", category="A")
 rating_sys = RatingSystem()
 
 ## This should work without errors

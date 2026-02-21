@@ -126,7 +126,7 @@
 - Cannot proceed if ANY category = "No"
 
 **Evidence Required:**
-- File paths (e.g., `[module]/util/PlayerManager.py`)
+- File paths (e.g., `[module]/util/RecordManager.py`)
 - Line numbers (e.g., `lines 180-215`)
 - Code snippets showing what you found
 

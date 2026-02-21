@@ -288,17 +288,17 @@ Re-Reading Checkpoint
 **Example:**
 ```python
 ## ❌ Off-by-one error
-for i in range(len(players)):  # Correct
-    player = players[i]
+for i in range(len(items)):  # Correct
+    item = items[i]
 
-for i in range(len(players) + 1):  # ❌ Will crash on last iteration
-    player = players[i]
+for i in range(len(items) + 1):  # ❌ Will crash on last iteration
+    item = items[i]
 
 ## ✅ Correct comparison
-if player.adp_rank < 50:  # Top 50 players
+if item.priority_rank < 50:  # Top 50 items
     apply_bonus()
 
-if player.adp_rank <= 50:  # Depends on requirement (inclusive vs exclusive)
+if item.priority_rank <= 50:  # Depends on requirement (inclusive vs exclusive)
 ```
 
 **Document findings:**
@@ -332,18 +332,18 @@ def proc(d):
     return sorted(r, key=lambda y: y['v'], reverse=True)
 
 ## ✅ GOOD - Clear, focused functions
-def filter_high_scorers(players, threshold=10):
-    """Return players with score above threshold."""
-    return [p for p in players if p['score'] > threshold]
+def filter_high_scorers(items, threshold=10):
+    """Return items with score above threshold."""
+    return [p for p in items if p['score'] > threshold]
 
-def apply_multiplier(players, multiplier=1.5):
-    """Apply multiplier to player scores."""
+def apply_multiplier(items, multiplier=1.5):
+    """Apply multiplier to item scores."""
     return [{'name': p['name'], 'value': p['score'] * multiplier}
-            for p in players]
+            for p in items]
 
-def sort_by_value(players, descending=True):
-    """Sort players by value."""
-    return sorted(players, key=lambda p: p['value'], reverse=descending)
+def sort_by_value(items, descending=True):
+    """Sort items by value."""
+    return sorted(items, key=lambda p: p['value'], reverse=descending)
 ```
 
 ---
@@ -366,17 +366,17 @@ def sort_by_value(players, descending=True):
 **Example:**
 ```python
 ## ❌ BAD - Restates code
-## Loop through players
-for player in players:
+## Loop through items
+for item in items:
     # Add to list
-    results.append(player)
+    results.append(item)
 
 ## ✅ GOOD - Explains why
-## Filter to only rostered players for trade analysis
+## Filter to only rostered items for trade analysis
 ## (Free agents handled separately in draft mode)
-for player in players:
-    if player.is_rostered:
-        results.append(player)
+for item in items:
+    if item.is_active:
+        results.append(item)
 ```
 
 ---
@@ -392,24 +392,24 @@ for player in players:
 ```python
 ## ❌ DUPLICATION - Same logic in 3 places
 ## In DraftHelper:
-if player.injury_status == "Out":
+if item.attribute_status == "Out":
     penalty = -10
-elif player.injury_status == "Questionable":
+elif item.attribute_status == "Questionable":
     penalty = -5
 
 ## In TradeSimulator:
-if player.injury_status == "Out":
+if item.attribute_status == "Out":
     penalty = -10
-elif player.injury_status == "Questionable":
+elif item.attribute_status == "Questionable":
     penalty = -5
 
 ## ✅ REFACTORED - Unified in ConfigManager
 ## In ConfigManager:
-def get_injury_penalty(self, injury_status):
-    return self.config['injury_penalties'].get(injury_status, 0)
+def get_injury_penalty(self, attribute_status):
+    return self.config['injury_penalties'].get(attribute_status, 0)
 
 ## In DraftHelper & TradeSimulator:
-penalty = config.get_injury_penalty(player.injury_status)
+penalty = config.get_injury_penalty(item.attribute_status)
 ```
 
 ---
@@ -457,15 +457,15 @@ penalty = config.get_injury_penalty(player.injury_status)
 **Example - Performance Issue:**
 ```python
 ## ❌ BAD - O(n²) when O(n) possible
-for player in all_players:
-    for team_player in team_roster:  # Inner loop runs for EACH player
-        if player.name == team_player.name:
-            player.is_rostered = True
+for item in all_items:
+    for team_item in team_roster:  # Inner loop runs for EACH item
+        if item.name == team_item.name:
+            item.is_active = True
 
 ## ✅ GOOD - O(n) with set lookup
 rostered_names = {p.name for p in team_roster}
-for player in all_players:
-    player.is_rostered = player.name in rostered_names  # O(1) lookup
+for item in all_items:
+    item.is_active = item.name in rostered_names  # O(1) lookup
 ```
 
 ---
@@ -491,8 +491,8 @@ except:
 try:
     load_data()
 except FileNotFoundError as e:
-    logger.error(f"Failed to load player data: {e}")
-    raise DataProcessingError("Player data file not found", context=ctx)
+    logger.error(f"Failed to load record data: {e}")
+    raise DataProcessingError("Record data file not found", context=ctx)
 ```
 
 ---
@@ -525,15 +525,15 @@ except FileNotFoundError as e:
 ```python
 ## ❌ BREAKING CHANGE - Changed method signature
 ## Before:
-def calculate_score(player):
+def calculate_score(item):
     ...
 
 ## After (BREAKS all existing callers):
-def calculate_score(player, config):
+def calculate_score(item, config):
     ...
 
 ## ✅ BACKWARDS COMPATIBLE - Added optional parameter
-def calculate_score(player, config=None):
+def calculate_score(item, config=None):
     if config is None:
         config = ConfigManager()
     ...
@@ -550,18 +550,18 @@ def calculate_score(player, config=None):
 
 **Example:**
 ```markdown
-Spec requirement: "Add ADP multiplier to draft recommendations"
+Spec requirement: "Add rank multiplier to scoring recommendations"
 
 ✅ In scope:
-- Calculate ADP multiplier
+- Calculate rank multiplier
 - Apply to draft scores
 - Display in recommendations
 
 ❌ Out of scope (unless explicitly discussed):
 - Redesign entire [domain algorithm]
 - Add caching layer for performance
-- Create configuration UI for ADP weights
-- Implement machine learning model for ADP prediction
+- Create configuration UI for rank weights
+- Implement machine learning model for rank prediction
 ```
 
 ---
@@ -909,22 +909,22 @@ Should use INFO level, not WARNING (this is expected behavior)
 
 ### Example 2: PR Review Catches Scope Creep
 
-**Feature:** Add ADP multiplier to draft recommendations
+**Feature:** Add rank multiplier to scoring recommendations
 
 **PR Review Category 11 (Scope):**
 ```markdown
-Spec requirement: "Add ADP multiplier to draft recommendations"
+Spec requirement: "Add rank multiplier to scoring recommendations"
 
 Code review found:
 ✅ In scope:
-- Calculate ADP multiplier
+- Calculate rank multiplier
 - Apply to draft scores
 - Display in recommendations
 
 ⚠️ Out of scope (not in spec):
-- NEW: Caching layer for ADP data (250 lines of code)
-- NEW: Admin UI for configuring ADP weights (180 lines of code)
-- NEW: ADP trend analysis over time (320 lines of code)
+- NEW: Caching layer for rank data (250 lines of code)
+- NEW: Admin UI for configuring rank weights (180 lines of code)
+- NEW: rank priority trend analysis over time (320 lines of code)
 
 Total: 750 lines of unspecified code (30% of feature)
 
@@ -934,7 +934,7 @@ Decision: Remove out-of-scope code or get user approval
 
 **Resolution:**
 - Asked user if these additions were wanted
-- User said: "No, just the basic ADP multiplier for now"
+- User said: "No, just the basic rank multiplier for now"
 - Removed 750 lines of unspecified code
 - Feature size reduced 30%
 - Complexity reduced significantly

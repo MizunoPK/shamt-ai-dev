@@ -137,7 +137,7 @@ Add new issue to "Active Investigations" table.
 ## Issue File Template: issue_{number}_{name}.md
 
 ```markdown
-## Issue #1: Player scoring returns None
+## Issue #1: Item scoring returns None
 
 **Created:** {YYYY-MM-DD HH:MM}
 **Status:** INVESTIGATING
@@ -149,21 +149,21 @@ Add new issue to "Active Investigations" table.
 ## Issue Description
 
 **Symptom:**
-Player scoring calculation returns None instead of expected float value
+Item scoring calculation returns None instead of expected float value
 
 **Discovered During:**
 S7.P1 Smoke Testing Part 3 - E2E test execution
 
 **Reproduction:**
 ```
-player = PlayerManager.load_player("Patrick Mahomes")
-score = player.calculate_score(week=1)
+item = RecordManager.load_item("Record-A")
+score = item.calculate_score(week=1)
 ## Expected: 24.5 (float)
 ## Actual: None
 ```markdown
 
 **Impact:**
-Blocks feature functionality - cannot calculate player scores
+Blocks feature functionality - cannot calculate item scores
 
 **Test Output:**
 ```
@@ -264,31 +264,31 @@ AssertionError: Expected float, got None
 **Execution Path Traced:**
 ```
 AccuracySimulationManager.run()
-  → PlayerManager.load_player("Patrick Mahomes")
-    → Player.__init__()
-      → Player._load_stats()
-        → Player._calculate_base_score()  ← Returns None
+  → RecordManager.load_item("Record-A")
+    → DataRecord.__init__()
+      → DataRecord._load_stats()
+        → DataRecord._calculate_base_score()  ← Returns None
 ```bash
 
 **Findings:**
-- Player._calculate_base_score() is returning None
+- DataRecord._calculate_base_score() is returning None
 - Method expects self.stats to be populated
 - self.stats appears to be empty dict {}
 - Suspect: Stats not loading from CSV during __init__
 
 **Suspicious Code Locations:**
-1. utils/FantasyPlayer.py:156 - _load_stats() method
-   - Responsible for loading player stats from CSV
+1. utils/DataRecord.py:156 - _load_stats() method
+   - Responsible for loading item stats from CSV
    - If CSV load fails, self.stats stays empty
-2. utils/FantasyPlayer.py:89 - _calculate_base_score() method
+2. utils/DataRecord.py:89 - _calculate_base_score() method
    - Returns None if self.stats is empty
    - No error raised, just returns None silently
-3. data/player_stats_2024.csv - Data source
+3. data/item_stats.csv - Data source
    - CSV might be missing or have wrong format
    - Column names might not match expected
 
 **Data Flow:**
-- CSV file → pd.read_csv() → filter by player name → self.stats dict
+- CSV file → pd.read_csv() → filter by item name → self.stats dict
 - If any step fails, self.stats = {}
 - Empty dict → calculate_base_score() returns None
 
@@ -394,10 +394,10 @@ CSV not loading correctly, leaving self.stats empty
 - **How to test:** Add logging to show CSV columns and parsed dict contents
 - **Expected evidence:** Log shows column names don't match expected, parsed dict is empty
 
-**HYPOTHESIS 2: Player Name Mismatch** (Confidence: 20%)
-- **Root Cause:** CSV uses "P. Mahomes" but we're looking up "Patrick Mahomes"
+**HYPOTHESIS 2: Item Name Mismatch** (Confidence: 20%)
+- **Root Cause:** CSV uses "P. Mahomes" but we're looking up "Record-A"
 - **Why it explains symptom:** Name mismatch → no rows match filter → empty dict → None
-- **How to test:** Add logging to show player name in CSV vs lookup name
+- **How to test:** Add logging to show item name in CSV vs lookup name
 - **Expected evidence:** Log shows name format mismatch between CSV and lookup
 
 **HYPOTHESIS 3: File Path Wrong** (Confidence: 10%)
@@ -408,19 +408,19 @@ CSV not loading correctly, leaving self.stats empty
 
 **Diagnostic Logging Plan:**
 ```
-## Add to utils/FantasyPlayer.py:156 (_load_stats method)
+## Add to utils/DataRecord.py:156 (_load_stats method)
 logger.info(f"Loading stats from: {csv_path}")
 logger.info(f"CSV columns: {df.columns.tolist()}")
 logger.info(f"CSV shape: {df.shape}")
-logger.info(f"Looking for player: {self.name}")
+logger.info(f"Looking for item: {self.name}")
 logger.info(f"Players in CSV: {df['PlayerName'].unique()[:5]}")  # First 5
 logger.info(f"Stats after filter: {player_stats.shape}")
 logger.info(f"Parsed stats dict: {self.stats}")
 ```markdown
 
 **Test Scenarios:**
-1. Load "Patrick Mahomes" (current failing case)
-2. Load different player to see if pattern repeats
+1. Load "Record-A" (current failing case)
+2. Load different item to see if pattern repeats
 3. Check if CSV file exists and is readable
 4. Inspect CSV manually to verify format
 
@@ -508,15 +508,15 @@ python [run_script].py --mode accuracy 2>&1 | tee debugging/diagnostic_logs/issu
 ### Round 3: Diagnostic Testing ({YYYY-MM-DD HH:MM})
 
 **Changes Made:**
-- Added diagnostic logging to utils/FantasyPlayer.py:156-162
+- Added diagnostic logging to utils/DataRecord.py:156-162
 
 **Test Run Output:**
 ```
-INFO: Loading stats from: data/player_stats_2024.csv
+INFO: Loading stats from: data/item_stats.csv
 INFO: CSV columns: ['Week', 'PlayerName', 'StatValue', 'Position']
 INFO: CSV shape: (544, 4)
-INFO: Looking for player: Patrick Mahomes
-INFO: Players in CSV: ['P.Mahomes', 'J.Allen', 'L.Jackson', 'J.Herbert', 'D.Prescott']
+INFO: Looking for item: Record-A
+INFO: Players in CSV: ['Record-A', 'J.Allen', 'L.Jackson', 'J.Herbert', 'D.Prescott']
 INFO: Stats after filter: (0, 4)
 INFO: Parsed stats dict: {}
 ```markdown
@@ -527,8 +527,8 @@ INFO: Parsed stats dict: {}
 - Evidence: CSV columns match expected (['PlayerName', 'StatValue'] exist)
 - No column mismatch
 
-**Hypothesis 2 (Player Name Mismatch):** ✅ CONFIRMED
-- Evidence: CSV has 'P.Mahomes' but we're looking up 'Patrick Mahomes'
+**Hypothesis 2 (Item Name Mismatch):** ✅ CONFIRMED
+- Evidence: CSV has 'Record-A' but we're looking up 'Record-A'
 - Filtered DataFrame has 0 rows (no match)
 - This explains why stats dict is empty
 - Empty dict → calculate_base_score() returns None
@@ -542,12 +542,12 @@ INFO: Parsed stats dict: {}
 
 **ROOT CAUSE CONFIRMED:**
 
-**Problem:** Player name format mismatch
-- Code uses: "Patrick Mahomes"
-- CSV has: "P.Mahomes"
+**Problem:** Item name format mismatch
+- Code uses: "Record-A"
+- CSV has: "Record-A"
 - Lookup fails → empty stats dict → calculate_base_score() returns None
 
-**Location:** utils/FantasyPlayer.py:156 (_load_stats method)
+**Location:** utils/DataRecord.py:156 (_load_stats method)
 
 **Evidence:** Diagnostic logs (saved to debugging/diagnostic_logs/issue_01_round3.log)
 

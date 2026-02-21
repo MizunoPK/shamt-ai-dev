@@ -292,7 +292,7 @@ Stuck For: 25 minutes
 ## Message 4 (2026-01-15 14:00) ⏳ UNREAD
 **Subject:** User answered your question
 **Action:** Check feature_02/checklist.md - Question 5 answered
-**Details:** User said: "Yes, apply penalty to all offensive players on team"
+**Details:** User said: "Yes, apply penalty to all offensive items on team"
 **Next:** Update spec.md with this requirement, complete S2.P3
 **Acknowledge:** Reply when updated
 ```

@@ -144,8 +144,8 @@ assert df['player_name'].str.len().min() > 2  # Verify reasonable values
 
 **Example:**
 ```markdown
-## Spec says: "Sort players by projected_points DESC"
-## Implementation must use: df.sort_values('projected_points', ascending=False)
+## Spec says: "Sort items by projected_value DESC"
+## Implementation must use: df.sort_values('projected_value', ascending=False)
 ## NOT acceptable: Sorting by rank ASC (even if equivalent)
 ```
 
@@ -326,13 +326,13 @@ Close spec → Wait 1 minute → Re-read independently
 
 ```python
 ## WRONG - Only checking structure
-assert 'projected_points' in df.columns  # Just checks column exists
+assert 'projected_value' in df.columns  # Just checks column exists
 
 ## CORRECT - Checking structure AND values
-assert 'projected_points' in df.columns  # Structure
-assert df['projected_points'].notna().all()  # Values not null
-assert df['projected_points'].sum() > 0  # Values not zero
-assert df['projected_points'].between(0, 500).all()  # Values in range
+assert 'projected_value' in df.columns  # Structure
+assert df['projected_value'].notna().all()  # Values not null
+assert df['projected_value'].sum() > 0  # Values not zero
+assert df['projected_value'].between(0, 500).all()  # Values in range
 ```
 
 ---

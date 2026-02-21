@@ -211,7 +211,7 @@ Summarize what the user requested in 2-4 sentences. Capture the essence without 
 
 User wants easier test runs for scripts, automated smoke testing,
 and "debugging version runs" for league helper modes (4 modes),
-simulations (win rate, accuracy), and data fetchers (player, scores,
+processing modules (A and B), and data fetchers (records, metadata,
 historical, schedule).
 
 **Original Request:** `improve_debugging_runs_notes.txt`
@@ -395,7 +395,7 @@ Each round, you MUST re-read the ENTIRE DISCOVERY.md document. Use different rea
 ### Issue 1: Missing External Dependencies Research
 **Category:** Missing Research
 **Description:** Section 3 mentions "API integration" but doesn't specify which API or research alternatives
-**Action Required:** Research ESPN API, Sleeper API, compare options, ask user preference
+**Action Required:** Research available external APIs, compare options, ask user preference
 
 ### Issue 2: Unverified Assumption
 **Category:** Unverified Assumption
@@ -451,7 +451,7 @@ For EACH issue identified in Step B, you MUST fix it BEFORE continuing to Step D
 
 ### Fix 1: External Dependencies Researched
 **Issue:** Missing API research
-**Resolution:** Researched ESPN API (free, reliable) and Sleeper API (better data). Asked user, user prefers ESPN API.
+**Resolution:** Researched primary API (free, reliable) and secondary API (better data). Asked user, user prefers primary API.
 **Updated Section:** Technical Analysis - External Dependencies
 
 ### Fix 2: Verified Offline Requirement
@@ -683,7 +683,7 @@ For each approach identified during research:
 **Purpose:** Debug mode for all data fetcher scripts
 
 **Scope:**
-- --debug flag for player, scores, historical, schedule fetchers
+- --debug flag for records, metadata, historical, schedule fetchers
 - Reduced data fetching in debug mode
 - Verbose logging
 

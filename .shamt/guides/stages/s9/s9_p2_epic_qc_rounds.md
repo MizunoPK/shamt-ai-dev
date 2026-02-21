@@ -279,11 +279,11 @@ VALIDATION COMPLETE → Proceed to S9.P3 (User Testing)
 ```markdown
 ## Integration Points (example from test plan)
 1. Feature 01 (PlayerDataManager) → Feature 02 (RatingSystem)
-   - Data flow: Player objects with ADP → Rating system
-   - Interface: get_all_players() returns List[Player]
+   - Data flow: Item objects with rank priority → Rating system
+   - Interface: get_all_items() returns List[DataRecord]
 
 2. Feature 02 (RatingSystem) → Feature 03 (RecommendationEngine)
-   - Data flow: Rated players → Recommendation generation
+   - Data flow: Rated items → Recommendation generation
    - Interface: get_rated_players() returns List[RatedPlayer]
 ```
 
@@ -291,23 +291,23 @@ VALIDATION COMPLETE → Proceed to S9.P3 (User Testing)
 
 ```python
 ## Integration Test: Feature 01 → Feature 02
-from feature_01.PlayerDataManager import PlayerDataManager
+from feature_01.RecordManager import DataRecordDataManager
 from feature_02.RatingSystem import RatingSystem
 
 ## Get data from Feature 01
 player_mgr = PlayerDataManager()
-players = player_mgr.get_all_players()
+items = player_mgr.get_all_items()
 
 ## Verify data format
-assert len(players) > 0, "Feature 01 returned no data"
-assert hasattr(players[0], 'adp'), "Players missing ADP field"
+assert len(items) > 0, "Feature 01 returned no data"
+assert hasattr(items[0], 'rank'), "Players missing rank field"
 
 ## Pass to Feature 02
 rating_sys = RatingSystem()
-rated_players = rating_sys.apply_ratings(players)
+rated_players = rating_sys.apply_ratings(items)
 
 ## Verify integration works
-assert len(rated_players) == len(players), "Data lost in integration"
+assert len(rated_players) == len(items), "Data lost in integration"
 assert all(hasattr(p, 'rating') for p in rated_players), "Ratings not applied"
 
 print("✅ Feature 01 → Feature 02 integration validated")
@@ -323,22 +323,22 @@ print("✅ Feature 01 → Feature 02 integration validated")
 
 ```python
 ## Complete data flow: Feature 01 → 02 → 03
-from feature_01.PlayerDataManager import PlayerDataManager
+from feature_01.RecordManager import DataRecordDataManager
 from feature_02.RatingSystem import RatingSystem
 from feature_03.RecommendationEngine import RecommendationEngine
 
 ## Step 1: Get raw data
-players = PlayerDataManager().get_all_players()
+items = PlayerDataManager().get_all_items()
 
 ## Step 2: Apply ratings
-rated_players = RatingSystem().apply_ratings(players)
+rated_players = RatingSystem().apply_ratings(items)
 
 ## Step 3: Generate recommendations
 recommendations = RecommendationEngine().generate(rated_players)
 
 ## Verify complete flow
 assert len(recommendations) > 0, "No recommendations generated"
-assert recommendations[0]['player_name'] in [p.name for p in players], "Lost player data"
+assert recommendations[0]['item_name'] in [p.name for p in items], "Lost record data"
 assert 'rating' in recommendations[0], "Lost rating data"
 assert 'draft_position' in recommendations[0], "Missing final output"
 
@@ -353,11 +353,11 @@ print("✅ Complete data flow validated")
 
 ```python
 ## Check Feature 02 accepts Feature 01's output format
-from feature_01.PlayerDataManager import Player
+from feature_01.RecordManager import DataRecord
 from feature_02.RatingSystem import RatingSystem
 
-## Create sample player (Feature 01 format)
-sample_player = Player(name="Test", position="QB", adp=50.0)
+## Create sample item (Feature 01 format)
+sample_item = DataRecord(name="Test", category="A", rank=50.0)
 
 ## Verify Feature 02 can process it
 rating_sys = RatingSystem()
@@ -384,7 +384,7 @@ try:
     RatingSystem().apply_ratings(invalid_data)
     assert False, "Should have raised error for invalid data"
 except ValueError as e:
-    assert "Invalid player data" in str(e), "Error message unclear"
+    assert "Invalid record data" in str(e), "Error message unclear"
     print("✅ Error propagation works")
 ```
 
@@ -430,7 +430,7 @@ except ValueError as e:
 **Sample files from each feature:**
 ```python
 ## Feature 01 sample
-from feature_01.PlayerDataManager import PlayerDataManager
+from feature_01.RecordManager import DataRecordDataManager
 
 ## Feature 02 sample
 from feature_02.RatingSystem import RatingSystem
@@ -459,7 +459,7 @@ from feature_03.RecommendationEngine import RecommendationEngine
 ## Check method naming patterns
 ## All features should use similar naming for similar operations
 
-## Feature 01: get_all_players()
+## Feature 01: get_all_items()
 ## Feature 02: get_rated_players()  ✅ Consistent "get_XXX_players()" pattern
 ## Feature 03: get_recommendations()  ❌ Different pattern
 
@@ -483,7 +483,7 @@ from feature_03.RecommendationEngine import RecommendationEngine
 try:
     data = load_data()
 except FileNotFoundError:
-    raise DataProcessingError("Player data file not found")
+    raise DataProcessingError("Record data file not found")
 
 ## Feature 02
 try:
@@ -564,14 +564,14 @@ Close any current views → Open `.shamt/epics/requests/{epic_name}.txt` → Rea
 ```markdown
 ## Original Epic Request (example)
 
-User Goal 1: "Integrate ADP data into draft recommendations"
-✅ Verified: Feature 01 fetches ADP, Feature 02 applies ratings, Feature 03 uses in recs
+User Goal 1: "Integrate rank data into scoring recommendations"
+✅ Verified: Feature 01 fetches rank priority, Feature 02 applies ratings, Feature 03 uses in recs
 
 User Goal 2: "Allow users to adjust rating multipliers"
 ✅ Verified: Feature 02 includes multiplier config, Feature 03 respects adjustments
 
-User Goal 3: "Generate top 200 ranked players"
-✅ Verified: Feature 03 outputs exactly 200 ranked players
+User Goal 3: "Generate top 200 ranked items"
+✅ Verified: Feature 03 outputs exactly 200 ranked items
 ```
 
 **If ANY goal not met:**
@@ -590,10 +590,10 @@ User Goal 3: "Generate top 200 ranked players"
 1. All 6 positions have rating multipliers (QB, RB, WR, TE, K, DST)
    ✅ Verified: All 6 position files have multipliers
 
-2. Recommendations include player name, position, ADP, rating, draft position
+2. Recommendations include item name, position, rank priority, rating, draft position
    ✅ Verified: All fields present in output
 
-3. Top player in each position has rating > 0.8
+3. Top item in each category has rating > 0.8
    ✅ Verified: QB top=0.92, RB top=0.88, WR top=0.90, TE top=0.85, K top=0.82, DST top=0.87
 ```
 

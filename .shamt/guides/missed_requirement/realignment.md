@@ -22,7 +22,7 @@
 1. [PHASE 4: S4 - Epic Testing Strategy Update](#phase-4-s4-epic-testing-strategy-update)
    - [Update epic_smoke_test_plan.md](#update-epicsmoketestplanmd)
    - [Step 1: Add Scenarios for New/Updated Feature](#step-1-add-scenarios-for-newupdated-feature)
-1. [Epic Integration Test: Player Scoring with Injury Status](#epic-integration-test-player-scoring-with-injury-status)
+1. [Epic Integration Test: Item Scoring with Attribute Status](#epic-integration-test-player-scoring-with-injury-status)
    - [Step 2: Update Existing Scenarios](#step-2-update-existing-scenarios)
 1. [Epic Integration Test: Draft Recommendations (UPDATED)](#epic-integration-test-draft-recommendations-updated)
    - [Step 3: Identify Integration Points](#step-3-identify-integration-points)
@@ -205,19 +205,19 @@ Proceed to S4 (Epic Testing Strategy update)? {User confirms}
 **Add test scenarios:**
 
 ```markdown
-## Epic Integration Test: Player Scoring with Injury Status
+## Epic Integration Test: Item Scoring with Attribute Status
 
 **Features involved:**
 - feature_02 (projection_system)
 - feature_05 (injury_tracking) ← NEW
 
 **Scenario:**
-1. Load player with injury status = "Questionable"
+1. Load item with attribute_status = "Questionable"
 2. Generate projection (should reduce projected points)
 3. Verify score reflects injury adjustment
 
 **Expected:** Projection accounts for injury status
-**Success criteria:** Injured player projection < healthy projection
+**Success criteria:** Degraded item score < healthy item score
 
 **Data to verify:**
 - Injury status field populated
@@ -240,18 +240,18 @@ Proceed to S4 (Epic Testing Strategy update)? {User confirms}
 ## Epic Integration Test: Draft Recommendations (UPDATED)
 
 **Features involved:**
-- feature_01 (adp_integration)
+- feature_01 (rank_integration)
 - feature_02 (projection_system)
 - feature_05 (injury_tracking) ← ADDED
 
 **Scenario:**
-1. Load players with ADP data
-2. Load injury status for each player ← NEW STEP
+1. Load items with rank data
+2. Load injury status for each item ← NEW STEP
 3. Generate projections (accounting for injuries) ← UPDATED
-4. Generate draft recommendations
+4. Generate scoring recommendations
 
-**Expected:** Recommendations account for both ADP and injury status
-**Success criteria:** Injured high-ADP player ranked lower than healthy equivalent
+**Expected:** Recommendations account for both rank priority and injury status
+**Success criteria:** Degraded high-rank priority item ranked lower than healthy equivalent
 ```
 
 ---
@@ -264,7 +264,7 @@ Proceed to S4 (Epic Testing Strategy update)? {User confirms}
 ## Integration Points
 
 **feature_02 → feature_05:**
-- feature_02 calls feature_05.get_injury_status(player_id)
+- feature_02 calls feature_05.get_attribute_status(player_id)
 - Returns: {"status": "Healthy|Questionable|Out", "impact_factor": 0.0-1.0}
 
 **feature_05 → feature_02:**
@@ -272,7 +272,7 @@ Proceed to S4 (Epic Testing Strategy update)? {User confirms}
 
 **Shared Data:**
 - player_id (integer, standardized across all features)
-- PlayerData class (utils/FantasyPlayer.py)
+- PlayerData class (utils/DataRecord.py)
 ```
 
 ---
@@ -288,7 +288,7 @@ Proceed to S4 (Epic Testing Strategy update)? {User confirms}
 
 | # | Requirement | Action | Priority | Status | Created | Implemented | Notes |
 |---|-------------|--------|----------|--------|---------|-------------|-------|
-| 1 | Player injury tracking | New feature_05 | High | PLANNING COMPLETE | 2026-01-04 | Not yet | Ready for implementation (after feature_02) |
+| 1 | Item attribute tracking | New feature_05 | High | PLANNING COMPLETE | 2026-01-04 | Not yet | Ready for implementation (after feature_02) |
 
 ## Current Status
 
@@ -324,7 +324,7 @@ Proceed to S4 (Epic Testing Strategy update)? {User confirms}
 I've completed planning for the missed requirement (Stages 2/3/4 complete).
 
 During S3 alignment, feature_02's spec was updated:
-- Added integration point: Call feature_05.get_injury_status()
+- Added integration point: Call feature_05.get_attribute_status()
 - Updated PlayerData class reference (now uses shared utility)
 - Updated projection calculation to account for injury impact
 

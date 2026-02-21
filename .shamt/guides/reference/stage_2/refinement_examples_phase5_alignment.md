@@ -34,7 +34,7 @@ This reference provides detailed examples specifically for **Phase 5: Cross-Feat
 
 **Date:** 2026-01-10
 **Current Feature:** Feature 02: Injury Risk Assessment
-**Comparison Target:** Feature 01: ADP Integration (S2 Complete)
+**Comparison Target:** Feature 01: rank priority Integration (S2 Complete)
 
 ---
 
@@ -43,42 +43,42 @@ This reference provides detailed examples specifically for **Phase 5: Cross-Feat
 ### 1. Components Affected
 
 **Feature 02 modifies:**
-- PlayerManager (calculate_total_score method)
-- FantasyPlayer (add injury_risk field)
+- RecordManager (calculate_total_score method)
+- DataRecord (add attribute_risk field)
 - InjuryDataLoader (new file)
 
 **Feature 01 modifies:**
-- PlayerManager (calculate_total_score method)
-- FantasyPlayer (add adp_value field)
+- RecordManager (calculate_total_score method)
+- DataRecord (add rank_value field)
 - ADPDataLoader (new file)
 
 **Overlap Analysis:**
-- ⚠️ Both modify PlayerManager.calculate_total_score()
-  - Feature 01 adds: `total_score *= adp_multiplier`
-  - Feature 02 adds: `total_score *= injury_multiplier`
+- ⚠️ Both modify RecordManager.calculate_total_score()
+  - Feature 01 adds: `total_score *= rank_multiplier`
+  - Feature 02 adds: `total_score *= attribute_multiplier`
   - **Conflict?** ❌ NO - Different multipliers, can coexist
   - **Resolution:** Both multiply into same total_score, order doesn't matter (multiplication is commutative)
 
-- ⚠️ Both modify FantasyPlayer class
-  - Feature 01 adds: adp_value, adp_multiplier fields
-  - Feature 02 adds: injury_risk, injury_multiplier fields
+- ⚠️ Both modify DataRecord class
+  - Feature 01 adds: rank_value, rank_multiplier fields
+  - Feature 02 adds: attribute_risk, attribute_multiplier fields
   - **Conflict?** ❌ NO - Different fields, no overlap
   - **Resolution:** Both can add fields independently
 
 **Verification:**
 ```
-## After both features, FantasyPlayer will have:
+## After both features, DataRecord will have:
 @dataclass
-class FantasyPlayer:
+class DataRecord:
     # Existing fields
     name: str
     position: str
     # Feature 01 additions
-    adp_value: Optional[int] = None
-    adp_multiplier: float = 1.0
+    rank_value: Optional[int] = None
+    rank_multiplier: float = 1.0
     # Feature 02 additions
-    injury_risk: Optional[float] = None
-    injury_multiplier: float = 1.0
+    attribute_risk: Optional[float] = None
+    attribute_multiplier: float = 1.0
 ```markdown
 
 **Status:** ✅ No conflicts
@@ -89,22 +89,22 @@ class FantasyPlayer:
 
 **Feature 02 introduces:**
 - Injury CSV format: Name, Position, InjuryStatus, RiskScore
-- injury_risk field on FantasyPlayer (float, 0.0-1.0 range)
+- attribute_risk field on DataRecord (float, 0.0-1.0 range)
 
 **Feature 01 introduces:**
-- ADP CSV format: Name, Position, OverallRank
-- adp_value field on FantasyPlayer (int, 1-300 range)
+- rank priority CSV format: Name, Position, OverallRank
+- rank_value field on DataRecord (int, 1-300 range)
 
 **Overlap Analysis:**
 - ⚠️ Both use CSV files from data/ directory
-  - Feature 01: data/adp_rankings.csv
+  - Feature 01: data/priority_rankings.csv
   - Feature 02: data/injury_report.csv
   - **Conflict?** ❌ NO - Different files, different formats
   - **Resolution:** No overlap
 
-- ⚠️ Both need to match players from CSV to player list
-  - Feature 01: Uses player name matching (depends on Feature 05)
-  - Feature 02: Uses player name matching (depends on Feature 05)
+- ⚠️ Both need to match items from CSV to item list
+  - Feature 01: Uses item name matching (depends on Feature 05)
+  - Feature 02: Uses item name matching (depends on Feature 05)
   - **Conflict?** ❌ NO - Both use same utility
   - **Resolution:** Both depend on Feature 05, consistent matching
 
@@ -120,14 +120,14 @@ class FantasyPlayer:
 - Apply multiplier in scoring
 
 **Feature 01 requirements:**
-- Load ADP data from CSV
-- Calculate ADP multiplier
+- Load rank data from CSV
+- Calculate rank multiplier
 - Apply multiplier in scoring
 
 **Overlap Analysis:**
 - ✅ No duplicate requirements
 - ✅ Similar patterns (both add multipliers) - this is intentional consistency
-- ⚠️ Both depend on Feature 05 (player matching)
+- ⚠️ Both depend on Feature 05 (item matching)
   - **Conflict?** ❌ NO - Both correctly specify dependency
   - **Resolution:** Feature 05 must be implemented first
 
@@ -143,9 +143,9 @@ class FantasyPlayer:
 - Injury risk calculated as: multiplier = 1.0 - (risk * 0.3)
 
 **Feature 01 assumptions:**
-- ADP CSV provided manually by user (no auto-updates)
-- Missing ADP data defaults to neutral (multiplier = 1.0)
-- ADP impact defined in config file
+- rank priority CSV provided manually by user (no auto-updates)
+- Missing rank data defaults to neutral (multiplier = 1.0)
+- rank priority impact defined in config file
 
 **Compatibility Check:**
 - ✅ Compatible assumptions
@@ -166,13 +166,13 @@ class FantasyPlayer:
 - ❌ NO - Independent
 
 **Do both depend on Feature 05?**
-- ✅ YES - Both use player name matching utility
+- ✅ YES - Both use item name matching utility
 
 **Circular dependency?**
 - ❌ NO
 
 **Implementation order:**
-1. Feature 05 (Player Matching) - FIRST (blocks both)
+1. Feature 05 (Item Matching) - FIRST (blocks both)
 2. Features 01 and 02 can be parallel (after Feature 05)
 3. No required sequence between 01 and 02
 
@@ -189,7 +189,7 @@ class FantasyPlayer:
 **Minor Conflicts (nice to resolve):** NONE
 
 **No Conflicts:**
-- ✅ Components - Both modify PlayerManager but different logic
+- ✅ Components - Both modify RecordManager but different logic
 - ✅ Data Structures - Different CSV files, different fields
 - ✅ Requirements - No duplicates, intentional consistency
 - ✅ Assumptions - Compatible approaches
@@ -212,7 +212,7 @@ class FantasyPlayer:
 
 **Date:** 2026-01-10
 **Current Feature:** Feature 03: Schedule Strength Analysis
-**Comparison Target:** Feature 01: ADP Integration (S2 Complete)
+**Comparison Target:** Feature 01: rank priority Integration (S2 Complete)
 
 ---
 
@@ -221,20 +221,20 @@ class FantasyPlayer:
 ### 1. Components Affected
 
 **Feature 03 modifies:**
-- PlayerManager (calculate_total_score method)
-- FantasyPlayer (add schedule_strength field)
+- RecordManager (calculate_total_score method)
+- DataRecord (add schedule_strength field)
 - ScheduleDataLoader (new file)
 - **ConfigManager (add schedule multiplier config)**
 
 **Feature 01 modifies:**
-- PlayerManager (calculate_total_score method)
-- FantasyPlayer (add adp_value field)
+- RecordManager (calculate_total_score method)
+- DataRecord (add rank_value field)
 - ADPDataLoader (new file)
-- **ConfigManager (add ADP multiplier config)**
+- **ConfigManager (add rank multiplier config)**
 
 **Overlap Analysis:**
 - ⚠️ **CONFLICT: Both modify ConfigManager config structure**
-  - Feature 01 spec: Add `adp_multipliers` section to league_config.json
+  - Feature 01 spec: Add `rank_multipliers` section to league_config.json
   - Feature 03 spec: Add `schedule_multipliers` section to league_config.json
   - **Conflict?** ⚠️ POTENTIAL - Need to ensure compatible JSON structure
   - **Resolution:** Both features add separate sections, but need to coordinate format
@@ -242,7 +242,7 @@ class FantasyPlayer:
 **Feature 01 config format:**
 ```
 {
-  "adp_multipliers": {
+  "rank_multipliers": {
     "ranges": [
       {"min": 1, "max": 50, "multiplier": 1.2}
     ]
@@ -283,7 +283,7 @@ class FantasyPlayer:
 **Overlap Analysis:**
 - ⚠️ **MINOR CONFLICT: Inconsistent caching strategy**
   - Feature 03 caches schedule data
-  - Feature 01 doesn't mention caching for ADP data
+  - Feature 01 doesn't mention caching for rank data
   - **Impact:** Inconsistent performance characteristics
 
 **Resolution Options:**
@@ -295,12 +295,12 @@ A. Add caching to Feature 01 (update spec)
 B. Keep Feature 03 caching, Feature 01 without
    - Pros: Simpler for Feature 01
    - Cons: Inconsistent patterns
-   - Justification: ADP data loaded once at startup, schedule data queried per player
+   - Justification: rank data loaded once at startup, schedule data queried per item
 
 **Recommendation:** Option B with justification:
-- ADP data is static per session (loaded once)
+- rank data is static per session (loaded once)
 - Schedule data may be dynamic (updated weekly)
-- Caching makes sense for schedule, not necessary for ADP
+- Caching makes sense for schedule, not necessary for rank priority
 
 **Action:** Add justification note to Feature 01 spec explaining why no caching
 

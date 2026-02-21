@@ -130,8 +130,8 @@ BUT: Feature B can write its spec without Feature A's spec
 **Epic:** Player data enhancements (3 features)
 
 **Features:**
-- Feature 01: Add JSON export for player data
-- Feature 02: Add CSV import for player data
+- Feature 01: Add JSON export for record data
+- Feature 02: Add CSV import for record data
 - Feature 03: Add data validation rules
 
 **Dependency Analysis:**

@@ -150,7 +150,7 @@ Test Coverage:
 **Checklist:**
 
 **Boundary Conditions:**
-- [ ] Min/max value tests (e.g., adp = 1, adp = 500)
+- [ ] Min/max value tests (e.g., rank = 1, rank = 500)
 - [ ] Empty input tests (empty list, empty string)
 - [ ] Null/None input tests
 - [ ] Zero value tests
@@ -185,11 +185,11 @@ Edge Cases:
 ```markdown
 Edge Cases:
 1. File not found: Verify returns empty list, logs error
-2. Invalid ADP value (0): Verify raises ValueError with message "ADP must be 1-500"
-3. Invalid ADP value (501): Verify raises ValueError
+2. Invalid rank value (0): Verify raises ValueError with message "rank priority must be 1-500"
+3. Invalid rank value (501): Verify raises ValueError
 4. Missing required column: Verify raises KeyError with column name
 5. Empty CSV file: Verify returns empty list, logs warning
-6. Duplicate player names: Verify uses first occurrence, logs warning
+6. Duplicate item names: Verify uses first occurrence, logs warning
 ```
 
 ---
@@ -230,10 +230,10 @@ Test Scenario 5:
 ✅ **CORRECT - Executable test:**
 ```markdown
 Test Scenario 5:
-- Input: adp = -1 (invalid)
-- Command: player_manager.get_adp_multiplier(-1)
-- Expected: Raises ValueError("ADP must be 1-500")
-- Verification: Use pytest.raises(ValueError, match="ADP must be 1-500")
+- Input: rank = -1 (invalid)
+- Command: record_manager.get_rank_multiplier(-1)
+- Expected: Raises ValueError("rank priority must be 1-500")
+- Verification: Use pytest.raises(ValueError, match="rank priority must be 1-500")
 ```
 
 ---
@@ -362,23 +362,23 @@ Test strategy-specific reading patterns:
 ❌ **WRONG:**
 ```markdown
 spec.md Requirements:
-- R1: Load ADP data
-- R2: Validate player names
+- R1: Load rank data
+- R2: Validate item names
 - R3: Calculate multipliers
 - R4: Handle errors
 
 test_strategy.md:
-- Test 1: Load ADP data [x]
+- Test 1: Load rank data [x]
 - Test 2: Calculate multipliers [x]
-← Missing: R2 (Validate player names), R4 (Handle errors)
+← Missing: R2 (Validate item names), R4 (Handle errors)
 ```
 
 ✅ **CORRECT:**
 ```markdown
 test_strategy.md:
-- Test 1: Load ADP data (covers R1)
-- Test 2: Validate player names - valid format (covers R2)
-- Test 3: Validate player names - invalid format (covers R2)
+- Test 1: Load rank data (covers R1)
+- Test 2: Validate item names - valid format (covers R2)
+- Test 3: Validate item names - invalid format (covers R2)
 - Test 4: Calculate multipliers (covers R3)
 - Test 5: Handle FileNotFoundError (covers R4)
 - Test 6: Handle ValueError (covers R4)
@@ -415,26 +415,26 @@ Test 3: Login with valid credentials
 
 ❌ **WRONG:**
 ```markdown
-Test 1: Load ADP data
-- Load from data/rankings/adp.csv
-- Expected: List of 200 players
+Test 1: Load rank data
+- Load from data/rankings/priority.csv
+- Expected: List of 200 items
 ```
 
 ✅ **CORRECT:**
 ```markdown
-Test 1a: Load ADP data - happy path
-- Load from data/rankings/adp.csv
-- Expected: List of 200 players
+Test 1a: Load rank data - happy path
+- Load from data/rankings/priority.csv
+- Expected: List of 200 items
 
-Test 1b: Load ADP data - file not found
+Test 1b: Load rank data - file not found
 - Load from non_existent.csv
 - Expected: FileNotFoundError OR empty list with logged error
 
-Test 1c: Load ADP data - empty file
+Test 1c: Load rank data - empty file
 - Load from empty.csv
 - Expected: Empty list, warning logged
 
-Test 1d: Load ADP data - missing required column
+Test 1d: Load rank data - missing required column
 - Load from invalid_columns.csv
 - Expected: KeyError with column name
 ```
@@ -476,15 +476,15 @@ Covered requirements: 32/32 required = 100% ✅
 
 ❌ **WRONG:**
 ```markdown
-Test 3: Validate player names
-Test 7: Check player name format
-Test 12: Player name validation
+Test 3: Validate item names
+Test 7: Check item name format
+Test 12: Item name validation
 ← All testing the same thing (duplicates)
 ```
 
 ✅ **CORRECT:**
 ```markdown
-Test 3: Validate player names
+Test 3: Validate item names
 - Valid format: Letters, spaces, hyphens
 - Invalid format: Numbers, special chars
 - Edge cases: Empty string, null

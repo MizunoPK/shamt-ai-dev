@@ -314,16 +314,16 @@ Validation 1.2: Code Structure
 ```text
 Validation 1.2: Code Structure
 
-Opening file: [module]/PlayerManager.py
+Opening file: [module]/RecordManager.py
 
-Line 45-52: load_adp_data() method
+Line 45-52: load_rank_data() method
 - Error handling present: ✅
   - Line 48: try/except FileNotFoundError
   - Line 50: error logged with context
   - Line 51: returns empty list (graceful degradation)
 - Return type matches spec: ✅
   - Returns List[Tuple[str, str, int]]
-  - Line 52: return adp_data
+  - Line 52: return rank_data
 - Docstring complete: ✅
   - Lines 45-51: Google style docstring with Args, Returns, Raises
 
@@ -407,13 +407,13 @@ Agent thought: "80% is good enough, I'll finish the rest later"
 **Example:**
 ```python
 ## WRONG - creates structure but uses placeholders
-for player in players:
-    ratings.append({'name': player.name, 'rating': 1.0})  # All 1.0!
+for item in items:
+    ratings.append({'name': item.name, 'rating': 1.0})  # All 1.0!
 
 ## CORRECT - actually calculates values
-for player in players:
-    rating = calculate_rating(player)  # Real calculation
-    ratings.append({'name': player.name, 'rating': rating})
+for item in items:
+    rating = calculate_rating(item)  # Real calculation
+    ratings.append({'name': item.name, 'rating': rating})
 ```
 
 **Fix:** Verify algorithms ACTUALLY execute (not just create placeholders)

@@ -151,16 +151,16 @@ This reference provides all templates needed during S9.P3 (Epic Final Review):
 - **Discovered In:** Step 6.7 (Epic PR Review - Performance)
 - **Description:** Epic execution time 12.5s (baseline 2.5s, +400% regression)
 - **Impact:** HIGH - Unacceptable performance for user
-- **Root Cause:** N+1 queries in Feature 02 (loading matchup data per player in loop)
+- **Root Cause:** N+1 queries in Feature 02 (loading matchup data per item in loop)
 - **Fix Required:** Implement batch loading for matchup data
 - **Priority:** high
 
 **Issue 3: Inconsistent Error Messages**
 - **Discovered In:** Step 6.8 (Epic PR Review - Error Handling)
-- **Description:** Feature 01 uses "Player not found", Feature 02 uses "No player data"
+- **Description:** Feature 01 uses "Item not found", Feature 02 uses "No record data"
 - **Impact:** LOW - User confusion but not functional
 - **Root Cause:** Different error message templates
-- **Fix Required:** Standardize error messages to "Player '{name}' not found in {feature} data"
+- **Fix Required:** Standardize error messages to "Item '{name}' not found in {feature} data"
 - **Priority:** medium
 ```
 
@@ -333,7 +333,7 @@ bugfix_{priority}_{name}/
 **Fix:** Refactor Feature 02 to Manager pattern (create MatchupManager class)
 
 **Evidence:**
-- Feature 01: ADPManager class (feature_01/adp_manager.py)
+- Feature 01: RankManager class (feature_01/rank_manager.py)
 - Feature 02: standalone functions get_matchup_difficulty(), load_matchup_data()
 
 **Fix Requirements:**

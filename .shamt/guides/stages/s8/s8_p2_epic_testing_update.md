@@ -101,7 +101,7 @@ Testing Plan Update is complete when epic_smoke_test_plan.md reflects actual imp
 
 3. ADD SPECIFIC TEST SCENARIOS (Not vague categories)
    - Bad: "Test feature integration"
-   - Good: "Test that PlayerManager.calculate_score() applies ADP multiplier to final score"
+   - Good: "Test that RecordManager.calculate_score() applies rank multiplier to final score"
    - Include WHAT to test, HOW to verify, EXPECTED result
 
 4. UPDATE EXISTING SCENARIOS (Don't just append)
@@ -172,8 +172,8 @@ Testing Plan Update is complete when epic_smoke_test_plan.md reflects actual imp
 - Edge cases discovered that should be tested
 - Cross-feature interactions found during development
 - Examples:
-  - "ADP multiplier applies to scoring calculation"
-  - "Missing ADP data defaults to neutral multiplier (1.0)"
+  - "rank multiplier applies to scoring calculation"
+  - "Missing rank data defaults to neutral multiplier (1.0)"
   - "Integration with ConfigManager for threshold values"
 - **Action:**
   - Add specific test scenarios to epic_smoke_test_plan.md
@@ -289,7 +289,7 @@ Testing Plan Update is complete when epic_smoke_test_plan.md reflects actual imp
 | Decision | Description | Go To |
 |----------|-------------|-------|
 | **Update Scope** | NO CHANGE / MINOR / MAJOR | [Critical Decisions](#critical-decisions-summary) |
-| **Integration Points** | New cross-feature interactions | [Integration Points Examples](#integration-points-found-in-feature_01_adp_integration) |
+| **Integration Points** | New cross-feature interactions | [Integration Points Examples](#integration-points-found-in-feature_01_rank_integration) |
 | **Edge Cases** | Discovered during implementation | [Edge Cases Examples](#edge-cases-discovered-in-implementation) |
 
 **Reference Sections:**
@@ -322,16 +322,16 @@ Testing Plan Update is complete when epic_smoke_test_plan.md reflects actual imp
    ```markdown
    ## Integration Points Found
    
-   **Feature:** feature_01_adp_integration
+   **Feature:** feature_01_rank_integration
    
-   1. **PlayerManager.calculate_total_score()**
-      - Discovery: Now multiplies score by adp_multiplier
+   1. **RecordManager.calculate_total_score()**
+      - Discovery: Now multiplies score by rank_multiplier
       - Impact: Affects all modes that calculate scores
-      - Source: [module]/util/PlayerManager.py:145-167
+      - Source: [module]/util/RecordManager.py:145-167
    
    2. **ConfigManager.load_league_config()**
-      - Discovery: Loads adp_multiplier_ranges from config
-      - Impact: Config validation must include ADP keys
+      - Discovery: Loads rank_multiplier_ranges from config
+      - Impact: Config validation must include rank priority keys
       - Source: [module]/util/ConfigManager.py:89-103
    ```
 
@@ -372,19 +372,19 @@ Testing Plan Update is complete when epic_smoke_test_plan.md reflects actual imp
 
 **Gap Type 1: New Integration Points**
 - Q: Does current plan test integration points discovered during implementation?
-- Example: "Plan tests feature_01 in isolation, but doesn't test PlayerManager → ConfigManager integration"
+- Example: "Plan tests feature_01 in isolation, but doesn't test RecordManager → ConfigManager integration"
 
 **Gap Type 2: Behavioral Discoveries**
 - Q: Does plan test edge cases discovered during implementation?
-- Example: "Plan assumes ADP always present, doesn't test missing ADP behavior"
+- Example: "Plan assumes rank priority always present, doesn't test missing rank behavior"
 
 **Gap Type 3: Cross-Feature Workflows**
 - Q: Does plan test workflows that span multiple features?
-- Example: "Plan tests ADP in isolation, doesn't test combined ADP + Rating workflow (future)"
+- Example: "Plan tests rank priority in isolation, doesn't test combined rank priority + Rating workflow (future)"
 
 **Gap Type 4: Data Dependencies**
 - Q: Does plan test data files and formats?
-- Example: "Plan doesn't verify adp_data.csv format matches what code expects"
+- Example: "Plan doesn't verify rank_data.csv format matches what code expects"
 
 **Gap Type 5: Configuration**
 - Q: Does plan test configuration keys and defaults?
@@ -396,19 +396,19 @@ Testing Plan Update is complete when epic_smoke_test_plan.md reflects actual imp
 
 **Template:**
 ```markdown
-## Test Plan Updates Needed (After feature_01_adp_integration)
+## Test Plan Updates Needed (After feature_01_rank_integration)
 
 **Add New Scenarios:**
-1. Test PlayerManager → ConfigManager.get_adp_multiplier() integration
-2. Test missing ADP data returns neutral multiplier
-3. Test ADP rank 0 (undrafted) gets penalty multiplier
-4. Test ADP rank > 250 gets capped multiplier
-5. Test adp_data.csv format matches code expectations
-6. Test config fallback when scoring.adp.curve_exponent missing
+1. Test RecordManager → ConfigManager.get_rank_multiplier() integration
+2. Test missing rank data returns neutral multiplier
+3. Test rank priority rank 0 (undrafted) gets penalty multiplier
+4. Test rank priority rank > 250 gets capped multiplier
+5. Test rank_data.csv format matches code expectations
+6. Test config fallback when scoring.rank.curve_exponent missing
 
 **Update Existing Scenarios:**
-1. "Test draft recommendations" → Add verification that ADP multiplier applied to scores
-2. "Test data loading" → Add adp_data.csv to list of files that must load successfully
+1. "Test scoring recommendations" → Add verification that rank multiplier applied to scores
+2. "Test data loading" → Add rank_data.csv to list of files that must load successfully
 
 **Remove Scenarios:**
 None - all S4 scenarios still relevant
@@ -436,7 +436,7 @@ None - all S4 scenarios still relevant
 **Purpose:** Define how to validate the complete epic end-to-end
 
 **Created:** 2025-12-25 (S1)
-**Last Updated:** 2025-12-30 (S8.P2 (Epic Testing Update) - after feature_01_adp_integration)
+**Last Updated:** 2025-12-30 (S8.P2 (Epic Testing Update) - after feature_01_rank_integration)
 ```
 
 ---
@@ -448,35 +448,35 @@ None - all S4 scenarios still relevant
 ```markdown
 ## Integration Test Scenarios
 
-### Scenario 7: ADP Multiplier Integration
+### Scenario 7: rank priority Multiplier Integration
 
-**Added:** S8.P2 (Epic Testing Update) (feature_01_adp_integration)
+**Added:** S8.P2 (Epic Testing Update) (feature_01_rank_integration)
 
-**What to test:** Verify that ADP multiplier is correctly applied to draft recommendations
+**What to test:** Verify that rank multiplier is correctly applied to scoring recommendations
 
 **How to test:**
-1. Ensure adp_data.csv has test data:
-   - Player A: ADP rank 1 (expect high multiplier ~1.50)
-   - Player B: ADP rank 50 (expect medium multiplier ~1.15)
-   - Player C: ADP rank 200 (expect low multiplier ~0.90)
+1. Ensure rank_data.csv has test data:
+   - Item A: rank priority rank 1 (expect high multiplier ~1.50)
+   - Item B: rank priority rank 50 (expect medium multiplier ~1.15)
+   - Item C: rank priority rank 200 (expect low multiplier ~0.90)
 
 2. Run draft mode:
    ```
    python run_[module].py --mode draft
    ```text
 
-3. Review draft recommendations output:
+3. Review scoring recommendations output:
    - Open data/recommendations.csv
-   - Verify Player A (rank 1) has higher final_score than projected_points
-   - Verify Player C (rank 200) has lower final_score than projected_points
+   - Verify Item A (rank 1) has higher final_score than projected_value
+   - Verify Item C (rank 200) has lower final_score than projected_value
 
 **Expected result:**
-- Player A final_score ≈ projected_points * 1.50
-- Player B final_score ≈ projected_points * 1.15
-- Player C final_score ≈ projected_points * 0.90
-- All multipliers visible in adp_multiplier column
+- Item A final_score ≈ projected_value * 1.50
+- Item B final_score ≈ projected_value * 1.15
+- Item C final_score ≈ projected_value * 0.90
+- All multipliers visible in rank_multiplier column
 
-**Why added:** Implementation revealed specific multiplier ranges. S4 plan just said "verify ADP affects scores" (too vague). This scenario is executable and verifiable.
+**Why added:** Implementation revealed specific multiplier ranges. S4 plan just said "verify rank priority affects scores" (too vague). This scenario is executable and verifiable.
 ```
 
 ---
@@ -489,7 +489,7 @@ None - all S4 scenarios still relevant
 ```markdown
 ### Scenario 2: Draft Recommendations
 
-**What to test:** Verify draft recommendations work correctly
+**What to test:** Verify scoring recommendations work correctly
 
 **How to test:**
 - Run draft mode
@@ -503,7 +503,7 @@ None - all S4 scenarios still relevant
 ```markdown
 ### Scenario 2: Draft Recommendations
 
-**What to test:** Verify draft recommendations work correctly
+**What to test:** Verify scoring recommendations work correctly
 
 **How to test:**
 1. Run draft mode:
@@ -518,15 +518,15 @@ None - all S4 scenarios still relevant
 
 3. Verify output content quality:
    - Open data/recommendations.csv
-   - **[UPDATED S8.P2 (Epic Testing Update) - feature_01]:** Verify adp_multiplier column exists and has values in range 0.85-1.50
-   - **[UPDATED S8.P2 (Epic Testing Update) - feature_01]:** Verify final_score = projected_points * adp_multiplier
-   - **[UPDATED S8.P2 (Epic Testing Update) - feature_01]:** Verify top recommendations have high ADP multipliers
+   - **[UPDATED S8.P2 (Epic Testing Update) - feature_01]:** Verify rank_multiplier column exists and has values in range 0.85-1.50
+   - **[UPDATED S8.P2 (Epic Testing Update) - feature_01]:** Verify final_score = projected_value * rank_multiplier
+   - **[UPDATED S8.P2 (Epic Testing Update) - feature_01]:** Verify top recommendations have high rank multipliers
 
 **Expected result:**
 - File created with recommendations
-- **[UPDATED S8.P2 (Epic Testing Update) - feature_01]:** All players have adp_multiplier between 0.85-1.50
-- **[UPDATED S8.P2 (Epic Testing Update) - feature_01]:** Final scores correctly incorporate ADP multiplier
-- Top 10 recommendations include players with elite ADP (ranks 1-20)
+- **[UPDATED S8.P2 (Epic Testing Update) - feature_01]:** All items have rank_multiplier between 0.85-1.50
+- **[UPDATED S8.P2 (Epic Testing Update) - feature_01]:** Final scores correctly incorporate rank multiplier
+- Top 10 recommendations include items with elite rank priority (ranks 1-20)
 
 **Why updated:** feature_01 implementation revealed specific multiplier range and integration. Original scenario just checked "file exists" - now verifies data quality and correctness.
 ```
@@ -540,16 +540,16 @@ None - all S4 scenarios still relevant
 ```markdown
 ## Edge Case Test Scenarios
 
-### Scenario 12: Missing ADP Data Handling
+### Scenario 12: Missing rank priority Data Handling
 
-**Added:** S8.P2 (Epic Testing Update) (feature_01_adp_integration)
+**Added:** S8.P2 (Epic Testing Update) (feature_01_rank_integration)
 
-**What to test:** Verify system handles players missing from adp_data.csv
+**What to test:** Verify system handles items missing from rank_data.csv
 
 **How to test:**
 1. Create test scenario:
-   - Remove one player (e.g., "J.Smith") from adp_data.csv
-   - Ensure "J.Smith" exists in players.csv
+   - Remove one item (e.g., "J.Smith") from rank_data.csv
+   - Ensure "J.Smith" exists in items.csv
 
 2. Run draft mode:
    ```
@@ -558,14 +558,14 @@ None - all S4 scenarios still relevant
 
 3. Check handling:
    - Verify "J.Smith" appears in recommendations (not excluded)
-   - Verify "J.Smith" has adp_multiplier = 1.0 (neutral)
-   - Check logs for INFO message: "Player J.Smith missing ADP, using default"
+   - Verify "J.Smith" has rank_multiplier = 1.0 (neutral)
+   - Check logs for INFO message: "Item J.Smith missing rank, using default"
 
 **Expected result:**
-- Players missing ADP data get neutral multiplier (1.0)
+- Players missing rank data get neutral multiplier (1.0)
 - No ERROR or WARNING logs
 - No crashes or exceptions
-- Missing ADP doesn't exclude player from recommendations
+- Missing rank priority does not exclude item from recommendations
 
 **Why added:** Implementation discovered fallback behavior for missing data. Needs explicit test to ensure it works correctly.
 ```
@@ -579,26 +579,26 @@ None - all S4 scenarios still relevant
 ```markdown
 ## Integration Points to Validate
 
-**Updated:** S8.P2 (Epic Testing Update) (feature_01_adp_integration)
+**Updated:** S8.P2 (Epic Testing Update) (feature_01_rank_integration)
 
-### Integration Point 1: PlayerManager → ConfigManager
+### Integration Point 1: RecordManager → ConfigManager
 
 **Components:**
-- PlayerManager.calculate_total_score() ([module]/util/PlayerManager.py:145)
-- ConfigManager.get_adp_multiplier() ([module]/util/ConfigManager.py:234)
+- RecordManager.calculate_total_score() ([module]/util/RecordManager.py:145)
+- ConfigManager.get_rank_multiplier() ([module]/util/ConfigManager.py:234)
 
 **Flow:**
-1. PlayerManager calls ConfigManager.get_adp_multiplier(player.adp)
+1. RecordManager calls ConfigManager.get_rank_multiplier(item.rank)
 2. ConfigManager returns (multiplier, score) tuple
-3. PlayerManager applies: final_score *= multiplier
-4. PlayerManager stores multiplier for display
+3. RecordManager applies: final_score *= multiplier
+4. RecordManager stores multiplier for display
 
 **Test:**
 - Verify multiplier is applied (final_score changes)
 - Verify multiplier is stored (visible in output)
 - Verify score is stored (for debugging)
 
-**Future integration:** feature_02 (player_rating) will add similar integration. S9 must test BOTH multipliers apply correctly together.
+**Future integration:** feature_02 (item_rating) will add similar integration. S9 must test BOTH multipliers apply correctly together.
 ```
 
 ---
@@ -614,7 +614,7 @@ None - all S4 scenarios still relevant
 
 1. {Original criterion from S1}
 2. {Original criterion from S1}
-3. **[ADDED S8.P2 (Epic Testing Update) - feature_01]** All scoring multipliers (ADP, rating, schedule, etc.) correctly apply to final scores
+3. **[ADDED S8.P2 (Epic Testing Update) - feature_01]** All scoring multipliers (rank priority, rating, schedule, etc.) correctly apply to final scores
 4. **[ADDED S8.P2 (Epic Testing Update) - feature_01]** Missing data handled gracefully with neutral multipliers (not crashes)
 ```
 
@@ -631,13 +631,13 @@ None - all S4 scenarios still relevant
 |------|-------|--------------|--------|
 | 2025-12-25 | S1 | Initial creation | Epic planning |
 | 2025-12-27 | S4 | Major update | Deep dive findings (all features spec'd) |
-| 2025-12-30 | S8.P2 (Epic Testing Update) (Feature 1) | Added 6 test scenarios, updated 2 existing scenarios | feature_01_adp_integration implementation revealed integration points, edge cases, and specific multiplier ranges not captured in S4 assumptions |
+| 2025-12-30 | S8.P2 (Epic Testing Update) (Feature 1) | Added 6 test scenarios, updated 2 existing scenarios | feature_01_rank_integration implementation revealed integration points, edge cases, and specific multiplier ranges not captured in S4 assumptions |
 
 **Current version is informed by:**
 - S1: Initial epic analysis (high-level categories)
 - S4: Deep dive findings from Stages 2-3 (all feature specs)
 - S8.P2 (Epic Testing Update) updates:
-  - feature_01_adp_integration (6 new scenarios, 2 updated)
+  - feature_01_rank_integration (6 new scenarios, 2 updated)
   - {future features will add rows here}
 ```
 
@@ -722,22 +722,22 @@ None - all S4 scenarios still relevant
 **When committing test plan updates:**
 
 ```text
-Update epic smoke test plan after feature_01_adp_integration
+Update epic smoke test plan after feature_01_rank_integration
 
 Added test scenarios:
-- ADP multiplier integration test (PlayerManager → ConfigManager)
-- Missing ADP data handling (neutral multiplier fallback)
-- ADP rank 0 (undrafted) penalty test
-- ADP rank > 250 cap test
-- adp_data.csv format validation
-- Config fallback when scoring.adp.curve_exponent missing
+- rank multiplier integration test (RecordManager → ConfigManager)
+- Missing rank data handling (neutral multiplier fallback)
+- rank priority rank 0 (undrafted) penalty test
+- rank priority rank > 250 cap test
+- rank_data.csv format validation
+- Config fallback when scoring.rank.curve_exponent missing
 
 Updated scenarios:
-- Draft recommendations: Add ADP multiplier verification
-- Data loading: Add adp_data.csv to required files
+- Draft recommendations: Add rank multiplier verification
+- Data loading: Add rank_data.csv to required files
 
 Rationale: Implementation revealed specific multiplier ranges (0.85-1.50),
-integration points (PlayerManager → ConfigManager), and edge case behaviors
+integration points (RecordManager → ConfigManager), and edge case behaviors
 (missing data, rank 0, rank > 250) that weren't captured in S4 plan.
 
 Ensures S9 epic QC tests actual implementation, not assumptions.
@@ -800,15 +800,15 @@ Ensures S9 epic QC tests actual implementation, not assumptions.
 
 ### Anti-Pattern 2: Vague Test Scenarios
 
-**Wrong:** "Test ADP integration works"
+**Wrong:** "Test Rank integration works"
 **Right:**
 ```text
-Test Scenario: ADP Multiplier Integration
-Context: After feature_01_adp_integration complete
+Test Scenario: rank priority Multiplier Integration
+Context: After feature_01_rank_integration complete
 Steps:
-  1. Load player with adp_value=15 (high draft pick)
-  2. Call PlayerManager.calculate_total_score(player)
-  3. Verify: Final score includes adp_multiplier boost
+  1. Load item with rank_value=15 (high priority)
+  2. Call RecordManager.calculate_total_score(item)
+  3. Verify: Final score includes rank_multiplier boost
 Expected: score > base_score (multiplier applied)
 ```text
 
@@ -832,8 +832,8 @@ Expected: score > base_score (multiplier applied)
 
 ### Anti-Pattern 5: Testing Feature Details (Not Epic Integration)
 
-**Wrong:** "Test that _parse_adp_csv() handles malformed CSV"
-**Right:** "Test that ADP data successfully integrates with draft recommendations across features"
+**Wrong:** "Test that _parse_priority_csv() handles malformed CSV"
+**Right:** "Test that rank data successfully integrates with scoring recommendations across features"
 **Why:** Feature unit tests in S7, epic tests in S8.P2 focus on cross-feature workflows
 
 ---
@@ -862,7 +862,7 @@ Before completing S8.P2, verify:
 **File:** `reference/s8_p2_testing_examples.md` (~240 lines)
 
 **What's covered:**
-1. **Example 1: After Feature 01 (ADP Integration)**
+1. **Example 1: After Feature 01 (rank priority Integration)**
    - Integration points discovered during implementation
    - Test scenarios added based on actual code
    - Update history showing rationale
@@ -887,7 +887,7 @@ Before completing S8.P2, verify:
 
 **The epic is successful if:**
 
-1. Draft recommendations incorporate all planned scoring multipliers (ADP, rating, schedule, injury, bye week)
+1. Draft recommendations incorporate all planned scoring multipliers (rank priority, rating, schedule, injury, bye week)
 2. Trade simulator evaluates trades using updated [domain algorithm]
 3. All data integrates without breaking existing functionality
 4. User can see breakdown of score components for transparency
@@ -899,7 +899,7 @@ Before completing S8.P2, verify:
 
 **The epic is successful if:**
 
-1. Draft recommendations incorporate all planned scoring multipliers (ADP, rating, schedule, injury, bye week)
+1. Draft recommendations incorporate all planned scoring multipliers (rank priority, rating, schedule, injury, bye week)
 2. Trade simulator evaluates trades using updated [domain algorithm]
 3. All data integrates without breaking existing functionality
 4. User can see breakdown of score components for transparency
@@ -926,7 +926,7 @@ Before completing S8.P2, verify:
 **Guide Last Read:** 2025-12-30 17:00
 **Critical Rules:** "Update based on ACTUAL implementation", "Add discovered integration points", "Keep scenarios executable"
 **Next Action:** Review feature_01 code and epic_smoke_test_plan.md
-**Completed Feature:** feature_01_adp_integration (just completed S8.P1 (Cross-Feature Alignment))
+**Completed Feature:** feature_01_rank_integration (just completed S8.P1 (Cross-Feature Alignment))
 ```
 
 ### At Completion of S8.P2 (Epic Testing Update)
@@ -939,7 +939,7 @@ Before completing S8.P2, verify:
 - If more features remain: "Read stages/s5/s5_v2_validation_loop.md for feature_02 (Round 1)"
 - If all features done: "Read stages/s9/s9_p1_epic_smoke_testing.md"
 **S8.P2 (Epic Testing Update) Summary:**
-- Reviewed feature_01_adp_integration implementation
+- Reviewed feature_01_rank_integration implementation
 - Added 6 new test scenarios to epic_smoke_test_plan.md
 - Updated 2 existing scenarios with specific verification steps
 - Added integration point documentation
@@ -966,7 +966,7 @@ Before completing S8.P2, verify:
   - **All features done** → S9 (Epic Final QC)
 
 ### If More Features Remain
-- [ ] Next feature identified (e.g., feature_02_player_rating)
+- [ ] Next feature identified (e.g., feature_02_item_rating)
 - [ ] Next feature has spec.md and checklist.md ready
 - [ ] Ready to read stages/s5/s5_v2_validation_loop.md (Round 1 for next feature)
 

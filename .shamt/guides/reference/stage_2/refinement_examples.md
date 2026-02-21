@@ -69,7 +69,7 @@ This reference library provides detailed examples for executing **S2.P3: Refinem
 
 **Key Examples:**
 - Example 1: Feature too large (>35 items) - propose split with clear justification
-- Example 2: New work discovered (player name matching utility) - create separate feature
+- Example 2: New work discovered (item name matching utility) - create separate feature
 
 ---
 
@@ -118,7 +118,7 @@ This reference library provides detailed examples for executing **S2.P3: Refinem
 - When finalizing spec.md before transitioning to S3
 
 **Key Examples:**
-- Example 1: Complete acceptance criteria (Feature 01: ADP Integration) - comprehensive template with all sections
+- Example 1: Complete acceptance criteria (Feature 01: rank priority Integration) - comprehensive template with all sections
 - Example 2: User approval process (presentation → approval with minor modification → final approval)
 
 ---

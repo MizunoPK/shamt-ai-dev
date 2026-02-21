@@ -311,7 +311,7 @@ python -m pip install -e .  # If using editable install
 **📖 Reference:** `SHAMT-{N}-{epic_name}/test_scenario.md` (created during Part 3 setup)
 
 **Use PRODUCTION or PRODUCTION-LIKE data:**
-- ✅ Real player CSV files from `data/`
+- ✅ Real data CSV files from `data/`
 - ✅ Real league config from `data/league_config.json`
 - ❌ NOT test fixtures (unless specifically testing edge cases)
 - ❌ NOT mocked data
@@ -326,13 +326,13 @@ python -m pip install -e .  # If using editable install
 ## Test Scenario: Rating Multiplier Feature
 
 **Input Data:**
-- data/players_2024.csv (300+ players)
+- data/players_2024.csv (300+ items)
 - data/league_config.json (standard scoring)
 
 **Expected Behavior:**
-- Apply ADP-based multipliers (0.5 to 1.5 range)
+- Apply rank-based multipliers (0.5 to 1.5 range)
 - Update 6 position-specific JSON files
-- Multipliers calculated per ADP ranges from spec
+- Multipliers calculated per rank priority ranges from spec
 
 **Validation Criteria:**
 - All 6 position files updated
@@ -386,7 +386,7 @@ for filename in expected_files:
 
     # Verify expected fields present
     first_item = data[0]
-    assert 'adp_multiplier' in first_item, f"{filename} missing adp_multiplier field"
+    assert 'rank_multiplier' in first_item, f"{filename} missing rank_multiplier field"
 
 print("✅ Output structure validated")
 ```
@@ -427,21 +427,21 @@ for pos in positions:
     assert len(data) > 0, f"{pos} file is empty"
 
     # Part 3b: DATA VALUE validation (CRITICAL)
-    first_player = data[0]
+    first_item = data[0]
 
     # Verify multiplier field exists and has value
-    assert 'adp_multiplier' in first_player, f"{pos} missing adp_multiplier field"
-    assert first_player['adp_multiplier'] is not None, f"{pos} multiplier is None"
+    assert 'rank_multiplier' in first_item, f"{pos} missing rank_multiplier field"
+    assert first_item['rank_multiplier'] is not None, f"{pos} multiplier is None"
 
     # Verify multiplier is in expected range (from spec: 0.5 to 1.5)
-    multiplier = first_player['adp_multiplier']
+    multiplier = first_item['rank_multiplier']
     assert 0.5 <= multiplier <= 1.5, f"{pos} multiplier {multiplier} out of range"
 
     # Verify multiplier is not placeholder (common bug)
     assert multiplier != 1.0, f"{pos} multiplier is placeholder value (1.0)"
 
-    # Sample check: At least some players have non-1.0 multipliers
-    multipliers = [p['adp_multiplier'] for p in data[:10]]
+    # Sample check: At least some items have non-1.0 multipliers
+    multipliers = [p['rank_multiplier'] for p in data[:10]]
     non_default = [m for m in multipliers if m != 1.0]
     assert len(non_default) > 0, f"{pos} all multipliers are default (1.0)"
 
@@ -453,7 +453,7 @@ print("✅ All 6 positions have valid multiplier data")
 2. ✅ Values in expected range (0.5-1.5 from spec)
 3. ✅ Values are NOT placeholders (not all 1.0)
 4. ✅ Calculations produce varied results (not uniform)
-5. ✅ Edge cases handled correctly (high ADP, low ADP, missing ADP)
+5. ✅ Edge cases handled correctly (high rank, low rank, missing rank)
 
 **Pass Criteria:**
 - All values in expected range from spec
@@ -483,9 +483,9 @@ print("✅ All 6 positions have valid multiplier data")
 ```python
 logger = get_logger()
 logger.info(f"Draft helper mode activated for league: {league_name}")
-logger.debug(f"Processing {len(players)} players for recommendations")
+logger.debug(f"Processing {len(items)} items for recommendations")
 logger.info(f"Generated {len(recommendations)} recommendations")
-logger.error(f"Failed to load player data: {e}", exc_info=True)
+logger.error(f"Failed to load record data: {e}", exc_info=True)
 ```
 
 ### Validation in Smoke Testing:
@@ -603,10 +603,10 @@ finally:
 
 **Example:**
 ```python
-## Test mocked this to return 170.0 for all players
-mock_api.get_adp.return_value = 170.0
+## Test mocked this to return 170.0 for all items
+mock_api.get_rank.return_value = 170.0
 
-## But real API returns None for some players (not in database)
+## But real API returns None for some items (not in database)
 ## Feature crashed on None value
 ```
 
@@ -621,15 +621,15 @@ mock_api.get_adp.return_value = 170.0
 **Example:**
 ```python
 ## WRONG - creates structure but doesn't populate
-players = []
+items = []
 for p in raw_data:
-    players.append({'name': p.name, 'multiplier': 1.0})  # Placeholder!
+    items.append({'name': p.name, 'multiplier': 1.0})  # Placeholder!
 
 ## CORRECT - actually calculate values
-players = []
+items = []
 for p in raw_data:
-    multiplier = calculate_multiplier(p.adp)  # Real calculation
-    players.append({'name': p.name, 'multiplier': multiplier})
+    multiplier = calculate_multiplier(p.rank)  # Real calculation
+    items.append({'name': p.name, 'multiplier': multiplier})
 ```
 
 **Fix:** Verify algorithms are actually executing (not just creating placeholders)

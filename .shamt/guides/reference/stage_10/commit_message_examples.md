@@ -75,7 +75,7 @@ Key changes:
 - data/export_templates/: Added CSV/JSON export templates
 
 Testing:
-- All unit tests passing (2250/2250)
+- All unit tests passing ({N}/{N})
 - Epic smoke testing passed (4/4 parts)
 - Epic QC rounds passed (3/3)
 EOF
@@ -96,20 +96,20 @@ EOF
 
 ```bash
 git commit -m "$(cat <<'EOF'
-fix/SHAMT-3: Fix ADP data loading issues
+fix/SHAMT-3: Fix rank data loading issues
 
 Bug fixes:
-- Fixed null pointer exception when ADP data missing
-- Corrected off-by-one error in ADP ranking calculation
-- Fixed encoding issue with special characters in player names
+- Fixed null pointer exception when rank data missing
+- Corrected off-by-one error in rank value calculation
+- Fixed encoding issue with special characters in item names
 
 Key changes:
-- PlayerManager.py: Added null checks for ADP data
-- adp_csv_loader.py: Fixed ranking calculation logic
+- RecordManager.py: Added null checks for rank data
+- priority_csv_loader.py: Fixed ranking calculation logic
 - utils/csv_utils.py: Changed encoding to utf-8-sig
 
 Testing:
-- All unit tests passing (2250/2250)
+- All unit tests passing ({N}/{N})
 - Epic smoke testing passed (4/4 parts)
 - Epic QC rounds passed (3/3)
 - User testing passed with ZERO bugs
@@ -139,7 +139,7 @@ Major features:
 
 Bug fixes (found during user testing):
 - Fixed incorrect point calculation in trade evaluation
-- Corrected display formatting for multi-player trades
+- Corrected display formatting for multi-item trades
 
 Key changes:
 - TradeAnalyzer.py: New class for trade evaluation logic
@@ -148,7 +148,7 @@ Key changes:
 - bugfix_high_point_calculation/: Fixed calculation bug
 
 Testing:
-- All unit tests passing (2300/2300)
+- All unit tests passing ({N}/{N})
 - Epic smoke testing passed (4/4 parts)
 - Epic QC rounds passed (3/3)
 - User testing passed after bug fixes
@@ -175,7 +175,7 @@ git commit -m "changes"
 git commit -m "fixes"
 
 ## No context
-git commit -m "updated PlayerManager"
+git commit -m "updated RecordManager"
 
 ## Emojis and subjective language
 git commit -m "✨ Amazing new feature! 🎉"
@@ -197,14 +197,14 @@ git commit -m "$(cat <<'EOF'
 feat/SHAMT-5: Complete player_comparison epic
 
 Major features:
-- Player comparison tool: Side-by-side stats comparison
+- Item comparison tool: Side-by-side stats comparison
 
 Key changes:
 - PlayerComparer.py: New comparison logic
 - [module]_main.py: Added comparison mode
 
 Testing:
-- All unit tests passing (2320/2320)
+- All unit tests passing ({N}/{N})
 - Epic smoke testing passed (4/4 parts)
 EOF
 )"

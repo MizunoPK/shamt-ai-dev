@@ -53,8 +53,8 @@ Requirements that define when a feature or task is considered complete. Document
 
 ---
 
-### ADP (Average Draft Position)
-Fantasy football term for player ranking used in project examples. Not a workflow term.
+### rank (external rank priority)
+External rank priority term used in project examples. Not a workflow term.
 
 ---
 

@@ -197,7 +197,7 @@ What would you like to do?
 
    Examples:
    - bugfix_high_authentication_error/
-   - bugfix_medium_missing_adp_multiplier/
+   - bugfix_medium_missing_rank_multiplier/
    - bugfix_low_typo_in_logs/
    ```
 
@@ -254,8 +254,8 @@ ROOT CAUSE (if known):
 {Analysis of why the bug exists}
 
 Example:
-- Missing null check in ConfigManager.get_adp_multiplier()
-- When player has no ADP data, method crashes instead of returning default
+- Missing null check in ConfigManager.get_rank_multiplier()
+- When item has no rank data, method crashes instead of returning default
 
 ----
 
@@ -265,8 +265,8 @@ PROPOSED SOLUTION:
 
 Example:
 - Add null check at top of method
-- Return (1.0, 50) for null/missing ADP (neutral multiplier)
-- Add unit test for null ADP case
+- Return (1.0, 50) for null/missing rank (neutral multiplier)
+- Add unit test for null rank case
 
 ----
 
@@ -334,7 +334,7 @@ Once you've reviewed, let me know and I'll proceed with the bug fix workflow.
   - Currently: Creating spec.md for bug fix
 
 **Paused Work:**
-- feature_01_adp_integration: Paused at S7 (Testing & Review) (post-implementation)
+- feature_01_rank_integration: Paused at S7 (Testing & Review) (post-implementation)
   - Resume point: After bug fix complete, verify fix doesn't affect feature_01
   - Agent Status saved: README.md in feature_01/ folder
 ```
@@ -360,8 +360,8 @@ When bug fix complete:
 
 **Context at Pause:**
 - Validation Loop in progress - found authentication bug that affects this feature
-- Bug discovered: ConfigManager.get_adp_multiplier() crashes on null ADP
-- This feature calls get_adp_multiplier() - need to verify fix works correctly
+- Bug discovered: ConfigManager.get_rank_multiplier() crashes on null rank
+- This feature calls get_rank_multiplier() - need to verify fix works correctly
 ```
 
 ---
@@ -414,14 +414,14 @@ DONE (return to previous work)
 
 ### Root Cause
 
-ConfigManager.get_adp_multiplier() crashes when player has null ADP value.
+ConfigManager.get_rank_multiplier() crashes when item has null rank value.
 
 Location: [module]/util/ConfigManager.py:234
 
 ```
-def get_adp_multiplier(self, adp_value: float) -> Tuple[float, int]:
+def get_rank_multiplier(self, rank_value: float) -> Tuple[float, int]:
     # BUG: No null check
-    if adp_value < 10:  # Crashes if adp_value is None
+    if rank_value < 10:  # Crashes if rank_value is None
         return (1.50, 100)
 ```markdown
 
@@ -430,24 +430,24 @@ def get_adp_multiplier(self, adp_value: float) -> Tuple[float, int]:
 Add null check at method start:
 
 ```
-def get_adp_multiplier(self, adp_value: float) -> Tuple[float, int]:
-    # FIX: Handle null/missing ADP
-    if adp_value is None:
-        self.logger.info("ADP value missing, using neutral multiplier")
+def get_rank_multiplier(self, rank_value: float) -> Tuple[float, int]:
+    # FIX: Handle null/missing rank
+    if rank_value is None:
+        self.logger.info("rank value missing, using neutral multiplier")
         return (1.0, 50)
 
-    if adp_value < 10:
+    if rank_value < 10:
         return (1.50, 100)
 ```markdown
 
 ### Testing
 
 Unit tests:
-- test_get_adp_multiplier_with_none()
-- test_get_adp_multiplier_with_zero()
+- test_get_rank_multiplier_with_none()
+- test_get_rank_multiplier_with_zero()
 
 Integration test:
-- Verify PlayerManager handles None ADP gracefully
+- Verify RecordManager handles None rank priority gracefully
 ```
 
 ---
@@ -471,17 +471,17 @@ Integration test:
 ## Bug Fix TODO: Authentication Error
 
 ### Phase 1: Fix Implementation
-- [ ] Add null check to ConfigManager.get_adp_multiplier()
-- [ ] Add logging for missing ADP case
+- [ ] Add null check to ConfigManager.get_rank_multiplier()
+- [ ] Add logging for missing rank case
 - [ ] Update method docstring
 
 ### Phase 2: Testing
-- [ ] Add unit test: test_get_adp_multiplier_with_none()
-- [ ] Add unit test: test_get_adp_multiplier_with_zero()
+- [ ] Add unit test: test_get_rank_multiplier_with_none()
+- [ ] Add unit test: test_get_rank_multiplier_with_zero()
 - [ ] Run all ConfigManager tests (verify no regressions)
 
 ## Phase 3: Integration Verification
-- [ ] Test PlayerManager with None ADP
+- [ ] Test RecordManager with None rank priority
 - [ ] Verify feature_01 still works after fix
 - [ ] Run full test suite (100% pass required)
 
@@ -529,7 +529,7 @@ python run_[module].py --help
 ## Run scenario that triggered bug
 ## Verify bug no longer occurs
 python run_[module].py --mode draft
-## Check: Players with missing ADP work correctly
+## Check: Players with missing rank work correctly
 ```
 
 ---
@@ -545,18 +545,18 @@ python run_[module].py --mode draft
 
 | # | Bug Fix Name | Priority | Status | Notes |
 |---|--------------|----------|--------|-------|
-| 1 | bugfix_high_authentication_error | high | COMPLETE | Fixed null ADP handling |
+| 1 | bugfix_high_authentication_error | high | COMPLETE | Fixed null rank handling |
 
 ### Current Status
 
 **Completed Bug Fixes:**
 - bugfix_high_authentication_error:
   - Completed: 2025-12-30 19:00
-  - Solution: Added null check to ConfigManager.get_adp_multiplier()
+  - Solution: Added null check to ConfigManager.get_rank_multiplier()
   - Verification: All tests pass, feature_01 retested successfully
 
 **Resuming Work:**
-- feature_01_adp_integration: Resuming S7 (Testing & Review) (post-implementation)
+- feature_01_rank_integration: Resuming S7 (Testing & Review) (post-implementation)
   - Resume from: Validation Loop (re-run after bug fix)
   - Next action: Complete Validation Loop (3 consecutive clean rounds)
 ```
@@ -572,12 +572,12 @@ python run_[module].py --mode draft
 
 **Example:**
 ```bash
-Bug fix: Added null check to ConfigManager.get_adp_multiplier()
+Bug fix: Added null check to ConfigManager.get_rank_multiplier()
 
-Paused feature: feature_01_adp_integration
+Paused feature: feature_01_rank_integration
 
 Impact check:
-- feature_01 calls get_adp_multiplier() → AFFECTED
+- feature_01 calls get_rank_multiplier() → AFFECTED
 - Need to re-run feature_01's QC to verify fix didn't break it
 
 Action: Re-run feature_01 S7 (Testing & Review) Validation Loop before continuing

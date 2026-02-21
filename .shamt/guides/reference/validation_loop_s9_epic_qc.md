@@ -125,15 +125,15 @@ These 5 dimensions are specific to S9.P2 Epic QC validation:
 **Example Verification:**
 ```python
 ## Integration: Feature 01 -> Feature 02
-from feature_01.PlayerDataManager import PlayerDataManager
+from feature_01.RecordManager import DataRecordDataManager
 from feature_02.RatingSystem import RatingSystem
 
 ## Verify data flows correctly
-players = PlayerDataManager().get_all_players()
-rated_players = RatingSystem().apply_ratings(players)
+items = PlayerDataManager().get_all_items()
+rated_players = RatingSystem().apply_ratings(items)
 
 ## Verify no data loss
-assert len(rated_players) == len(players)
+assert len(rated_players) == len(items)
 assert all(hasattr(p, 'rating') for p in rated_players)
 ```
 
@@ -161,14 +161,14 @@ assert all(hasattr(p, 'rating') for p in rated_players)
 
 Wrong - Inconsistent patterns:
 ```python
-## Feature 01: get_all_players()
+## Feature 01: get_all_items()
 ## Feature 02: get_rated_players()  # Consistent
 ## Feature 03: fetch_recommendations()  # Different pattern
 ```
 
 Correct - Consistent patterns:
 ```python
-## Feature 01: get_all_players()
+## Feature 01: get_all_items()
 ## Feature 02: get_rated_players()
 ## Feature 03: get_recommendations()  # Consistent
 ```
@@ -199,7 +199,7 @@ Wrong - Inconsistent error handling:
 ```python
 ## Feature 01: Raises DataProcessingError
 except FileNotFoundError:
-    raise DataProcessingError("Player data not found")
+    raise DataProcessingError("Record data not found")
 
 ## Feature 03: Returns None
 except FileNotFoundError:
@@ -210,7 +210,7 @@ Correct - Consistent error handling:
 ```python
 ## Feature 01: Raises DataProcessingError
 except FileNotFoundError:
-    raise DataProcessingError("Player data not found")
+    raise DataProcessingError("Record data not found")
 
 ## Feature 03: Also raises DataProcessingError
 except FileNotFoundError:
@@ -261,14 +261,14 @@ except FileNotFoundError:
 ```markdown
 ## Original Epic Goals (from `.shamt/epics/requests/{epic_name}.txt`)
 
-Goal 1: "Integrate ADP data into draft recommendations"
-Verified: Feature 01 fetches ADP, Feature 02 applies ratings, Feature 03 uses in recommendations
+Goal 1: "Integrate rank data into scoring recommendations"
+Verified: Feature 01 fetches rank priority, Feature 02 applies ratings, Feature 03 uses in recommendations
 
 Goal 2: "Allow users to adjust rating multipliers"
 Verified: Feature 02 includes multiplier config, Feature 03 respects adjustments
 
-Goal 3: "Generate top 200 ranked players"
-Verified: Feature 03 outputs exactly 200 ranked players
+Goal 3: "Generate top 200 ranked items"
+Verified: Feature 03 outputs exactly 200 ranked items
 ```
 
 ---
@@ -362,8 +362,8 @@ Epic-specific reading patterns:
 
 **Example:**
 ```python
-## Feature 01 returns List[Player]
-## Feature 02 expects Dict[str, Player]
+## Feature 01 returns List[DataRecord]
+## Feature 02 expects Dict[str, DataRecord]
 ## Integration fails with TypeError
 ```
 
@@ -392,8 +392,8 @@ Epic-specific reading patterns:
 
 **Example:**
 ```markdown
-Original goal: "Generate top 200 players"
-Implementation: Only generates top 100 players
+Original goal: "Generate top 200 items"
+Implementation: Only generates top 100 items
 ```
 
 **Fix:** Review original epic request and implement missing functionality

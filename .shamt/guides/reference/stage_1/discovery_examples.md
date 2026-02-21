@@ -94,7 +94,7 @@ What specifically is frustrating about debugging?
 **Question 2: Progress Visibility**
 Would progress bars/percentage complete solve the "can't tell if stuck" problem?
 
-**Context:** Currently runs 10,000 iterations with zero output until completion.
+**Context:** Currently runs {N} iterations with zero output until completion.
 
 **Options:**
 - Option A: Yes, progress bar would help a lot
@@ -162,13 +162,13 @@ When errors occur, what information do you need?
 **Context:** Currently errors are caught silently.
 
 **Options:**
-- Option A: Stack trace + player that caused error
+- Option A: Stack trace + item that caused error
 - Option B: Full context dump (all variables)
 - Option C: Just the error message is fine
 
 ---
 
-**User Answer:** "Option A - stack trace and which player caused it"
+**User Answer:** "Option A - stack trace and which item caused it"
 
 ---
 
@@ -206,13 +206,13 @@ When errors occur, what information do you need?
 - Progress bar (not partial results)
 - Same debug mode for both simulation types
 - Configurable subset size (default 50)
-- Stack trace + player context for errors
+- Stack trace + item context for errors
 
 ## Recommended Approach
 
 Add a debug mode to simulations with:
 1. Progress bar showing iteration count
-2. Configurable player subset for fast runs
+2. Configurable item subset for fast runs
 3. Verbose error output with stack traces
 4. Debug logging in calculation paths
 ```
@@ -223,7 +223,7 @@ Add a debug mode to simulations with:
 
 **In Scope:**
 - Progress bar for simulation iterations
-- Player subset configuration
+- Item subset configuration
 - Debug logging in calculations
 - Enhanced error messages with context
 
@@ -240,13 +240,13 @@ Add a debug mode to simulations with:
    - Dependencies: None (foundation)
 
 2. **Feature 02: Subset Simulation Support**
-   - Purpose: Run on configurable player subsets
-   - Scope: Player filtering, count parameter
+   - Purpose: Run on configurable item subsets
+   - Scope: Item filtering, count parameter
    - Dependencies: Feature 01
 
 3. **Feature 03: Enhanced Error Reporting**
    - Purpose: Improve error visibility with context
-   - Scope: Stack traces, player context, error logging
+   - Scope: Stack traces, item context, error logging
    - Dependencies: Feature 01
 
 ---
@@ -257,7 +257,7 @@ Add a debug mode to simulations with:
 
 ## Example 2: Discovery Loop Exit (No More Questions)
 
-**Epic Request:** "Add JSON export for player rankings"
+**Epic Request:** "Add JSON export for item rankings"
 
 ### Iteration 1 - Research
 
@@ -273,9 +273,9 @@ Add a debug mode to simulations with:
 **Questions for User:**
 
 **Question 1:** What format should the JSON file have?
-- Option A: Array of player objects
-- Option B: Object with player names as keys
-- Option C: Nested by position, then players
+- Option A: Array of item objects
+- Option B: Object with item names as keys
+- Option C: Nested by position, then items
 
 **User Answer:** "Option A - simple array"
 

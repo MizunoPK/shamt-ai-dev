@@ -26,7 +26,7 @@
 {Focus on OUTCOMES, not implementation details}
 
 {Example:}
-This epic integrates JSON player data files into both the win rate simulation and accuracy simulation systems. Currently, simulations use CSV files with incomplete data. After this epic, simulations will use comprehensive JSON files with week-by-week projected and actual player points, enabling more accurate simulation results and historical backtesting.
+This epic integrates JSON record data files into both processing modules. Currently, modules use CSV files with incomplete data. After this epic, modules will use comprehensive JSON files with period-by-period projected and actual values, enabling more accurate processing results and historical analysis.
 
 ---
 
@@ -45,11 +45,11 @@ This epic integrates JSON player data files into both the win rate simulation an
 {Important: These should be TESTABLE and OBSERVABLE}
 
 {Example:}
-- [ ] All 18 weeks of 2025 season data are accessible and used correctly for both simulations
-- [ ] Win rate simulation loads projected points from JSON files (not CSV)
-- [ ] Accuracy simulation loads both projected AND actual points from JSON files
-- [ ] Actual points for all players across all 18 weeks contain realistic non-zero values
-- [ ] Both simulations produce results comparable to or better than CSV-based baseline
+- [ ] All {N} periods of data are accessible and used correctly for both processing modules
+- [ ] Processing module A loads projected values from JSON files (not CSV)
+- [ ] Processing module B loads both projected AND actual values from JSON files
+- [ ] Actual values for all records across all {N} periods contain realistic non-zero values
+- [ ] Both processing modules produce results comparable to or better than CSV-based baseline
 - [ ] All unit tests pass (100% pass rate)
 - [ ] Epic smoke testing passes (all scenarios)
 

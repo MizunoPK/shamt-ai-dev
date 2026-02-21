@@ -21,7 +21,7 @@
 1. [📐 THE TWO-PHASE APPROACH](#-the-two-phase-approach)
 1. [🚀 PHASE 1: DRAFT CREATION](#-phase-1-draft-creation)
    - [Step-by-Step Process](#step-by-step-process)
-1. [Task 1: Load ADP Data](#task-1-load-adp-data)
+1. [Task 1: Load Rank Data](#task-1-load-rank-data)
 1. [Task 6: Create CLI Flag Tests (R1)](#task-6-create-cli-flag-tests-r1)
 1. [Component Dependencies](#component-dependencies)
 1. [Algorithm Traceability Matrix](#algorithm-traceability-matrix)
@@ -235,16 +235,16 @@ Historical evidence from SHAMT-8 Feature 04 shows test creation tasks missing fr
 
 **Example Feature Task (Draft Quality):**
 ```markdown
-## Task 1: Load ADP Data
+## Task 1: Load Rank Data
 
-**Requirement:** spec.md "Objective" - Load ADP rankings from CSV
+**Requirement:** spec.md "Objective" - Load rank values from CSV
 
 **Acceptance Criteria:**
-- [ ] Load data from data/rankings/adp.csv
-- [ ] Return list of player rankings
+- [ ] Load data from data/rankings/priority.csv
+- [ ] Return list of item rankings
 - [ ] Handle file not found gracefully
 
-**Location:** [module]/util/PlayerManager.py (~line 450)
+**Location:** [module]/util/RecordManager.py (~line 450)
 ```
 
 **Example Test Task (Draft Quality):**
@@ -281,10 +281,10 @@ Historical evidence from SHAMT-8 Feature 04 shows test creation tasks missing fr
 ```markdown
 ## Component Dependencies
 
-1. **ConfigManager.get_adp_multiplier()**
+1. **ConfigManager.get_rank_multiplier()**
    - Used in: Task 3
    - File: [module]/util/ConfigManager.py
-   - Purpose: Get ADP score multiplier
+   - Purpose: Get rank score multiplier
 
 2. **csv_utils.read_csv_with_validation()**
    - Used in: Task 1
@@ -308,8 +308,8 @@ Historical evidence from SHAMT-8 Feature 04 shows test creation tasks missing fr
 
 | Algorithm (from spec) | Spec Section | Implementation Task |
 |----------------------|--------------|---------------------|
-| Load ADP from CSV | Algorithms step 1 | Task 1 |
-| Match player to ADP | Algorithms step 2 | Task 2 |
+| Load rank from CSV | Algorithms step 1 | Task 1 |
+| Match item to rank | Algorithms step 2 | Task 2 |
 | Calculate multiplier | Algorithms step 3 | Task 3 |
 | Apply to score | Algorithms step 4 | Task 4 |
 ```
@@ -332,17 +332,17 @@ Historical evidence from SHAMT-8 Feature 04 shows test creation tasks missing fr
 ```markdown
 ## Data Flow
 
-**Entry:** data/rankings/adp.csv
+**Entry:** data/rankings/priority.csv
   ↓
 **Load:** Task 1 reads CSV → List of rankings
   ↓
-**Match:** Task 2 matches players → Sets player.adp_value
+**Match:** Task 2 matches items → Sets item.rank_value
   ↓
-**Calculate:** Task 3 calculates multiplier → Sets player.adp_multiplier
+**Calculate:** Task 3 calculates multiplier → Sets item.rank_multiplier
   ↓
 **Apply:** Task 4 applies to score → Updated total_score
   ↓
-**Output:** Modified player scores used in draft recommendations
+**Output:** Modified item scores used in scoring recommendations
 ```
 
 #### **Step 6: Error Cases & Edge Cases (Initial) (10-15 minutes)**
@@ -360,13 +360,13 @@ Historical evidence from SHAMT-8 Feature 04 shows test creation tasks missing fr
 
 1. File not found: Return empty list, log warning
 2. Malformed CSV: Skip invalid rows, log warning
-3. Player not in ADP: Set adp_value = None
+3. Item not in rank priority: Set rank_value = None
 
 ## Edge Cases
 
-1. Empty ADP file: All players get default multiplier
-2. Duplicate players: Use first occurrence
-3. Invalid ADP values: Clamp to valid range (1-500)
+1. Empty rank file: All items get default multiplier
+2. Duplicate items: Use first occurrence
+3. Invalid rank values: Clamp to valid range (1-500)
 ```text
 
 **Draft Quality Bar:**
@@ -495,7 +495,7 @@ Each round follows this pattern:
 - **Test-to-task mapping table showing 100% coverage (test_strategy.md)**
 
 **Example Issue (Feature Requirements):**
-- "Missing requirement: spec.md line 67 'Handle player name matching' has no task"
+- "Missing requirement: spec.md line 67 'Handle item name matching' has no task"
 
 **Example Issue (Test Requirements - NEW):**
 - "Missing test creation: test_strategy.md Category 1 (8 CLI flag tests) has no implementation task"
@@ -528,7 +528,7 @@ Each round follows this pattern:
 - Dependency verification table with file:line references
 
 **Example Issue:**
-- "ConfigManager.get_adp_multiplier() assumed to return float, but actual signature (line 234) returns Tuple[float, int]"
+- "ConfigManager.get_rank_multiplier() assumed to return float, but actual signature (line 234) returns Tuple[float, int]"
 
 **How to Fix:**
 - Read actual source code: `[module]/util/ConfigManager.py:234`
@@ -578,7 +578,7 @@ Each round follows this pattern:
 **How to Fix:**
 - Rewrite Task 5 acceptance criteria:
   - [ ] Catch FileNotFoundError, log warning, return empty list
-  - [ ] Catch ValueError on invalid ADP, log warning, use default
+  - [ ] Catch ValueError on invalid rank priority, log warning, use default
   - [ ] All errors logged to feature logger
 
 ---
@@ -597,11 +597,11 @@ Each round follows this pattern:
 - Data flow diagram: entry → transformations → consumption → output
 
 **Example Issue:**
-- "Task 1 loads ADP data, but no task shows HOW this data is consumed in calculations"
+- "Task 1 loads rank data, but no task shows HOW this data is consumed in calculations"
 
 **How to Fix:**
 - Add consumption verification to data flow section
-- Document: "Task 2 consumes ADP data by calling get_adp_value() for each player"
+- Document: "Task 2 consumes rank data by calling get_rank_value() for each item"
 - Verify consumption in Task 2 acceptance criteria
 
 ---
@@ -620,12 +620,12 @@ Each round follows this pattern:
 - Edge case table (15+ cases typical)
 
 **Example Issue:**
-- "Missing error case: What if ConfigManager.get_adp_multiplier() raises exception?"
+- "Missing error case: What if ConfigManager.get_rank_multiplier() raises exception?"
 
 **How to Fix:**
-- Add error case: "ConfigManager.get_adp_multiplier() raises KeyError if config missing"
+- Add error case: "ConfigManager.get_rank_multiplier() raises KeyError if config missing"
 - Add handling: "Catch KeyError, log error, use default multiplier 1.0"
-- Add test: test_calculate_adp_multiplier_missing_config()
+- Add test: test_calculate_rank_multiplier_missing_config()
 
 ---
 
@@ -644,10 +644,10 @@ Each round follows this pattern:
 - Backward compatibility analysis
 
 **Example Issue:**
-- "New method _calculate_adp_multiplier() has no identified caller"
+- "New method _calculate_rank_multiplier() has no identified caller"
 
 **How to Fix:**
-- Identify caller: Task 2 (_match_player_to_adp) will call this
+- Identify caller: Task 2 (_match_item_to_rank) will call this
 - Update integration table showing call chain
 - OR remove method if truly not needed
 
@@ -657,7 +657,7 @@ Each round follows this pattern:
 
 **What to Check:**
 - [ ] Test strategy references S4's test_strategy.md (don't duplicate)
-- [ ] Tests cover ALL code categories/types (e.g., all player positions)
+- [ ] Tests cover ALL code categories/types (e.g., all item categories)
 - [ ] Success paths: 100% coverage
 - [ ] Failure paths: 100% coverage
 - [ ] Edge cases: >90% coverage
@@ -668,10 +668,10 @@ Each round follows this pattern:
 - Test coverage analysis table showing >90% total coverage
 
 **Example Issue:**
-- "Test coverage 85% - missing tests for case-insensitive player matching"
+- "Test coverage 85% - missing tests for case-insensitive item matching"
 
 **How to Fix:**
-- Add test: test_match_player_case_insensitive()
+- Add test: test_match_item_case_insensitive()
 - Verify coverage now >90%
 
 ---
@@ -691,7 +691,7 @@ Each round follows this pattern:
 - Dependency version table
 
 **Example Issue:**
-- "O(n²) player matching will cause 5.0s regression (>20% threshold)"
+- "O(n²) item matching will cause 5.0s regression (>20% threshold)"
 
 **How to Fix:**
 - Add optimization task: Use dict for O(1) lookup instead of nested loops
@@ -800,11 +800,11 @@ ROUND 1: Sequential read, D1-4 focus (30 min)
 Issues found: 12
 
 Dimension 1:
-- Missing requirement: spec.md line 45 (player name normalization)
+- Missing requirement: spec.md line 45 (item name normalization)
 - Missing requirement: spec.md line 67 (case-insensitive matching)
 
 Dimension 2:
-- ConfigManager.get_adp_multiplier() interface not verified
+- ConfigManager.get_rank_multiplier() interface not verified
 - csv_utils.read_csv_with_validation() parameters assumed
 
 Dimension 3:
@@ -830,8 +830,8 @@ Dimension 5:
 - Data flow missing transformation step (normalization)
 
 Dimension 6:
-- Missing error: What if ADP CSV has wrong columns?
-- Edge case not handled: Empty string player names
+- Missing error: What if rank priority CSV has wrong columns?
+- Edge case not handled: Empty string item names
 
 Dimension 8:
 - Resume/persistence tests not planned

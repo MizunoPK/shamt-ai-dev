@@ -419,7 +419,7 @@ cat feature_{XX}_{name}/README.md
 
 ## Examples
 
-### Example 1: New Feature - Player Injury Tracking
+### Example 1: New Feature - Item Attribute Tracking
 
 **Context:** Missed requirement discovered during feature_02 implementation
 

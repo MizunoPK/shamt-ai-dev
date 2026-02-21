@@ -133,7 +133,7 @@ Round 5: Final sweep
 
 ## Common Issues in Alignment Context
 
-1. **Naming conflicts:** F1 uses "player" for PlayerData, F2 uses "player" for PlayerID → Rename for clarity
+1. **Naming conflicts:** F1 uses "item" for ItemData, F2 uses "item" for ItemID → Rename for clarity
 2. **Approach conflicts:** F1 uses async/await, F2 uses callbacks → Standardize approach
 3. **Data structure conflicts:** F1 expects JSON, F2 produces CSV → Add conversion layer or standardize
 4. **Pattern inconsistencies:** F1 logs errors to file, F2 logs to console → Standardize logging

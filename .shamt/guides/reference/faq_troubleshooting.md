@@ -27,7 +27,7 @@
 **A:**
 - **Epic** = Top-level work unit containing multiple related features
 - **Feature** = Individual component within an epic (Feature 01, Feature 02, etc.)
-- **Example:** Epic "Integrate Player Data" might contain features "Add ADP Weighting", "Position-Specific Evaluations", "Cross-Simulation Testing"
+- **Example:** Epic "Integrate Record Data" might contain features "Add rank priority Weighting", "Position-Specific Evaluations", "Cross-Simulation Testing"
 
 ### Q: Can I skip stages if they seem unnecessary?
 
@@ -150,7 +150,7 @@ A: Specific enough to create implementation_plan.md in S5:
 - Acceptance criteria clear
 
 **Too vague:** "Add better scoring"
-**Good:** "Modify [domain algorithm] to weight ADP by position: QB weight 0.8, RB/WR weight 1.0, TE weight 1.2"
+**Good:** "Modify [domain algorithm] to weight rank priority by position: QB weight 0.8, RB/WR weight 1.0, TE weight 1.2"
 
 **Q: When do I move from Phase 0 to Phase 1 to Phase 2 in S2?**
 

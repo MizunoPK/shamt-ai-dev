@@ -101,26 +101,26 @@ This is an EPIC-LEVEL PR review covering {N} features:
 
 ```python
 - Example: Verify cross-feature workflow correctness
-- Epic: Improve Draft Helper (ADP + Matchup + Performance)
+- Epic: Improve Draft Helper (rank priority + Matchup + Performance)
 
-- 1. Verify Feature 01 (ADP) correctness
-from feature_01.adp_manager import ADPManager
-adp_mgr = ADPManager()
-multiplier, rank = adp_mgr.get_adp_data("Patrick Mahomes")
-assert 0.5 <= multiplier <= 1.5, "ADP multiplier out of valid range"
-assert rank > 0, "ADP rank invalid"
+- 1. Verify Feature 01 (rank priority) correctness
+from feature_01.rank_manager import RankManager
+rank_mgr = RankManager()
+multiplier, rank = rank_mgr.get_rank_data("Record-A")
+assert 0.5 <= multiplier <= 1.5, "rank multiplier out of valid range"
+assert rank > 0, "rank priority rank invalid"
 
 - 2. Verify Feature 02 (Matchup) correctness
 from feature_02.matchup_manager import MatchupManager
 matchup_mgr = MatchupManager()
-difficulty = matchup_mgr.get_matchup_difficulty("Patrick Mahomes", week=5)
+difficulty = matchup_mgr.get_matchup_difficulty("Record-A", week=5)
 assert 0.5 <= difficulty <= 1.5, "Matchup difficulty out of valid range"
 
 - 3. Verify INTEGRATION correctness
-from [module].util.FantasyPlayer import FantasyPlayer
-player = FantasyPlayer("Patrick Mahomes", "QB", 300.0)
+from [module].util.DataRecord import DataRecord
+item = DataRecord("Record-A", "QB", 300.0)
 - Apply both multipliers
-final_score = player.score * multiplier * difficulty
+final_score = item.score * multiplier * difficulty
 - Verify final score makes sense
 assert 150 <= final_score <= 600, f"Final score {final_score} unrealistic"
 ```
@@ -133,10 +133,10 @@ assert 150 <= final_score <= 600, f"Final score {final_score} unrealistic"
 
 **Validated:**
 - All 3 features implement requirements correctly
-- Cross-feature workflow (ADP + Matchup → Final Score) correct
+- Cross-feature workflow (rank priority + Matchup → Final Score) correct
 - Integration points produce correct data (verified with assertions)
-- Edge cases tested: Missing ADP data → graceful degradation
-- Logic flow verified: Base score → ADP multiplier → Matchup multiplier → Final score
+- Edge cases tested: Missing rank data → graceful degradation
+- Logic flow verified: Base score → rank multiplier → Matchup multiplier → Final score
 
 **Issues Found:** None
 ```
@@ -146,8 +146,8 @@ assert 150 <= final_score <= 600, f"Final score {final_score} unrealistic"
 ### Correctness (Epic Level): ❌ FAIL
 
 **Issues Found:**
-- Issue #1: Feature 02 not applying ADP multiplier correctly
-- Root cause: Missing null check when ADP data unavailable
+- Issue #1: Feature 02 not applying rank multiplier correctly
+- Root cause: Missing null check when rank data unavailable
 - Error: Final score calculation incorrect (expected 300, got 450)
 
 **Action Required:** Document issue, proceed to Step 7 (Handle Issues)
@@ -233,14 +233,14 @@ assert 150 <= final_score <= 600, f"Final score {final_score} unrealistic"
 
 - In feature_01/README.md:
 ## Public Interfaces
-- `get_adp_data(player_name: str) -> Tuple[float, int]`
-  - Returns: (multiplier, adp_rank)
+- `get_rank_data(player_name: str) -> Tuple[float, int]`
+  - Returns: (multiplier, priority_rank)
   - Used by: Feature 02 (Matchup System)
   - Contract: multiplier in [0.5, 1.5], rank > 0
 
 - In feature_02/README.md:
 ## Dependencies
-- Feature 01: Consumes `get_adp_data()` for ADP multiplier
+- Feature 01: Consumes `get_rank_data()` for rank multiplier
   - Expected: Tuple[float, int]
   - Fallback: If unavailable, uses default multiplier 1.0
 ```
@@ -340,7 +340,7 @@ feature_02_accuracy_sim_json_integration/
 - ============================= test session starts ==============================
 - collected 2247 items
 #
-- tests/unit/test_adp_manager.py ................                          [  1%]
+- tests/unit/test_rank_manager.py ................                          [  1%]
 - tests/unit/test_matchup_manager.py ................                      [  2%]
 - tests/integration/test_epic_integration.py ....                          [ 99%]
 - ============================== 2247 passed in 45.32s ===========================
@@ -359,7 +359,7 @@ feature_02_accuracy_sim_json_integration/
 
 **Validated:**
 - Epic-level integration tests exist (tests/integration/test_epic_integration.py)
-- Cross-feature scenarios tested (ADP + Matchup + Performance workflow)
+- Cross-feature scenarios tested (rank priority + Matchup + Performance workflow)
 - All 2247 unit tests passing (100% pass rate)
 - Test coverage adequate: 92% overall, 87% for integration points
 - Integration tests cover: Data flow, error propagation, edge cases
@@ -374,7 +374,7 @@ feature_02_accuracy_sim_json_integration/
 **Issues Found:**
 - 3 integration tests failing in test_epic_integration.py
 - Error: AssertionError: Final score calculation incorrect
-- Root cause: Feature 02 not applying ADP multiplier correctly
+- Root cause: Feature 02 not applying rank multiplier correctly
 
 **Action Required:** Create bug fix (proceed to Step 7)
 ```
@@ -399,20 +399,20 @@ feature_02_accuracy_sim_json_integration/
 - 1. Check input validation across features
 - All features should validate inputs consistently
 
-- Example: Feature 01 validates player names
-def get_adp_data(player_name: str) -> Tuple[float, int]:
+- Example: Feature 01 validates item names
+def get_rank_data(player_name: str) -> Tuple[float, int]:
     if not player_name:
-        raise ValueError("Player name required")
+        raise ValueError("Item name required")
     if not isinstance(player_name, str):
-        raise TypeError("Player name must be string")
+        raise TypeError("Item name must be string")
     # ... proceed
 
 - Feature 02 should validate similarly
 def get_matchup_difficulty(player_name: str, week: int) -> float:
     if not player_name:
-        raise ValueError("Player name required")  # ✅ Consistent
+        raise ValueError("Item name required")  # ✅ Consistent
     if not isinstance(player_name, str):
-        raise TypeError("Player name must be string")  # ✅ Consistent
+        raise TypeError("Item name must be string")  # ✅ Consistent
     # ... proceed
 
 - 2. Check for sensitive data leaks
@@ -473,14 +473,14 @@ print(f"Performance change: {regression:+.1f}%")
 - Acceptable if: regression < 20% OR epic_time < 5s
 
 - 3. Check for N+1 queries
-- Example BAD: Loading ADP data for each player in loop
-for player in players:
-    adp_data = get_adp_data(player.name)  # ❌ N queries
+- Example BAD: Loading rank data for each item in loop
+for item in items:
+    rank_data = get_rank_data(item.name)  # ❌ N queries
 
-- Example GOOD: Batch load ADP data
-adp_data_map = get_all_adp_data()  # ✅ 1 query
-for player in players:
-    adp_data = adp_data_map.get(player.name)
+- Example GOOD: Batch load rank data
+rank_data_map = get_all_rank_data()  # ✅ 1 query
+for item in items:
+    rank_data = rank_data_map.get(item.name)
 ```
 
 ### Document Results
@@ -491,12 +491,12 @@ for player in players:
 **Validated:**
 - Epic execution time: 3.2s (baseline: 2.5s, +28% regression)
 - Regression acceptable: <5s threshold met
-- Cross-feature calls optimized: Batch loading implemented for ADP and Matchup data
+- Cross-feature calls optimized: Batch loading implemented for rank priority and Matchup data
 - No N+1 queries identified
-- Performance tested with 200 players (realistic volume)
+- Performance tested with 200 items (realistic volume)
 
 **Performance Breakdown:**
-- Feature 01 (ADP): 0.8s
+- Feature 01 (rank priority): 0.8s
 - Feature 02 (Matchup): 1.2s
 - Feature 03 (Performance): 0.5s
 - Integration overhead: 0.7s (acceptable)
@@ -510,7 +510,7 @@ for player in players:
 
 **Issues Found:**
 - Epic execution time: 12.5s (baseline: 2.5s, +400% regression)
-- Root cause: N+1 queries in Feature 02 (loading matchup data per player)
+- Root cause: N+1 queries in Feature 02 (loading matchup data per item)
 
 **Action Required:** Create bug fix to batch load matchup data (proceed to Step 7)
 ```
@@ -535,7 +535,7 @@ for player in players:
 - 1. Check error class consistency
 - Feature 01:
 from utils.error_handler import DataProcessingError
-raise DataProcessingError("ADP data not found")
+raise DataProcessingError("rank data not found")
 
 - Feature 02:
 from utils.error_handler import DataProcessingError  # ✅ Same error class
@@ -544,16 +544,16 @@ raise DataProcessingError("Matchup data not found")
 - 2. Check error propagation
 - Feature 01 error should propagate to Feature 02
 try:
-    adp_data = get_adp_data("NonexistentPlayer")
+    rank_data = get_rank_data("NonexistentPlayer")
 except DataProcessingError as e:
     # Feature 02 should catch and handle
-    logger.warning(f"ADP unavailable: {e}")
+    logger.warning(f"rank priority unavailable: {e}")
     # Use default multiplier
-    adp_data = (1.0, 999)
+    rank_data = (1.0, 999)
 
 - 3. Check user-facing error messages
-- GOOD: "Player 'John Doe' not found in ADP data. Using default ranking."
-- BAD: "KeyError: 'John Doe' at line 342 in adp_manager.py"
+- GOOD: "Item 'J.Smith' not found in rank data. Using default ranking."
+- BAD: "KeyError: 'John Doe' at line 342 in rank_manager.py"
 
 - 4. Check graceful degradation
 - If Feature 01 fails, Feature 02 should still work (with defaults)
@@ -567,14 +567,14 @@ except DataProcessingError as e:
 **Validated:**
 - Error handling consistent across features (all use DataProcessingError from utils.error_handler)
 - Errors propagate correctly: Feature 01 errors caught by Feature 02, logged, and handled gracefully
-- User-facing errors helpful: "Player not found in ADP data. Using default ranking."
+- User-facing errors helpful: "Item not found in rank data. Using default ranking."
 - Graceful degradation tested: Feature 01 failure doesn't crash epic (defaults used)
 - Error logging consistent: All features use logger.warning() for non-critical errors
 
 **Error Scenarios Tested:**
-- Missing ADP data → Default multiplier 1.0 used
+- Missing rank data → Default multiplier 1.0 used
 - Missing matchup data → Default difficulty 1.0 used
-- Invalid player name → Clear error message shown to user
+- Invalid item name → Clear error message shown to user
 
 **Issues Found:** None
 ```
@@ -603,11 +603,11 @@ except DataProcessingError as e:
 - All features should follow same architectural pattern
 
 - Feature 01:
-class ADPManager:
+class RankManager:
     def __init__(self, data_folder: Path):
         self.data_folder = data_folder
 
-    def get_adp_data(self, player_name: str) -> Tuple[float, int]:
+    def get_rank_data(self, player_name: str) -> Tuple[float, int]:
         # ...
 
 - Feature 02:
@@ -630,25 +630,25 @@ class PerformanceTracker:  # ✅ Consistent
 - Interfaces should be clean and well-defined
 
 - GOOD:
-def get_adp_data(player_name: str) -> Tuple[float, int]:
+def get_rank_data(player_name: str) -> Tuple[float, int]:
     """Clean interface: single responsibility, clear contract"""
 
 - BAD:
-def get_adp_data_and_maybe_matchup_if_available(player_name: str, week: Optional[int] = None) -> Union[float, Tuple[float, int], Dict[str, Any]]:
+def get_rank_data_and_maybe_matchup_if_available(player_name: str, week: Optional[int] = None) -> Union[float, Tuple[float, int], Dict[str, Any]]:
     """Unclear interface: multiple responsibilities, ambiguous return type"""
 
 - 3. Check feature coupling
 - Features should be loosely coupled (depend on interfaces, not implementations)
 
 - GOOD: Feature 02 depends on interface
-from feature_01.interfaces import IADPProvider
-adp_provider: IADPProvider = get_adp_provider()
-multiplier = adp_provider.get_multiplier("Patrick Mahomes")
+from feature_01.interfaces import IRankProvider
+rank_provider: IRankProvider = get_rank_provider()
+multiplier = rank_provider.get_multiplier("Record-A")
 
 - BAD: Feature 02 depends on implementation
-from feature_01.adp_manager import ADPManager
-adp_mgr = ADPManager()  # ❌ Tightly coupled
-multiplier = adp_mgr.get_adp_data("Patrick Mahomes")[0]
+from feature_01.rank_manager import RankManager
+rank_mgr = RankManager()  # ❌ Tightly coupled
+multiplier = rank_mgr.get_rank_data("Record-A")[0]
 
 - 4. Check design pattern consistency
 - All features should use same patterns (Manager, Factory, Strategy, etc.)
@@ -668,7 +668,7 @@ multiplier = adp_mgr.get_adp_data("Patrick Mahomes")[0]
 - Maintainability: Easy to add new features (follow same Manager pattern)
 
 **Architectural Patterns Identified:**
-- Manager Pattern: ADPManager, MatchupManager, PerformanceTracker
+- Manager Pattern: RankManager, MatchupManager, PerformanceTracker
 - Dependency Injection: Managers accept data_folder in __init__
 - Error Context: All managers use error_handler.error_context()
 - Graceful Degradation: Features provide defaults when dependencies unavailable
@@ -708,13 +708,13 @@ multiplier = adp_mgr.get_adp_data("Patrick Mahomes")[0]
 - 1. Run existing tests (pre-epic)
 - All tests that existed before epic should still pass
 
-python -m pytest tests/unit/test_player_manager.py -v
+python -m pytest tests/unit/test_record_manager.py -v
 - All tests pass? ✅
 
 - 2. Test existing workflows (pre-epic functionality)
 - Epic should not break users who don't use new features
 
-- Example: User runs draft without using new ADP feature
+- Example: User runs draft without using new rank feature
 python run_[module].py --mode draft --week 5
 - Should still work as before epic? ✅
 
@@ -726,7 +726,7 @@ python run_[module].py --mode draft --week 5
 - 4. Check for deprecation warnings
 - If deprecating old features, should warn user
 import warnings
-warnings.warn("Old ADP format deprecated. Use new format.", DeprecationWarning)
+warnings.warn("Old rank priority format deprecated. Use new format.", DeprecationWarning)
 ```
 
 ### Document Results
@@ -775,13 +775,13 @@ warnings.warn("Old ADP format deprecated. Use new format.", DeprecationWarning)
 
 | Original Request | Implemented | Evidence | Scope Creep? |
 |------------------|-------------|----------|--------------|
-| Integrate ADP data | ✅ YES | Feature 01 | NO |
+| Integrate rank data | ✅ YES | Feature 01 | NO |
 | Add matchup projections | ✅ YES | Feature 02 | NO |
 | Track performance | ✅ YES | Feature 03 | NO |
-| (NOT requested: Refactor PlayerManager) | ✅ YES | Code changes | ⚠️ YES - SCOPE CREEP |
+| (NOT requested: Refactor RecordManager) | ✅ YES | Code changes | ⚠️ YES - SCOPE CREEP |
 
 - 3. Check for unrelated changes
-- Example: Epic about draft helper but also refactored [domain analyzer] ❌
+- Example: Epic about recommendation engine but also refactored [domain analyzer] ❌
 
 - 4. Verify all changes necessary
 - Every code change should trace back to epic requirements
@@ -802,7 +802,7 @@ warnings.warn("Old ADP format deprecated. Use new format.", DeprecationWarning)
 **Scope Validation Table:**
 | Original Goal | Delivered | Evidence |
 |---------------|-----------|----------|
-| Integrate ADP data | ✅ YES | Feature 01: ADPManager, adp_data.json |
+| Integrate rank data | ✅ YES | Feature 01: RankManager, rank_data.json |
 | Add matchup projections | ✅ YES | Feature 02: MatchupManager, matchup_data.json |
 | Track performance vs projections | ✅ YES | Feature 03: PerformanceTracker, performance_tracking.csv |
 

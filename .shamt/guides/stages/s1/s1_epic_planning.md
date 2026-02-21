@@ -532,7 +532,7 @@ I've created an epic ticket to validate my understanding of the epic's goals and
 
 For EACH approved feature, create folder: `.shamt/epics/SHAMT-{N}-{epic_name}/feature_{NN}_{name}/`
 
-**Naming:** Zero-padded numbers + descriptive snake_case name (e.g., `feature_01_adp_integration`)
+**Naming:** Zero-padded numbers + descriptive snake_case name (e.g., `feature_01_rank_integration`)
 
 **For each feature folder, create 4 files:**
 1. **README.md** - Use Feature README Template (Agent Status: PLANNING phase)

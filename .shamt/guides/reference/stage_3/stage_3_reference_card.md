@@ -71,7 +71,7 @@ STEP 6: Mark Complete (2 min)
 - Data types (mismatches?)
 - Data added to files (overlapping columns?)
 
-**Example Conflict:** Feature 1 adds `player_adp` as integer, Feature 2 adds `player_adp` as string
+**Example Conflict:** Feature 1 adds `item_rank` as integer, Feature 2 adds `item_rank` as string
 
 ### Category 2: Interfaces & Dependencies
 **Check:**
@@ -111,7 +111,7 @@ STEP 6: Mark Complete (2 min)
 - Mock dependencies
 - Integration test assumptions
 
-**Example Conflict:** Feature 1 tests assume player data exists, Feature 2 tests assume empty player data
+**Example Conflict:** Feature 1 tests assume record data exists, Feature 2 tests assume empty record data
 
 ---
 

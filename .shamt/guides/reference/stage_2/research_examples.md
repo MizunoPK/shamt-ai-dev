@@ -40,42 +40,42 @@ This reference provides detailed examples for executing Research Phase (S2.P1). 
 
 **1. What problem is THIS feature solving?**
 
-Quote from epic notes: "Draft helper doesn't account for ADP (Average Draft Position) when ranking players. This means we might recommend players who get drafted way earlier than projected, making recommendations useless in real drafts."
+Quote from epic notes: "Draft helper doesn't account for rank (external rank priority) when ranking items. This means we might recommend items who get drafted way earlier than projected, making recommendations useless in real drafts."
 (Source: Epic notes line 12-14)
 
-My interpretation: Users want draft recommendations that reflect real-world draft patterns, not just our scoring projections in isolation.
+My interpretation: Users want scoring recommendations that reflect real-world draft patterns, not just our scoring projections in isolation.
 
 ---
 
 **2. What did the user EXPLICITLY request for this feature?**
 
-Explicit request 1: "integrate ADP data from FantasyPros"
+Explicit request 1: "integrate rank data from [ranking source]"
 (Source: Epic notes line 15)
 
-Explicit request 2: "factor ADP into draft recommendations so high-ADP players rank higher"
+Explicit request 2: "factor rank priority into scoring recommendations so high-rank priority items rank higher"
 (Source: Epic notes line 18-19)
 
-Explicit request 3: "use FantasyPros CSV format"
+Explicit request 3: "use [ranking source] CSV format"
 (Source: Epic notes line 22)
 
 ---
 
 **3. What constraints did the user mention?**
 
-Constraint 1: "Don't change PlayerManager interface too much - other code depends on it"
+Constraint 1: "Don't change RecordManager interface too much - other code depends on it"
 (Source: Epic notes line 35)
 
-Constraint 2: "Keep it simple - just add ADP as another multiplier like injury penalty"
+Constraint 2: "Keep it simple - just add rank priority as another multiplier like injury penalty"
 (Source: Epic notes line 37-38)
 
 ---
 
 **4. What is OUT of scope? (user said "not now" or "future")**
 
-Out of scope 1: "Don't worry about historical ADP trends, just use current season ADP"
+Out of scope 1: "Don't worry about historical rank priority trends, just use current season rank priority"
 (Source: Epic notes line 42)
 
-Out of scope 2: "Automatic ADP updates can come later, manual CSV for now"
+Out of scope 2: "Automatic rank priority updates can come later, manual CSV for now"
 (Source: Epic notes line 45)
 
 ---
@@ -89,15 +89,15 @@ User's goal: "Make better draft decisions by incorporating real-world draft patt
 
 **6. What technical components did the user mention?**
 
-Component 1: "PlayerManager" - Line 35
+Component 1: "RecordManager" - Line 35
 Component 2: "injury penalty system" (as a pattern to follow) - Line 37
-Data source: "FantasyPros CSV" - Line 22
+Data source: "[ranking source] CSV" - Line 22
 ```
 
 ### Example 2: Discovery Context Section in spec.md
 
 ```markdown
-## Feature 01: ADP Integration
+## Feature 01: rank priority Integration
 
 ---
 
@@ -107,40 +107,40 @@ Data source: "FantasyPros CSV" - Line 22
 
 **Problem This Feature Solves:**
 
-"Draft helper doesn't account for ADP (Average Draft Position) when ranking players. This means we might recommend players who get drafted way earlier than projected, making recommendations useless in real drafts."
+"Draft helper doesn't account for rank (external rank priority) when ranking items. This means we might recommend items who get drafted way earlier than projected, making recommendations useless in real drafts."
 (Source: Epic notes line 12-14)
 
 ---
 
 **User's Explicit Requests:**
 
-1. "integrate ADP data from FantasyPros"
+1. "integrate rank data from [ranking source]"
    (Source: Epic notes line 15)
 
-2. "factor ADP into draft recommendations so high-ADP players rank higher"
+2. "factor rank priority into scoring recommendations so high-rank priority items rank higher"
    (Source: Epic notes line 18-19)
 
-3. "use FantasyPros CSV format"
+3. "use [ranking source] CSV format"
    (Source: Epic notes line 22)
 
 ---
 
 **User's Constraints:**
 
-- "Don't change PlayerManager interface too much - other code depends on it"
+- "Don't change RecordManager interface too much - other code depends on it"
   (Source: Epic notes line 35)
 
-- "Keep it simple - just add ADP as another multiplier like injury penalty"
+- "Keep it simple - just add rank priority as another multiplier like injury penalty"
   (Source: Epic notes line 37-38)
 
 ---
 
 **Out of Scope (User Explicitly Excluded):**
 
-- "Don't worry about historical ADP trends, just use current season ADP"
+- "Don't worry about historical rank priority trends, just use current season rank priority"
   (Source: Epic notes line 42)
 
-- "Automatic ADP updates can come later, manual CSV for now"
+- "Automatic rank priority updates can come later, manual CSV for now"
   (Source: Epic notes line 45)
 
 ---
@@ -154,9 +154,9 @@ Data source: "FantasyPros CSV" - Line 22
 
 **Technical Components Mentioned by User:**
 
-- **PlayerManager** (Epic notes line 35)
+- **RecordManager** (Epic notes line 35)
 - **injury penalty system** (as pattern to follow) (Epic notes line 37)
-- **FantasyPros CSV** (Epic notes line 22)
+- **[ranking source] CSV** (Epic notes line 22)
 
 ---
 
@@ -180,11 +180,11 @@ Data source: "FantasyPros CSV" - Line 22
 ### Example 1: Research Checklist (Grounded in Epic)
 
 ```markdown
-## Research Checklist for Feature 01 (ADP Integration)
+## Research Checklist for Feature 01 (rank priority Integration)
 
 Based on Discovery Context section, I must research:
 
-- [ ] **PlayerManager** (mentioned epic line 35)
+- [ ] **RecordManager** (mentioned epic line 35)
   - Action: Find class definition
   - Action: Read calculate_total_score() method (user mentioned scoring)
   - Action: Document actual signatures (not assumed)
@@ -196,9 +196,9 @@ Based on Discovery Context section, I must research:
   - Action: Document pattern used (method structure, multiplier approach)
   - Evidence required: File path, code structure, actual code snippets
 
-- [ ] **FantasyPros CSV format** (mentioned epic line 22)
+- [ ] **[ranking source] CSV format** (mentioned epic line 22)
   - Action: Search for existing CSV files in data/
-  - Action: Check if ADP already used anywhere in codebase
+  - Action: Check if rank priority already used anywhere in codebase
   - Action: Document expected CSV structure (if examples exist)
   - Evidence required: File paths, column names, sample data
 
@@ -212,7 +212,7 @@ Based on Discovery Context section, I must research:
 ### Example 2: Complete Research Findings Document
 
 ```markdown
-## Feature 01: ADP Integration - Discovery Findings
+## Feature 01: rank priority Integration - Discovery Findings
 
 **Research Date:** 2026-01-02
 **Researcher:** Agent
@@ -222,12 +222,12 @@ Based on Discovery Context section, I must research:
 
 ## Discovery Context Summary
 
-**User requested:** "integrate ADP data from FantasyPros and factor it into draft recommendations using a multiplier pattern similar to injury penalty"
+**User requested:** "integrate rank data from [ranking source] and factor it into scoring recommendations using a multiplier pattern similar to injury penalty"
 
 **Components user mentioned:**
-- PlayerManager (scoring integration)
+- RecordManager (scoring integration)
 - injury penalty system (pattern to follow)
-- FantasyPros CSV (data source)
+- [ranking source] CSV (data source)
 
 **This research focused on user-mentioned components ONLY.**
 
@@ -235,78 +235,78 @@ Based on Discovery Context section, I must research:
 
 ## Components Identified
 
-### Component 1: PlayerManager (from Epic line 35)
+### Component 1: RecordManager (from Epic line 35)
 
-**User mentioned:** "Don't change PlayerManager interface too much"
+**User mentioned:** "Don't change RecordManager interface too much"
 
 **Found in codebase:**
-- File: `[module]/util/PlayerManager.py`
+- File: `[module]/util/RecordManager.py`
 - Class definition: Line 45
 - Relevant method: `calculate_total_score()` at line 125
 
 **Method signature (actual from source):**
 ```
-def calculate_total_score(self, player: FantasyPlayer, config: ConfigManager) -> float:
+def calculate_total_score(self, item: DataRecord, config: ConfigManager) -> float:
     """Calculate total score including all multipliers.
 
     Args:
-        player (FantasyPlayer): Player to score
+        item (DataRecord): Item to score
         config (ConfigManager): Configuration for multiplier ranges
 
     Returns:
         float: Final score with all multipliers applied
     """
-    base_score = player.projected_points
+    base_score = item.projected_value
 
     # Apply multipliers
-    injury_mult = self._calculate_injury_multiplier(player)
-    matchup_mult = self._calculate_matchup_multiplier(player)
-    team_mult = self._calculate_team_quality_multiplier(player)
+    attribute_mult = self._calculate_attribute_multiplier(item)
+    context_mult = self._calculate_context_multiplier(item)
+    team_mult = self._calculate_team_quality_multiplier(item)
 
-    total_score = base_score * injury_mult * matchup_mult * team_mult
+    total_score = base_score * attribute_mult * context_mult * team_mult
     return total_score
 ```markdown
 
 **How it works today:**
-- Loads base score from player.projected_points
+- Loads base score from item.projected_value
 - Applies multipliers: injury, matchup, team_quality
 - Each multiplier is a separate method (pattern: `_calculate_{type}_multiplier()`)
 - Returns final score as product of base * all multipliers
 
 **Relevance to this feature:**
-- User wants to add ADP as another multiplier
-- Should follow existing pattern: create `_calculate_adp_multiplier()` method
+- User wants to add rank priority as another multiplier
+- Should follow existing pattern: create `_calculate_rank_multiplier()` method
 - Multiply into total_score alongside existing multipliers
 
 ---
 
 ### Component 2: injury penalty system (from Epic line 37 - pattern to follow)
 
-**User mentioned:** "Keep it simple - just add ADP as another multiplier like injury penalty"
+**User mentioned:** "Keep it simple - just add rank priority as another multiplier like injury penalty"
 
 **Found implementation:**
-- File: `[module]/util/PlayerManager.py`
+- File: `[module]/util/RecordManager.py`
 - Lines: 450-480
 - Pattern used: Multiplier-based penalty
 
 **Code structure (actual):**
 ```
-def _calculate_injury_multiplier(self, player: FantasyPlayer) -> float:
+def _calculate_attribute_multiplier(self, item: DataRecord) -> float:
     """Calculate injury status multiplier.
 
     Args:
-        player (FantasyPlayer): Player to evaluate
+        item (DataRecord): Item to evaluate
 
     Returns:
         float: Multiplier between 0.0-1.0 (penalty for injury)
     """
-    if player.injury_status == "Healthy":
+    if item.attribute_status == "Healthy":
         return 1.0
-    elif player.injury_status == "Questionable":
+    elif item.attribute_status == "Questionable":
         return 0.95
-    elif player.injury_status == "Doubtful":
+    elif item.attribute_status == "Doubtful":
         return 0.85
-    elif player.injury_status == "Out":
+    elif item.attribute_status == "Out":
         return 0.0
     else:
         # Unknown status - neutral
@@ -317,74 +317,74 @@ def _calculate_injury_multiplier(self, player: FantasyPlayer) -> float:
 - Method returns float multiplier
 - Range: 0.0-1.0 (penalty) or 1.0+ (bonus)
 - Applied in calculate_total_score() by multiplication
-- Uses player fields to determine multiplier value
+- Uses item fields to determine multiplier value
 - Defaults to 1.0 (neutral) for unknown/missing data
 
-**For ADP feature:**
-- Create `_calculate_adp_multiplier(player: FantasyPlayer) -> float`
-- High ADP (1-50) → multiplier > 1.0 (bonus)
-- Low ADP (200+) → multiplier = 1.0 (neutral)
-- Missing ADP → multiplier = 1.0 (neutral, like injury unknown status)
-- Add to total_score calculation: `total_score = base * injury * matchup * team * adp`
+**For rank feature:**
+- Create `_calculate_rank_multiplier(item: DataRecord) -> float`
+- High rank priority (1-50) → multiplier > 1.0 (bonus)
+- Low rank priority (200+) → multiplier = 1.0 (neutral)
+- Missing rank priority → multiplier = 1.0 (neutral, like injury unknown status)
+- Add to total_score calculation: `total_score = base * injury * matchup * team * rank`
 
 ---
 
-### Data Source: FantasyPros CSV (from Epic line 22)
+### Data Source: [ranking source] CSV (from Epic line 22)
 
-**User mentioned:** "use FantasyPros CSV format"
+**User mentioned:** "use [ranking source] CSV format"
 
 **Found in codebase:**
-- Searched for: `grep -r "adp" --include="*.py" -i`
-- Result: NO existing ADP references found
+- Searched for: `grep -r "rank" --include="*.py" -i`
+- Result: NO existing rank priority references found
 - This is NEW data source (not currently in codebase)
 
 **Searched for example CSV files:**
 - `find data/ -name "*.csv"`
-- Found: `data/players.csv`, `data/injury_report.csv`
+- Found: `data/items.csv`, `data/injury_report.csv`
 
-**Example CSV structure (from players.csv):**
+**Example CSV structure (from items.csv):**
 ```
 Name,Position,Team,ProjectedPoints
-Patrick Mahomes,QB,KC,450.5
+Record-A,QB,KC,450.5
 Christian McCaffrey,RB,CAR,380.2
 ```markdown
 
-**For ADP feature:**
-- Need to determine exact FantasyPros CSV format (add to checklist as question)
-- Likely columns: Name, Position, ADP (TBD - ask user)
-- Will need to match players by Name+Position (matching logic TBD - add to checklist)
+**For rank feature:**
+- Need to determine exact [ranking source] CSV format (add to checklist as question)
+- Likely columns: Name, Position, rank priority (TBD - ask user)
+- Will need to match items by Name+Position (matching logic TBD - add to checklist)
 
 ---
 
 ## Existing Test Patterns
 
-**Found test pattern in:** `tests/[module]/util/test_PlayerManager_scoring.py`
+**Found test pattern in:** `tests/[module]/util/test_RecordManager_scoring.py`
 
 **Pattern observed:**
-- Uses pytest fixtures for sample players
+- Uses pytest fixtures for sample items
 - Mocks ConfigManager
 - Tests each multiplier in isolation:
   ```
-  def test_injury_multiplier_healthy():
-      player = FantasyPlayer(name="Test", injury_status="Healthy")
-      manager = PlayerManager()
-      mult = manager._calculate_injury_multiplier(player)
+  def test_attribute_multiplier_healthy():
+      item = DataRecord(name="Test", attribute_status="Healthy")
+      manager = RecordManager()
+      mult = manager._calculate_attribute_multiplier(item)
       assert mult == 1.0
 
-  def test_injury_multiplier_questionable():
-      player = FantasyPlayer(name="Test", injury_status="Questionable")
-      manager = PlayerManager()
-      mult = manager._calculate_injury_multiplier(player)
+  def test_attribute_multiplier_questionable():
+      item = DataRecord(name="Test", attribute_status="Questionable")
+      manager = RecordManager()
+      mult = manager._calculate_attribute_multiplier(item)
       assert mult == 0.95
   ```markdown
 - Integration test with all multipliers combined
 - Edge case tests (missing data, invalid values)
 
-**Can follow this pattern for ADP feature tests:**
-- `test_adp_multiplier_high()` - ADP 1-50 returns bonus
-- `test_adp_multiplier_low()` - ADP 200+ returns neutral
-- `test_adp_multiplier_missing()` - No ADP data returns 1.0
-- Integration test with all multipliers including ADP
+**Can follow this pattern for rank feature tests:**
+- `test_rank_multiplier_high()` - rank priority 1-50 returns bonus
+- `test_rank_multiplier_low()` - rank priority 200+ returns neutral
+- `test_rank_multiplier_missing()` - No rank data returns 1.0
+- Integration test with all multipliers including rank priority
 
 ---
 
@@ -392,23 +392,23 @@ Christian McCaffrey,RB,CAR,380.2
 
 **Classes This Feature Will Call:**
 
-1. **ConfigManager.get_adp_multiplier()** (may need to create)
+1. **ConfigManager.get_rank_multiplier()** (may need to create)
    - Searched: `grep -r "get_.*_multiplier" [module]/util/ConfigManager.py`
-   - Found similar method: `get_injury_multiplier(status: str) -> float` at line 180
+   - Found similar method: `get_attribute_multiplier(status: str) -> float` at line 180
    - Pattern: Takes input value, returns multiplier
-   - For ADP: Will need `get_adp_multiplier(adp: int) -> float`
+   - For rank priority: Will need `get_rank_multiplier(rank: int) -> float`
    - May need to add this method (not currently exists)
 
-2. **CSV utilities** (for reading FantasyPros CSV)
+2. **CSV utilities** (for reading [ranking source] CSV)
    - Source: `utils/csv_utils.py`
    - Method: `read_csv_with_validation(filepath, required_columns)`
    - Verified: Method exists (checked source code line 45)
-   - Can use for loading ADP data
+   - Can use for loading rank data
 
-3. **FantasyPlayer class** (need to add ADP field)
-   - Source: `[module]/util/FantasyPlayer.py`
-   - Current fields (line 15): name, position, team, projected_points, injury_status
-   - Will add: `adp_value: Optional[int]` (new field)
+3. **DataRecord class** (need to add rank priority field)
+   - Source: `[module]/util/DataRecord.py`
+   - Current fields (line 15): name, position, team, projected_value, attribute_status
+   - Will add: `rank_value: Optional[int]` (new field)
 
 ---
 
@@ -416,34 +416,34 @@ Christian McCaffrey,RB,CAR,380.2
 
 **From reading existing code:**
 
-1. Player not in ADP data → How to handle?
+1. Item not in rank data → How to handle?
    - Pattern from injury: Return neutral multiplier (1.0)
-   - Add to checklist: "Should players without ADP get neutral 1.0 or penalty?"
+   - Add to checklist: "Should items without rank priority get neutral 1.0 or penalty?"
 
-2. Invalid ADP values (< 1 or > 500) → Validation needed?
-   - Add to checklist: "What's valid ADP range? How to handle invalid values?"
+2. Invalid rank values (< 1 or > 500) → Validation needed?
+   - Add to checklist: "What's valid rank priority range? How to handle invalid values?"
 
-3. ADP data file missing → Graceful degradation?
-   - Pattern from injury: If injury_report.csv missing, all players get 1.0
-   - Add to checklist: "If ADP CSV missing, should we fail or default to neutral?"
+3. rank data file missing → Graceful degradation?
+   - Pattern from injury: If injury_report.csv missing, all items get 1.0
+   - Add to checklist: "If rank priority CSV missing, should we fail or default to neutral?"
 
-4. Multiple players with same name → Matching logic?
-   - Add to checklist: "How to match players? Exact name+position? Fuzzy matching?"
+4. Multiple items with same name → Matching logic?
+   - Add to checklist: "How to match items? Exact name+position? Fuzzy matching?"
 
 ---
 
 ## Research Completeness
 
 **Components researched:**
-- ✅ PlayerManager class (READ source code lines 45-500)
+- ✅ RecordManager class (READ source code lines 45-500)
 - ✅ Existing multiplier pattern (READ injury penalty code lines 450-480)
-- ✅ Test patterns (READ existing tests in test_PlayerManager_scoring.py)
-- ✅ Data source search (grep for existing ADP references - none found)
+- ✅ Test patterns (READ existing tests in test_RecordManager_scoring.py)
+- ✅ Data source search (grep for existing rank priority references - none found)
 - ✅ CSV utilities (verified read_csv_with_validation exists)
-- ✅ FantasyPlayer class structure (READ source code lines 1-100)
+- ✅ DataRecord class structure (READ source code lines 1-100)
 
 **Evidence collected:**
-- File paths: 5 files (PlayerManager.py, FantasyPlayer.py, ConfigManager.py, csv_utils.py, test_PlayerManager_scoring.py)
+- File paths: 5 files (RecordManager.py, DataRecord.py, ConfigManager.py, csv_utils.py, test_RecordManager_scoring.py)
 - Line numbers: Cited for all code references
 - Actual code snippets: Copied method signatures, example implementations
 
@@ -469,22 +469,22 @@ Christian McCaffrey,RB,CAR,380.2
 
 **Question 1.1:** Can I list the EXACT classes/files that will be modified?
 
-❌ BAD: "Probably PlayerManager and maybe ConfigManager"
-✅ GOOD: "PlayerManager ([module]/util/PlayerManager.py:125-180) and ConfigManager ([module]/util/ConfigManager.py:234)"
+❌ BAD: "Probably RecordManager and maybe ConfigManager"
+✅ GOOD: "RecordManager ([module]/util/RecordManager.py:125-180) and ConfigManager ([module]/util/ConfigManager.py:234)"
 
 **My answer:**
-- PlayerManager ([module]/util/PlayerManager.py)
+- RecordManager ([module]/util/RecordManager.py)
   - calculate_total_score() method at line 125
-  - Will add _calculate_adp_multiplier() method around line 485
-- FantasyPlayer ([module]/util/FantasyPlayer.py)
+  - Will add _calculate_rank_multiplier() method around line 485
+- DataRecord ([module]/util/DataRecord.py)
   - Class definition at line 15
-  - Will add adp_value field
+  - Will add rank_value field
 - ConfigManager ([module]/util/ConfigManager.py)
-  - May need to add get_adp_multiplier() method (similar to get_injury_multiplier at line 180)
+  - May need to add get_rank_multiplier() method (similar to get_attribute_multiplier at line 180)
 
 **Evidence:**
-- Read PlayerManager.py lines 1-500 (Read tool call at 10:25)
-- Read FantasyPlayer.py lines 1-100 (Read tool call at 10:27)
+- Read RecordManager.py lines 1-500 (Read tool call at 10:25)
+- Read DataRecord.py lines 1-100 (Read tool call at 10:27)
 - Read ConfigManager.py lines 1-300 (Read tool call at 10:30)
 
 ---
@@ -492,14 +492,14 @@ Christian McCaffrey,RB,CAR,380.2
 **Question 1.2:** Have I READ the source code for each component?
 
 ❌ BAD: "I searched for it but didn't read the actual code"
-✅ GOOD: "Yes, used Read tool to view PlayerManager.py lines 1-300, focused on calculate_total_score() method"
+✅ GOOD: "Yes, used Read tool to view RecordManager.py lines 1-300, focused on calculate_total_score() method"
 
 **My answer:** Yes, read source code for all components:
-- PlayerManager.py: Read lines 1-500, focused on calculate_total_score() (125-150) and injury multiplier pattern (450-480)
-- FantasyPlayer.py: Read lines 1-100, documented current field structure
-- ConfigManager.py: Read lines 1-300, found get_injury_multiplier() pattern
+- RecordManager.py: Read lines 1-500, focused on calculate_total_score() (125-150) and injury multiplier pattern (450-480)
+- DataRecord.py: Read lines 1-100, documented current field structure
+- ConfigManager.py: Read lines 1-300, found get_attribute_multiplier() pattern
 - csv_utils.py: Read lines 1-100, verified read_csv_with_validation() exists
-- test_PlayerManager_scoring.py: Read entire file, documented test patterns
+- test_RecordManager_scoring.py: Read entire file, documented test patterns
 
 **Evidence:** Read tool calls made at 10:25, 10:27, 10:30, 10:32, 10:35
 
@@ -507,22 +507,22 @@ Christian McCaffrey,RB,CAR,380.2
 
 **Question 1.3:** Can I cite actual method signatures from source?
 
-❌ BAD: "The method probably takes a player and returns a score"
-✅ GOOD: "def calculate_total_score(self, player: FantasyPlayer, config: ConfigManager) -> float (PlayerManager.py:125)"
+❌ BAD: "The method probably takes an item and returns a score"
+✅ GOOD: "def calculate_total_score(self, item: DataRecord, config: ConfigManager) -> float (RecordManager.py:125)"
 
 **My answer:** Yes, documented actual signatures:
 
 ```
-## PlayerManager.calculate_total_score
-def calculate_total_score(self, player: FantasyPlayer, config: ConfigManager) -> float:
-    # Source: PlayerManager.py:125
+## RecordManager.calculate_total_score
+def calculate_total_score(self, item: DataRecord, config: ConfigManager) -> float:
+    # Source: RecordManager.py:125
 
-## PlayerManager._calculate_injury_multiplier
-def _calculate_injury_multiplier(self, player: FantasyPlayer) -> float:
-    # Source: PlayerManager.py:450
+## RecordManager._calculate_attribute_multiplier
+def _calculate_attribute_multiplier(self, item: DataRecord) -> float:
+    # Source: RecordManager.py:450
 
-## ConfigManager.get_injury_multiplier
-def get_injury_multiplier(self, status: str) -> float:
+## ConfigManager.get_attribute_multiplier
+def get_attribute_multiplier(self, status: str) -> float:
     # Source: ConfigManager.py:180
 
 ## csv_utils.read_csv_with_validation
@@ -548,27 +548,27 @@ def read_csv_with_validation(filepath: Union[str, Path], required_columns: List[
 **Question 2.1:** Have I searched for similar existing features?
 
 ❌ BAD: "I assume there are similar features but didn't search"
-✅ GOOD: "Searched for 'injury penalty', found implementation in PlayerManager.py:450-480"
+✅ GOOD: "Searched for 'injury penalty', found implementation in RecordManager.py:450-480"
 
 **My answer:** Yes, searched for multiplier pattern:
 - grep -r "multiplier" --include="*.py" [module]/
-- Found: injury_multiplier, matchup_multiplier, team_quality_multiplier
-- All follow same pattern in PlayerManager
-- Read injury_multiplier as example (most similar to ADP use case)
+- Found: attribute_multiplier, context_multiplier, team_quality_multiplier
+- All follow same pattern in RecordManager
+- Read attribute_multiplier as example (most similar to rank priority use case)
 
 **Evidence:**
 - grep results showed 3 existing multipliers
-- Read PlayerManager.py lines 450-550 to see all multiplier implementations
+- Read RecordManager.py lines 450-550 to see all multiplier implementations
 
 ---
 
 **Question 2.2:** Have I READ at least one similar feature's implementation?
 
 ❌ BAD: "Found it but didn't read the code"
-✅ GOOD: "Read PlayerManager.py lines 450-480, documented pattern in research file"
+✅ GOOD: "Read RecordManager.py lines 450-480, documented pattern in research file"
 
 **My answer:** Yes, read injury penalty implementation in detail:
-- Method structure: `_calculate_{type}_multiplier(player: FantasyPlayer) -> float`
+- Method structure: `_ calculate_{type}_multiplier(item: DataRecord) -> float`
 - Return value: Float between 0.0-1.0 for penalties, 1.0+ for bonuses
 - Default: Returns 1.0 for unknown/missing data
 - Integration: Multiplied into total_score in calculate_total_score()
@@ -583,18 +583,18 @@ def read_csv_with_validation(filepath: Union[str, Path], required_columns: List[
 ✅ GOOD: "Returns float multiplier (0.0-1.0 range), applied in calculate_total_score(), follows method naming pattern _calculate_{type}_multiplier()"
 
 **My answer:** Pattern details:
-- **Naming:** `_calculate_{type}_multiplier(self, player: FantasyPlayer) -> float`
+- **Naming:** `_calculate_{type}_multiplier((self, item: DataRecord)) -> float`
 - **Range:** 0.0-1.0 for penalties (injury, bad matchup), 1.0+ for bonuses (good matchup)
 - **Default:** Returns 1.0 for neutral/missing data
 - **Integration:** All multipliers multiplied together in calculate_total_score():
   ```
   total_score = base_score * mult1 * mult2 * mult3 * ... * multN
   ```markdown
-- **Config:** Some multipliers use ConfigManager for ranges (matchup uses config.get_matchup_multiplier())
+- **Config:** Some multipliers use ConfigManager for ranges (matchup uses config.get_context_multiplier())
 
 **Evidence:**
-- injury_multiplier code (lines 450-480)
-- matchup_multiplier code (lines 490-520)
+- attribute_multiplier code (lines 450-480)
+- context_multiplier code (lines 490-520)
 - calculate_total_score integration (lines 125-150)
 
 ---
@@ -613,70 +613,70 @@ def read_csv_with_validation(filepath: Union[str, Path], required_columns: List[
 **Question 3.1:** Have I READ the actual data files (CSV/JSON examples)?
 
 ❌ BAD: "I assume CSV has Name, Position columns"
-✅ GOOD: "Read data/players.csv, actual columns: Name,Position,Team,Points,ADP (line 1)"
+✅ GOOD: "Read data/items.csv, actual columns: Name,Position,Team,Points,rank priority (line 1)"
 
 **My answer:** Yes, read existing CSV files to understand format:
-- Read data/players.csv (example player data)
+- Read data/items.csv (example record data)
 - Read data/injury_report.csv (example status data)
-- No existing ADP CSV found (this is new data source)
+- No existing rank priority CSV found (this is new data source)
 - Documented format patterns from existing files
 
 **Evidence:**
-- data/players.csv header: `Name,Position,Team,ProjectedPoints`
+- data/items.csv header: `Name,Position,Team,ProjectedPoints`
 - data/injury_report.csv header: `Name,Position,Status,Updated`
-- Sample row from players.csv: `Patrick Mahomes,QB,KC,450.5`
+- Sample row from items.csv: `Record-A,QB,KC,450.5`
 
 ---
 
 **Question 3.2:** Can I describe the current format from actual examples?
 
-❌ BAD: "CSV format with player data"
-✅ GOOD: "CSV with header row, 5 columns (Name,Position,Team,Points,ADP), example: 'Patrick Mahomes,QB,KC,450.5,5'"
+❌ BAD: "CSV format with record data"
+✅ GOOD: "CSV with header row, 5 columns (Name,Position,Team,Points,rank priority), example: 'Record-A,QB,KC,450.5,5'"
 
 **My answer:**
-Existing CSV pattern (from players.csv):
+Existing CSV pattern (from items.csv):
 - Format: CSV with header row
 - Columns: Name,Position,Team,ProjectedPoints
-- Name: Full player name (e.g., "Patrick Mahomes")
+- Name: Full item name (e.g., "Record-A")
 - Position: Standard position abbreviation (QB, RB, WR, TE, K, DST)
 - Team: Team abbreviation (e.g., "KC")
 - ProjectedPoints: Float value
 
-For ADP CSV (need to confirm with user):
+For rank priority CSV (need to confirm with user):
 - Will likely follow same pattern
-- Expected columns: Name, Position, ADP (TBD - add to checklist)
-- ADP: Integer ranking 1-500 (TBD - ask user for range)
+- Expected columns: Name, Position, rank priority (TBD - add to checklist)
+- rank priority: Integer ranking 1-500 (TBD - ask user for range)
 
 **Evidence:**
-- Actual header from data/players.csv: `Name,Position,Team,ProjectedPoints`
+- Actual header from data/items.csv: `Name,Position,Team,ProjectedPoints`
 - Sample rows documented in research file
 
 ---
 
 **Question 3.3:** Have I verified field names from source code?
 
-❌ BAD: "I assume player has 'name' field"
-✅ GOOD: "FantasyPlayer class ([module]/util/FantasyPlayer.py:15) has fields: name: str, position: str, team: str, projected_points: float"
+❌ BAD: "I assume item has 'name' field"
+✅ GOOD: "DataRecord class ([module]/util/DataRecord.py:15) has fields: name: str, position: str, team: str, projected_value: float"
 
-**My answer:** Yes, verified FantasyPlayer class fields:
+**My answer:** Yes, verified DataRecord class fields:
 
 ```
 @dataclass
-class FantasyPlayer:
+class DataRecord:
     name: str
     position: str
     team: str
-    projected_points: float
-    injury_status: Optional[str] = None
+    projected_value: float
+    attribute_status: Optional[str] = None
     matchup_rating: Optional[float] = None
     team_quality: Optional[float] = None
-    # Will add: adp_value: Optional[int] = None
+    # Will add: rank_value: Optional[int] = None
 ```markdown
 
-Source: [module]/util/FantasyPlayer.py lines 15-25
+Source: [module]/util/DataRecord.py lines 15-25
 
 **Evidence:**
-- Read FantasyPlayer.py lines 1-100
+- Read DataRecord.py lines 1-100
 - Copied actual field definitions with type hints
 
 ---
@@ -709,14 +709,14 @@ Source: [module]/util/FantasyPlayer.py lines 15-25
 
 **Question 4.2:** Can I list what the user EXPLICITLY requested?
 
-❌ BAD: "User wants better draft recommendations"
-✅ GOOD: "User requested: 1) 'integrate ADP data' (line 15), 2) 'factor ADP into scoring' (line 18), 3) 'use FantasyPros CSV' (line 22)"
+❌ BAD: "User wants better scoring recommendations"
+✅ GOOD: "User requested: 1) 'integrate rank data' (line 15), 2) 'factor rank priority into scoring' (line 18), 3) 'use [ranking source] CSV' (line 22)"
 
 **My answer:** User explicit requests:
-1. "integrate ADP data from FantasyPros" (epic line 15)
-2. "factor ADP into draft recommendations so high-ADP players rank higher" (epic line 18-19)
-3. "use FantasyPros CSV format" (epic line 22)
-4. "Keep it simple - just add ADP as another multiplier like injury penalty" (epic line 37-38)
+1. "integrate rank data from [ranking source]" (epic line 15)
+2. "factor rank priority into scoring recommendations so high-rank priority items rank higher" (epic line 18-19)
+3. "use [ranking source] CSV format" (epic line 22)
+4. "Keep it simple - just add rank priority as another multiplier like injury penalty" (epic line 37-38)
 
 **Evidence:** Exact quotes with line citations in Discovery Context section of spec.md
 
@@ -728,12 +728,12 @@ Source: [module]/util/FantasyPlayer.py lines 15-25
 ✅ GOOD: "User did NOT mention: fuzzy matching, automatic CSV updates, caching. These are agent assumptions (need to add to checklist as questions)"
 
 **My answer:** User did NOT mention:
-- ADP multiplier formula (how to convert ADP 1-500 to multiplier)
-- Player matching strategy (exact vs fuzzy)
-- Default behavior when player not in ADP data
-- ADP value ranges (min/max valid ADP)
+- rank multiplier formula (how to convert rank priority 1-500 to multiplier)
+- Item matching strategy (exact vs fuzzy)
+- Default behavior when item not in rank data
+- rank value ranges (min/max valid rank priority)
 - CSV location/filename
-- Handling multiple players with same name
+- Handling multiple items with same name
 
 All of these are agent assumptions → Added to checklist as questions
 
@@ -766,20 +766,20 @@ All of these are agent assumptions → Added to checklist as questions
 **Evidence Summary:**
 
 **Files Read:** 6
-- [module]/util/PlayerManager.py (lines 1-500)
-- [module]/util/FantasyPlayer.py (lines 1-100)
+- [module]/util/RecordManager.py (lines 1-500)
+- [module]/util/DataRecord.py (lines 1-100)
 - [module]/util/ConfigManager.py (lines 1-300)
 - utils/csv_utils.py (lines 1-100)
-- tests/[module]/util/test_PlayerManager_scoring.py (entire file)
-- data/players.csv (header + sample rows)
+- tests/[module]/util/test_RecordManager_scoring.py (entire file)
+- data/items.csv (header + sample rows)
 
 **Code Snippets Collected:** 8
 - calculate_total_score() signature and implementation
-- _calculate_injury_multiplier() full implementation
-- _calculate_matchup_multiplier() signature
-- get_injury_multiplier() signature
+- _calculate_attribute_multiplier() full implementation
+- _calculate_context_multiplier() signature
+- get_attribute_multiplier() signature
 - read_csv_with_validation() signature
-- FantasyPlayer class definition with fields
+- DataRecord class definition with fields
 - Test pattern examples (3 test methods)
 
 **Epic Notes Citations:** 8 line numbers
@@ -798,7 +798,7 @@ All of these are agent assumptions → Added to checklist as questions
 
 **Question 1.1:** Can I list the EXACT classes/files that will be modified?
 
-**My answer:** ❌ "Probably PlayerManager and maybe ConfigManager, not sure what else"
+**My answer:** ❌ "Probably RecordManager and maybe ConfigManager, not sure what else"
 
 **Evidence:** ❌ None - didn't check file paths or line numbers
 
@@ -809,7 +809,7 @@ All of these are agent assumptions → Added to checklist as questions
 
 **Question 1.2:** Have I READ the source code for each component?
 
-**My answer:** ❌ "I used grep to search for PlayerManager but didn't actually read the file"
+**My answer:** ❌ "I used grep to search for RecordManager but didn't actually read the file"
 
 **Evidence:** ❌ grep results only, no Read tool calls
 
@@ -820,7 +820,7 @@ All of these are agent assumptions → Added to checklist as questions
 
 **Question 1.3:** Can I cite actual method signatures from source?
 
-**My answer:** ❌ "The scoring method probably takes a player and returns a number"
+**My answer:** ❌ "The scoring method probably takes an item and returns a number"
 
 **Evidence:** ❌ None - guessing based on assumptions
 
@@ -850,7 +850,7 @@ All of these are agent assumptions → Added to checklist as questions
 ```
 ## Research Questions
 
-- [ ] Understand how PlayerManager works
+- [ ] Understand how RecordManager works
 - [ ] Learn about the scoring system
 - [ ] Research data loading patterns
 - [ ] Study the codebase architecture
@@ -860,11 +860,11 @@ All of these are agent assumptions → Added to checklist as questions
 ```
 ## Research Questions (Grounded in Epic)
 
-Based on user request to "integrate ADP data into PlayerManager scoring using injury penalty pattern":
+Based on user request to "integrate rank data into RecordManager scoring using injury penalty pattern":
 
-- [ ] PlayerManager.calculate_total_score() - How does it work? (user mentioned scoring)
+- [ ] RecordManager.calculate_total_score() - How does it work? (user mentioned scoring)
 - [ ] injury penalty pattern - What's the implementation? (user said to follow this pattern)
-- [ ] FantasyPros CSV - Does similar data exist? (user specified this data source)
+- [ ] [ranking source] CSV - Does similar data exist? (user specified this data source)
 ```markdown
 
 **Why:** Epic intent guides research. Only research what user explicitly mentioned.
@@ -875,23 +875,23 @@ Based on user request to "integrate ADP data into PlayerManager scoring using in
 
 ❌ **WRONG:**
 ```
-**PlayerManager probably has a calculate_score method that takes a player.**
+**RecordManager probably has a calculate_score method that takes an item.**
 
-I'll assume it returns a float and we can add ADP as a parameter.
+I'll assume it returns a float and we can add rank priority as a parameter.
 ```markdown
 
 ✅ **CORRECT:**
 ```
-**PlayerManager.calculate_total_score() actual signature:**
+**RecordManager.calculate_total_score() actual signature:**
 
 ```python
-def calculate_total_score(self, player: FantasyPlayer, config: ConfigManager) -> float:
+def calculate_total_score(self, item: DataRecord, config: ConfigManager) -> float:
 ```
 
-Source: [module]/util/PlayerManager.py:125
+Source: [module]/util/RecordManager.py:125
 Read timestamp: 2026-01-02 10:30
 
-**Cannot add ADP as parameter** - would break interface (user constraint: "don't change interface too much")
+**Cannot add rank priority as parameter** - would break interface (user constraint: "don't change interface too much")
 **Must follow multiplier pattern instead** - add as separate calculation, multiply into result
 ```markdown
 
@@ -903,7 +903,7 @@ Read timestamp: 2026-01-02 10:30
 
 ❌ **WRONG:**
 ```
-I remember from S1 that user wants ADP integration. I'll start researching PlayerManager now.
+I remember from S1 that user wants Rank integration. I'll start researching RecordManager now.
 
 {Jumps straight to Phase 1 without re-reading epic}
 ```markdown

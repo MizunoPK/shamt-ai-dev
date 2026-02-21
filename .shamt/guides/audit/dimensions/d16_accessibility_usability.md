@@ -271,7 +271,7 @@ grep -n "TODO\|\[placeholder\]" spec.md  # Should return nothing
 **Example spec.md section:**
 ```markdown
 ## Purpose
-Enable users to fetch player data from ESPN API with configurable
+Enable users to export record data in configurable formats with
 date ranges and data types (stats, projections, rankings).
 ```markdown
 ```markdown

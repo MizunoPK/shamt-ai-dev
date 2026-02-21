@@ -250,24 +250,24 @@ These 7 dimensions apply to **ALL** validation loops, regardless of context.
 
 ❌ **WRONG - Made-up function signature:**
 ```markdown
-Task 3: Call ConfigManager.get_adp_multiplier(adp: int) -> float
+Task 3: Call ConfigManager.get_rank_multiplier(rank: int) -> float
 Source: Assumption based on spec description
 ```
 
 ✅ **CORRECT - Verified from source:**
 ```markdown
-Task 3: Call ConfigManager.get_adp_multiplier(adp: int) -> Tuple[float, int]
+Task 3: Call ConfigManager.get_rank_multiplier(rank: int) -> Tuple[float, int]
 Source: Verified from [module]/util/ConfigManager.py:234
 Verification method: Read tool
 Verification timestamp: 2026-02-10 14:30
 
 Actual signature:
-    def get_adp_multiplier(self, adp: int) -> Tuple[float, int]:
+    def get_rank_multiplier(self, rank: int) -> Tuple[float, int]:
         """
-        Calculate ADP multiplier based on ADP ranking.
+        Calculate rank multiplier based on rank value.
 
         Args:
-            adp (int): ADP ranking (1-500)
+            rank (int): rank value (1-500)
 
         Returns:
             Tuple[float, int]: (multiplier, rating)
@@ -276,38 +276,38 @@ Actual signature:
 
 ❌ **WRONG - Made-up file path:**
 ```markdown
-Load data from: data/adp_rankings.csv
+Load data from: data/priority_rankings.csv
 Verification: Not checked (assumed from spec)
 ```
 
 ✅ **CORRECT - Verified path:**
 ```markdown
-Load data from: data/rankings/adp.csv
+Load data from: data/rankings/priority.csv
 Verification method: ls command
 Verification timestamp: 2026-02-10 14:32
 
-Command: ls -la data/rankings/adp.csv
-Output: -rw-r--r-- 1 user user 45832 Feb 10 10:15 data/rankings/adp.csv
+Command: ls -la data/rankings/priority.csv
+Output: -rw-r--r-- 1 user user 45832 Feb 10 10:15 data/rankings/priority.csv
 
-Note: Spec mentioned "adp_rankings.csv" but actual file is in rankings/ subdirectory
+Note: Spec mentioned "priority_rankings.csv" but actual file is in rankings/ subdirectory
 ```
 
 ❌ **WRONG - Assumed class name:**
 ```markdown
 Integration: PlayerDataManager.load_players()
-Source: Mentioned in epic request as "player data manager"
+Source: Mentioned in epic request as "record manager"
 ```
 
 ✅ **CORRECT - Verified class name:**
 ```markdown
-Integration: PlayerManager.load_players()
-Source: Verified from [module]/util/PlayerManager.py:23
+Integration: RecordManager.load_items()
+Source: Verified from [module]/util/RecordManager.py:23
 Verification method: grep command
 
-Command: grep -r "class Player.*Manager" --include="*.py"
-Output: [module]/util/PlayerManager.py:23:class PlayerManager:
+Command: grep -r "class RecordManager" --include="*.py"
+Output: [module]/util/RecordManager.py:23:class RecordManager:
 
-Note: Epic request used phrase "player data manager" but actual class is PlayerManager (no "Data")
+Note: Epic request used phrase "record manager" but actual class is RecordManager (no "Data")
 ```
 
 **Verification Evidence Template:**
@@ -358,7 +358,7 @@ Note: Epic request used phrase "player data manager" but actual class is PlayerM
 ❌ **WRONG - Incomplete requirements:**
 ```markdown
 ## Requirements
-1. Load player data
+1. Load record data
 2. Calculate scores
 3. Handle errors
 ... (additional requirements TBD)
@@ -367,12 +367,12 @@ Note: Epic request used phrase "player data manager" but actual class is PlayerM
 ✅ **CORRECT - Complete enumeration:**
 ```markdown
 ## Requirements
-1. Load player data from CSV
-2. Validate player data structure
-3. Calculate ADP-based scores
+1. Load record data from CSV
+2. Validate record data structure
+3. Calculate rank-based scores
 4. Apply position-specific adjustments
 5. Handle missing data gracefully
-6. Handle invalid ADP values (< 1 or > 500)
+6. Handle invalid rank values (< 1 or > 500)
 7. Handle file not found errors
 8. Log all operations
 
@@ -571,18 +571,18 @@ Handle errors with try/except blocks:
 Timeout: 30 seconds (per Requirement 5)
 
 Validate input:
-- Check adp value is integer between 1 and 500
+- Check rank value is integer between 1 and 500
 - Raise ValueError if out of range
 ```
 
 ❌ **WRONG - "Should" instead of "must":**
 ```markdown
-The system should validate player data.
+The system should validate record data.
 ```
 
 ✅ **CORRECT - Definitive language:**
 ```markdown
-The system must validate player data before processing.
+The system must validate record data before processing.
 ```
 
 ---
@@ -619,23 +619,23 @@ The system must validate player data before processing.
 
 ❌ **WRONG - Scope creep:**
 ```markdown
-Epic Request: "Load ADP data and calculate multipliers"
+Epic Request: "Load rank data and calculate multipliers"
 
 Spec Requirements:
-1. Load ADP data from CSV
-2. Calculate multipliers based on ADP
+1. Load rank data from CSV
+2. Calculate multipliers based on rank priority
 3. Generate visualization dashboard ← NOT REQUESTED
 4. Export to multiple formats ← NOT REQUESTED
 ```
 
 ✅ **CORRECT - Scope match:**
 ```markdown
-Epic Request: "Load ADP data and calculate multipliers"
+Epic Request: "Load rank data and calculate multipliers"
 
 Spec Requirements:
-1. Load ADP data from CSV (Epic request line 12)
-2. Validate ADP values (Derived from requirement 1)
-3. Calculate multipliers based on ADP (Epic request line 13)
+1. Load rank data from CSV (Epic request line 12)
+2. Validate rank values (Derived from requirement 1)
+3. Calculate multipliers based on rank priority (Epic request line 13)
 4. Return multiplier values (Derived from requirement 3)
 
 Future Enhancements (out of scope for this feature):
@@ -712,7 +712,7 @@ Plan Tasks:
 
 ✅ **CORRECT - Using official template:**
 ```markdown
-## Feature Spec: ADP Integration
+## Feature Spec: rank priority Integration
 
 ## Discovery Context
 ...
@@ -737,8 +737,8 @@ def LoadPlayerData():  # PascalCase (wrong for Python)
 
 ✅ **CORRECT - Consistent naming:**
 ```markdown
-def load_player_data():  # snake_case (Python convention)
-    """Load player data from CSV file."""
+def load_record_data():  # snake_case (Python convention)
+    """Load record data from CSV file."""
     player_count = ...
     total_players = ...  # snake_case (consistent)
 ```
@@ -767,14 +767,14 @@ def load_player_data():  # snake_case (Python convention)
 ### Dimension 1: Empirical Verification
 - ❌ ISSUE 1 (HIGH): Function signature assumed, not verified
   - Location: Section 3.2, line 45
-  - Problem: Claims ConfigManager.get_adp() returns float
+  - Problem: Claims ConfigManager.get_rank() returns float
   - Reality: Returns Tuple[float, int] per ConfigManager.py:234
   - Fix: Update section 3.2 with correct signature
 
 - ❌ ISSUE 2 (MEDIUM): File path not verified
   - Location: Section 2.1, line 12
-  - Problem: References data/adp.csv
-  - Reality: Actual path is data/rankings/adp.csv (verified with ls)
+  - Problem: References data/priority.csv
+  - Reality: Actual path is data/rankings/priority.csv (verified with ls)
   - Fix: Update file path
 
 ### Dimension 2: Completeness
@@ -831,7 +831,7 @@ def load_player_data():  # snake_case (Python convention)
 - ❌ ISSUE 9 (MEDIUM): New discovery - missed in Round 1
   - Location: Section 4.5, line 89
   - Problem: References PlayerDataManager class
-  - Reality: Actual class is PlayerManager (verified grep)
+  - Reality: Actual class is RecordManager (verified grep)
   - Fix: Update class name
 
 ### Dimension 2: Completeness
@@ -1079,9 +1079,9 @@ Round 1 Check:
 ```markdown
 Round 1 Check:
 - Dimension 1 (Empirical Verification):
-  - [ ] Verified ConfigManager.get_adp() signature from source
-  - [ ] Verified file path data/rankings/adp.csv exists
-  - [ ] Verified PlayerManager class name from grep
+  - [ ] Verified ConfigManager.get_rank() signature from source
+  - [ ] Verified file path data/rankings/priority.csv exists
+  - [ ] Verified RecordManager class name from grep
   - Result: ❌ 2 issues found (wrong signature, wrong path)
 ```
 

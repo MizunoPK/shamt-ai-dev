@@ -81,10 +81,10 @@
 **Who benefits:** {Which agents/stages benefit from this change}
 
 **When it helps:** {Specific situations where this guidance is needed}
-- Example: "During S5 Round 2 when analyzing player data edge cases"
+- Example: "During S5 Round 2 when analyzing record data edge cases"
 
 **Severity if unfixed:** {What happens without this fix}
-- Example: "Future epics will likely encounter same bug with player status"
+- Example: "Future epics will likely encounter same bug with item status"
 
 **Estimated debugging time saved:** {X} hours per epic
 - Example: "3 hours (this bug took 3 hours to debug, direct prevention)"
@@ -221,11 +221,11 @@
 
 ### Root Cause
 
-Bug occurred because player injury status wasn't checked, causing null pointer when accessing injured player stats.
+Bug occurred because item attribute status wasn't checked, causing null pointer when accessing injured item stats.
 
 **5-Why Analysis:**
 1. **Technical Cause:** Null pointer exception in calculate_score()
-2. **Implementation Gap:** Missing null check for injured players
+2. **Implementation Gap:** Missing null check for injured items
 3. **Planning Gap:** Edge case not identified in implementation_plan.md Iteration 9
 4. **Process Gap:** Iteration 9 (Edge Case Analysis) didn't consider injury status
 5. **Guide Gap:** s5_v2_validation_loop.md Iteration 9 doesn't mention entity status fields ← ROOT CAUSE
@@ -269,7 +269,7 @@ Adding entity status fields to the checklist forces agents to systematically ver
 
 ### Impact Assessment
 
-**Who benefits:** All agents implementing features with entity data (players, teams, games)
+**Who benefits:** All agents implementing features with entity data (items, teams, games)
 
 **When it helps:** During S5 Round 2 when analyzing edge cases for any entity-based feature
 

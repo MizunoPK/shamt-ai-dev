@@ -380,7 +380,7 @@ echo %ERRORLEVEL%  # On Windows
 
 **Objective:** Verify root cause of unexpected behavior empirically.
 
-**When to use:** User notices unexpected behavior during testing (e.g., "all players have same value")
+**When to use:** User notices unexpected behavior during testing (e.g., "all items have same value")
 
 **⚠️ CRITICAL RULE:** Do NOT assume existing code comments/warnings explain the behavior - verify empirically.
 

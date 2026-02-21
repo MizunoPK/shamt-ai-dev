@@ -87,7 +87,7 @@ Add "Solution Implementation" section:
 ### Solution Design ({YYYY-MM-DD HH:MM})
 
 **Confirmed Root Cause:**
-Player name format mismatch - CSV uses "P.Mahomes" but code uses "Patrick Mahomes"
+Item name format mismatch - CSV uses "Record-A" but code uses "Record-A"
 
 **Solution Approach:**
 Add name normalization in _load_stats() to handle both formats
@@ -95,13 +95,13 @@ Add name normalization in _load_stats() to handle both formats
 **Implementation Plan:**
 
 **Part 1: Code Changes**
-- [ ] Update _load_stats() to normalize player names before lookup
-- [ ] Create helper method _normalize_player_name()
-- [ ] Handle formats: "Patrick Mahomes" → "P.Mahomes" OR vice versa
+- [ ] Update _load_stats() to normalize item names before lookup
+- [ ] Create helper method _normalize_item_name()
+- [ ] Handle formats: "Record-A" → "Record-A" OR vice versa
 - [ ] Preserve original name in self.name for display purposes
 
 **Part 2: Testing**
-- [ ] Add unit test: test_normalize_player_name()
+- [ ] Add unit test: test_normalize_item_name()
 - [ ] Add unit test: test_load_stats_with_full_name()
 - [ ] Add unit test: test_load_stats_with_abbreviated_name()
 - [ ] Update existing tests if needed
@@ -109,7 +109,7 @@ Add name normalization in _load_stats() to handle both formats
 
 **Part 3: Verification**
 - [ ] Run original reproduction scenario (should work now)
-- [ ] Run all FantasyPlayer tests (should pass)
+- [ ] Run all DataRecord tests (should pass)
 - [ ] Re-run smoke test Part 3 (should pass)
 
 **Alternative Approaches Considered:**
@@ -141,30 +141,30 @@ Normalize names in code to handle both formats - most flexible, no external depe
 **Example implementation:**
 
 ```python
-- utils/FantasyPlayer.py
+- utils/DataRecord.py
 
-def _normalize_player_name(self, name):
+def _normalize_item_name(self, name):
     """Convert full name to CSV format (abbreviated first name).
 
     Args:
-        name (str): Player name in any format
+        name (str): Item name in any format
 
     Returns:
-        str: Normalized name (e.g., "Patrick Mahomes" → "P.Mahomes")
+        str: Normalized name (e.g., "Record-A" → "Record-A")
     """
     parts = name.split()
     if len(parts) == 2:
-        return f"{parts[0][0]}.{parts[1]}"  # "Patrick Mahomes" → "P.Mahomes"
+        return f"{parts[0][0]}.{parts[1]}"  # "Record-A" → "Record-A"
     return name  # Already in correct format or single name
 
 def _load_stats(self, csv_path):
-    """Load player stats from CSV file.
+    """Load item stats from CSV file.
 
     Args:
         csv_path (str): Path to CSV file
     """
     df = pd.read_csv(csv_path)
-    normalized_name = self._normalize_player_name(self.name)
+    normalized_name = self._normalize_item_name(self.name)
     player_stats = df[df['PlayerName'] == normalized_name]
 
     if player_stats.empty:
@@ -180,28 +180,28 @@ def _load_stats(self, csv_path):
 **Add new tests for the fix:**
 
 ```python
-- tests/utils/test_FantasyPlayer.py
+- tests/utils/test_DataRecord.py
 
-def test_normalize_player_name():
-    """Test that player names are normalized correctly."""
-    player = FantasyPlayer(name="Patrick Mahomes")
-    assert player._normalize_player_name("Patrick Mahomes") == "P.Mahomes"
-    assert player._normalize_player_name("Josh Allen") == "J.Allen"
-    assert player._normalize_player_name("P.Mahomes") == "P.Mahomes"  # Already normalized
+def test_normalize_item_name():
+    """Test that item names are normalized correctly."""
+    item = DataRecord(name="Record-A")
+    assert item._normalize_item_name("Record-A") == "Record-A"
+    assert item._normalize_item_name("Item-B") == "J.Allen"
+    assert item._normalize_item_name("Record-A") == "Record-A"  # Already normalized
 
 def test_load_stats_with_full_name():
-    """Test that stats load correctly with full player name."""
-    player = FantasyPlayer(name="Patrick Mahomes")
-    player._load_stats("data/player_stats_2024.csv")
-    assert player.stats != {}
-    assert 'StatValue' in player.stats
+    """Test that stats load correctly with full item name."""
+    item = DataRecord(name="Record-A")
+    item._load_stats("data/item_stats.csv")
+    assert item.stats != {}
+    assert 'StatValue' in item.stats
 
 def test_load_stats_with_abbreviated_name():
-    """Test that stats load correctly with abbreviated player name."""
-    player = FantasyPlayer(name="P.Mahomes")
-    player._load_stats("data/player_stats_2024.csv")
-    assert player.stats != {}
-    assert 'StatValue' in player.stats
+    """Test that stats load correctly with abbreviated item name."""
+    item = DataRecord(name="Record-A")
+    item._load_stats("data/item_stats.csv")
+    assert item.stats != {}
+    assert 'StatValue' in item.stats
 ```
 
 ---
@@ -232,7 +232,7 @@ def test_load_stats_with_abbreviated_name():
 - REMOVE these lines added during investigation:
 - logger.info(f"Loading stats from: {csv_path}")
 - logger.info(f"CSV columns: {df.columns.tolist()}")
-- logger.info(f"Looking for player: {self.name}")
+- logger.info(f"Looking for item: {self.name}")
 - etc.
 ```
 
@@ -255,9 +255,9 @@ def test_load_stats_with_abbreviated_name():
 **Status:** COMPLETE
 
 **Changes Made:**
-- Modified: utils/FantasyPlayer.py (added _normalize_player_name() method)
-- Updated: utils/FantasyPlayer.py:156 (_load_stats to use normalization)
-- Added: tests/utils/test_FantasyPlayer.py (3 new tests)
+- Modified: utils/DataRecord.py (added _normalize_item_name() method)
+- Updated: utils/DataRecord.py:156 (_load_stats to use normalization)
+- Added: tests/utils/test_DataRecord.py (3 new tests)
 
 **Test Results:**
 - Reproduction scenario: ✅ FIXED (returns 24.5, not None)
@@ -267,19 +267,19 @@ def test_load_stats_with_abbreviated_name():
 
 **Before State:**
 ```
-player = PlayerManager.load_player("Patrick Mahomes")
-score = player.calculate_score(week=1)
+item = RecordManager.load_item("Record-A")
+score = item.calculate_score(week=1)
 - Returns: None ❌
 ```markdown
 
 **After State:**
 ```
-player = PlayerManager.load_player("Patrick Mahomes")
-score = player.calculate_score(week=1)
+item = RecordManager.load_item("Record-A")
+score = item.calculate_score(week=1)
 - Returns: 24.5 ✅
 ```markdown
 
-**Diagnostic Logging Removed:** Yes (lines 156-162 in FantasyPlayer.py)
+**Diagnostic Logging Removed:** Yes (lines 156-162 in DataRecord.py)
 
 **Next:** Phase 4 - User Verification
 ```
@@ -574,11 +574,11 @@ def component_b_method(player_obj):
     return player_obj.name
 
 - After: Add adapter
-def component_b_method(player_data):
-    if isinstance(player_data, dict):
-        player_obj = Player.from_dict(player_data)
+def component_b_method(record_data):
+    if isinstance(record_data, dict):
+        item_obj = Item.from_dict(record_data)
     else:
-        player_obj = player_data
+        item_obj = record_data
     return player_obj.name
 ```
 

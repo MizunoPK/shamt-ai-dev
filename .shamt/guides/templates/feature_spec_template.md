@@ -118,12 +118,12 @@
 
 **Example Calculation:**
 ```
-Input: player_name="Patrick Mahomes", adp=5
+Input: player_name="Record-A", rank=5
 Process:
-  1. Fetch ADP data: adp_value = 5
-  2. Calculate multiplier: mult = 1.0 + (50 - adp) / 100 = 1.45
+  1. Fetch rank data: rank_value = 5
+  2. Calculate multiplier: mult = 1.0 + (50 - rank) / 100 = 1.45
   3. Clamp to range: mult = max(0.5, min(1.5, 1.45)) = 1.45
-Output: (multiplier=1.45, adp_rank=5)
+Output: (multiplier=1.45, priority_rank=5)
 ```json
 
 {Repeat for all algorithms}
@@ -147,9 +147,9 @@ Output: (multiplier=1.45, adp_rank=5)
 **Example:**
 ```
 {
-    "player_name": "Patrick Mahomes",
-    "adp_rank": 5,
-    "adp_multiplier": 1.45
+    "player_name": "Record-A",
+    "priority_rank": 5,
+    "rank_multiplier": 1.45
 }
 ```json
 
@@ -200,12 +200,12 @@ result = provider.method_name("value1", 123)
 
 **Example Flow:**
 ```
-Feature 01 (ADP Integration)
-  ↓ provides adp_data: (multiplier, rank)
+Feature 01 (rank priority Integration)
+  ↓ provides rank_data: (multiplier, rank)
 Feature 02 (Matchup System)
-  ↓ consumes adp_data, provides matchup_difficulty
+  ↓ consumes rank_data, provides matchup_difficulty
 Feature 03 (Performance Tracker)
-  ↓ consumes both adp_data and matchup_difficulty
+  ↓ consumes both rank_data and matchup_difficulty
 ```json
 
 {Repeat for all integration points}
@@ -223,10 +223,10 @@ Feature 03 (Performance Tracker)
 **Example:**
 ```
 try:
-    adp_data = fetch_adp_data(player_name)
+    rank_data = fetch_rank_data(player_name)
 except DataProcessingError as e:
-    logger.error(f"ADP data not found for {player_name}: {e}")
-    return (1.0, 999)  # Default: no ADP bonus, rank 999 (unknown)
+    logger.error(f"rank data not found for {player_name}: {e}")
+    return (1.0, 999)  # Default: no rank data bonus, rank 999 (unknown)
 ```json
 
 {Repeat for all error scenarios}
@@ -254,10 +254,10 @@ except DataProcessingError as e:
 ## Non-Functional Requirements
 
 **Performance:**
-- {Requirement - e.g., "Process all players in < 2 seconds"}
+- {Requirement - e.g., "Process all items in < 2 seconds"}
 
 **Scalability:**
-- {Requirement - e.g., "Handle 500+ players without degradation"}
+- {Requirement - e.g., "Handle 500+ items without degradation"}
 
 **Reliability:**
 - {Requirement - e.g., "Gracefully handle missing data files"}
@@ -274,7 +274,7 @@ except DataProcessingError as e:
 - {Item 2}
 - {Item 3}
 
-{Example: "ADP data fetching - uses existing data files, doesn't fetch from external APIs"}
+{Example: "rank data fetching - uses existing data files, doesn't fetch from external APIs"}
 
 ---
 

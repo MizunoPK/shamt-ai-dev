@@ -26,7 +26,7 @@ Issue/Gap Discovered
 │  └─ NO → Requires investigation?
 │     │
 │     ├─ YES → DEBUGGING PROTOCOL
-│     │  Example: "Player scores are incorrect but we don't know why"
+│     │  Example: "Item scores are incorrect but we don't know why"
 │     │  → Create debugging/ISSUES_CHECKLIST.md
 │     │  → Investigation rounds (Phase 2)
 │     │  → Root cause analysis (Phase 4b)
@@ -52,9 +52,9 @@ Issue/Gap Discovered
 
 ## Detailed Scenario Examples
 
-### Scenario 1: Empty Player Name Bug
+### Scenario 1: Empty Item Name Bug
 
-**Discovery:** During QC testing, system crashes when player name is empty
+**Discovery:** During QC testing, system crashes when item name is empty
 
 **Analysis:**
 - Do we know the solution? → **NO** (need to investigate why it crashes)
@@ -69,7 +69,7 @@ Issue/Gap Discovered
 
 **Actions:**
 1. Create `debugging/ISSUES_CHECKLIST.md` (feature-level or epic-level)
-2. Add issue to checklist: "Player name validation crash"
+2. Add issue to checklist: "Item name validation crash"
 3. Enter Debugging Protocol Phase 2 (Investigation)
 4. Trace code to find crash location
 5. Identify root cause through hypothesis testing
@@ -137,7 +137,7 @@ Issue/Gap Discovered
 
 ### Scenario 4: Unclear Edge Case
 
-**Discovery:** During planning, unsure if we should handle negative ADP values
+**Discovery:** During planning, unsure if we should handle negative rank values
 
 **Analysis:**
 - Do we know the solution? → **NO** (need user input)
@@ -153,19 +153,19 @@ Issue/Gap Discovered
 **Actions:**
 1. Add question to `questions.md` or `checklist.md`:
    ```markdown
-   ## Edge Case: Negative ADP Values
+   ## Edge Case: Negative rank priority Values
 
-   **Context:** ADP values are typically 1-300, but some data sources may have negative values.
+   **Context:** rank values are typically 1-300, but some data sources may have negative values.
 
-   **Question:** Should we handle negative ADP values? Options:
+   **Question:** Should we handle negative rank values? Options:
    - Reject as invalid (validation error)
-   - Treat as "undrafted" (ADP = 999)
+   - Treat as "undrafted" (rank priority = 999)
    - Use absolute value
    - Other?
 
    **Impact on spec.md:**
-   - Validation section will specify ADP range
-   - Error handling for invalid ADP values
+   - Validation section will specify rank priority range
+   - Error handling for invalid rank values
    ```
 2. Wait for user answer
 3. Update spec.md based on user's decision

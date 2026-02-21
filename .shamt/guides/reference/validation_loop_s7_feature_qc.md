@@ -80,7 +80,7 @@ These universal dimensions apply to S7 Feature QC validation:
 - [ ] No orphan code (code without requirement justification)
 
 ### Dimension 5: Clarity & Specificity
-- [ ] No vague error messages ("Error occurred" → "FileNotFoundError: adp.csv not found in data/rankings/")
+- [ ] No vague error messages ("Error occurred" → "FileNotFoundError: priority.csv not found in data/rankings/")
 - [ ] Specific logging (includes context, not just "Processing item")
 - [ ] Clear function names (behavior obvious from name)
 - [ ] Specific acceptance criteria verification (not "works well")
@@ -133,7 +133,7 @@ These 5 dimensions are specific to S7.P2 Feature QC validation:
 ❌ **WRONG - Integration not verified:**
 ```python
 ## Feature 1 calls Feature 2's method
-result = feature2.process_data(player_data)
+result = feature2.process_data(record_data)
 ## Assumed feature2.process_data() returns dict
 ## Actually returns tuple → TypeError at runtime
 ```
@@ -144,7 +144,7 @@ result = feature2.process_data(player_data)
 ## def process_data(self, data: dict) -> Tuple[int, str]:
 ##     return (score, status)
 
-result = feature2.process_data(player_data)
+result = feature2.process_data(record_data)
 score, status = result  # Correctly unpacks tuple
 ```
 
@@ -184,23 +184,23 @@ score, status = result  # Correctly unpacks tuple
 
 ❌ **WRONG - Error not handled:**
 ```python
-def load_player_data():
-    with open('data/players.csv', 'r') as f:
+def load_record_data():
+    with open('data/items.csv', 'r') as f:
         return csv.reader(f)
 ## FileNotFoundError crashes entire program
 ```
 
 ✅ **CORRECT - Error handled gracefully:**
 ```python
-def load_player_data():
+def load_record_data():
     try:
-        with open('data/players.csv', 'r') as f:
+        with open('data/items.csv', 'r') as f:
             return list(csv.reader(f))
     except FileNotFoundError:
-        logger.error("players.csv not found in data/ directory")
+        logger.error("items.csv not found in data/ directory")
         return []  # Return empty list, allow program to continue
     except PermissionError:
-        logger.error("Permission denied reading players.csv")
+        logger.error("Permission denied reading items.csv")
         raise  # Re-raise critical error
 ```
 
@@ -246,12 +246,12 @@ def load_player_data():
 
 ✅ **CORRECT - Complete flow:**
 ```python
-print("Loading player data...")
-players = load_players()
-print(f"Loaded {len(players)} players")
+print("Loading record data...")
+items = load_players()
+print(f"Loaded {len(items)} items")
 
 print("Processing trades...")
-results = process_trades(players)
+results = process_trades(items)
 print(f"Processed {len(results)} trades")
 
 save_results(results)
@@ -534,9 +534,9 @@ def run_analysis():
 ✅ **CORRECT:**
 ```python
 def run_analysis():
-    print("Starting player analysis...")
+    print("Starting item analysis...")
     results = analyze_players()
-    print(f"Analyzed {len(results)} players")
+    print(f"Analyzed {len(results)} items")
 
     save_results(results)
     print(f"Results saved to {RESULTS_FILE}")

@@ -191,14 +191,14 @@ Conclusion: Must load period_N+1 for period N actuals
 
 **Example:**
 ```markdown
-Epic says: "week_17 folders for projected, week_18 folders for actual"
+Epic says: "period_N folders for projected, period_N+1 folders for actual"
 
 Pattern Test:
-- Week 1: week_01 (projected), week_02 (actual) [x] Pattern holds
-- Week 2: week_02 (projected), week_03 (actual) [x] Pattern holds
-- Week 17: week_17 (projected), week_18 (actual) [x] Pattern holds
+- Period 1: period_01 (projected), period_02 (actual) [x] Pattern holds
+- Period 2: period_02 (projected), period_03 (actual) [x] Pattern holds
+- Period N: period_N (projected), period_N+1 (actual) [x] Pattern holds
 
-Conclusion: This is a GENERAL PATTERN, not week 17 special case
+Conclusion: This is a GENERAL PATTERN, not a special case for a specific period
 ```
 
 ---
