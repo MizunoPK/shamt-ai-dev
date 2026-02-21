@@ -26,7 +26,7 @@ Starting Stage: S2.P1 (Feature Deep Dive - Research Phase)
 - STATUS: {FEATURE_FOLDER}/STATUS (update at phase transitions)
 
 **Sync Points:**
-- After S2.P3 complete: Signal completion, WAIT for Primary to run S3
+- After S2.P1 complete: Signal completion, WAIT for Primary to run S2.P2 (Cross-Feature Alignment) and S3
 - After Primary completes S3: Proceed to implementation (sequential in S2 plan)
 
 Begin S2.P1 now.
@@ -55,7 +55,7 @@ Starting Stage: S2.P1 (Feature Deep Dive - Research Phase)
 - STATUS: feature_02_team_penalty/STATUS (update at phase transitions)
 
 **Sync Points:**
-- After S2.P3 complete: Signal completion, WAIT for Primary to run S3
+- After S2.P1 complete: Signal completion, WAIT for Primary to run S2.P2 (Cross-Feature Alignment) and S3
 - After Primary completes S3: Proceed to implementation (sequential in S2 plan)
 
 Begin S2.P1 now.
@@ -108,7 +108,7 @@ Starting Stage: S2.P1 (Feature Deep Dive - Research Phase)
 - STATUS: $FEATURE_FOLDER/STATUS (update at phase transitions)
 
 **Sync Points:**
-- After S2.P3 complete: Signal completion, WAIT for Primary to run S3
+- After S2.P1 complete: Signal completion, WAIT for Primary to run S2.P2 (Cross-Feature Alignment) and S3
 - After Primary completes S3: Proceed to implementation (sequential in S2 plan)
 
 Begin S2.P1 now.

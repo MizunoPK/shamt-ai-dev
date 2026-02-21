@@ -48,7 +48,7 @@ Key activities:
 Key activities:
 - For each feature: create `spec.md`, `checklist.md`, `RESEARCH_NOTES.md`
 - Run S2.P1 Spec Creation Refinement Validation Loop (Gates 1, 2, 3)
-- Gate 3: User approval of checklist (all questions answered before S5)
+- Gate 3: User approval of acceptance criteria (in S2.P1.I3, before S5)
 
 **Parallelization option:** `parallel_work/s2_parallel_protocol.md` (3+ features)
 
@@ -75,7 +75,7 @@ Key activities:
 
 Key activities:
 - For each feature: create `test_strategy.md`
-- Run validation loop (4 iterations)
+- 4 iterations total (I1: Draft, I2: Self-Review, I3: Cross-Feature, I4: Validation Loop)
 
 **Outputs:** `test_strategy.md` per feature
 

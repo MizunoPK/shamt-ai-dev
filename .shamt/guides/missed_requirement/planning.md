@@ -111,12 +111,12 @@ touch feature_{XX}_{name}/lessons_learned.md
 
 **Follow complete S2 process:**
 
-**S2.P1: Research & Discovery Context**
+**S2.P1.I1: Research & Discovery Context**
 - Review epic intent for this missed requirement
 - Research technical approaches if needed
 - Audit similar features (in this epic or other projects)
 
-**Phase 2-2.5: Specification with Traceability**
+**S2.P1.I2: Specification with Traceability**
 - Create spec.md with:
   - Feature overview
   - Requirements (functional and non-functional)
@@ -125,11 +125,11 @@ touch feature_{XX}_{name}/lessons_learned.md
   - Success criteria
   - Traceability matrix (epic intent → requirements)
 
-**S2.P3: Questions, Scope, Alignment, Approval**
+**S2.P1.I3: Refinement & Alignment, Approval**
 - Ask clarifying questions (one at a time)
 - Validate scope completeness
 - Check alignment with other features
-- Get user approval on spec
+- Get user approval on spec (Gate 3)
 
 **No shortcuts:**
 - Full rigor required
@@ -427,14 +427,14 @@ cat feature_{XX}_{name}/README.md
 1. Create `feature_05_injury_tracking/` folder
 2. Create README.md with missed requirement context
 3. Run S2 deep dive:
-   - S2.P1: Research injury data sources, audit similar tracking features
-   - Phase 2-2.5: Create spec.md with:
+   - S2.P1.I1: Research injury data sources, audit similar tracking features
+   - S2.P1.I2: Create spec.md with:
      - Data model for injury status
      - API integration requirements
      - Update frequency
      - Impact on projections
      - Traceability to epic intent
-   - S2.P3: Ask questions, validate scope, get approval
+   - S2.P1.I3: Ask questions, validate scope, get approval (Gate 3)
 4. Create checklist.md with decisions (data source, update frequency, etc.)
 5. User approves spec
 

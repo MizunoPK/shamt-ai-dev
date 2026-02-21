@@ -674,8 +674,6 @@ Use prompt from prompts/guide_update_prompts.md "After Applying Changes" section
 - [ ] EPIC_README.md shows S10.P1 complete
 - [ ] Ready to proceed to S10 Step 7
 
-**Next Stage:** S10 Step 7 (Final Commit & Pull Request)
-
 ---
 
 ## Common Pitfalls

@@ -689,8 +689,6 @@ Instead, send message via agent_comms:
 
 ### Step 6.2: Present to User for Approval
 
-### Step 6.2: Present to User for Approval
-
 **Message to user:**
 
 ```markdown
@@ -860,8 +858,6 @@ If changes needed: Let me know what to modify
    - Acceptance criteria approved
    - Approval checkbox marked [x]
    - Approval timestamp documented
-
-**Next Stage:** Either next feature's Research Phase (stages/s2/s2_p1_spec_creation_refinement.md) OR Cross-Feature Sanity Check (stages/s3/s3_epic_planning_approval.md) if all features complete
 
 ---
 

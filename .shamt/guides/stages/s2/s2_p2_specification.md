@@ -1,5 +1,4 @@
 # S2.P2: Specification Phase
-## S2.P2: Specification Phase
 
 **Guide Version:** 1.0
 **Created:** 2026-01-02
@@ -608,7 +607,7 @@ Update Agent Status in feature README.md:
 - Mark S2.P2 COMPLETE + Gate 2 PASSED
 - Document checklist status (all answered, pending 0)
 - Note spec.md updated with user answers
-- Identify next action (usually S5 if no NEW questions)
+- Identify next action (usually S5 if checklist is fully resolved with no remaining open questions)
 
 ---
 

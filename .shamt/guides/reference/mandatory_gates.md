@@ -12,13 +12,13 @@
 1. [Understanding Gate Numbering](#-understanding-gate-numbering)
 2. [Quick Summary Table](#quick-summary-table)
 3. [S1: Epic Planning](#s1-epic-planning)
-4. [S2: Feature Deep Dive (4 gates per feature - NEW: Checklist Approval added)](#s2-feature-deep-dive-4-gates-per-feature---new-checklist-approval-added)
+4. [S2: Feature Deep Dive (3 formal gates per feature - NEW: Checklist Approval added)](#s2-feature-deep-dive-3-formal-gates-per-feature---new-checklist-approval-added)
 5. [S3: Cross-Feature Sanity Check (1 gate per epic)](#s3-cross-feature-sanity-check-1-gate-per-epic)
 6. [S4: Epic Testing Strategy (1 gate per epic - NEW)](#s4-epic-testing-strategy-1-gate-per-epic---new)
 7. [S5: Implementation Planning](#s5-implementation-planning)
 8. [S6: Implementation Execution](#s6-implementation-execution)
 9. [S7: Post-Implementation (2 gates per feature)](#s7-post-implementation-2-gates-per-feature)
-10. [S8: Post-Feature Updates](#s8-post-.shamt/epics)
+10. [S8: Post-Feature Updates](#s8-post-feature-updates)
 11. [S9: Epic-Level Final QC](#s9-epic-level-final-qc)
 12. [S10: Epic Cleanup (2 gates per epic)](#s10-epic-cleanup-2-gates-per-epic)
 13. [Summary Statistics](#summary-statistics)
@@ -39,7 +39,7 @@
 
 **Logic:**
 - Gate 3 = S2 gate (named after target stage)
-- Gate 4.5 = Between S4 and 5 (decimal indicates "between")
+- Gate 4.5 = S3.P3 (interstitial; approves epic plan + test strategy before S4 begins)
 - Gate 5 = S5 gate
 
 ### Type 2: Iteration-Level Gates (iteration numbers)
@@ -107,7 +107,7 @@
 
 ---
 
-## S2: Feature Deep Dive (4 gates per feature - NEW: Checklist Approval added)
+## S2: Feature Deep Dive (3 formal gates per feature - NEW: Checklist Approval added)
 
 ### Gate 1: S2.P1.I1 - Research Completeness Audit
 
@@ -254,55 +254,9 @@
 
 ---
 
-## S4: Epic Testing Strategy (1 gate per epic - NEW)
+## S4: Feature-Level Testing Strategy (0 formal gates)
 
-### Gate 4.5: Epic Test Plan Approval (🚨 NEW MANDATORY GATE)
-
-**Location:** stages/s4/s4_feature_testing_strategy.md
-**When:** After updating epic_smoke_test_plan.md (before S5 begins)
-
-**What it checks:**
-- User reviews updated epic_smoke_test_plan.md
-- User approves epic testing strategy BEFORE implementation planning begins
-- Agent knows testing requirements before creating implementation plans
-
-**Pass Criteria:**
-- Agent presents epic_smoke_test_plan.md with:
-  - Measurable success criteria (5-10 criteria)
-  - Specific test scenarios (4-8 scenarios)
-  - Integration points between features
-  - Data quality checks (verify VALUES not just structure)
-  - Concrete commands and expected outputs
-- User explicitly approves test plan
-- User says "approved" or "looks good" or equivalent
-
-**Evidence Required:**
-- epic_smoke_test_plan.md shows N measurable success criteria
-- epic_smoke_test_plan.md shows N test scenarios
-- All integration points from S3 incorporated
-- User Approval section completed with timestamp
-- Gate 4.5 Status: ✅ PASSED documented in EPIC_README.md
-
-**If FAIL (user requests changes):**
-- Revise epic_smoke_test_plan.md based on user feedback
-- Re-present test plan for user approval
-- Cannot proceed to S5 without user approval
-
-**Why it matters:**
-- Agent knows EXACTLY how to test work BEFORE creating implementation plans
-- User can adjust test strategy early (S4 vs S5 v2 Phase 2)
-- Prevents creating implementation plans without knowing testing requirements
-- Separates test WHAT (S4) from implement HOW (S5)
-- Earlier feedback loop (S4 approval vs S5 v2 Phase 2 approval)
-
-**Benefits:**
-- Agent creates better implementation plans knowing exact testing requirements
-- User sees test strategy early (cheap to change)
-- Prevents discovering test strategy misalignment late (expensive to fix)
-- Test strategy guides implementation planning (not vice versa)
-- Clear separation: test plan approval (Gate 4.5) vs implementation plan approval (Gate 5)
-
-**From Enhancement:** This gate ensures agents know HOW to test work BEFORE planning implementation, creating earlier user visibility and control.
+S4 has no formal user approval gates. The epic testing strategy was approved at Gate 4.5 in S3. S4 creates feature-level test strategies (test_strategy.md per feature) which are agent-validated only.
 
 ---
 
@@ -728,7 +682,7 @@
 - Gate 25 (S5 v2): Embedded in Dimension 11 - Spec Alignment & Cross-Validation
 
 **Additional Stage Checkpoints (documented in this file but not formally numbered gates):**
-- S2.P3: User Approval of Acceptance Criteria (referenced as "Gate 4" in this file for completeness)
+- S2.P1.I3: User Approval of Acceptance Criteria (referenced as "Gate 4" in this file for completeness — embedded in Gate 3)
 - S7.P1: Smoke Part 3 - E2E Data Validation (referenced as "Gate 5" in this file)
 - S7.P2: Validation Loop - 3 Consecutive Clean Rounds (referenced as "Gate 6" in this file)
 - S10: Unit Tests 100% Pass (referenced as "Gate 7.1" in this file)
@@ -738,7 +692,7 @@
 - S1: 0 formal gates
 - S2: 3 formal gates per feature (Gates 1, 2, 3)
 - S3: 1 formal gate (Gate 4.5)
-- S4: 0 formal gates (test plan approval happens at Gate 4.5 in S3)
+- S4: 0 formal gates (test plan approval covered by Gate 4.5 in S3)
 - S5 v2: 1 formal user gate (Gate 5 - User Approval), 5 embedded validation gates (4a, 7a, 23a, 24, 25 now embedded in 11 validation dimensions)
 - S6-S8: 0 formal gates
 - S9: 0 formal gates (but restart protocol applies)
@@ -767,7 +721,7 @@
 - Gate 25 (Dimension 11 validation): User decision if discrepancies found
 
 **Stage Checkpoints Requiring User Input:** 2
-- S2.P3 Checkpoint: User approval of acceptance criteria
+- S2.P1.I3 Checkpoint: User approval of acceptance criteria (embedded in Gate 3)
 - S10 Checkpoint 7.2: User testing approval (zero bugs)
 
 ---

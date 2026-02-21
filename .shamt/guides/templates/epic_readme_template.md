@@ -290,7 +290,7 @@ Plan  Deep Dive  Check  Strategy  (per feature)   QC
 
 **Feature 01: {feature_name}**
 - **Agent:** Primary ({agent_id})
-- **Current Phase:** {S2.P1 / S2.P2 / S2.P3 / COMPLETE}
+- **Current Phase:** {S2.P1 / S2.P2 / COMPLETE}
 - **Last Update:** {timestamp}
 - **Blockers:** {description or "None"}
 - **Ready for Sync:** {YES/NO}
@@ -301,7 +301,7 @@ Plan  Deep Dive  Check  Strategy  (per feature)   QC
 
 **Feature 02: {feature_name}**
 - **Agent:** Secondary-A ({agent_id})
-- **Current Phase:** {S2.P1 / S2.P2 / S2.P3 / COMPLETE}
+- **Current Phase:** {S2.P1 / S2.P2 / COMPLETE}
 - **Last Update:** {timestamp}
 - **Blockers:** {description or "None"}
 - **Ready for Sync:** {YES/NO}
@@ -312,7 +312,7 @@ Plan  Deep Dive  Check  Strategy  (per feature)   QC
 
 **Feature 03: {feature_name}**
 - **Agent:** Secondary-B ({agent_id})
-- **Current Phase:** {S2.P1 / S2.P2 / S2.P3 / COMPLETE}
+- **Current Phase:** {S2.P1 / S2.P2 / COMPLETE}
 - **Last Update:** {timestamp}
 - **Blockers:** {description or "None"}
 - **Ready for Sync:** {YES/NO}
@@ -323,7 +323,7 @@ Plan  Deep Dive  Check  Strategy  (per feature)   QC
 
 **Feature 04: {feature_name}**
 - **Agent:** Secondary-C ({agent_id})
-- **Current Phase:** {S2.P1 / S2.P2 / S2.P3 / COMPLETE}
+- **Current Phase:** {S2.P1 / S2.P2 / COMPLETE}
 - **Last Update:** {timestamp}
 - **Blockers:** {description or "None"}
 - **Ready for Sync:** {YES/NO}

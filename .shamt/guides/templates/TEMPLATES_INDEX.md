@@ -29,7 +29,7 @@
 |----------|----------|----------|
 | [Feature README](#feature-readme) | `feature_readme_template.md` | Creating feature folder |
 | [Feature Research Notes](#feature-research-notes) | `FEATURE_RESEARCH_NOTES_template.md` | Recording feature-level research during Discovery Phase (S2.P1.I1) |
-| [Spec Summary](#spec-summary) | `spec_summary_template.md` | Validating feature understanding (Phase 6) |
+| [Spec Summary](#spec-summary) | `spec_summary_template.md` | Validating feature understanding (S2.P1.I3) |
 | [Feature Spec](#feature-spec) | `feature_spec_template.md` | Writing detailed feature specification |
 | [Feature Checklist](#feature-checklist) | `feature_checklist_template.md` | Tracking feature decisions |
 | [Feature Lessons Learned](#feature-lessons-learned) | `feature_lessons_learned_template.md` | Creating feature-level lessons document |
@@ -106,14 +106,14 @@
 - **File:** `epic_readme_template.md`
 - **Created:** S1
 - **Purpose:** Central epic tracking (Agent Status, progress, checklists)
-- **Size:** ~260 lines
+- **Size:** ~460 lines
 - **When to use:** Creating epic folder in S1
 
 #### Discovery
 - **File:** `discovery_template.md`
 - **Created:** S1.P3 (Discovery Phase)
 - **Purpose:** Epic-level source of truth for problem understanding, solution approach, and feature breakdown rationale
-- **Size:** ~300 lines
+- **Size:** ~350 lines
 - **When to use:** S1 Step 3 (Discovery Phase initialization)
 - **Critical:** Becomes reference document for all feature specs after user approval
 
@@ -121,7 +121,7 @@
 - **File:** `epic_ticket_template.md`
 - **Created:** S1 - Step 3.6
 - **Purpose:** User-validated epic-level outcomes
-- **Size:** ~120 lines
+- **Size:** ~140 lines
 - **When to use:** After feature breakdown, before folder creation
 - **Critical:** Immutable after user validation
 
@@ -130,7 +130,7 @@
 - **Created:** S1
 - **Updated:** S4, S8.P2 (after each feature)
 - **Purpose:** Epic end-to-end testing scenarios
-- **Size:** ~270 lines
+- **Size:** ~280 lines
 - **When to use:** S1 initial creation, S4 refinement
 
 #### Epic Lessons Learned
@@ -138,7 +138,7 @@
 - **Created:** S1
 - **Updated:** Throughout all stages
 - **Purpose:** Cross-feature insights and guide improvements
-- **Size:** ~310 lines
+- **Size:** ~375 lines
 - **When to use:** S1 creation, updated after each stage
 
 ---
@@ -150,14 +150,14 @@
 - **Created:** S1 or S2
 - **Updated:** Throughout S2-S8
 - **Purpose:** Central feature tracking (Agent Status, progress)
-- **Size:** ~160 lines
+- **Size:** ~165 lines
 - **When to use:** Creating feature folder
 
 #### Spec Summary
 - **File:** `spec_summary_template.md`
-- **Created:** S2 - Phase 6
+- **Created:** S2.P1.I3
 - **Purpose:** User-validated feature-level outcomes
-- **Size:** ~140 lines
+- **Size:** ~200 lines
 - **When to use:** After multi-phase research, before implementation
 - **Critical:** Immutable after user validation
 
@@ -173,21 +173,21 @@
 - **File:** `feature_checklist_template.md`
 - **Created:** S2
 - **Purpose:** Track resolved vs pending decisions
-- **Size:** ~95 lines
+- **Size:** ~255 lines
 - **When to use:** S2 deep dive decision tracking
 
 #### Implementation Plan
 - **File:** `implementation_plan_template.md`
 - **Created:** S5 (accumulated through S5 v2 Validation Loop)
 - **Purpose:** User-approved build guide with tasks, tests, edge cases, matrices
-- **Size:** ~400 lines (grows from 150→300→400)
-- **When to use:** Throughout S5, user approves after iteration 22
+- **Size:** ~320 lines
+- **When to use:** Throughout S5 v2 — draft in Phase 1, refined through Validation Loop (user approves after 3 consecutive clean rounds)
 
 #### Implementation Checklist
 - **File:** `implementation_checklist_template.md`
 - **Created:** S6 (start of implementation)
 - **Purpose:** Live progress tracking with simple checkboxes
-- **Size:** ~50 lines
+- **Size:** ~160 lines
 - **When to use:** Create at S6 start, update as tasks complete
 
 #### Feature Lessons Learned
@@ -195,7 +195,7 @@
 - **Created:** S2
 - **Updated:** After Stages S5, S6, S7
 - **Purpose:** Feature-specific development insights
-- **Size:** ~180 lines
+- **Size:** ~190 lines
 - **When to use:** S2 creation, updated after each substage
 
 ---
@@ -206,7 +206,7 @@
 - **File:** `bugfix_notes_template.md`
 - **Created:** When bug discovered (any stage)
 - **Purpose:** User-verified bug description and fix plan
-- **Size:** ~85 lines
+- **Size:** ~87 lines
 - **When to use:** Creating bug fix folder during any stage
 
 ---
@@ -310,19 +310,19 @@ Read .shamt/guides/templates/{template_name}.md
 
 | Template | Lines | Immutable | User Validation Required |
 |----------|-------|-----------|-------------------------|
-| Epic README | ~260 | No | No |
-| Discovery | ~300 | Yes (after approval)* | Yes (S1.P3) |
-| Epic Ticket | ~120 | Yes (after validation) | Yes (S1) |
-| Epic Smoke Test Plan | ~270 | No | No |
-| Epic Lessons Learned | ~310 | No | No |
-| Feature README | ~160 | No | No |
-| Spec Summary | ~140 | Yes (after validation) | Yes (S2) |
+| Epic README | ~460 | No | No |
+| Discovery | ~350 | Yes (after approval)* | Yes (S1.P3) |
+| Epic Ticket | ~140 | Yes (after validation) | Yes (S1) |
+| Epic Smoke Test Plan | ~280 | No | No |
+| Epic Lessons Learned | ~375 | No | No |
+| Feature README | ~165 | No | No |
+| Spec Summary | ~200 | Yes (after validation) | Yes (S2) |
 | Feature Spec | ~320 | No | No |
-| Feature Checklist | ~95 | No | No |
-| Implementation Plan | ~400 | Yes (after validation) | Yes (S5) |
-| Implementation Checklist | ~50 | No | No |
-| Feature Lessons Learned | ~180 | No | No |
-| Bug Fix Notes | ~85 | Yes (after validation) | Yes |
+| Feature Checklist | ~255 | No | No |
+| Implementation Plan | ~320 | Yes (after validation) | Yes (S5) |
+| Implementation Checklist | ~160 | No | No |
+| Feature Lessons Learned | ~190 | No | No |
+| Bug Fix Notes | ~87 | Yes (after validation) | Yes |
 | Feature Research Notes | ~367 | No | No |
 | Feature Test Strategy | ~259 | No | No |
 | Handoff Package (S2) | ~242 | No | No |

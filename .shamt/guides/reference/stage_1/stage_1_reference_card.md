@@ -33,7 +33,7 @@ STEP 3: Discovery Phase (S1.P3) - MANDATORY (1-4 hours)
     |   +-- Document findings in DISCOVERY.md
     |   +-- Identify questions
     |   +-- Ask user, record answers
-    |   +-- Repeat until NO NEW QUESTIONS emerge
+    |   +-- Repeat until 3 consecutive clean rounds (zero issues/gaps)
     +-- S1.P3.3: Synthesize findings
     +-- S1.P3.4: User approval of recommended approach
     +-- Time-Box: SMALL 1-2hrs, MEDIUM 2-3hrs, LARGE 3-4hrs
@@ -78,7 +78,7 @@ STEP 6: Transition to S2 (5 min)
 
 ## Mandatory Gates
 
-**Note:** These are S1-local gates (labeled S1-A, S1-B, S1-C to avoid conflict with global Gate 1/2/3 defined in reference/mandatory_gates.md).
+**Note:** These are S1-local gates (labeled S1-Gate-A, S1-Gate-B, S1-Gate-C to avoid conflict with global Gate 1/2/3 defined in reference/mandatory_gates.md).
 
 ### S1-Gate-A: Discovery Phase Approval (Step 3)
 **Location:** stages/s1/s1_p3_discovery_phase.md S1.P3.4
@@ -125,7 +125,7 @@ STEP 6: Transition to S2 (5 min)
 | LARGE | 3-4 hours | 5+ features |
 
 **Discovery Loop Exit Condition:**
-- Research iteration produces NO NEW QUESTIONS
+- 3 consecutive clean rounds with zero issues/gaps
 - NOT based on time or iteration count
 
 **Key Output:** DISCOVERY.md containing:
@@ -141,7 +141,7 @@ STEP 6: Transition to S2 (5 min)
 
 - Create git branch BEFORE any changes (Step 1.0)
 - **Discovery Phase is MANDATORY for ALL epics (Step 3)**
-- Discovery Loop continues until NO NEW QUESTIONS emerge
+- Discovery Loop continues until 3 consecutive clean rounds (zero issues/gaps)
 - Feature folders NOT created until Discovery approved
 - Feature breakdown MUST be based on Discovery findings
 - Seed each spec.md with Discovery Context section (Step 5)

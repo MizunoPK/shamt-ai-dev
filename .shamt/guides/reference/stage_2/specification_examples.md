@@ -20,7 +20,7 @@
 
 ## Purpose
 
-This reference provides detailed examples for executing Specification Phase (S2.P2). Use this alongside the main guide for:
+This reference provides detailed examples for executing Spec Creation & Refinement (S2.P1). Use this alongside the main guide for:
 - Example spec.md sections with requirement traceability
 - Sample checklist.md with valid questions
 - Alignment check examples
@@ -701,9 +701,9 @@ C. **No logging** (silent default to 1.0 multiplier)
 ### Example: Presenting Checklist for Approval
 
 ```markdown
-## User Checklist Approval - Gate 2
+## User Checklist Approval - Gate 3
 
-S2.P2 (Specification Phase) is complete. I've created checklist.md with 6 questions that need your input:
+S2.P1.I3 (Refinement & Alignment) is complete. I've created checklist.md with 6 questions that need your input:
 
 **Checklist Sections:**
 - Functional Questions: 3 (CSV format, matching strategy, multiplier formula)
@@ -806,7 +806,7 @@ def load_rank_data(filepath: Path) -> Dict[str, int]:
 **User Comments:**
 User provided answers for all 6 questions. Preferred config-based approach for multiplier calculation, which allows tuning without code changes.
 
-**Gate 2 Status:** ✅ PASSED - All questions answered, spec.md updated accordingly
+**Gate 3 Status:** ✅ PASSED - All questions answered, spec.md updated accordingly
 
 ---
 
