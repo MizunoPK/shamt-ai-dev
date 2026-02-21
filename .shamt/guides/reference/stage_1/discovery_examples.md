@@ -310,22 +310,22 @@ Add a debug mode to simulations with:
 
 ## Example 3: Discovery Revealing Larger Scope
 
-**Epic Request:** "Fix the broken playoff projections"
+**Epic Request:** "Fix the broken trend projections"
 
 ### Iteration 1 - Initial Research
 
 **Files Examined:**
-- `[module]/playoff.py` - File not found!
-- `[module]/modes/` - No playoff mode exists
+- `[module]/trends.py` - File not found!
+- `[module]/modes/` - No trend projection mode exists
 
 **Findings:**
-- There IS no playoff projection feature
+- There IS no trend projection feature
 - User thinks it exists but it doesn't
 - This is a NEW FEATURE, not a fix
 
 **Questions for User:**
 
-**Question 1:** I can't find existing playoff projections. Were you expecting this to already exist?
+**Question 1:** I can't find existing trend projections. Were you expecting this to already exist?
 
 **User Answer:** "Oh, I thought it was there. I guess we need to build it from scratch."
 
@@ -335,19 +335,19 @@ Add a debug mode to simulations with:
 
 **Questions for User:**
 
-**Question 2:** What should playoff projections show?
-- Option A: Just probability of making playoffs
-- Option B: Full bracket projections with matchups
-- Option C: Both probability and bracket
+**Question 2:** What should trend projections show?
+- Option A: Just probability of exceeding threshold
+- Option B: Full trend lines with breakdowns by period
+- Option C: Both probability and trend lines
 
 **User Answer:** "Option A for now - just probability"
 
-**Question 3:** Which weeks count as playoffs?
-- Option A: Weeks 14-17 (standard)
-- Option B: Weeks 15-17 (shorter playoffs)
+**Question 3:** Which periods count as the projection window?
+- Option A: Last N periods (configurable)
+- Option B: Fixed rolling window
 - Option C: Let me configure it
 
-**User Answer:** "Option A - standard weeks 14-17"
+**User Answer:** "Option C - let me configure it"
 
 ---
 
@@ -360,7 +360,7 @@ Add a debug mode to simulations with:
 **Findings:**
 - Entity records are tracked
 - Projection logic exists in projections module
-- Need to combine team records + projections
+- Need to combine historical records + projections
 
 **Questions for User:** None - scope is now clear.
 
@@ -371,7 +371,7 @@ Add a debug mode to simulations with:
 **Scope Changed:** This is a NEW FEATURE epic, not a bug fix.
 - Estimated 3-4 features
 - MEDIUM complexity
-- Discovery prevented building wrong thing
+- Discovery prevented building the wrong thing
 
 ---
 
@@ -430,7 +430,7 @@ Time saved: 2 weeks of wrong work
 
 ### MEDIUM Epic (2-3 hours time-box)
 
-**Request:** "Improve draft helper recommendations"
+**Request:** "Improve search recommendations"
 
 **Discovery completes in 5-6 iterations:**
 1. Understand current algorithm
@@ -447,15 +447,15 @@ Time saved: 2 weeks of wrong work
 
 ### LARGE Epic (3-4 hours time-box)
 
-**Request:** "Add dynasty league support"
+**Request:** "Add multi-tenant account support"
 
 **Discovery completes in 8-9 iterations:**
-1. Understand dynasty rules
-2. Research keeper/contract concepts
+1. Understand isolation requirements
+2. Research subscription/tier concepts
 3. Identify affected modules
-4. Clarify multi-year tracking
-5. Discuss rookie draft handling
-6. Review salary cap requirements
+4. Clarify cross-account data handling
+5. Discuss new user onboarding
+6. Review budget limit requirements
 7. Check database schema needs
 8. Verify migration requirements
 9. Confirm integration strategy

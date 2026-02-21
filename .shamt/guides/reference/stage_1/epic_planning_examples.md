@@ -10,12 +10,12 @@
 
 ### Example 1: Good Feature Breakdown
 
-**Epic Request:** "Improve draft helper with more data sources"
+**Epic Request:** "Improve recommendation engine with more data sources"
 
 **GOOD Breakdown:**
 ```text
-Feature 1: ADP Integration
-- Purpose: Load average draft position data from external API
+Feature 1: Rank Data Integration
+- Purpose: Load external ranking data from external API
 - Scope: API client, data normalization, storage
 - Dependencies: None (foundation)
 - Estimate: ~25 items, MEDIUM risk
@@ -26,15 +26,15 @@ Feature 2: Expert Rankings Integration
 - Dependencies: None (parallel to Feature 1)
 - Estimate: ~20 items, LOW risk
 
-Feature 3: Injury Risk Assessment
-- Purpose: Evaluate injury history and calculate penalty
-- Scope: Parse injury data, calculate risk score, apply penalty
+Feature 3: Attribute Risk Assessment
+- Purpose: Evaluate attribute history and calculate penalty
+- Scope: Parse attribute data, calculate risk score, apply penalty
 - Dependencies: None (parallel to Features 1, 2)
 - Estimate: ~15 items, LOW risk
 
-Feature 4: Recommendation Engine Updates
+Feature 4: Scoring Engine Updates
 - Purpose: Integrate new data sources into [domain algorithm]
-- Scope: Update PlayerManager, add new multipliers, integration tests
+- Scope: Update RecordManager, add new multipliers, integration tests
 - Dependencies: Features 1, 2, 3 (consumes their outputs)
 - Estimate: ~30 items, HIGH risk (integration complexity)
 ```
@@ -50,7 +50,7 @@ Feature 4: Recommendation Engine Updates
 
 ### Example 2: Bad Feature Breakdown
 
-**Epic Request:** "Improve draft helper with more data sources"
+**Epic Request:** "Improve recommendation engine with more data sources"
 
 **BAD Breakdown:**
 ```text
@@ -84,7 +84,7 @@ Feature 3: Miscellaneous
 
 ### Example 3: Feature vs Epic Confusion
 
-**Request:** "Add JSON export for player data"
+**Request:** "Add JSON export for record data"
 
 **WRONG (treating as multi-feature epic):**
 ```text
@@ -138,20 +138,20 @@ Not: .shamt/epics/json_export_epic/feature_01_serialization/
 
 ### Example 5: Epic Ticket Example - Feature 02
 
-**Epic Request:** "Integrate JSON player data into simulations"
+**Epic Request:** "Integrate JSON record data into simulations"
 
 **Epic Ticket:**
 
 ```markdown
-## Epic Ticket: Integrate JSON Player Data into Simulations
+## Epic Ticket: Integrate JSON Record Data into Simulations
 
 ## Description
-Replace CSV-based player data loading with JSON format for both win rate and accuracy simulations. The new JSON files contain weekly arrays instead of individual columns, enabling more efficient data organization and week-based queries across all 18 NFL regular season weeks.
+Replace CSV-based record data loading with JSON format for both processing modules. The new JSON files contain weekly arrays instead of individual columns, enabling more efficient data organization and week-based queries across all {N} processing periods.
 
 ## Acceptance Criteria
-- [ ] Both simulation types (win rate & accuracy) load player data from JSON files
-- [ ] All 18 weeks of data are accessible and used correctly for both simulations
-- [ ] Actual points for all players across all 18 weeks contain realistic non-zero values
+- [ ] Both processing modules load data from JSON files
+- [ ] All {N} periods of data are accessible and used correctly for both modules
+- [ ] Actual points for all records across all {N} periods contain realistic non-zero values
 - [ ] Projected values for all records across all {N} periods contain realistic non-zero values
 - [ ] Processing produces equivalent or better results compared to baseline
 - [ ] No regression in existing functionality
@@ -174,7 +174,7 @@ Replace CSV-based player data loading with JSON format for both win rate and acc
 ```
 
 **Why this would have caught Feature 02 bug:**
-- "All 18 weeks" makes clear it's not just week 17-18
+- "All {N} periods" makes clear it's not just week 17-18
 - Failure pattern explicitly describes the ">90% zeros" bug that happened
 - Success indicators would have failed (99.8% zeros >> 1% threshold)
 
@@ -182,33 +182,33 @@ Replace CSV-based player data loading with JSON format for both win rate and acc
 
 ### Example 6: Multi-Feature Epic Analysis
 
-**Epic Request:** "Add playoff projections feature"
+**Epic Request:** "Add trend projections feature"
 
 **Phase 2 Analysis:**
 
 **What problem is this solving?**
-Users cannot predict playoff outcomes or evaluate playoff scenarios during the season.
+Users cannot predict trend outcomes or evaluate trend scenarios during the season.
 
 **Explicit goals:**
-1. Project playoff bracket based on current standings
-2. Calculate playoff probabilities for each team
-3. Show strength of schedule for playoff weeks (14-17)
-4. Recommend roster moves optimized for playoffs
+1. Project trend bracket based on current standings
+2. Calculate trend probabilities for each team
+3. Show strength of schedule for target periods
+4. Recommend roster moves optimized for trends
 
 **Constraints:**
-- Must use existing league data (no new APIs)
-- Playoff weeks only (weeks 14-17)
-- 6-team playoff bracket (standard format)
+- Must use existing data (no new external APIs)
+- Target periods only (configurable window)
+- N-entity trend bracket (standard format)
 
 **Out of scope:**
-- Historical playoff analysis
-- Multi-league comparisons
+- Historical trend analysis
+- Multi-tenant comparisons
 - Custom bracket sizes
 
 **Components Affected:**
-- FantasyTeam ([module]/classes/FantasyTeam.py)
+- EntityManager ([module]/classes/[EntityClass].py)
 - ConfigManager ([module]/util/ConfigManager.py)
-- New PlayoffProjector module (to be created)
+- New TrendProjector module (to be created)
 - Calculation engine ([module]/core/) - may need feature-specific logic
 
 **Similar Existing Features:**
@@ -258,7 +258,7 @@ Users cannot predict playoff outcomes or evaluate playoff scenarios during the s
 **Acceptance Criteria:**
 - Must be testable/verifiable outcomes
 - Apply to entire epic (not individual features)
-- Use "All X" language when patterns apply broadly (e.g., "All 18 weeks", "All 6 positions")
+- Use "All X" language when patterns apply broadly (e.g., "All {N} periods", "All 6 positions")
 - Avoid implementation details ("Create class X", "Use method Y")
 - Focus on capabilities ("System can...", "Users can...", "Data shows...")
 
@@ -284,37 +284,37 @@ I've analyzed the epic request and propose breaking this into 4 features:
 
 ## Proposed Feature Breakdown
 
-### Feature 1: ADP Integration
-**Purpose:** Load and normalize average draft position data from external API
+### Feature 1: Rank Data Integration
+**Purpose:** Load and normalize external ranking data from API
 **Scope:**
-- Create API client for ADP data source
-- Normalize ADP values across different scoring formats
-- Store ADP data in player records
+- Create API client for ranking data source
+- Normalize rank values across different scoring formats
+- Store rank data in item records
 **Dependencies:** None (foundation feature)
 **Estimate:** ~25 items, MEDIUM risk
 
 ### Feature 2: Expert Rankings Integration
-**Purpose:** Integrate consensus expert rankings into player evaluations
+**Purpose:** Integrate consensus expert rankings into item evaluations
 **Scope:**
 - Fetch expert rankings from multiple sources
 - Calculate weighted consensus rankings
-- Apply expert consensus multiplier to player scores
+- Apply expert consensus multiplier to item scores
 **Dependencies:** None (parallel to Feature 1)
 **Estimate:** ~20 items, LOW risk
 
-### Feature 3: Injury Risk Assessment
-**Purpose:** Evaluate player injury history and calculate risk penalties
+### Feature 3: Attribute Risk Assessment
+**Purpose:** Evaluate item attribute history and calculate risk penalties
 **Scope:**
-- Parse injury report data
-- Calculate injury risk score based on severity and frequency
-- Apply risk penalty to player scores
+- Parse attribute report data
+- Calculate attribute risk score based on severity and frequency
+- Apply risk penalty to item scores
 **Dependencies:** None (parallel to Features 1, 2)
 **Estimate:** ~15 items, LOW risk
 
-### Feature 4: Recommendation Engine Updates
-**Purpose:** Integrate new data sources into draft recommendation algorithm
+### Feature 4: Scoring Engine Updates
+**Purpose:** Integrate new data sources into item recommendation algorithm
 **Scope:**
-- Update PlayerManager to consume ADP, rankings, injury data
+- Update RecordManager to consume rank, context, attribute data
 - Add new multipliers to [domain algorithm]
 - Create integration tests for end-to-end workflow
 **Dependencies:** Features 1, 2, 3 (consumes all three outputs)
@@ -323,7 +323,7 @@ I've analyzed the epic request and propose breaking this into 4 features:
 ## Rationale
 
 **Why 4 features?**
-- Each data source (ADP, rankings, injury) is independent and can be tested separately
+- Each data source (rank, context, attribute) is independent and can be tested separately
 - Parallel development possible for Features 1, 2, 3
 - Clear integration point (Feature 4) consumes all data sources
 - Foundation features establish data pipeline before integration
@@ -424,12 +424,12 @@ Time: 1-2 days
 
 **MEDIUM Epic (3-5 features):**
 ```text
-Epic: "Improve draft helper with more data sources"
+Epic: "Improve recommendation engine with more data sources"
 
-Feature 1: ADP Integration (~25 items)
+Feature 1: Rank Data Integration (~25 items)
 Feature 2: Expert Rankings Integration (~20 items)
-Feature 3: Injury Risk Assessment (~15 items)
-Feature 4: Recommendation Engine Updates (~30 items)
+Feature 3: Attribute Risk Assessment (~15 items)
+Feature 4: Scoring Engine Updates (~30 items)
 
 Total estimate: ~90 items
 Time: 1-2 weeks
@@ -441,14 +441,14 @@ Time: 1-2 weeks
 
 **LARGE Epic (6+ features):**
 ```text
-Epic: "Add dynasty league support"
+Epic: "Add multi-tenant account support"
 
-Feature 1: Multi-Year Player Tracking (~40 items)
-Feature 2: Rookie Draft System (~35 items)
-Feature 3: Contract Management (~30 items)
-Feature 4: Salary Cap Tracking (~25 items)
-Feature 5: Keeper Selection Logic (~20 items)
-Feature 6: Dynasty-Specific Scoring (~30 items)
+Feature 1: Multi-Year Entity Tracking (~40 items)
+Feature 2: New Entity Onboarding (~35 items)
+Feature 3: Subscription Management (~30 items)
+Feature 4: Budget Limit Tracking (~25 items)
+Feature 5: Subscription Renewal Logic (~20 items)
+Feature 6: Account-Specific Scoring (~30 items)
 Feature 7: Integration with Existing Modes (~40 items)
 
 Total estimate: ~220 items

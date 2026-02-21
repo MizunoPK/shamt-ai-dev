@@ -661,7 +661,7 @@ Check folder structure:
 ls .shamt/epics/done/SHAMT-{N}-{epic_name}/
 ```
 
-**Example:** `ls .shamt/epics/done/SHAMT-1-improve_draft_helper/`
+**Example:** `ls .shamt/epics/done/SHAMT-1-improve_recommendation_engine/`
 
 **Expected:**
 ```text

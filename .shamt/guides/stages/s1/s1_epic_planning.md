@@ -298,7 +298,7 @@ If user selects Option B, they will provide the custom number in "Other" text in
 
 Create epic folder: `.shamt/epics/SHAMT-{N}-{epic_name}/`
 
-**Naming:** Use SHAMT number + snake_case epic name (e.g., `SHAMT-1-improve_draft_helper`)
+**Naming:** Use SHAMT number + snake_case epic name (e.g., `SHAMT-1-improve_recommendation_engine`)
 
 ### Step 1.2: Record Epic Request File Location
 

@@ -356,7 +356,7 @@ Load ADP data from FantasyPros CSV and factor it into draft recommendations as a
 **Full Details:**
 
 Please review the "Acceptance Criteria" section in spec.md:
-`.shamt/epics/SHAMT-1-improve_draft_helper/feature_01_adp_integration/spec.md`
+`.shamt/epics/SHAMT-1-improve_recommendation_engine/feature_01_adp_integration/spec.md`
 
 **Acceptance Criteria Section includes:**
 - Exact behavior changes (what's new, what's modified, what's unchanged)

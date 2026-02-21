@@ -661,14 +661,14 @@ For each approach identified during research:
 
 **Estimated Size:** MEDIUM
 
-### Feature 3: simulation_debug
+### Feature 3: processing_debug
 
-**Purpose:** Debug mode for win rate and accuracy simulations
+**Purpose:** Debug mode for core processing modules
 
 **Scope:**
 - --debug flag for [run_script].py
-- Reduced iterations for both simulation types
-- Verbose output during simulation
+- Reduced iterations for processing-heavy modules
+- Verbose output during processing
 
 **Dependencies:** Feature 1 (debug_infrastructure)
 

@@ -225,7 +225,7 @@ This document tracks the feedback loop from implementation â†’ lessons learned â
 
 ### Example: Applied Lesson Entry
 
-**Epic:** SHAMT-1-improve_draft_helper
+**Epic:** SHAMT-1-improve_recommendation_engine
 **Priority:** P0
 **Lesson:** "S5 Dimension 11 (Spec Alignment & Cross-Validation) caught that spec.md misinterpreted epic notes about week_N+1 folder logic. Epic said 'create week folders' but spec said 'no code changes needed for folders.' Validation dimension prevented week+ of rework."
 **Guide Updated:** `reference/mandatory_gates.md`

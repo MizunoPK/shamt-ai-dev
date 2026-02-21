@@ -698,7 +698,7 @@ Source: [module]/util/FantasyPlayer.py lines 15-25
 ✅ GOOD: "Re-read in Phase 0 at 2026-01-02 10:15, extracted user requests"
 
 **My answer:** Yes, re-read epic notes in Phase 0:
-- File: .shamt/epics/SHAMT-1-improve_draft_helper/improve_draft_helper_notes.txt
+- File: .shamt/epics/SHAMT-1-improve_recommendation_engine/improve_recommendation_engine_notes.txt
 - Read timestamp: 2026-01-02 10:15
 - Extracted user quotes with line numbers
 - Created Discovery Context section in spec.md

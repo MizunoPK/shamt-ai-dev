@@ -742,9 +742,9 @@ warnings.warn("Old ADP format deprecated. Use new format.", DeprecationWarning)
 - Version compatibility maintained (no version bumps required)
 
 **Backwards Compatibility Tests:**
-- Existing unit tests: 2200/2200 passing ✅
-- Existing integration tests: 25/25 passing ✅
-- Pre-epic draft workflow: Works without new features ✅
+- Existing unit tests: {N}/{N} passing ✅
+- Existing integration tests: {M}/{M} passing ✅
+- Pre-epic baseline workflow: Works without new features ✅
 - Pre-epic CSV format: Unchanged (new columns added, not replaced) ✅
 
 **Issues Found:** None

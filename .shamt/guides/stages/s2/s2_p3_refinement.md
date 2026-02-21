@@ -435,7 +435,7 @@ Continue asking questions ONE AT A TIME until checklist shows:
 - **Next:** Present to user, if approved return to S1
 
 **Option B: New work extends current feature**
-- Example: "We need to add logging to ADP loader"
+- Example: "We need to add logging to the data loader"
 - **Action:** Add to current feature's spec (expanded scope)
 - **Rationale:** These are implementation details, not separate features
 - **Next:** Update spec.md and checklist.md, continue with current feature

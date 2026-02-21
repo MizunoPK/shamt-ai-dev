@@ -29,20 +29,20 @@
 
 ```bash
 git commit -m "$(cat <<'EOF'
-feat/SHAMT-1: Complete improve_draft_helper epic
+feat/SHAMT-1: Complete improve_recommendation_engine epic
 
 Major features:
-- ADP integration: Adds market wisdom via Average Draft Position data
-- Matchup system: Incorporates opponent strength into projections
-- Performance tracking: Tracks player accuracy vs projections
+- Rank integration: Adds external ranking data to scoring system
+- Context system: Incorporates contextual signals into recommendations
+- Performance tracking: Tracks item accuracy vs projections
 
 Key changes:
-- PlayerManager.py: Added calculate_adp_multiplier() method
-- AddToRosterModeManager.py: Integrated matchup difficulty into scoring
-- league_config.json: Added adp_weights and matchup_weights parameters
+- RecordManager.py: Added calculate_rank_multiplier() method
+- RecommendationEngine.py: Integrated context signals into scoring
+- settings.json: Added rank_weights and context_weights parameters
 
 Testing:
-- All unit tests passing (2200/2200)
+- All unit tests passing ({N}/{N})
 - Epic smoke testing passed (4/4 parts)
 - Epic QC rounds passed (3/3)
 EOF

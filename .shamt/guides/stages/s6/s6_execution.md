@@ -221,10 +221,10 @@ From implementation_plan.md, extract all external methods/classes you'll call:
 
 ```markdown
 External Dependencies to Verify:
-1. ConfigManager.get_adp_multiplier(adp: int)
+1. ConfigManager.get_rank_multiplier(rank: int)
 2. csv_utils.read_csv_with_validation(filepath, required_columns)
-3. FantasyPlayer class (will add fields)
-4. PlayerManager.load_players() (will modify)
+3. DataRecord class (will add fields)
+4. RecordManager.load_records() (will modify)
 ```
 
 2. **For EACH dependency, READ actual source code:**

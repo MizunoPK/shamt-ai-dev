@@ -4,7 +4,7 @@
 
 ---
 
-## Primary Example: improve_draft_helper
+## Primary Example: improve_recommendation_engine
 
 **Use this example for:**
 - Multi-feature epics (3 features)
@@ -72,12 +72,12 @@
 ## Example File Names
 
 **Original request:**
-- `.shamt/epics/requests/improve_draft_helper.txt`
+- `.shamt/epics/requests/improve_recommendation_engine.txt`
 - `.shamt/epics/requests/add_player_validation.txt`
 - `.shamt/epics/requests/integrate_matchup_data.txt`
 
 **Epic folders:**
-- `.shamt/epics/SHAMT-1-improve_draft_helper/`
+- `.shamt/epics/SHAMT-1-improve_recommendation_engine/`
 - `.shamt/epics/SHAMT-2-add_player_validation/`
 - `.shamt/epics/SHAMT-3-integrate_matchup_data/`
 
@@ -92,20 +92,20 @@
 
 | Context | Example to Use | Reason |
 |---------|----------------|--------|
-| S1 planning | improve_draft_helper | Shows feature breakdown |
-| S2 deep dive | improve_draft_helper | Shows multi-feature coordination |
-| S5 implementation | improve_draft_helper | Full workflow demonstration |
+| S1 planning | improve_recommendation_engine | Shows feature breakdown |
+| S2 deep dive | improve_recommendation_engine | Shows multi-feature coordination |
+| S5 implementation | improve_recommendation_engine | Full workflow demonstration |
 | Bug fix workflow | add_player_validation | Simple, clear |
 | Cross-feature dependencies | integrate_matchup_data | Complex dependencies |
 | Quick examples | add_player_validation | Least cognitive load |
-| Comprehensive examples | improve_draft_helper | Most realistic |
+| Comprehensive examples | improve_recommendation_engine | Most realistic |
 
 ---
 
 ## Consistency Guidelines
 
 **When writing examples:**
-1. Always use SHAMT-1 for improve_draft_helper
+1. Always use SHAMT-1 for improve_recommendation_engine
 2. Always use SHAMT-2 for add_player_validation
 3. Always use SHAMT-3 for integrate_matchup_data
 4. Don't invent new example epics without updating this doc

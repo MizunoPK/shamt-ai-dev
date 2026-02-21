@@ -34,7 +34,7 @@ S10.P1 (Guide Update from Lessons Learned) requires finding ALL lessons learned 
 **File:** `.shamt/epics/done/{epic_name}/epic_lessons_learned.md`
 
 ```markdown
-## Epic Lessons Learned: improve_draft_helper
+## Epic Lessons Learned: improve_recommendation_engine
 
 **Epic Overview:** Enhanced draft helper with ADP integration, matchup analysis, and performance tracking
 **Date Range:** 2025-12-15 - 2025-12-30
@@ -147,7 +147,7 @@ S10.P1 (Guide Update from Lessons Learned) requires finding ALL lessons learned 
 ## Feature Lessons Learned: ADP Integration
 
 **Feature:** feature_01_adp_integration
-**Epic:** improve_draft_helper
+**Epic:** improve_recommendation_engine
 **Date Range:** 2025-12-16 - 2025-12-22
 
 ---
@@ -228,7 +228,7 @@ S10.P1 (Guide Update from Lessons Learned) requires finding ALL lessons learned 
 ## Bug Fix Lessons Learned: Point Calculation Error
 
 **Bug Fix:** bugfix_high_point_calculation
-**Epic:** improve_draft_helper
+**Epic:** improve_recommendation_engine
 **Priority:** high
 **Date Range:** 2025-12-28 - 2025-12-29
 
@@ -298,11 +298,11 @@ find .shamt/epics/done/{epic_name} -name "lessons_learned.md" -type f
 
 **Expected Results:**
 ```text
-.shamt/epics/done/improve_draft_helper/epic_lessons_learned.md
-.shamt/epics/done/improve_draft_helper/feature_01_adp_integration/lessons_learned.md
-.shamt/epics/done/improve_draft_helper/feature_02_matchup_system/lessons_learned.md
-.shamt/epics/done/improve_draft_helper/feature_03_performance_tracker/lessons_learned.md
-.shamt/epics/done/improve_draft_helper/bugfix_high_point_calculation/lessons_learned.md
+.shamt/epics/done/improve_recommendation_engine/epic_lessons_learned.md
+.shamt/epics/done/improve_recommendation_engine/feature_01_adp_integration/lessons_learned.md
+.shamt/epics/done/improve_recommendation_engine/feature_02_matchup_system/lessons_learned.md
+.shamt/epics/done/improve_recommendation_engine/feature_03_performance_tracker/lessons_learned.md
+.shamt/epics/done/improve_recommendation_engine/bugfix_high_point_calculation/lessons_learned.md
 ```
 
 **Total: 5 files** (1 epic + 3 features + 1 bugfix)
@@ -316,7 +316,7 @@ For EACH file found, read it completely and extract "Guide Improvements Needed" 
 **Example extraction from epic_lessons_learned.md:**
 
 ```markdown
-**Reading:** .shamt/epics/done/improve_draft_helper/epic_lessons_learned.md
+**Reading:** .shamt/epics/done/improve_recommendation_engine/epic_lessons_learned.md
 
 **Lessons Found:**
 1. S1 Lesson: Verify data sources during planning
@@ -344,7 +344,7 @@ For EACH file found, read it completely and extract "Guide Improvements Needed" 
 Combine ALL lessons from ALL files:
 
 ```markdown
-## Master Checklist: Guide Updates from Epic improve_draft_helper
+## Master Checklist: Guide Updates from Epic improve_recommendation_engine
 
 **Total Files Checked:** 5
 **Total Lessons Found:** 6

@@ -81,7 +81,7 @@ git commit -m "fix/SHAMT-1: Fix player name validation in draft mode"
 **Step 1: Commit changes on branch** (after user testing passes)
 ```bash
 git add .
-git commit -m "feat/SHAMT-1: Complete improve_draft_helper epic"
+git commit -m "feat/SHAMT-1: Complete improve_recommendation_engine epic"
 ```
 
 **Step 2: Push branch to remote**
@@ -104,23 +104,23 @@ gh pr create --base main --head {work_type}/SHAMT-{number} \
 **Example:**
 ```bash
 gh pr create --base main --head epic/SHAMT-1 \
-  --title "feat/SHAMT-1: Complete improve_draft_helper epic" \
+  --title "feat/SHAMT-1: Complete improve_recommendation_engine epic" \
   --body "$(cat <<'EOF'
-- Epic: improve_draft_helper
+- Epic: improve_recommendation_engine
 
 ## Features Implemented
-- Feature 01: ADP integration for player recommendations
-- Feature 02: Confidence scoring for draft suggestions
-- Feature 03: Top 200 player filtering
+- Feature 01: Rank-based scoring integration
+- Feature 02: Confidence scoring for recommendations
+- Feature 03: Top-N item filtering
 
 ## Testing
-- 100% unit test pass rate (2,256 tests passing)
+- 100% unit test pass rate ({N} tests passing)
 - Epic smoke testing complete (all scenarios pass)
 - User testing complete (zero bugs reported)
 
 ## Review Instructions
-1. Review feature changes in [module]/draft_helper.py
-2. Check updated tests in tests/[module]/test_draft_helper.py
+1. Review feature changes in [module]/recommendation_engine.py
+2. Check updated tests in tests/[module]/test_recommendation_engine.py
 3. Run: {TEST_COMMAND}
 4. Test draft helper: python run_[module].py (select Draft Helper mode)
 EOF

@@ -533,7 +533,7 @@ feature_04_FeatureStuff (not snake_case)
 **Examples:**
 
 ```text
-Epic: improve_draft_helper
+Epic: improve_recommendation_engine
 
 ✅ GOOD:
 - feature_01_adp_integration

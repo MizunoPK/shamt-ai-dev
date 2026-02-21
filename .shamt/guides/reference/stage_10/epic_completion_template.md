@@ -39,7 +39,7 @@ After epic is complete and moved to done/, update the EPIC_README.md file in its
 
 ## Template with Example Values
 
-**Example: "SHAMT-1-improve_draft_helper" epic**
+**Example: "SHAMT-1-improve_recommendation_engine" epic**
 
 ```markdown
 ## Agent Status
@@ -54,10 +54,10 @@ After epic is complete and moved to done/, update the EPIC_README.md file in its
 - Duration: 15 days
 - Total Features: 3
 - Bug Fixes Created: 1
-- Final Test Pass Rate: 100% (2200/2200 tests)
+- Final Test Pass Rate: 100% ({N}/{N} tests)
 
-**Epic Moved To:** .shamt/epics/done/SHAMT-1-improve_draft_helper/
-**Original Request:** .shamt/epics/requests/improve_draft_helper.txt
+**Epic Moved To:** .shamt/epics/done/SHAMT-1-improve_recommendation_engine/
+**Original Request:** .shamt/epics/requests/improve_recommendation_engine.txt
 
 **Next Steps:** None - epic complete! 🎉
 ```
@@ -188,7 +188,7 @@ Before considering epic completion summary complete:
 
 **Wrong:**
 ```bash
-## Edit .shamt/epics/improve_draft_helper/EPIC_README.md
+## Edit .shamt/epics/improve_recommendation_engine/EPIC_README.md
 ## Then move epic to done/
 ## Result: Edit is lost because file moved before saving
 ```
@@ -196,7 +196,7 @@ Before considering epic completion summary complete:
 **Right:**
 ```bash
 ## Move epic to done/
-## Then edit .shamt/epics/done/improve_draft_helper/EPIC_README.md
+## Then edit .shamt/epics/done/improve_recommendation_engine/EPIC_README.md
 ## Result: Edit persists in correct location
 ```
 
@@ -204,12 +204,12 @@ Before considering epic completion summary complete:
 
 **Wrong:**
 ```markdown
-**Epic Moved To:** .shamt/epics/improve_draft_helper/  ← Still in root!
+**Epic Moved To:** .shamt/epics/improve_recommendation_engine/  ← Still in root!
 ```
 
 **Right:**
 ```markdown
-**Epic Moved To:** .shamt/epics/done/improve_draft_helper/  ← In done/
+**Epic Moved To:** .shamt/epics/done/improve_recommendation_engine/  ← In done/
 ```
 
 ### ❌ Mistake 3: Forgetting to count bug fixes
@@ -232,12 +232,12 @@ Before considering epic completion summary complete:
 
 **Wrong:**
 ```markdown
-**Final Test Pass Rate:** 95% (2090/2200 tests)  ← Should be 100%!
+**Final Test Pass Rate:** 95% (N-fail/N tests)  ← Should be 100%!
 ```
 
 **Right:**
 ```markdown
-**Final Test Pass Rate:** 100% (2200/2200 tests)  ← All tests passing
+**Final Test Pass Rate:** 100% ({N}/{N} tests)  ← All tests passing
 ```
 
 **Note:** If tests aren't 100%, don't commit. Fix tests first, then complete S10.

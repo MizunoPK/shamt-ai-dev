@@ -710,7 +710,7 @@ S2.P2 (Specification Phase) is complete. I've created checklist.md with 6 questi
 - Technical Questions: 1 (player key format)
 - Error Handling Questions: 2 (missing CSV behavior, logging preferences)
 
-**File Location:** `.shamt/epics/SHAMT-1-improve_draft_helper/feature_01_adp_integration/checklist.md`
+**File Location:** `.shamt/epics/SHAMT-1-improve_recommendation_engine/feature_01_adp_integration/checklist.md`
 
 **Question Summary:**
 1. ADP CSV Format - What are the exact column names?
