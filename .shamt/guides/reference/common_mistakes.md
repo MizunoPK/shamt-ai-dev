@@ -82,10 +82,11 @@
 ### S3: Cross-Feature Sanity Check
 - ❌ Only checking new features (must check ALL pairwise)
 - ❌ Resolving conflicts without user input
+- ❌ Not getting user approval (Gate 4.5 — epic plan + test strategy approval occurs in S3.P3)
 
-### S4: Epic Testing Strategy
+### S4: Feature Testing Strategy
 - ❌ Creating detailed test plan without implementation knowledge
-- ❌ Not getting user approval (Gate 4.5)
+- ❌ Starting S4 without Gate 4.5 already passed (Gate 4.5 is in S3.P3, not S4)
 
 ### S5: Implementation Planning
 - ❌ Skipping dimensions or gates in the Validation Loop

@@ -117,7 +117,7 @@ This document captures:
 
 ---
 
-## S4 Lessons Learned (Epic Testing Strategy)
+## S4 Lessons Learned (Feature Testing Strategy)
 
 **What Went Well:**
 - {Positive observation}

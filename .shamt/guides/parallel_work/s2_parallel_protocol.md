@@ -80,7 +80,7 @@ SAVINGS: 4 hours (14% epic-level reduction)
 **Sequential (Unchanged):**
 - ❌ S1: Epic Planning (Primary only)
 - ❌ S3: Cross-Feature Sanity Check (Primary only)
-- ❌ S4: Epic Testing Strategy (Primary only)
+- ❌ S4: Feature Testing Strategy (Primary only)
 - ❌ S5-S8: Feature Implementation (sequential in this plan)
 - ❌ S9-S10: Epic completion (Primary only)
 
@@ -586,7 +586,7 @@ All features complete! Proceeding to S3.
 
 ---
 
-### Phase 8: S4 Epic Testing Strategy (Primary Solo)
+### Phase 8: S4 Feature Testing Strategy (Primary Solo)
 
 **Run S4 alone:**
 

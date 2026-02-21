@@ -61,7 +61,7 @@
 - Agent proceeds to wrong stage after completion
 - Workflow sequence broken
 - Critical stages skipped
-- Example: S2 guide says "Next: S4" → S3 Epic Testing Strategy skipped entirely
+- Example: S2 guide says "Next: S4" → S3 (Cross-Feature Sanity Check) skipped entirely
 
 **Output-to-Input Mismatches:**
 - Stage A produces file X, Stage B expects file Y

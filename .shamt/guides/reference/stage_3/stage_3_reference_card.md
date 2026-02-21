@@ -322,9 +322,9 @@ STEP 6: Mark Complete (2 min)
 - [ ] User explicitly approved complete plan
 - [ ] Approval documented in epic EPIC_README.md
 - [ ] EPIC_README.md shows S3 complete
-- [ ] Ready to start S4 (Epic Testing Strategy)
+- [ ] Ready to start S4 (Feature Testing Strategy)
 
-**Next Stage:** S4 (Epic Testing Strategy)
+**Next Stage:** S4 (Feature Testing Strategy)
 
 ---
 

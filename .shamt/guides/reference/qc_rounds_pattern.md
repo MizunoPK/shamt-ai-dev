@@ -18,7 +18,7 @@
 6. [Round 3](#round-3-scope-specific---see-implementation-guides)
 7. [Common Validation Patterns](#common-validation-patterns)
 8. [Common Mistakes to Avoid](#common-mistakes-to-avoid)
-9. [Restart Decision Tree](#restart-decision-tree)
+9. [Issue Handling Decision Tree](#issue-handling-decision-tree)
 10. [Scope-Specific Differences](#scope-specific-differences)
 11. [Summary](#summary)
 
@@ -35,7 +35,7 @@
 - All dimensions checked every round (not different focuses per round)
 
 **Scope-Specific Implementation:**
-- **Feature-level (S7.P2):** 11 dimensions validated
+- **Feature-level (S7.P2):** 12 dimensions validated (7 master + 5 S7 QC-specific)
 - **Epic-level (S9.P2):** 12 dimensions validated (7 master + 5 epic-specific)
 
 ---
@@ -71,8 +71,7 @@ Each Round: Check ALL dimensions
 - Each round has DIFFERENT focus
 - Each round catches different issues
 
-### 2. QC Restart Protocol
-**If ANY round fails, RESTART from smoke testing:**
+### 2. Fix-and-Continue Protocol (v2.0)
 
 ```text
 VALIDATION LOOP PROTOCOL (v2.0):
@@ -187,7 +186,7 @@ assert df['player_name'].str.len().min() > 2  # Verify reasonable values
 - **Objective:** Basic validation
 - **Time Estimate:** 10-20 minutes
 - **Pass Criteria:** Scope-specific (see implementation guides)
-- **If FAIL:** Fix issues, RESTART from smoke testing
+- **If issues found:** Fix immediately, reset clean counter to 0, continue to next round
 
 **Scope-Specific Focus:**
 - **Feature-level:** Unit tests, code structure, output files, interfaces, documentation
@@ -201,38 +200,33 @@ assert df['player_name'].str.len().min() > 2  # Verify reasonable values
 - **Objective:** Deep verification
 - **Time Estimate:** 10-20 minutes
 - **Pass Criteria:**
-  - ALL Round 1 issues resolved (none remaining)
-  - ZERO new critical issues found
-- **If FAIL:** Fix issues, RESTART from smoke testing
+  - ZERO issues found this round
+  - All dimensions checked
+- **If issues found:** Fix immediately, reset clean counter to 0, continue to next round
 
 **Scope-Specific Focus:**
 - **Feature-level:** Baseline comparison, data validation, regression testing, semantic diff, edge cases
 - **Epic-level:** Epic cohesion & consistency, code style, naming conventions, error handling patterns
-
-**Critical:** Round 2 builds on Round 1. If Round 1 issues unresolved OR new critical issues appear, implementation is unstable → RESTART
 
 ---
 
 ## Round 3: [Scope-Specific - See Implementation Guides]
 
 **Universal Pattern:**
-- **Objective:** Final skeptical review with ZERO tolerance
+- **Objective:** Skeptical fresh-eyes review
 - **Time Estimate:** 10-20 minutes
 - **Pass Criteria:**
   - **ZERO issues found** (critical, medium, OR minor)
   - Spec re-read confirms 100% implementation
   - Fresh-eyes review finds no gaps
-- **If FAIL:** Fix issues, RESTART from smoke testing
+  - If clean: increment clean counter (need 3 consecutive clean rounds to exit)
+- **If issues found:** Fix immediately, reset clean counter to 0, continue
 
 **Scope-Specific Focus:**
 - **Feature-level:** Fresh-eyes spec review, algorithm traceability re-check, integration gap re-check
 - **Epic-level:** End-to-end success criteria, original epic request validation, user experience flows
 
-**Critical:** Round 3 is ZERO TOLERANCE checkpoint
-- ANY issue found → RESTART
-- "Minor" issues are still issues → RESTART
-- This is final chance to catch problems
-- Production readiness gate
+**Exit Criteria:** 3 consecutive rounds with ZERO issues (not necessarily rounds 1-3; may require rounds 4, 5, 6+)
 
 ---
 
@@ -307,14 +301,14 @@ assert df['player_name'].str.len().min() > 2  # Verify reasonable values
 Round 1 → Round 2 → Round 3
 ```
 
-### ❌ Mistake 2: Partial Re-run After Failure
+### ❌ Mistake 2: Skipping Remaining Dimensions After Finding Issue
 
 ```markdown
-## WRONG - Fix Round 2 issues, continue to Round 3
-## (skipping smoke testing and Round 1)
+## WRONG - Find issue in Dimension 3, stop checking other dimensions
+## "I found a bug, I'll fix it and move on"
 
-## CORRECT - Fix issues, RESTART from smoke testing
-Smoke Testing → Round 1 → Round 2 → Round 3
+## CORRECT - Fix issue immediately, then complete ALL remaining dimensions
+Fix D3 issue → reset clean counter → check D4...D12 → continue next round
 ```
 
 ### ❌ Mistake 3: Accepting "90% Done"
@@ -353,26 +347,25 @@ assert df['projected_value'].between(0, 500).all()  # Values in range
 
 ---
 
-## Restart Decision Tree
+## Issue Handling Decision Tree
 
 ```bash
 Did QC round find issues?
 ├─ NO ISSUES
-│  └─ If Round 1 or 2: Proceed to next round
-│  └─ If Round 3: QC complete, proceed to next stage
+│  └─ If clean count < 3: Proceed to next round
+│  └─ If 3 consecutive clean rounds: QC complete, proceed to next stage
 │
 └─ ISSUES FOUND
-   ├─ Are issues CRITICAL?
-   │  ├─ YES (integration fails, requirements not met, data incorrect)
-   │  │  └─ RESTART from smoke testing
-   │  │
-   │  └─ NO (minor cosmetic, naming inconsistency)
-   │     ├─ Feature-level: Still RESTART (zero tolerance)
-   │     └─ Epic-level: Fix immediately IF Round 1/2, RESTART IF Round 3
-   │
-   └─ Special case: Round 3
-      └─ ANY issues (critical OR minor) → RESTART
+   ├─ Fix ALL issues immediately (zero deferral tolerance)
+   ├─ Reset consecutive clean counter to 0
+   └─ Continue to next round (no restart needed)
+      → Exit only after 3 consecutive clean rounds
+      → Max 10 rounds (escalate to user if exceeded)
 ```
+
+**Note:** S7.P2 uses fix-and-continue (not restart). Both critical and minor issues
+are fixed immediately and validation continues. See `stages/s7/s7_p2_qc_rounds.md`
+for the authoritative protocol.
 
 ---
 
@@ -380,18 +373,25 @@ Did QC round find issues?
 
 ### Feature-Level Validation Loop (S7.P2)
 
-**11 Dimensions Checked EVERY Round:**
-1. Content Accuracy - Requirements met
-2. References - All links valid
-3. Workflow Integration - Fits into overall workflow
-4. Template Compliance - Follows templates
-5. Cross-Feature Integration - Works with other features
-6. Data Validation - Values correct (not just structure)
-7. Error Handling - All errors caught and handled
-8. Edge Cases - Boundary conditions handled
-9. Algorithm Correctness - Logic matches spec
-10. Regression Testing - Old functionality still works
-11. Spec Alignment - Implementation matches spec
+**12 Dimensions Checked EVERY Round (7 master + 5 S7 QC-specific):**
+
+**See `reference/validation_loop_s7_feature_qc.md` for the authoritative dimension checklists.**
+
+Master Dimensions (1-7):
+1. Empirical Verification - All interfaces verified from source code
+2. Completeness - All spec requirements implemented (100%)
+3. Internal Consistency - No contradictions between implementation and spec
+4. Traceability - Every function traces to spec requirement
+5. Clarity & Specificity - No vague error messages or logging
+6. Upstream Alignment - Implementation matches spec.md exactly
+7. Standards Compliance - Follows project coding standards
+
+S7 QC-Specific Dimensions (8-12):
+8. Cross-Feature Integration - Integrates correctly with existing features
+9. Error Handling Completeness - All error scenarios handled gracefully
+10. End-to-End Functionality - E2E execution produces correct data values
+11. Test Coverage Quality - Adequate test coverage with meaningful tests
+12. Requirements Completion - 100% spec requirements verifiably implemented
 
 **If issues found:** Fix immediately, reset counter, continue
 

@@ -666,7 +666,7 @@ NEXT_ACTION: Waiting for Primary to run S2.P2 (Cross-Feature Alignment) and S3
 - Complete their Feature 01 S2
 - Wait for other secondaries to complete
 - Run S3 (Cross-Feature Sanity Check)
-- Run S4 (Epic Testing Strategy)
+- Run S4 (Feature Testing Strategy)
 
 ### Step 2: Monitor Inbox
 

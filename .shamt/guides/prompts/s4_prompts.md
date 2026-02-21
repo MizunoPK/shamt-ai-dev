@@ -1,11 +1,11 @@
-# S4 Prompts: Epic Testing Strategy
+# S4 Prompts: Feature Testing Strategy
 
 **Stage:** 4
-**Purpose:** Epic test plan update based on feature specs
+**Purpose:** Feature-level test strategy creation based on feature specs
 
 ---
 
-## Starting S4: Epic Testing Strategy
+## Starting S4: Feature Testing Strategy
 
 **User says:** "Update epic test plan" or "Define testing strategy" or Agent detects S3 complete
 
@@ -38,7 +38,7 @@ I'm reading `stages/s4/s4_feature_testing_strategy.md` to ensure I create a comp
 **I'll now review the existing test plan and update based on Stages 2-3 findings...**
 
 **Updating EPIC_README.md Agent Status:**
-- Current Stage: S4 - Epic Testing Strategy
+- Current Stage: S4 - Feature Testing Strategy
 - Current Guide: stages/s4/s4_feature_testing_strategy.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
 - Critical Rules: "Update test plan (don't recreate)", "Hybrid test scenarios", "Measurable success criteria", "Plan will evolve in S8.P2"

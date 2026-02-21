@@ -237,7 +237,7 @@ s1_epic_planning.md (reduces to ~960 lines):
   - Step 3: Discovery Phase (MANDATORY)
     - **Goal:** Explore problem space through iterative research and user Q&A
     - **Time-Box:** 1-4 hours depending on epic size
-    - **Exit Condition:** 3 consecutive iterations with NO NEW QUESTIONS
+    - **Exit Condition:** 3 consecutive clean rounds with zero issues/gaps
     - **Detailed Guide:** stages/s1/s1_p3_discovery_phase.md (READ ENTIRE GUIDE)
     - **Key Outputs:** DISCOVERY.md, solution approach, scope definition, feature breakdown
 

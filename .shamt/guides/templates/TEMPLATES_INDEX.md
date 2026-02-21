@@ -77,6 +77,7 @@
 | Template | Filename | Use When |
 |----------|----------|----------|
 | [Handoff Package (S2)](#handoff-package-s2) | `handoff_package_s2_template.md` | Creating handoff package for secondary agents in parallel S2 work |
+| [Feature Status](#feature-status) | `feature_status_template.txt` | STATUS file format for parallel work coordination (each feature folder) |
 
 ### Debugging
 
@@ -276,6 +277,13 @@
 - **Size:** ~242 lines
 - **When to use:** Parallel S2 work — Primary Agent creates one per secondary agent
 
+#### Feature Status
+- **File:** `feature_status_template.txt`
+- **Created:** Parallel work setup (Primary and Secondary Agents)
+- **Purpose:** Plain-text STATUS file format for parallel work coordination; placed in each feature folder to communicate progress between agents
+- **Size:** ~10 lines
+- **When to use:** Parallel S2 work — every agent creates a STATUS file for their assigned feature(s); see `parallel_work/README.md`
+
 ---
 
 ## How to Use Templates
@@ -326,6 +334,7 @@ Read .shamt/guides/templates/{template_name}.md
 | Feature Research Notes | ~367 | No | No |
 | Feature Test Strategy | ~259 | No | No |
 | Handoff Package (S2) | ~242 | No | No |
+| Feature Status | ~10 | No | No |
 | Validation Loop Log | ~205 | No | No |
 | Validation Loop Log (S5) | ~411 | No | No |
 | PR Review Issues | ~175 | No | No |

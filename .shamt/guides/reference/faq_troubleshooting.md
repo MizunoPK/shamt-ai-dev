@@ -190,7 +190,7 @@ A: NO - Always do complete pairwise comparison:
 
 ---
 
-### S4: Epic Testing Strategy
+### S4: Feature Testing Strategy
 
 **Q: How is epic_smoke_test_plan.md different from feature smoke testing?**
 
@@ -795,7 +795,7 @@ I understand you want to move quickly, but the Epic-Driven Development v2 workfl
 Current status: S2 (Feature Deep Dives)
 Remaining before implementation:
 - S3: Cross-Feature Sanity Check (30-60 min)
-- S4: Epic Testing Strategy (30-45 min)
+- S4: Feature Testing Strategy (30-45 min)
 - S5: TODO Creation (2.5-4 hours)
 
 These stages prevent costly rework by catching issues early.

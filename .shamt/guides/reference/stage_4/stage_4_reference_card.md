@@ -1,4 +1,4 @@
-# STAGE 4: Epic Testing Strategy - Quick Reference Card
+# STAGE 4: Feature Testing Strategy - Quick Reference Card
 
 **Purpose:** One-page summary for updating epic test plan with concrete scenarios
 **Use Case:** Quick lookup when transforming placeholder test plan into actionable tests

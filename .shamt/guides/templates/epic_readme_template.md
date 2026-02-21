@@ -393,7 +393,7 @@ Plan  Deep Dive  Check  Strategy  (per feature)   QC
 - [ ] Conflicts resolved
 - [ ] User sign-off obtained
 
-**S4 - Epic Testing Strategy:**
+**S4 - Feature Testing Strategy:**
 - [ ] `epic_smoke_test_plan.md` updated based on deep dives
 - [ ] Integration points identified
 - [ ] Epic success criteria defined

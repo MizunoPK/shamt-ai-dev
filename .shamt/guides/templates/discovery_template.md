@@ -275,7 +275,7 @@ Feature 1 ({name})     Feature 2 ({name})
 | {YYYY-MM-DD HH:MM} | User answered Q1-Q{N} | Clarified {topic} |
 | {YYYY-MM-DD HH:MM} | Iteration 2 Research | Found {N} patterns, {M} questions |
 | {YYYY-MM-DD HH:MM} | User answered Q{N}-Q{M} | Decided {approach} |
-| {YYYY-MM-DD HH:MM} | Final Iteration | No new questions |
+| {YYYY-MM-DD HH:MM} | Final Iteration | 3rd consecutive clean round — zero issues/gaps |
 | {YYYY-MM-DD HH:MM} | Synthesis complete | Recommended {approach} |
 | {YYYY-MM-DD HH:MM} | User approved | Proceed to feature breakdown |
 

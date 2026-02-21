@@ -79,7 +79,7 @@
 **S7 - Implementation Testing & Review:**
 - [ ] Smoke testing (3 parts) passed
 - [ ] Validation Loop passed (3 consecutive clean rounds)
-- [ ] All 11 dimensions checked every round
+- [ ] All 12 dimensions checked every round (7 master + 5 S7 QC-specific)
 - [ ] PR Review (11 categories) passed
 - [ ] `lessons_learned.md` updated with S7 insights
 - [ ] S7 complete: {✅/◻️}

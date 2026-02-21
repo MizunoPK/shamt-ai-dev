@@ -242,3 +242,6 @@ def get_rank_multiplier(self, rank_value: float) -> Tuple[float, int]:
 **Original Epic Success Criteria (from S1):**
 ```markdown
 ## Epic Success Criteria
+```
+
+*Example 3 is a stub — content not yet written.*

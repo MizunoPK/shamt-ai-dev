@@ -80,7 +80,7 @@ The Epic-Driven Development Workflow v2 uses a **3-level hierarchical S#.P#.I# n
 | Level | Pattern | Example Filename |
 |-------|---------|------------------|
 | **Stage** | `s{N}_{name}.md` | `s1_epic_planning.md` |
-| **Phase** | `s{N}_p{M}_{name}.md` | `s2_p2_specification.md` |
+| **Phase** | `s{N}_p{M}_{name}.md` | `s2_p1_spec_creation_refinement.md` |
 | **Iteration** | `s{N}_p{M}_i{K}_{name}.md` | *(deprecated - S5 v2 uses single comprehensive file)* |
 
 **Note:** S5 v2 replaces the iteration-based structure with a single comprehensive Validation Loop guide (`s5_v2_validation_loop.md`). See `reference/stage_5/s5_v2_quick_reference.md` for details.
@@ -93,7 +93,7 @@ The Epic-Driven Development Workflow v2 uses a **3-level hierarchical S#.P#.I# n
 - **Why:** Lowercase 's' prefix is concise and consistent
 
 **Rule 2: Phase files (Level 2) - Stage + Phase prefix**
-- ✅ Correct: `s5_v2_validation_loop.md`, `s2_p2_specification.md`
+- ✅ Correct: `s5_v2_validation_loop.md`, `s2_p1_spec_creation_refinement.md`
 - ❌ Wrong: `s5_planning_round1.md` (missing p1), `phase_5.1_planning.md` (old notation)
 - **Why:** Shows exactly where in hierarchy (S5, Phase 1)
 
@@ -109,14 +109,14 @@ The Epic-Driven Development Workflow v2 uses a **3-level hierarchical S#.P#.I# n
 - **Why:** Consistent with project-wide file naming standards
 
 **Rule 5: Use underscores to separate parts**
-- ✅ Correct: `s2_p2_specification.md`
-- ❌ Wrong: `s2-p2-specification.md`, `s2p2_specification.md`
+- ✅ Correct: `s2_p1_spec_creation_refinement.md`
+- ❌ Wrong: `s2-p1-spec-creation.md`, `s2p1_spec.md`
 - **Why:** Clear visual separation between notation and description
 
 **Rule 6: Special case - Phase number variants**
-- For S2.P2.5 style numbering: `s2_p2_5_spec_validation.md`
-- ✅ Correct: `s2_p2_5_spec_validation.md`
-- ❌ Wrong: `s2_p2.5_spec_validation.md` (dot in filename)
+- For sub-phase numbering (e.g. S2.P1.5): `s{N}_p{M}_{K}_{name}.md`
+- ✅ Correct: `s4_feature_testing_card.md`
+- ❌ Wrong: `s2_p1.5_spec_validation.md` (dot in filename)
 
 ---
 
@@ -131,10 +131,8 @@ The Epic-Driven Development Workflow v2 uses a **3-level hierarchical S#.P#.I# n
 │   │   └── s1_epic_planning.md                    (Level 1: Stage)
 │   ├── s2/
 │   │   ├── s2_feature_deep_dive.md                (Level 1: Stage, router)
-│   │   ├── s2_p1_spec_creation_refinement.md                      (Level 2: Phase)
-│   │   ├── s2_p2_specification.md                 (Level 2: Phase)
-│   │   ├── s2_p2_5_spec_validation.md             (Level 2: Phase variant)
-│   │   └── s2_p3_refinement.md                    (Level 2: Phase)
+│   │   ├── s2_p1_spec_creation_refinement.md      (Level 2: Phase)
+│   │   └── s2_p2_cross_feature_alignment.md       (Level 2: Phase)
 │   ├── s3/
 │   │   └── s3_epic_planning_approval.md       (Level 1: Stage)
 │   ├── s4/
@@ -541,7 +539,7 @@ See `stages/s5/s5_v2_validation_loop.md`
 | Level | Term | Notation | Filename Pattern | Header Format | Example |
 |-------|------|----------|------------------|---------------|---------|
 | **1** | Stage | S# | `s{N}_{name}.md` | `# S{N}:` | `s1_epic_planning.md` |
-| **2** | Phase | S#.P# | `s{N}_p{M}_{name}.md` | `## S{N}.P{M}:` | `s2_p2_specification.md` |
+| **2** | Phase | S#.P# | `s{N}_p{M}_{name}.md` | `## S{N}.P{M}:` | `s2_p1_spec_creation_refinement.md` |
 | **3** | Iteration | S#.P#.I# | `s{N}_p{M}_i{K}_{name}.md` | `### S{N}.P{M}.I{K}:` | *(deprecated)* |
 
 ### File Location Patterns
@@ -549,7 +547,7 @@ See `stages/s5/s5_v2_validation_loop.md`
 | Level | Directory Location | Example |
 |-------|-------------------|---------|
 | **Stage** | `stages/s{N}/` | `stages/s1/s1_epic_planning.md` |
-| **Phase** | `stages/s{N}/` | `stages/s2/s2_p2_specification.md` |
+| **Phase** | `stages/s{N}/` | `stages/s2/s2_p1_spec_creation_refinement.md` |
 | **Iteration** | `stages/s{N}/` | *(deprecated - no longer used)* |
 
 ### Cross-Reference Format Quick Reference

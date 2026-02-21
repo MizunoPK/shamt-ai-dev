@@ -3,7 +3,7 @@
 **Filename:** `epic_smoke_test_plan.md`
 **Location:** `.shamt/epics/SHAMT-{N}-{epic_name}/epic_smoke_test_plan.md`
 **Created:** {YYYY-MM-DD} (S1)
-**Updated:** S4 (Epic Testing Strategy), S8.P2 (after each feature)
+**Updated:** S4 (Feature Testing Strategy), S8.P2 (after each feature)
 
 **Purpose:** Defines how to validate the complete epic end-to-end with specific test scenarios and success criteria.
 

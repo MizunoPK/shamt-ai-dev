@@ -830,7 +830,7 @@ see the Examples appendix at the end of this guide.
 [Rest of guide content]
 
 ## See Also
-- [S2.P2 Specification](s2_p2_specification.md)
+- [S2.P1 Spec Creation & Refinement](../../stages/s2/s2_p1_spec_creation_refinement.md)
 
 [No Examples appendix in file]
 ```markdown

@@ -173,7 +173,7 @@ Round 5: Final sweep
 
 **S7.P2 Validation Loop (Feature-Level):**
 - Use this protocol after implementation complete
-- Check ALL 11 dimensions every round
+- Check ALL 12 dimensions every round (7 master + 5 S7 QC-specific)
 - Exit after 3 consecutive clean rounds
 - Must pass before S7.P3 (PR Review)
 

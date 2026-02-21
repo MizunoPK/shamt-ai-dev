@@ -145,7 +145,7 @@ Final Review is complete when 3 consecutive validation rounds find ZERO issues a
 
 **From S7.P2:**
 - [ ] Validation Loop: PASSED (3 consecutive clean rounds)
-- [ ] All 11 dimensions checked every round
+- [ ] All 12 dimensions checked every round (7 master + 5 S7 QC-specific)
 - [ ] Zero issues deferred (fix-and-continue approach used)
 - [ ] All re-reading checkpoints completed
 
@@ -706,7 +706,7 @@ Files updated:
 
 **Validation Loop:**
 - [ ] Validation Loop: PASSED (3 consecutive clean rounds)
-- [ ] All 11 dimensions checked every round
+- [ ] All 12 dimensions checked every round (7 master + 5 S7 QC-specific)
 - [ ] Zero issues deferred (fix-and-continue approach used)
 
 **PR Review:**
@@ -781,7 +781,7 @@ Files updated:
 
 ### Validation Loop (S7.P2)
 - [x] Validation Loop passed (3 consecutive clean rounds)
-- [x] All 11 dimensions checked every round
+- [x] All 12 dimensions checked every round (7 master + 5 S7 QC-specific)
 - [x] Zero issues deferred (fix-and-continue approach used)
 
 ### PR Review (S7.P3)

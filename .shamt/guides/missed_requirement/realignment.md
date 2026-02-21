@@ -19,7 +19,7 @@
    - [Step 2: Identify Conflicts](#step-2-identify-conflicts)
    - [Step 3: Resolve Conflicts](#step-3-resolve-conflicts)
    - [Step 4: User Sign-Off on Complete Aligned Plan](#step-4-user-sign-off-on-complete-aligned-plan)
-1. [PHASE 4: S4 - Epic Testing Strategy Update](#phase-4-s4-epic-testing-strategy-update)
+1. [PHASE 4: S4 - Feature Testing Strategy Update](#phase-4-s4-feature-testing-strategy-update)
    - [Update epic_smoke_test_plan.md](#update-epicsmoketestplanmd)
    - [Step 1: Add Scenarios for New/Updated Feature](#step-1-add-scenarios-for-newupdated-feature)
 1. [Epic Integration Test: Item Scoring with Attribute Status](#epic-integration-test-item-scoring-with-attribute-status)
@@ -179,12 +179,12 @@ S3 cross-feature sanity check complete.
 
 **All features are now aligned and ready for implementation.**
 
-Proceed to S4 (Epic Testing Strategy update)? {User confirms}
+Proceed to S4 (Feature Testing Strategy update)? {User confirms}
 ```
 
 ---
 
-## PHASE 4: S4 - Epic Testing Strategy Update
+## PHASE 4: S4 - Feature Testing Strategy Update
 
 ### Update epic_smoke_test_plan.md
 
@@ -454,7 +454,7 @@ After feature_05: Resume and complete feature_02
 - [x] User approved conflict resolutions
 - [x] User signed off on complete aligned plan
 
-**S4 (Epic Testing Strategy):**
+**S4 (Feature Testing Strategy):**
 - [x] epic_smoke_test_plan.md updated
 - [x] New scenarios added for new/updated feature
 - [x] Existing scenarios updated if needed

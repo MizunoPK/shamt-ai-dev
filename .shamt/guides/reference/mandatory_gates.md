@@ -14,13 +14,13 @@
 3. [S1: Epic Planning](#s1-epic-planning)
 4. [S2: Feature Deep Dive (3 formal gates per feature - NEW: Checklist Approval added)](#s2-feature-deep-dive-3-formal-gates-per-feature---new-checklist-approval-added)
 5. [S3: Cross-Feature Sanity Check (1 gate per epic)](#s3-cross-feature-sanity-check-1-gate-per-epic)
-6. [S4: Epic Testing Strategy (1 gate per epic - NEW)](#s4-epic-testing-strategy-1-gate-per-epic---new)
+6. [S4: Feature-Level Testing Strategy (0 formal gates)](#s4-feature-level-testing-strategy-0-formal-gates)
 7. [S5: Implementation Planning](#s5-implementation-planning)
 8. [S6: Implementation Execution](#s6-implementation-execution)
 9. [S7: Post-Implementation (2 gates per feature)](#s7-post-implementation-2-gates-per-feature)
 10. [S8: Post-Feature Updates](#s8-post-feature-updates)
 11. [S9: Epic-Level Final QC](#s9-epic-level-final-qc)
-12. [S10: Epic Cleanup (2 gates per epic)](#s10-epic-cleanup-2-gates-per-epic)
+12. [S10: Epic Cleanup (2 critical checkpoints per epic)](#s10-epic-cleanup-2-critical-checkpoints-per-epic)
 13. [Summary Statistics](#summary-statistics)
 14. [When to Use This Reference](#when-to-use-this-reference)
 
@@ -619,7 +619,7 @@ S4 has no formal user approval gates. The epic testing strategy was approved at 
 
 ---
 
-## S10: Epic Cleanup (2 gates per epic)
+## S10: Epic Cleanup (2 critical checkpoints per epic)
 
 ### Gate 7.1: Unit Tests (100% Pass)
 

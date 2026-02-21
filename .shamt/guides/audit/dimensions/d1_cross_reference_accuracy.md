@@ -75,7 +75,7 @@ Result: Agent couldn't find file, workflow stuck
 
 **After File Renaming:**
 - epic_cleanup.md → s10_epic_cleanup.md
-- phase_1_specification.md → s2_p2_specification.md
+- phase_1_specification.md → s2_p1_spec_creation_refinement.md
 
 **After Folder Reorganization:**
 - stages/s5/round1/ → stages/s5/s5_p1_*

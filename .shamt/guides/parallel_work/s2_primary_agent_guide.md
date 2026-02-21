@@ -19,7 +19,7 @@
 - [Phase 5: Parallel S2 Work](#phase-5-parallel-s2-work)
 - [Phase 6: Sync Point — All Features Complete S2](#phase-6-sync-point--all-features-complete-s2)
 - [Phase 7: S3 Cross-Feature Sanity Check (Solo)](#phase-7-s3-cross-feature-sanity-check-solo)
-- [Phase 8: S4 Epic Testing Strategy (Solo)](#phase-8-s4-epic-testing-strategy-solo)
+- [Phase 8: S4 Feature Testing Strategy (Solo)](#phase-8-s4-feature-testing-strategy-solo)
 - [Phase 9: Notify Secondary Agents of S3/S4 Completion](#phase-9-notify-secondary-agents-of-s3s4-completion)
 - [Common Scenarios](#common-scenarios)
 - [Tools and References](#tools-and-references)
@@ -662,7 +662,7 @@ I'll review all 3 specs for conflicts, overlaps, and gaps...
 
 ---
 
-## Phase 8: S4 Epic Testing Strategy (Solo)
+## Phase 8: S4 Feature Testing Strategy (Solo)
 
 **Run S4 alone:**
 

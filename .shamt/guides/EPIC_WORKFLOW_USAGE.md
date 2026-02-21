@@ -11,7 +11,7 @@ This file provides a complete overview of the Shamt S1–S10 epic-driven develop
 
 ```text
 S1: Epic Planning → S2: Feature Deep Dives → S3: Cross-Feature Sanity Check →
-S4: Epic Testing Strategy → S5-S8: Feature Loop → S9: Epic Final QC → S10: Epic Cleanup
+S4: Feature Testing Strategy → S5-S8: Feature Loop → S9: Epic Final QC → S10: Epic Cleanup
 
 Per-feature loop: S5 (Plan) → S6 (Execute) → S7 (Test) → S8 (Align) → repeat or S9
 ```

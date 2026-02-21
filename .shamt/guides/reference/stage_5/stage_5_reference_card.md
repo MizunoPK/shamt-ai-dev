@@ -86,7 +86,7 @@ Next Feature (loop S5→S6→S7→S8) OR STAGE 6 (if all features done)
 | S5.P2 | stages/s5/s5_v2_validation_loop.md | 3.5-6 hrs | Validation Loop (11 dimensions × 6-8 rounds) | 3 consecutive clean rounds, Gates 3a/23a/24/25 embedded |
 | S6 | stages/s6/s6_execution.md | 1-4 hrs | Execute implementation_plan.md tasks | 100% test pass |
 | S7.P1 | stages/s7/s7_p1_smoke_testing.md | 30-45 min | Import, entry point, E2E tests | Part 3 data values |
-| S7.P2 | stages/s7/s7_p2_qc_rounds.md | 45-75 min | Validation Loop, 11 dimensions | 3 consecutive clean rounds |
+| S7.P2 | stages/s7/s7_p2_qc_rounds.md | 45-75 min | Validation Loop, 12 dimensions (7 master + 5 S7 QC) | 3 consecutive clean rounds |
 | S7.P3 | stages/s7/s7_p3_final_review.md | 30-45 min | PR review, lessons learned | Zero tech debt |
 | S8.P1 | stages/s8/s8_p1_cross_feature_alignment.md | 15-30 min | Update remaining specs | None |
 | S8.P2 | stages/s8/s8_p2_epic_testing_update.md | 15-30 min | Update epic test plan | None |
