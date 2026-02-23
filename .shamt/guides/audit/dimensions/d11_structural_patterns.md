@@ -759,8 +759,8 @@ done
 - **D1: Cross-Reference Accuracy** - File naming affects path validation
 
 **Complementary:**
-- **D6: Template Currency** (not implemented) - Template compliance validation
-- **D9: Intra-File Consistency** (not implemented) - Section content quality
+- **D6: Template Currency** - Template compliance validation (see `d6_template_currency.md`)
+- **D9: Intra-File Consistency** - Section content quality (see `d9_intra_file_consistency.md`)
 
 ---
 

@@ -56,7 +56,7 @@
 **PHASE 3 & 4 ensures epic coherence after adding/updating a feature:**
 
 - **S3:** Cross-feature sanity check (ALL features)
-- **S4:** Update epic testing strategy
+- **S4:** Update/create feature testing strategy (test_strategy.md)
 - **Resume:** Return to paused work
 - **Later:** Implement new/updated feature in sequence
 

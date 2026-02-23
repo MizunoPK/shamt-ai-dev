@@ -40,7 +40,7 @@ STAGE 5: Implementation Planning (4.5-7 hours typical, 6-8 validation rounds)
         ├─ Count consecutive clean rounds
         └─ Exit when 3 consecutive clean rounds achieved
         ↓
-STAGE 5b: Implementation Execution (stages/s6/s6_execution.md)
+S6: Implementation Execution (stages/s6/s6_execution.md)
     1-4 hours (varies by complexity)
     ├─ Create implementation_checklist.md from implementation_plan.md tasks
     ├─ Execute implementation_plan.md tasks (PRIMARY reference)
@@ -48,7 +48,7 @@ STAGE 5b: Implementation Execution (stages/s6/s6_execution.md)
     ├─ Mini-QC checkpoints every 5-7 tasks
     └─ 100% test pass required before completing
         ↓
-STAGE 5c: Post-Implementation (1.5-2.5 hours, 3 phases)
+S7: Post-Implementation (1.5-2.5 hours, 3 phases)
     │
     ├─ Phase 1: Smoke Testing (stages/s7/s7_p1_smoke_testing.md)
     │   ├─ Part 1: Import Test
@@ -56,7 +56,7 @@ STAGE 5c: Post-Implementation (1.5-2.5 hours, 3 phases)
     │   └─ Part 3: E2E Test (verify DATA VALUES) ← MANDATORY GATE
     │
     ├─ Phase 2: Validation Loop (stages/s7/s7_p2_qc_rounds.md)
-    │   ├─ Check ALL 11 dimensions every round
+    │   ├─ Check ALL 12 dimensions every round (7 master + 5 S7 QC-specific)
     │   ├─ Fix issues immediately, reset clean counter
     │   └─ 3 consecutive clean rounds required ← MANDATORY
     │
@@ -65,15 +65,15 @@ STAGE 5c: Post-Implementation (1.5-2.5 hours, 3 phases)
         ├─ Lessons learned documentation
         └─ Zero tech debt tolerance
         ↓
-STAGE 5d: Cross-Feature Spec Alignment (stages/s8/s8_p1_cross_feature_alignment.md)
+S8.P1: Cross-Feature Spec Alignment (stages/s8/s8_p1_cross_feature_alignment.md)
     15-30 minutes
     └─ Update remaining feature specs based on actual implementation
         ↓
-STAGE 5e: Testing Plan Update (stages/s8/s8_p2_epic_testing_update.md)
+S8.P2: Testing Plan Update (stages/s8/s8_p2_epic_testing_update.md)
     15-30 minutes
     └─ Reassess epic_smoke_test_plan.md
         ↓
-Next Feature (loop S5→S6→S7→S8) OR STAGE 6 (if all features done)
+Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 ```
 
 ---
@@ -83,7 +83,7 @@ Next Feature (loop S5→S6→S7→S8) OR STAGE 6 (if all features done)
 | Stage | Guide | Time | Key Activities | Mandatory Gates |
 |-------|-------|------|----------------|-----------------|
 | S5.P1 | stages/s5/s5_v2_validation_loop.md | 60-90 min | Draft creation, merge S4 test strategy | Draft ready |
-| S5.P2 | stages/s5/s5_v2_validation_loop.md | 3.5-6 hrs | Validation Loop (11 dimensions × 6-8 rounds) | 3 consecutive clean rounds, Gates 3a/23a/24/25 embedded |
+| S5.P2 | stages/s5/s5_v2_validation_loop.md | 3.5-6 hrs | Validation Loop (11 dimensions × 6-8 rounds) | 3 consecutive clean rounds, Gates 4a/7a/23a/24/25 embedded |
 | S6 | stages/s6/s6_execution.md | 1-4 hrs | Execute implementation_plan.md tasks | 100% test pass |
 | S7.P1 | stages/s7/s7_p1_smoke_testing.md | 30-45 min | Import, entry point, E2E tests | Part 3 data values |
 | S7.P2 | stages/s7/s7_p2_qc_rounds.md | 45-75 min | Validation Loop, 12 dimensions (7 master + 5 S7 QC) | 3 consecutive clean rounds |
@@ -159,7 +159,7 @@ Next Feature (loop S5→S6→S7→S8) OR STAGE 6 (if all features done)
 → Fix issues, restart from S7.P1 Step 1 (smoke testing)
 
 **Why fix-and-continue?**
-- Check ALL 11 dimensions every round
+- Check ALL 12 dimensions every round (7 master + 5 S7 QC-specific)
 - Fix issues immediately when found
 - More efficient than full restart protocol
 - Zero tech debt tolerance - no deferring issues
@@ -169,24 +169,24 @@ Next Feature (loop S5→S6→S7→S8) OR STAGE 6 (if all features done)
 ## Time Estimates by Complexity
 
 ### Simple Feature (10-15 TODO tasks)
-- 5a: 2 hours
-- 5b: 1 hour
-- 5c: 1.5 hours
-- 5d+5e: 30 minutes
+- S5 (Planning): 2 hours
+- S6 (Execution): 1 hour
+- S7 (Post-Impl): 1.5 hours
+- S8.P1+S8.P2: 30 minutes
 - **Total:** ~5 hours
 
 ### Medium Feature (20-30 TODO tasks)
-- 5a: 2.5 hours
-- 5b: 2 hours
-- 5c: 2 hours
-- 5d+5e: 45 minutes
+- S5 (Planning): 2.5 hours
+- S6 (Execution): 2 hours
+- S7 (Post-Impl): 2 hours
+- S8.P1+S8.P2: 45 minutes
 - **Total:** ~7 hours
 
 ### Complex Feature (35+ TODO tasks - consider splitting)
-- 5a: 3 hours
-- 5b: 3-4 hours
-- 5c: 2.5 hours
-- 5d+5e: 1 hour
+- S5 (Planning): 3 hours
+- S6 (Execution): 3-4 hours
+- S7 (Post-Impl): 2.5 hours
+- S8.P1+S8.P2: 1 hour
 - **Total:** ~10 hours
 
 ---
@@ -214,7 +214,7 @@ Next Feature (loop S5→S6→S7→S8) OR STAGE 6 (if all features done)
 - ✅ Zero tech debt tolerance (fix ALL issues immediately)
 - ✅ PR review covers all 11 categories
 
-### S8.P1 & 5e
+### S8.P1 & S8.P2
 - ✅ Update specs ONLY for remaining (not yet implemented) features
 - ✅ Reassess epic test plan after EACH feature completes
 
@@ -275,14 +275,9 @@ Next Feature (loop S5→S6→S7→S8) OR STAGE 6 (if all features done)
 **S5 is complete for a feature when (v2):**
 - [ ] Draft creation complete (implementation_plan.md created)
 - [ ] Validation Loop complete (3 consecutive clean rounds, all 11 dimensions passing)
-- [ ] All embedded gates passed (Gates 3a, 23a, 24, 25)
+- [ ] All embedded gates passed (Gates 4a, 7a, 23a, 24, 25)
 - [ ] User approval received (Gate 5)
 - [ ] Implementation ready to execute in S6
-- [ ] Validation Loop passed (3 consecutive clean rounds)
-- [ ] PR review passed (all 11 categories)
-- [ ] Lessons learned documented
-- [ ] Remaining feature specs updated (S8.P1)
-- [ ] Epic test plan updated (S8.P2)
 
 **Next Action:**
 - If more features to implement → Loop to S5 for next feature

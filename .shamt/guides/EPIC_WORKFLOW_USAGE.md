@@ -75,7 +75,7 @@ Key activities:
 
 Key activities:
 - For each feature: create `test_strategy.md`
-- 4 iterations total (I1: Draft, I2: Self-Review, I3: Cross-Feature, I4: Validation Loop)
+- 4 iterations total (I1: Test Strategy Development, I2: Edge Case Enumeration, I3: Configuration Change Impact, I4: Validation Loop)
 
 **Outputs:** `test_strategy.md` per feature
 
@@ -115,7 +115,7 @@ Key activities:
 - `stages/s7/s7_p2_qc_rounds.md` — S7.P2 QC Rounds (3 rounds)
 - `stages/s7/s7_p3_final_review.md` — S7.P3 Final Review
 
-**🚨 Restart Protocol:** If ANY issues found → restart from S7.P1 (not just fix and continue)
+**Protocol:** S7.P2 uses fix-and-continue (fix issues immediately, reset clean counter, no restart). S7.P1 failure or S7.P3 critical issues → restart from S7.P1.
 
 **Outputs:** Feature committed to git, `lessons_learned.md`
 

@@ -2,7 +2,7 @@
 
 **Purpose:** Orchestrate the complete feature implementation lifecycle from code writing to epic test plan updates, ensuring smooth transitions between phases and proper EPIC_README tracking.
 
-**Use Case:** Quick reference for navigating a single feature through Stages 5b, 5c, 5d, 5e with clear decision points.
+**Use Case:** Quick reference for navigating a single feature through Stages S6, S7, S8.P1, S8.P2 with clear decision points.
 
 **Total Time:** 2-5 hours per feature (varies by complexity)
 
@@ -53,7 +53,7 @@ S5: TODO Creation COMPLETE
     └─ YES → Feature complete!
          ↓
     [More features remaining?]
-    ├─ YES → Stages 5d + 5e
+    ├─ YES → Stages S8.P1 + S8.P2
     └─ NO → Skip to S9
          ↓
 ┌─────────────────────────────────────────┐
@@ -357,10 +357,10 @@ Mark next column as 🔄 (in progress)
 **Question:** Do we continue to S8.P1 and S8.P2?
 
 **Answer:**
-- **YES** if features remaining to implement → Go to 5d
+- **YES** if features remaining to implement → Go to S8.P1
 - **NO** if this was last feature → Skip to S9
 
-**Why:** No point updating specs (5d) or test plan (5e) if no more features to implement
+**Why:** No point updating specs (S8.P1) or test plan (S8.P2) if no more features to implement
 
 ---
 
@@ -425,8 +425,8 @@ Mark next column as 🔄 (in progress)
 **Total per feature:** 2-5 hours
 
 **Key Decision Points:**
-- After 5c: Skip S8 if last feature
-- After 5e: Next feature's 5a OR S9 if all done
+- After S7: Skip S8 if last feature
+- After S8.P2: Next feature's S5 OR S9 if all done
 - During any stage: Issues found → Bug fix → Restart stage
 
 **EPIC_README Updates:**

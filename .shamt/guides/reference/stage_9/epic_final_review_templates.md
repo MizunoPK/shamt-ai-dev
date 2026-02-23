@@ -614,7 +614,7 @@ bugfix_{priority}_{name}/
 
 **Guide Improvements Needed:**
 - STAGE_2 guide: Add "Architecture Pattern" section to spec template
-- S5.P3 guide: Add performance baseline comparison to smoke testing
+- S7.P1 guide: Add performance baseline comparison to smoke testing
 - S9 guide: Add architectural pattern consistency check
 
 **S9.P3 Statistics:**

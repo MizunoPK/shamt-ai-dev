@@ -1,4 +1,4 @@
-# SPECIAL CASE: Discovery During Epic Testing (S9/7)
+# SPECIAL CASE: Discovery During Epic Testing (S9/S10)
 
 **Purpose:** Handle missed requirements discovered during epic testing with special restart protocol
 
@@ -18,7 +18,7 @@
 - Implement features in sequence
 - Continue to next stage when turn comes
 
-**Special case (discovered during S9/7):**
+**Special case (discovered during S9/S10):**
 - Plan new/updated feature (Stages 2/3/4) ← SAME
 - Resume any paused work
 - **Complete ALL remaining features first** ← DIFFERENT
@@ -289,7 +289,7 @@ Actions needed:
 
 ## Comparison: Normal vs Special Case
 
-| Aspect | Normal (S5) | Special (S9/7) |
+| Aspect | Normal (S5) | Special (S9/S10) |
 |--------|-----------------|---------------------|
 | **Planning** | Stages 2/3/4 ✓ | Stages 2/3/4 ✓ |
 | **Resume paused work** | Resume feature implementation | Not applicable (features done) |
@@ -368,19 +368,19 @@ Actions needed:
 
 ## Summary
 
-**Special case for S9/7 discovery:**
+**Special case for S9/S10 discovery:**
 
 1. Follow normal PHASE 1-4 (discovery, planning, realignment)
 2. **Different:** Complete ALL remaining features first
 3. **Different:** Implement new/updated feature (full S5)
 4. **Different:** RESTART epic testing from S9.P1 Step 1
-5. Run complete epic testing flow (S9.P1 → S9.P2 → S9.P3 → S9.P4 → 7)
+5. Run complete epic testing flow (S9.P1 → S9.P2 → S9.P3 → S9.P4 → S10)
 
 **Key principle:** New feature changes epic integration → Must re-test entire epic
 
 **Loop-back mechanism:**
 - Similar to debugging: Fix → Loop back to testing
-- Missed requirement in S9/7: Add feature → Loop back to S9.P1
+- Missed requirement in S9/S10: Add feature → Loop back to S9.P1
 
 ---
 

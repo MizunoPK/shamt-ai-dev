@@ -892,7 +892,6 @@ grep "ISSUES:" feature_*/STATUS | grep -v "ISSUES: 0"
 **Estimated time:** 1-2 hours
 
 **Proceeding to S3 now...**
-```text
 
 **Then:**
 - Read `stages/s3/s3_epic_planning_approval.md`

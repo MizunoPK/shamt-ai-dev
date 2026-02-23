@@ -733,7 +733,7 @@ round to ensure no new issues were introduced.
 - **D13: Documentation Quality** - Code tags improve quality
 
 **Complementary:**
-- **D5: Content Completeness** (not implemented) - Ensures examples present
+- **D5: Content Completeness** - Ensures examples present (see `d5_content_completeness.md`)
 
 ---
 

@@ -122,7 +122,7 @@ Missed requirement handling is complete when the new/updated feature has been pl
 3. ⚠️ ALWAYS RETURN TO STAGE 2/3/4
    - S2: Flesh out new/updated feature spec
    - S3: Cross-feature sanity check (ALL features)
-   - S4: Update epic testing strategy
+   - S4: Update/create feature testing strategy (test_strategy.md)
    - Maintains epic-level alignment
 
 4. ⚠️ SEQUENCE MATTERS FOR NEW FEATURES
@@ -197,7 +197,7 @@ The missed requirement protocol consists of 4 phases (plus special case):
 **Key Activities:**
 - S3: Cross-feature sanity check (ALL features, not just new/updated)
 - Resolve conflicts between features
-- S4: Update epic_smoke_test_plan.md
+- S4: Create/update feature test_strategy.md + update epic_smoke_test_plan.md
 - Update Epic Progress Tracker
 - Update EPIC_README with new sequence
 
@@ -334,7 +334,7 @@ Discovered during S9 or S10?
 5. **Implementation:** Feature implemented later in sequence
 
 **Special Case:**
-- If discovered during S9/7: Complete all features → Restart epic testing from S9.P1
+- If discovered during S9/S10: Complete all features → Restart epic testing from S9.P1
 
 **Key Principle:** Missed requirements are REAL features - treated with same rigor, proper planning, epic alignment
 

@@ -643,9 +643,9 @@ Content: "audit/README.md (modular audit system entry point)"
 **Next Dimension (Recommended Reading Order):**
 - **D2: Terminology Consistency** - After fixing cross-references, verify paths use correct notation (e.g., "S5.P1" not "S5a")
 
-**Related Dimensions (Coming Soon):**
-- D3: Workflow Integration ⏳ - Prerequisites and transitions must match file paths
-- D11: Structural Patterns ⏳ - Expected file structures validate reference targets exist
+**Related Dimensions:**
+- D3: Workflow Integration - Prerequisites and transitions must match file paths (see `d3_workflow_integration.md`)
+- D11: Structural Patterns - Expected file structures validate reference targets exist (see `d11_structural_patterns.md`)
 
 **Audit Stages:**
 - `../stages/stage_1_discovery.md` - How to search for broken references

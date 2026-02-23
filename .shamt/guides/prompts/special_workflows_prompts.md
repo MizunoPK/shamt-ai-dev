@@ -99,7 +99,7 @@ I'm reading `missed_requirement/missed_requirement_protocol.md` to ensure I foll
 - Step 3: Return to Planning Stages (2/3/4)
   - S2: Flesh out new/updated feature spec (full deep dive)
   - S3: Re-align ALL features (cross-feature sanity check)
-  - S4: Update epic_smoke_test_plan.md
+  - S4: Create/update feature test_strategy.md + update epic_smoke_test_plan.md
 - Step 4: Resume Previous Work
   - Mark planning complete
   - Verify no spec changes affect paused feature
@@ -109,8 +109,8 @@ I'm reading `missed_requirement/missed_requirement_protocol.md` to ensure I foll
 - ALWAYS return to S2/3/4 for planning
 - Full S5 (S5 → S6 → S7 → S8) when feature gets implemented
 - Priority determines sequence: high = before current, medium = after current, low = at end
-- SPECIAL CASE: If discovered during S9/7 → Complete all features → Restart epic testing from S9.P1
-- Can be discovered during: Implementation (5a/5b/5c), Debugging, Epic Testing (6a/6b/6c), User Testing (7)
+- SPECIAL CASE: If discovered during S9/S10 → Complete all features → Restart epic testing from S9.P1
+- Can be discovered during: Implementation (S5-S6), Debugging, Epic Testing (S9), User Testing (S10)
 
 **Prerequisites I'm verifying:**
 ✅ At least one feature has entered S5 (can only use after first S5 starts)

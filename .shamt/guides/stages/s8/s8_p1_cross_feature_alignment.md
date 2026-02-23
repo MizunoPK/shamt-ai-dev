@@ -452,7 +452,7 @@ After Feature 01 implementation:
 - Review ALL remaining features sequentially
 - Compare to ACTUAL implementation (read the code)
 - Update specs proactively (don't defer)
-- Use clear rework criteria (S1, 2, or 5a)
+- Use clear rework criteria (S1, S2, or S5)
 - Get user approval for major changes
 
 **Success criteria:**

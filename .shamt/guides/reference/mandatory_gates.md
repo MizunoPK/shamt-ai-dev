@@ -577,7 +577,7 @@ S4 has no formal user approval gates. The epic testing strategy was approved at 
 **When:** During Validation Loop (S7.P2)
 
 **What it checks:**
-- Check ALL 11 dimensions every round
+- Check ALL 12 dimensions every round (7 master + 5 S7 QC-specific)
 - 3 consecutive rounds with ZERO issues
 
 **Pass Criteria:**
@@ -591,7 +591,7 @@ S4 has no formal user approval gates. The epic testing strategy was approved at 
 - No restart needed - fix issues and keep going
 
 **Validation Loop Protocol:**
-- Check all 11 dimensions every round (not different focuses per round)
+- Check all 12 dimensions every round (7 master + 5 S7 QC-specific — not different focuses per round)
 - Fix issues immediately when found
 - Only exit after 3 CONSECUTIVE clean rounds
 
@@ -717,7 +717,7 @@ S4 has no formal user approval gates. The epic testing strategy was approved at 
 **Formal Gates Requiring User Input:** 3
 - Gate 3: User Checklist Approval (S2.P1.I3)
 - Gate 4.5: Epic Plan Approval (S3.P3) - includes test plan approval
-- Gate 5: Implementation Plan Approval (S5.P3)
+- Gate 5: Implementation Plan Approval (S5 v2 — after Validation Loop, before S6)
 - Gate 25 (Dimension 11 validation): User decision if discrepancies found
 
 **Stage Checkpoints Requiring User Input:** 2

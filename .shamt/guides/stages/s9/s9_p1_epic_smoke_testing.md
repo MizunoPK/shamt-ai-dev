@@ -73,7 +73,7 @@ Epic-level smoke testing validates that ALL features work together as a cohesive
 **When do you use this guide?**
 - After ALL features have completed S8.P2 (Epic Testing Update)
 - No pending bug fixes
-- epic_smoke_test_plan.md has been evolved through Stages 1, 4, and 5e
+- epic_smoke_test_plan.md has been evolved through Stages S1, S4, and S8.P2
 - Ready to validate epic as a whole
 
 **Key Outputs:**
@@ -112,8 +112,8 @@ Epic Smoke Testing is complete when ALL 4 parts of epic_smoke_test_plan.md pass,
    - Contains integration scenarios added during S8.P2 (Epic Testing Update)
 
 3. ⚠️ Epic testing ≠ Feature testing
-   - Feature testing (5c): Tests feature in isolation
-   - Epic testing (6a): Tests ALL features working together
+   - Feature testing (S7): Tests feature in isolation
+   - Epic testing (S9): Tests ALL features working together
    - Focus: Cross-feature workflows, integration points
 
 4. ⚠️ If smoke testing fails → Fix issues, re-run from Part 1
@@ -160,7 +160,7 @@ Epic Smoke Testing is complete when ALL 4 parts of epic_smoke_test_plan.md pass,
 - [ ] Contains user's original epic request
 
 **EPIC_README.md ready:**
-- [ ] Epic Progress Tracker shows all features at 5e
+- [ ] Epic Progress Tracker shows all features at S8.P2
 - [ ] Agent Status section exists
 
 **If any prerequisite fails:**

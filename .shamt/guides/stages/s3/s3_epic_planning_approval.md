@@ -304,7 +304,7 @@ Await user decision before proceeding.
 **S4 will:**
 - Plan unit tests, integration tests, edge cases, config tests
 - Create test_strategy.md with >90% coverage goal
-- Validate with Validation Loop (4 iterations)
+- 4 iterations total (I1: Test Strategy Development, I2: Edge Case Enumeration, I3: Configuration Change Impact, I4: Validation Loop)
 
 **Remember:** Use phase transition prompt from `prompts_reference_v2.md` when starting S4.
 

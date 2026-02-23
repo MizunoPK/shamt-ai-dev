@@ -785,7 +785,7 @@ $ grep -n "Guide Index" README.md
 - **D14: Content Accuracy** - Validates claims match reality
 
 **Complementary:**
-- **D5: Content Completeness** (not implemented) - Would check for missing content within sections
+- **D5: Content Completeness** - Checks for missing content within sections (see `d5_content_completeness.md`)
 - **D16: Accessibility** - TOC requirement overlaps
 
 ---

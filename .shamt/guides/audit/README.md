@@ -39,7 +39,7 @@
 ```bash
 cd .shamt/guides/audit
 bash scripts/pre_audit_checks.sh
-```diff
+```
 
 **STEP 3:** Start Round 1 Discovery
 - Read `stages/stage_1_discovery.md`

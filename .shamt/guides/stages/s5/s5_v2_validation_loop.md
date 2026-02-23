@@ -13,7 +13,7 @@
 
 ## Table of Contents
 
-1. [🎯 OVERVIEW](#-overview)
+1. [Overview](#overview)
    - [What is S5 v2?](#what-is-s5-v2)
    - [How S5 v2 Differs from S5 v1](#how-s5-v2-differs-from-s5-v1)
    - [When to Use This Guide](#when-to-use-this-guide)
@@ -52,7 +52,7 @@
    - [❌ Anti-Pattern 4: "Batching Fixes"](#-anti-pattern-4-batching-fixes)
    - [❌ Anti-Pattern 5: "Skipping Re-Reading After Small Fix"](#-anti-pattern-5-skipping-re-reading-after-small-fix)
    - [❌ Anti-Pattern 6: "Saying 'Efficiently' or 'Quickly'"](#-anti-pattern-6-saying-efficiently-or-quickly)
-1. [✅ EXIT CRITERIA & QUALITY METRICS](#-exit-criteria-quality-metrics)
+1. [Exit Criteria & Quality Metrics](#exit-criteria)
    - [Validation Loop Exit Criteria](#validation-loop-exit-criteria)
    - [Gate 5: User Approval](#gate-5-user-approval)
    - [Quality Metrics](#quality-metrics)
@@ -360,7 +360,7 @@ Historical evidence from SHAMT-8 Feature 04 shows test creation tasks missing fr
 1. Empty rank file: All items get default multiplier
 2. Duplicate items: Use first occurrence
 3. Invalid rank values: Clamp to valid range (1-500)
-```text
+```
 
 **Draft Quality Bar:**
 - 5-10 error scenarios identified
@@ -452,7 +452,7 @@ Each round follows this pattern:
 5. FIX OR CONTINUE
    - If X > 0: Fix ALL issues immediately → Round N+1, RESET counter
    - If X = 0: Increment clean counter → Check if 3 consecutive clean
-```text
+```
 
 ---
 

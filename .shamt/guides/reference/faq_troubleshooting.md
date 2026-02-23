@@ -308,18 +308,18 @@ A: Fix immediately - no deferrals:
 
 A: NO - Zero tech debt tolerance:
 - Fix ALL PR review issues before completing S7
-- This is the LAST checkpoint before S8.P1/5e
+- This is the LAST checkpoint before S8.P1/S8.P2
 - Deferring issues = they'll appear in S9
 
 ---
 
-### S8.P1/5e: Post-Feature Alignment
+### S8.P1/S8.P2: Post-Feature Alignment
 
 **Q: When do I skip S8.P1 and S8.P2?**
 
 A: Skip ONLY if this was the LAST feature:
-- No more features to implement = no specs to update (5d)
-- Epic test plan will be validated in S9 anyway (5e)
+- No more features to implement = no specs to update (S8.P1)
+- Epic test plan will be validated in S9 anyway (S8.P2)
 - Proceed directly to S9
 
 **Q: What if I already updated other feature specs during S6?**
@@ -385,7 +385,7 @@ A: NO - Zero bugs required:
 - ANY bugs = restart S9 after fixing
 - Committing with known bugs violates workflow
 
-**Q: Tests were passing in S6/5c/6 but fail in S10 - how?**
+**Q: Tests were passing in S6/S7 but fail in S10 - how?**
 
 A: Possible causes:
 - Environment differences

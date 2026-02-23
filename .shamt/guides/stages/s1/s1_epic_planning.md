@@ -34,9 +34,8 @@
 13. [Exit Criteria](#exit-criteria)
 14. [Common Mistakes to Avoid](#common-mistakes-to-avoid)
 15. [README Agent Status Update Requirements](#readme-agent-status-update-requirements)
-16. [Guide Comprehension Verification](#guide-comprehension-verification)
-17. [Prerequisites for S2](#prerequisites-for-s2)
-18. [Next Stage](#next-stage)
+16. [Prerequisites for S2](#prerequisites-for-s2)
+17. [Next Stage](#next-stage)
 
 ---
 

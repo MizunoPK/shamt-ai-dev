@@ -24,7 +24,7 @@
 - While investigating issues: Realize root cause is missing functionality
 - After fixing bugs: Discover the fix revealed missing scope
 
-**During Epic-Level Work (S9/7):**
+**During Epic-Level Work (S9/S10):**
 - S9.P1 (Epic Smoke Testing): Find missing integration between features
 - S9.P2 (Epic Validation Loop): Discover missing epic-level functionality
 - S10 (User Testing): User reports missing functionality that was in original intent

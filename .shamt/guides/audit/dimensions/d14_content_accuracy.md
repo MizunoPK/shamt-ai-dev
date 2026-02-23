@@ -773,7 +773,7 @@ grep -rn "automat.*[0-9]\+%\|Checks [0-9] of [0-9]" .shamt/guides/ -i
 **Related Dimensions:**
 - **D1: Cross-Reference Accuracy** - Validates file paths exist (complements count validation)
 - **D2: Terminology Consistency** - Validates notation (complements claim validation)
-- **D5: Content Completeness** ⏳ - Validates no missing sections (complements accuracy)
+- **D5: Content Completeness** - Validates no missing sections (complements accuracy)
 
 **Audit Stages:**
 - `../stages/stage_1_discovery.md` - How to search for count mismatches

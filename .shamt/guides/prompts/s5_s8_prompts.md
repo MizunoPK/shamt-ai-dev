@@ -25,7 +25,7 @@
 
 **User says:** "Prepare for updates based on {feature_name}" or "Start implementation of feature_01" or "Create implementation plan"
 
-**Prerequisite:** S4 complete (Gate 4.5 passed - user approved test plan) AND feature spec.md complete AND checklist.md resolved
+**Prerequisite:** S4 complete (test_strategy.md created and Validation Loop passed) AND feature spec.md complete AND checklist.md resolved
 
 **Note:** S5 v2 uses Validation Loop approach (replaces 22-iteration v1 structure)
 
@@ -36,7 +36,7 @@ I'm beginning S5 (Implementation Planning) for {feature_name}.
 
 **Guide I'm following:** stages/s5/s5_v2_validation_loop.md (from CLAUDE.md Stage Workflow table)
 **Prerequisites verified:**
-- [x] Prior stage (S4) fully complete - test_strategy.md approved by user (Gate 4.5)
+- [x] Prior stage (S4) fully complete - test_strategy.md created and Validation Loop passed (S4 has no user approval gate)
 - [x] Guide path matches CLAUDE.md Stage Workflow table
 - [x] Read ENTIRE guide using Read tool
 
@@ -86,7 +86,7 @@ I'm beginning S5 (Implementation Planning) for {feature_name}.
 **Prerequisites I'm verifying:**
 ✅ spec.md exists and is complete
 ✅ checklist.md all items resolved (all [x])
-✅ S4 complete (Gate 4.5 passed - user approved test plan)
+✅ S4 complete (test_strategy.md created and Validation Loop passed — S4 has no user approval gate)
 ✅ No pending questions from S2
 
 **Updating feature README Agent Status:**

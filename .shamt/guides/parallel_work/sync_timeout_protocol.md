@@ -297,7 +297,7 @@ Parallel S2 work started 6 hours ago. Not all features have completed S2.
 
 **Assumptions:**
 - S3: 30-60 minutes (cross-feature sanity check)
-- S4: 30-45 minutes (epic testing strategy update)
+- S4: 45-60 minutes per feature (feature testing strategy — 4 iterations)
 - Total: 1-2 hours for Primary to complete both
 
 **Timeout thresholds:**
