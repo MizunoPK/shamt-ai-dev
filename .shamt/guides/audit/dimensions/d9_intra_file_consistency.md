@@ -1052,6 +1052,63 @@ The agent must wait for user approval before proceeding.
 
 ---
 
+### Rule 5: GFM Anchor Generation for Emoji and Special Characters
+
+**Context:** ToC anchor links for headings containing emoji or special characters follow GFM
+(GitHub Flavored Markdown) anchor generation rules that produce non-obvious results. Agents
+that guess at emoji anchor format will be wrong, and will "fix" correct anchors into broken ones.
+
+**The GFM Anchor Algorithm (apply this before flagging any anchor as wrong):**
+
+1. Take the heading text (excluding the `#` prefix and surrounding whitespace)
+2. Convert to lowercase
+3. Remove all characters that are NOT alphanumeric, spaces, or hyphens — this includes:
+   - Emoji (🔢, 🔀, 📖, 🚨, 🛑, ✅, etc.)
+   - Punctuation: `:`, `(`, `)`, `/`, `!`, `?`, `.`
+   - Symbols: `&`, `*`, `@`
+4. Replace spaces with hyphens
+5. **Do NOT trim leading or trailing hyphens** — a leading `#-` is valid and correct
+
+**Key implication — emoji prefix pattern:**
+An emoji at the START of a heading followed by a space produces a **leading hyphen** in the anchor
+(the space after the stripped emoji becomes the first hyphen).
+
+```
+Heading:  ## 🔢 Understanding Gate Numbering
+Step 3:   [strip emoji]  →  " understanding gate numbering"   (space remains)
+Step 4:   [spaces→hyphens]  →  "-understanding-gate-numbering"
+Anchor:   #-understanding-gate-numbering   ← CORRECT (leading hyphen is intentional)
+```
+
+**Common wrong "fix" (do NOT apply):**
+```
+❌ WRONG:  #🔢-understanding-gate-numbering   (emoji cannot appear in GFM anchors)
+✅ CORRECT: #-understanding-gate-numbering
+```
+
+**🚨 MANDATORY STOP:** Before flagging any anchor containing emoji as wrong, apply the algorithm
+above manually. If the existing anchor matches the algorithm output, it is CORRECT — do not
+change it, even if it looks unintuitive (e.g., leading `#-`).
+
+**Verified anchor table for Shamt emoji headings (do NOT change these):**
+
+| File | Heading | Correct Anchor |
+|------|---------|----------------|
+| `reference/mandatory_gates.md` | `## 🔢 Understanding Gate Numbering` | `#-understanding-gate-numbering` |
+| `stages/s2/s2_feature_deep_dive.md` | `## 🔀 Parallel Work Check (FIRST PRIORITY)` | `#-parallel-work-check-first-priority` |
+| `stages/s2/s2_feature_deep_dive.md` | `## 📖 Terminology Note` | `#-terminology-note` |
+| `stages/s10/s10_epic_cleanup.md` | `## 🚨 MANDATORY READING PROTOCOL` | `#-mandatory-reading-protocol` |
+| `stages/s10/s10_epic_cleanup.md` | `## 🛑 Critical Rules` | `#-critical-rules` |
+
+**History:** This rule was added after Round 12 SR12.3 introduced a regression by changing
+correct `#-emoji-name` anchors to incorrect `#emoji-emoji-name` anchors. The agent lacked this
+rule and reasoned incorrectly that the emoji should appear in the anchor. See
+`audit/outputs/round_12_sr3_discovery_report.md` for the original (incorrect) finding.
+
+**Validation:** Apply algorithm manually → if result matches current anchor → VALID (do not change)
+
+---
+
 ## Real Examples
 
 ### Example 1: Mixed Notation in S5 Guide

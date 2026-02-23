@@ -189,6 +189,41 @@ Audit Dimension D13 (Documentation Quality) checks for "## Prerequisites" and "#
 
 ---
 
+### Category D: Emoji Heading Anchor Patterns
+
+**Purpose:** Documents the correct GFM anchor format for headings that start with emoji.
+
+**Why anchors look "wrong" but are correct:**
+GFM (GitHub Flavored Markdown) strips emoji characters during anchor generation. A heading like
+`## 🔢 Understanding Gate Numbering` produces anchor `#-understanding-gate-numbering`, NOT
+`#🔢-understanding-gate-numbering`. The leading hyphen comes from the space character that
+follows the emoji (space → hyphen after stripping the emoji).
+
+**Pattern:** `#-kebab-case-title` is correct for all emoji-prefixed headings.
+
+**🚨 Do NOT "fix" these anchors** — they are already correct. Changing them from `#-name` to
+`#emoji-name` is a regression (introduced in Round 12 SR12.3 and reverted in Round 13).
+
+**Verified correct anchors:**
+
+| File | Heading | Correct Anchor | Wrong Form (do not use) |
+|------|---------|----------------|------------------------|
+| `reference/mandatory_gates.md` | `## 🔢 Understanding Gate Numbering` | `#-understanding-gate-numbering` | `#🔢-understanding-gate-numbering` |
+| `stages/s2/s2_feature_deep_dive.md` | `## 🔀 Parallel Work Check (FIRST PRIORITY)` | `#-parallel-work-check-first-priority` | `#🔀-parallel-work-check-first-priority` |
+| `stages/s2/s2_feature_deep_dive.md` | `## 📖 Terminology Note` | `#-terminology-note` | `#📖-terminology-note` |
+| `stages/s10/s10_epic_cleanup.md` | `## 🚨 MANDATORY READING PROTOCOL` | `#-mandatory-reading-protocol` | `#🚨-mandatory-reading-protocol` |
+| `stages/s10/s10_epic_cleanup.md` | `## 🛑 Critical Rules` | `#-critical-rules` | `#🛑-critical-rules` |
+
+**Algorithm (for deriving anchors for new emoji headings):**
+1. Take heading text, lowercase it
+2. Strip all non-alphanumeric, non-space, non-hyphen characters (including the emoji)
+3. Replace spaces with hyphens — the space after the stripped emoji becomes a leading `-`
+4. Do not trim leading hyphens — `#-name` is valid
+
+**Related:** See D9 Context-Sensitive Rule 5 for full specification.
+
+---
+
 ## How to Use This Document
 
 ### For Future Audits

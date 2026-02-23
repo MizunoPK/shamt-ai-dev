@@ -17,7 +17,7 @@ S5 (Implementation Planning) → S6 (Implementation Execution) → S7 (Testing &
 
 ## Table of Contents
 
-1. [MANDATORY READING PROTOCOL](#mandatory-reading-protocol)
+1. [🚨 MANDATORY READING PROTOCOL](#🚨-mandatory-reading-protocol)
 2. [Overview](#overview)
 3. [Critical Rules](#critical-rules)
 4. [Critical Decisions Summary](#critical-decisions-summary)
@@ -25,7 +25,7 @@ S5 (Implementation Planning) → S6 (Implementation Execution) → S7 (Testing &
 6. [Workflow Overview](#workflow-overview)
 7. [Quick Navigation](#quick-navigation)
 8. [Detailed Workflow](#detailed-workflow)
-9. [MANDATORY CHECKPOINT 1](#mandatory-checkpoint-1)
+9. [🛑 MANDATORY CHECKPOINT 1](#🛑-mandatory-checkpoint-1)
 10. [Commit Message Template](#commit-message-template)
 11. [Exit Criteria](#exit-criteria)
 12. [Common Mistakes to Avoid](#common-mistakes-to-avoid)

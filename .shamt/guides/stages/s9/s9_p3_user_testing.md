@@ -15,10 +15,10 @@ S9.P1 (Epic Smoke) → S9.P2 (Epic QC Validation Loop) →
 
 ## Table of Contents
 
-1. [🚨 MANDATORY READING PROTOCOL](#-mandatory-reading-protocol)
+1. [🚨 MANDATORY READING PROTOCOL](#🚨-mandatory-reading-protocol)
 2. [Prerequisites](#prerequisites)
 3. [Overview](#overview)
-4. [🛑 Critical Rules](#-critical-rules)
+4. [🛑 Critical Rules](#🛑-critical-rules)
 5. [Workflow Overview](#workflow-overview)
 6. [Step S9.P1: Ask User to Test the System](#step-s9p1-ask-user-to-test-the-system)
 7. [Step S9.P2: Wait for User Testing Results](#step-s9p2-wait-for-user-testing-results)

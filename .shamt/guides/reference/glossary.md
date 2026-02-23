@@ -166,7 +166,7 @@ Testing how multiple features interact together.
 ---
 
 ### Cross-Feature Sanity Check
-S3 process of systematic pairwise comparison of all feature specs.
+S3 process of validating epic-level consistency across all feature specs. Note: Pairwise comparison of feature specs is performed in S2.P2 (moved from old S3). S3 focuses on epic-level testing strategy, documentation, and user approval (Gate 4.5).
 
 **See:** S3, Alignment
 

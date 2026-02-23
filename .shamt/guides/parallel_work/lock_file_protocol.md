@@ -18,7 +18,7 @@
 6. [Lock Timeout Behavior](#lock-timeout-behavior)
 7. [Lock Files in S2 Parallelization](#lock-files-in-s2-parallelization)
 8. [Lock Retry Logic](#lock-retry-logic)
-9. [Sectioned EPIC_README.md](#sectioned-epic_readmemd)
+9. [Sectioned EPIC_README.md](#sectioned-epic_readmemd-reduces-lock-contention)
 10. [Common Lock Scenarios](#common-lock-scenarios)
 11. [Lock Debugging](#lock-debugging)
 12. [Integration with Guides](#integration-with-guides)

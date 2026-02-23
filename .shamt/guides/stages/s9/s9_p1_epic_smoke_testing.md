@@ -44,9 +44,9 @@ S8 (ALL features complete) →
 
 ## Table of Contents
 
-1. [🚨 MANDATORY READING PROTOCOL](#-mandatory-reading-protocol)
+1. [🚨 MANDATORY READING PROTOCOL](#🚨-mandatory-reading-protocol)
 2. [Overview](#overview)
-3. [🛑 Critical Rules (Epic-Specific)](#-critical-rules-epic-specific)
+3. [🛑 Critical Rules (Epic-Specific)](#🛑-critical-rules-epic-specific)
 4. [Prerequisites Checklist](#prerequisites-checklist)
 5. [Workflow Overview](#workflow-overview)
 6. [STEP 1: Pre-QC Verification](#step-1-pre-qc-verification)
@@ -57,7 +57,7 @@ S8 (ALL features complete) →
 11. [Part 4: Cross-Feature Integration Test (EPIC-SPECIFIC)](#part-4-cross-feature-integration-test-epic-specific)
 12. [Pass/Fail Criteria](#passfail-criteria)
 13. [Epic Issue Handling Protocol](#epic-issue-handling-protocol)
-14. [🛑 MANDATORY CHECKPOINT 1](#-mandatory-checkpoint-1)
+14. [🛑 MANDATORY CHECKPOINT 1](#🛑-mandatory-checkpoint-1)
 15. [Next Steps](#next-steps)
 16. [Summary](#summary)
 17. [Exit Criteria](#exit-criteria)

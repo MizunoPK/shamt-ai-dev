@@ -18,8 +18,8 @@
    - [How S5 v2 Differs from S5 v1](#how-s5-v2-differs-from-s5-v1)
    - [When to Use This Guide](#when-to-use-this-guide)
    - [Relationship to Master Validation Loop Protocol](#relationship-to-master-validation-loop-protocol)
-1. [📐 THE TWO-PHASE APPROACH](#-the-two-phase-approach)
-1. [🚀 PHASE 1: DRAFT CREATION](#-phase-1-draft-creation)
+1. [📐 THE TWO-PHASE APPROACH](#📐-the-two-phase-approach)
+1. [🚀 PHASE 1: DRAFT CREATION](#🚀-phase-1-draft-creation)
    - [Step-by-Step Process](#step-by-step-process)
 1. [Task 1: Load Rank Data](#task-1-load-rank-data)
 1. [Task 6: Create CLI Flag Tests (R1)](#task-6-create-cli-flag-tests-r1)
@@ -29,37 +29,37 @@
 1. [Error Handling](#error-handling)
 1. [Edge Cases](#edge-cases)
    - [Draft Creation Exit Criteria](#draft-creation-exit-criteria)
-1. [🔄 PHASE 2: VALIDATION LOOP](#-phase-2-validation-loop)
+1. [🔄 PHASE 2: VALIDATION LOOP](#🔄-phase-2-validation-loop)
    - [Validation Loop Protocol](#validation-loop-protocol)
    - [Round Structure](#round-structure)
    - [The 11 Implementation Planning Dimensions](#the-11-implementation-planning-dimensions)
    - [Round-by-Round Reading Patterns](#round-by-round-reading-patterns)
    - [Example Validation Loop Execution](#example-validation-loop-execution)
-1. [🛑 SPECIAL CASES & PROTOCOLS](#-special-cases-protocols)
+1. [🛑 SPECIAL CASES & PROTOCOLS](#🛑-special-cases--protocols)
    - [If Validation Loop Exceeds 10 Rounds](#if-validation-loop-exceeds-10-rounds)
    - [If spec.md Discrepancies Found (Dimension 11)](#if-specmd-discrepancies-found-dimension-11)
    - [If Draft Quality <70% After 90 Minutes](#if-draft-quality-70-after-90-minutes)
-1. [⚠️ COMMON ISSUES & FIXES](#-common-issues-fixes)
+1. [⚠️ COMMON ISSUES & FIXES](#⚠️-common-issues--fixes)
    - [Issue 1: "Can't find all algorithms in spec"](#issue-1-cant-find-all-algorithms-in-spec)
    - [Issue 2: "Interface verification taking too long"](#issue-2-interface-verification-taking-too-long)
    - [Issue 3: "Fixes introducing new issues"](#issue-3-fixes-introducing-new-issues)
    - [Issue 4: "Validation loop stuck at 8-9 rounds"](#issue-4-validation-loop-stuck-at-8-9-rounds)
    - [Issue 5: "Unsure if something is an issue"](#issue-5-unsure-if-something-is-an-issue)
-1. [🚫 ANTI-PATTERNS TO AVOID](#-anti-patterns-to-avoid)
-   - [❌ Anti-Pattern 1: "Working from Memory"](#-anti-pattern-1-working-from-memory)
-   - [❌ Anti-Pattern 2: "Deferring Minor Issues"](#-anti-pattern-2-deferring-minor-issues)
-   - [❌ Anti-Pattern 3: "Stopping at 3 Rounds Total"](#-anti-pattern-3-stopping-at-3-rounds-total)
-   - [❌ Anti-Pattern 4: "Batching Fixes"](#-anti-pattern-4-batching-fixes)
-   - [❌ Anti-Pattern 5: "Skipping Re-Reading After Small Fix"](#-anti-pattern-5-skipping-re-reading-after-small-fix)
-   - [❌ Anti-Pattern 6: "Saying 'Efficiently' or 'Quickly'"](#-anti-pattern-6-saying-efficiently-or-quickly)
+1. [🚫 ANTI-PATTERNS TO AVOID](#🚫-anti-patterns-to-avoid)
+   - [❌ Anti-Pattern 1: "Working from Memory"](#❌-anti-pattern-1-working-from-memory)
+   - [❌ Anti-Pattern 2: "Deferring Minor Issues"](#❌-anti-pattern-2-deferring-minor-issues)
+   - [❌ Anti-Pattern 3: "Stopping at 3 Rounds Total"](#❌-anti-pattern-3-stopping-at-3-rounds-total)
+   - [❌ Anti-Pattern 4: "Batching Fixes"](#❌-anti-pattern-4-batching-fixes)
+   - [❌ Anti-Pattern 5: "Skipping Re-Reading After Small Fix"](#❌-anti-pattern-5-skipping-re-reading-after-small-fix)
+   - [❌ Anti-Pattern 6: "Saying 'Efficiently' or 'Quickly'"](#❌-anti-pattern-6-saying-efficiently-or-quickly)
 1. [Exit Criteria & Quality Metrics](#exit-criteria)
    - [Validation Loop Exit Criteria](#validation-loop-exit-criteria)
    - [Gate 5: User Approval](#gate-5-user-approval)
    - [Quality Metrics](#quality-metrics)
-1. [📊 TRACKING & DOCUMENTATION](#-tracking-documentation)
+1. [📊 TRACKING & DOCUMENTATION](#📊-tracking--documentation)
    - [Update Agent Status](#update-agent-status)
    - [Validation Loop Log](#validation-loop-log)
-1. [📚 REFERENCE](#-reference)
+1. [📚 REFERENCE](#📚-reference)
 
 ---
 
@@ -622,7 +622,7 @@ Each round follows this pattern:
 
 ---
 
-#### **Dimension 7: Integration & Compatibility**
+#### **Dimension 7: Integration & Compatibility** (EMBEDS Gate 7a)
 
 **What to Check:**
 - [ ] **Integration Gap Check:** Every new method has identified caller
@@ -692,7 +692,7 @@ Each round follows this pattern:
 
 ---
 
-#### **Dimension 10: Implementation Readiness**
+#### **Dimension 10: Implementation Readiness** (EMBEDS Gate 24)
 
 **What to Check:**
 - [ ] Implementation phased into 4-6 logical phases

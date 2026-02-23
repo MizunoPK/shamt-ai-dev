@@ -20,9 +20,9 @@ S9.P1 (Epic Smoke Testing) →
 ## Table of Contents
 
 1. [S9.P2: Epic QC Validation Loop](#s9p2-epic-qc-validation-loop)
-2. [MANDATORY READING PROTOCOL](#-mandatory-reading-protocol)
+2. [MANDATORY READING PROTOCOL](#mandatory-reading-protocol)
 3. [Overview](#overview)
-4. [Critical Rules (Epic-Specific)](#-critical-rules-epic-specific)
+4. [Critical Rules (Epic-Specific)](#critical-rules)
 5. [Prerequisites Checklist](#prerequisites-checklist)
 6. [Workflow Overview](#workflow-overview)
 7. [12 Dimensions Checklist](#12-dimensions-checklist)
@@ -32,7 +32,7 @@ S9.P1 (Epic Smoke Testing) →
 11. [Dimension 11: Architectural Alignment](#dimension-11-architectural-alignment)
 12. [Dimension 12: Success Criteria Completion](#dimension-12-success-criteria-completion)
 13. [Issue Handling: Fix and Continue](#issue-handling-fix-and-continue)
-14. [MANDATORY CHECKPOINT 1](#-mandatory-checkpoint-1)
+14. [MANDATORY CHECKPOINT 1](#mandatory-checkpoint-1)
 15. [Next Steps](#next-steps)
 16. [Summary](#summary)
 17. [Exit Criteria](#exit-criteria)

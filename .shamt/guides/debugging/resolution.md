@@ -12,7 +12,7 @@
 
 ## Table of Contents
 
-1. [PHASE 3: Solution Design & Implementation](#phase-3-solution-design-implementation)
+1. [PHASE 3: Solution Design & Implementation](#phase-3-solution-design--implementation)
    - [Step 1: Update Status](#step-1-update-status)
 1. [Completed Investigations](#completed-investigations)
 1. [Active Investigations](#active-investigations)
@@ -21,7 +21,7 @@
    - [Solution Design ({YYYY-MM-DD HH:MM})](#solution-design-yyyy-mm-dd-hhmm)
    - [Step 3: Implement Solution](#step-3-implement-solution)
    - [Implementation ({YYYY-MM-DD HH:MM})](#implementation-yyyy-mm-dd-hhmm)
-1. [PHASE 4: User Verification - MANDATORY](#phase-4-user-verification-mandatory)
+1. [PHASE 4: User Verification - MANDATORY](#phase-4-user-verification---mandatory)
    - [Step 1: Present to User](#step-1-present-to-user)
 1. [User Verification Required: Issue #{number}](#user-verification-required-issue-number)
    - [Before State (BROKEN)](#before-state-broken)
@@ -31,7 +31,7 @@
 1. [Question](#question)
    - [Step 2: Process User Response](#step-2-process-user-response)
 1. [User Verification](#user-verification)
-1. [User Verification - Attempt 1](#user-verification-attempt-1)
+1. [User Verification - Attempt 1](#user-verification---attempt-1)
    - [Investigation Round 4 (or Revised Solution)](#investigation-round-4-or-revised-solution)
 1. [Common Resolution Patterns](#common-resolution-patterns)
    - [Pattern 1: Data Validation Fix](#pattern-1-data-validation-fix)

@@ -30,7 +30,7 @@ STAGE 5: Implementation Planning (4.5-7 hours typical, 6-8 validation rounds)
         │   ├─ D4: Task Specification Quality ← EMBEDS Gate 4a
         │   ├─ D5: Data Flow & Consumption
         │   ├─ D6: Error Handling & Edge Cases
-        │   ├─ D7: Integration & Compatibility
+        │   ├─ D7: Integration & Compatibility ← EMBEDS Gate 7a
         │   ├─ D8: Test Coverage Quality
         │   ├─ D9: Performance & Dependencies
         │   ├─ D10: Implementation Readiness ← EMBEDS Gate 24

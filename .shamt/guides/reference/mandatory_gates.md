@@ -9,7 +9,7 @@
 
 ## Table of Contents
 
-1. [Understanding Gate Numbering](#🔢-understanding-gate-numbering)
+1. [Understanding Gate Numbering](#-understanding-gate-numbering)
 2. [Quick Summary Table](#quick-summary-table)
 3. [S1: Epic Planning](#s1-epic-planning)
 4. [S2: Feature Deep Dive (3 formal gates per feature - NEW: Checklist Approval added)](#s2-feature-deep-dive-3-formal-gates-per-feature---new-checklist-approval-added)
@@ -714,11 +714,11 @@ S4 has no formal user approval gates. The epic testing strategy was approved at 
 - Smoke Part 3 → Smoke Part 1
 - Validation Loop issues → Fix and continue (no restart)
 
-**Formal Gates Requiring User Input:** 3
+**Formal Gates Requiring User Input:** 3 (always required) + 1 conditional
 - Gate 3: User Checklist Approval (S2.P1.I3)
 - Gate 4.5: Epic Plan Approval (S3.P3) - includes test plan approval
 - Gate 5: Implementation Plan Approval (S5 v2 — after Validation Loop, before S6)
-- Gate 25 (Dimension 11 validation): User decision if discrepancies found
+- Gate 25 (Dimension 11 validation): User decision **only if discrepancies found** (conditional)
 
 **Stage Checkpoints Requiring User Input:** 2
 - S2.P1.I3 Checkpoint: User approval of acceptance criteria (embedded in Gate 3)

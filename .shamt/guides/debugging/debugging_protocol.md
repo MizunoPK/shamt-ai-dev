@@ -10,11 +10,11 @@
 
 ## Table of Contents
 
-- [Mandatory Reading Protocol](#mandatory-reading-protocol)
+- [Mandatory Reading Protocol](#🚨-mandatory-reading-protocol)
 - [Step 0: Update Agent Status (MANDATORY)](#step-0-update-epic_readmemd-agent-status-mandatory)
 - [Quick Start](#quick-start)
-- [When to Use This Protocol vs Missed Requirement Protocol](#when-to-use-this-protocol-vs-missed-requirement-protocol)
-- [Critical Rules](#critical-rules)
+- [When to Use This Protocol vs Missed Requirement Protocol](#🔀-when-to-use-this-protocol-vs-missed-requirement-protocol)
+- [Critical Rules](#🛑-critical-rules)
 - [Debugging Protocol Phases (Overview)](#debugging-protocol-phases-overview)
 - [File Structure](#file-structure)
 - [Which Phase Should I Use?](#which-phase-should-i-use)

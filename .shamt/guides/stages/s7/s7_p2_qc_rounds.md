@@ -18,13 +18,13 @@ S7.P1 (Smoke Testing) →
 
 ## Table of Contents
 
-1. [MANDATORY READING PROTOCOL](#mandatory-reading-protocol)
+1. [🚨 MANDATORY READING PROTOCOL](#🚨-mandatory-reading-protocol)
 2. [Overview](#overview)
-3. [Critical Rules](#critical-rules)
+3. [🛑 Critical Rules](#🛑-critical-rules)
 4. [Prerequisites Checklist](#prerequisites-checklist)
 5. [Workflow Overview](#workflow-overview)
 6. [Detailed Validation Process](#detailed-validation-process)
-7. [Code Inspection Protocol (MANDATORY)](#code-inspection-protocol-mandatory)
+7. [🚨 Code Inspection Protocol (MANDATORY)](#🚨-code-inspection-protocol-mandatory)
 8. [Common Feature-Specific Issues](#common-feature-specific-issues)
 9. [MANDATORY CHECKPOINT 1](#mandatory-checkpoint-1)
 10. [Next Steps](#next-steps)

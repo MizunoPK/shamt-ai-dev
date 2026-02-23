@@ -14,7 +14,7 @@
 
 ## Table of Contents
 
-1. [🚨 CRITICAL: Why This Phase Is Mandatory](#-critical-why-this-phase-is-mandatory)
+1. [🚨 CRITICAL: Why This Phase Is Mandatory](#🚨-critical-why-this-phase-is-mandatory)
 1. [Trigger Condition](#trigger-condition)
 1. [Step 1: 5-Why Root Cause Analysis](#step-1-5-why-root-cause-analysis)
    - [1.1: Start with the Bug Symptom](#11-start-with-the-bug-symptom)
@@ -36,7 +36,7 @@
 1. [Question for You](#question-for-you)
    - [4.2: Process User Response](#42-process-user-response)
 1. [Root Cause Analysis](#root-cause-analysis)
-1. [Step 5: Document in guide_update_recommendations.md](#step-5-document-in-guideupdaterecommendationsmd)
+1. [Step 5: Document in guide_update_recommendations.md](#step-5-document-in-guide_update_recommendationsmd)
    - [5.1: Create or Update File](#51-create-or-update-file)
    - [5.2: File Template (First Time)](#52-file-template-first-time)
 1. [Recommendation #1: {Short Title}](#recommendation-1-short-title)
@@ -46,7 +46,7 @@
    - [Rationale](#rationale)
    - [Impact Assessment](#impact-assessment)
    - [5.3: Add Recommendation for Current Issue](#53-add-recommendation-for-current-issue)
-1. [Recommendation #{next_number}: {Short Title from User-Confirmed Analysis}](#recommendation-nextnumber-short-title-from-user-confirmed-analysis)
+1. [Recommendation #{next_number}: {Short Title from User-Confirmed Analysis}](#recommendation-next_number-short-title-from-user-confirmed-analysis)
 1. [Step 6: Update Issue File](#step-6-update-issue-file)
    - [6.1: Add Root Cause Section](#61-add-root-cause-section)
 1. [Root Cause Analysis (Phase 4b)](#root-cause-analysis-phase-4b)
@@ -54,7 +54,7 @@
    - [Prevention Point](#prevention-point)
    - [Guide Improvement](#guide-improvement)
    - [User Feedback](#user-feedback)
-1. [Step 7: Update ISSUES_CHECKLIST.md](#step-7-update-issueschecklistmd)
+1. [Step 7: Update ISSUES_CHECKLIST.md](#step-7-update-issues_checklistmd)
    - [7.1: Add New Column (If First Time)](#71-add-new-column-if-first-time)
    - [7.2: Mark Root Cause Complete](#72-mark-root-cause-complete)
 1. [Step 8: Determine Next Action](#step-8-determine-next-action)

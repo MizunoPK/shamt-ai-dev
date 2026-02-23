@@ -24,7 +24,7 @@
 7. [Critical Rules (Same Across All Sub-Stages)](#critical-rules-same-across-all-sub-stages)
 8. [How to Use This Router Guide](#how-to-use-this-router-guide)
 9. [Exit Criteria](#exit-criteria)
-10. [Next Stage After S9](#next-stage-after-s9)
+10. [Next Stage](#next-stage)
 11. [Why S9 Was Split](#why-s9-was-split)
 12. [Frequently Asked Questions](#frequently-asked-questions)
 13. [Summary](#summary)

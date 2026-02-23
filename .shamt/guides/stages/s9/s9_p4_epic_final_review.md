@@ -11,7 +11,7 @@
 ## Table of Contents
 
 1. [S9.P4: Epic Final Review](#s9p4-epic-final-review)
-2. [🚨 MANDATORY READING PROTOCOL](#-mandatory-reading-protocol)
+2. [🚨 MANDATORY READING PROTOCOL](#🚨-mandatory-reading-protocol)
 3. [Overview](#overview)
 4. [Critical Rules for S9.P4](#critical-rules-for-s9p4)
 5. [Prerequisites](#prerequisites)

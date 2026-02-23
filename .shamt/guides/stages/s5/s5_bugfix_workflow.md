@@ -9,10 +9,10 @@
 
 ## Table of Contents
 
-1. [🚨 MANDATORY READING PROTOCOL](#-mandatory-reading-protocol)
+1. [🚨 MANDATORY READING PROTOCOL](#🚨-mandatory-reading-protocol)
 2. [Prerequisites](#prerequisites)
 3. [Overview](#overview)
-4. [🛑 Critical Rules](#-critical-rules)
+4. [🛑 Critical Rules](#🛑-critical-rules)
 5. [PHASE 1: Bug Fix Creation](#phase-1-bug-fix-creation)
 6. [Bug Fix Tracking](#bug-fix-tracking)
 7. [Current Status](#current-status)

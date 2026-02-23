@@ -11,7 +11,7 @@
 1. [Starting S5 v2: Validation Loop Phase](#starting-s5-v2-validation-loop-phase)
 1. [Reporting S5 v2: Validation Round Results](#reporting-s5-v2-validation-round-results)
 1. [Exiting S5 v2: Validation Loop Complete](#exiting-s5-v2-validation-loop-complete)
-1. [S5 v2: Gate 5 - User Approval of Implementation Plan](#s5-v2-gate-5-user-approval-of-implementation-plan)
+1. [S5 v2: Gate 5 - User Approval of Implementation Plan](#s5-v2-gate-5---user-approval-of-implementation-plan)
 1. [Starting S6: Implementation](#starting-s6-implementation)
 1. [Starting S7.P1: Smoke Testing](#starting-s7p1-smoke-testing)
 1. [Starting S7.P2: Feature QC Validation Loop](#starting-s7p2-feature-qc-validation-loop)

@@ -9,9 +9,9 @@
 
 ## Table of Contents
 
-1. [MANDATORY READING PROTOCOL](#🚨-mandatory-reading-protocol)
+1. [MANDATORY READING PROTOCOL](#-mandatory-reading-protocol)
 2. [Overview](#overview)
-3. [Critical Rules](#🛑-critical-rules)
+3. [Critical Rules](#-critical-rules)
 4. [Prerequisites Checklist](#prerequisites-checklist)
 5. [Workflow Overview](#workflow-overview)
 6. [Quick Navigation](#quick-navigation)
@@ -282,7 +282,7 @@ STAGE 10: Epic Cleanup
 
 | Section | Description | Go To |
 |---------|-------------|-------|
-| Critical Rules | Must-follow cleanup rules | [Critical Rules](#🛑-critical-rules) |
+| Critical Rules | Must-follow cleanup rules | [Critical Rules](#-critical-rules) |
 | Prerequisites | What must be done first | [Prerequisites Checklist](#prerequisites-checklist) |
 | Exit Criteria | All items that must be checked | [Exit Criteria](#exit-criteria) |
 
