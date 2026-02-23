@@ -796,7 +796,7 @@ $ grep -n "Guide Index" README.md
 
 ### Prerequisites and Exit Criteria Exceptions
 
-**17 files intentionally lack formal "## Prerequisites" or "## Exit Criteria" sections** due to established design patterns.
+**19 files intentionally lack formal "## Prerequisites" or "## Exit Criteria" sections** due to established design patterns.
 
 **Documentation:** `../reference/known_exceptions.md` (complete list with rationale)
 
@@ -808,8 +808,14 @@ $ grep -n "Guide Index" README.md
 - Exit Criteria: Inherited from parent round guides (s5_p1, s5_p2, s5_p3)
 - Examples: s5_p1_i3_integration.md, s5_p1_i3_iter5_dataflow.md, s5_p3_i1_iter17_phasing.md
 - Design: Sequential steps within larger workflow, formal sections would be redundant
+- Note: All 14 files deleted from filesystem (S5 v1 → v2 migration); retained for historical reference
 
-**Category B: Optional/Auxiliary Files (3 files)**
+**Category B: S5 Design and Migration Documents (2 files)**
+- Pattern: Reference/design documents for understanding S5 v1→v2 transition
+- Examples: s5_update_notes.md, S5 v2 design plan document
+- Design: Not part of active workflow execution; historical context only
+
+**Category C: Optional/Auxiliary Files (3 files)**
 - Pattern: Conditional or reference guides, not standard workflows
 - Examples: s3_parallel_work_sync.md (optional), s4_feature_testing_card.md (reference card)
 - Design: Not part of standard epic workflow sequence
@@ -819,14 +825,14 @@ $ grep -n "Guide Index" README.md
 When checking Prerequisites/Exit Criteria (Type 1, Type 2):
 1. Generate violation list using automated patterns
 2. **Cross-reference with known_exceptions.md** before flagging
-3. Filter out 17 known exceptions
+3. Filter out 19 known exceptions
 4. Investigate remaining violations as potential real issues
 
 **Automation:**
 
 The `pre_audit_checks.sh` script (CHECK 2) now includes exception filtering:
 ```bash
-# Known exceptions array (17 files)
+# Known exceptions array (19 files — see reference/known_exceptions.md for full list)
 declare -a known_exceptions=(
   "stages/s5/s5_p1_i3_integration.md"
   "stages/s5/s5_p1_i3_iter5_dataflow.md"

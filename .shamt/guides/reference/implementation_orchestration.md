@@ -28,7 +28,7 @@
 Feature Workflow (Single Feature Journey)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-S5: TODO Creation COMPLETE
+S5: Implementation Planning COMPLETE
          ↓
          ✅ GO Decision from S5 v2 Validation Loop complete
          ↓
@@ -83,7 +83,7 @@ Write the feature code following the implementation plan created in S5.
 ### Entry Conditions
 - [ ] S5 v2 Phase 2 complete (S5 v2 Validation Loop complete = GO)
 - [ ] implementation_plan.md ready and user-approved
-- [ ] All mandatory gates passed (4a, 23a, 25, 24)
+- [ ] All mandatory gates passed (4a, 7a, 23a, 24, 25)
 
 ### Key Activities
 1. **Interface Verification First** - Verify ALL external interfaces from source code before writing ANY code
@@ -282,7 +282,7 @@ Update epic_smoke_test_plan.md to reflect ACTUAL implementation discoveries and 
 **Update Agent Status:**
 ```markdown
 ## If more features remaining:
-Current Stage: S5 - TODO Creation (Next Feature)
+Current Stage: S5 - Implementation Planning (Next Feature)
 Next Feature: feature_0X_{name}
 Next Action: Read stages/s5/s5_v2_validation_loop.md for next feature
 
@@ -295,7 +295,7 @@ Next Action: Read stages/s9/s9_epic_final_qc.md
 **Question:** Are there more features to implement?
 
 **If YES (features remaining):**
-- Proceed to next feature's S5 (TODO Creation)
+- Proceed to next feature's S5 (Implementation Planning)
 - Repeat cycle: S5 → S6 → S7 → S8
 - Each feature gets full S5 treatment
 

@@ -46,7 +46,7 @@
 |----------|----------|----------|
 | [Feature Test Strategy](#feature-test-strategy) | `feature_test_strategy_template.md` | Creating test strategy before implementation (>90% coverage goal) |
 
-### S5: TODO Creation (Implementation Planning)
+### S5: Implementation Planning
 
 | Template | Filename | Use When |
 |----------|----------|----------|

@@ -72,7 +72,7 @@ Missed Requirement Protocol treats missing scope as real features - either creat
 
 **When do you use this protocol?**
 - Missing requirement discovered at ANY point after first S5 starts:
-  - During S5 (TODO creation)
+  - During S5 (Implementation Planning)
   - During S6 (Implementation)
   - During S7 (QA - smoke testing, QC rounds)
   - During debugging protocol (while investigating issues)

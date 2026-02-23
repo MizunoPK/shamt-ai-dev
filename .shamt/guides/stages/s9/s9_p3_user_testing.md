@@ -321,7 +321,7 @@ Read and follow: `stages/s5/s5_bugfix_workflow.md`
 
 **Stages:**
 1. **S2** (Feature Deep Dive) - Understand bug scope
-2. **S5** (TODO Creation) - Plan fix
+2. **S5** (Implementation Planning) - Plan fix
 3. **S6** (Implementation) - Implement fix
 4. **S7 (Testing & Review)** (Post-Implementation) - Test fix
 

@@ -15,7 +15,7 @@
 **Missing requirement can be discovered during ANY stage after first S5 starts:**
 
 **During Feature Implementation (S5):**
-- S5 (TODO creation): Realize missing scope while planning implementation
+- S5 (Implementation Planning): Realize missing scope while planning implementation
 - S6 (Implementation): Discover forgotten functionality while coding
 - S7 (Smoke Testing): Find missing requirement during Part 1/2/3 tests
 - S7 (Validation Loop): Discover missing scope during validation rounds

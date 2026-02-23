@@ -200,5 +200,5 @@ Feature 02 catastrophic bug - spec.md stated "no code changes needed" for week 1
 - Spec summary describes WHAT the feature delivers, not detailed implementation
 - Created after research (informed by codebase understanding)
 - Provides high-level technical changes without premature implementation decisions
-- Allows detailed design to happen in S5 (TODO creation)
+- Allows detailed design to happen in S5 (Implementation Planning)
 ```

@@ -208,7 +208,7 @@ A: Make best predictions in S4:
 
 ---
 
-### S5: TODO Creation
+### S5: Implementation Planning
 
 **Q: Can I skip iterations if they don't seem relevant?**
 
@@ -796,7 +796,7 @@ Current status: S2 (Feature Deep Dives)
 Remaining before implementation:
 - S3: Cross-Feature Sanity Check (30-60 min)
 - S4: Feature Testing Strategy (30-45 min)
-- S5: TODO Creation (2.5-4 hours)
+- S5: Implementation Planning (2.5-4 hours)
 
 These stages prevent costly rework by catching issues early.
 

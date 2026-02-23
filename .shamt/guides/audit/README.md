@@ -469,7 +469,7 @@ Learn from actual audit rounds:
 - `find_duplicates.sh` - D15: Duplication detection
 - `validate_dependencies.sh` - D12: Cross-file dependency checks
 
-**All functionality available in:** `scripts/pre_audit_checks.sh` (12KB, 7 dimensions)
+**All functionality available in:** `scripts/pre_audit_checks.sh` (12KB, covers 11 dimensions — see "Pre-Audit Checks" section above)
 
 ---
 

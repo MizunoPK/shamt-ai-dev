@@ -180,7 +180,7 @@ Post-Feature Alignment is complete when all remaining feature specs are updated 
   - Data dependencies changed fundamentally
   - Feature should be split or removed
 - **Action based on severity:**
-  - Return to S5 (TODO creation) if >3 new tasks
+  - Return to S5 (Implementation Planning) if >3 new tasks
   - Return to S2 (Deep Dive) if spec fundamentally wrong
   - Return to S1 (Epic Planning) if feature should be split/removed
 - ❌ Mark feature as "REQUIRES REWORK - {reason}"

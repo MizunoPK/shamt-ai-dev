@@ -256,4 +256,4 @@
 
 ---
 
-*This test strategy document will be integrated into implementation_plan.md during S5.P2.I1 (Test Strategy Merge).*
+*This test strategy document will be integrated into implementation_plan.md during S5.P1.I1 (Test Strategy Merge).*

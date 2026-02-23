@@ -19,7 +19,7 @@
 7. [STEP 7: Handle Issues (If Any Discovered)](#step-7-handle-issues-if-any-discovered)
 8. [STEP 8: Final Verification & README Update](#step-8-final-verification--readme-update)
 9. [Re-Reading Checkpoints](#re-reading-checkpoints)
-10. [Completion Criteria](#completion-criteria)
+10. [Exit Criteria](#exit-criteria)
 11. [Reference Files](#reference-files)
 12. [Prerequisites for Next Stage](#prerequisites-for-next-stage)
 13. [Summary](#summary)
@@ -596,7 +596,7 @@ Mark S9.P4 complete and prepare for S10:
 
 ---
 
-## Completion Criteria
+## Exit Criteria
 
 **S9.P4 is COMPLETE when ALL of the following are true:**
 

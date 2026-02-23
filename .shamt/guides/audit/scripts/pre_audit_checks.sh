@@ -9,7 +9,7 @@
 # Last Updated: 2026-02-19 (D18 Addition)
 # Changes:
 #   - Round 3: Simplified file size threshold from 3-tier (600/800/1000) to 1000-line baseline
-#   - Round 3: Added 17 known exceptions for Prerequisites/Exit Criteria checks
+#   - Round 3: Added 17 known exceptions for Prerequisites/Exit Criteria checks (now 19 — see known_exceptions.md)
 #   - Meta-Audit: Increased baseline from 1000 → 1250 lines for comprehensive reference guides
 #   - Exceptions documented in audit/reference/known_exceptions.md
 #   - 2026-02-19: Added D18 Character and Format Compliance check (banned Unicode chars)
@@ -165,13 +165,13 @@ for file in stages/*/*.md; do
 done
 
 if [ $MISSING_PREREQ -eq 0 ] && [ $MISSING_EXIT -eq 0 ]; then
-  echo -e "${GREEN}✅ All required sections present (excluding 17 known exceptions)${NC}"
+  echo -e "${GREEN}✅ All required sections present (excluding 19 known exceptions)${NC}"
 fi
 
 echo ""
 echo "Missing Prerequisites: $MISSING_PREREQ"
 echo "Missing Exit Criteria: $MISSING_EXIT"
-echo "Known exceptions skipped: 17 (see audit/reference/known_exceptions.md)"
+echo "Known exceptions skipped: 19 (see audit/reference/known_exceptions.md)"
 echo ""
 
 # ============================================================================

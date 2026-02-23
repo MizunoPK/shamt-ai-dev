@@ -168,7 +168,7 @@ S10.P1 (Guide Update from Lessons Learned) requires finding ALL lessons learned 
 
 ---
 
-## S5: TODO Creation
+## S5: Implementation Planning
 
 **What Went Well:**
 - Algorithm traceability matrix revealed missing validation step
@@ -250,7 +250,7 @@ S10.P1 (Guide Update from Lessons Learned) requires finding ALL lessons learned 
 
 ---
 
-## S5: TODO Creation
+## S5: Implementation Planning
 
 **What Went Well:**
 - S5 v2 Validation Loop (11 dimensions checked each round) ensured fix didn't introduce new bugs

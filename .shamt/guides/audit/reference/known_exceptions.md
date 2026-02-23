@@ -197,7 +197,7 @@ Audit Dimension D13 (Documentation Quality) checks for "## Prerequisites" and "#
 
 1. **Generate violation list** using automated pattern search
 2. **Cross-reference with this document** before flagging as issues
-3. **Filter out known exceptions** (17 files total)
+3. **Filter out known exceptions** (19 files total)
 4. **Investigate remaining violations** as potential real issues
 
 **Example Audit Workflow:**

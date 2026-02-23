@@ -74,7 +74,7 @@ Waiting for your guidance...
 
 ## When Confidence < Medium
 
-**Situation:** Agent's confidence drops below Medium during S5 (TODO Creation)
+**Situation:** Agent's confidence drops below Medium during S5 (Implementation Planning)
 
 **Agent MUST respond:**
 

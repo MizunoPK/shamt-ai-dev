@@ -438,7 +438,7 @@ After completing S5.P1, proceed to S5.P2.
 See `stages/s5/s5_v2_validation_loop.md` for details.
 ```
 
-**Why:** Old notation (S5, S5.P1) is deprecated.
+**Why:** Old file-path notation (e.g., `phase_5.1_implementation_planning.md`) is deprecated in favor of the `s5_v2_validation_loop.md` single-file approach. Use phase notation (S5.P1, S5.P2) when referencing sub-stages within S5.
 
 ---
 

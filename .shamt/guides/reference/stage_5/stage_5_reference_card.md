@@ -95,13 +95,20 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 
 ## Mandatory Gates Across S5
 
-### S5: TODO Creation (4 gates)
+### S5: Implementation Planning (5 gates)
 
 **Gate 4a: Iteration 4a - TODO Specification Audit**
 - **Location:** stages/s5/s5_v2_validation_loop.md
 - **Criteria:** ALL TODO tasks have acceptance criteria
 - **Evidence:** Task count, criteria count, 100% coverage
 - **If FAIL:** Add missing acceptance criteria, re-run Iteration 4a
+
+**Gate 7a: Backward Compatibility Analysis**
+- **Location:** stages/s5/s5_v2_validation_loop.md (Dimension 7)
+- **Embedded in:** Dimension 7 (Integration & Compatibility)
+- **Criteria:** All file I/O analyzed, data structure changes documented, compatibility strategy selected (migrate / invalidate / no-op)
+- **Evidence:** List of persisted files, new fields with types/defaults, resume/load scenarios, strategy with justification
+- **If FAIL:** Add migration/invalidation logic, add version markers, re-run Iteration 7a
 
 **Gate 23a: Pre-Implementation Spec Audit**
 - **Location:** stages/s5/s5_v2_validation_loop.md (Dimension 11)
@@ -193,10 +200,10 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 
 ## Critical Rules Summary
 
-### S5 (TODO Creation)
+### S5 (Implementation Planning)
 - ✅ Complete Validation Loop: all 11 dimensions, 3 consecutive clean rounds (no skipping)
 - ✅ Execute iterations IN ORDER (not parallel)
-- ✅ Pass ALL 4 mandatory gates (4a, 23a, 25, 24)
+- ✅ Pass ALL 5 mandatory gates (4a, 7a, 23a, 24, 25)
 - ✅ Achieve >90% test coverage (Round 2)
 - ✅ Evidence-based verification (cite specific numbers)
 - ✅ Close spec.md before Dimension 11 validation (avoid confirmation bias)

@@ -141,7 +141,7 @@ This document captures:
 
 ### Feature 01 ({name}) - Stages S5 through S8
 
-**S5 (TODO Creation):**
+**S5 (Implementation Planning):**
 - What went well: {Observation}
 - What could improve: {Improvement}
 - Validation Loop experience: {Any issues with specific dimensions or validation rounds}
