@@ -36,7 +36,7 @@
 
 ---
 
-### Overview
+## Overview
 
 **What is this phase?**
 S10.P1 is the mandatory guide improvement workflow where you analyze lessons learned from the epic and propose specific guide updates to help future agents, with user approval for each change individually.
@@ -61,7 +61,7 @@ S10.P1 is complete when all proposals have been reviewed by user, approved chang
 
 ---
 
-### Critical Rules
+## Critical Rules
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
@@ -128,7 +128,7 @@ S10.P1 is complete when all proposals have been reviewed by user, approved chang
 
 ---
 
-### Step-by-Step Workflow
+## Step-by-Step Workflow
 
 ### Step 1: Read All Lessons Learned
 

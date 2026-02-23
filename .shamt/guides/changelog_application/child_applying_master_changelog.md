@@ -119,7 +119,7 @@ The master changelog may also have prompted you to notice something in your guid
 If multiple changelog files are in `unapplied_external_changes/`:
 
 - Process them in **version number order** (lowest first)
-- Complete Steps 1–5 for each file before starting the next
+- Complete Steps 1-5 for each file before starting the next
 - Do not batch or skip files
 
 ---

@@ -897,6 +897,7 @@ grep "ISSUES:" feature_*/STATUS | grep -v "ISSUES: 0"
 - Read `stages/s3/s3_epic_planning_approval.md`
 - Execute S3 workflow (epic-level, solo work)
 - Groups no longer matter
+```
 
 ---
 

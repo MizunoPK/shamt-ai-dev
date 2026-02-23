@@ -310,7 +310,7 @@ I've analyzed why this bug existed and how we can prevent it in future epics.
 ### Prevention Point
 
 **This bug SHOULD have been caught at:**
-- **Stage:** {S5/5b/etc.}
+- **Stage:** {S5/S6/S7/etc.}
 - **Step:** {Iteration X / Validation Round X}
 - **Guide:** `{guide name}`
 - **Why it wasn't caught:** {specific gap}
@@ -352,7 +352,7 @@ If you choose MODIFY or DISAGREE, please explain:
 - What's inaccurate about the analysis?
 - What would be a better root cause?
 - What guide improvement would you prefer?
-```
+````
 
 **Wait for user response before proceeding.**
 

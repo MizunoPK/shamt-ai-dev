@@ -30,7 +30,7 @@
 **D4: Count Accuracy** validates that numeric claims in documentation match reality:
 
 1. **Stage Counts** - "10 stages" actually shows S1-S10
-2. **Phase Counts** - "S5 has 3 phases" matches S5.P1, S5.P2, S5.P3
+2. **Phase Counts** - "S5 has 2 phases" matches S5 v2 Phase 1 (Draft Creation) and Phase 2 (Validation Loop)
 3. **Iteration Counts** - "22 iterations in S5" matches actual iteration count
 4. **Gate Counts** - "8 mandatory gates" matches reference/mandatory_gates.md
 5. **File Counts** - "16 dimensions" matches actual dimension count

@@ -12,7 +12,7 @@
 
 1. [S9.P4: Epic Final Review](#s9p4-epic-final-review)
 2. [🚨 MANDATORY READING PROTOCOL](#-mandatory-reading-protocol)
-3. [Quick Start](#quick-start)
+3. [Overview](#overview)
 4. [Critical Rules for S9.P4](#critical-rules-for-s9p4)
 5. [Prerequisites](#prerequisites)
 6. [STEP 6: Epic PR Review (Multi-Round with Fresh Eyes)](#step-6-epic-pr-review-multi-round-with-fresh-eyes)
@@ -48,7 +48,7 @@ Before proceeding, you must have:
 
 ---
 
-## Quick Start
+## Overview
 
 ### What is this sub-stage?
 

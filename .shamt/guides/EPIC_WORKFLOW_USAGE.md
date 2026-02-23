@@ -1,6 +1,6 @@
 # Shamt Epic Workflow — Comprehensive Usage Guide
 
-This file provides a complete overview of the Shamt S1–S10 epic-driven development workflow.
+This file provides a complete overview of the Shamt S1-S10 epic-driven development workflow.
 
 **For stage-specific detail:** Read the full guide for each stage (listed below).
 **For phase transition prompts:** See `prompts_reference_v2.md` or `prompts/`

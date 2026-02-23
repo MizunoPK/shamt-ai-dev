@@ -7,7 +7,7 @@ Use this when:
 - You're making structural changes to the guide system
 - You're adding new guides or sections
 
-This process is intentionally lighter than the full S1–S10 epic workflow. It's aligned with S10's lessons-learned update approach.
+This process is intentionally lighter than the full S1-S10 epic workflow. It's aligned with S10's lessons-learned update approach.
 
 ---
 
@@ -17,7 +17,7 @@ This process is intentionally lighter than the full S1–S10 epic workflow. It's
 |-------|-----|
 | Single guide fix, clarification, or small addition | This workflow |
 | New guide section (< 1 guide file) | This workflow |
-| New guide files or significant restructuring | Full epic workflow (S1–S10) with SHAMT epic tracking |
+| New guide files or significant restructuring | Full epic workflow (S1-S10) with SHAMT epic tracking |
 | Multi-guide cross-cutting changes | Full epic workflow |
 
 ---
@@ -130,5 +130,5 @@ For significant multi-guide changes, use the full SHAMT epic workflow:
 1. Create epic folder in `.shamt/epics/SHAMT-[N]-[name]/`
 2. Update `.shamt/epics/EPIC_TRACKER.md`
 3. Create branch: `feat/SHAMT-[N]`
-4. Follow S1–S10 stages as appropriate for the scope
+4. Follow S1-S10 stages as appropriate for the scope
 5. Publish outbound changelog at the end (S10)

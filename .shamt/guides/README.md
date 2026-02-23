@@ -4,7 +4,7 @@ This directory contains the complete Shamt epic-driven development workflow guid
 
 ---
 
-## Core Workflow (S1–S10)
+## Core Workflow (S1-S10)
 
 | Stage | Guide | Purpose |
 |-------|-------|---------|
@@ -29,7 +29,7 @@ This directory contains the complete Shamt epic-driven development workflow guid
 
 | Directory | Contents |
 |-----------|----------|
-| `stages/` | Core S1–S10 workflow guides |
+| `stages/` | Core S1-S10 workflow guides |
 | `reference/` | Gates, common mistakes, glossary, protocols, decision trees |
 | `templates/` | File templates (spec, checklist, implementation plan, etc.) |
 | `debugging/` | Debugging protocol |

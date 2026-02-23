@@ -771,7 +771,7 @@ Identify configuration dependencies and plan configuration-related tests (defaul
 
 ## Next Phase
 
-**After completing S4 Iterations 1–3, proceed to:**
+**After completing S4 Iterations 1-3, proceed to:**
 - **Phase:** S4.I4 — Test Strategy Validation Loop
 - **Guide:** `reference/validation_loop_test_strategy.md`
 

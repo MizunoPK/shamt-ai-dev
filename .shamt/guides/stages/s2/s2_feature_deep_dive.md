@@ -165,7 +165,7 @@ Feature Planning is where you research each feature, create detailed specificati
 
 ## Sub-Stage Breakdown
 
-### S2.P1: Spec Creation and Refinement (2.25–4 hours)
+### S2.P1: Spec Creation and Refinement (2.25-4 hours)
 
 **Guide:** `stages/s2/s2_p1_spec_creation_refinement.md`
 
@@ -197,7 +197,7 @@ Feature Planning is where you research each feature, create detailed specificati
 
 ---
 
-### S2.P2: Cross-Feature Alignment (20–60 min)
+### S2.P2: Cross-Feature Alignment (20-60 min)
 
 **Guide:** `stages/s2/s2_p2_cross_feature_alignment.md`
 

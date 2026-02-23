@@ -15,13 +15,14 @@
 
 1. [What This Checks](#what-this-checks)
 2. [Why This Matters](#why-this-matters)
-3. [Banned Characters](#banned-characters)
-4. [Allowed Exceptions](#allowed-exceptions)
-5. [Automated Validation](#automated-validation)
-6. [Manual Validation](#manual-validation)
-7. [Fix Patterns](#fix-patterns)
-8. [Real Examples](#real-examples)
-9. [Integration with Other Dimensions](#integration-with-other-dimensions)
+3. [Pattern Types](#pattern-types)
+4. [Banned Characters](#banned-characters)
+5. [Allowed Exceptions](#allowed-exceptions)
+6. [Automated Validation](#automated-validation)
+7. [Manual Validation](#manual-validation)
+8. [Fix Patterns](#fix-patterns)
+9. [Real Examples](#real-examples)
+10. [Integration with Other Dimensions](#integration-with-other-dimensions)
 
 ---
 
@@ -62,6 +63,44 @@ If some files use `- [ ]` and others use `□`, agents face inconsistent checkli
 **Historical Evidence:**
 - Round 1.3 audit found 85 Unicode checkbox characters across 8 files, introduced via content pasting from external documents
 - Characters found: □ (U+25A1), ☐ (U+2610), ☑ (U+2611) — all "looked correct" in editor previews
+
+---
+
+## Pattern Types
+
+D18 violations fall into four categories based on character type and impact:
+
+### Type A: Unicode Checkbox Characters (CRITICAL)
+
+**What:** Unicode box characters used as checklist items instead of standard markdown checkboxes
+**Examples:** `□` (U+25A1), `☐` (U+2610), `☑` (U+2611), `☒` (U+2612)
+**Impact:** Agents searching for `- [ ]` miss these items; invisible task tracking failures
+**Fix:** Replace with `- [ ]` or `- [x]`
+**Automated:** ✅ Yes (exact byte match)
+
+### Type B: Unicode Quotation Marks (HIGH)
+
+**What:** Curly/smart quotes from word processors or external content
+**Examples:** `"` (U+201C), `"` (U+201D), `'` (U+2018), `'` (U+2019)
+**Impact:** Agents grepping for quoted strings or code examples fail to match
+**Fix:** Replace with straight ASCII quotes `"` and `'`
+**Automated:** ✅ Yes (exact byte match)
+
+### Type C: Unicode Dashes Used as Hyphens (MEDIUM)
+
+**What:** Em-dash or en-dash used in place of ASCII hyphen/dash
+**Examples:** `–` (U+2013 EN DASH), `—` (U+2014 EM DASH)
+**Impact:** Code examples and structured lists break when dashes are non-ASCII
+**Fix:** Replace with `--` or `-` in code/lists; acceptable in prose (human review required)
+**Automated:** ⚠️ Partial (detection automated; context judgment manual)
+
+### Type D: Box-Drawing Characters in Prose (LOW)
+
+**What:** Box-drawing chars used as prose list-item prefixes instead of inside diagrams
+**Examples:** `│` used as bullet prefix in prose (not in a diagram block)
+**Impact:** Inconsistent visual parsing; agents expecting `-` bullets miss `│` items
+**Fix:** Replace prose-context box chars with standard markdown list markers
+**Automated:** ⚠️ Partial (context-sensitive; diagram use is allowed)
 
 ---
 

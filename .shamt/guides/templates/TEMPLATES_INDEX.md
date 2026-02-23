@@ -372,7 +372,7 @@ Read .shamt/guides/templates/{template_name}.md
 5. ✅ Use **Feature Checklist** template
 6. ✅ Use **Feature Lessons Learned** template
 
-### Implementing a Feature (S5-5b)
+### Implementing a Feature (S5-S8)
 
 1. ✅ Create **Implementation Plan** (S5 - grows through S5 v2 Validation Loop)
 2. ✅ Show Implementation Plan to user for approval

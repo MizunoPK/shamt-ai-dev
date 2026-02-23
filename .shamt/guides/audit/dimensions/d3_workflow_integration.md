@@ -428,12 +428,12 @@ Quality gates appear at correct stage boundaries with correct gate numbers.
 | Gate 2 | S2.P1.I3 | Embedded | Agent | Spec-to-epic alignment |
 | Gate 3 | S2.P1.I3 | Stage | User | Checklist approval |
 | Gate 4.5 | S3.P3 | Stage | User | Epic plan approval |
-| Gate 5 | S5.P3 | Stage | User | Implementation plan approval |
-| Gate 4a | S5.P1.I2 | Iteration | Agent | TODO specification audit |
-| Gate 7a | S5.P1.I3 | Iteration | Agent | Backward compatibility |
-| Gate 23a | S5.P3.I2 | Iteration | Agent | Pre-implementation spec audit |
-| Gate 24 | S5.P3.I3 | Iteration | Agent | GO/NO-GO decision |
-| Gate 25 | S5.P3.I3 | Iteration | Agent | Spec validation check |
+| Gate 5 | S5 v2 (after Validation Loop, before S6) | Stage | User | Implementation plan approval |
+| Gate 4a | S5 v2 Dimension 4 | Iteration | Agent | Task specification audit |
+| Gate 7a | S5 v2 Dimension 7 | Iteration | Agent | Backward compatibility |
+| Gate 23a | S5 v2 Dimension 11 | Iteration | Agent | Pre-implementation spec audit |
+| Gate 24 | S5 v2 Dimension 10 | Iteration | Agent | GO/NO-GO decision |
+| Gate 25 | S5 v2 Dimension 11 | Iteration | Agent | Spec validation check |
 
 **Search Commands:**
 ```bash
@@ -451,8 +451,8 @@ grep -rn "Gate 5" stages/s2/ stages/s3/ stages/s4/  # Should only be in S5
 
 - [ ] Gate 3 appears in S2.P1.I3 (not S2.P2 or S3)
 - [ ] Gate 4.5 appears in S3.P3 (not S3.P1 or S4)
-- [ ] Gate 5 appears in S5.P3 (not S5.P1 or S6)
-- [ ] Gates 4a, 7a, 23a, 24, 25 appear in S5 only
+- [ ] Gate 5 appears after S5 v2 Validation Loop, before S6 (not inside S5.P1 or in S6)
+- [ ] Gates 4a, 7a, 23a, 24, 25 appear embedded in S5 v2 Validation Loop dimensions (D4, D7, D11, D10, D11)
 - [ ] No gates reference deprecated gate numbers (Gate 6, Gate 7 that don't exist)
 - [ ] Gates appear in numerical order within their sections
 - [ ] Each gate has clear pass/fail criteria

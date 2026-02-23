@@ -297,10 +297,10 @@ Proceed to S4 (Feature Testing Strategy update)? {User confirms}
 **Planning Complete:**
 - feature_05_injury_tracking spec created (S2 ✅)
 - All features re-aligned (S3 ✅)
-- Epic test plan updated (S4 ✅)
+- Feature test strategy created (S4 ✅)
 
 **Resuming Work:**
-- feature_02_projection_system: Resuming S6 Phase 3
+- feature_02_projection_system: Resuming S6
   - Resume from: {Exact step where paused}
   - Next action: {Continue implementation}
 ```
@@ -353,9 +353,9 @@ Planning complete for missed requirement.
 Stages completed:
 - S2: feature_05 spec created ✅
 - S3: All features aligned ✅
-- S4: Epic test plan updated ✅
+- S4: Feature test strategy created ✅
 
-feature_02's spec remains unchanged. Resuming implementation at S6 Phase 3.
+feature_02's spec remains unchanged. Resuming implementation at S6.
 ```
 
 ---
@@ -370,7 +370,7 @@ feature_02's spec remains unchanged. Resuming implementation at S6 Phase 3.
 **Resume Instructions:**
 When planning complete:
 1. Verify this feature's spec still valid after alignment ← DID THIS
-2. Resume at: S6 Phase 3 ← RESUME HERE
+2. Resume at: S6 ← RESUME HERE
 3. Context: Implementing projection calculation logic ← CONTEXT
 ```
 
@@ -390,7 +390,7 @@ When planning complete:
 - feature_02 spec verified (unchanged/updated)
 
 **Current Stage:** S6 (Implementation Execution)
-**Next Action:** Continue Phase 3 - Projection calculation logic
+**Next Action:** Continue S6 execution - Projection calculation logic
 
 **Critical Rules from Guide:**
 - Keep spec.md visible during implementation
