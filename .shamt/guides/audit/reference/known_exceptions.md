@@ -2,7 +2,7 @@
 
 **Purpose:** Documents files that intentionally lack formal "## Prerequisites" or "## Exit Criteria" sections
 
-**Last Updated:** 2026-02-05
+**Last Updated:** 2026-02-22
 
 **Why This Document Exists:**
 Audit Dimension D13 (Documentation Quality) checks for "## Prerequisites" and "## Exit Criteria" sections in workflow guides. However, certain file types intentionally use alternative patterns. This document prevents these files from being flagged as violations in future audits.
@@ -15,16 +15,18 @@ Audit Dimension D13 (Documentation Quality) checks for "## Prerequisites" and "#
 
 **Pattern:** Lightweight iteration guides with inline prerequisites, exit criteria inherited from parent round
 
-**Design Rationale:**
-- Iteration files are sequential steps within S5 rounds (Round 1, Round 2, Round 3)
-- Prerequisites are simple: "Previous iteration complete" (stated inline)
+**⚠️ NOTE: All 14 files in this category have been DELETED from the filesystem** as part of the S5 v1 → S5 v2 migration. S5 v2 consolidates all iteration content into a single `s5_v2_validation_loop.md` file using an 11-dimension Validation Loop approach. These entries are retained for historical reference only — they cannot produce D13 false positives since the files no longer exist.
+
+**Design Rationale (historical):**
+- Iteration files were sequential steps within S5 v1 rounds (Round 1, Round 2, Round 3)
+- Prerequisites were simple: "Previous iteration complete" (stated inline)
 - Exit criteria defined at round level (s5_v2_validation_loop.md consolidates all rounds)
-- Formal sections would be redundant
-- Files follow "router + detailed iteration" pattern for focused reference
+- Formal sections would have been redundant
+- Files followed "router + detailed iteration" pattern for focused reference
 
 **Missing Sections:** Prerequisites (inline instead), Exit Criteria (inherited from parent)
 
-**Files:**
+**Files (DELETED — S5 v1 only, no longer in filesystem):**
 
 #### S5.P1 (Round 1) Iteration Files (7 files)
 
@@ -273,6 +275,6 @@ wc -l real_violations.txt  # Should be low count
 
 ---
 
-**Last Verified:** 2026-02-05 (Round 3 audit)
+**Last Verified:** 2026-02-22 (Round 11 audit — confirmed Category A files are all DELETED from filesystem as part of S5 v1 → v2 migration)
 **Next Review:** When new stage/iteration guides added, or if D13 check patterns change
 

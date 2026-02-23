@@ -22,7 +22,7 @@
 10. [Common Mistakes to Avoid](#common-mistakes-to-avoid)
 11. [Re-Reading Checkpoints](#re-reading-checkpoints)
 12. [Exit Criteria](#exit-criteria)
-13. [Next Step](#next-step)
+13. [Next Phase](#next-phase)
 
 ---
 

@@ -131,14 +131,14 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 - **If NO-GO:** Address concerns, cannot proceed to S6
 - **If GO:** Proceed to S6 implementation
 
-### S7: Post-Implementation (2 gates)
+### S7: Post-Implementation (2 checkpoints)
 
-**Gate 5: S7.P1 Part 3 - E2E Smoke Test (Data Values)**
+**Checkpoint: S7.P1 Part 3 - E2E Smoke Test (Data Values)**
 - **Location:** stages/s7/s7_p1_smoke_testing.md
 - **Criteria:** E2E test with REAL data, verify DATA VALUES (not just file existence)
 - **If FAIL:** Restart from S7.P1 Step 1
 
-**Gate 6: S7.P2 Validation Loop - 3 Consecutive Clean Rounds**
+**Checkpoint: S7.P2 Validation Loop - 3 Consecutive Clean Rounds**
 - **Location:** stages/s7/s7_p2_qc_rounds.md
 - **Criteria:** 3 consecutive rounds with ZERO issues found
 - **If issues found:** Fix immediately, reset counter, continue (fix-and-continue approach)

@@ -281,16 +281,16 @@ Testing Plan Update is complete when epic_smoke_test_plan.md reflects actual imp
 |------|-----------|-------|
 | **Step 1** | Review Actual Implementation | [Step 1](#step-1-review-actual-implementation) |
 | **Step 2** | Identify Testing Gaps | [Step 2](#step-2-identify-testing-gaps) |
-| **Step 3** | Add/Update Test Scenarios | [Step 3](#step-3-addupdate-test-scenarios) |
-| **Step 4** | Document & Commit | [Step 4](#step-4-document-update-rationale-and-commit) |
+| **Step 3** | Update Test Plan | [Step 3](#step-3-update-test-plan) |
+| **Step 4** | Final Verification | [Step 4](#step-4-final-verification) |
 
 **Key Decision Points:**
 
 | Decision | Description | Go To |
 |----------|-------------|-------|
 | **Update Scope** | NO CHANGE / MINOR / MAJOR | [Critical Decisions](#critical-decisions-summary) |
-| **Integration Points** | New cross-feature interactions | [Integration Points Examples](#integration-points-found-in-feature_01_rank_integration) |
-| **Edge Cases** | Discovered during implementation | [Edge Cases Examples](#edge-cases-discovered-in-implementation) |
+| **Integration Points** | New cross-feature interactions | [Integration Points Examples](#step-2-identify-testing-gaps) |
+| **Edge Cases** | Discovered during implementation | [Edge Cases Examples](#step-2-identify-testing-gaps) |
 
 **Reference Sections:**
 
@@ -351,6 +351,7 @@ Testing Plan Update is complete when epic_smoke_test_plan.md reflects actual imp
 
 ---
 
+### STEP 2: Identify Testing Gaps
 
 **Purpose:** Identify what's missing or outdated in current test plan
 

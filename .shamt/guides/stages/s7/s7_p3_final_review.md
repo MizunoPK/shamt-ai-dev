@@ -23,7 +23,7 @@ S7.P1 (Smoke Testing) → S7.P2 (Validation Loop) →
 3. [Critical Rules](#critical-rules)
 4. [Prerequisites Checklist](#prerequisites-checklist)
 5. [Workflow Overview](#workflow-overview)
-6. [Step 1: PR Review (Multi-Round with Fresh Eyes)](#step-1-pr-review-multi-round-with-fresh-eyes)
+6. [Step 1: PR Review (Validation Loop)](#step-1-pr-review-validation-loop)
 7. [Step 2: Lessons Learned Capture](#step-2-lessons-learned-capture)
 8. [Step 3: Final Verification](#step-3-final-verification)
 9. [MANDATORY CHECKPOINT 1](#mandatory-checkpoint-1)

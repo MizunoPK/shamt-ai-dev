@@ -17,7 +17,7 @@
 - [S3.P2: Epic Documentation Refinement](#s3p2-epic-documentation-refinement-20-30-min)
 - [S3.P3: Epic Plan Approval](#s3p3-epic-plan-approval-10-15-min)
 - [Exit Criteria](#exit-criteria)
-- [Next: S4 (Feature Testing Strategy)](#next-s4-feature-testing-strategy)
+- [Next: S4 (Feature Testing Strategy)](#next-stage)
 
 ---
 

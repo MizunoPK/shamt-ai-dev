@@ -17,7 +17,7 @@
 6. [S4: Feature-Level Testing Strategy (0 formal gates)](#s4-feature-level-testing-strategy-0-formal-gates)
 7. [S5: Implementation Planning](#s5-implementation-planning)
 8. [S6: Implementation Execution](#s6-implementation-execution)
-9. [S7: Post-Implementation (2 gates per feature)](#s7-post-implementation-2-gates-per-feature)
+9. [S7: Post-Implementation (2 checkpoints per feature)](#s7-post-implementation-2-checkpoints-per-feature)
 10. [S8: Post-Feature Updates](#s8-post-feature-updates)
 11. [S9: Epic-Level Final QC](#s9-epic-level-final-qc)
 12. [S10: Epic Cleanup (2 critical checkpoints per epic)](#s10-epic-cleanup-2-critical-checkpoints-per-epic)
@@ -541,9 +541,9 @@ S4 has no formal user approval gates. The epic testing strategy was approved at 
 
 ---
 
-## S7: Post-Implementation (2 gates per feature)
+## S7: Post-Implementation (2 checkpoints per feature)
 
-### Gate 5: S7.P1 Part 3 - E2E Smoke Test (Data Validation)
+### Checkpoint: S7.P1 Part 3 - E2E Smoke Test (Data Validation)
 
 **Location:** stages/s7/s7_p1_smoke_testing.md
 **When:** After Part 1 (Import) and Part 2 (Entry Point) tests pass
@@ -571,7 +571,7 @@ S4 has no formal user approval gates. The epic testing strategy was approved at 
 
 ---
 
-### Gate 6: S7.P2 Validation Loop - 3 Consecutive Clean Rounds
+### Checkpoint: S7.P2 Validation Loop - 3 Consecutive Clean Rounds
 
 **Location:** stages/s7/s7_p2_qc_rounds.md
 **When:** During Validation Loop (S7.P2)
@@ -683,8 +683,8 @@ S4 has no formal user approval gates. The epic testing strategy was approved at 
 
 **Additional Stage Checkpoints (documented in this file but not formally numbered gates):**
 - S2.P1.I3: User Approval of Acceptance Criteria (referenced as "Gate 4" in this file for completeness — embedded in Gate 3)
-- S7.P1: Smoke Part 3 - E2E Data Validation (referenced as "Gate 5" in this file)
-- S7.P2: Validation Loop - 3 Consecutive Clean Rounds (referenced as "Gate 6" in this file)
+- S7.P1: Smoke Part 3 - E2E Data Validation (labeled "Checkpoint: S7.P1 Part 3" in this file)
+- S7.P2: Validation Loop - 3 Consecutive Clean Rounds (labeled "Checkpoint: S7.P2 Validation Loop" in this file)
 - S10: Unit Tests 100% Pass (referenced as "Gate 7.1" in this file)
 - S10: User Testing Zero Bugs (referenced as "Gate 7.2" in this file)
 

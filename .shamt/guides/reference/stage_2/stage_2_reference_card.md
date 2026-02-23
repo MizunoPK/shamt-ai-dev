@@ -78,13 +78,15 @@ S2.P2: Cross-Feature Alignment (20-60 min)
 **Pass Criteria:** Zero scope creep + zero missing requirements
 **If FAIL:** Remove scope creep OR add missing requirements, re-run check
 
-### Gate 3: User Approval (S2.P1.I3)
+### Gate 3: User Checklist Approval (S2.P1.I3)
 **Location:** stages/s2/s2_p1_spec_creation_refinement.md (I3)
 **What it checks:**
-- User explicitly approves acceptance criteria
+- User explicitly approves spec.md (including acceptance criteria)
+- User explicitly approves checklist.md (all questions answered)
+- Zero autonomous agent resolution of checklist questions
 
-**Pass Criteria:** User confirmation documented
-**If FAIL:** Revise acceptance criteria, get user approval
+**Pass Criteria:** User confirms approval of both spec.md and checklist.md
+**If FAIL:** Revise spec/checklist based on user feedback, re-present for approval
 
 ---
 
@@ -179,12 +181,13 @@ S2.P2: Cross-Feature Alignment (20-60 min)
 - [ ] Compared to completed features (alignment verified)
 - [ ] Patterns consistent with rest of codebase
 
-**Gate 2 → Gate 3 (User Approval):**
+**Gate 2 → Gate 3 (User Checklist Approval):**
 - [ ] Alignment check PASSED (zero scope creep + zero missing requirements)
 - [ ] Acceptance criteria drafted
 
 **Gate 3 → S2.P2 (or next feature):**
-- [ ] User explicitly approved acceptance criteria
+- [ ] User explicitly approved spec.md (including acceptance criteria)
+- [ ] User explicitly approved checklist.md (all questions answered)
 - [ ] Spec finalized with all sources cited
 
 ---

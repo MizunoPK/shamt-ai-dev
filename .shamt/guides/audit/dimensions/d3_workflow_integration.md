@@ -347,14 +347,13 @@ done
 **What to Check:**
 Phases within a stage must have correct ordering and dependencies.
 
-**Example: S5 (Implementation Planning) has 3 phases:**
+**Example: S5 (Implementation Planning) has 2 phases (S5 v2):**
 ```text
-S5.P1: Planning Round 1 (I1-I7)
+S5 Phase 1: Draft Creation
   ↓ Must complete before
-S5.P2: Planning Round 2 (I8-I13)
-  ↓ Must complete before
-S5.P3: Planning Round 3 (I14-I22)
-```markdown
+S5 Phase 2: Validation Loop (3 consecutive clean rounds across 11 dimensions)
+```
+> ⚠️ **S5 v2 Note:** S5 v1 used 3 phases (S5.P1 Round 1, S5.P2 Round 2, S5.P3 Round 3). S5 v2 uses 2 phases only (Draft Creation + Validation Loop). When auditing S5 phase count, expect 2 phases, not 3.
 
 **Example: S7 (Implementation Testing) has 3 phases:**
 ```text
@@ -600,14 +599,16 @@ CONTRADICTION: S1 says groups matter for S3/S4, S2 says groups only matter for S
 ### Root Cause 4: Phase Additions Without Router Updates
 
 **Scenario:**
-- S5 splits into 3 phases (S5.P1, S5.P2, S5.P3)
+- A stage is split into additional phases (e.g., a stage adds a new phase)
 - Individual phase guides created
-- **FORGET** to update S5 router file with new structure
+- **FORGET** to update the stage router file with new structure
 
 **Result:**
-- Agent reads S5 router, sees old single-phase structure
-- Agent skips S5.P2 entirely
-- Verification iterations missing from implementation planning
+- Agent reads stage router, sees old phase structure
+- Agent skips new phase entirely
+- Workflow steps in new phase missing from execution
+
+> **Historical S5 Example (S5 v1 → v2):** S5 v1 had 3 phases (S5.P1, S5.P2, S5.P3). S5 v2 consolidated to 2 phases (Draft Creation + Validation Loop). Router needed updating to reflect new 2-phase structure.
 
 ---
 
@@ -854,16 +855,18 @@ grep -B 3 -A 3 "S5a\|S5b" stages/
 
 **Context:** Router files (like stage README.md) may show simplified workflow for readability.
 
-**Example:**
+**Example (S7 — 3-phase stage):**
 ```markdown
-# S5: Implementation Planning
+# S7: Testing & Review
 
-S5.P1 → S5.P2 → S5.P3 → S6
-```markdown
+S7.P1 (Smoke Testing) → S7.P2 (QC Rounds) → S7.P3 (Final Review) → S8
+```
 
-This is simplified; actual workflow has 22 iterations. Router shows phase-level only.
+This is simplified; actual workflow has detailed steps in each phase file. Router shows phase-level only.
 
-**Validation:** Simplified view in router → VALID (if detailed guides exist)
+> ⚠️ **S5 v2 Note:** S5 v2 does NOT use S5.P1/S5.P2/S5.P3 notation. S5 v2 has 2 phases (Draft Creation + Validation Loop). If a router shows "S5.P1 → S5.P2 → S5.P3", that is S5 v1 notation and should be flagged as a violation.
+
+**Validation:** Simplified view in router → VALID (if detailed guides exist AND phase structure matches current workflow)
 
 ---
 

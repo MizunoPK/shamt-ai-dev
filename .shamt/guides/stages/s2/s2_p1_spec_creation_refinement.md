@@ -17,7 +17,7 @@
 - [S2.P1.I2: Checklist Resolution](#s2p1i2-checklist-resolution-45-90-min)
 - [S2.P1.I3: Refinement & Alignment](#s2p1i3-refinement--alignment-30-60-min)
 - [Exit Criteria](#exit-criteria)
-- [Next: S2.P2](#next-s2p2-primary-agent-only)
+- [Next: S2.P2](#next-phase)
 
 ---
 
