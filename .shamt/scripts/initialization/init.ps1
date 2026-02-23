@@ -2,12 +2,12 @@
 # Shamt Initialization Script (PowerShell — Windows)
 # =============================================================================
 # Run this script from the root of the project you want to initialize Shamt in.
-# Usage: & "C:\path\to\shamt-ai-dev\.shamt\initialization\init.ps1"
+# Usage: & "C:\path\to\shamt-ai-dev\.shamt\scripts\initialization\init.ps1"
 # =============================================================================
 
 $ErrorActionPreference = "Stop"
 
-$ShamtSourceDir = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
+$ShamtSourceDir = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PSScriptRoot))
 $TargetDir = Get-Location
 $ShamtDir = Join-Path $TargetDir ".shamt"
 
@@ -60,6 +60,18 @@ function Apply-Substitutions {
         $content = $content -replace [regex]::Escape($key), $Replacements[$key]
     }
     Set-Content $FilePath $content -NoNewline
+}
+
+function Add-GitignoreEntry {
+    param([string]$GitignoreFile, [string]$Entry)
+    if (Test-Path $GitignoreFile) {
+        $existing = Get-Content $GitignoreFile -Raw
+        if ($existing -notlike "*$Entry*") {
+            Add-Content $GitignoreFile "`n$Entry"
+        }
+    } else {
+        Set-Content $GitignoreFile $Entry
+    }
 }
 
 # --- AI Service Selection ----------------------------------------------------
@@ -132,19 +144,36 @@ $DefaultBranch = Prompt-Input "  Default/main branch name" "main"
 Write-Host "  OK Git platform: $GitPlatform"
 Write-Host "  OK Default branch: $DefaultBranch"
 
+# --- Repository Configuration ------------------------------------------------
+
+Write-Separator "Repository Configuration"
+
+Write-Host "  Should .shamt/ and the rules file be gitignored in this project?"
+Write-Host "  Choose 'yes' for solo/local-only tooling, 'no' to track them in the repo."
+Write-Host ""
+$gitignoreChoice = Prompt-Input "  Gitignore .shamt/ and rules file? [y/N]" "N"
+if ($gitignoreChoice -match '^[Yy]$') {
+    $GitignoreShamt = $true
+} else {
+    $GitignoreShamt = $false
+}
+
+Write-Host "  OK Gitignore .shamt/ and rules file: $GitignoreShamt"
+
 # --- Confirmation ------------------------------------------------------------
 
 Write-Separator "Review"
-Write-Host "  Project name:      $ProjectName"
-Write-Host "  Epic tag:          $EpicTag"
-Write-Host "  Agent name:        $ShamtName"
-Write-Host "  Starting epic #:   $StartingEpic"
-Write-Host "  AI service:        $AiService"
-Write-Host "  Rules file:        $RulesFileName"
-Write-Host "  Rules file path:   $RulesFileDir\"
-Write-Host "  Git platform:      $GitPlatform"
-Write-Host "  Default branch:    $DefaultBranch"
-Write-Host "  Epic directory:    .shamt\epics\"
+Write-Host "  Project name:          $ProjectName"
+Write-Host "  Epic tag:              $EpicTag"
+Write-Host "  Agent name:            $ShamtName"
+Write-Host "  Starting epic #:       $StartingEpic"
+Write-Host "  AI service:            $AiService"
+Write-Host "  Rules file:            $RulesFileName"
+Write-Host "  Rules file path:       $RulesFileDir\"
+Write-Host "  Git platform:          $GitPlatform"
+Write-Host "  Default branch:        $DefaultBranch"
+Write-Host "  Gitignore .shamt/:     $GitignoreShamt"
+Write-Host "  Epic directory:        .shamt\epics\"
 Write-Host ""
 
 $confirm = Prompt-Input "Proceed with initialization? [Y/n]" "Y"
@@ -159,12 +188,10 @@ Write-Separator "Creating folder structure"
 
 $dirs = @(
     "$ShamtDir\guides",
-    "$ShamtDir\initialization",
+    "$ShamtDir\scripts",
+    "$ShamtDir\project-specific-configs",
     "$ShamtDir\epics\requests",
     "$ShamtDir\epics\done",
-    "$ShamtDir\changelogs\outbound",
-    "$ShamtDir\changelogs\unapplied_external_changes",
-    "$ShamtDir\changelogs\applied_external_changes",
     $RulesFileDir
 )
 foreach ($dir in $dirs) {
@@ -173,20 +200,65 @@ foreach ($dir in $dirs) {
 
 Write-Host "  OK .shamt\ structure created"
 
+# --- Write Config Files ------------------------------------------------------
+
+Write-Separator "Writing config files"
+
+Set-Content "$ShamtDir\shamt_master_path.conf" $ShamtSourceDir -NoNewline
+Write-Host "  OK Master path written to .shamt\shamt_master_path.conf"
+
+$rulesFilePath = Join-Path $RulesFileDir $RulesFileName
+Set-Content "$ShamtDir\rules_file_path.conf" $rulesFilePath -NoNewline
+Write-Host "  OK Rules file path written to .shamt\rules_file_path.conf"
+
+# --- Configure .gitignore ----------------------------------------------------
+
+Write-Separator "Configuring .gitignore"
+
+$GitignoreFile = Join-Path $TargetDir ".gitignore"
+
+# Always add shamt_master_path.conf (machine-specific absolute path — never commit)
+Add-GitignoreEntry -GitignoreFile $GitignoreFile -Entry ".shamt/shamt_master_path.conf"
+Write-Host "  OK .shamt/shamt_master_path.conf added to .gitignore (always)"
+
+# Optionally gitignore .shamt/ and rules file
+if ($GitignoreShamt) {
+    Add-GitignoreEntry -GitignoreFile $GitignoreFile -Entry ".shamt/"
+    if ($RulesFileDir -eq $TargetDir) {
+        $RulesGitignorePath = $RulesFileName
+    } else {
+        $RulesGitignorePath = (Resolve-Path -Relative $rulesFilePath).TrimStart(".\").Replace("\", "/")
+    }
+    Add-GitignoreEntry -GitignoreFile $GitignoreFile -Entry $RulesGitignorePath
+    Write-Host "  OK .shamt/ and $RulesGitignorePath added to .gitignore"
+}
+
 # --- Copy Guides -------------------------------------------------------------
 
 Write-Separator "Copying guides"
 
 Copy-Item -Path "$ShamtSourceDir\.shamt\guides\*" -Destination "$ShamtDir\guides\" -Recurse -Force
-Copy-Item -Path "$ShamtSourceDir\.shamt\initialization\*" -Destination "$ShamtDir\initialization\" -Recurse -Force
-Write-Host "  OK Guides and initialization files copied"
+# Exclude master's audit output history — child projects start fresh
+$auditOutputs = Join-Path $ShamtDir "guides\audit\outputs"
+if (Test-Path $auditOutputs) {
+    Remove-Item $auditOutputs -Recurse -Force
+}
+New-Item -ItemType Directory -Force -Path $auditOutputs | Out-Null
+Write-Host "  OK Guides copied (audit/outputs/ cleared for fresh start)"
+
+# --- Copy Scripts ------------------------------------------------------------
+
+Write-Separator "Copying scripts"
+
+Copy-Item -Path "$ShamtSourceDir\.shamt\scripts\*" -Destination "$ShamtDir\scripts\" -Recurse -Force
+Write-Host "  OK Scripts copied"
 
 # --- Configure Rules File ----------------------------------------------------
 
 Write-Separator "Configuring rules file"
 
 $RulesDest = Join-Path $RulesFileDir $RulesFileName
-$RulesTemplate = Join-Path $ShamtDir "initialization\RULES_FILE.template.md"
+$RulesTemplate = Join-Path $ShamtDir "scripts\initialization\RULES_FILE.template.md"
 $RulesFileExisted = $false
 
 if (Test-Path $RulesDest) {
@@ -208,12 +280,12 @@ if (-not $RulesFileExisted) {
 Write-Separator "Applying configuration"
 
 $replacements = @{
-    "{{PROJECT_NAME}}"  = $ProjectName
-    "{{EPIC_TAG}}"      = $EpicTag
-    "{{SHAMT_NAME}}"    = $ShamtName
-    "{{GIT_PLATFORM}}"  = $GitPlatform
-    "{{DEFAULT_BRANCH}}"= $DefaultBranch
-    "SHAMT-{N}"         = "$EpicTag-{N}"
+    "{{PROJECT_NAME}}"   = $ProjectName
+    "{{EPIC_TAG}}"       = $EpicTag
+    "{{SHAMT_NAME}}"     = $ShamtName
+    "{{GIT_PLATFORM}}"   = $GitPlatform
+    "{{DEFAULT_BRANCH}}" = $DefaultBranch
+    "SHAMT-{N}"          = "$EpicTag-{N}"
 }
 
 # Apply to rules file
@@ -233,42 +305,28 @@ Get-ChildItem -Path "$ShamtDir\guides" -Filter "*.md" -Recurse | ForEach-Object 
 
 # Create EPIC_TRACKER.md
 $epicTrackerDest = Join-Path $ShamtDir "epics\EPIC_TRACKER.md"
-Copy-Item (Join-Path $ShamtDir "initialization\EPIC_TRACKER.template.md") $epicTrackerDest -Force
+Copy-Item (Join-Path $ShamtDir "scripts\initialization\EPIC_TRACKER.template.md") $epicTrackerDest -Force
 Apply-Substitutions -FilePath $epicTrackerDest -Replacements $replacements
-# Set starting number
 (Get-Content $epicTrackerDest -Raw) -replace "$EpicTag-1", "$EpicTag-$StartingEpic" | Set-Content $epicTrackerDest -NoNewline
-
-# Create CHANGELOG_INDEX files
-@"
-# Applied External Changes Index
-
-**Current Version:** v0000 (no changelogs applied yet)
-
-| Version | Date Applied | Summary |
-|---------|-------------|---------|
-| — | — | No changelogs applied yet |
-"@ | Set-Content "$ShamtDir\changelogs\applied_external_changes\CHANGELOG_INDEX.md"
-
-@"
-# Outbound Changelog Index
-
-| Entry ID | Date | Summary | Submitted to Master |
-|----------|------|---------|---------------------|
-| — | — | No changelog entries yet | — |
-"@ | Set-Content "$ShamtDir\changelogs\outbound\CHANGELOG_INDEX.md"
 
 Write-Host "  OK Configuration applied"
 
-# --- Write init_config.md ----------------------------------------------------
+# --- Write init_config.md Handoff File ---------------------------------------
 
 Write-Separator "Writing handoff file for agent"
 
-$needsAiDiscovery = ($AiService -eq "other" -or $AiService -eq "amazon_q").ToString().ToLower()
+$needsAiDiscovery = ($AiService -eq "other" -or $AiService -eq "amazon_q")
 $today = Get-Date -Format "yyyy-MM-dd"
-$rulesNote = if ($RulesFileExisted) { "- Existing rules file was preserved — agent should incorporate it into new RULES_FILE content." } else { "- Rules file written fresh from template." }
-$aiNote = if ($needsAiDiscovery -eq "true") { "- AI service '$AiService' needs rules file convention confirmed. Agent should research and update ai_services.md." } else { "" }
+$rulesNote = if ($RulesFileExisted) {
+    "- Existing rules file was preserved — agent should incorporate it into the new rules file content."
+} else {
+    "- Rules file written fresh from template."
+}
+$aiNote = if ($needsAiDiscovery) {
+    "- AI service '$AiService' needs rules file convention confirmed. Agent should research and update ai_services.md."
+} else { "" }
 
-@"
+$initConfigContent = @"
 # Shamt Initialization Config
 
 **Generated:** $today
@@ -285,36 +343,50 @@ $aiNote = if ($needsAiDiscovery -eq "true") { "- AI service '$AiService' needs r
 - **Service:** $AiService
 - **Rules File Name:** $RulesFileName
 - **Rules File Path:** $RulesFileDir\
-- **Needs AI Discovery:** $needsAiDiscovery
+- **Rules File Template:** .shamt\scripts\initialization\RULES_FILE.template.md
+- **Needs AI Discovery:** $($needsAiDiscovery.ToString().ToLower())
 
 ## Git Configuration
 - **Platform:** $GitPlatform
 - **Default Branch:** $DefaultBranch
 
 ## Script Actions Completed
-- [x] Created .shamt\ folder structure
-- [x] Copied guides from master Shamt
-- [x] Copied initialization files
+- [x] Created .shamt\ folder structure (including project-specific-configs\)
+- [x] Copied guides from master Shamt (audit\outputs\ cleared for fresh start)
+- [x] Copied scripts from master Shamt
 - [x] Placed rules file at $RulesFileDir\$RulesFileName
 - [x] Created EPIC_TRACKER.md at .shamt\epics\EPIC_TRACKER.md
-- [x] Created CHANGELOG_INDEX.md files
-- [x] Applied configuration substitutions
+- [x] Written .shamt\shamt_master_path.conf
+- [x] Written .shamt\rules_file_path.conf
+- [x] Applied configuration substitutions to guides and rules file
 
 ## Agent Remaining Tasks
+
+**Before beginning:** Re-read the validation loop protocol at:
+`.shamt/guides/reference/validation_loop_master_protocol.md`
+
+Then run a validation loop to complete initialization:
+
 - [ ] Handle AI service discovery (if Needs AI Discovery = true)
 - [ ] Analyze codebase structure, languages, frameworks
-- [ ] Write ARCHITECTURE.md (incorporate existing content if present)
-- [ ] Write CODING_STANDARDS.md (incorporate existing content if present)
-- [ ] Customize guides for this project (test commands, project-specific notes)
+- [ ] Ask clarifying questions until codebase is fully understood
+- [ ] Write ARCHITECTURE.md to `.shamt/project-specific-configs/`
+- [ ] Write CODING_STANDARDS.md to `.shamt/project-specific-configs/`
 - [ ] Add 3-5 key coding rules to rules file summary section
+- [ ] Validate all outputs meet quality bar (3 consecutive clean validation rounds)
 - [ ] Mark this file complete: change Status to COMPLETE
 
 ## Notes
 $rulesNote
 $aiNote
-"@ | Set-Content "$ShamtDir\init_config.md"
+- ARCHITECTURE.md and CODING_STANDARDS.md belong in `.shamt/project-specific-configs/`, not the project root.
+- Shared guide files in `.shamt/guides/` must remain generic — never write project-specific content into them.
+- The only exception: a pointer note in a shared guide directing the agent to check `.shamt/project-specific-configs/` for a supplement.
+"@
 
-Write-Host "  OK Handoff file written to .shamt\init_config.md"
+Set-Content "$ShamtDir\project-specific-configs\init_config.md" $initConfigContent
+
+Write-Host "  OK Handoff file written to .shamt\project-specific-configs\init_config.md"
 
 # --- Done --------------------------------------------------------------------
 
@@ -324,9 +396,13 @@ Write-Host "  Shamt has been initialized in: $TargetDir"
 Write-Host ""
 Write-Host "  Next step: open your project in $ShamtName (your AI assistant) and say:"
 Write-Host ""
-Write-Host "    `"Read .shamt/init_config.md and complete the Shamt initialization.`""
+Write-Host "    `"Read .shamt/project-specific-configs/init_config.md and complete the Shamt initialization.`""
 Write-Host ""
 Write-Host "  The agent will analyze your codebase and finish setup."
+Write-Host ""
+Write-Host "  To sync with master later:"
+Write-Host "    Import updates from master: bash .shamt/scripts/import/import.sh (or import.ps1)"
+Write-Host "    Export changes to master:   bash .shamt/scripts/export/export.sh (or export.ps1)"
 Write-Host ""
 Write-Host "============================================================"
 Write-Host ""

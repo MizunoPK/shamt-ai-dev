@@ -6,7 +6,7 @@
 
 ## Quick Start for New Agents
 
-**FIRST:** Read `ARCHITECTURE.md` for complete architectural overview and implementation details.
+**FIRST:** Read `.shamt/project-specific-configs/ARCHITECTURE.md` for complete architectural overview and implementation details.
 
 **SECOND:** Read this file for workflow rules, coding standards references, and commit protocols.
 
@@ -73,8 +73,9 @@ Per-feature: S5 (Plan) → S6 (Execute) → S7 (Test) → S8 (Align) → repeat 
 | File | Location | Purpose |
 |------|----------|---------|
 | Epic tracker | `.shamt/epics/EPIC_TRACKER.md` | All epics + next available number |
-| Architecture | `ARCHITECTURE.md` | Project structure and design |
-| Coding standards | `CODING_STANDARDS.md` | Style, naming, testing rules |
+| Architecture | `.shamt/project-specific-configs/ARCHITECTURE.md` | Project structure and design |
+| Coding standards | `.shamt/project-specific-configs/CODING_STANDARDS.md` | Style, naming, testing rules |
+| Project-specific configs | `.shamt/project-specific-configs/` | All project-specific supplements and overrides |
 | Guides | `.shamt/guides/` | Full S1–S10 workflow |
 | Epic work | `.shamt/epics/` | Active and archived epics |
 
@@ -82,15 +83,14 @@ Per-feature: S5 (Plan) → S6 (Execute) → S7 (Test) → S8 (Align) → repeat 
 
 ## Coding Standards
 
-See `CODING_STANDARDS.md` for complete standards. Key points:
+See `.shamt/project-specific-configs/CODING_STANDARDS.md` for complete standards. Key points:
 - [Agent: fill in 3–5 key coding rules after analyzing the codebase]
 
 ---
 
-## Shamt Changelog
+## Shamt Sync
 
-This project participates in the Shamt changelog ecosystem:
-- **Write a changelog** when you make guide improvements that could benefit other projects
-- **Changelog location:** `.shamt/changelogs/outbound/`
-- **Apply updates** from `.shamt/changelogs/unapplied_external_changes/` when available
-- **Guide:** `.shamt/guides/changelog_application/child_applying_master_changelog.md`
+This project syncs improvements with the master Shamt repo via scripts:
+- **Import updates from master:** `bash .shamt/scripts/import/import.sh`
+- **Export improvements to master:** `bash .shamt/scripts/export/export.sh` (then open a PR)
+- **Log shared file changes:** `.shamt/CHANGES.md` (written by agent during S10/audit work)
