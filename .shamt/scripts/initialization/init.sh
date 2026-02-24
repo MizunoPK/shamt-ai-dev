@@ -3,12 +3,12 @@
 # Shamt Initialization Script (Bash — Linux / Mac)
 # =============================================================================
 # Run this script from the root of the project you want to initialize Shamt in.
-# Usage: bash /path/to/shamt-ai-dev/.shamt/initialization/init.sh
+# Usage: bash /path/to/shamt-ai-dev/.shamt/scripts/initialization/init.sh
 # =============================================================================
 
 set -e
 
-SHAMT_SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+SHAMT_SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 TARGET_DIR="$(pwd)"
 SHAMT_DIR="$TARGET_DIR/.shamt"
 
@@ -152,19 +152,37 @@ DEFAULT_BRANCH=$(prompt "  Default/main branch name" "main")
 echo "  ✓ Git platform: $GIT_PLATFORM"
 echo "  ✓ Default branch: $DEFAULT_BRANCH"
 
+# --- Repository Configuration ------------------------------------------------
+
+separator "Repository Configuration"
+
+echo "  Should .shamt/ and the rules file be gitignored in this project?"
+echo "  Choose 'yes' for solo/local-only tooling, 'no' to track them in the repo."
+echo ""
+read -rp "  Gitignore .shamt/ and rules file? [y/N]: " gitignore_choice
+gitignore_choice="${gitignore_choice:-N}"
+if [[ "$gitignore_choice" =~ ^[Yy]$ ]]; then
+    GITIGNORE_SHAMT="true"
+else
+    GITIGNORE_SHAMT="false"
+fi
+
+echo "  ✓ Gitignore .shamt/ and rules file: $GITIGNORE_SHAMT"
+
 # --- Confirmation ------------------------------------------------------------
 
 separator "Review"
-echo "  Project name:      $PROJECT_NAME"
-echo "  Epic tag:          $EPIC_TAG"
-echo "  Agent name:        $SHAMT_NAME"
-echo "  Starting epic #:   $STARTING_EPIC"
-echo "  AI service:        $AI_SERVICE"
-echo "  Rules file:        $RULES_FILE_NAME"
-echo "  Rules file path:   $RULES_FILE_DIR/"
-echo "  Git platform:      $GIT_PLATFORM"
-echo "  Default branch:    $DEFAULT_BRANCH"
-echo "  Epic directory:    .shamt/epics/"
+echo "  Project name:          $PROJECT_NAME"
+echo "  Epic tag:              $EPIC_TAG"
+echo "  Agent name:            $SHAMT_NAME"
+echo "  Starting epic #:       $STARTING_EPIC"
+echo "  AI service:            $AI_SERVICE"
+echo "  Rules file:            $RULES_FILE_NAME"
+echo "  Rules file path:       $RULES_FILE_DIR/"
+echo "  Git platform:          $GIT_PLATFORM"
+echo "  Default branch:        $DEFAULT_BRANCH"
+echo "  Gitignore .shamt/:     $GITIGNORE_SHAMT"
+echo "  Epic directory:        .shamt/epics/"
 echo ""
 read -rp "Proceed with initialization? [Y/n]: " confirm
 confirm="${confirm:-Y}"
@@ -178,29 +196,78 @@ fi
 separator "Creating folder structure"
 
 mkdir -p "$SHAMT_DIR/guides"
-mkdir -p "$SHAMT_DIR/initialization"
+mkdir -p "$SHAMT_DIR/scripts"
+mkdir -p "$SHAMT_DIR/project-specific-configs"
 mkdir -p "$SHAMT_DIR/epics/requests"
 mkdir -p "$SHAMT_DIR/epics/done"
-mkdir -p "$SHAMT_DIR/changelogs/outbound"
-mkdir -p "$SHAMT_DIR/changelogs/unapplied_external_changes"
-mkdir -p "$SHAMT_DIR/changelogs/applied_external_changes"
 mkdir -p "$RULES_FILE_DIR"
 
 echo "  ✓ .shamt/ structure created"
+
+# --- Write Config Files ------------------------------------------------------
+
+separator "Writing config files"
+
+echo "$SHAMT_SOURCE_DIR" > "$SHAMT_DIR/shamt_master_path.conf"
+echo "  ✓ Master path written to .shamt/shamt_master_path.conf"
+
+echo "$RULES_FILE_DIR/$RULES_FILE_NAME" > "$SHAMT_DIR/rules_file_path.conf"
+echo "  ✓ Rules file path written to .shamt/rules_file_path.conf"
+
+# --- Configure .gitignore ----------------------------------------------------
+
+separator "Configuring .gitignore"
+
+GITIGNORE_FILE="$TARGET_DIR/.gitignore"
+
+# Always add shamt_master_path.conf (machine-specific absolute path — never commit)
+if [ -f "$GITIGNORE_FILE" ]; then
+    if ! grep -qF ".shamt/shamt_master_path.conf" "$GITIGNORE_FILE"; then
+        echo ".shamt/shamt_master_path.conf" >> "$GITIGNORE_FILE"
+    fi
+else
+    echo ".shamt/shamt_master_path.conf" > "$GITIGNORE_FILE"
+fi
+echo "  ✓ .shamt/shamt_master_path.conf added to .gitignore (always)"
+
+# Optionally gitignore .shamt/ and rules file
+if [ "$GITIGNORE_SHAMT" = "true" ]; then
+    if ! grep -qF ".shamt/" "$GITIGNORE_FILE"; then
+        echo ".shamt/" >> "$GITIGNORE_FILE"
+    fi
+    if [ "$RULES_FILE_DIR" = "$TARGET_DIR" ]; then
+        RULES_GITIGNORE_PATH="$RULES_FILE_NAME"
+    else
+        RULES_GITIGNORE_PATH="${RULES_FILE_DIR#"$TARGET_DIR"/}/$RULES_FILE_NAME"
+    fi
+    if ! grep -qF "$RULES_GITIGNORE_PATH" "$GITIGNORE_FILE"; then
+        echo "$RULES_GITIGNORE_PATH" >> "$GITIGNORE_FILE"
+    fi
+    echo "  ✓ .shamt/ and $RULES_GITIGNORE_PATH added to .gitignore"
+fi
 
 # --- Copy Guides -------------------------------------------------------------
 
 separator "Copying guides"
 
 cp -r "$SHAMT_SOURCE_DIR/.shamt/guides/"* "$SHAMT_DIR/guides/"
-cp -r "$SHAMT_SOURCE_DIR/.shamt/initialization/"* "$SHAMT_DIR/initialization/"
-echo "  ✓ Guides and initialization files copied"
+# Exclude master's audit output history — child projects start fresh
+rm -rf "$SHAMT_DIR/guides/audit/outputs"
+mkdir -p "$SHAMT_DIR/guides/audit/outputs"
+echo "  ✓ Guides copied (audit/outputs/ cleared for fresh start)"
 
-# --- Copy and Configure Rules File -------------------------------------------
+# --- Copy Scripts ------------------------------------------------------------
+
+separator "Copying scripts"
+
+cp -r "$SHAMT_SOURCE_DIR/.shamt/scripts/"* "$SHAMT_DIR/scripts/"
+echo "  ✓ Scripts copied"
+
+# --- Configure Rules File ----------------------------------------------------
 
 separator "Configuring rules file"
 
-RULES_TEMPLATE="$SHAMT_DIR/initialization/RULES_FILE.template.md"
+RULES_TEMPLATE="$SHAMT_DIR/scripts/initialization/RULES_FILE.template.md"
 RULES_DEST="$RULES_FILE_DIR/$RULES_FILE_NAME"
 
 if [ -f "$RULES_DEST" ]; then
@@ -251,31 +318,12 @@ if [ "$RULES_FILE_EXISTS" = "false" ]; then
 fi
 
 # Copy and configure EPIC_TRACKER
-EPIC_TRACKER_TEMPLATE="$SHAMT_DIR/initialization/EPIC_TRACKER.template.md"
+EPIC_TRACKER_TEMPLATE="$SHAMT_DIR/scripts/initialization/EPIC_TRACKER.template.md"
 EPIC_TRACKER_DEST="$SHAMT_DIR/epics/EPIC_TRACKER.md"
 cp "$EPIC_TRACKER_TEMPLATE" "$EPIC_TRACKER_DEST"
 do_substitutions "$EPIC_TRACKER_DEST"
 # Set starting epic number
 sed -i "s/$EPIC_TAG-1/$EPIC_TAG-$STARTING_EPIC/g" "$EPIC_TRACKER_DEST"
-
-# Copy CHANGELOG_INDEX templates
-cat > "$SHAMT_DIR/changelogs/applied_external_changes/CHANGELOG_INDEX.md" << EOF
-# Applied External Changes Index
-
-**Current Version:** v0000 (no changelogs applied yet)
-
-| Version | Date Applied | Summary |
-|---------|-------------|---------|
-| — | — | No changelogs applied yet |
-EOF
-
-cat > "$SHAMT_DIR/changelogs/outbound/CHANGELOG_INDEX.md" << EOF
-# Outbound Changelog Index
-
-| Entry ID | Date | Summary | Submitted to Master |
-|----------|------|---------|---------------------|
-| — | — | No changelog entries yet | — |
-EOF
 
 echo "  ✓ Configuration applied"
 
@@ -288,7 +336,7 @@ if [ "$AI_SERVICE" = "other" ] || [ "$AI_SERVICE" = "amazon_q" ]; then
     NEEDS_AI_DISCOVERY="true"
 fi
 
-cat > "$SHAMT_DIR/init_config.md" << EOF
+cat > "$SHAMT_DIR/project-specific-configs/init_config.md" << EOF
 # Shamt Initialization Config
 
 **Generated:** $(date +%Y-%m-%d)
@@ -305,6 +353,7 @@ cat > "$SHAMT_DIR/init_config.md" << EOF
 - **Service:** $AI_SERVICE
 - **Rules File Name:** $RULES_FILE_NAME
 - **Rules File Path:** $RULES_FILE_DIR/
+- **Rules File Template:** .shamt/scripts/initialization/RULES_FILE.template.md
 - **Needs AI Discovery:** $NEEDS_AI_DISCOVERY
 
 ## Git Configuration
@@ -312,29 +361,40 @@ cat > "$SHAMT_DIR/init_config.md" << EOF
 - **Default Branch:** $DEFAULT_BRANCH
 
 ## Script Actions Completed
-- [x] Created .shamt/ folder structure
-- [x] Copied guides from master Shamt
-- [x] Copied initialization files
+- [x] Created .shamt/ folder structure (including project-specific-configs/)
+- [x] Copied guides from master Shamt (audit/outputs/ cleared for fresh start)
+- [x] Copied scripts from master Shamt
 - [x] Placed rules file at $RULES_FILE_DIR/$RULES_FILE_NAME
 - [x] Created EPIC_TRACKER.md at .shamt/epics/EPIC_TRACKER.md
-- [x] Created CHANGELOG_INDEX.md files
-- [x] Applied configuration substitutions
+- [x] Written .shamt/shamt_master_path.conf
+- [x] Written .shamt/rules_file_path.conf
+- [x] Applied configuration substitutions to guides and rules file
 
 ## Agent Remaining Tasks
+
+**Before beginning:** Re-read the validation loop protocol at:
+\`.shamt/guides/reference/validation_loop_master_protocol.md\`
+
+Then run a validation loop to complete initialization:
+
 - [ ] Handle AI service discovery (if Needs AI Discovery = true)
 - [ ] Analyze codebase structure, languages, frameworks
-- [ ] Write ARCHITECTURE.md (incorporate existing content if present)
-- [ ] Write CODING_STANDARDS.md (incorporate existing content if present)
-- [ ] Customize guides for this project (test commands, project-specific notes)
+- [ ] Ask clarifying questions until codebase is fully understood
+- [ ] Write ARCHITECTURE.md to \`.shamt/project-specific-configs/\`
+- [ ] Write CODING_STANDARDS.md to \`.shamt/project-specific-configs/\`
 - [ ] Add 3-5 key coding rules to rules file summary section
+- [ ] Validate all outputs meet quality bar (3 consecutive clean validation rounds)
 - [ ] Mark this file complete: change Status to COMPLETE
 
 ## Notes
-$( [ "$RULES_FILE_EXISTS" = "true" ] && echo "- Existing rules file was preserved — agent should incorporate it into the new RULES_FILE content." || echo "- Rules file written fresh from template." )
-$( [ "$NEEDS_AI_DISCOVERY" = "true" ] && echo "- AI service '$AI_SERVICE' needs rules file convention confirmed. Agent should research and update ai_services.md." || echo "" )
+$( [ "$RULES_FILE_EXISTS" = "true" ] && echo "- Existing rules file was preserved — agent should incorporate it into the new rules file content." || echo "- Rules file written fresh from template." )
+$( [ "$NEEDS_AI_DISCOVERY" = "true" ] && echo "- AI service '$AI_SERVICE' needs rules file convention confirmed. Agent should research and update ai_services.md." )
+- ARCHITECTURE.md and CODING_STANDARDS.md belong in \`.shamt/project-specific-configs/\`, not the project root.
+- Shared guide files in \`.shamt/guides/\` must remain generic — never write project-specific content into them.
+- The only exception: a pointer note in a shared guide directing the agent to check \`.shamt/project-specific-configs/\` for a supplement.
 EOF
 
-echo "  ✓ Handoff file written to .shamt/init_config.md"
+echo "  ✓ Handoff file written to .shamt/project-specific-configs/init_config.md"
 
 # --- Done --------------------------------------------------------------------
 
@@ -344,9 +404,13 @@ echo "  Shamt has been initialized in: $TARGET_DIR"
 echo ""
 echo "  Next step: open your project in $SHAMT_NAME (your AI assistant) and say:"
 echo ""
-echo "    \"Read .shamt/init_config.md and complete the Shamt initialization.\""
+echo "    \"Read .shamt/project-specific-configs/init_config.md and complete the Shamt initialization.\""
 echo ""
 echo "  The agent will analyze your codebase and finish setup."
+echo ""
+echo "  To sync with master later:"
+echo "    Import updates from master: bash .shamt/scripts/import/import.sh"
+echo "    Export changes to master:   bash .shamt/scripts/export/export.sh"
 echo ""
 echo "============================================================"
 echo ""

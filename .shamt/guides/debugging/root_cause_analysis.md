@@ -322,14 +322,14 @@ I've analyzed why this bug existed and how we can prevent it in future epics.
 **Guide to Update:** `{path/to/guide.md}`
 
 **Current State (BEFORE):**
-```
+```text
 {current text or "Section doesn't exist"}
-```bash
+```
 
 **Proposed Addition/Change (AFTER):**
-```
+```text
 {proposed new text with **BOLD** for changes}
-```markdown
+```
 
 **Rationale:**
 {Why this prevents future bugs}

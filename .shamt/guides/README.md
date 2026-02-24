@@ -37,7 +37,7 @@ This directory contains the complete Shamt epic-driven development workflow guid
 | `prompts/` | Phase transition prompts by stage |
 | `parallel_work/` | Parallel S2 work coordination |
 | `audit/` | Modular guide audit system |
-| `changelog_application/` | Changelog apply/publish guides |
+| `sync/` | Separation rule, export workflow, import workflow |
 | `master_dev_workflow/` | Guide for improving guides directly |
 
 ---

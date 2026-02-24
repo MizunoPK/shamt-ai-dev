@@ -1,6 +1,6 @@
 # Master Dev Workflow — Guide Improvement Process
 
-This guide defines the standardized process for improving the master Shamt guides directly (not via a child changelog).
+This guide defines the standardized process for improving the master Shamt guides directly (as opposed to receiving improvements via a child project PR).
 
 Use this when:
 - You've identified a gap, error, or improvement opportunity in the master guides
@@ -29,7 +29,7 @@ Before touching any files, write a one-paragraph description of:
 - What the problem or gap is
 - What the improvement should be
 
-This becomes the basis for your changelog entry.
+This becomes the basis for your commit message or PR description.
 
 ---
 
@@ -64,62 +64,14 @@ After making changes:
 
 ---
 
-## Step 5: Write a Changelog Entry
-
-Write a changelog entry in `.shamt/changelogs/` describing what changed.
-
-**Even for master-internal changes**, write the entry — it becomes the basis for the outbound changelog.
-
-Use the template:
-
-```markdown
-# Shamt Changelog Entry
-
-**Entry ID:** SHAMT-CHANGELOG-[NNN]
-**Date:** YYYY-MM-DD
-**Source Project:** master
-**Author:** [agent]
-
-## Guide(s) Affected
-- [.shamt/guides/path/to/guide.md] — [section]
-
-## Change Type
-- [ ] Core functionality change
-- [ ] New guide or section added
-- [ ] Clarification / wording improvement
-- [ ] Bug fix (guide was incorrect or contradictory)
-- [ ] Structural/organizational change
-
-## Summary
-[1-3 sentences]
-
-## Rationale
-[Why this change was made]
-
-## Universality Assessment
-- [x] Universal
-
-## How to Apply
-[Guidance for child agents applying this to their customized guides]
-```
-
----
-
-## Step 6: Publish as an Outbound Changelog
-
-1. Check `outbound_changelogs/CHANGELOG_INDEX.md` for the current version number
-2. Assign the next sequential version: `v[NNNN]_[brief-slug].md`
-3. Copy the changelog entry to `outbound_changelogs/`
-4. Update `CHANGELOG_INDEX.md` — add new entry at top, update current version
-
----
-
-## Step 7: Commit
+## Step 5: Commit
 
 ```bash
-git add .shamt/guides/ .shamt/outbound_changelogs/
+git add .shamt/guides/ .shamt/scripts/
 git commit -m "feat/SHAMT-[N]: [brief description of guide improvement]"
 ```
+
+For master-internal improvements, commit directly to a branch and open a PR against `main`. Child projects will receive the improvement on their next import.
 
 ---
 
@@ -131,4 +83,4 @@ For significant multi-guide changes, use the full SHAMT epic workflow:
 2. Update `.shamt/epics/EPIC_TRACKER.md`
 3. Create branch: `feat/SHAMT-[N]`
 4. Follow S1-S10 stages as appropriate for the scope
-5. Publish outbound changelog at the end (S10)
+5. Merge branch to `main` — child projects will receive the changes on their next import run

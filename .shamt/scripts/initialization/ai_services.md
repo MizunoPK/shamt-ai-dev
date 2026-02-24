@@ -42,7 +42,7 @@ During initialization, the init script reads this file to determine how to name 
 
 - **Rules file name:** TBD
 - **Rules file location:** TBD
-- **Notes:** Amazon Q Developer rules file convention not yet confirmed. If you use Amazon Q and discover the correct setup, please contribute a changelog entry.
+- **Notes:** Amazon Q Developer rules file convention not yet confirmed. If you use Amazon Q and discover the correct setup, please submit a PR to the master Shamt repo with the information.
 
 ---
 
@@ -53,6 +53,6 @@ If your AI service is not listed above:
 1. Research the service's documentation for how it reads custom rules/instructions
 2. During init, select "Other" and provide the filename and location
 3. The agent will add the service to this file
-4. When prompted, consider writing a changelog entry to contribute the discovery back to the master Shamt repo
+4. Consider submitting a PR to the master Shamt repo to contribute the discovery back
 
-**Changelog template:** `.shamt/guides/changelog_application/` → write entry in `.shamt/changelogs/outbound/`
+**To contribute back:** Run `bash .shamt/scripts/export/export.sh` and open a PR to the master repo. See `.shamt/guides/sync/export_workflow.md` for details.

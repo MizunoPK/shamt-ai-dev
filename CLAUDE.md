@@ -3,16 +3,15 @@
 This is the **master Shamt repository**. You are working on the framework itself, not a child project.
 
 Your primary responsibilities here are:
-1. **Applying child changelogs** — reviewing improvements submitted by child projects and incorporating them into the master guides
-2. **Publishing outbound changelogs** — versioning and publishing improvements for child projects to consume
-3. **Master dev workflow** — making guide improvements using the standardized process
-4. **AI service registry** — keeping `ai_services.md` up to date with new AI services
+1. **Reviewing child PRs** — reviewing guide/script improvements submitted by child projects via pull request
+2. **Master dev workflow** — making guide improvements using the standardized process
+3. **AI service registry** — keeping `ai_services.md` up to date with new AI services
 
 ---
 
 ## Project Structure
 
-```
+```text
 shamt-ai-dev/
 ├── README.md
 ├── CLAUDE.md                           (this file)
@@ -21,65 +20,47 @@ shamt-ai-dev/
     │   ├── stages/                     # s1–s10 workflow guides
     │   ├── reference/
     │   ├── audit/
-    │   ├── changelog_application/      # guides for applying changelogs
+    │   ├── sync/                       # separation rule, export workflow, import workflow
     │   └── master_dev_workflow/        # guide for improving master guides
-    ├── initialization/
-    │   ├── RULES_FILE.template.md      # AI rules file template
-    │   ├── ARCHITECTURE.template.md
-    │   ├── CODING_STANDARDS.template.md
-    │   ├── EPIC_TRACKER.template.md
-    │   ├── ai_services.md              # known AI service registry
-    │   ├── init.sh
-    │   └── init.ps1
-    ├── epics/
-    │   ├── EPIC_TRACKER.md             # master's own epic tracker
-    │   ├── requests/
-    │   ├── done/
-    │   └── SHAMT-[N]-[name]/           # active epic folders
-    ├── changelogs/
-    │   ├── unapplied_external_changes/ # from child projects, not yet applied
-    │   └── applied_external_changes/   # from child projects, already applied
-    └── outbound_changelogs/
-        ├── CHANGELOG_INDEX.md          # version record + index
-        └── v[NNNN]_[description].md
+    ├── scripts/
+    │   ├── initialization/
+    │   │   ├── RULES_FILE.template.md  # AI rules file template
+    │   │   ├── ARCHITECTURE.template.md
+    │   │   ├── CODING_STANDARDS.template.md
+    │   │   ├── EPIC_TRACKER.template.md
+    │   │   ├── ai_services.md          # known AI service registry
+    │   │   ├── init.sh
+    │   │   └── init.ps1
+    │   ├── export/                     # export script
+    │   └── import/                     # import script
+    └── epics/
+        ├── EPIC_TRACKER.md             # master's own epic tracker
+        ├── requests/
+        ├── done/
+        └── SHAMT-[N]-[name]/           # active epic folders
 ```
 
 ---
 
-## Applying a Child Changelog
+## Reviewing Child Project PRs
 
-When a child project submits a changelog file, place it in `.shamt/changelogs/unapplied_external_changes/` and follow:
+Child projects submit guide and script improvements to master via pull request (not changelog files).
 
-**Guide:** `.shamt/guides/changelog_application/master_receiving_child_changelog.md`
+The PR description will reference `.shamt/CHANGES.md` from the child project for context.
 
-Key steps:
-1. Read the changelog entry carefully
-2. Assess universality (does this apply to all Shamt versions, or is it child-specific?)
-3. Apply relevant changes to the appropriate guide(s)
-4. Run the guide audit: `.shamt/guides/audit/`
-5. Assign the next version number and publish to `outbound_changelogs/`
-6. Update `outbound_changelogs/CHANGELOG_INDEX.md`
-7. Move the source file to `applied_external_changes/`
+Review steps:
+1. Read the PR diff — assess whether changes are truly generic (applicable to all Shamt projects)
+2. If generic: approve and merge
+3. If project-specific content has leaked into shared files: request changes
+4. After merging, the import script will distribute the improvement to other child projects on their next import
 
----
-
-## Publishing an Outbound Changelog
-
-After applying improvements (from child changelogs or master dev work):
-
-**Guide:** `.shamt/guides/changelog_application/master_receiving_child_changelog.md` (versioning section)
-
-Version numbering:
-- Check `outbound_changelogs/CHANGELOG_INDEX.md` for the latest version number
-- Increment by 1, zero-padded to 4 digits (e.g., `v0001`, `v0042`)
-- Filename format: `v[NNNN]_[brief-description].md`
-- Update `CHANGELOG_INDEX.md` immediately after publishing
+**Full workflow guides:** `.shamt/guides/sync/export_workflow.md` (child side) and `.shamt/guides/sync/import_workflow.md` (post-import validation)
 
 ---
 
 ## Master Dev Workflow
 
-For improving the guides directly (not from a child changelog):
+For improving the guides directly:
 
 **Guide:** `.shamt/guides/master_dev_workflow/`
 
@@ -92,9 +73,9 @@ This is a lighter process than the full S1–S10 epic workflow, aligned with S10
 When a new AI service is discovered (reported by a child project or user):
 
 1. Research the service's rules file convention
-2. Add an entry to `.shamt/initialization/ai_services.md`
-3. Write a changelog entry documenting the addition
-4. Publish as an outbound changelog
+2. Add an entry to `.shamt/scripts/initialization/ai_services.md`
+3. Update the init scripts if the service needs special handling
+4. Commit the change with a descriptive message
 
 ---
 
@@ -111,5 +92,4 @@ When a new AI service is discovered (reported by a child project or user):
 
 - Zero autonomous conflict resolution — always escalate to user when uncertain
 - Run guide audit after every set of guide changes
-- Update `CHANGELOG_INDEX.md` immediately when publishing a new version
-- Never merge child changelogs automatically — always agent-reviewed
+- Never approve child PRs that contain project-specific content in shared guide files

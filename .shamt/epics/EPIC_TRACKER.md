@@ -2,7 +2,7 @@
 
 **Project:** Shamt Master
 **Epic Tag:** SHAMT
-**Next Available Number:** SHAMT-1
+**Next Available Number:** SHAMT-2
 
 ---
 
@@ -18,7 +18,7 @@
 
 | SHAMT # | Epic Name | Branch | Completed | Notes |
 |---------|-----------|--------|-----------|-------|
-| — | — | — | — | — |
+| SHAMT-1 | Sync Flow Redesign | feat/SHAMT-1 | 2026-02-23 | Replaced changelog sync with script-driven export/import |
 
 ---
 
