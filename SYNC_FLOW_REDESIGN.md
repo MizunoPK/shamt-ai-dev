@@ -1,6 +1,6 @@
 # Shamt Sync Flow Redesign — Proposal
 
-**Status:** Design complete. All questions resolved. Ready for Phase 2 implementation.
+**Status:** COMPLETE. All phases implemented and validated (2026-02-23).
 **Source:** `proposed_new_flow.txt`
 **Created:** 2026-02-23
 **Effort Size:** Large — multi-session implementation
@@ -390,39 +390,36 @@ Export and import scripts live in `.shamt/scripts/export/` and `.shamt/scripts/i
   8. Delete all import diff files when complete
   ```
 
-### Phase 2 — Structure, Init, and Master Repo Cleanup
-- Create `.shamt/scripts/` with `initialization/`, `export/`, `import/` subfolders (new folder — does not yet exist on master)
-- Move init scripts from `.shamt/initialization/` to `.shamt/scripts/initialization/`
-- Delete obsolete master repo folders: `.shamt/outbound_changelogs/`, `.shamt/changelogs/`
-- Update init scripts: create `project-specific-configs/`, copy `guides/` from master (excluding `guides/audit/outputs/`), copy `scripts/` from master; remove all changelog folder creation
-- Add `shamt-ai-dev` path prompt; write to `.shamt/shamt_master_path.conf`
-- Write rules file path to `.shamt/rules_file_path.conf`
-- Always add `.shamt/shamt_master_path.conf` to `.gitignore` unconditionally (machine-specific path — see Q17)
-- Prompt user whether to gitignore `.shamt/` and the rules file; apply `.gitignore` entries based on their choice
-- Move `init_config.md` output to `project-specific-configs/init_config.md`
-- Update `init_config.md` template: ARCHITECTURE.md and CODING_STANDARDS.md to `project-specific-configs/`, rules file generated from `scripts/initialization/` template, validation loop protocol re-read instruction
-- Update master `CLAUDE.md` structure diagram to reflect new layout
+### Phase 2 — Structure, Init, and Master Repo Cleanup (complete)
+- ~~Create `.shamt/scripts/` with `initialization/`, `export/`, `import/` subfolders~~
+- ~~Move init scripts from `.shamt/initialization/` to `.shamt/scripts/initialization/`~~
+- ~~Delete obsolete master repo folders: `.shamt/outbound_changelogs/`, `.shamt/changelogs/`~~
+- ~~Update init scripts: create `project-specific-configs/`, copy `guides/` and `scripts/` from master, remove changelog folder creation~~
+- ~~`shamt_master_path.conf` auto-detected from script location (no user prompt needed)~~
+- ~~Write rules file path to `.shamt/rules_file_path.conf`~~
+- ~~Always gitignore `.shamt/shamt_master_path.conf` unconditionally~~
+- ~~Prompt user whether to gitignore `.shamt/` and the rules file~~
+- ~~`init_config.md` written to `project-specific-configs/init_config.md`~~
+- ~~Updated master `CLAUDE.md` structure diagram~~
 
-### Phase 3 — Export and Import Scripts
-- Write `scripts/export/export.sh` and `export.ps1`
-- Write `scripts/import/import.sh` and `import.ps1`
-- Export script: full `guides/` and `scripts/` comparison against master; no sub-exclusions within `guides/`
-- Import script: `guides/` and `scripts/` comparison against master, with `guides/audit/outputs/` excluded; full sync (copy + delete for removed files)
-- Import generates `import_diff.md` (or numbered split files) and outputs agent prompt
-- Test both scripts end-to-end
+### Phase 3 — Export and Import Scripts (complete)
+- ~~Write `scripts/export/export.sh` and `export.ps1`~~
+- ~~Write `scripts/import/import.sh` and `import.ps1`~~
+- ~~Both scripts exclude `guides/audit/outputs/` (practical necessity)~~
+- ~~Import generates `import_diff.md` (or numbered split files) and outputs agent prompt~~
+- ~~Tested both scripts end-to-end~~
 
-### Phase 4 — Guide Updates
-- Delete `.shamt/guides/changelog_application/` folder entirely
-- Write new import workflow guide (location TBD during Phase 4)
-- Write new export/PR workflow guide (location TBD during Phase 4)
-- Add separation rule guide to `.shamt/guides/`
-- Update S10 and audit guides to reference the separation rule and `project-specific-configs/`
-- Update `master_dev_workflow/` guides to remove references to the old changelog system and reflect the new export/import flow
+### Phase 4 — Guide Updates (complete)
+- ~~Delete `.shamt/guides/changelog_application/` folder entirely~~
+- ~~Write `sync/import_workflow.md`~~
+- ~~Write `sync/export_workflow.md`~~
+- ~~Write `sync/separation_rule.md`~~
+- ~~Updated S10 guide, `master_dev_workflow/`, `guides/README.md`, `EPIC_WORKFLOW_USAGE.md`~~
 
-### Phase 5 — Validation
-- Run the audit against all updated guides
-- Test full round-trip: init a test project → make a guide change → export → PR → import → agent validation loop
-- Close out and update this document
+### Phase 5 — Validation (complete)
+- ~~Run the guide audit against all updated guides — 4 issues found and fixed~~
+- ~~Test full round-trip: init test project → modify guide → export → import → diff verified~~
+- ~~Close out EPIC_TRACKER and SYNC_FLOW_REDESIGN~~
 
 ---
 

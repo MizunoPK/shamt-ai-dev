@@ -10,7 +10,7 @@
 
 | SHAMT # | Epic Name | Branch | Status | Started |
 |---------|-----------|--------|--------|---------|
-| SHAMT-1 | Sync Flow Redesign | feat/SHAMT-1 | In Progress | 2026-02-23 |
+| — | — | — | — | — |
 
 ---
 
@@ -18,7 +18,7 @@
 
 | SHAMT # | Epic Name | Branch | Completed | Notes |
 |---------|-----------|--------|-----------|-------|
-| — | — | — | — | — |
+| SHAMT-1 | Sync Flow Redesign | feat/SHAMT-1 | 2026-02-23 | Replaced changelog sync with script-driven export/import |
 
 ---
 
