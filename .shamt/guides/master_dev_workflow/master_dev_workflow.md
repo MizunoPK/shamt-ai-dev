@@ -64,62 +64,14 @@ After making changes:
 
 ---
 
-## Step 5: Write a Changelog Entry
-
-Write a changelog entry in `.shamt/changelogs/` describing what changed.
-
-**Even for master-internal changes**, write the entry — it becomes the basis for the outbound changelog.
-
-Use the template:
-
-```markdown
-# Shamt Changelog Entry
-
-**Entry ID:** SHAMT-CHANGELOG-[NNN]
-**Date:** YYYY-MM-DD
-**Source Project:** master
-**Author:** [agent]
-
-## Guide(s) Affected
-- [.shamt/guides/path/to/guide.md] — [section]
-
-## Change Type
-- [ ] Core functionality change
-- [ ] New guide or section added
-- [ ] Clarification / wording improvement
-- [ ] Bug fix (guide was incorrect or contradictory)
-- [ ] Structural/organizational change
-
-## Summary
-[1-3 sentences]
-
-## Rationale
-[Why this change was made]
-
-## Universality Assessment
-- [x] Universal
-
-## How to Apply
-[Guidance for child agents applying this to their customized guides]
-```
-
----
-
-## Step 6: Publish as an Outbound Changelog
-
-1. Check `outbound_changelogs/CHANGELOG_INDEX.md` for the current version number
-2. Assign the next sequential version: `v[NNNN]_[brief-slug].md`
-3. Copy the changelog entry to `outbound_changelogs/`
-4. Update `CHANGELOG_INDEX.md` — add new entry at top, update current version
-
----
-
-## Step 7: Commit
+## Step 5: Commit
 
 ```bash
-git add .shamt/guides/ .shamt/outbound_changelogs/
+git add .shamt/guides/ .shamt/scripts/
 git commit -m "feat/SHAMT-[N]: [brief description of guide improvement]"
 ```
+
+For master-internal improvements, commit directly to a branch and open a PR against `main`. Child projects will receive the improvement on their next import.
 
 ---
 

@@ -552,73 +552,40 @@ git commit -m "docs(tracking): Update guide tracking for SHAMT-{N}-{epic_name}"
 
 ---
 
-### Step 8: Consider Writing a Shamt Changelog Entry
+### Step 8: Consider Exporting Improvements to Master
 
-**Purpose:** If guide improvements are universal enough to benefit other projects, contribute them back to the Shamt master repo via a changelog entry.
+**Purpose:** If guide improvements are generic enough to benefit other projects, record them for export to the master Shamt repo.
 
-**When to write a changelog:**
+**When to record for export:**
 - The improvement addresses a genuine gap or error in the guide system
 - The change would benefit any project using Shamt (not just this project's tech stack)
 - The improvement is to core workflow steps, gates, or clarifications — not project-specific examples
 
-**When NOT to write a changelog:**
+**When NOT to export:**
 - The change is domain-specific (only makes sense for this project's language/framework)
 - The change is minor wording tweaks with no functional impact
 - The change contradicts a deliberate Shamt design decision
 
-**If a changelog is warranted:**
+**If improvements are worth exporting:**
 
-8.1. Write a changelog entry in `.shamt/changelogs/outbound/` using this template:
-
-```markdown
-# Shamt Changelog Entry
-
-**Entry ID:** {EPIC_TAG}-CHANGELOG-{NNN}
-**Date:** YYYY-MM-DD
-**Source Project:** {project name}
-**Author:** {agent}
-
-## Guide(s) Affected
-- [.shamt/guides/path/to/guide.md] — [section]
-
-## Change Type
-- [ ] Core functionality change
-- [ ] New guide or section added
-- [ ] Clarification / wording improvement
-- [ ] Bug fix (guide was incorrect or contradictory)
-- [ ] Structural/organizational change
-
-## Summary
-[1-3 sentences: what changed]
-
-## Rationale
-[Why this change was made — what problem it solves]
-
-## Universality Assessment
-- [ ] Universal — likely beneficial to all Shamt versions
-- [ ] Partially universal — see notes below
-- [ ] Child-specific — included for awareness only
-
-**Notes:** [context for the applying agent]
-
-## How to Apply
-[Guidance for an agent applying this to a different version of the guides]
-```
-
-8.2. Update `.shamt/changelogs/outbound/CHANGELOG_INDEX.md` — add a row at the top:
+8.1. Verify that `CHANGES.md` entries exist for each shared file you modified (the separation rule guide requires this). Add any missing entries:
 
 ```markdown
-| {EPIC_TAG}-CHANGELOG-{NNN} | YYYY-MM-DD | [one-line summary] | No |
+## YYYY-MM-DD — [brief description]
+- Modified: `.shamt/guides/path/to/guide.md`
+- Reason: [one line]
 ```
 
-8.3. Inform the user: "I've written a changelog entry in `.shamt/changelogs/outbound/`. When ready, you can submit it to the Shamt master repo."
+8.2. Inform the user: "Guide improvements were made that could benefit other Shamt projects. When ready, run `bash .shamt/scripts/export/export.sh` and open a PR to the master repo."
 
-**If no changelog is warranted:** Note "No changelog written — changes are project-specific" in your completion announcement and proceed.
+**If improvements are project-specific only:** Note "No export warranted — changes are project-specific" in your completion announcement and proceed.
+
+**Reference:** See `sync/export_workflow.md` for the full export process.
 
 **Checkpoint:**
-- [ ] Assessed whether guide improvements are universal
-- [ ] Changelog written (if applicable) or reason noted (if not)
-- [ ] `outbound/CHANGELOG_INDEX.md` updated (if changelog written)
+- [ ] Assessed whether guide improvements are generic/universal
+- [ ] `CHANGES.md` updated for all shared file modifications (if applicable)
+- [ ] User informed about export opportunity (if applicable) or reason noted (if not)
 
 ---
 
@@ -670,7 +637,7 @@ Use prompt from prompts/guide_update_prompts.md "After Applying Changes" section
 - [ ] All approved/modified proposals applied to guides
 - [ ] Separate commit created for guide updates
 - [ ] reference/guide_update_tracking.md updated
-- [ ] Changelog written to `outbound/` (or decision to skip documented)
+- [ ] Export assessed: CHANGES.md updated if improvements are generic (or project-specific noted)
 - [ ] EPIC_README.md shows S10.P1 complete
 - [ ] Ready to proceed to S10 Step 7
 

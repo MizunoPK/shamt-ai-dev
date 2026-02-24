@@ -154,7 +154,7 @@ Key activities:
 Key activities:
 - Run unit tests (100% pass required)
 - Verify all documentation
-- S10.P1 Guide Updates (MANDATORY — analyze lessons, propose changes, get user approval, apply, write changelog if universal)
+- S10.P1 Guide Updates (MANDATORY — analyze lessons, propose changes, get user approval, apply, update CHANGES.md and inform user of export opportunity if improvements are generic)
 - Commit epic work
 - Move epic to `done/` folder
 - Update `EPIC_TRACKER.md`
@@ -164,8 +164,8 @@ Key activities:
 
 ## Setup and First Use
 
-1. Initialize Shamt in your project: run `init.sh` or `init.ps1` from `.shamt/initialization/`
-2. Tell your AI agent: "Read `.shamt/init_config.md` and complete the Shamt initialization."
+1. Initialize Shamt in your project: run `init.sh` or `init.ps1` from `.shamt/scripts/initialization/`
+2. Tell your AI agent: "Read `.shamt/project-specific-configs/init_config.md` and complete the Shamt initialization."
 3. Start your first epic: tell your agent "Help me develop [epic description]"
 4. Agent starts at S1 — reads `stages/s1/s1_epic_planning.md`
 
@@ -206,4 +206,4 @@ When new requirement discovered: `missed_requirement/missed_requirement_protocol
 
 **Audit system:** `audit/README.md`
 
-**Changelog system:** `changelog_application/`
+**Sync system:** `sync/` — separation rule, export workflow, import workflow
