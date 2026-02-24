@@ -50,7 +50,7 @@ Project-specific content belongs **exclusively** in `.shamt/project-specific-con
 
 `project-specific-configs/` mirrors the guide folder structure. Supplements for a given guide go in the corresponding mirrored directory:
 
-```
+```text
 .shamt/project-specific-configs/
   init_config.md                          ← init handoff
   ARCHITECTURE.md                         ← this project's architecture

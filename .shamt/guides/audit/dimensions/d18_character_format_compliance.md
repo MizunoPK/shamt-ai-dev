@@ -189,6 +189,12 @@ These serve specific semantic purposes and are intentional:
 
 `→`, `←`, `↑`, `↓`, `↔`, `⟶` are allowed as flow indicators in diagrams and transitions.
 
+### Detection and Validation Scripts
+
+Banned characters present in audit detection scripts (e.g., `audit/scripts/pre_audit_checks.sh`) as detection targets or lookup table values are explicitly allowed. The script must reference the characters it detects. These occurrences are never in guide content and are never rendered as documentation.
+
+**Example:** `BANNED = {'\u25a1': ('□', ...), '\u2610': ('☐', ...)}` — the `□` and `☐` characters appear as dictionary values to show what the banned character looks like, not as content.
+
 ---
 
 ## Automated Validation

@@ -11,7 +11,7 @@ Your primary responsibilities here are:
 
 ## Project Structure
 
-```
+```text
 shamt-ai-dev/
 ├── README.md
 ├── CLAUDE.md                           (this file)
