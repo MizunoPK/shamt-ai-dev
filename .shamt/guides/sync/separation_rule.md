@@ -96,6 +96,10 @@ When you modify any file in `.shamt/guides/` or `.shamt/scripts/`, record it in 
 ## YYYY-MM-DD — [brief description]
 - Modified: `.shamt/guides/path/to/file.md`
 - Reason: [one line]
+
+## YYYY-MM-DD — [brief description]
+- Modified: `.shamt/scripts/export/export.sh`
+- Reason: [one line]
 ```
 
 **When to write CHANGES.md entries:**

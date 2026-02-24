@@ -278,7 +278,7 @@ The following become obsolete and must be deleted as part of Phase 2:
 **Decision:** `project-specific-configs/init_config.md` — matches the original proposal and is consistent with the separation rule since it contains project-specific data.
 
 **Q8: What is the exact scope of the export and import scripts?**
-**Decision:** Both scripts compare and sync `guides/` and `scripts/` only — direct path mirror between child and master. Everything else (epics, project-specific-configs, CHANGES.md, shamt_master_path.conf, rules_file_path.conf) is excluded. Note: `guides/audit/outputs/` is excluded from the import scope as a sub-exception within `guides/` (see Q15); the export script has no equivalent exclusion since child projects don't write to `guides/audit/outputs/`.
+**Decision:** Both scripts compare and sync `guides/` and `scripts/` only — direct path mirror between child and master. Everything else (epics, project-specific-configs, CHANGES.md, shamt_master_path.conf, rules_file_path.conf) is excluded. Note: `guides/audit/outputs/` is excluded from both scripts' scope as a sub-exception within `guides/` (see Q15); the original plan assumed the export script would not need this exclusion, but in practice child projects do generate audit outputs, so both scripts exclude it (see Phase 3 completed checklist).
 
 **Q9: How do updated scripts reach child projects?**
 **Decision:** Resolved by Q8 — `scripts/` is in import scope, so improvements to export.sh, import.sh, and init scripts flow to child projects automatically on next import.
