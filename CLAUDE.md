@@ -20,7 +20,7 @@ shamt-ai-dev/
     │   ├── stages/                     # s1–s10 workflow guides
     │   ├── reference/
     │   ├── audit/
-    │   ├── changelog_application/      # legacy guides (will be removed in Phase 4)
+    │   ├── sync/                       # separation rule, export workflow, import workflow
     │   └── master_dev_workflow/        # guide for improving master guides
     ├── scripts/
     │   ├── initialization/
@@ -31,8 +31,8 @@ shamt-ai-dev/
     │   │   ├── ai_services.md          # known AI service registry
     │   │   ├── init.sh
     │   │   └── init.ps1
-    │   ├── export/                     # export script (Phase 3)
-    │   └── import/                     # import script (Phase 3)
+    │   ├── export/                     # export script
+    │   └── import/                     # import script
     └── epics/
         ├── EPIC_TRACKER.md             # master's own epic tracker
         ├── requests/
@@ -54,7 +54,7 @@ Review steps:
 3. If project-specific content has leaked into shared files: request changes
 4. After merging, the import script will distribute the improvement to other child projects on their next import
 
-**Full workflow guide:** `.shamt/guides/` (export/import guides will be added in Phase 4)
+**Full workflow guides:** `.shamt/guides/sync/export_workflow.md` (child side) and `.shamt/guides/sync/import_workflow.md` (post-import validation)
 
 ---
 

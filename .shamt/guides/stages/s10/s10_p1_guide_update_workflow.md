@@ -568,7 +568,7 @@ git commit -m "docs(tracking): Update guide tracking for SHAMT-{N}-{epic_name}"
 
 **If improvements are worth exporting:**
 
-8.1. Verify that `CHANGES.md` entries exist for each shared file you modified (the separation rule guide requires this). Add any missing entries:
+8.1. Verify that `CHANGES.md` entries exist for each shared file you modified (see `sync/separation_rule.md` for the required format). Add any missing entries:
 
 ```markdown
 ## YYYY-MM-DD — [brief description]
