@@ -130,7 +130,7 @@ grep -n "S[0-9]" CLAUDE.md | grep -o "S[0-9][0-9]*\(\.P[0-9][0-9]*\)\?\(\.I[0-9]
 
 **ALL 9 must pass to exit audit:**
 
-- [ ] **Criterion 1:** Minimum 3 rounds completed with fresh eyes
+- [ ] **Criterion 1:** 3 consecutive zero-issue rounds completed (consecutive_clean >= 3)
 - [ ] **Criterion 2:** Stage 1 found ZERO new issues this round
 - [ ] **Criterion 3:** Stage 4 verification N_new = 0
 - [ ] **Criterion 4:** All N_remaining documented as intentional
@@ -403,7 +403,7 @@ wc -l file.md  # Count lines
 ```text
 ┌─────────────────────────────────────┐
 │  Are ALL 9 exit criteria TRUE?     │
-│  (Minimum 3 rounds, N_new=0, etc.)  │
+│  (consecutive_clean>=3, N_new=0, etc.) │
 └─────────┬───────────────────────────┘
           │
     ┌─────┴─────┐
@@ -432,7 +432,7 @@ wc -l file.md  # Count lines
 → Good! This is normal. Keep looping until Round N finds ZERO new issues. SHAMT-7 needed 4 rounds.
 
 **"Round 3 still found issues"**
-→ Continue to Round 4. Minimum 3 rounds is BASELINE, not target. Exit trigger is ZERO issues, not round count.
+→ Continue. Exit requires 3 CONSECUTIVE zero-issue rounds (consecutive_clean >= 3). Rounds with issues reset the counter to 0.
 
 **"User said 'are you sure?'"**
 → Immediately LOOP back to Round 1. User challenge = evidence you missed something. Do NOT defend previous work.

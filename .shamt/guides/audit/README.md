@@ -511,7 +511,7 @@ themselves — not epic workflow guides (those go through S10 lessons learned).
 
 **ALL 9 exit criteria must be met:**
 1. ✅ All issues resolved | 2. ✅ Zero new discoveries | 3. ✅ Zero verification findings
-4. ✅ Minimum 3 rounds | 5. ✅ All documented | 6. ✅ User approved
+4. ✅ 3 consecutive zero-issue rounds | 5. ✅ All documented | 6. ✅ User approved
 7. ✅ Confidence ≥80% | 8. ✅ Pattern diversity | 9. ✅ Spot-checks clean
 
 **See `stages/stage_5_loop_decision.md` for detailed criteria with sub-requirements.**
@@ -548,7 +548,7 @@ Issue discovered → Can I fix with confidence?
 
 - Approach each round as if you've never seen the codebase
 - Question everything, verify everything, assume you missed something
-- Use iterative loops until zero new issues found (minimum 3 rounds as baseline, typically 3-5)
+- Use iterative loops until 3 consecutive zero-issue rounds achieved (typically 5-8 total rounds)
 - Provide evidence, not just claims
 - When user challenges you, THEY ARE USUALLY RIGHT - re-verify immediately
 

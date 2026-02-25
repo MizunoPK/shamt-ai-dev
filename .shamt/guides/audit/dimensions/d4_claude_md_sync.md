@@ -471,10 +471,10 @@ echo "  - Key concepts aligned (Fresh Eyes, exit criteria, etc.)"
 - [ ] References stage_5_loop_decision.md as source
 - [ ] Doesn't duplicate detailed criteria (single source of truth)
 
-**Minimum 3 Rounds:**
-- [ ] CLAUDE.md uses "minimum 3 rounds as baseline" phrasing
-- [ ] Consistent with audit guides' messaging
-- [ ] No contradictions (e.g., "exactly 3 rounds")
+**Exit Criteria — Consecutive Rounds:**
+- [ ] CLAUDE.md uses "3 CONSECUTIVE zero-issue rounds" phrasing (not "minimum 3 rounds")
+- [ ] CLAUDE.md mentions tracking `consecutive_clean` counter explicitly
+- [ ] Consistent with audit guides' messaging (consecutive, not total count)
 
 ---
 

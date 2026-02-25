@@ -175,8 +175,8 @@ Issue discovered → Can I fix with confidence?
 - Spot-check random files to verify grep accuracy
 
 **5. Iterative Until Zero**
-- Minimum 3 rounds as baseline (NOT a target - SHAMT-7 needed 4 rounds)
-- TRUE exit trigger: Round N finds ZERO new issues + ALL 9 criteria met
+- 3 CONSECUTIVE zero-issue rounds required (NOT just any 3 rounds - SHAMT-7 needed 4+ total rounds)
+- TRUE exit trigger: consecutive_clean >= 3 + ALL 9 criteria met
 - Continue auditing regardless of round count until criteria satisfied
 - Each round uses completely different patterns
 
@@ -567,7 +567,7 @@ Sub-Round N.X found issues → Fix ALL → Re-run Sub-Round N.X → Repeat until
 Sub-Round N.X found ZERO issues → Proceed to Sub-Round N.(X+1)
 Sub-Round N.4 found ZERO issues + Sub-Rounds N.1-N.3 were clean → Round N complete
 Round N complete (all 4 sub-rounds clean) → Round N+1 (fresh patterns)
-Round N complete + Minimum 3 rounds + ALL 9 criteria met → Consider exit
+3 CONSECUTIVE zero-issue rounds (consecutive_clean >= 3) + ALL 9 criteria met → Consider exit
 ```markdown
 
 ### ALL 9 Criteria Must Be Met (Audit Level)
@@ -577,7 +577,7 @@ Round N complete + Minimum 3 rounds + ALL 9 criteria met → Consider exit
 1. ✅ **All issues resolved:** Every issue from ALL rounds AND sub-rounds fixed and verified
 2. ✅ **Zero new issues:** Latest round found ZERO issues in ALL 4 sub-rounds
 3. ✅ **Zero verification findings:** Latest round verifications (S4) found ZERO new issues across all sub-rounds
-4. ✅ **Minimum 3 rounds:** At least 3 complete rounds (12 sub-rounds total) completed
+4. ✅ **3 consecutive zero-issue rounds:** consecutive_clean >= 3 (rounds with issues reset counter)
 5. ✅ **All remaining documented:** All remaining instances documented as intentional
 6. ✅ **User has NOT challenged:** User has not questioned findings
 7. ✅ **Confidence score:** ≥ 80% confidence in completeness across all 19 dimensions
@@ -622,7 +622,7 @@ Round N complete + Minimum 3 rounds + ALL 9 criteria met → Consider exit
 
 **Exit conditions:**
 - ✅ Round N complete (all 4 sub-rounds clean)
-- ✅ Minimum 3 rounds complete (12 sub-rounds total)
+- ✅ 3 consecutive zero-issue rounds complete (consecutive_clean >= 3)
 - ✅ ALL 9 exit criteria met
 - ✅ User approves exit
 

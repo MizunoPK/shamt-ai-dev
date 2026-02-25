@@ -51,8 +51,7 @@
 │  • Round N complete → Proceed to Round N+1 (fresh eyes)         │
 │                                                                  │
 │  AUDIT LEVEL (After Round N complete):                          │
-│  • Minimum 3 rounds complete (12 sub-rounds total)              │
-│  • Latest round ZERO issues (all 4 sub-rounds clean)            │
+│  • 3 CONSECUTIVE zero-issue rounds (consecutive_clean >= 3)     │
 │  • ALL 9 exit criteria met → Consider exit                      │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -73,10 +72,10 @@
 - Use fresh patterns, different approach
 - Reset mental model between rounds
 
-**"Minimum 3 rounds" = 12 sub-rounds total:**
-- 3 rounds × 4 sub-rounds = 12 minimum cycles
-- Real exit trigger: Round with ALL sub-rounds clean + all criteria met
-- You may need 4-6 rounds (16-24 sub-rounds) until achieving clean round
+**"3 consecutive zero-issue rounds" = at minimum 12 sub-rounds total:**
+- Each clean round = 4 sub-rounds, so 3 clean rounds = 12 minimum cycles
+- Exit trigger: 3 CONSECUTIVE rounds all finding zero issues + all 9 criteria met
+- Rounds with issues reset the counter; you may need 5-8+ total rounds
 
 ### Why This Stage Matters
 
@@ -147,7 +146,7 @@
 
 **If ANY N_new > 0 in any sub-round:** MUST loop same sub-round (mandatory)
 
-#### Criterion 4: Minimum Rounds (Sub-Round System)
+#### Criterion 4: 3 Consecutive Zero-Issue Rounds
 - [ ] Completed at least 3 CONSECUTIVE zero-issue rounds
   - Track explicitly: `consecutive_clean = [current count]`
   - Rounds that found issues do NOT count — counter resets to 0 on any issue
@@ -260,8 +259,8 @@ criteria_met=0
 # Criterion 3: Zero new findings in Stage 4
 [ $N_new -eq 0 ] && ((criteria_met++))
 
-# Criterion 4: Minimum 3 rounds
-[ $round_number -ge 3 ] && ((criteria_met++))
+# Criterion 4: 3 consecutive zero-issue rounds
+[ $consecutive_clean -ge 3 ] && ((criteria_met++))
 
 # Criterion 5: All remaining documented
 [ $undocumented_matches -eq 0 ] && ((criteria_met++))
@@ -584,7 +583,7 @@ The working file is temporary — **do NOT commit it.**
 - [x] Criterion 1: All issues resolved
 - [x] Criterion 2: Zero new discoveries
 - [x] Criterion 3: Zero verification findings
-- [x] Criterion 4: Minimum 3 rounds completed
+- [x] Criterion 4: 3 consecutive zero-issue rounds completed
 - [x] Criterion 5: All remaining documented
 - [x] Criterion 6: User verification passed
 - [x] Criterion 7: Confidence ≥ 80%
