@@ -1,6 +1,6 @@
 # SHAMT-2 Sync System Enhancements — Design
 
-**Status:** Design complete — all questions resolved (Q1–Q21, 2026-02-24)
+**Status:** Q22 pending resolution (Q1–Q21 resolved 2026-02-24)
 **Source:** Post-SHAMT-1 improvement analysis (2026-02-24)
 **Created:** 2026-02-24
 
@@ -42,7 +42,7 @@ SHAMT-1 replaced the changelog-based sync system with a script-driven export/imp
 ```
 (date | master HEAD commit hash at time of import)
 
-**Open questions:** See Q4, Q5, Q6, Q14.
+**Open questions:** See Q4, Q5, Q6, Q14, Q20.
 
 ---
 
@@ -157,7 +157,7 @@ Update `guides/audit/stages/stage_1_discovery.md` to include `scripts/initializa
 - In child context: add an audit check that compares the child's rules file against `.shamt/scripts/initialization/RULES_FILE.template.md` and flags structural drift — missing sections, missing key guidance, or sections that diverge significantly from the template
 - Add new audit dimension(s) if needed to support child context rules file comparison
 
-**Open questions:** See Q16, Q17, Q18.
+**Open questions:** See Q16, Q17, Q18, Q21, Q22.
 
 ---
 
@@ -186,7 +186,14 @@ This requires updating all references to dimension numbers throughout the audit 
 
 ## Open Questions
 
-*All questions resolved — see Resolved Questions below.*
+### Q22 — D19: behavior when `rules_file_path.conf` path is stale or missing
+
+`rules_file_path.conf` stores an absolute path (written by init.sh using `$(pwd)` at init time). If the project directory has moved or was cloned to a different path, the stored path is stale and D19 cannot locate the child's rules file.
+
+What should D19 do when the stored path is invalid?
+
+- **A** — Skip D19 gracefully with a note ("rules file not found at stored path — re-run init to update `rules_file_path.conf`; D19 skipped") — consistent with the design-wide pattern of skipping gracefully on check failure
+- **B** — Flag as an audit finding (LOW severity) requiring the user to re-run init before D19 can run
 
 ---
 
@@ -247,7 +254,7 @@ This requires updating all references to dimension numbers throughout the audit 
 ### `last_sync.conf`
 - Written after every import run (including no-change runs)
 - Format: `YYYY-MM-DD | <short-hash>` (one line)
-- Always gitignored unconditionally (added by init.sh alongside `shamt_master_path.conf`)
+- Always gitignored — new projects: init.sh adds it unconditionally; existing projects: migration note in import_workflow.md instructs manual addition (per Q20 → B)
 - Located at `.shamt/last_sync.conf` in the child project
 
 ### RULES_FILE.template Additions
@@ -290,9 +297,11 @@ This requires updating all references to dimension numbers throughout the audit 
 
 ## Proposed Implementation Phases
 
-### Phase 1 — Design Finalization ✅ Complete
+### Phase 1 — Design Finalization (Q22 pending)
 - Q1–Q14 resolved (2026-02-24)
 - Q15–Q19 resolved (2026-02-24)
+- Q20–Q21 resolved (2026-02-24)
+- Q22 pending resolution
 
 ### Phase 2 — Script Changes
 - Update `scripts/import/import.sh` and `import.ps1`: add freshness check (git fetch → compare → prompt), write `last_sync.conf`
@@ -341,6 +350,7 @@ This requires updating all references to dimension numbers throughout the audit 
 | Q19 | Dimension renumbering — before or after Improvement 11 | Resolved → A |
 | Q20 | last_sync.conf gitignore — existing child projects | Resolved → B |
 | Q21 | D19 — locating the child's rules file | Resolved → A |
+| Q22 | D19 — behavior when rules_file_path.conf path is stale | Pending |
 
 ---
 
