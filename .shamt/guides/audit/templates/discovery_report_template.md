@@ -35,6 +35,7 @@
 | D17: Accessibility | 0 | 0 | 0 | 0 | 0 |
 | D18: Stage Flow Consistency | 0 | 0 | 0 | 0 | 0 |
 | D19: Rules File Template Alignment (child only) | 0 | 0 | 0 | 0 | 0 |
+| D20: Script Integrity | 0 | 0 | 0 | 0 | 0 |
 | **TOTAL** | **0** | **0** | **0** | **0** | **0** |
 
 ### By Severity
