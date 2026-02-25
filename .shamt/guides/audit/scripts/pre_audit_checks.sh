@@ -2,12 +2,12 @@
 # Pre-Audit Automated Checks
 # Runs before manual audit to catch common structural issues
 #
-# Coverage: 11 of 19 dimensions (D1, D3, D4, D10, D11, D12, D8, D9, D17, D18, D14)
+# Coverage: 12 of 20 dimensions (D1, D3, D4, D8, D9, D10, D11, D12, D14, D17, D18, D20 partial)
 # Estimated: 45-55% of typical issues (based on SHAMT-7 Round 1-2 data)
 # NOT Checked: D2 (Terminology - requires pattern-specific search, see dimension guide)
-# NOT Checked: D5, D6, D7, D13, D15, D16, D19 (require manual audit)
+# NOT Checked: D5, D6, D7, D13, D15, D16, D19 (require manual audit); D20 mostly manual
 #
-# Last Updated: 2026-02-24 (SHAMT-2: dimension count 18 -> 19, D19 added as manual-only)
+# Last Updated: 2026-02-25 (SHAMT-3: D20 added, sync/ scope extended, CHECK 13 gitignore check)
 # Changes:
 #   - Round 3: Simplified file size threshold from 3-tier (600/800/1000) to 1000-line baseline
 #   - Round 3: Added 17 known exceptions for Prerequisites/Exit Criteria checks (now 19 -- see known_exceptions.md)
@@ -15,6 +15,7 @@
 #   - Exceptions documented in audit/reference/known_exceptions.md
 #   - 2026-02-19: Added D14 Character and Format Compliance check (banned Unicode chars)
 #   - 2026-02-24: SHAMT-2 dimension renumbering; D19 Rules File Template Alignment added (manual only)
+#   - 2026-02-25: SHAMT-3 Phase 3 — D8/D11/D14 extended to cover sync/, D14 scans RULES_FILE.template.md, CHECK 13 gitignore verification (partial D20)
 
 # set -e  # Exit on error - DISABLED: causes premature exit in file size check loop
 
@@ -48,7 +49,7 @@ echo ""
 TOO_LARGE=0
 LARGE=0
 
-for file in $(find stages -name "*.md"); do
+for file in $(find stages sync -name "*.md" 2>/dev/null); do
   lines=$(wc -l < "$file")
 
   if [ "$lines" -gt 1250 ]; then
@@ -183,12 +184,12 @@ echo ""
 echo -e "${BLUE}=== Documentation Quality (D8) ===${NC}"
 echo ""
 
-TODO_COUNT=$(grep -rc "TODO\|TBD\|FIXME" stages templates prompts reference 2>/dev/null | grep -v ":0" | wc -l)
-PLACEHOLDER_COUNT=$(grep -rc "\[placeholder\]\|\.\.\." stages templates prompts 2>/dev/null | grep -v ":0" | wc -l)
+TODO_COUNT=$(grep -rc "TODO\|TBD\|FIXME" stages templates prompts reference sync 2>/dev/null | grep -v ":0" | wc -l)
+PLACEHOLDER_COUNT=$(grep -rc "\[placeholder\]\|\.\.\." stages templates prompts sync 2>/dev/null | grep -v ":0" | wc -l)
 
 if [ "$TODO_COUNT" -gt 0 ]; then
   echo -e "${RED}❌ TODOs found:${NC}"
-  grep -rn "TODO\|TBD\|FIXME" stages templates prompts reference 2>/dev/null | grep -v ":0" | head -10
+  grep -rn "TODO\|TBD\|FIXME" stages templates prompts reference sync 2>/dev/null | grep -v ":0" | head -10
   echo ""
   ((CRITICAL_ISSUES += TODO_COUNT))
   ((TOTAL_ISSUES += TODO_COUNT))
@@ -198,7 +199,7 @@ fi
 
 if [ "$PLACEHOLDER_COUNT" -gt 0 ]; then
   echo -e "${YELLOW}⚠️  Placeholders found:${NC}"
-  grep -rn "\[placeholder\]" stages templates prompts 2>/dev/null | grep -v ":0" | head -10
+  grep -rn "\[placeholder\]" stages templates prompts sync 2>/dev/null | grep -v ":0" | head -10
   echo ""
   ((WARNING_ISSUES += PLACEHOLDER_COUNT))
   ((TOTAL_ISSUES += PLACEHOLDER_COUNT))
@@ -553,6 +554,41 @@ for root, dirs, files in os.walk('.'):
             for hit in review_hits:
                 print(hit)
 
+# Also scan extra files outside the guides tree
+EXTRA_FILES = ['../../scripts/initialization/RULES_FILE.template.md']
+for fpath in EXTRA_FILES:
+    if not os.path.isfile(fpath):
+        continue
+    if fpath in EXCEPTIONS:
+        continue
+    try:
+        with open(fpath, encoding='utf-8') as f:
+            content = f.read()
+    except Exception:
+        continue
+    banned_hits = []
+    for char, (display, name, replacement) in BANNED.items():
+        count = content.count(char)
+        if count > 0:
+            banned_hits.append(f"  {count}x {name} → replace with '{replacement}'")
+            banned_total += count
+    if banned_hits:
+        banned_files += 1
+        print(f"{RED}❌ BANNED CHARS:{NC} {fpath}")
+        for hit in banned_hits:
+            print(hit)
+    review_hits = []
+    for char, (display, name, replacement) in REVIEW.items():
+        count = content.count(char)
+        if count > 0:
+            review_hits.append(f"  {count}x {name} (review — OK in prose, replace in lists/code)")
+            review_total += count
+    if review_hits:
+        review_files += 1
+        print(f"{YELLOW}⚠️  REVIEW CHARS:{NC} {fpath}")
+        for hit in review_hits:
+            print(hit)
+
 if banned_files == 0 and review_files == 0:
     print(f"{GREEN}✅ No banned or review Unicode characters found{NC}")
 elif banned_files == 0:
@@ -583,6 +619,53 @@ fi
 echo ""
 echo "Files with banned chars (critical): $BANNED_CHAR_FILES"
 echo "(See output above for full list of review-level chars)"
+echo ""
+
+# ============================================================================
+# CHECK 13: Gitignore Completeness (D20 partial)
+# ============================================================================
+
+echo -e "${BLUE}=== Gitignore Completeness (D20) ===${NC}"
+echo ""
+
+GITIGNORE_FILE="../../.gitignore"
+GITIGNORE_ISSUES=0
+
+if [ ! -f "$GITIGNORE_FILE" ]; then
+  echo -e "${YELLOW}⚠️  No .gitignore found at project root — cannot verify transient file entries${NC}"
+  ((WARNING_ISSUES++))
+  ((TOTAL_ISSUES++))
+  GITIGNORE_ISSUES=1
+else
+  if ! grep -qF ".shamt/import_diff" "$GITIGNORE_FILE"; then
+    echo -e "${RED}❌ .shamt/import_diff*.md is not in .gitignore${NC}"
+    echo "   Add: .shamt/import_diff*.md"
+    ((CRITICAL_ISSUES++))
+    ((TOTAL_ISSUES++))
+    GITIGNORE_ISSUES=1
+  fi
+
+  if ! grep -qF ".shamt/shamt_master_path.conf" "$GITIGNORE_FILE"; then
+    echo -e "${RED}❌ .shamt/shamt_master_path.conf is not in .gitignore${NC}"
+    echo "   Add: .shamt/shamt_master_path.conf"
+    ((CRITICAL_ISSUES++))
+    ((TOTAL_ISSUES++))
+    GITIGNORE_ISSUES=1
+  fi
+
+  if ! grep -qF ".shamt/last_sync.conf" "$GITIGNORE_FILE"; then
+    echo -e "${RED}❌ .shamt/last_sync.conf is not in .gitignore${NC}"
+    echo "   Add: .shamt/last_sync.conf"
+    ((CRITICAL_ISSUES++))
+    ((TOTAL_ISSUES++))
+    GITIGNORE_ISSUES=1
+  fi
+
+  if [ $GITIGNORE_ISSUES -eq 0 ]; then
+    echo -e "${GREEN}✅ All transient Shamt files are gitignored${NC}"
+  fi
+fi
+
 echo ""
 
 # ============================================================================
