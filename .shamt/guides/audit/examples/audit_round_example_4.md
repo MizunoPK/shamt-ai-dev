@@ -17,7 +17,7 @@
 - Fresh eyes: Different validation approach (automated link checking)
 - Expand scope: Check templates for notation consistency
 
-**Sub-Round:** Round 1.2 (Content Quality - D6 Template Currency)
+**Sub-Round:** Round 1.2 (Content Quality - D7 Template Currency)
 
 ---
 
@@ -285,7 +285,7 @@ $ while read link; do
 **Remaining:** 2 intentional instances (historical references, documented)
 
 **Files Modified:** 50+ files across all rounds
-**Dimensions Covered:** D1, D2, D3, D6, D8, D10
+**Dimensions Covered:** D1, D2, D3, D7, D4, D11
 
 ---
 

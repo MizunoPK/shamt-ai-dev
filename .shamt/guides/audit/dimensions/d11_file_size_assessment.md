@@ -1,6 +1,6 @@
-# D10: File Size Assessment
+# D11: File Size Assessment
 
-**Dimension Number:** 10
+**Dimension Number:** 11
 **Category:** Structural Dimensions
 **Automation Level:** 100% automated
 **Priority:** MEDIUM
@@ -215,7 +215,7 @@ Epic 6: 720 lines (LARGE) - Added validation loop details
 
 **Prevention:**
 - Regular file size audits (every 2-3 epics)
-- "Last Updated" date monitoring (D14)
+- "Last Updated" date monitoring (D9)
 - Pre-audit script catches threshold crossings
 
 ### Root Cause 2: Content Consolidation Without Refactoring
@@ -285,10 +285,10 @@ Create spec.md using template.
 ### Script 1: File Size Assessment (IN pre_audit_checks.sh)
 
 ```bash
-# CHECK 1: File Size Assessment (D10)
+# CHECK 1: File Size Assessment (D11)
 # ============================================================================
 
-echo "=== File Size Assessment (D10) ==="
+echo "=== File Size Assessment (D11) ==="
 
 TOO_LARGE=0
 LARGE=0
@@ -308,7 +308,7 @@ echo "Files >1250 lines: $TOO_LARGE"
 ### Script 2: CLAUDE.md Character Limit (IN pre_audit_checks.sh)
 
 ```bash
-# CHECK 1b: Policy Compliance - CLAUDE.md Character Limit (D10)
+# CHECK 1b: Policy Compliance - CLAUDE.md Character Limit (D11)
 # ============================================================================
 
 claude_md="../../CLAUDE.md"
@@ -327,7 +327,7 @@ fi
 ### Script 3: Size Trend Analysis (SHOULD ADD)
 
 ```bash
-# CHECK 1c: File Size Trend Analysis (D10)
+# CHECK 1c: File Size Trend Analysis (D11)
 # ============================================================================
 
 echo "=== File Size Trend Analysis ==="
@@ -645,7 +645,7 @@ This dimension guide focuses on **detection and evaluation**. For **reduction ex
 - Before/after examples
 
 **Division of Responsibility:**
-- **D10 (this guide):** WHAT to check, WHEN files are too large, WHETHER to reduce
+- **D11 (this guide):** WHAT to check, WHEN files are too large, WHETHER to reduce
 - **file_size_reduction_guide.md:** HOW to reduce, step-by-step protocols
 
 ---
@@ -727,7 +727,7 @@ This dimension guide focuses on **detection and evaluation**. For **reduction ex
 
 **Related Dimensions:**
 - **D1: Cross-Reference Accuracy** - Verify links after splitting files
-- **D16: Accessibility & Usability** - Navigation quality (complements file size)
+- **D17: Accessibility & Usability** - Navigation quality (complements file size)
 
 **Audit Stages:**
 - `../stages/stage_1_discovery.md` - How to discover large files
@@ -743,4 +743,4 @@ This dimension guide focuses on **detection and evaluation**. For **reduction ex
 
 ---
 
-**When to Use:** Run D10 validation during every audit. File size issues are first-class fixes (not deferred) and must be addressed in Stage 3.
+**When to Use:** Run D11 validation during every audit. File size issues are first-class fixes (not deferred) and must be addressed in Stage 3.

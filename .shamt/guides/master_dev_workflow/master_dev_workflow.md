@@ -50,6 +50,13 @@ Rules:
 - If you discover scope is larger than expected → stop and switch to full epic workflow
 - No deferred issues — fix everything or don't change anything
 
+**If your changes affect system behavior** (new sync scripts, new guides, new audit scope, new workflow steps, changed commands or file locations): also review and update the three master-only files that are not propagated to child projects via import:
+- [ ] `CLAUDE.md` (root) — does the PR review checklist, Critical Rules, or workflow description need updating?
+- [ ] Root `README.md` — does the sync or initialization description need updating?
+- [ ] `scripts/initialization/RULES_FILE.template.md` — does the Shamt Sync section or any other section need updating?
+
+These files are the agent's first point of reference and are not kept current by the import mechanism — they require deliberate manual updates when behavior changes.
+
 ---
 
 ## Step 4: Run the Guide Audit

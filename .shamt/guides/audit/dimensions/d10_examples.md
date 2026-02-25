@@ -1,8 +1,8 @@
-# D9: Intra-File Consistency — Real Examples
+# D10: Intra-File Consistency — Real Examples
 
-Real examples of D9 violations and fixes, organized by pattern type.
+Real examples of D10 violations and fixes, organized by pattern type.
 
-**Referenced from:** `d9_intra_file_consistency.md` → "Real Examples" section
+**Referenced from:** `d10_intra_file_consistency.md` → "Real Examples" section
 
 ---
 
@@ -43,7 +43,7 @@ Refer to S5.P1 guide for details...  ← Consistent notation
 
 **Root Cause:** Content copy-pasted from old guide during update, old notation not replaced
 
-**How D9 Detects:**
+**How D10 Detects:**
 - Type 1: Mixed Notation Within Single File
 - Automated: CHECK 16 detects files with both old and new notation
 
@@ -86,7 +86,7 @@ For minor issues (typos, formatting), you can document them in the main checklis
 
 **Root Cause:** Rule made absolute, exception added later without updating original rule
 
-**How D9 Detects:**
+**How D10 Detects:**
 - Type 2: Contradictory Instructions Within File
 - Manual validation: Find ALWAYS statements, check for contradicting permissive statements
 
@@ -144,7 +144,7 @@ The initiative will deliver...  ← INCONSISTENT (epic, project, or initiative?)
 
 **Root Cause:** Template created from multiple sources, each using different terminology
 
-**How D9 Detects:**
+**How D10 Detects:**
 - Type 3: Inconsistent Terminology Within File
 - Automated: CHECK 17 detects high variation in workflow unit terms
 
@@ -191,7 +191,7 @@ The initiative will deliver...  ← INCONSISTENT (epic, project, or initiative?)
 
 **Root Cause:** Examples written at different times, structure evolved, old examples not updated
 
-**How D9 Detects:**
+**How D10 Detects:**
 - Type 4: Structural Pattern Inconsistencies
 - Manual validation: Compare structure of all examples in file
 
@@ -235,7 +235,7 @@ For detailed testing patterns, see Section 7: Advanced Testing Techniques.
 
 **Root Cause:** File reorganization without updating internal references
 
-**How D9 Detects:**
+**How D10 Detects:**
 - Type 5: Internal Reference Accuracy
 - Automated: CHECK 18 detects references to non-existent sections
 

@@ -1,6 +1,6 @@
-# D6: Template Currency
+# D7: Template Currency
 
-**Dimension Number:** 6
+**Dimension Number:** 7
 **Category:** Content Quality Dimensions
 **Automation Level:** 70% automated
 **Priority:** HIGH
@@ -40,7 +40,7 @@
 
 ✅ **Section Structure Current:**
 - Template sections match current guide structure
-- Required sections align with D11 (Structural Patterns)
+- Required sections align with D12 (Structural Patterns)
 - No obsolete sections from old workflow
 
 ✅ **Example Content Accurate:**
@@ -249,7 +249,7 @@ grep -rn "implementation\.md\|spec_v1\.md" templates/
 
 **Prevention:**
 - S10.P1 includes template review
-- Audit D6 validates template currency
+- Audit D7 validates template currency
 - Templates listed in "affected files" for workflow changes
 
 ### Root Cause 2: Stage Renumbering Incomplete
@@ -319,10 +319,10 @@ cp SHAMT-5-old_epic/EPIC_README.md templates/epic_readme_template.md
 ### Script 1: Notation Validation in Templates (SHOULD ADD)
 
 ```bash
-# CHECK: Template Currency - Notation Validation (D6)
+# CHECK: Template Currency - Notation Validation (D7)
 # ============================================================================
 
-echo "=== Template Currency - Notation Validation (D6) ==="
+echo "=== Template Currency - Notation Validation (D7) ==="
 
 # Find old notation in templates
 OLD_NOTATION=$(grep -rn "\bS[0-9][a-z]\b\|Stage [0-9][a-z]" templates/ | \
@@ -351,7 +351,7 @@ fi
 ### Script 2: Stage Number Validation (SHOULD ADD)
 
 ```bash
-# CHECK: Template Currency - Stage Numbers (D6)
+# CHECK: Template Currency - Stage Numbers (D7)
 # ============================================================================
 
 echo "=== Template Stage Number Validation ==="
@@ -385,7 +385,7 @@ fi
 ### Script 3: Required Field Validation (SHOULD ADD)
 
 ```bash
-# CHECK: Template Currency - Required Fields (D6)
+# CHECK: Template Currency - Required Fields (D7)
 # ============================================================================
 
 echo "=== Template Required Field Validation ==="
@@ -453,7 +453,7 @@ STEP 5: Validate examples
 
 STEP 6: Compare to actual guides
 - [ ] Template structure matches actual guide structure
-- [ ] Template required sections align with D11
+- [ ] Template required sections align with D12
 - [ ] Template doesn't have extra obsolete sections
 
 STEP 7: Document currency issues
@@ -694,13 +694,13 @@ File: templates/feature_readme_template.md
 - **D2: Terminology Consistency** - Templates must use current notation
 
 **Complementary:**
-- **D11: Structural Patterns** - Template structure should match current patterns
-- **D14: Content Accuracy** - Template stage numbers and counts must be accurate
+- **D12: Structural Patterns** - Template structure should match current patterns
+- **D9: Content Accuracy** - Template stage numbers and counts must be accurate
 
 **Difference from Other Dimensions:**
-- **D6:** Template-specific currency issues
+- **D7:** Template-specific currency issues
 - **D1/D2:** Apply to all files (including templates)
-- **D6 Focus:** Template as source of propagated errors
+- **D7 Focus:** Template as source of propagated errors
 
 ---
 
@@ -709,8 +709,8 @@ File: templates/feature_readme_template.md
 **Related Dimensions:**
 - `d1_cross_reference_accuracy.md` - Validate template file paths
 - `d2_terminology_consistency.md` - Validate template notation
-- `d11_structural_patterns.md` - Template structure patterns
-- `d14_content_accuracy.md` - Template content accuracy
+- `d12_structural_patterns.md` - Template structure patterns
+- `d9_content_accuracy.md` - Template content accuracy
 
 **Audit Stages:**
 - `../stages/stage_1_discovery.md` - How to discover template currency issues
@@ -721,4 +721,4 @@ File: templates/feature_readme_template.md
 
 ---
 
-**When to Use:** Run D6 validation after any workflow changes (stage renumbering, new stages added, notation changes) and during regular audits. Template errors multiply across all new epics - fix templates to prevent error propagation.
+**When to Use:** Run D7 validation after any workflow changes (stage renumbering, new stages added, notation changes) and during regular audits. Template errors multiply across all new epics - fix templates to prevent error propagation.

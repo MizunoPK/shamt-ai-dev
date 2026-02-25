@@ -32,6 +32,16 @@ If entries are missing, add them now:
 
 ---
 
+## Step 1.5: Run the Guide Audit on Modified Files
+
+Before exporting, run the guide audit on every shared guide file you modified.
+
+This step is **mandatory**. Exporting without auditing risks submitting a well-intentioned improvement that has formatting, consistency, or cross-reference issues — problems the master maintainer would have to request changes for, and that would otherwise propagate to other child projects on their next import.
+
+Run the full audit process (starting from `guides/audit/README.md`) focused on the files you changed. The audit must pass before you proceed to Step 2.
+
+---
+
 ## Step 2: Run the Export Script
 
 From the project root:
@@ -98,6 +108,17 @@ After the PR is merged, the improvement is available to all Shamt projects on th
 - Guide customizations that only make sense for your tech stack
 - Test command overrides or language-specific instructions
 - Content in `project-specific-configs/` (never exported by the script)
+
+---
+
+## Common Situations
+
+**Export script fails with "Master directory not found":**
+`.shamt/shamt_master_path.conf` is stale — the master repo has moved or you're on a different machine. Update the file with the current path to your local `shamt-ai-dev` clone:
+
+```bash
+echo "/path/to/shamt-ai-dev" > .shamt/shamt_master_path.conf
+```
 
 ---
 

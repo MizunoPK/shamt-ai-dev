@@ -645,7 +645,7 @@ Content: "audit/README.md (modular audit system entry point)"
 
 **Related Dimensions:**
 - D3: Workflow Integration - Prerequisites and transitions must match file paths (see `d3_workflow_integration.md`)
-- D11: Structural Patterns - Expected file structures validate reference targets exist (see `d11_structural_patterns.md`)
+- D12: Structural Patterns - Expected file structures validate reference targets exist (see `d12_structural_patterns.md`)
 
 **Audit Stages:**
 - `../stages/stage_1_discovery.md` - How to search for broken references

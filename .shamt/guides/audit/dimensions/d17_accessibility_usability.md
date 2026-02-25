@@ -1,6 +1,6 @@
-# D16: Accessibility & Usability
+# D17: Accessibility & Usability
 
-**Dimension Number:** 16
+**Dimension Number:** 17
 **Category:** Advanced Dimensions
 **Automation Level:** 80% automated
 **Priority:** MEDIUM
@@ -392,10 +392,10 @@ any assumptions and get user approval before proceeding to execution.
 ### Script 1: TOC Requirement (IN pre_audit_checks.sh)
 
 ```
-# CHECK 5: Accessibility - TOC for Long Files (D16)
+# CHECK 5: Accessibility - TOC for Long Files (D17)
 # ============================================================================
 
-echo "=== Accessibility - TOC Check (D16) ==="
+echo "=== Accessibility - TOC Check (D17) ==="
 
 MISSING_TOC=0
 
@@ -421,10 +421,10 @@ echo "Large files missing TOC: $MISSING_TOC"
 > Use the Python pair-tracker below instead.
 
 ```bash
-# CHECK 7: Code Block Language Tags (D16)
+# CHECK 7: Code Block Language Tags (D17)
 # ============================================================================
 
-echo "=== Code Block Language Tags (D16) ==="
+echo "=== Code Block Language Tags (D17) ==="
 
 # Tracks fence pairs — only flags OPENING fences without a language tag.
 # Closing fences (always bare ```) are intentionally excluded.
@@ -461,7 +461,7 @@ fi
 ### Script 3: Navigation Links Check (SHOULD ADD)
 
 ```
-# CHECK 5b: Navigation Links (D16)
+# CHECK 5b: Navigation Links (D17)
 # ============================================================================
 
 echo "=== Navigation Links Validation ==="
@@ -729,19 +729,19 @@ round to ensure no new issues were introduced.
 ## Integration with Other Dimensions
 
 **Works With:**
-- **D10: File Size Assessment** - Large files especially need TOCs
-- **D13: Documentation Quality** - Code tags improve quality
+- **D11: File Size Assessment** - Large files especially need TOCs
+- **D8: Documentation Quality** - Code tags improve quality
 
 **Complementary:**
-- **D5: Content Completeness** - Ensures examples present (see `d5_content_completeness.md`)
+- **D6: Content Completeness** - Ensures examples present (see `d6_content_completeness.md`)
 
 ---
 
 ## See Also
 
 **Related Dimensions:**
-- `d10_file_size_assessment.md` - File size directly impacts navigation needs
-- `d13_documentation_quality.md` - Quality standards include formatting
+- `d11_file_size_assessment.md` - File size directly impacts navigation needs
+- `d8_documentation_quality.md` - Quality standards include formatting
 
 **Audit Stages:**
 - `../stages/stage_1_discovery.md` - How to discover usability issues
@@ -755,4 +755,4 @@ round to ensure no new issues were introduced.
 
 ---
 
-**When to Use:** Run D16 validation during every audit. Accessibility issues (especially missing TOCs and untagged code blocks) should be fixed to improve agent effectiveness.
+**When to Use:** Run D17 validation during every audit. Accessibility issues (especially missing TOCs and untagged code blocks) should be fixed to improve agent effectiveness.

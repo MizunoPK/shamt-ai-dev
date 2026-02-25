@@ -1,8 +1,8 @@
-# D15: Duplication Detection — Real Examples
+# D16: Duplication Detection — Real Examples
 
-Real examples of D15 violations and fixes, organized by pattern type.
+Real examples of D16 violations and fixes, organized by pattern type.
 
-**Referenced from:** `d15_duplication_detection.md` → "Real Examples" section
+**Referenced from:** `d16_duplication_detection.md` → "Real Examples" section
 
 ---
 
@@ -49,7 +49,7 @@ See `reference/critical_workflow_rules.md` for universal workflow rules.
 
 **Root Cause:** Copy-paste for consistency without consolidation
 
-**How D15 Detects:**
+**How D16 Detects:**
 - Type 1: Exact Duplicate Content
 - Type 5: Entire Section Duplication
 - Automated: CHECK 19 detects identical sections
@@ -106,7 +106,7 @@ See `reference/GIT_WORKFLOW.md` for branch naming and git commands.
 
 **Root Cause:** Reference material embedded in guides instead of extracted
 
-**How D15 Detects:**
+**How D16 Detects:**
 - Type 3: Redundant Instructions Across Guides
 - Automated: CHECK 20 counts instruction occurrences
 
@@ -154,7 +154,7 @@ See `reference/common_examples.md` → "Missing Import Error" for debugging appr
 
 **Root Cause:** Examples not extracted to shared library
 
-**How D15 Detects:**
+**How D16 Detects:**
 - Type 4: Duplicate Examples Across Guides
 - Manual validation: Compare example content
 
@@ -203,7 +203,7 @@ See `reference/common_examples.md` → "Missing Import Error" for debugging appr
 
 **Root Cause:** Template created generic content without customization prompt
 
-**How D15 Detects:**
+**How D16 Detects:**
 - Type 7: Template Content Propagation
 - Manual validation: Check if template instances identical
 
@@ -254,7 +254,7 @@ See `reference/standard_prerequisites.md`
 
 **Root Cause:** Standard boilerplate not extracted to shared reference
 
-**How D15 Detects:**
+**How D16 Detects:**
 - Type 5: Entire Section Duplication
 - Automated: CHECK 19 detects identical Prerequisites sections
 

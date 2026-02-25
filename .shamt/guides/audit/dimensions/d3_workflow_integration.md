@@ -451,7 +451,7 @@ grep -rn "Gate 5" stages/s2/ stages/s3/ stages/s4/  # Should only be in S5
 - [ ] Gate 3 appears in S2.P1.I3 (not S2.P2 or S3)
 - [ ] Gate 4.5 appears in S3.P3 (not S3.P1 or S4)
 - [ ] Gate 5 appears after S5 v2 Validation Loop, before S6 (not inside S5.P1 or in S6)
-- [ ] Gates 4a, 7a, 23a, 24, 25 appear embedded in S5 v2 Validation Loop dimensions (D4, D7, D11, D10, D11)
+- [ ] Gates 4a, 7a, 23a, 24, 25 appear embedded in S5 v2 Validation Loop dimensions (D5, D15, D12, D11, D12)
 - [ ] No gates reference deprecated gate numbers (Gate 6, Gate 7 that don't exist)
 - [ ] Gates appear in numerical order within their sections
 - [ ] Each gate has clear pass/fail criteria
@@ -1115,59 +1115,59 @@ Proceed to S9: Epic-Level Final QC (`stages/s9/s9_epic_final_qc.md`)
 
 ---
 
-### D5: Content Completeness
+### D6: Content Completeness
 
 **Overlap:**
-- D5 validates required sections exist (Prerequisites, Next Stage)
+- D6 validates required sections exist (Prerequisites, Next Stage)
 - D3 validates content of Prerequisites/Next Stage is correct
-- **Division:** D5 = presence, D3 = correctness
+- **Division:** D6 = presence, D3 = correctness
 
 **Example:**
-- D5 checks: Guide has "## Prerequisites" section ✅
+- D6 checks: Guide has "## Prerequisites" section ✅
 - D3 checks: Prerequisites list correct previous stage and files ✅
 
 ---
 
-### D12: Cross-File Dependencies
+### D13: Cross-File Dependencies
 
 **Overlap:**
-- D12 validates stage handoff files exist (output from one, input to next)
+- D13 validates stage handoff files exist (output from one, input to next)
 - D3 validates those files are correctly documented in guides
-- **Division:** D12 = runtime file dependencies, D3 = documentation of dependencies
+- **Division:** D13 = runtime file dependencies, D3 = documentation of dependencies
 
 **Example:**
 - D3 checks: S5 prerequisites say "test_strategy.md required" ✅
-- D12 checks: test_strategy.md actually exists when S5 starts ✅
+- D13 checks: test_strategy.md actually exists when S5 starts ✅
 
-**Recommendation:** Run D3 BEFORE D12 (D3 validates documentation, D12 validates reality matches documentation)
+**Recommendation:** Run D3 BEFORE D13 (D3 validates documentation, D13 validates reality matches documentation)
 
 ---
 
-### D13: Documentation Quality
+### D8: Documentation Quality
 
 **Overlap:**
-- D13 validates Prerequisites/Next Stage sections are present and well-formatted
+- D8 validates Prerequisites/Next Stage sections are present and well-formatted
 - D3 validates content is semantically correct
-- **Division:** D13 = structure/quality, D3 = logical correctness
+- **Division:** D8 = structure/quality, D3 = logical correctness
 
 **Example:**
-- D13 checks: Prerequisites section uses checkbox format ✅
+- D8 checks: Prerequisites section uses checkbox format ✅
 - D3 checks: Checkboxes reference correct previous stages ✅
 
 ---
 
-### D17: Stage Flow Consistency
+### D18: Stage Flow Consistency
 
 **Overlap:**
 - D3 validates workflow descriptions are internally consistent
-- D17 validates workflow behavior is consistent across stage transitions
-- **Division:** D3 = within-stage workflow validation, D17 = across-stage boundary validation
+- D18 validates workflow behavior is consistent across stage transitions
+- **Division:** D3 = within-stage workflow validation, D18 = across-stage boundary validation
 
 **Example:**
 - D3 checks: S2 workflow descriptions don't contradict each other ✅
-- D17 checks: S2's exit behavior matches S3's entry expectations ✅
+- D18 checks: S2's exit behavior matches S3's entry expectations ✅
 
-**Recommendation:** Run D3 and D17 together (D3 for within-stage, D17 for cross-stage)
+**Recommendation:** Run D3 and D18 together (D3 for within-stage, D18 for cross-stage)
 
 ---
 
@@ -1192,7 +1192,7 @@ Proceed to S9: Epic-Level Final QC (`stages/s9/s9_epic_final_qc.md`)
 - Preventing stage skipping or wrong transitions
 - Validating workflow remains coherent after changes
 
-**Next Dimension:** D4: Count Accuracy (validate file counts, iteration counts match reality)
+**Next Dimension:** D5: Count Accuracy (validate file counts, iteration counts match reality)
 
 ---
 

@@ -5,7 +5,7 @@
 **Last Updated:** 2026-02-22
 
 **Why This Document Exists:**
-Audit Dimension D13 (Documentation Quality) checks for "## Prerequisites" and "## Exit Criteria" sections in workflow guides. However, certain file types intentionally use alternative patterns. This document prevents these files from being flagged as violations in future audits.
+Audit Dimension D8 (Documentation Quality) checks for "## Prerequisites" and "## Exit Criteria" sections in workflow guides. However, certain file types intentionally use alternative patterns. This document prevents these files from being flagged as violations in future audits.
 
 ---
 
@@ -15,7 +15,7 @@ Audit Dimension D13 (Documentation Quality) checks for "## Prerequisites" and "#
 
 **Pattern:** Lightweight iteration guides with inline prerequisites, exit criteria inherited from parent round
 
-**⚠️ NOTE: All 14 files in this category have been DELETED from the filesystem** as part of the S5 v1 → S5 v2 migration. S5 v2 consolidates all iteration content into a single `s5_v2_validation_loop.md` file using an 11-dimension Validation Loop approach. These entries are retained for historical reference only — they cannot produce D13 false positives since the files no longer exist.
+**⚠️ NOTE: All 14 files in this category have been DELETED from the filesystem** as part of the S5 v1 → S5 v2 migration. S5 v2 consolidates all iteration content into a single `s5_v2_validation_loop.md` file using an 11-dimension Validation Loop approach. These entries are retained for historical reference only — they cannot produce D8 false positives since the files no longer exist.
 
 **Design Rationale (historical):**
 - Iteration files were sequential steps within S5 v1 rounds (Round 1, Round 2, Round 3)
@@ -116,7 +116,7 @@ Audit Dimension D13 (Documentation Quality) checks for "## Prerequisites" and "#
     - Exit Criteria: Inherited from s5_v2_validation_loop.md
     - Design: Focused single-iteration guide (S5 v1 only)
 
-**Audit Action:** SKIP these files when checking D13 (Documentation Quality) - Prerequisites/Exit Criteria
+**Audit Action:** SKIP these files when checking D8 (Documentation Quality) - Prerequisites/Exit Criteria
 
 ---
 
@@ -142,7 +142,7 @@ Audit Dimension D13 (Documentation Quality) checks for "## Prerequisites" and "#
    - Purpose: Document architectural decisions for S5 v2 design
    - Design: Architecture, dimension definitions, validation loop design
 
-**Audit Action:** SKIP these files when checking D13 (Documentation Quality) - Prerequisites/Exit Criteria
+**Audit Action:** SKIP these files when checking D8 (Documentation Quality) - Prerequisites/Exit Criteria
 
 ---
 
@@ -220,7 +220,7 @@ follows the emoji (space → hyphen after stripping the emoji).
 3. Replace spaces with hyphens — the space after the stripped emoji becomes a leading `-`
 4. Do not trim leading hyphens — `#-name` is valid
 
-**Related:** See D9 Context-Sensitive Rule 5 for full specification.
+**Related:** See D10 Context-Sensitive Rule 5 for full specification.
 
 ---
 
@@ -228,7 +228,7 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 ### For Future Audits
 
-**When running D13 (Documentation Quality) Prerequisites/Exit Criteria checks:**
+**When running D8 (Documentation Quality) Prerequisites/Exit Criteria checks:**
 
 1. **Generate violation list** using automated pattern search
 2. **Cross-reference with this document** before flagging as issues
@@ -278,7 +278,7 @@ wc -l real_violations.txt  # Should be low count
 - 30 intentional exceptions (documented here)
 
 **Known Audit Tools:**
-- D13 dimension automated checks
+- D8 dimension automated checks
 - audit/scripts/pre_audit_checks.sh
 
 **Future Updates:**
@@ -311,5 +311,5 @@ wc -l real_violations.txt  # Should be low count
 ---
 
 **Last Verified:** 2026-02-22 (Round 11 audit — confirmed Category A files are all DELETED from filesystem as part of S5 v1 → v2 migration)
-**Next Review:** When new stage/iteration guides added, or if D13 check patterns change
+**Next Review:** When new stage/iteration guides added, or if D8 check patterns change
 

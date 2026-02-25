@@ -1,6 +1,6 @@
-# D17: Stage Flow Consistency
+# D18: Stage Flow Consistency
 
-**Dimension Number:** 17
+**Dimension Number:** 18
 **Category:** Advanced Dimensions
 **Automation Level:** 30% automated
 **Priority:** HIGH
@@ -29,7 +29,7 @@
 
 ## What This Checks
 
-**D17: Stage Flow Consistency** validates that adjacent stages agree on workflow behavior:
+**D18: Stage Flow Consistency** validates that adjacent stages agree on workflow behavior:
 
 1. **Handoff Promises** - What Stage N promises to deliver matches what Stage N+1 expects
 2. **Workflow Behavior** - How Stage N describes workflow matches how Stage N+1 operates
@@ -80,7 +80,7 @@ The group-based parallelization issue was a flow consistency problem:
 
 ## How This Differs From D3
 
-| Aspect | D3: Workflow Integration | D17: Stage Flow Consistency |
+| Aspect | D3: Workflow Integration | D18: Stage Flow Consistency |
 |--------|-------------------------|----------------------------|
 | **Focus** | Structural references | Behavioral continuity |
 | **Checks** | File paths valid, prerequisites exist | Workflow descriptions align |
@@ -89,11 +89,11 @@ The group-based parallelization issue was a flow consistency problem:
 | **Example Fail** | | "S2 says epic-level S3, S3 says group-level" |
 
 **D3 catches:** "S2 says Next: S4" (wrong stage number - structural)
-**D17 catches:** "S2 says groups end at S2, S1 says groups continue to S4" (contradictory behavior - semantic)
+**D18 catches:** "S2 says groups end at S2, S1 says groups continue to S4" (contradictory behavior - semantic)
 
 **Complementary relationship:**
 - Run D3 first (ensure structure is valid)
-- Run D17 second (ensure behavior is consistent)
+- Run D18 second (ensure behavior is consistent)
 
 ---
 
@@ -372,7 +372,7 @@ For each transition:
 
 **Result:** Three stages have incompatible descriptions of same workflow
 
-**Prevention:** D17 validation after any stage guide changes
+**Prevention:** D18 validation after any stage guide changes
 
 ---
 
@@ -386,7 +386,7 @@ For each transition:
 
 **Result:** S1 still describes old behavior, S3 has remnant group-based content
 
-**Prevention:** D17 validation after workflow design changes
+**Prevention:** D18 validation after workflow design changes
 
 ---
 
@@ -400,7 +400,7 @@ For each transition:
 
 **Result:** S3 content doesn't match S3's actual workflow
 
-**Prevention:** D17 Type 2 (Workflow Behavior Alignment) validation
+**Prevention:** D18 Type 2 (Workflow Behavior Alignment) validation
 
 ---
 
@@ -410,10 +410,10 @@ For each transition:
 
 ```bash
 #!/bin/bash
-# CHECK: Stage Flow Consistency (D17)
+# CHECK: Stage Flow Consistency (D18)
 # ============================================================================
 
-echo "=== D17: Stage Flow Consistency Checks ==="
+echo "=== D18: Stage Flow Consistency Checks ==="
 
 # Check 1: Workflow description consistency
 echo ""
@@ -457,7 +457,7 @@ for file in stages/**/*.md; do
 done
 
 echo ""
-echo "=== D17 Pre-Check Complete ==="
+echo "=== D18 Pre-Check Complete ==="
 echo "Manual review required for semantic validation"
 ```
 
@@ -538,7 +538,7 @@ For each stage boundary:
 **Step 5: Document Findings (10 min)**
 
 ```markdown
-## D17 Flow Consistency Findings
+## D18 Flow Consistency Findings
 
 ### Transitions Validated
 - [ ] S1->S2: [PASS/FAIL]
@@ -635,7 +635,7 @@ After S2.P2:
 - Update S1 to say "Groups complete S2 only, then proceed to S3 (epic-level)"
 - Ensure S2 and S1 describe same workflow
 
-**How D17 Detects:**
+**How D18 Detects:**
 - Type 1: Handoff Promises (S1 promises differ from S2 behavior)
 - Type 2: Workflow Behavior Alignment (descriptions don't match)
 
@@ -661,9 +661,9 @@ S3 runs ONCE PER ROUND (not just once at end):
 - Content says "Round 1: Group 1" (group-level)
 - **INTERNAL SCOPE CONFLICT**
 
-**Note:** This is also caught by D9 (intra-file consistency), but D17 would flag it when validating S2->S3 transition (S2 says epic-level S3, S3 content says group-level).
+**Note:** This is also caught by D10 (intra-file consistency), but D18 would flag it when validating S2->S3 transition (S2 says epic-level S3, S3 content says group-level).
 
-**How D17 Detects:**
+**How D18 Detects:**
 - Type 5: Scope Alignment (S2 exit scope doesn't match S3 content scope)
 
 ---
@@ -702,31 +702,31 @@ Parallelization modes:
 - Add "Are You Primary Agent in Group-Based Parallel Mode?" to S2 router
 - Create s2_primary_agent_group_wave_guide.md
 
-**How D17 Detects:**
+**How D18 Detects:**
 - Type 3: Conditional Logic Consistency (S1 branches not all handled in S2)
 
 ---
 
 ## Integration with Other Dimensions
 
-| Dimension | Relationship to D17 |
+| Dimension | Relationship to D18 |
 |-----------|---------------------|
-| **D3: Workflow Integration** | D3 = structural (links valid), D17 = behavioral (content matches) |
-| **D9: Intra-File Consistency** | D9 = within file, D17 = across stage boundary |
-| **D14: Content Accuracy** | D14 = claims vs reality, D17 = claims vs claims across stages |
-| **D15: Duplication Detection** | D15 = same content copied, D17 = contradictory content |
+| **D3: Workflow Integration** | D3 = structural (links valid), D18 = behavioral (content matches) |
+| **D10: Intra-File Consistency** | D10 = within file, D18 = across stage boundary |
+| **D9: Content Accuracy** | D9 = claims vs reality, D18 = claims vs claims across stages |
+| **D16: Duplication Detection** | D16 = same content copied, D18 = contradictory content |
 
 **Recommended Audit Order:**
 1. D3 (structural validation)
-2. D17 (behavioral validation)
-3. D9 (within-file validation)
-4. D15 (duplication/contradiction)
+2. D18 (behavioral validation)
+3. D10 (within-file validation)
+4. D16 (duplication/contradiction)
 
 ---
 
 ## Summary
 
-**D17: Stage Flow Consistency validates behavioral continuity across stage transitions.**
+**D18: Stage Flow Consistency validates behavioral continuity across stage transitions.**
 
 **Key Validations:**
 1. Handoff promises match expectations

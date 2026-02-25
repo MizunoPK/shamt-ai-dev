@@ -1,6 +1,6 @@
-# D4: Count Accuracy
+# D5: Count Accuracy
 
-**Dimension Number:** 4
+**Dimension Number:** 5
 **Category:** Content Quality Dimensions
 **Automation Level:** 90% automated
 **Priority:** MEDIUM
@@ -27,7 +27,7 @@
 
 ## What This Checks
 
-**D4: Count Accuracy** validates that numeric claims in documentation match reality:
+**D5: Count Accuracy** validates that numeric claims in documentation match reality:
 
 1. **Stage Counts** - "10 stages" actually shows S1-S10
 2. **Phase Counts** - "S5 has 2 phases" matches S5 v2 Phase 1 (Draft Creation) and Phase 2 (Validation Loop)
@@ -43,9 +43,9 @@
 - Reference materials (gate lists, dimension lists)
 - Templates (step counts, checklist counts)
 
-**Key Distinction from D14 (Content Accuracy):**
-- **D14:** Validates semantic correctness (claims match reality broadly)
-- **D4:** Validates numeric correctness (specific counts are accurate)
+**Key Distinction from D9 (Content Accuracy):**
+- **D9:** Validates semantic correctness (claims match reality broadly)
+- **D5:** Validates numeric correctness (specific counts are accurate)
 
 ---
 
@@ -987,7 +987,7 @@ The v2 workflow is a **9-stage epic-driven development process**...
 
 **Root Cause:** S4 added, stage count updated in guides but not in CLAUDE.md root file
 
-**How D4 Detects:**
+**How D5 Detects:**
 - Type 0: Root-Level Workflow Count Claims
 - Type 1: Stage Count Validation
 - Automated: CHECK 12 in pre_audit_checks.sh
@@ -1027,7 +1027,7 @@ The v2 workflow is a **9-stage epic-driven development process**...
 
 **Root Cause:** Iterations added for gate implementation, header not updated
 
-**How D4 Detects:**
+**How D5 Detects:**
 - Type 3: Iteration Count Validation
 - Automated: CHECK 13 validates S5 iteration count specifically
 
@@ -1086,7 +1086,7 @@ The workflow uses two types of gates:
 
 **Root Cause:** New gates added to reference, CLAUDE.md not updated
 
-**How D4 Detects:**
+**How D5 Detects:**
 - Type 4: Gate Count Validation
 - Automated: CHECK 14 compares all gate count claims to reference
 
@@ -1128,7 +1128,7 @@ If 9-10 are actually sub-criteria, move them as sub-bullets under criteria 8.
 
 **Root Cause:** List expanded without updating header count
 
-**How D4 Detects:**
+**How D5 Detects:**
 - Type 6: List Item Count Validation
 - Manual validation: Count list items following numeric headers
 
@@ -1165,7 +1165,7 @@ If 9-10 are actually sub-criteria, move them as sub-bullets under criteria 8.
 
 **Root Cause:** Tracker updated, but README overview section forgotten
 
-**How D4 Detects:**
+**How D5 Detects:**
 - Type 5: File Count Validation
 - Compare claims across files (README vs Tracker)
 - Flag inconsistencies
@@ -1174,28 +1174,28 @@ If 9-10 are actually sub-criteria, move them as sub-bullets under criteria 8.
 
 ## Integration with Other Dimensions
 
-**D4 focuses on numeric/count accuracy, complementing dimensions that validate other aspects:**
+**D5 focuses on numeric/count accuracy, complementing dimensions that validate other aspects:**
 
 | Dimension | Division of Responsibility |
 |-----------|---------------------------|
-| **D14: Content Accuracy** | D14 = semantic correctness ("is claim true?"), D4 = numeric correctness ("is number correct?") |
-| **D5: Content Completeness** | D5 = presence (content exists), D4 = quantity (counts match headers) |
-| **D13: Documentation Quality** | D13 = format (headers consistent), D4 = numbers ("## 8 Steps" has 8 steps) |
-| **D3: Workflow Integration** | D3 = logic (sequence correct), D4 = counts ("10 stages" matches S1-S10) |
+| **D9: Content Accuracy** | D9 = semantic correctness ("is claim true?"), D5 = numeric correctness ("is number correct?") |
+| **D6: Content Completeness** | D6 = presence (content exists), D5 = quantity (counts match headers) |
+| **D8: Documentation Quality** | D8 = format (headers consistent), D5 = numbers ("## 8 Steps" has 8 steps) |
+| **D3: Workflow Integration** | D3 = logic (sequence correct), D5 = counts ("10 stages" matches S1-S10) |
 
 **Example workflow:**
-1. D5 checks: Guide has "Prerequisites" section ✅
-2. D4 checks: If header says "5 Prerequisites," list has 5 items ✅
-3. D13 checks: Section headers formatted consistently ✅
-4. D14 checks: Prerequisites content semantically correct ✅
+1. D6 checks: Guide has "Prerequisites" section ✅
+2. D5 checks: If header says "5 Prerequisites," list has 5 items ✅
+3. D8 checks: Section headers formatted consistently ✅
+4. D9 checks: Prerequisites content semantically correct ✅
 
-**Recommendation:** Run D4 BEFORE D14 (numbers easier to verify than semantics).
+**Recommendation:** Run D5 BEFORE D9 (numbers easier to verify than semantics).
 
 ---
 
 ## Summary
 
-**D4: Count Accuracy validates that numeric claims match reality.**
+**D5: Count Accuracy validates that numeric claims match reality.**
 
 **Key Validations:**
 1. ✅ Stage counts (10 stages S1-S10)
@@ -1215,7 +1215,7 @@ If 9-10 are actually sub-criteria, move them as sub-bullets under criteria 8.
 - Ensuring documentation stays updated after workflow evolution
 - Maintaining accuracy in high-visibility root files
 
-**Next Dimension:** D9: Intra-File Consistency (validate consistency within single files)
+**Next Dimension:** D10: Intra-File Consistency (validate consistency within single files)
 
 ---
 

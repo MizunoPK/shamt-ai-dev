@@ -1,6 +1,6 @@
-# D11: Structural Patterns
+# D12: Structural Patterns
 
-**Dimension Number:** 11
+**Dimension Number:** 12
 **Category:** Structural Dimensions
 **Automation Level:** 60% automated
 **Priority:** MEDIUM
@@ -393,10 +393,10 @@ Prerequisites: ...
 ### Script 1: Required Sections Validation (IN pre_audit_checks.sh)
 
 ```bash
-# CHECK 2: Structure Validation (D11)
+# CHECK 2: Structure Validation (D12)
 # ============================================================================
 
-echo "=== Structure Validation (D11) ==="
+echo "=== Structure Validation (D12) ==="
 
 MISSING_PREREQ=0
 MISSING_EXIT=0
@@ -429,7 +429,7 @@ echo "Missing Exit Criteria: $MISSING_EXIT"
 ### Script 2: Naming Convention Validation (SHOULD ADD)
 
 ```bash
-# CHECK 2b: File Naming Conventions (D11)
+# CHECK 2b: File Naming Conventions (D12)
 # ============================================================================
 
 echo "=== File Naming Convention Validation ==="
@@ -462,7 +462,7 @@ fi
 ### Script 3: Header Hierarchy Validation (SHOULD ADD)
 
 ```bash
-# CHECK 2c: Header Hierarchy Validation (D11)
+# CHECK 2c: Header Hierarchy Validation (D12)
 # ============================================================================
 
 echo "=== Header Hierarchy Validation ==="
@@ -755,12 +755,12 @@ done
 ## Integration with Other Dimensions
 
 **Works With:**
-- **D13: Documentation Quality** - Required sections overlap
+- **D8: Documentation Quality** - Required sections overlap
 - **D1: Cross-Reference Accuracy** - File naming affects path validation
 
 **Complementary:**
-- **D6: Template Currency** - Template compliance validation (see `d6_template_currency.md`)
-- **D9: Intra-File Consistency** - Section content quality (see `d9_intra_file_consistency.md`)
+- **D7: Template Currency** - Template compliance validation (see `d7_template_currency.md`)
+- **D10: Intra-File Consistency** - Section content quality (see `d10_intra_file_consistency.md`)
 
 ---
 
@@ -768,7 +768,7 @@ done
 
 **Related Dimensions:**
 - `d1_cross_reference_accuracy.md` - File path and naming validation
-- `d13_documentation_quality.md` - Required sections overlap
+- `d8_documentation_quality.md` - Required sections overlap
 
 **Audit Stages:**
 - `../stages/stage_1_discovery.md` - How to discover structural issues
@@ -782,4 +782,4 @@ done
 
 ---
 
-**When to Use:** Run D11 validation after any template changes, file reorganization, or when creating new guides to ensure structural consistency.
+**When to Use:** Run D12 validation after any template changes, file reorganization, or when creating new guides to ensure structural consistency.

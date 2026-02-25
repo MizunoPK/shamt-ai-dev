@@ -1,6 +1,6 @@
-# D15: Duplication Detection
+# D16: Duplication Detection
 
-**Dimension Number:** 15
+**Dimension Number:** 16
 **Category:** Advanced Dimensions
 **Automation Level:** 50% automated
 **Priority:** MEDIUM
@@ -27,7 +27,7 @@
 
 ## What This Checks
 
-**D15: Duplication Detection** validates the DRY principle (Don't Repeat Yourself) across guides:
+**D16: Duplication Detection** validates the DRY principle (Don't Repeat Yourself) across guides:
 
 1. **Exact Duplicates** - Same content appears in multiple files verbatim
 2. **Near Duplicates** - Very similar content with minor variations (90%+ similarity)
@@ -601,7 +601,7 @@ Multiple files describing the same concept must not contradict each other.
 - **Duplication (Types 1-7):** Same content copied -> maintenance burden
 - **Contradiction (Type 8):** Different claims about same topic -> confusion
 
-**Why This Belongs in D15:**
+**Why This Belongs in D16:**
 Both duplication and contradiction involve multiple files describing the same thing:
 - Duplication: Same thing, same words (redundant)
 - Contradiction: Same thing, incompatible words (incorrect)
@@ -1058,31 +1058,31 @@ NEVER commit without running tests first. 100% test pass rate required.
 
 ## Real Examples
 
-See `d15_examples.md` for 5 real examples of each detection pattern type (exact duplicates, redundant instructions, duplicate examples, template propagation, section boilerplate).
+See `d16_examples.md` for 5 real examples of each detection pattern type (exact duplicates, redundant instructions, duplicate examples, template propagation, section boilerplate).
 
 ---
 
 ## Integration with Other Dimensions
 
-**D15 complements related dimensions by focusing on consolidation and DRY principle:**
+**D16 complements related dimensions by focusing on consolidation and DRY principle:**
 
 | Dimension | Division of Responsibility |
 |-----------|---------------------------|
-| **D5: Content Completeness** | D5 = presence (content exists), D15 = non-duplication (content not redundant) |
-| **D11: Structural Patterns** | D11 = consistency (structure matches), D15 = consolidation (structure not duplicated) |
-| **D12: Cross-File Dependencies** | D12 = references work (links valid), D15 = prefer references (content referenced, not copied) |
-| **D14: Content Accuracy** | D14 = correctness (claims accurate), D15 = efficiency (claims not duplicated) |
+| **D6: Content Completeness** | D6 = presence (content exists), D16 = non-duplication (content not redundant) |
+| **D12: Structural Patterns** | D12 = consistency (structure matches), D16 = consolidation (structure not duplicated) |
+| **D13: Cross-File Dependencies** | D13 = references work (links valid), D16 = prefer references (content referenced, not copied) |
+| **D9: Content Accuracy** | D9 = correctness (claims accurate), D16 = efficiency (claims not duplicated) |
 
 **Example workflow:**
-1. D5 checks: Guide has "Examples" section ✅
-2. D15 checks: Examples aren't duplicated across guides ✅
-3. D12 checks: Examples reference is valid ✅
+1. D6 checks: Guide has "Examples" section ✅
+2. D16 checks: Examples aren't duplicated across guides ✅
+3. D13 checks: Examples reference is valid ✅
 
 ---
 
 ## Summary
 
-**D15: Duplication Detection validates the DRY principle across guides.**
+**D16: Duplication Detection validates the DRY principle across guides.**
 
 **Key Validations:**
 1. ✅ Exact duplicate detection
@@ -1104,7 +1104,7 @@ See `d15_examples.md` for 5 real examples of each detection pattern type (exact 
 - Improving file readability (extract to references)
 - DRY principle adherence
 
-**Next Dimension:** D7: Context-Sensitive Validation (distinguishing intentional exceptions from errors)
+**Next Dimension:** D15: Context-Sensitive Validation (distinguishing intentional exceptions from errors)
 
 ---
 

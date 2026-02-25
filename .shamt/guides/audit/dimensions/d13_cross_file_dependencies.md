@@ -1,6 +1,6 @@
-# D12: Cross-File Dependencies
+# D13: Cross-File Dependencies
 
-**Dimension Number:** 12
+**Dimension Number:** 13
 **Category:** Structural Dimensions
 **Automation Level:** 30% automated
 **Priority:** HIGH
@@ -27,7 +27,7 @@
 
 ## What This Checks
 
-**D12: Cross-File Dependencies** validates that files correctly reference and depend on each other at RUNTIME (not just documentation):
+**D13: Cross-File Dependencies** validates that files correctly reference and depend on each other at RUNTIME (not just documentation):
 
 1. **Stage Handoff Files** - Outputs from Stage A actually exist and match Stage B input expectations
 2. **Cross-Stage References** - spec.md references DISCOVERY.md findings, implementation_plan.md references spec.md requirements
@@ -44,7 +44,7 @@
 
 **Key Distinction from D3:**
 - **D3 (Workflow Integration):** Validates DOCUMENTATION says correct prerequisites and transitions
-- **D12 (Cross-File Dependencies):** Validates files ACTUALLY EXIST at runtime matching documentation
+- **D13 (Cross-File Dependencies):** Validates files ACTUALLY EXIST at runtime matching documentation
 
 ---
 
@@ -929,7 +929,7 @@ If feature is simple, S4.I1 will produce minimal test_strategy.md (5-10 min).
 
 **Root Cause:** Optional stage created mandatory dependency
 
-**How D12 Detects:**
+**How D13 Detects:**
 - Type 1: Stage Handoff File Dependencies
 - Manual validation: Check if "optional" stages produce "required" files
 
@@ -975,7 +975,7 @@ From epic discovery, see DISCOVERY.md Section 3: Technical Constraints.
 
 **Root Cause:** Template created before DISCOVERY.md structure finalized, not updated when structure changed
 
-**How D12 Detects:**
+**How D13 Detects:**
 - Type 2: Intra-Document Cross-References
 - Type 3: Template File References
 - Manual validation Step 5: Validate section references
@@ -1025,7 +1025,7 @@ Authentication method: [Determined from user answers - see checklist.md Q1]
 
 **Root Cause:** Spec tried to defer decision back to checklist instead of documenting decision
 
-**How D12 Detects:**
+**How D13 Detects:**
 - Type 5: Circular Dependency Detection
 - Manual validation: Build dependency graph, trace for cycles
 
@@ -1073,7 +1073,7 @@ grep "feature_requirements.md" templates/feature_spec_template.md
 
 **Root Cause:** Template not updated after workflow file naming change
 
-**How D12 Detects:**
+**How D13 Detects:**
 - Type 6: Orphaned File Detection
 - Automated: Compare created files vs used files
 
@@ -1106,7 +1106,7 @@ For build steps, refer to implementation_checklist.md.
 
 **Root Cause:** Template referenced file created later in workflow
 
-**How D12 Detects:**
+**How D13 Detects:**
 - Type 3: Template File References
 - Manual validation: Check when template used vs when referenced file created
 
@@ -1118,14 +1118,14 @@ For build steps, refer to implementation_checklist.md.
 
 **Overlap:**
 - D3 validates DOCUMENTATION says correct prerequisites
-- D12 validates FILES EXIST matching those prerequisites
-- **Division:** D3 = documentation, D12 = runtime reality
+- D13 validates FILES EXIST matching those prerequisites
+- **Division:** D3 = documentation, D13 = runtime reality
 
 **Example:**
 - D3 checks: S5 prerequisites say "test_strategy.md required" ✅
-- D12 checks: test_strategy.md actually exists when S5 starts ✅
+- D13 checks: test_strategy.md actually exists when S5 starts ✅
 
-**Recommendation:** Run D3 BEFORE D12 (fix documentation first, then validate reality matches)
+**Recommendation:** Run D3 BEFORE D13 (fix documentation first, then validate reality matches)
 
 ---
 
@@ -1133,57 +1133,57 @@ For build steps, refer to implementation_checklist.md.
 
 **Overlap:**
 - D1 validates file paths in references are technically correct
-- D12 validates those files exist and have expected content
-- **Division:** D1 = syntax, D12 = semantics
+- D13 validates those files exist and have expected content
+- **Division:** D1 = syntax, D13 = semantics
 
 **Example:**
 - D1 checks: Path `stages/s5/s5_v2_validation_loop.md` is correctly formatted ✅
-- D12 checks: File exists and is not empty/stub ✅
+- D13 checks: File exists and is not empty/stub ✅
 
 ---
 
-### D5: Content Completeness
+### D6: Content Completeness
 
 **Overlap:**
-- D5 validates required sections exist in files
-- D12 validates cross-references to those sections are correct
-- **Division:** D5 = intra-file, D12 = inter-file
+- D6 validates required sections exist in files
+- D13 validates cross-references to those sections are correct
+- **Division:** D6 = intra-file, D13 = inter-file
 
 **Example:**
-- D5 checks: DISCOVERY.md has "Technical Considerations" section ✅
-- D12 checks: spec.md references to DISCOVERY.md "Technical Considerations" are valid ✅
+- D6 checks: DISCOVERY.md has "Technical Considerations" section ✅
+- D13 checks: spec.md references to DISCOVERY.md "Technical Considerations" are valid ✅
 
 ---
 
-### D10: File Size Assessment
+### D11: File Size Assessment
 
 **Overlap:**
-- D10 validates files aren't too large
-- D12 validates files exist and are usable
-- **Division:** D10 = size, D12 = existence/dependencies
+- D11 validates files aren't too large
+- D13 validates files exist and are usable
+- **Division:** D11 = size, D13 = existence/dependencies
 
 **Example:**
-- D10 checks: implementation_plan.md is ~400 lines (not >1250) ✅
-- D12 checks: implementation_plan.md exists when S6 needs it ✅
+- D11 checks: implementation_plan.md is ~400 lines (not >1250) ✅
+- D13 checks: implementation_plan.md exists when S6 needs it ✅
 
 ---
 
-### D11: Structural Patterns
+### D12: Structural Patterns
 
 **Overlap:**
-- D11 validates files follow template structure
-- D12 validates files have content referenced by other files
-- **Division:** D11 = structure, D12 = content dependencies
+- D12 validates files follow template structure
+- D13 validates files have content referenced by other files
+- **Division:** D12 = structure, D13 = content dependencies
 
 **Example:**
-- D11 checks: spec.md has "## Prerequisites" section (structure) ✅
-- D12 checks: Prerequisites section lists files that exist (dependencies) ✅
+- D12 checks: spec.md has "## Prerequisites" section (structure) ✅
+- D13 checks: Prerequisites section lists files that exist (dependencies) ✅
 
 ---
 
 ## Summary
 
-**D12: Cross-File Dependencies validates that files correctly reference each other at RUNTIME.**
+**D13: Cross-File Dependencies validates that files correctly reference each other at RUNTIME.**
 
 **Key Validations:**
 1. ✅ Stage handoff files exist when needed

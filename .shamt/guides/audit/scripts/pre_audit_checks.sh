@@ -2,17 +2,17 @@
 # Pre-Audit Automated Checks
 # Runs before manual audit to catch common structural issues
 #
-# Coverage: 11 of 18 dimensions (D1, D3, D8, D9, D10, D11, D13, D14, D16, D17, D18)
+# Coverage: 11 of 18 dimensions (D1, D3, D4, D10, D11, D12, D8, D9, D17, D18, D14)
 # Estimated: 45-55% of typical issues (based on SHAMT-7 Round 1-2 data)
 # NOT Checked: D2 (Terminology - requires pattern-specific search, see dimension guide)
 #
-# Last Updated: 2026-02-19 (D18 Addition)
+# Last Updated: 2026-02-19 (D14 Addition)
 # Changes:
 #   - Round 3: Simplified file size threshold from 3-tier (600/800/1000) to 1000-line baseline
 #   - Round 3: Added 17 known exceptions for Prerequisites/Exit Criteria checks (now 19 — see known_exceptions.md)
 #   - Meta-Audit: Increased baseline from 1000 → 1250 lines for comprehensive reference guides
 #   - Exceptions documented in audit/reference/known_exceptions.md
-#   - 2026-02-19: Added D18 Character and Format Compliance check (banned Unicode chars)
+#   - 2026-02-19: Added D14 Character and Format Compliance check (banned Unicode chars)
 
 # set -e  # Exit on error - DISABLED: causes premature exit in file size check loop
 
@@ -37,10 +37,10 @@ echo ""
 cd "$(dirname "$0")/../.." || exit 1
 
 # ============================================================================
-# CHECK 1: File Size Assessment (D10)
+# CHECK 1: File Size Assessment (D11)
 # ============================================================================
 
-echo -e "${BLUE}=== File Size Assessment (D10) ===${NC}"
+echo -e "${BLUE}=== File Size Assessment (D11) ===${NC}"
 echo ""
 
 TOO_LARGE=0
@@ -71,7 +71,7 @@ echo "        - Meta-Audit (2026-02-05): Increased baseline to 1250 lines for co
 echo ""
 
 # ============================================================================
-# CHECK 1b: Policy Compliance - CLAUDE.md Character Limit (D10)
+# CHECK 1b: Policy Compliance - CLAUDE.md Character Limit (D11)
 # ============================================================================
 
 echo -e "${BLUE}=== Policy Compliance Check ===${NC}"
@@ -100,10 +100,10 @@ fi
 echo ""
 
 # ============================================================================
-# CHECK 2: Structure Validation (D11)
+# CHECK 2: Structure Validation (D12)
 # ============================================================================
 
-echo -e "${BLUE}=== Structure Validation (D11) ===${NC}"
+echo -e "${BLUE}=== Structure Validation (D12) ===${NC}"
 echo ""
 
 MISSING_PREREQ=0
@@ -175,10 +175,10 @@ echo "Known exceptions skipped: 19 (see audit/reference/known_exceptions.md)"
 echo ""
 
 # ============================================================================
-# CHECK 3: Documentation Quality (D13)
+# CHECK 3: Documentation Quality (D8)
 # ============================================================================
 
-echo -e "${BLUE}=== Documentation Quality (D13) ===${NC}"
+echo -e "${BLUE}=== Documentation Quality (D8) ===${NC}"
 echo ""
 
 TODO_COUNT=$(grep -rc "TODO\|TBD\|FIXME" stages templates prompts reference 2>/dev/null | grep -v ":0" | wc -l)
@@ -210,10 +210,10 @@ echo "Placeholders found: $PLACEHOLDER_COUNT"
 echo ""
 
 # ============================================================================
-# CHECK 4: Content Accuracy - File Counts (D14)
+# CHECK 4: Content Accuracy - File Counts (D9)
 # ============================================================================
 
-echo -e "${BLUE}=== Content Accuracy - File Counts (D14) ===${NC}"
+echo -e "${BLUE}=== Content Accuracy - File Counts (D9) ===${NC}"
 echo ""
 
 # Count actual templates
@@ -240,10 +240,10 @@ fi
 echo ""
 
 # ============================================================================
-# CHECK 5: Accessibility - TOC for Long Files (D16)
+# CHECK 5: Accessibility - TOC for Long Files (D17)
 # ============================================================================
 
-echo -e "${BLUE}=== Accessibility - TOC Check (D16) ===${NC}"
+echo -e "${BLUE}=== Accessibility - TOC Check (D17) ===${NC}"
 echo ""
 
 MISSING_TOC=0
@@ -300,10 +300,10 @@ fi
 echo ""
 
 # ============================================================================
-# CHECK 7: Code Block Language Tags (D16)
+# CHECK 7: Code Block Language Tags (D17)
 # ============================================================================
 
-echo -e "${BLUE}=== Code Block Language Tags (D16) ===${NC}"
+echo -e "${BLUE}=== Code Block Language Tags (D17) ===${NC}"
 echo ""
 
 # NOTE: Do NOT use `grep "^\`\`\`$"` — it matches closing fences (always bare ```),
@@ -353,10 +353,10 @@ fi
 echo ""
 
 # ============================================================================
-# CHECK 8: CLAUDE.md Sync Quick Check (D8)
+# CHECK 8: CLAUDE.md Sync Quick Check (D4)
 # ============================================================================
 
-echo -e "${BLUE}=== CLAUDE.md Sync Check (D8) ===${NC}"
+echo -e "${BLUE}=== CLAUDE.md Sync Check (D4) ===${NC}"
 echo ""
 
 # Check if CLAUDE.md exists
@@ -366,7 +366,7 @@ if [ -f "../../CLAUDE.md" ]; then
 
   if [ "$STAGE_REFS" -gt 0 ]; then
     echo -e "${GREEN}✅ CLAUDE.md found with $STAGE_REFS stage references${NC}"
-    echo "   (Full D8 validation required in manual audit)"
+    echo "   (Full D4 validation required in manual audit)"
   else
     echo -e "${YELLOW}⚠️  CLAUDE.md found but no stage references detected${NC}"
     ((WARNING_ISSUES++))
@@ -381,10 +381,10 @@ fi
 echo ""
 
 # ============================================================================
-# CHECK 9: Workflow Description Consistency (D3, D17)
+# CHECK 9: Workflow Description Consistency (D3, D18)
 # ============================================================================
 
-echo -e "${BLUE}=== Workflow Description Consistency (D3, D17) ===${NC}"
+echo -e "${BLUE}=== Workflow Description Consistency (D3, D18) ===${NC}"
 echo ""
 
 # Find all workflow sequence claims
@@ -404,10 +404,10 @@ fi
 echo ""
 
 # ============================================================================
-# CHECK 10: Prerequisite-Content Consistency (D9)
+# CHECK 10: Prerequisite-Content Consistency (D10)
 # ============================================================================
 
-echo -e "${BLUE}=== Prerequisite-Content Consistency (D9) ===${NC}"
+echo -e "${BLUE}=== Prerequisite-Content Consistency (D10) ===${NC}"
 echo ""
 
 PREREQ_CONFLICTS=0
@@ -438,10 +438,10 @@ fi
 echo ""
 
 # ============================================================================
-# CHECK 11: Stage Flow Consistency (D17)
+# CHECK 11: Stage Flow Consistency (D18)
 # ============================================================================
 
-echo -e "${BLUE}=== Stage Flow Consistency (D17) ===${NC}"
+echo -e "${BLUE}=== Stage Flow Consistency (D18) ===${NC}"
 echo ""
 
 echo "Checking S1 parallelization modes vs S2 router handling..."
@@ -457,15 +457,15 @@ grep -n "Sequential\|Parallel\|Group" stages/s2/s2_feature_deep_dive.md 2>/dev/n
 
 echo ""
 echo -e "${YELLOW}Verify all S1 modes are handled in S2 router${NC}"
-echo "(Full D17 validation required in manual audit)"
+echo "(Full D18 validation required in manual audit)"
 
 echo ""
 
 # ============================================================================
-# CHECK 12: Character and Format Compliance (D18)
+# CHECK 12: Character and Format Compliance (D14)
 # ============================================================================
 
-echo -e "${BLUE}=== Character and Format Compliance (D18) ===${NC}"
+echo -e "${BLUE}=== Character and Format Compliance (D14) ===${NC}"
 echo ""
 
 BANNED_CHAR_FILES=0
@@ -508,7 +508,7 @@ review_total = 0
 
 # Known exceptions: files that intentionally contain banned chars as examples
 EXCEPTIONS = {
-    './audit/dimensions/d18_character_format_compliance.md',  # D18 guide shows the chars it bans
+    './audit/dimensions/d14_character_format_compliance.md',  # D14 guide shows the chars it bans
 }
 
 for root, dirs, files in os.walk('.'):
@@ -559,7 +559,7 @@ elif banned_files == 0:
 else:
     print(f"\nFiles with banned chars (CRITICAL): {banned_files}")
     print(f"Files with review chars (WARNING): {review_files}")
-    print("Fix: See audit/dimensions/d18_character_format_compliance.md for bulk replacement script")
+    print("Fix: See audit/dimensions/d14_character_format_compliance.md for bulk replacement script")
     sys.exit(1)
 
 # Signal review-only to caller

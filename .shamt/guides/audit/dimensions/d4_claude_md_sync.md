@@ -1,6 +1,6 @@
-# D8: CLAUDE.md Synchronization
+# D4: CLAUDE.md Synchronization
 
-**Dimension Number:** 8
+**Dimension Number:** 4
 **Category:** Core Dimensions (Always Check)
 **Automation Level:** 60% automated
 **Priority:** HIGH
@@ -86,7 +86,7 @@ Result: Agent expects 28 iterations, looks for I23-I28 which don't exist
 4. Next epic starts, reads outdated CLAUDE.md
 5. Confusion or incorrect workflow followed
 
-**Solution:** D8 audits catch drift before it impacts new epics
+**Solution:** D4 audits catch drift before it impacts new epics
 
 ---
 
@@ -275,7 +275,7 @@ done
 4. Forget to update CLAUDE.md (still says 15 iterations)
 5. Next epic starts, reads CLAUDE.md, thinks 15 iterations
 
-**Prevention:** D8 audit after any guide changes
+**Prevention:** D4 audit after any guide changes
 
 ---
 
@@ -291,7 +291,7 @@ done
 5. Miss some references in CLAUDE.md quick reference
 6. CLAUDE.md says "Next: S6" but should say "Next: S9"
 
-**Prevention:** D1 (Cross-Reference) + D8 (CLAUDE.md Sync) audits
+**Prevention:** D1 (Cross-Reference) + D4 (CLAUDE.md Sync) audits
 
 ---
 
@@ -306,7 +306,7 @@ done
 4. Forget to mention new template in CLAUDE.md
 5. CLAUDE.md workflow description outdated (doesn't mention template)
 
-**Prevention:** D8 audit catches missing template mention
+**Prevention:** D4 audit catches missing template mention
 
 ---
 
@@ -321,7 +321,7 @@ done
 4. CLAUDE.md still has vague "Fresh Eyes" mention without details
 5. Agents read CLAUDE.md, don't realize detailed guide exists
 
-**Prevention:** D8 audit ensures CLAUDE.md points to new resources
+**Prevention:** D4 audit ensures CLAUDE.md points to new resources
 
 ---
 
@@ -355,7 +355,7 @@ else
 fi
 ```
 
-**Coverage:** ~60% of D8 issues
+**Coverage:** ~60% of D4 issues
 
 ---
 
@@ -386,7 +386,7 @@ done
 echo "✅ Stage reference check complete"
 ```bash
 
-**Coverage:** ~20% of D8 issues
+**Coverage:** ~20% of D4 issues
 
 ---
 
@@ -396,7 +396,7 @@ echo "✅ Stage reference check complete"
 
 ```bash
 echo ""
-echo "=== D8: CLAUDE.md Synchronization ==="
+echo "=== D4: CLAUDE.md Synchronization ==="
 echo ""
 
 # Check file paths
@@ -518,7 +518,7 @@ echo "  - Key concepts aligned (Fresh Eyes, exit criteria, etc.)"
 ```bash
 # Run automated scripts
 bash .shamt/guides/audit/scripts/pre_audit_checks.sh | \
-  grep -A 20 "D8: CLAUDE.md"
+  grep -A 20 "D4: CLAUDE.md"
 ```markdown
 
 **Step 2: Manual Checks (20-30 minutes)**
@@ -528,7 +528,7 @@ bash .shamt/guides/audit/scripts/pre_audit_checks.sh | \
 
 **Step 3: Document Issues**
 - Use discovery_report_template.md
-- Tag with Dimension: D8
+- Tag with Dimension: D4
 - Provide before/after for each issue
 
 ---
@@ -703,11 +703,11 @@ CLAUDE.md contradicts guide ❌
 
 **Difference:**
 - D1: Checks paths WITHIN .shamt/guides folder
-- D8: Checks paths FROM CLAUDE.md TO .shamt/guides folder
+- D4: Checks paths FROM CLAUDE.md TO .shamt/guides folder
 
 **Workflow:**
 1. Run D1 first (validate .shamt/guides internal consistency)
-2. Run D8 second (validate CLAUDE.md points to correct .shamt/guides files)
+2. Run D4 second (validate CLAUDE.md points to correct .shamt/guides files)
 
 ---
 
@@ -717,36 +717,36 @@ CLAUDE.md contradicts guide ❌
 
 **Difference:**
 - D2: Checks S#.P#.I# notation within guides
-- D8: Checks CLAUDE.md notation matches guides notation
+- D4: Checks CLAUDE.md notation matches guides notation
 
 **Workflow:**
 1. Run D2 first (standardize notation in guides)
-2. Run D8 second (ensure CLAUDE.md uses same notation)
+2. Run D4 second (ensure CLAUDE.md uses same notation)
 
 ---
 
-### Works With D6 (Template Currency)
+### Works With D7 (Template Currency)
 
 **Overlap:** Both check template references
 
 **Difference:**
-- D6: Checks templates match guide expectations
-- D8: Checks CLAUDE.md describes templates correctly
+- D7: Checks templates match guide expectations
+- D4: Checks CLAUDE.md describes templates correctly
 
 **Workflow:**
-1. Run D6 first (validate templates are current)
-2. Run D8 second (ensure CLAUDE.md template descriptions match)
+1. Run D7 first (validate templates are current)
+2. Run D4 second (ensure CLAUDE.md template descriptions match)
 
 ---
 
-## When to Focus on D8
+## When to Focus on D4
 
 ### High Priority Scenarios
 
 **Trigger 1: After S10.P1 Guide Updates**
 - S10.P1 is when guides are updated based on lessons learned
 - CLAUDE.md should be updated in parallel
-- D8 validates synchronization
+- D4 validates synchronization
 
 **Trigger 2: After Workflow Evolution**
 - Major workflow changes (e.g., 7→10 stages)
@@ -756,7 +756,7 @@ CLAUDE.md contradicts guide ❌
 **Trigger 3: Before New Epic Starts**
 - Agents read CLAUDE.md first
 - Outdated CLAUDE.md = wrong workflow followed
-- Quick D8 check prevents misdirection
+- Quick D4 check prevents misdirection
 
 **Trigger 4: After Template Changes**
 - New templates added
@@ -767,7 +767,7 @@ CLAUDE.md contradicts guide ❌
 
 ### Low Priority Scenarios
 
-**Skip D8 if:**
+**Skip D4 if:**
 - No guide changes recently
 - Mid-epic (CLAUDE.md won't be read until next epic)
 - Only minor guide updates (typo fixes, clarifications)
@@ -833,7 +833,7 @@ CLAUDE.md contradicts guide ❌
 **Related Dimensions:**
 - `d1_cross_reference_accuracy.md` - File path validation within guides
 - `d2_terminology_consistency.md` - Notation standardization
-- `d6_template_currency.md` - Template synchronization
+- `d7_template_currency.md` - Template synchronization
 
 **Stage Guides:**
 - `../stages/s10/s10_p1_guide_update_workflow.md` - When CLAUDE.md should be updated
@@ -844,7 +844,7 @@ CLAUDE.md contradicts guide ❌
 
 ---
 
-**After reviewing D8:**
+**After reviewing D4:**
 - Run automated scripts first (60% coverage)
 - Complete manual checklist (remaining 40%)
 - Document all mismatches found

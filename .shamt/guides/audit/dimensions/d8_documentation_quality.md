@@ -1,6 +1,6 @@
-# D13: Documentation Quality
+# D8: Documentation Quality
 
-**Dimension Number:** 13
+**Dimension Number:** 8
 **Category:** Content Quality Dimensions
 **Automation Level:** 90% automated
 **Priority:** MEDIUM
@@ -412,10 +412,10 @@ Prerequisites: None documented
 ### Script 1: TODO/Placeholder Detection (IN pre_audit_checks.sh)
 
 ```bash
-# CHECK 3: Documentation Quality (D13)
+# CHECK 3: Documentation Quality (D8)
 # ============================================================================
 
-echo "=== Documentation Quality (D13) ==="
+echo "=== Documentation Quality (D8) ==="
 
 TODO_COUNT=$(grep -rc "TODO\|TBD\|FIXME" stages templates prompts reference 2>/dev/null | grep -v ":0" | wc -l)
 PLACEHOLDER_COUNT=$(grep -rc "\[placeholder\]\|\.\.\." stages templates prompts 2>/dev/null | grep -v ":0" | wc -l)
@@ -439,7 +439,7 @@ echo "Placeholders found: $PLACEHOLDER_COUNT"
 ### Script 2: Code Block Language Tags (IN pre_audit_checks.sh)
 
 ```bash
-# CHECK 7: Code Block Language Tags (D16 / D13 overlap)
+# CHECK 7: Code Block Language Tags (D17 / D8 overlap)
 # ============================================================================
 
 echo "=== Code Block Language Tags ==="
@@ -458,7 +458,7 @@ fi
 ### Script 3: Required Sections Check (SHOULD ADD)
 
 ```bash
-# CHECK 3b: Required Sections Validation (D13)
+# CHECK 3b: Required Sections Validation (D8)
 # ============================================================================
 
 echo "=== Required Sections Validation ==="
@@ -781,12 +781,12 @@ $ grep -n "Guide Index" README.md
 
 **Works With:**
 - **D1: Cross-Reference Accuracy** - Validates "See Also" references exist
-- **D11: Structural Patterns** - Validates required sections (template compliance)
-- **D14: Content Accuracy** - Validates claims match reality
+- **D12: Structural Patterns** - Validates required sections (template compliance)
+- **D9: Content Accuracy** - Validates claims match reality
 
 **Complementary:**
-- **D5: Content Completeness** - Checks for missing content within sections (see `d5_content_completeness.md`)
-- **D16: Accessibility** - TOC requirement overlaps
+- **D6: Content Completeness** - Checks for missing content within sections (see `d6_content_completeness.md`)
+- **D17: Accessibility** - TOC requirement overlaps
 
 ---
 
@@ -876,8 +876,8 @@ done
 
 **Related Dimensions:**
 - `d1_cross_reference_accuracy.md` - Verify "See Also" links
-- `d11_structural_patterns.md` - Template compliance validation
-- `d16_accessibility_usability.md` - Navigation and TOC requirements
+- `d12_structural_patterns.md` - Template compliance validation
+- `d17_accessibility_usability.md` - Navigation and TOC requirements
 
 **Audit Stages:**
 - `../stages/stage_1_discovery.md` - How to discover quality issues
@@ -891,4 +891,4 @@ done
 
 ---
 
-**When to Use:** Run D13 validation during every audit. Documentation quality issues (especially TODOs and missing sections) must be resolved before audit completion.
+**When to Use:** Run D8 validation during every audit. Documentation quality issues (especially TODOs and missing sections) must be resolved before audit completion.

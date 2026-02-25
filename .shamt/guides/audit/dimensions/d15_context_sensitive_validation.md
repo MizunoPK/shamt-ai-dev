@@ -1,6 +1,6 @@
-# D7: Context-Sensitive Validation
+# D15: Context-Sensitive Validation
 
-**Dimension Number:** 7
+**Dimension Number:** 15
 **Category:** Advanced Dimensions
 **Automation Level:** 20% automated
 **Priority:** MEDIUM
@@ -27,7 +27,7 @@
 
 ## What This Checks
 
-**D7: Context-Sensitive Validation** distinguishes intentional exceptions from actual errors:
+**D15: Context-Sensitive Validation** distinguishes intentional exceptions from actual errors:
 
 1. **Historical References** - Old notation in historical context vs current errors
 2. **Anti-Pattern Examples** - Wrong code shown intentionally vs actual mistakes
@@ -47,7 +47,7 @@ This dimension provides **context analysis** to interpret findings from other di
 
 **Key Distinction:**
 - **Other Dimensions:** Find patterns (e.g., "S5a" notation found)
-- **D7:** Determine if pattern match is error or intentional (e.g., "S5a" in historical section = intentional)
+- **D15:** Determine if pattern match is error or intentional (e.g., "S5a" in historical section = intentional)
 
 ---
 
@@ -744,7 +744,7 @@ done < /tmp/examples_with_old.txt
 
 **Process Overview:**
 
-For each finding from other dimensions (D1-D6, D8-D16), apply context validation.
+For each finding from other dimensions (D1-D7, D4-D17), apply context validation.
 
 **Step 1: Categorize Finding (5 min per dimension)**
 
@@ -1034,7 +1034,7 @@ ACTION: No fix needed - variation is documented and approved
 
 **Audit Finding:**
 ```text
-D4: Count Accuracy
+D5: Count Accuracy
 FOUND: "S5 has 20 iterations" in stages/s5/guide.md:10
 ERROR: Actual iteration count is 22
 ```
@@ -1072,7 +1072,7 @@ S5 has 20 iterations across 3 rounds. The final 2 iterations (I21-I22) were adde
 
 **Audit Finding:**
 ```text
-D5: Content Completeness
+D6: Content Completeness
 FOUND: Generic placeholder text in feature_01/spec.md:20
 ERROR: Content incomplete, needs feature-specific information
 ```markdown
@@ -1121,37 +1121,37 @@ head -5 feature_01/spec.md
 
 ### ALL Other Dimensions
 
-**D7 provides context validation for ALL other dimensions:**
+**D15 provides context validation for ALL other dimensions:**
 
 **D1: Cross-Reference Accuracy**
 - Finding: Broken link
-- D7: Is it example of broken link (intentional) or actual broken link?
+- D15: Is it example of broken link (intentional) or actual broken link?
 
 **D2: Terminology Consistency**
 - Finding: Old notation
-- D7: Historical reference (valid) or current usage (error)?
+- D15: Historical reference (valid) or current usage (error)?
 
 **D3: Workflow Integration**
 - Finding: Stage skipped
-- D7: Approved variation (valid) or workflow violation (error)?
+- D15: Approved variation (valid) or workflow violation (error)?
 
-**D4: Count Accuracy**
+**D5: Count Accuracy**
 - Finding: Count mismatch
-- D7: Historical count (valid) or current error?
+- D15: Historical count (valid) or current error?
 
-**D5: Content Completeness**
+**D6: Content Completeness**
 - Finding: Missing section
-- D7: Template placeholder (valid) or incomplete (error)?
+- D15: Template placeholder (valid) or incomplete (error)?
 
 **And so on for all dimensions...**
 
-**D7's Role:** Meta-dimension providing context analysis for interpreting all other dimension findings.
+**D15's Role:** Meta-dimension providing context analysis for interpreting all other dimension findings.
 
 ---
 
 ## Summary
 
-**D7: Context-Sensitive Validation distinguishes intentional exceptions from actual errors.**
+**D15: Context-Sensitive Validation distinguishes intentional exceptions from actual errors.**
 
 **Key Validations:**
 1. ✅ Historical references (markers detectable)
@@ -1172,7 +1172,7 @@ head -5 feature_01/spec.md
 - Preserving valuable historical/educational content
 - Systematic context interpretation
 
-**Usage:** Apply D7 analysis to findings from ALL other dimensions before creating fix plans.
+**Usage:** Apply D15 analysis to findings from ALL other dimensions before creating fix plans.
 
 ---
 

@@ -521,6 +521,6 @@ Please advise.
 
 ## See Also
 
-- **D7: Context-Sensitive Validation:** `dimensions/d7_context_sensitive_validation.md` - Complete dimension guide
+- **D15: Context-Sensitive Validation:** `dimensions/d15_context_sensitive_validation.md` - Complete dimension guide
 - **Known Exceptions:** `reference/known_exceptions.md` - Pre-documented exception cases
 - **Stage 2 Fix Planning:** `stages/stage_2_fix_planning.md` - When to use context analysis

@@ -72,19 +72,19 @@ bash scripts/pre_audit_checks.sh
 
 Round N:
   │
-  ├─> Sub-Round N.1: Core Dimensions (D1, D2, D3, D8)
+  ├─> Sub-Round N.1: Core Dimensions (D1, D2, D3, D4)
   │   S1: Discovery → S2: Planning → S3: Apply → S4: Verify → S5: Loop Decision
   │   If 0 issues → Sub-Round N.2 | If issues → Fix & Re-run N.1
   │
-  ├─> Sub-Round N.2: Content Quality (D4, D5, D6, D13, D14)
+  ├─> Sub-Round N.2: Content Quality (D5, D6, D7, D8, D9)
   │   S1: Discovery → S2: Planning → S3: Apply → S4: Verify → S5: Loop Decision
   │   If 0 issues → Sub-Round N.3 | If issues → Fix & Re-run N.2
   │
-  ├─> Sub-Round N.3: Structural (D9, D10, D11, D12, D18)
+  ├─> Sub-Round N.3: Structural (D10, D11, D12, D13, D14)
   │   S1: Discovery → S2: Planning → S3: Apply → S4: Verify → S5: Loop Decision
   │   If 0 issues → Sub-Round N.4 | If issues → Fix & Re-run N.3
   │
-  └─> Sub-Round N.4: Advanced (D7, D15, D16, D17)
+  └─> Sub-Round N.4: Advanced (D15, D16, D17, D18, D19)
       S1: Discovery → S2: Planning → S3: Apply → S4: Verify → S5: Loop Decision
       If 0 issues → Round N complete | If issues → Fix & Re-run N.4
 
@@ -94,10 +94,10 @@ Round N complete → Round N+1 (fresh eyes) → EXIT when all criteria met
 ### Sub-Round Benefits
 
 1. **Dependency Management:** Core fixes (broken references) applied before Structural checks
-2. **Focused Discovery:** Check 4-5 related dimensions per sub-round, not all 18 at once
+2. **Focused Discovery:** Check 4-5 related dimensions per sub-round, not all 19 at once
 3. **Incremental Verification:** Verify fixes before moving to next category
 4. **Mental Clarity:** Fresh mental model between dimension categories
-5. **Complete Coverage:** ALL 18 dimensions checked systematically every round
+5. **Complete Coverage:** ALL 19 dimensions checked systematically every round
 6. **No Blind Spots:** Can't skip dimensions accidentally
 
 ---
@@ -126,11 +126,11 @@ Round N complete → Round N+1 (fresh eyes) → EXIT when all criteria met
 
 | Sub-Round | Dimensions | Count | Focus | Duration |
 |-----------|------------|-------|-------|----------|
-| **N.1: Core** | D1, D2, D3, D8 | 4 | File paths, terminology, workflow, CLAUDE.md | 60-90 min |
-| **N.2: Content** | D4, D5, D6, D13, D14 | 5 | Counts, completeness, templates, documentation | 75-120 min |
-| **N.3: Structural** | D9, D10, D11, D12, D18 | 5 | File consistency, size, patterns, dependencies, character compliance | 60-90 min |
-| **N.4: Advanced** | D7, D15, D16, D17 | 4 | Context-sensitive, duplication, accessibility, flow | 60-90 min |
-| **TOTAL** | All 18 dimensions | 18 | Complete coverage | 4.5-6.5 hours |
+| **N.1: Core** | D1, D2, D3, D4 | 4 | File paths, terminology, workflow, CLAUDE.md | 60-90 min |
+| **N.2: Content** | D5, D6, D7, D8, D9 | 5 | Counts, completeness, templates, documentation | 75-120 min |
+| **N.3: Structural** | D10, D11, D12, D13, D14 | 5 | File consistency, size, patterns, dependencies, character compliance | 60-90 min |
+| **N.4: Advanced** | D15, D16, D17, D18, D19 | 5 | Context-sensitive, duplication, accessibility, flow, rules alignment | 60-90 min |
+| **TOTAL** | All 19 dimensions | 19 | Complete coverage | 4.5-6.5 hours |
 
 **Execution Order:**
 1. **Core first** - Fixes broken references and inconsistent notation that affect all other checks
@@ -148,7 +148,7 @@ Round N complete → Round N+1 (fresh eyes) → EXIT when all criteria met
 
 ## Navigation by Audit Dimension
 
-The audit evaluates guides across **18 critical dimensions**:
+The audit evaluates guides across **19 critical dimensions**:
 
 ### Core Dimensions (Always Check)
 
@@ -157,36 +157,37 @@ The audit evaluates guides across **18 critical dimensions**:
 | **D1: Cross-Reference Accuracy** | `dimensions/d1_cross_reference_accuracy.md` | File paths, links | 90% automated |
 | **D2: Terminology Consistency** | `dimensions/d2_terminology_consistency.md` | Notation, naming | 80% automated |
 | **D3: Workflow Integration** | `dimensions/d3_workflow_integration.md` | Prerequisites, transitions | 40% automated |
-| **D8: CLAUDE.md Sync** | `dimensions/d8_claude_md_sync.md` | Root file synchronization | 60% automated |
+| **D4: CLAUDE.md Sync** | `dimensions/d4_claude_md_sync.md` | Root file synchronization | 60% automated |
 
 ### Content Quality Dimensions
 
 | Dimension | Guide | Focus | Automation |
 |-----------|-------|-------|------------|
-| **D4: Count Accuracy** | `dimensions/d4_count_accuracy.md` | File counts, iteration counts | 90% automated |
-| **D5: Content Completeness** | `dimensions/d5_content_completeness.md` | Missing sections, TODOs | 85% automated |
-| **D6: Template Currency** | `dimensions/d6_template_currency.md` | Template synchronization | 70% automated |
-| **D13: Documentation Quality** | `dimensions/d13_documentation_quality.md` | Required sections, examples | 90% automated |
-| **D14: Content Accuracy** | `dimensions/d14_content_accuracy.md` | Claims vs reality | 70% automated |
+| **D5: Count Accuracy** | `dimensions/d5_count_accuracy.md` | File counts, iteration counts | 90% automated |
+| **D6: Content Completeness** | `dimensions/d6_content_completeness.md` | Missing sections, TODOs | 85% automated |
+| **D7: Template Currency** | `dimensions/d7_template_currency.md` | Template synchronization | 70% automated |
+| **D8: Documentation Quality** | `dimensions/d8_documentation_quality.md` | Required sections, examples | 90% automated |
+| **D9: Content Accuracy** | `dimensions/d9_content_accuracy.md` | Claims vs reality | 70% automated |
 
 ### Structural Dimensions
 
 | Dimension | Guide | Focus | Automation |
 |-----------|-------|-------|------------|
-| **D9: Intra-File Consistency** | `dimensions/d9_intra_file_consistency.md` | Within-file quality | 80% automated |
-| **D10: File Size Assessment** | `dimensions/d10_file_size_assessment.md` | Readability limits | 100% automated |
-| **D11: Structural Patterns** | `dimensions/d11_structural_patterns.md` | Template compliance | 60% automated |
-| **D12: Cross-File Dependencies** | `dimensions/d12_cross_file_dependencies.md` | Stage transitions | 30% automated |
-| **D18: Character and Format Compliance** | `dimensions/d18_character_format_compliance.md` | Banned Unicode chars | 100% automated |
+| **D10: Intra-File Consistency** | `dimensions/d10_intra_file_consistency.md` | Within-file quality | 80% automated |
+| **D11: File Size Assessment** | `dimensions/d11_file_size_assessment.md` | Readability limits | 100% automated |
+| **D12: Structural Patterns** | `dimensions/d12_structural_patterns.md` | Template compliance | 60% automated |
+| **D13: Cross-File Dependencies** | `dimensions/d13_cross_file_dependencies.md` | Stage transitions | 30% automated |
+| **D14: Character and Format Compliance** | `dimensions/d14_character_format_compliance.md` | Banned Unicode chars | 100% automated |
 
 ### Advanced Dimensions
 
 | Dimension | Guide | Focus | Automation |
 |-----------|-------|-------|------------|
-| **D7: Context-Sensitive Validation** | `dimensions/d7_context_sensitive_validation.md` | Intentional exceptions | 20% automated |
-| **D15: Duplication Detection** | `dimensions/d15_duplication_detection.md` | DRY principle | 50% automated |
-| **D16: Accessibility** | `dimensions/d16_accessibility_usability.md` | Navigation, UX | 80% automated |
-| **D17: Stage Flow Consistency** | `dimensions/d17_stage_flow_consistency.md` | Cross-stage behavior | 30% automated |
+| **D15: Context-Sensitive Validation** | `dimensions/d15_context_sensitive_validation.md` | Intentional exceptions | 20% automated |
+| **D16: Duplication Detection** | `dimensions/d16_duplication_detection.md` | DRY principle | 50% automated |
+| **D17: Accessibility** | `dimensions/d17_accessibility_usability.md` | Navigation, UX | 80% automated |
+| **D18: Stage Flow Consistency** | `dimensions/d18_stage_flow_consistency.md` | Cross-stage behavior | 30% automated |
+| **D19: Rules File Template Alignment** | `dimensions/d19_rules_file_template_alignment.md` | Child rules file structure (child context only) | 30% automated |
 
 **Usage:** Read dimension guides as needed during discovery. Not all dimensions apply to every audit.
 
@@ -205,19 +206,19 @@ Read these first - they're most common and easiest to validate:
 
 ### Level 2: Content Quality (After Level 1)
 Build on D1-D2 findings:
-- **D5: Content Completeness** - Finds missing sections that D1 cross-references pointed to
-- **D13: Documentation Quality** - Expands D5 with structure requirements
+- **D6: Content Completeness** - Finds missing sections that D1 cross-references pointed to
+- **D8: Documentation Quality** - Expands D6 with structure requirements
 
 ### Level 3: Structural (Optional, As Needed)
 Deep-dive validations for specific issues:
-- **D9: Intra-File Consistency** - Within-file quality (use if files seem inconsistent)
-- **D10: File Size Assessment** - Readability limits (use if files seem too large)
-- **D11: Structural Patterns** - Template compliance (use after template changes)
+- **D10: Intra-File Consistency** - Within-file quality (use if files seem inconsistent)
+- **D11: File Size Assessment** - Readability limits (use if files seem too large)
+- **D12: Structural Patterns** - Template compliance (use after template changes)
 
 ### Level 4: Advanced (Rare, Specialized)
 Only needed for specific scenarios:
-- **D7: Context-Sensitive Validation** - Distinguishing errors from intentional cases
-- **D15: Duplication Detection** - Finding duplicate content across guides
+- **D15: Context-Sensitive Validation** - Distinguishing errors from intentional cases
+- **D16: Duplication Detection** - Finding duplicate content across guides
 
 **Note:** You don't need to read ALL dimension guides for every audit. Read what's relevant to your trigger event (see Common Scenarios below).
 
@@ -232,8 +233,8 @@ Only needed for specific scenarios:
 **High-Risk Dimensions:**
 1. D1: Cross-Reference Accuracy (guide changes may break links)
 2. D2: Terminology Consistency (new terminology may be inconsistent)
-3. D6: Template Currency (templates may not reflect guide changes)
-4. D8: CLAUDE.md Sync (quick reference may be outdated)
+3. D7: Template Currency (templates may not reflect guide changes)
+4. D4: CLAUDE.md Sync (quick reference may be outdated)
 
 **Recommended Approach:**
 ```bash
@@ -256,9 +257,9 @@ bash scripts/pre_audit_checks.sh
 **High-Risk Dimensions:**
 1. D1: Cross-Reference Accuracy (old stage numbers in references)
 2. D3: Workflow Integration (prerequisite chains broken)
-3. D6: Template Currency (templates have old stage numbers)
-4. D8: CLAUDE.md Sync (quick reference outdated)
-5. D12: Cross-File Dependencies (stage transitions broken)
+3. D7: Template Currency (templates have old stage numbers)
+4. D4: CLAUDE.md Sync (quick reference outdated)
+5. D13: Cross-File Dependencies (stage transitions broken)
 
 **Recommended Approach:**
 ```bash
@@ -280,9 +281,9 @@ bash scripts/pre_audit_checks.sh
 
 **High-Risk Dimensions:**
 1. D2: Terminology Consistency (old notation stragglers)
-2. D6: Template Currency (templates use old notation)
-3. D7: Context-Sensitive Validation (intentional old notation in examples)
-4. D9: Intra-File Consistency (mixed notation within files)
+2. D7: Template Currency (templates use old notation)
+3. D15: Context-Sensitive Validation (intentional old notation in examples)
+4. D10: Intra-File Consistency (mixed notation within files)
 
 **Recommended Approach:**
 ```bash
@@ -444,7 +445,7 @@ Learn from actual audit rounds:
 
 ### Pre-Audit Checks
 `scripts/pre_audit_checks.sh` - Run before manual audit begins
-- Checks 11 of 18 dimensions (D1, D3, D8, D9, D10, D11, D13, D14, D16, D17, D18)
+- Checks 11 of 19 dimensions (D1, D3, D4, D10, D11, D12, D8, D9, D17, D18, D14)
 - Catches common structural issues (estimated 45-55% of typical issues)
 - Fast execution (5 minutes)
 - Generates initial report
@@ -461,13 +462,13 @@ Learn from actual audit rounds:
 - Most audits run all checks anyway (not selective)
 
 **What would have been separate scripts:**
-- `check_file_sizes.sh` - D10: File size and complexity assessment
-- `validate_structure.sh` - D11: Structural pattern validation
-- `check_completeness.sh` - D13: Documentation quality checks
-- `verify_counts.sh` - D14: Content accuracy validation
-- `check_navigation.sh` - D16: Accessibility checks
-- `find_duplicates.sh` - D15: Duplication detection
-- `validate_dependencies.sh` - D12: Cross-file dependency checks
+- `check_file_sizes.sh` - D11: File size and complexity assessment
+- `validate_structure.sh` - D12: Structural pattern validation
+- `check_completeness.sh` - D8: Documentation quality checks
+- `verify_counts.sh` - D9: Content accuracy validation
+- `check_navigation.sh` - D17: Accessibility checks
+- `find_duplicates.sh` - D16: Duplication detection
+- `validate_dependencies.sh` - D13: Cross-file dependency checks
 
 **All functionality available in:** `scripts/pre_audit_checks.sh` (12KB, covers 11 dimensions — see "Pre-Audit Checks" section above)
 
@@ -476,6 +477,8 @@ Learn from actual audit rounds:
 ## Outputs
 
 **Output files are temporary working documents — never commit them.**
+
+**Note on historical output files:** Output reports in `audit/outputs/` from before February 2026 (pre-SHAMT-2) use the old dimension numbering scheme (D1-D18 with a different grouping). These are historical records and retain their original numbers — do not update them.
 
 ### Per-Round Working Files (`audit/outputs/`)
 

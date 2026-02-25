@@ -19,19 +19,22 @@
 | D1: Cross-Reference | 0 | 0 | 0 | 0 | 0 |
 | D2: Terminology | 0 | 0 | 0 | 0 | 0 |
 | D3: Workflow Integration | 0 | 0 | 0 | 0 | 0 |
-| D4: Count Accuracy | 0 | 0 | 0 | 0 | 0 |
-| D5: Content Completeness | 0 | 0 | 0 | 0 | 0 |
-| D6: Template Currency | 0 | 0 | 0 | 0 | 0 |
-| D7: Context-Sensitive | 0 | 0 | 0 | 0 | 0 |
-| D8: CLAUDE.md Sync | 0 | 0 | 0 | 0 | 0 |
-| D9: Intra-File Consistency | 0 | 0 | 0 | 0 | 0 |
-| D10: File Size | 0 | 0 | 0 | 0 | 0 |
-| D11: Structural Patterns | 0 | 0 | 0 | 0 | 0 |
-| D12: Cross-File Dependencies | 0 | 0 | 0 | 0 | 0 |
-| D13: Documentation Quality | 0 | 0 | 0 | 0 | 0 |
-| D14: Content Accuracy | 0 | 0 | 0 | 0 | 0 |
-| D15: Duplication | 0 | 0 | 0 | 0 | 0 |
-| D16: Accessibility | 0 | 0 | 0 | 0 | 0 |
+| D4: CLAUDE.md Sync | 0 | 0 | 0 | 0 | 0 |
+| D5: Count Accuracy | 0 | 0 | 0 | 0 | 0 |
+| D6: Content Completeness | 0 | 0 | 0 | 0 | 0 |
+| D7: Template Currency | 0 | 0 | 0 | 0 | 0 |
+| D8: Documentation Quality | 0 | 0 | 0 | 0 | 0 |
+| D9: Content Accuracy | 0 | 0 | 0 | 0 | 0 |
+| D10: Intra-File Consistency | 0 | 0 | 0 | 0 | 0 |
+| D11: File Size | 0 | 0 | 0 | 0 | 0 |
+| D12: Structural Patterns | 0 | 0 | 0 | 0 | 0 |
+| D13: Cross-File Dependencies | 0 | 0 | 0 | 0 | 0 |
+| D14: Character and Format Compliance | 0 | 0 | 0 | 0 | 0 |
+| D15: Context-Sensitive | 0 | 0 | 0 | 0 | 0 |
+| D16: Duplication | 0 | 0 | 0 | 0 | 0 |
+| D17: Accessibility | 0 | 0 | 0 | 0 | 0 |
+| D18: Stage Flow Consistency | 0 | 0 | 0 | 0 | 0 |
+| D19: Rules File Template Alignment (child only) | 0 | 0 | 0 | 0 | 0 |
 | **TOTAL** | **0** | **0** | **0** | **0** | **0** |
 
 ### By Severity
@@ -187,9 +190,11 @@ Document which folders were checked and in what order:
 - [x] stages/s10/
 - [x] debugging/
 - [x] missed_requirement/
+- [x] sync/
 - [x] CLAUDE.md (root)
-- [x] README.md
+- [x] README.md (root)
 - [x] EPIC_WORKFLOW_USAGE.md
+- [x] scripts/initialization/RULES_FILE.template.md
 
 **Order:** [alphabetical / reverse / random / priority-based]
 

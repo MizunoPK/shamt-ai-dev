@@ -17,7 +17,7 @@
 - Step numbers may have changed during editing
 - CLAUDE.md quick reference may be outdated
 
-**Sub-Round:** Round 1.1 (Core Dimensions - D1, D2, D3, D8)
+**Sub-Round:** Round 1.1 (Core Dimensions - D1, D2, D3, D4)
 
 ---
 

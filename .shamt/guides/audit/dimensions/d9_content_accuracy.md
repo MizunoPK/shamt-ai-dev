@@ -1,6 +1,6 @@
-# D14: Content Accuracy
+# D9: Content Accuracy
 
-**Dimension Number:** 14
+**Dimension Number:** 9
 **Category:** Content Quality Dimensions
 **Automation Level:** 70% automated
 **Priority:** HIGH
@@ -262,7 +262,7 @@ Different guides may make incompatible claims about the same workflow:
 - Guide B claims X works differently
 - Both can't be correct
 
-**This differs from D14's other checks:**
+**This differs from D9's other checks:**
 - Types 1-4: Claims vs implementation (do claims match reality?)
 - Type 5: Claims vs claims (do guides agree with each other?)
 
@@ -402,8 +402,8 @@ Result: Agent looks for non-existent iteration
 ```markdown
 Guide: "Audit system validates 16 dimensions comprehensively"
 Reality: Only D1, D2 fully implemented (guides + automation)
-         D8, D10, D11, D13, D14, D16 partially implemented (automation only)
-         D3, D4, D5, D6, D7, D9, D12, D15 not implemented
+         D4, D11, D12, D8, D9, D17 partially implemented (automation only)
+         D3, D5, D6, D7, D15, D10, D13, D16 not implemented
 Result: Users expect comprehensive audit, get partial validation
 ```bash
 
@@ -414,10 +414,10 @@ Result: Users expect comprehensive audit, get partial validation
 ### Script 1: Validate File Counts (IN pre_audit_checks.sh)
 
 ```bash
-# CHECK 4: Content Accuracy - File Counts (D14)
+# CHECK 4: Content Accuracy - File Counts (D9)
 # ============================================================================
 
-echo "=== Content Accuracy - File Counts (D14) ==="
+echo "=== Content Accuracy - File Counts (D9) ==="
 
 # Count actual templates
 ACTUAL_TEMPLATES=$(find templates -name "*.md" -o -name "*.txt" | wc -l)
@@ -441,7 +441,7 @@ fi
 ### Script 2: Validate Iteration Counts (SHOULD ADD to pre_audit_checks.sh)
 
 ```bash
-# CHECK 4b: Iteration Count Validation (D14)
+# CHECK 4b: Iteration Count Validation (D9)
 # ============================================================================
 
 echo "=== Iteration Count Validation ==="
@@ -470,7 +470,7 @@ fi
 ### Script 3: Check Last Updated Freshness (SHOULD ADD to pre_audit_checks.sh)
 
 ```bash
-# CHECK 4c: Last Updated Freshness (D14)
+# CHECK 4c: Last Updated Freshness (D9)
 # ============================================================================
 
 echo "=== Last Updated Freshness Check ==="
@@ -773,7 +773,7 @@ grep -rn "automat.*[0-9]\+%\|Checks [0-9] of [0-9]" .shamt/guides/ -i
 **Related Dimensions:**
 - **D1: Cross-Reference Accuracy** - Validates file paths exist (complements count validation)
 - **D2: Terminology Consistency** - Validates notation (complements claim validation)
-- **D5: Content Completeness** - Validates no missing sections (complements accuracy)
+- **D6: Content Completeness** - Validates no missing sections (complements accuracy)
 
 **Audit Stages:**
 - `../stages/stage_1_discovery.md` - How to search for count mismatches
@@ -785,4 +785,4 @@ grep -rn "automat.*[0-9]\+%\|Checks [0-9] of [0-9]" .shamt/guides/ -i
 
 ---
 
-**When to Use:** Run D14 validation after any template additions, stage restructuring, or if root files haven't been updated in >1 month.
+**When to Use:** Run D9 validation after any template additions, stage restructuring, or if root files haven't been updated in >1 month.

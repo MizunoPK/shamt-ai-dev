@@ -50,9 +50,10 @@ The PR description will reference `.shamt/CHANGES.md` from the child project for
 
 Review steps:
 1. Read the PR diff — assess whether changes are truly generic (applicable to all Shamt projects)
-2. If generic: approve and merge
-3. If project-specific content has leaked into shared files: request changes
-4. After merging, the import script will distribute the improvement to other child projects on their next import
+2. If project-specific content has leaked into shared files: request changes
+3. If generic: approve and merge
+4. After merging, run the full guide audit on the entire `.shamt/guides/` tree — do not let changes propagate to other child projects on their next import until the audit passes
+5. Commit any audit fixes before the merge is considered complete
 
 **Full workflow guides:** `.shamt/guides/sync/export_workflow.md` (child side) and `.shamt/guides/sync/import_workflow.md` (post-import validation)
 
@@ -93,3 +94,4 @@ When a new AI service is discovered (reported by a child project or user):
 - Zero autonomous conflict resolution — always escalate to user when uncertain
 - Run guide audit after every set of guide changes
 - Never approve child PRs that contain project-specific content in shared guide files
+- When any epic changes system behavior (new sync scripts, new guides, new audit scope, new workflow steps): review and update the three master-only files that are not propagated via import — `CLAUDE.md`, root `README.md`, and `scripts/initialization/RULES_FILE.template.md`

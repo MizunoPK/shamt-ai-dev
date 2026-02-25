@@ -1,6 +1,6 @@
-# D9: Intra-File Consistency
+# D10: Intra-File Consistency
 
-**Dimension Number:** 9
+**Dimension Number:** 10
 **Category:** Structural Dimensions
 **Automation Level:** 80% automated
 **Priority:** MEDIUM
@@ -27,7 +27,7 @@
 
 ## What This Checks
 
-**D9: Intra-File Consistency** validates that content WITHIN a single file is internally consistent:
+**D10: Intra-File Consistency** validates that content WITHIN a single file is internally consistent:
 
 1. **Notation Consistency** - File uses one notation system throughout (not mixed "S5a" and "S5.P1")
 2. **Terminology Consistency** - Same concept uses same term (not "epic" then "project" then "initiative")
@@ -46,7 +46,7 @@
 
 **Key Distinction from D2 (Terminology Consistency):**
 - **D2:** Validates consistency ACROSS files (all files use same notation)
-- **D9:** Validates consistency WITHIN single files (one file doesn't mix notations)
+- **D10:** Validates consistency WITHIN single files (one file doesn't mix notations)
 
 ---
 
@@ -1111,32 +1111,32 @@ rule and reasoned incorrectly that the emoji should appear in the anchor. See
 
 ## Real Examples
 
-See `d9_examples.md` for 5 real examples of each detection pattern type (mixed notation, contradictory instructions, terminology inconsistency, structural inconsistency, broken internal references).
+See `d10_examples.md` for 5 real examples of each detection pattern type (mixed notation, contradictory instructions, terminology inconsistency, structural inconsistency, broken internal references).
 
 ---
 
 ## Integration with Other Dimensions
 
-**D9 focuses on consistency WITHIN files, complementing dimensions that check ACROSS files:**
+**D10 focuses on consistency WITHIN files, complementing dimensions that check ACROSS files:**
 
 | Dimension | Division of Responsibility |
 |-----------|---------------------------|
-| **D2: Terminology Consistency** | D2 = inter-file (all files use same terms), D9 = intra-file (single file doesn't mix terms) |
-| **D5: Content Completeness** | D5 = presence (sections exist), D9 = consistency (sections internally consistent) |
-| **D11: Structural Patterns** | D11 = template compliance (matches template), D9 = internal consistency (patterns match within file) |
-| **D13: Documentation Quality** | D13 = standards (quality met), D9 = consistency (quality consistent throughout) |
+| **D2: Terminology Consistency** | D2 = inter-file (all files use same terms), D10 = intra-file (single file doesn't mix terms) |
+| **D6: Content Completeness** | D6 = presence (sections exist), D10 = consistency (sections internally consistent) |
+| **D12: Structural Patterns** | D12 = template compliance (matches template), D10 = internal consistency (patterns match within file) |
+| **D8: Documentation Quality** | D8 = standards (quality met), D10 = consistency (quality consistent throughout) |
 
 **Example workflow:**
 1. D2 checks: All files use "epic" (not "project") ✅
-2. D9 checks: Single file doesn't mix "epic" and "project" ✅
-3. D13 checks: Examples are high-quality ✅
-4. D9 checks: All examples in file follow same structure ✅
+2. D10 checks: Single file doesn't mix "epic" and "project" ✅
+3. D8 checks: Examples are high-quality ✅
+4. D10 checks: All examples in file follow same structure ✅
 
-**Recommendation:** Run D2, D9, D11, D13 together for comprehensive consistency validation.
+**Recommendation:** Run D2, D10, D12, D8 together for comprehensive consistency validation.
 
 ## Summary
 
-**D9: Intra-File Consistency validates that content within single files is internally consistent.**
+**D10: Intra-File Consistency validates that content within single files is internally consistent.**
 
 **Key Validations:**
 1. ✅ Notation consistency (one system throughout file)
@@ -1157,7 +1157,7 @@ See `d9_examples.md` for 5 real examples of each detection pattern type (mixed n
 - Ensuring file provides consistent guidance throughout
 - Maintaining professional quality in documentation
 
-**Next Dimension:** D15: Duplication Detection (finding duplicate content across files)
+**Next Dimension:** D16: Duplication Detection (finding duplicate content across files)
 
 ---
 

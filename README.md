@@ -65,7 +65,7 @@ The agent will analyze your codebase and write `ARCHITECTURE.md`, `CODING_STANDA
 
 ## Keeping Your Guides Up to Date
 
-Shamt uses import and export scripts to sync guide improvements between projects.
+Shamt uses import and export scripts to sync guide improvements between projects. For a full overview of how the sync system works, see `.shamt/guides/sync/README.md`.
 
 ### Getting updates from master
 

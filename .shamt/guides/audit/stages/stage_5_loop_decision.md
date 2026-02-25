@@ -155,7 +155,7 @@
 - [ ] Each round used different patterns than previous
 - [ ] Each sub-round focused on correct dimension set
 - [ ] Clear mental break between rounds (fresh perspective)
-- [ ] All 18 dimensions checked at least 3 times (once per round)
+- [ ] All 19 dimensions checked at least 3 times (once per round)
 
 **If Total Rounds < 3:** MUST loop (baseline requirement)
 **If ANY sub-round skipped:** MUST loop (all 4 sub-rounds mandatory)
@@ -376,14 +376,14 @@ Run a focused mini-validation on only the audit files that were changed:
 **Checks to run per changed file:**
 - [ ] D1: No broken cross-references introduced
 - [ ] D2: Consistent terminology (no notation drift)
-- [ ] D9: Internal consistency within changed sections
-- [ ] D15: No duplication introduced
+- [ ] D10: Internal consistency within changed sections
+- [ ] D16: No duplication introduced
 
 **Process:**
 ```text
 For each changed audit file:
   1. Read the changed sections
-  2. Check D1 / D2 / D9 / D15
+  2. Check D1 / D2 / D10 / D16
   3. Issues found → fix immediately → re-check same file
   4. Clean → proceed to next file
 
@@ -530,7 +530,7 @@ The working file is temporary — **do NOT commit it.**
 |-----------|--------------|--------------|
 | D1: Cross-Reference | 20 | 20 |
 | D2: Terminology | 70 | 70 |
-| D10: File Size | 2 | 2 |
+| D11: File Size | 2 | 2 |
 [Continue for all dimensions with issues]
 
 ## Final Verification

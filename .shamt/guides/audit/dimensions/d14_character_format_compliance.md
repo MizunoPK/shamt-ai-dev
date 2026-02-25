@@ -1,6 +1,6 @@
-# D18: Character and Format Compliance
+# D14: Character and Format Compliance
 
-**Dimension Number:** 18
+**Dimension Number:** 14
 **Category:** Structural Dimensions
 **Automation Level:** 95% automated
 **Priority:** HIGH
@@ -28,7 +28,7 @@
 
 ## What This Checks
 
-**D18: Character and Format Compliance** ensures that every character in guide files can be reliably read, rendered, and acted upon by AI agents:
+**D14: Character and Format Compliance** ensures that every character in guide files can be reliably read, rendered, and acted upon by AI agents:
 
 1. **Banned Unicode Characters** - Characters that should use standard ASCII/markdown alternatives (box chars used as checkboxes, etc.)
 2. **Standard Checkbox Format** - All task/checklist items use `- [ ]` or `- [x]` (not Unicode box characters)
@@ -38,9 +38,9 @@
 - All `.md` files in .shamt/guides (stages/, reference/, templates/, prompts/, parallel_work/, debugging/)
 - Excludes: audit/outputs/ and audit/round_*.md (temporary audit logs)
 
-**Key Distinction from D9 (Intra-File Consistency):**
-- **D9:** Validates consistency of notation and terminology within files
-- **D18:** Validates the character-level encoding and format primitives that agents rely on to parse content
+**Key Distinction from D10 (Intra-File Consistency):**
+- **D10:** Validates consistency of notation and terminology within files
+- **D14:** Validates the character-level encoding and format primitives that agents rely on to parse content
 
 ---
 
@@ -68,7 +68,7 @@ If some files use `- [ ]` and others use `□`, agents face inconsistent checkli
 
 ## Pattern Types
 
-D18 violations fall into four categories based on character type and impact:
+D14 violations fall into four categories based on character type and impact:
 
 ### Type A: Unicode Checkbox Characters (CRITICAL)
 
@@ -425,7 +425,7 @@ for f in files:
 
 **Fix Applied:** Python bulk replacement (see Pattern 1 above)
 
-**Prevention:** Run D18 check after every content paste from external source
+**Prevention:** Run D14 check after every content paste from external source
 
 ---
 
@@ -443,11 +443,11 @@ for f in files:
 
 | Dimension | Relationship |
 |-----------|-------------|
-| **D9: Intra-File Consistency** | D9 catches mixed notation/terminology; D18 catches character-level encoding issues. Both are structural. |
-| **D13: Documentation Quality** | D13 checks for incomplete/placeholder content; D18 checks for unparseable character formats. |
-| **D11: Structural Patterns** | D11 verifies high-level structure; D18 verifies lowest-level character compliance. |
+| **D10: Intra-File Consistency** | D10 catches mixed notation/terminology; D14 catches character-level encoding issues. Both are structural. |
+| **D8: Documentation Quality** | D8 checks for incomplete/placeholder content; D14 checks for unparseable character formats. |
+| **D12: Structural Patterns** | D12 verifies high-level structure; D14 verifies lowest-level character compliance. |
 
-**Recommended execution order in Sub-Round N.3:** D10 → D11 → D18 → D9 → D12
+**Recommended execution order in Sub-Round N.3:** D11 → D12 → D14 → D10 → D13
 
 ---
 
@@ -456,9 +456,9 @@ for f in files:
 **Add to `scripts/pre_audit_checks.sh`:**
 
 ```bash
-# === D18: Character and Format Compliance ===
+# === D14: Character and Format Compliance ===
 echo ""
-echo "=== Character and Format Compliance (D18) ==="
+echo "=== Character and Format Compliance (D14) ==="
 
 python3 -c "
 import glob, sys, os
@@ -492,7 +492,7 @@ for fpath in sorted(files):
 if total == 0:
     print('✅ PASS: No banned characters found')
 else:
-    print(f'Found {total} banned character(s) - run fix from d18_character_format_compliance.md')
+    print(f'Found {total} banned character(s) - run fix from d14_character_format_compliance.md')
     sys.exit(1)
 " 2>/dev/null || true
 ```
@@ -501,7 +501,7 @@ else:
 
 ## Summary
 
-**D18: Character and Format Compliance ensures agents can reliably read and parse guide content.**
+**D14: Character and Format Compliance ensures agents can reliably read and parse guide content.**
 
 **Key Validations:**
 1. ✅ No Unicode checkbox chars (□ ☐ ☑ ☒) — use `- [ ]` / `- [x]` instead
@@ -518,7 +518,7 @@ else:
 - Preventing invisible task tracking failures from Unicode vs ASCII checkboxes
 - Catching copy-paste contamination from external documents early
 
-**Sub-Round:** N.3 (Structural Dimensions) alongside D9, D10, D11, D12
+**Sub-Round:** N.3 (Structural Dimensions) alongside D10, D11, D12, D13
 
 ---
 

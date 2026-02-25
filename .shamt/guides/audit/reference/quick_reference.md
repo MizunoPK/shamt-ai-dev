@@ -26,7 +26,7 @@
 
 **I need to know WHEN to audit →** `audit_overview.md` → "When to Run Audits" section
 
-**I need to check ROOT FILE sync →** `dimensions/d8_claude_md_sync.md` → Automated + manual checks
+**I need to check ROOT FILE sync →** `dimensions/d4_claude_md_sync.md` → Automated + manual checks
 
 **I need PRE-BUILT PATTERNS →** See "Common Search Patterns" below or `reference/pattern_library.md` for comprehensive patterns
 
@@ -77,7 +77,7 @@ grep -rn "S[0-9]\.P[0-9]\.I[0-9]" --include="*.md" # S5.P1.I2 (correct format)
 
 ---
 
-### Count Patterns (D4)
+### Count Patterns (D5)
 
 ```bash
 # Find explicit counts that may be outdated
@@ -91,7 +91,7 @@ grep -rn "^- " --include="*.md"                    # Bullet lists
 
 ---
 
-### File Size Check (D10)
+### File Size Check (D11)
 
 ```bash
 # Find files over 1250 lines (potential readability issues)
@@ -110,7 +110,7 @@ done
 
 ---
 
-### CLAUDE.md Sync Check (D8)
+### CLAUDE.md Sync Check (D4)
 
 ```bash
 # Extract paths from CLAUDE.md
@@ -190,19 +190,19 @@ grep -n "S[0-9]" CLAUDE.md | grep -o "S[0-9][0-9]*\(\.P[0-9][0-9]*\)\?\(\.I[0-9]
 | **D1: Cross-Reference** | File paths, links, stage refs | 90% | After renumbering, restructuring |
 | **D2: Terminology** | Notation, naming conventions | 80% | After notation changes |
 | **D3: Workflow** | Prerequisites, transitions | 40% | After workflow changes |
-| **D4: Count Accuracy** | File counts, list counts | 90% | After adding/removing files |
-| **D5: Completeness** | Missing sections, TODOs | 85% | After major updates |
-| **D6: Template Currency** | Template synchronization | 70% | After template changes |
-| **D7: Context-Sensitive** | Intentional exceptions | 20% | Advanced: distinguishing errors |
-| **D8: CLAUDE.md Sync** | Root file synchronization | 60% | After S10.P1 guide updates |
-| **D9: Intra-File** | Within-file consistency | 80% | File seems internally inconsistent |
-| **D10: File Size** | Readability limits | 100% | Files seem too large |
-| **D11: Structural** | Template compliance | 60% | After structural changes |
-| **D12: Dependencies** | Cross-file dependencies | 30% | After major refactors |
-| **D13: Quality** | Required sections, examples | 90% | General quality check |
-| **D14: Accuracy** | Claims vs reality | 70% | Content seems wrong |
-| **D15: Duplication** | DRY principle | 50% | Suspected duplicate content |
-| **D16: Accessibility** | Navigation, UX | 80% | Usability concerns |
+| **D5: Count Accuracy** | File counts, list counts | 90% | After adding/removing files |
+| **D6: Completeness** | Missing sections, TODOs | 85% | After major updates |
+| **D7: Template Currency** | Template synchronization | 70% | After template changes |
+| **D15: Context-Sensitive** | Intentional exceptions | 20% | Advanced: distinguishing errors |
+| **D4: CLAUDE.md Sync** | Root file synchronization | 60% | After S10.P1 guide updates |
+| **D10: Intra-File** | Within-file consistency | 80% | File seems internally inconsistent |
+| **D11: File Size** | Readability limits | 100% | Files seem too large |
+| **D12: Structural** | Template compliance | 60% | After structural changes |
+| **D13: Dependencies** | Cross-file dependencies | 30% | After major refactors |
+| **D8: Quality** | Required sections, examples | 90% | General quality check |
+| **D9: Accuracy** | Claims vs reality | 70% | Content seems wrong |
+| **D16: Duplication** | DRY principle | 50% | Suspected duplicate content |
+| **D17: Accessibility** | Navigation, UX | 80% | Usability concerns |
 
 **Recommended:** Start with D1-D2 (most common issues, highest automation)
 
@@ -382,13 +382,13 @@ wc -l file.md  # Count lines
 ## Scenario Quick Lookup
 
 **"I just completed S10.P1 guide updates"**
-→ Run full audit focusing on D1, D2, D6, D8 (3-4 hours, 3-4 rounds)
+→ Run full audit focusing on D1, D2, D7, D4 (3-4 hours, 3-4 rounds)
 
 **"I just did stage renumbering"**
-→ Run full audit focusing on D1, D3, D6, D8, D12 (4-6 hours, 3-4 rounds min)
+→ Run full audit focusing on D1, D3, D7, D4, D13 (4-6 hours, 3-4 rounds min)
 
 **"I just changed notation system"**
-→ Run full audit focusing on D2, D6, D7, D9 (3-5 hours, 3-4 rounds)
+→ Run full audit focusing on D2, D7, D15, D10 (3-5 hours, 3-4 rounds)
 
 **"User reported broken link"**
 → Spot-check (30 min), if widespread → Full D1 audit (2 hours)

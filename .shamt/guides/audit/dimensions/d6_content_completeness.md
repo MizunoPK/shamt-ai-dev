@@ -1,6 +1,6 @@
-# D5: Content Completeness
+# D6: Content Completeness
 
-**Dimension Number:** 5
+**Dimension Number:** 6
 **Category:** Content Quality Dimensions
 **Automation Level:** 85% automated
 **Priority:** HIGH
@@ -70,7 +70,7 @@
 
 **Example Failure (Hypothetical):**
 ```markdown
-Guide: stages/s5/s5_v2_validation_loop.md (D11: Gate 23a)
+Guide: stages/s5/s5_v2_validation_loop.md (D12: Gate 23a)
 
 ## Gate 23a: Pre-Implementation Spec Audit
 
@@ -85,18 +85,18 @@ Coming soon - will add after testing this workflow
 
 ### Completeness vs Quality
 
-**D5 (Content Completeness):** Is content PRESENT?
+**D6 (Content Completeness):** Is content PRESENT?
 - Section exists in file
 - Section has substantive content (not stub)
 - Promised content delivered
 
-**D13 (Documentation Quality):** Does present content meet STANDARDS?
+**D8 (Documentation Quality):** Does present content meet STANDARDS?
 - Formatting quality
 - Example quality
 - Code block language tags
 - TODO markers
 
-**Overlap:** Both check for TODOs, but D5 focuses on "missing content" while D13 focuses on "quality of present content"
+**Overlap:** Both check for TODOs, but D6 focuses on "missing content" while D8 focuses on "quality of present content"
 
 ---
 
@@ -433,10 +433,10 @@ cp templates/feature_spec_template.md feature_01_name/spec.md
 ### Script 1: Placeholder Text Detection (SHOULD ADD to pre_audit_checks.sh)
 
 ```bash
-# CHECK: Content Completeness - Placeholder Detection (D5)
+# CHECK: Content Completeness - Placeholder Detection (D6)
 # ============================================================================
 
-echo "=== Content Completeness - Placeholder Detection (D5) ==="
+echo "=== Content Completeness - Placeholder Detection (D6) ==="
 
 # Find template placeholders in non-template files
 PLACEHOLDERS=$(grep -rn "\[Describe\|<fill in\|\[Prerequisite\|\[Step\|\[Example\|Coming Soon\|⏳" \
@@ -466,7 +466,7 @@ fi
 ### Script 2: TOC vs Section Validation (SHOULD ADD)
 
 ```bash
-# CHECK: Content Completeness - TOC Validation (D5)
+# CHECK: Content Completeness - TOC Validation (D6)
 # ============================================================================
 
 echo "=== TOC vs Section Validation ==="
@@ -494,7 +494,7 @@ done
 ### Script 3: Empty Section Detection (SHOULD ADD)
 
 ```bash
-# CHECK: Content Completeness - Empty Sections (D5)
+# CHECK: Content Completeness - Empty Sections (D6)
 # ============================================================================
 
 echo "=== Empty Section Detection ==="
@@ -517,7 +517,7 @@ fi
 ### Script 4: Root File Completeness Check (SHOULD ADD)
 
 ```bash
-# CHECK: Content Completeness - Root Files (D5)
+# CHECK: Content Completeness - Root Files (D6)
 # ============================================================================
 
 echo "=== Root File Completeness Check ==="
@@ -663,7 +663,7 @@ Coming Soon
 
 **1. Stub Sections in Published Guides:**
 ```markdown
-File: stages/s5/s5_v2_validation_loop.md (D11: Gate 23a) (published guide)
+File: stages/s5/s5_v2_validation_loop.md (D12: Gate 23a) (published guide)
 
 ## Gate 23a Checklist
 Coming Soon
@@ -750,7 +750,7 @@ File: stages/s5/s5_v2_validation_loop.md
 
 **Issue Found:**
 ```markdown
-File: stages/s5/s5_v2_validation_loop.md (D11: Gate 23a)
+File: stages/s5/s5_v2_validation_loop.md (D12: Gate 23a)
 
 ## Gate 23a: Pre-Implementation Spec Audit
 
@@ -905,15 +905,15 @@ $ grep "### S10:" EPIC_WORKFLOW_USAGE.md
 ## Integration with Other Dimensions
 
 **Works With:**
-- **D13: Documentation Quality** - D5 checks "is content present", D13 checks "is present content high quality"
+- **D8: Documentation Quality** - D6 checks "is content present", D8 checks "is present content high quality"
 - **D1: Cross-Reference Accuracy** - Validates forward references point to existing content
 
 **Complementary:**
-- **D11: Structural Patterns** - Required sections (D11) must also be complete (D5)
+- **D12: Structural Patterns** - Required sections (D12) must also be complete (D6)
 
-**Difference from D13:**
-- **D5:** Missing sections, stub content, unfulfilled promises
-- **D13:** TODOs, code tags, formatting quality of present content
+**Difference from D8:**
+- **D6:** Missing sections, stub content, unfulfilled promises
+- **D8:** TODOs, code tags, formatting quality of present content
 - **Overlap:** Both flag TODOs, but different focus
 
 ---
@@ -921,9 +921,9 @@ $ grep "### S10:" EPIC_WORKFLOW_USAGE.md
 ## See Also
 
 **Related Dimensions:**
-- `d13_documentation_quality.md` - Quality of present content
+- `d8_documentation_quality.md` - Quality of present content
 - `d1_cross_reference_accuracy.md` - Validates promised content exists
-- `d11_structural_patterns.md` - Required sections must be complete
+- `d12_structural_patterns.md` - Required sections must be complete
 
 **Audit Stages:**
 - `../stages/stage_1_discovery.md` - How to discover incomplete content
@@ -934,4 +934,4 @@ $ grep "### S10:" EPIC_WORKFLOW_USAGE.md
 
 ---
 
-**When to Use:** Run D5 validation after major content additions, file reorganizations, or when guides seem incomplete. Completeness issues must be resolved before audit completion - stub content blocks workflow execution.
+**When to Use:** Run D6 validation after major content additions, file reorganizations, or when guides seem incomplete. Completeness issues must be resolved before audit completion - stub content blocks workflow execution.
