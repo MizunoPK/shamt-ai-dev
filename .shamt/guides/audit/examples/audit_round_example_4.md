@@ -330,19 +330,18 @@ $ while read link; do
 1. ✅ All issues resolved (107/109, 2 intentional documented)
 2. ✅ Zero new discoveries in Round 4 Stage 1 (would need Round 5 if found issues)
 3. ✅ Zero verification findings (N_new = 0)
-4. ✅ Minimum 3 rounds (completed 4)
+4. ⚠️ 3 consecutive zero-issue rounds — consecutive_clean = 1 (rounds 1-3 all found issues; Round 4 is first clean round; criterion technically fails)
 5. ✅ All remaining documented (2 historical refs)
 6. ✅ User has not challenged
 7. ✅ Confidence ≥ 80% (self-assessed: 85%)
 8. ✅ Pattern diversity ≥ 5 types (used 8+ pattern types across rounds)
 9. ✅ Spot-checks clean (20+ files checked, zero issues)
 
-**Decision:** ✅ **CAN EXIT** (all criteria met)
+**Decision:** ⚠️ **USER OVERRIDE** — Criterion 4 fails (consecutive_clean = 1, need 3). User approved exit after evaluating remaining risk.
 
-**But:** Best practice is minimum 3 consecutive clean rounds
-- Round 4 found 23 issues → Should run Round 5 to validate
+**Note:** This example demonstrates a user override scenario. Best practice is to continue until consecutive_clean >= 3. The user accepted 2 documented intentional instances and judged the risk acceptable after 4 rounds.
 
-**User decision:** User approved exit after Round 4 (accepted 2 intentional instances)
+**User decision:** User approved exit after Round 4 (accepted 2 intentional instances; overrode Criterion 4)
 
 ---
 
@@ -352,6 +351,6 @@ $ while read link; do
 **Issues Fixed:** 23
 **Files Modified:** 12 (including 3 templates)
 **Duration:** 90 minutes
-**Next Action:** Exit audit (all criteria met, user approved)
+**Next Action:** Exit audit (user override — Criterion 4 not met, but user approved after risk evaluation)
 
 **Key Takeaway:** After large-scale changes (70+ notation fixes), always run validation round to verify changes didn't introduce new issues. Found 23 issues that wouldn't exist without Round 3 changes.
