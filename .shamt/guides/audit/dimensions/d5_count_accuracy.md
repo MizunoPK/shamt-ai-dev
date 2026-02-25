@@ -35,7 +35,7 @@
 4. **Gate Counts** - "8 mandatory gates" matches reference/mandatory_gates.md
 5. **File Counts** - "16 dimensions" matches actual dimension count
 6. **List Item Counts** - Numbered lists match their claimed count
-7. **Duration Claims** - "3-5 rounds typical" matches historical evidence
+7. **Duration Claims** - "5-8 total rounds typical" matches historical evidence
 
 **Coverage:**
 - All workflow documentation (CLAUDE.md, README.md, EPIC_WORKFLOW_USAGE.md)
@@ -600,7 +600,7 @@ grep -rn "S5.*hour\|S5.*min" .shamt/guides/ CLAUDE.md
 
 **Audit Round Duration:**
 ```markdown
-audit/README.md: Typical audit requires 3-5 rounds
+audit/README.md: typically 5-8 total rounds
 ```
 
 **Validation:**
