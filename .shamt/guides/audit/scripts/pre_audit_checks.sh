@@ -2,17 +2,19 @@
 # Pre-Audit Automated Checks
 # Runs before manual audit to catch common structural issues
 #
-# Coverage: 11 of 18 dimensions (D1, D3, D4, D10, D11, D12, D8, D9, D17, D18, D14)
+# Coverage: 11 of 19 dimensions (D1, D3, D4, D10, D11, D12, D8, D9, D17, D18, D14)
 # Estimated: 45-55% of typical issues (based on SHAMT-7 Round 1-2 data)
 # NOT Checked: D2 (Terminology - requires pattern-specific search, see dimension guide)
+# NOT Checked: D5, D6, D7, D13, D15, D16, D19 (require manual audit)
 #
-# Last Updated: 2026-02-19 (D14 Addition)
+# Last Updated: 2026-02-24 (SHAMT-2: dimension count 18 -> 19, D19 added as manual-only)
 # Changes:
 #   - Round 3: Simplified file size threshold from 3-tier (600/800/1000) to 1000-line baseline
-#   - Round 3: Added 17 known exceptions for Prerequisites/Exit Criteria checks (now 19 — see known_exceptions.md)
-#   - Meta-Audit: Increased baseline from 1000 → 1250 lines for comprehensive reference guides
+#   - Round 3: Added 17 known exceptions for Prerequisites/Exit Criteria checks (now 19 -- see known_exceptions.md)
+#   - Meta-Audit: Increased baseline from 1000 -> 1250 lines for comprehensive reference guides
 #   - Exceptions documented in audit/reference/known_exceptions.md
 #   - 2026-02-19: Added D14 Character and Format Compliance check (banned Unicode chars)
+#   - 2026-02-24: SHAMT-2 dimension renumbering; D19 Rules File Template Alignment added (manual only)
 
 # set -e  # Exit on error - DISABLED: causes premature exit in file size check loop
 
