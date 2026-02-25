@@ -475,9 +475,10 @@ BANNED_CHAR_FILES=0
 REVIEW_CHAR_FILES=0
 
 # Use python3 to scan for banned Unicode characters
-# Category A/B: BANNED (checkboxes, curly quotes) → Critical violation
-# Category C: REVIEW (em/en dashes) → Warning only (acceptable in prose)
-python3 - <<'PYEOF'
+# Category A/B: BANNED (checkboxes, curly quotes) -> Critical violation
+# Category C: REVIEW (em/en dashes) -> Warning only (acceptable in prose)
+# PYTHONUTF8=1: force UTF-8 stdout on Windows (avoid cp1252 encoding errors with emoji/special chars)
+PYTHONUTF8=1 python3 - <<'PYEOF'
 import os
 import sys
 
@@ -515,12 +516,13 @@ EXCEPTIONS = {
 }
 
 for root, dirs, files in os.walk('.'):
-    dirs[:] = [d for d in dirs if not d.startswith('.')]
+    # Skip hidden dirs and audit/outputs/ (transient historical files)
+    dirs[:] = [d for d in dirs if not d.startswith('.') and d != 'outputs']
     for fname in files:
         if not fname.endswith('.md'):
             continue
         fpath = os.path.join(root, fname)
-        if fpath in EXCEPTIONS:
+        if fpath.replace('\\', '/') in EXCEPTIONS:
             continue
         try:
             with open(fpath, encoding='utf-8') as f:
@@ -532,7 +534,7 @@ for root, dirs, files in os.walk('.'):
         for char, (display, name, replacement) in BANNED.items():
             count = content.count(char)
             if count > 0:
-                banned_hits.append(f"  {count}x {name} → replace with '{replacement}'")
+                banned_hits.append(f"  {count}x {name} -> replace with '{replacement}'")
                 banned_total += count
 
         if banned_hits:
@@ -545,7 +547,7 @@ for root, dirs, files in os.walk('.'):
         for char, (display, name, replacement) in REVIEW.items():
             count = content.count(char)
             if count > 0:
-                review_hits.append(f"  {count}x {name} (review — OK in prose, replace in lists/code)")
+                review_hits.append(f"  {count}x {name} (review - OK in prose, replace in lists/code)")
                 review_total += count
 
         if review_hits:
@@ -570,7 +572,7 @@ for fpath in EXTRA_FILES:
     for char, (display, name, replacement) in BANNED.items():
         count = content.count(char)
         if count > 0:
-            banned_hits.append(f"  {count}x {name} → replace with '{replacement}'")
+            banned_hits.append(f"  {count}x {name} -> replace with '{replacement}'")
             banned_total += count
     if banned_hits:
         banned_files += 1
@@ -581,7 +583,7 @@ for fpath in EXTRA_FILES:
     for char, (display, name, replacement) in REVIEW.items():
         count = content.count(char)
         if count > 0:
-            review_hits.append(f"  {count}x {name} (review — OK in prose, replace in lists/code)")
+            review_hits.append(f"  {count}x {name} (review - OK in prose, replace in lists/code)")
             review_total += count
     if review_hits:
         review_files += 1

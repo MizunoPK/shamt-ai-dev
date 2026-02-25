@@ -45,7 +45,7 @@
 
 ✅ **Claims vs Reality:**
 - "Run pre_audit_checks.sh" → script actually exists
-- "Checks 11 of 19 dimensions" → actually checks 11 (not 10 or 12)
+- "Checks 12 of 20 dimensions" → actually checks 12 (not 11 or 13)
 - "3 consecutive zero-issue rounds" → workflow enforces consecutive_clean >= 3 (not total rounds)
 
 ✅ **Version Numbers:**

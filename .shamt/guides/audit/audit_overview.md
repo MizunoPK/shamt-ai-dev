@@ -23,7 +23,7 @@
 
 This audit ensures **consistency, accuracy, and completeness** across all .shamt/guides files AND related external files.
 
-### The 19 Audit Dimensions
+### The 20 Audit Dimensions
 
 **Core Dimensions (Always Check) - D1, D2, D3, D4:**
 - ✅ **D1: Cross-Reference Accuracy** - All file paths, stage references, and cross-links are valid
@@ -434,7 +434,7 @@ Round N:
   │   └─ If 0 issues found → Sub-Round N.4
   │       If issues found → Fix all → Re-run Sub-Round N.3
   │
-  └─> Sub-Round N.4: Advanced (D15, D16, D17, D18, D19)
+  └─> Sub-Round N.4: Advanced (D15, D16, D17, D18, D19, D20)
       ├─ S1: Discovery → S2: Planning → S3: Apply → S4: Verify → S5: Loop Decision
       └─ If 0 issues found → Round N complete
           If issues found → Fix all → Re-run Sub-Round N.4
@@ -453,11 +453,11 @@ EXIT (only if Round N had 0 issues in all 4 sub-rounds + 9 criteria met)
 **Benefits of the 4 sub-round structure:**
 
 1. **Dependency Management:** Core dimension fixes (broken references) applied before Structural checks (cross-file dependencies)
-2. **Focused Discovery:** Check 4-5 related dimensions per sub-round, not all 19 at once
+2. **Focused Discovery:** Check 4-6 related dimensions per sub-round, not all 20 at once
 3. **Incremental Verification:** Verify fixes before moving to next category
 4. **Mental Clarity:** Fresh mental model between dimension categories
 5. **Better Tracking:** Know exactly which category and dimensions you're auditing
-6. **Prevents Blind Spots:** ALL 19 dimensions checked systematically every round
+6. **Prevents Blind Spots:** ALL 20 dimensions checked systematically every round
 
 ### Dimension Organization by Sub-Round
 
@@ -580,7 +580,7 @@ Round N complete (all 4 sub-rounds clean) → Round N+1 (fresh patterns)
 4. ✅ **3 consecutive zero-issue rounds:** consecutive_clean >= 3 (rounds with issues reset counter)
 5. ✅ **All remaining documented:** All remaining instances documented as intentional
 6. ✅ **User has NOT challenged:** User has not questioned findings
-7. ✅ **Confidence score:** ≥ 80% confidence in completeness across all 19 dimensions
+7. ✅ **Confidence score:** ≥ 80% confidence in completeness across all 20 dimensions
 8. ✅ **Pattern diversity:** ≥ 5 pattern types used per dimension category across rounds
 9. ✅ **Spot-check clean:** 10+ files manually checked per sub-round, zero issues
 
