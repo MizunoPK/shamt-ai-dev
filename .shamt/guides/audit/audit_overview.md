@@ -45,12 +45,13 @@ This audit ensures **consistency, accuracy, and completeness** across all .shamt
 - ✅ **D13: Cross-File Dependencies** - Stage prerequisites match outputs, workflow continuity
 - ✅ **D14: Character and Format Compliance** - Guide files use only agent-readable characters; no Unicode checkboxes, curly quotes, or other problematic non-ASCII chars
 
-**Advanced Dimensions - D15, D16, D17, D18, D19:**
+**Advanced Dimensions - D15, D16, D17, D18, D19, D20:**
 - ✅ **D15: Context-Sensitive Validation** - Same pattern validated differently based on context
 - ✅ **D16: Duplication Detection** - No duplicate content or contradictory instructions
 - ✅ **D17: Accessibility** - Navigation aids, TOCs, scannable structure
 - ✅ **D18: Stage Flow Consistency** - Behavioral continuity and semantic consistency across stage transitions
 - ✅ **D19: Rules File Template Alignment** - Child project rules file retains Shamt structural sections (child context only)
+- ✅ **D20: Script Integrity** - Sync/init scripts are functionally correct, bash/PS parity, output matches guide instructions, transient files gitignored (manual review)
 
 ---
 
@@ -493,6 +494,7 @@ EXIT (only if Round N had 0 issues in all 4 sub-rounds + 9 criteria met)
 - D17: Accessibility - Navigation, UX (80% automated)
 - D18: Stage Flow Consistency - Cross-stage behavioral continuity (30% automated)
 - D19: Rules File Template Alignment - Child rules file structure (30% automated, child context only)
+- D20: Script Integrity - Sync/init script correctness and bash/PS parity (20% automated, manual review)
 
 **Why Last:** Advanced checks require all other dimensions to be clean
 
