@@ -429,7 +429,7 @@ grep -rn "PATTERN" README.md EPIC_WORKFLOW_USAGE.md
 **Why templates first?** Template errors multiply - every new epic created gets the error.
 
 **Also check guides/sync/ (all contexts):**
-The three sync guides (`separation_rule.md`, `export_workflow.md`, `import_workflow.md`) are `.md` guide files subject to the same audit dimensions as all other guides. Include `guides/sync/` in every audit run.
+The sync guides (`README.md`, `separation_rule.md`, `export_workflow.md`, `import_workflow.md`) are `.md` guide files subject to the same audit dimensions as all other guides. Include `guides/sync/` in every audit run.
 
 ```bash
 echo "=== Checking guides/sync/ ==="

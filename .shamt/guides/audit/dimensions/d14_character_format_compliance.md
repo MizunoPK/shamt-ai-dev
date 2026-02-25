@@ -447,7 +447,7 @@ for f in files:
 | **D8: Documentation Quality** | D8 checks for incomplete/placeholder content; D14 checks for unparseable character formats. |
 | **D12: Structural Patterns** | D12 verifies high-level structure; D14 verifies lowest-level character compliance. |
 
-**Recommended execution order in Sub-Round N.3:** D11 → D12 → D14 → D10 → D13
+**Recommended execution order in Sub-Round N.3:** D11 → D14 → D12 → D10 → D13
 
 ---
 
