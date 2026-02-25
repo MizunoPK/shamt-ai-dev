@@ -139,14 +139,14 @@ done
 
 **README.md - Dimension Count:**
 ```markdown
-The audit evaluates guides across **16 critical dimensions**:
+The audit evaluates guides across **20 critical dimensions**:
 ```
 
 **Validation:**
 ```bash
 # Count dimension entries in README.md dimension table
 grep -c "^\| \*\*D[0-9]" .shamt/guides/audit/README.md
-# Expected: 16
+# Expected: 20
 
 # Count actual dimension files
 ls -1 .shamt/guides/audit/dimensions/d*.md | wc -l
@@ -434,18 +434,18 @@ Claims about file counts match actual file system.
 
 **Dimension Count:**
 ```markdown
-The audit system has **16 dimensions** covering all quality aspects.
+The audit system has **20 dimensions** covering all quality aspects.
 ```bash
 
 **Validation:**
 ```bash
 # Count dimension files
 ls -1 .shamt/guides/audit/dimensions/d*.md | wc -l
-# Expected: 16 (d1.md through d16.md, may have gaps)
+# Expected: 21 (d1-d19 guides + d10_examples.md + d16_examples.md; D20 in stage_1_discovery.md)
 
 # Count dimension entries in README
 grep -c "^\| \*\*D[0-9]" .shamt/guides/audit/README.md
-# Expected: 16
+# Expected: 20
 ```
 
 **Stage Count:**

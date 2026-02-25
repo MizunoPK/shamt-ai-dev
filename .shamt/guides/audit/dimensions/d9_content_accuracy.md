@@ -147,7 +147,7 @@ git log --since="2025-12-30" --oneline stages/ reference/ | wc -l
 ```text
 "19 templates"
 "10 stages"
-"16 dimensions"
+"20 dimensions"
 "22 iterations in S5"
 ```bash
 
@@ -160,7 +160,7 @@ grep -rn "[0-9]\+ template\|[0-9]\+ stage\|[0-9]\+ dimension\|[0-9]\+ iteration"
 # Extract specific claims
 grep -rn "19 template" .shamt/guides/
 grep -rn "10 stage" .shamt/guides/
-grep -rn "16 dimension" .shamt/guides/
+grep -rn "20 dimension" .shamt/guides/
 ```
 
 **Validation:**
@@ -230,7 +230,7 @@ done < referenced_files.txt
 **Common Claims:**
 ```text
 "Automated validation catches 90%"
-"Checks 6 of 16 dimensions"
+"Checks 12 of 20 dimensions"
 "3 consecutive zero-issue rounds required"
 "100% test pass rate enforced"
 ```
@@ -567,7 +567,7 @@ STEP 1: Extract capability claims
 $ grep -rn "automated.*[0-9]\+%\|Checks [0-9] of [0-9]" .shamt/guides/
 
 STEP 2: Verify each claim manually
-- "Checks 6 of 16 dimensions" → Check pre_audit_checks.sh has 6 CHECK blocks
+- "Checks 12 of 20 dimensions" → Check pre_audit_checks.sh has 12 CHECK blocks
 - "90% automated" → Estimate automation coverage
 
 STEP 3: Update or add disclaimers

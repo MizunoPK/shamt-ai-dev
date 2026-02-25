@@ -220,7 +220,7 @@ grep -rn "[0-9]+ files\|[0-9]+ stages\|[0-9]+ iterations\|[0-9]+ rounds" --inclu
 grep -rn "20 dimensions\|all 20\|20 critical" --include="*.md" .
 
 # Check for old counts (stale references to previous dimension counts)
-grep -rn "19 dimensions\|all 19\|19 critical\|18 dimensions\|all 18\|18 critical\|14 dimensions\|15 dimensions" --include="*.md" .
+grep -rn "19 dimensions\|all 19\|19 critical\|18 dimensions\|all 18\|18 critical\|16 dimensions\|16 critical\|14 dimensions\|15 dimensions" --include="*.md" .
 ```
 
 ### Pattern 4.3: Stage Count Claims
