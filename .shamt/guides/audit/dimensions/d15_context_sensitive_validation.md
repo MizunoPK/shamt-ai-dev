@@ -744,7 +744,7 @@ done < /tmp/examples_with_old.txt
 
 **Process Overview:**
 
-For each finding from other dimensions (D1-D7, D4-D17), apply context validation.
+For each finding from other dimensions (D1-D14, D16-D19), apply context validation.
 
 **Step 1: Categorize Finding (5 min per dimension)**
 

@@ -89,7 +89,7 @@ Where each component ranges from 0.0 to 1.0
 Coverage Score = [Your score 0.0-1.0]
 
 Justification:
-- Dimensions checked: [N/16]
+- Dimensions checked: [N/19]
 - Sub-rounds completed: [N.1, N.2, N.3, N.4 - all or subset]
 - Root files checked: [Yes/No]
 - Directories searched: [List]

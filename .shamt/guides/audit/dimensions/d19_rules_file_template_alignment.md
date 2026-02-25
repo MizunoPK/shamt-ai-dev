@@ -15,14 +15,16 @@
 ## Table of Contents
 
 1. [What This Checks](#what-this-checks)
-2. [When This Applies](#when-this-applies)
-3. [How to Locate the Rules File](#how-to-locate-the-rules-file)
-4. [Validation Checks](#validation-checks)
-5. [Automated Validation](#automated-validation)
-6. [Manual Validation](#manual-validation)
-7. [Severity Levels](#severity-levels)
-8. [Real Examples](#real-examples)
-9. [Integration with Other Dimensions](#integration-with-other-dimensions)
+2. [Why This Matters](#why-this-matters)
+3. [When This Applies](#when-this-applies)
+4. [How to Locate the Rules File](#how-to-locate-the-rules-file)
+5. [Pattern Types](#pattern-types)
+6. [Automated Validation](#automated-validation)
+7. [Manual Validation](#manual-validation)
+8. [Severity Levels](#severity-levels)
+9. [Real Examples](#real-examples)
+10. [Integration with Other Dimensions](#integration-with-other-dimensions)
+11. [See Also](#see-also)
 
 ---
 
@@ -42,6 +44,19 @@
 
 **Key Purpose:**
 Child projects inherit their rules file from `RULES_FILE.template.md` at init time and then customize it. Over time, Shamt-specific sections may be accidentally deleted or overwritten. This dimension flags structural drift before it causes workflow failures.
+
+---
+
+## Why This Matters
+
+Child projects initialize their rules file from `RULES_FILE.template.md` and then customize it over time. Critical Shamt-specific sections — particularly the Shamt Sync section (import guidance, when to import, `last_sync.conf` reference) and Git Conventions section — may be accidentally deleted during large rules file restructurings or overwritten when following non-Shamt templates.
+
+Without these sections, agents operating in the child project:
+- May not know how or when to run the import script, causing guides to go stale
+- May not follow the correct branch and commit format for Shamt projects
+- May produce contributions that fail PR review due to missing git convention adherence
+
+This dimension catches structural drift before it causes workflow failures.
 
 ---
 
@@ -87,7 +102,7 @@ fi
 
 ---
 
-## Validation Checks
+## Pattern Types
 
 Once the rules file is located, perform these checks:
 
@@ -282,6 +297,15 @@ $ grep -n "Shamt Sync\|import.sh\|last_sync\|guides/sync" "$RULES_PATH"
 **D7: Template Currency** — D7 checks whether `RULES_FILE.template.md` itself is up to date. D19 checks whether the child's rules file is structurally aligned with the template — a complementary check from the opposite direction.
 
 **D6: Content Completeness** — D6 catches missing sections in guide files generally. D19 specifically targets Shamt structural sections in the rules file. If D6 already flagged the rules file for missing sections, D19 provides additional context about which template sections are expected.
+
+---
+
+## See Also
+
+- `../stages/stage_1_discovery.md` - How to identify audit context (master vs child) before starting discovery
+- `../stages/stage_4_verification.md` - Re-verify D19 compliance after fixes
+- `d7_template_currency.md` - D7 checks whether `RULES_FILE.template.md` itself is current (complementary direction)
+- `d4_claude_md_sync.md` - D4 checks cross-reference accuracy within the rules file
 
 ---
 
