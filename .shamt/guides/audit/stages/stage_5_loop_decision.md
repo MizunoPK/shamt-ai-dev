@@ -19,6 +19,8 @@
 7. [If Exiting Audit](#if-exiting-audit)
 8. [User Presentation](#user-presentation)
 9. [Commit Strategy](#commit-strategy)
+10. [Exit Criteria Decision Matrix](#exit-criteria-decision-matrix)
+11. [See Also](#see-also)
 
 ---
 
@@ -723,7 +725,7 @@ git diff --name-only main | grep "audit/outputs"
 | 1. All Issues Resolved | Count remaining issues | 0 | LOOP (not optional) |
 | 2. Zero New in Stage 1 | Stage 1 report | 0 issues | LOOP |
 | 3. Zero New in Stage 4 | N_new count | 0 | LOOP |
-| 4. Min Rounds | Count rounds | ≥ 3 | LOOP (not optional) |
+| 4. 3 Consecutive Zero-Issue Rounds | consecutive_clean | ≥ 3 | LOOP (not optional) |
 | 5. All Documented | Undocumented count | 0 | LOOP |
 | 6. User Approved | User response | No challenge | LOOP if challenged |
 | 7. Confidence | Self-assessment | ≥ 80% | LOOP |

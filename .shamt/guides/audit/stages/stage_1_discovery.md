@@ -126,7 +126,7 @@
 
 **Example:**
 ```text
-Current: Sub-Round 2.1 (Core Dimensions)
+Current: Sub-Round N.1 (Core Dimensions)
 Focus: D1, D2, D3, D4
 Read: d1_cross_reference_accuracy.md, d2_terminology_consistency.md, d3_workflow_integration.md, d4_claude_md_sync.md
 Search: File paths, old notation, prerequisite chains, CLAUDE.md vs guides
