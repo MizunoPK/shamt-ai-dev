@@ -1100,7 +1100,7 @@ The workflow uses two types of gates:
 ```markdown
 ## 8 Exit Criteria for Audit Completion
 
-1. Minimum 3 rounds complete
+1. 3 consecutive zero-issue rounds complete
 2. Zero new discoveries in current round
 3. Zero verification findings
 4. All documented
