@@ -33,7 +33,7 @@
 2. **Phase Counts** - "S5 has 2 phases" matches S5 v2 Phase 1 (Draft Creation) and Phase 2 (Validation Loop)
 3. **Iteration Counts** - "22 iterations in S5" matches actual iteration count
 4. **Gate Counts** - "8 mandatory gates" matches reference/mandatory_gates.md
-5. **File Counts** - "16 dimensions" matches actual dimension count
+5. **File Counts** - "19 dimensions" matches actual dimension count
 6. **List Item Counts** - Numbered lists match their claimed count
 7. **Duration Claims** - "5-8 total rounds typical" matches historical evidence
 

@@ -326,7 +326,7 @@ done
 - ✅ Zero nagging doubts
 
 ### 80-89%: High Confidence (Exit Threshold)
-- ✅ 3-4 rounds completed
+- ✅ consecutive_clean >= 3 (3+ consecutive zero-issue rounds)
 - ✅ 0 new issues this round
 - ✅ 5+ pattern types used
 - ✅ All folders checked
@@ -383,13 +383,13 @@ wc -l file.md  # Count lines
 ## Scenario Quick Lookup
 
 **"I just completed S10.P1 guide updates"**
-→ Run full audit focusing on D1, D2, D7, D4 (3-4 hours, 3-4 rounds)
+→ Run full audit focusing on D1, D2, D7, D4 (3-4 hours, 5-8 rounds typical)
 
 **"I just did stage renumbering"**
-→ Run full audit focusing on D1, D3, D7, D4, D13 (4-6 hours, 3-4 rounds min)
+→ Run full audit focusing on D1, D3, D7, D4, D13 (4-6 hours, 5-8 rounds typical)
 
 **"I just changed notation system"**
-→ Run full audit focusing on D2, D7, D15, D10 (3-5 hours, 3-4 rounds)
+→ Run full audit focusing on D2, D7, D15, D10 (3-5 hours, 5-8 rounds typical)
 
 **"User reported broken link"**
 → Spot-check (30 min), if widespread → Full D1 audit (2 hours)

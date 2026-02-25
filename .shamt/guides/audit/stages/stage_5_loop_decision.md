@@ -83,7 +83,7 @@
 - Agents naturally want to finish quickly
 - Premature exit = missed issues
 - "Are you sure?" from user = red flag
-- Minimum 3 rounds is NOT arbitrary - it's evidence-based
+- 3 consecutive zero-issue rounds is NOT arbitrary - it's evidence-based
 - SHAMT-7 needed **4 rounds** before achieving zero-issue round
 
 **From monolithic guide:**

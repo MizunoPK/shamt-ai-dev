@@ -17,7 +17,7 @@
 7. [Common Scenarios](#common-scenarios)
 8. [Reference Materials](#reference-materials)
 9. [Templates](#templates)
-10. [Real Examples](#real-examples-✅-complete)
+10. [Real Examples](#real-examples--complete)
 11. [Automated Scripts](#automated-scripts)
 12. [Outputs](#outputs)
 13. [Critical Success Factors](#critical-success-factors)
@@ -66,7 +66,7 @@ bash scripts/pre_audit_checks.sh
 ```text
 ┌─────────────────────────────────────────────────────────────────┐
 │         AUDIT LOOP (Repeat until ZERO new issues found)         │
-│     MINIMUM 3 ROUNDS (each with 4 sub-rounds: 12 cycles min)    │
+│   3 CONSECUTIVE ZERO-ISSUE ROUNDS (12+ sub-rounds min each)     │
 │  EXIT TRIGGER: Round N all 4 sub-rounds ZERO issues + 9 criteria│
 └─────────────────────────────────────────────────────────────────┘
 
@@ -246,7 +246,7 @@ bash scripts/pre_audit_checks.sh
 # Then read d1, d2, d6, d8 dimension guides
 ```markdown
 
-**Estimated Duration:** 3-4 hours (3-4 rounds)
+**Estimated Duration:** 3-4 hours (5-8 rounds typical)
 
 ---
 
@@ -271,7 +271,7 @@ bash scripts/pre_audit_checks.sh
 # Read all 5 high-risk dimension guides
 ```
 
-**Estimated Duration:** 4-6 hours (3-4 rounds minimum)
+**Estimated Duration:** 4-6 hours (5-8 rounds typical)
 
 ---
 
@@ -295,7 +295,7 @@ bash scripts/pre_audit_checks.sh
 # Manual review for context-sensitive cases
 ```markdown
 
-**Estimated Duration:** 3-5 hours (3-4 rounds)
+**Estimated Duration:** 3-5 hours (5-8 rounds typical)
 
 ---
 
