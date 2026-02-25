@@ -156,12 +156,23 @@ remove_deleted() {
         if [ ! -f "$master_file" ]; then
             rm "$child_file"
             DELETED+=("$rel_path")
+            # Remove empty parent directories
+            local dir
+            dir="$(dirname "$child_file")"
+            while [ "$dir" != "$CHILD_SHAMT_DIR" ] && [ -d "$dir" ] && [ -z "$(ls -A "$dir")" ]; do
+                rmdir "$dir"
+                dir="$(dirname "$dir")"
+            done
         fi
     done < <(find "$child_dir" -type f -print0 | sort -z)
 }
 
 remove_deleted "$CHILD_SHAMT_DIR/guides" "$MASTER_SHAMT_DIR/guides" "guides/audit/outputs"
 remove_deleted "$CHILD_SHAMT_DIR/scripts" "$MASTER_SHAMT_DIR/scripts" ""
+
+# Record sync state now — before diff generation and output, so a script
+# interruption after syncing still produces an accurate last_sync.conf.
+write_last_sync
 
 # --- Write diff file(s) ------------------------------------------------------
 
@@ -281,4 +292,3 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 echo "============================================================"
 echo ""
-write_last_sync

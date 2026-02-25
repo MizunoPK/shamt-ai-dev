@@ -55,7 +55,8 @@ try {
             Write-Host "  Warning: master repo's 'main' branch appears to be behind origin/main." -ForegroundColor Yellow
             Write-Host "  Consider running 'git pull' in: $MasterDir" -ForegroundColor Yellow
             Write-Host ""
-            $proceedChoice = Prompt-Input "  Proceed anyway? [y/N]" "N"
+            $proceedChoice = Read-Host "  Proceed anyway? [y/N]"
+            if ([string]::IsNullOrEmpty($proceedChoice)) { $proceedChoice = "N" }
             if ($proceedChoice -notmatch '^[Yy]$') {
                 Write-Host "  Import cancelled."
                 Write-Host ""
@@ -176,6 +177,12 @@ function Remove-Deleted {
         if (-not (Test-Path $masterFile)) {
             Remove-Item $childFile -Force
             $script:Deleted += $relPathFwd
+            # Remove empty parent directories
+            $dir = Split-Path $childFile -Parent
+            while ($dir -ne $script:ChildShamtDir -and (Test-Path $dir) -and @(Get-ChildItem $dir).Count -eq 0) {
+                Remove-Item $dir -Force
+                $dir = Split-Path $dir -Parent
+            }
         }
     }
 }
@@ -187,6 +194,10 @@ Remove-Deleted -ChildDir (Join-Path $ChildShamtDir "guides") `
 Remove-Deleted -ChildDir (Join-Path $ChildShamtDir "scripts") `
                -MasterDir (Join-Path $MasterShamtDir "scripts") `
                -SkipPrefix ""
+
+# Record sync state now — before diff generation and output, so a script
+# interruption after syncing still produces an accurate last_sync.conf.
+Write-LastSync
 
 # --- Write diff file(s) ------------------------------------------------------
 
@@ -274,7 +285,7 @@ if ($DiffFiles.Count -eq 0) {
     foreach ($f in $DiffFiles) { Write-Host "     ```.shamt/$f```" }
 }
 Write-Host ""
-Write-Host "3. For each changed file, check whether your ``project-specific-configs/```"
+Write-Host "3. For each changed file, check whether your ``project-specific-configs/``"
 Write-Host "   supplements are still accurate and consistent with the new content."
 Write-Host ""
 Write-Host "4. Check whether any existing pointers in the changed guide files are"
@@ -292,4 +303,3 @@ Write-Host "━━━━━━━━━━━━━━━━━━━━━━�
 Write-Host ""
 Write-Host "============================================================"
 Write-Host ""
-Write-LastSync

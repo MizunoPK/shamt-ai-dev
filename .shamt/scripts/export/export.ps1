@@ -44,9 +44,19 @@ Write-Host "  To:   $MasterDir"
 Write-Host "============================================================"
 Write-Host ""
 
+# --- Dirty tree check --------------------------------------------------------
+
+$masterStatus = & git -C $MasterDir status --porcelain 2>&1
+if ($masterStatus -and ($masterStatus | Where-Object { $_ -ne "" }).Count -gt 0) {
+    Write-Host "  Warning: master working tree has uncommitted changes." -ForegroundColor Yellow
+    Write-Host "  Exported files will be mixed with existing changes. Proceed with care." -ForegroundColor Yellow
+    Write-Host ""
+}
+
 # --- Compare and copy changed files ------------------------------------------
 
 $Exported = @()
+$Deleted = @()
 
 function Export-Dir {
     param(
@@ -85,12 +95,40 @@ function Export-Dir {
     }
 }
 
+function Remove-FromMaster {
+    param(
+        [string]$MasterDir,
+        [string]$MasterShamtPath,
+        [string]$ChildShamtPath
+    )
+    if (-not (Test-Path $MasterDir)) { return }
+
+    Get-ChildItem -Path $MasterDir -Recurse -File | Sort-Object FullName | ForEach-Object {
+        $masterFile = $_.FullName
+        $relPath = $masterFile.Substring($MasterShamtPath.Length).TrimStart('\', '/')
+        $relPathFwd = $relPath.Replace('\', '/')
+
+        # Never touch audit outputs
+        if ($relPathFwd.StartsWith("guides/audit/outputs/")) {
+            return
+        }
+
+        $childFile = Join-Path $ChildShamtPath $relPath
+        if (-not (Test-Path $childFile)) {
+            Remove-Item $masterFile -Force
+            $script:Deleted += $relPathFwd
+        }
+    }
+}
+
 Export-Dir -SourceDir (Join-Path $ChildShamtDir "guides") -MasterShamtPath $MasterShamtDir -ChildShamtPath $ChildShamtDir
 Export-Dir -SourceDir (Join-Path $ChildShamtDir "scripts") -MasterShamtPath $MasterShamtDir -ChildShamtPath $ChildShamtDir
+Remove-FromMaster -MasterDir (Join-Path $MasterShamtDir "guides") -MasterShamtPath $MasterShamtDir -ChildShamtPath $ChildShamtDir
+Remove-FromMaster -MasterDir (Join-Path $MasterShamtDir "scripts") -MasterShamtPath $MasterShamtDir -ChildShamtPath $ChildShamtDir
 
 # --- Summary -----------------------------------------------------------------
 
-if ($Exported.Count -eq 0) {
+if ($Exported.Count -eq 0 -and $Deleted.Count -eq 0) {
     Write-Host "  No differences found. Child is in sync with master."
     Write-Host ""
     Write-Host "============================================================"
@@ -98,12 +136,23 @@ if ($Exported.Count -eq 0) {
     exit 0
 }
 
-Write-Host "  Exported $($Exported.Count) file(s) to master:"
-Write-Host ""
-foreach ($f in $Exported) {
-    Write-Host "    + $f"
+if ($Exported.Count -gt 0) {
+    Write-Host "  Exported $($Exported.Count) file(s) to master:"
+    Write-Host ""
+    foreach ($f in $Exported) {
+        Write-Host "    + $f"
+    }
+    Write-Host ""
 }
-Write-Host ""
+
+if ($Deleted.Count -gt 0) {
+    Write-Host "  Deleted $($Deleted.Count) file(s) from master (not present in child):"
+    Write-Host ""
+    foreach ($f in $Deleted) {
+        Write-Host "    - $f"
+    }
+    Write-Host ""
+}
 
 # --- Next steps --------------------------------------------------------------
 

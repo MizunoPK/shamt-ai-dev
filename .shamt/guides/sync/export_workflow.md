@@ -52,10 +52,11 @@ bash .shamt/scripts/export/export.sh
 
 The script:
 1. Reads the master path from `.shamt/shamt_master_path.conf`
-2. Compares your `guides/` and `scripts/` against master by content comparison
-3. Copies all differing files to the master repo
-4. Excludes `guides/audit/outputs/` (your audit history stays local)
-5. Prints a summary of what was copied
+2. Warns if master's working tree has uncommitted changes (exported files would be mixed with them)
+3. Compares your `guides/` and `scripts/` against master by content comparison
+4. Copies all differing files to master, and deletes from master any files absent from your child
+5. Excludes `guides/audit/outputs/` (your audit history stays local)
+6. Prints a summary of what was copied and deleted
 
 Review the output. If files were exported that you didn't intend to change, investigate before opening a PR.
 

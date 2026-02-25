@@ -162,3 +162,10 @@ If your project was initialized before SHAMT-2, `.shamt/last_sync.conf` was not 
 ```
 .shamt/last_sync.conf
 ```
+
+**SHAMT-3 migration — `.shamt/import_diff*.md` not in your `.gitignore`:**
+If your project was initialized before SHAMT-3, import diff files were not automatically gitignored at init time. The import script writes these files on every run. Add them manually to your `.gitignore`:
+
+```
+.shamt/import_diff*.md
+```
