@@ -148,18 +148,23 @@
 **If ANY N_new > 0 in any sub-round:** MUST loop same sub-round (mandatory)
 
 #### Criterion 4: Minimum Rounds (Sub-Round System)
-- [ ] Completed at least 3 complete rounds (12 sub-rounds total)
-  - [ ] Round 1: Sub-Rounds 1.1, 1.2, 1.3, 1.4 complete
-  - [ ] Round 2: Sub-Rounds 2.1, 2.2, 2.3, 2.4 complete
-  - [ ] Round 3: Sub-Rounds 3.1, 3.2, 3.3, 3.4 complete
+- [ ] Completed at least 3 CONSECUTIVE zero-issue rounds
+  - Track explicitly: `consecutive_clean = [current count]`
+  - Rounds that found issues do NOT count — counter resets to 0 on any issue
+  - [ ] Round with 0 issues — consecutive_clean = 1
+  - [ ] Round with 0 issues — consecutive_clean = 2
+  - [ ] Round with 0 issues — consecutive_clean = 3 ✓
 - [ ] Each round used different patterns than previous
 - [ ] Each sub-round focused on correct dimension set
 - [ ] Clear mental break between rounds (fresh perspective)
-- [ ] All 19 dimensions checked at least 3 times (once per round)
+- [ ] All 19 dimensions checked at least 3 times (once per clean round)
 
-**If Total Rounds < 3:** MUST loop (baseline requirement)
+**If consecutive_clean < 3:** MUST loop (regardless of total rounds completed)
 **If ANY sub-round skipped:** MUST loop (all 4 sub-rounds mandatory)
-**Note:** 3 rounds is minimum, NOT sufficient - must also have zero-issue round
+**If ANY round finds issues:** Reset consecutive_clean to 0 and loop
+
+**Critical distinction:** "Minimum 3 rounds" means 3 CONSECUTIVE zero-issue rounds.
+A round that found issues does not count. Rounds 1(issues), 2(issues), 3(clean) = consecutive_clean of 1, not 3.
 
 #### Criterion 5: All Remaining Documented
 - [ ] All remaining pattern matches are documented

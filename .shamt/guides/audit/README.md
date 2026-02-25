@@ -142,7 +142,7 @@ Round N complete → Round N+1 (fresh eyes) → EXIT when all criteria met
 - Sub-round finds issues → Fix ALL → Re-run SAME sub-round → Repeat until 0 issues
 - Sub-round clean → Proceed to next sub-round
 - All 4 sub-rounds clean → Round complete → Next round (fresh eyes)
-- Minimum 3 rounds (12 sub-rounds) + all clean → Consider exit
+- Minimum 3 CONSECUTIVE zero-issue rounds → Consider exit (rounds with issues reset the counter to 0)
 
 ---
 
