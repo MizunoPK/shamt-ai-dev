@@ -84,7 +84,7 @@ Round N:
   │   S1: Discovery → S2: Planning → S3: Apply → S4: Verify → S5: Loop Decision
   │   If 0 issues → Sub-Round N.4 | If issues → Fix & Re-run N.3
   │
-  └─> Sub-Round N.4: Advanced (D15, D16, D17, D18, D19)
+  └─> Sub-Round N.4: Advanced (D15, D16, D17, D18, D19, D20)
       S1: Discovery → S2: Planning → S3: Apply → S4: Verify → S5: Loop Decision
       If 0 issues → Round N complete | If issues → Fix & Re-run N.4
 
@@ -94,10 +94,10 @@ Round N complete → Round N+1 (fresh eyes) → EXIT when all criteria met
 ### Sub-Round Benefits
 
 1. **Dependency Management:** Core fixes (broken references) applied before Structural checks
-2. **Focused Discovery:** Check 4-5 related dimensions per sub-round, not all 19 at once
+2. **Focused Discovery:** Check 4-5 related dimensions per sub-round, not all 20 at once
 3. **Incremental Verification:** Verify fixes before moving to next category
 4. **Mental Clarity:** Fresh mental model between dimension categories
-5. **Complete Coverage:** ALL 19 dimensions checked systematically every round
+5. **Complete Coverage:** ALL 20 dimensions checked systematically every round
 6. **No Blind Spots:** Can't skip dimensions accidentally
 
 ---
@@ -129,8 +129,8 @@ Round N complete → Round N+1 (fresh eyes) → EXIT when all criteria met
 | **N.1: Core** | D1, D2, D3, D4 | 4 | File paths, terminology, workflow, CLAUDE.md | 60-90 min |
 | **N.2: Content** | D5, D6, D7, D8, D9 | 5 | Counts, completeness, templates, documentation | 75-120 min |
 | **N.3: Structural** | D10, D11, D12, D13, D14 | 5 | File consistency, size, patterns, dependencies, character compliance | 60-90 min |
-| **N.4: Advanced** | D15, D16, D17, D18, D19 | 5 | Context-sensitive, duplication, accessibility, flow, rules alignment | 60-90 min |
-| **TOTAL** | All 19 dimensions | 19 | Complete coverage | 4.5-6.5 hours |
+| **N.4: Advanced** | D15, D16, D17, D18, D19, D20 | 6 | Context-sensitive, duplication, accessibility, flow, rules alignment, script integrity | 60-90 min |
+| **TOTAL** | All 20 dimensions | 20 | Complete coverage | 4.5-6.5 hours |
 
 **Execution Order:**
 1. **Core first** - Fixes broken references and inconsistent notation that affect all other checks
@@ -142,13 +142,13 @@ Round N complete → Round N+1 (fresh eyes) → EXIT when all criteria met
 - Sub-round finds issues → Fix ALL → Re-run SAME sub-round → Repeat until 0 issues
 - Sub-round clean → Proceed to next sub-round
 - All 4 sub-rounds clean → Round complete → Next round (fresh eyes)
-- Minimum 3 CONSECUTIVE zero-issue rounds → Consider exit (rounds with issues reset the counter to 0)
+- 3 CONSECUTIVE zero-issue rounds required to exit (rounds with issues reset the counter to 0)
 
 ---
 
 ## Navigation by Audit Dimension
 
-The audit evaluates guides across **19 critical dimensions**:
+The audit evaluates guides across **20 critical dimensions**:
 
 ### Core Dimensions (Always Check)
 
@@ -188,6 +188,7 @@ The audit evaluates guides across **19 critical dimensions**:
 | **D17: Accessibility** | `dimensions/d17_accessibility_usability.md` | Navigation, UX | 80% automated |
 | **D18: Stage Flow Consistency** | `dimensions/d18_stage_flow_consistency.md` | Cross-stage behavior | 30% automated |
 | **D19: Rules File Template Alignment** | `dimensions/d19_rules_file_template_alignment.md` | Child rules file structure (child context only) | 30% automated |
+| **D20: Script Integrity** | `dimensions/d20_script_integrity.md` | Sync/init script correctness and parity | 20% automated |
 
 **Usage:** Read dimension guides as needed during discovery. Not all dimensions apply to every audit.
 
@@ -445,7 +446,7 @@ Learn from actual audit rounds:
 
 ### Pre-Audit Checks
 `scripts/pre_audit_checks.sh` - Run before manual audit begins
-- Checks 11 of 19 dimensions (D1, D3, D4, D10, D11, D12, D8, D9, D17, D18, D14)
+- Checks 12 of 20 dimensions (D1, D3, D4, D8, D9, D10, D11, D12, D14, D17, D18, D20 partial)
 - Catches common structural issues (estimated 45-55% of typical issues)
 - Fast execution (5 minutes)
 - Generates initial report
@@ -470,13 +471,15 @@ Learn from actual audit rounds:
 - `find_duplicates.sh` - D16: Duplication detection
 - `validate_dependencies.sh` - D13: Cross-file dependency checks
 
-**All functionality available in:** `scripts/pre_audit_checks.sh` (12KB, covers 11 dimensions — see "Pre-Audit Checks" section above)
+**All functionality available in:** `scripts/pre_audit_checks.sh` (covers 12 dimensions — see "Pre-Audit Checks" section above)
 
 ---
 
 ## Outputs
 
 **Output files are temporary working documents — never commit them.**
+
+`audit/outputs/` is listed in the project `.gitignore` so output files are automatically excluded from git tracking.
 
 **Note on historical output files:** Output reports in `audit/outputs/` from before February 2026 (pre-SHAMT-2) use the old dimension numbering scheme (D1-D18 with a different grouping). These are historical records and retain their original numbers — do not update them.
 
