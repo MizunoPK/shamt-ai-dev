@@ -129,8 +129,7 @@ Draft Artifact Created
            │ Dimensions      │
            └─────────────────┘
                 │
-                ├─→ Issues Found? → FIX ALL → RESTART from Round 1
-                │                   (Counter resets to 0)
+                ├─→ Issues Found? → FIX ALL IMMEDIATELY → Counter resets to 0 → Continue to Round N+1
                 │
                 └─→ 0 Issues? → Counter = 1 → Continue to Round 3
                        │
@@ -145,7 +144,7 @@ Draft Artifact Created
                   │ Dimensions      │
                   └─────────────────┘
                        │
-                       ├─→ Issues Found? → FIX ALL → RESTART from Round 1
+                       ├─→ Issues Found? → FIX ALL IMMEDIATELY → Counter resets to 0 → Continue to Round N+1
                        │
                        └─→ 0 Issues? → Counter = 2 → Continue to Round 4
                               │
@@ -160,7 +159,7 @@ Draft Artifact Created
                          │ Dimensions      │
                          └─────────────────┘
                               │
-                              ├─→ Issues Found? → FIX → RESTART Round 1
+                              ├─→ Issues Found? → FIX ALL IMMEDIATELY → Counter resets to 0 → Continue to Round N+1
                               │
                               └─→ 0 Issues? → Counter = 3 ✅
                                      │
@@ -1046,7 +1045,7 @@ Round 4: 0 issues → Counter = 3 ✅ EXIT
 
 **Validation Loop is COMPLETE when ALL of the following are true:**
 
-- [ ] At least 3 rounds completed
+- [ ] 3 consecutive zero-issue rounds achieved (consecutive_clean = 3)
 - [ ] 3 consecutive rounds with ZERO issues found
 - [ ] All 7 master dimensions checked every round
 - [ ] All scenario-specific dimensions checked every round

@@ -104,6 +104,11 @@ When the validation loop passes 3 clean rounds, delete all import diff files:
 rm -f .shamt/import_diff.md .shamt/import_diff_*.md
 ```
 
+```powershell
+# PowerShell:
+Remove-Item .shamt\import_diff.md, .shamt\import_diff_*.md -ErrorAction SilentlyContinue
+```
+
 Do not leave diff files in place after the import is complete — they are temporary and contain dated content.
 
 ---

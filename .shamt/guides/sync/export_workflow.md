@@ -32,13 +32,11 @@ If entries are missing, add them now:
 
 ---
 
-## Step 1.5: Run the Guide Audit on Modified Files
+## Step 1.5: Run the Full Guide Audit
 
-Before exporting, run the guide audit on every shared guide file you modified.
+Before exporting, run the guide audit on the entire `.shamt/guides/` tree (starting from `guides/audit/README.md`). The audit must achieve 3 consecutive zero-issue rounds before you proceed to Step 2.
 
-This step is **mandatory**. Exporting without auditing risks submitting a well-intentioned improvement that has formatting, consistency, or cross-reference issues — problems the master maintainer would have to request changes for, and that would otherwise propagate to other child projects on their next import.
-
-Run the full audit process (starting from `guides/audit/README.md`) focused on the files you changed. The audit must pass before you proceed to Step 2.
+This step is **mandatory**. Exporting without a full audit risks submitting changes that are internally inconsistent with other guides — cross-references, terminology, or workflow descriptions may need to be updated in files you didn't directly modify.
 
 ---
 
@@ -54,7 +52,7 @@ bash .shamt/scripts/export/export.sh
 
 The script:
 1. Reads the master path from `.shamt/shamt_master_path.conf`
-2. Compares your `guides/` and `scripts/` against master by file hash
+2. Compares your `guides/` and `scripts/` against master by content comparison
 3. Copies all differing files to the master repo
 4. Excludes `guides/audit/outputs/` (your audit history stays local)
 5. Prints a summary of what was copied
@@ -68,8 +66,9 @@ Review the output. If files were exported that you didn't intend to change, inve
 ```bash
 cd /path/to/shamt-ai-dev
 
+git checkout main
 git checkout -b feat/child-sync-YYYY-MM-DD
-git add .shamt/guides/ .shamt/scripts/
+git add -A .shamt/guides/ .shamt/scripts/
 git commit -m "sync: [brief description of improvement]"
 git push origin feat/child-sync-YYYY-MM-DD
 ```
