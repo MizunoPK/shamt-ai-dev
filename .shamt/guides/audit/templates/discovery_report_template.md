@@ -257,11 +257,8 @@ Document which folders were checked and in what order:
 ### If Zero Issues Found
 
 **Proceed to Stage 5 (Loop Decision) IF:**
-- [x] This is Round 3 or higher
-- [x] Tried at least 5 different pattern types
-- [x] Spot-checked 10+ files manually
-- [x] No new discoveries compared to previous round
-- [x] Confidence score ≥ 80%
+See exit criteria in `stages/stage_5_loop_decision.md` — all criteria must pass.
+Key criterion: consecutive_clean >= 3.
 
 **Otherwise:**
 - Continue to Round [N+1] with fresh patterns

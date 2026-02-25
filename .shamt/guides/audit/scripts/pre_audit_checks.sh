@@ -114,27 +114,27 @@ MISSING_EXIT=0
 required_sections=("Prerequisites" "Exit Criteria" "Overview")
 
 # Known exceptions (documented in audit/reference/known_exceptions.md)
-# Category A: S5 iteration files (14 files)
 declare -a known_exceptions=(
-  "stages/s5/s5_p1_i3_integration.md"
-  "stages/s5/s5_p1_i3_iter5_dataflow.md"
-  "stages/s5/s5_p1_i3_iter5a_downstream.md"
-  "stages/s5/s5_p1_i3_iter6_errorhandling.md"
-  "stages/s5/s5_p1_i3_iter6a_dependencies.md"
-  "stages/s5/s5_p1_i3_iter7_integration.md"
-  "stages/s5/s5_p1_i3_iter7a_compatibility.md"
-  "stages/s5/s5_p3_i1_preparation.md"
-  "stages/s5/s5_p3_i1_iter17_phasing.md"
-  "stages/s5/s5_p3_i1_iter18_rollback.md"
-  "stages/s5/s5_p3_i1_iter19_traceability.md"
-  "stages/s5/s5_p3_i1_iter20_performance.md"
-  "stages/s5/s5_p3_i1_iter21_mockaudit.md"
-  "stages/s5/s5_p3_i1_iter22_consumers.md"
-  # Category B: Optional/auxiliary files (3 files)
+  # Category C: Optional/auxiliary files (3 files)
   "stages/s3/s3_parallel_work_sync.md"
   "stages/s4/s4_feature_testing_card.md"
   "stages/s4/s4_test_strategy_development.md"
 )
+
+# Self-check: warn if any known_exceptions entry no longer exists on disk.
+# Stale entries skew the "Known exceptions skipped" count and mislead future maintainers.
+STALE_EXCEPTIONS=0
+for exception in "${known_exceptions[@]}"; do
+  if [ ! -f "$exception" ]; then
+    echo -e "${YELLOW}⚠️  STALE EXCEPTION:${NC} '$exception' is listed in known_exceptions but does not exist on disk"
+    ((STALE_EXCEPTIONS++))
+  fi
+done
+if [ $STALE_EXCEPTIONS -gt 0 ]; then
+  echo -e "${RED}❌ $STALE_EXCEPTIONS stale known_exception(s) found — remove from pre_audit_checks.sh${NC}"
+  ((CRITICAL_ISSUES += STALE_EXCEPTIONS))
+  ((TOTAL_ISSUES += STALE_EXCEPTIONS))
+fi
 
 for file in stages/*/*.md; do
   # Skip known exceptions (documented design patterns)
@@ -167,13 +167,13 @@ for file in stages/*/*.md; do
 done
 
 if [ $MISSING_PREREQ -eq 0 ] && [ $MISSING_EXIT -eq 0 ]; then
-  echo -e "${GREEN}✅ All required sections present (excluding 19 known exceptions)${NC}"
+  echo -e "${GREEN}✅ All required sections present (excluding 3 known exceptions)${NC}"
 fi
 
 echo ""
 echo "Missing Prerequisites: $MISSING_PREREQ"
 echo "Missing Exit Criteria: $MISSING_EXIT"
-echo "Known exceptions skipped: 19 (see audit/reference/known_exceptions.md)"
+echo "Known exceptions skipped: 3 (see audit/reference/known_exceptions.md)"
 echo ""
 
 # ============================================================================
