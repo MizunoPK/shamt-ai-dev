@@ -2,7 +2,7 @@
 
 **Purpose:** Pre-built search patterns organized by category for efficient audit discovery
 **Audience:** Agents conducting quality audits
-**Last Updated:** 2026-02-06
+**Last Updated:** 2026-02-25
 
 ---
 
