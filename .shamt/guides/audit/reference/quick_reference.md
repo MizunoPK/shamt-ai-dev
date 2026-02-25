@@ -130,14 +130,15 @@ grep -n "S[0-9]" CLAUDE.md | grep -o "S[0-9][0-9]*\(\.P[0-9][0-9]*\)\?\(\.I[0-9]
 
 **ALL 9 must pass to exit audit:**
 
-- [ ] **Criterion 1:** 3 consecutive zero-issue rounds completed (consecutive_clean >= 3)
+- [ ] **Criterion 1:** All issues resolved (zero open issues across all rounds)
 - [ ] **Criterion 2:** Stage 1 found ZERO new issues this round
 - [ ] **Criterion 3:** Stage 4 verification N_new = 0
-- [ ] **Criterion 4:** All N_remaining documented as intentional
-- [ ] **Criterion 5:** User has NOT challenged results
-- [ ] **Criterion 6:** Confidence ≥ 80%
-- [ ] **Criterion 7:** Pattern diversity ≥ 5 types used
-- [ ] **Criterion 8:** Spot-checks (10+ files) found 0 issues
+- [ ] **Criterion 4:** 3 consecutive zero-issue rounds completed (consecutive_clean >= 3)
+- [ ] **Criterion 5:** All N_remaining documented as intentional
+- [ ] **Criterion 6:** User has NOT challenged results
+- [ ] **Criterion 7:** Confidence ≥ 80%
+- [ ] **Criterion 8:** Pattern diversity ≥ 5 types used
+- [ ] **Criterion 9:** Spot-checks (10+ files) found 0 issues
 
 **If ANY checkbox is unchecked → LOOP to Round N+1**
 

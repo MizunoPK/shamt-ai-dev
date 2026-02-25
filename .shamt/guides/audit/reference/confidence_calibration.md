@@ -183,7 +183,7 @@ Justification:
 
 **If ANY of these are true, reduce confidence by 20 percentage points:**
 
-🚩 **Round Count <3:** Minimum rounds not met
+🚩 **consecutive_clean < 3:** Required consecutive zero-issue rounds not yet met
 🚩 **N_new > 0:** New issues introduced by fixes
 🚩 **User Challenged:** User expressed doubt at any point
 🚩 **Root Files Skipped:** README.md, EPIC_WORKFLOW_USAGE.md, prompts_reference_v2.md not checked
