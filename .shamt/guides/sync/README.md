@@ -23,7 +23,7 @@ You improve a shared guide
 Document in .shamt/CHANGES.md
         |
         v
-Run audit on modified files    <-- Improvement 6 (export pre-flight)
+Run audit on modified files (mandatory pre-flight)
         |
         v
 Run export script

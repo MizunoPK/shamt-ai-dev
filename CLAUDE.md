@@ -20,7 +20,7 @@ shamt-ai-dev/
     │   ├── stages/                     # s1–s10 workflow guides
     │   ├── reference/
     │   ├── audit/
-    │   ├── sync/                       # separation rule, export workflow, import workflow
+    │   ├── sync/                       # README, separation rule, export workflow, import workflow
     │   └── master_dev_workflow/        # guide for improving master guides
     ├── scripts/
     │   ├── initialization/
