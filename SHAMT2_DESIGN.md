@@ -301,7 +301,6 @@ This requires updating all references to dimension numbers throughout the audit 
 - Update `guides/sync/import_workflow.md` (Common Situations shamt_master_path.conf note)
 - Update `CLAUDE.md`: add full audit step to PR review checklist (Improvement 5); add master-only file update responsibility to Critical Rules section (Improvement 10)
 - Update `guides/audit/stages/stage_1_discovery.md` and `guides/audit/templates/discovery_report_template.md`: add `guides/sync/` and `RULES_FILE.template.md` to file coverage scope; define master vs child context; add master-context file coverage
-- Update `guides/audit/audit_overview.md` and dimension guides: add D19 (Rules File Template Alignment) as the child-context rules file comparison dimension
 - Update `guides/master_dev_workflow/master_dev_workflow.md` (master-only file update step per Q15)
 - Renumber audit dimensions first (Improvement 12): update all dimension files, `audit_overview.md`, `audit/README.md`, stage guides, templates, quick reference, pattern library, and discovery report template — establishing D1–D18 as the clean base
 - Then implement Improvement 11: add D19 (Rules File Template Alignment) as the new Advanced context dimension
