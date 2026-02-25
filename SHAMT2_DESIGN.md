@@ -1,6 +1,6 @@
 # SHAMT-2 Sync System Enhancements — Design
 
-**Status:** Q22 pending resolution (Q1–Q21 resolved 2026-02-24)
+**Status:** Design complete — all questions resolved (Q1–Q22, 2026-02-24)
 **Source:** Post-SHAMT-1 improvement analysis (2026-02-24)
 **Created:** 2026-02-24
 
@@ -186,14 +186,7 @@ This requires updating all references to dimension numbers throughout the audit 
 
 ## Open Questions
 
-### Q22 — D19: behavior when `rules_file_path.conf` path is stale or missing
-
-`rules_file_path.conf` stores an absolute path (written by init.sh using `$(pwd)` at init time). If the project directory has moved or was cloned to a different path, the stored path is stale and D19 cannot locate the child's rules file.
-
-What should D19 do when the stored path is invalid?
-
-- **A** — Skip D19 gracefully with a note ("rules file not found at stored path — re-run init to update `rules_file_path.conf`; D19 skipped") — consistent with the design-wide pattern of skipping gracefully on check failure
-- **B** — Flag as an audit finding (LOW severity) requiring the user to re-run init before D19 can run
+*All questions resolved — see Resolved Questions below.*
 
 ---
 
@@ -241,6 +234,8 @@ What should D19 do when the stored path is invalid?
 
 **Q21 → A:** D19 reads `.shamt/rules_file_path.conf` (written by init.sh at initialization time) to locate the child's rules file. This file already stores the full path to the rules file regardless of AI service.
 
+**Q22 → B:** If `rules_file_path.conf` doesn't exist or the path it contains points to a file that doesn't exist, D19 flags this as a LOW-severity audit finding: "Rules file not found at stored path — re-run init to update `rules_file_path.conf`." D19 cannot complete its check until the path is valid.
+
 ---
 
 ## Design Decisions
@@ -287,6 +282,7 @@ What should D19 do when the stored path is invalid?
 - Key sections to verify: Shamt Sync, Git Conventions (any section with Shamt-specific workflow guidance)
 - Implemented as new D19: Rules File Template Alignment
 - Rules file location: read `.shamt/rules_file_path.conf` (written by init.sh; stores full path regardless of AI service)
+- If path is missing or invalid: flag as LOW-severity audit finding; D19 cannot complete until path is valid (per Q22 → B)
 
 ### Audit Dimension Renumbering Order
 - Improvement 12 (renumber D1–D18) runs before Improvement 11 (add D19)
@@ -297,11 +293,10 @@ What should D19 do when the stored path is invalid?
 
 ## Proposed Implementation Phases
 
-### Phase 1 — Design Finalization (Q22 pending)
+### Phase 1 — Design Finalization ✅ Complete
 - Q1–Q14 resolved (2026-02-24)
 - Q15–Q19 resolved (2026-02-24)
-- Q20–Q21 resolved (2026-02-24)
-- Q22 pending resolution
+- Q20–Q22 resolved (2026-02-24)
 
 ### Phase 2 — Script Changes
 - Update `scripts/import/import.sh` and `import.ps1`: add freshness check (git fetch → compare → prompt), write `last_sync.conf`
@@ -350,7 +345,7 @@ What should D19 do when the stored path is invalid?
 | Q19 | Dimension renumbering — before or after Improvement 11 | Resolved → A |
 | Q20 | last_sync.conf gitignore — existing child projects | Resolved → B |
 | Q21 | D19 — locating the child's rules file | Resolved → A |
-| Q22 | D19 — behavior when rules_file_path.conf path is stale | Pending |
+| Q22 | D19 — behavior when rules_file_path.conf path is stale | Resolved → B |
 
 ---
 
