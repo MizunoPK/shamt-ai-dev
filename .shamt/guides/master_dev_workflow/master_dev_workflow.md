@@ -82,12 +82,19 @@ For master-internal improvements, commit directly to a branch and open a PR agai
 
 ---
 
-## Using Epic Tracking for Larger Work
+## Larger Changes: Branch + Design Doc
 
-For significant multi-guide changes, use the full SHAMT epic workflow:
+For multi-guide or cross-cutting changes, use a branch with an optional design doc:
 
-1. Create epic folder in `.shamt/epics/SHAMT-[N]-[name]/`
-2. Update `.shamt/epics/EPIC_TRACKER.md`
-3. Create branch: `feat/SHAMT-[N]`
-4. Follow S1-S10 stages as appropriate for the scope
-5. Merge branch to `main` — child projects will receive the changes on their next import run
+1. Create branch: `feat/SHAMT-[N]`
+2. For planning: create `SHAMT[N]_DESIGN.md` at the repo root (not in `.shamt/`) to capture scope, decisions, and open questions
+3. Make changes across the affected guides and scripts
+4. Run the full guide audit before merging (3 consecutive zero-issue rounds required)
+5. Open a PR against `main` — child projects receive the changes on their next import run
+
+**What NOT to do for master work:**
+- Do not maintain `.shamt/epics/EPIC_TRACKER.md` — SHAMT-N numbers are sequence markers, not epic IDs
+- Do not follow S1-S10 stage gates or phase transitions
+- Do not create epic folders in `.shamt/epics/`
+
+**Scope threshold:** Judgment call. Single-guide fix → lightweight workflow (Steps 1-5 above). Multi-guide or requires planning → branch + design doc. There is no formal gate between the two.

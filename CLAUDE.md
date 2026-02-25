@@ -34,10 +34,9 @@ shamt-ai-dev/
     │   ├── export/                     # export script
     │   └── import/                     # import script
     └── epics/
-        ├── EPIC_TRACKER.md             # master's own epic tracker
+        ├── EPIC_TRACKER.md             # not actively maintained for master work — see Master Dev Workflow
         ├── requests/
-        ├── done/
-        └── SHAMT-[N]-[name]/           # active epic folders
+        └── done/
 ```
 
 ---
@@ -65,7 +64,12 @@ For improving the guides directly:
 
 **Guide:** `.shamt/guides/master_dev_workflow/`
 
-This is a lighter process than the full S1–S10 epic workflow, aligned with S10's guide update approach. Use epic tracking in `.shamt/epics/` for significant multi-guide changes.
+Master work does **not** follow the S1-S10 epic workflow and does **not** use EPIC_TRACKER.md. The operating model:
+
+- **Small changes:** Lightweight workflow — read, fix, audit, commit directly to a branch, open PR
+- **Large changes:** Use a design doc at the repo root (e.g., `SHAMT3_DESIGN.md`) for planning, then work on a `feat/SHAMT-N` branch
+- **SHAMT-N numbers:** Sequence markers for change sets, not epic identifiers
+- **No stage gates:** Master work proceeds at judgment, not through S1-S10 phase transitions
 
 ---
 
@@ -94,5 +98,5 @@ When a new AI service is discovered (reported by a child project or user):
 - Zero autonomous conflict resolution — always escalate to user when uncertain
 - Run guide audit after every set of guide changes
 - Never approve child PRs that contain project-specific content in shared guide files
-- When any epic changes system behavior (new sync scripts, new guides, new audit scope, new workflow steps): review and update the three master-only files that are not propagated via import — `CLAUDE.md`, root `README.md`, and `scripts/initialization/RULES_FILE.template.md`
+- When any change affects system behavior (new sync scripts, new guides, new audit scope, new workflow steps): review and update the three master-only files that are not propagated via import — `CLAUDE.md`, root `README.md`, and `scripts/initialization/RULES_FILE.template.md`
 - Audits and validation loops require 3 CONSECUTIVE zero-issue rounds to exit — track `consecutive_clean` explicitly and state it at the end of every round; rounds with issues reset the counter to 0
