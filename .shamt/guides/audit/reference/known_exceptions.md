@@ -120,29 +120,15 @@ Audit Dimension D8 (Documentation Quality) checks for "## Prerequisites" and "##
 
 ---
 
-### Category B: S5 Design and Migration Documents (2 files)
+### Category B: S5 Design and Migration Documents (INACTIVE — files deleted)
 
 **Pattern:** Design plans and migration guides (not workflow execution guides)
 
-**Design Rationale:**
-- These are reference documents for understanding S5 v1→v2 transition
-- Not part of active workflow execution path
-- Provide historical context and design decisions
-- Prerequisites/Exit Criteria not applicable to reference documentation
+**Status:** These 2 files no longer exist in the repository. The S5 v1→v2 migration guide and S5 v2 design plan were deleted during S5 cleanup. This exception category is now inactive.
 
-**Missing Sections:** Prerequisites, Exit Criteria
+**Historical Note:** These were reference documents for the S5 v1 (22 iterations) → S5 v2 (Validation Loop) transition. The files lacked Prerequisites/Exit Criteria by design (not workflow execution guides).
 
-**Files:**
-
-   - Type: Migration guide
-   - Purpose: Help agents understand transition from S5 v1 (22 iterations) to S5 v2 (Validation Loop)
-   - Design: Comparison tables, side-by-side workflows, FAQ format
-
-   - Type: Design plan document
-   - Purpose: Document architectural decisions for S5 v2 design
-   - Design: Architecture, dimension definitions, validation loop design
-
-**Audit Action:** SKIP these files when checking D8 (Documentation Quality) - Prerequisites/Exit Criteria
+**Audit Action:** No action needed — files do not exist, exception is inactive.
 
 ---
 
@@ -290,21 +276,21 @@ wc -l real_violations.txt  # Should be low count
 
 ## Summary Statistics
 
-**Total Known Exceptions:** 19 files
+**Total Known Exceptions:** 19 files (historical count)
 
-**By Category:**
-- Category A (S5 Iteration Files): 14 files
-- Category B (S5 Design/Migration Documents): 2 files
-- Category C (Optional/Auxiliary): 3 files
+**Active Exceptions (files that still exist):**
+- Category C (Optional/Auxiliary): **3 active files** — these are the only exceptions that apply to current audits
 
-**Missing Sections:**
+**Inactive Exceptions (files deleted from filesystem):**
+- Category A (S5 Iteration Files): 14 files — DELETED (S5 v1 → v2 migration)
+- Category B (S5 Design/Migration Documents): 2 files — DELETED (no longer exist)
+
+**Missing Sections (historical — based on deleted files):**
 - Missing Prerequisites only: 5 files (s5 iterations 5, 5a, 6, 6a, 7 with inline statements)
 - Missing Exit Criteria only: 3 files (s3_parallel_work_sync, s4_feature_testing_card, s4_test_strategy_development)
 - Missing BOTH: 11 files (remaining s5 iteration files + 2 design docs)
 
-**Design Patterns:**
-- Router + Iteration: 14 files (S5 structure)
-- Design/Migration Reference: 2 files (S5 v1→v2 documentation)
+**Design Patterns (active only):**
 - Optional/Conditional: 1 file (s3_parallel_work_sync)
 - Reference Material: 2 files (s4_feature_testing_card, s4_test_strategy_development)
 
