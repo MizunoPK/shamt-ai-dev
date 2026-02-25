@@ -1,6 +1,6 @@
 # SHAMT-2 Sync System Enhancements — Design
 
-**Status:** Design complete — all questions resolved (2026-02-24)
+**Status:** Design complete — all questions resolved (Q1–Q21, 2026-02-24)
 **Source:** Post-SHAMT-1 improvement analysis (2026-02-24)
 **Created:** 2026-02-24
 
@@ -230,6 +230,10 @@ This requires updating all references to dimension numbers throughout the audit 
 
 **Q19 → A:** Renumber first (Improvement 12 before Improvement 11). Establish the clean D1–D18 scheme, then add D19 for Rules File Template Alignment as part of Improvement 11. The Advanced block will extend to D15–D19 after both improvements are complete.
 
+**Q20 → B:** Do not add gitignore handling to the import script. Init handles it for new projects. For existing child projects importing SHAMT-2, add a migration note to `import_workflow.md` instructing them to manually add `.shamt/last_sync.conf` to their `.gitignore`.
+
+**Q21 → A:** D19 reads `.shamt/rules_file_path.conf` (written by init.sh at initialization time) to locate the child's rules file. This file already stores the full path to the rules file regardless of AI service.
+
 ---
 
 ## Design Decisions
@@ -275,6 +279,7 @@ This requires updating all references to dimension numbers throughout the audit 
 - Structural + key content check: verify all major sections present AND critical guidance not removed or substantially altered
 - Key sections to verify: Shamt Sync, Git Conventions (any section with Shamt-specific workflow guidance)
 - Implemented as new D19: Rules File Template Alignment
+- Rules file location: read `.shamt/rules_file_path.conf` (written by init.sh; stores full path regardless of AI service)
 
 ### Audit Dimension Renumbering Order
 - Improvement 12 (renumber D1–D18) runs before Improvement 11 (add D19)
@@ -298,7 +303,7 @@ This requires updating all references to dimension numbers throughout the audit 
 - Update root `README.md` (minimal sync system pointer for first-time users)
 - Update `scripts/initialization/RULES_FILE.template.md` (when-to-import note, last_sync.conf reference, sync/README.md reference, shamt_master_path.conf maintenance note)
 - Update `guides/sync/export_workflow.md` (Step 1.5 mandatory audit; Common Situations shamt_master_path.conf note)
-- Update `guides/sync/import_workflow.md` (Common Situations shamt_master_path.conf note)
+- Update `guides/sync/import_workflow.md` (Common Situations `shamt_master_path.conf` note; SHAMT-2 migration note: manually add `.shamt/last_sync.conf` to `.gitignore` for existing projects)
 - Update `CLAUDE.md`: add full audit step to PR review checklist (Improvement 5); add master-only file update responsibility to Critical Rules section (Improvement 10)
 - Update `guides/audit/stages/stage_1_discovery.md` and `guides/audit/templates/discovery_report_template.md`: add `guides/sync/` and `RULES_FILE.template.md` to file coverage scope; define master vs child context; add master-context file coverage
 - Update `guides/master_dev_workflow/master_dev_workflow.md` (master-only file update step per Q15)
@@ -334,6 +339,8 @@ This requires updating all references to dimension numbers throughout the audit 
 | Q17 | Child context — rules file comparison depth | Resolved → B |
 | Q18 | Child context check — new dimension vs D8 extension | Resolved → A |
 | Q19 | Dimension renumbering — before or after Improvement 11 | Resolved → A |
+| Q20 | last_sync.conf gitignore — existing child projects | Resolved → B |
+| Q21 | D19 — locating the child's rules file | Resolved → A |
 
 ---
 
