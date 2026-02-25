@@ -202,8 +202,12 @@ grep -n "S[0-9]" CLAUDE.md | grep -o "S[0-9][0-9]*\(\.P[0-9][0-9]*\)\?\(\.I[0-9]
 | **D13: Dependencies** | Cross-file dependencies | 30% | After major refactors |
 | **D8: Quality** | Required sections, examples | 90% | General quality check |
 | **D9: Accuracy** | Claims vs reality | 70% | Content seems wrong |
+| **D14: Character/Format** | Banned Unicode chars | 100% | After editing any guide file |
 | **D16: Duplication** | DRY principle | 50% | Suspected duplicate content |
 | **D17: Accessibility** | Navigation, UX | 80% | Usability concerns |
+| **D18: Stage Flow** | Cross-stage consistency | 30% | After stage workflow changes |
+| **D19: Rules Alignment** | Rules file structure (child only) | 30% | After import — verify rules file |
+| **D20: Script Integrity** | Sync/init script correctness | 20% | After modifying sync/init scripts |
 
 **Recommended:** Start with D1-D2 (most common issues, highest automation)
 
