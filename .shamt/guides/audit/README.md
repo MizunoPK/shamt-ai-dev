@@ -188,7 +188,7 @@ The audit evaluates guides across **20 critical dimensions**:
 | **D17: Accessibility** | `dimensions/d17_accessibility_usability.md` | Navigation, UX | 80% automated |
 | **D18: Stage Flow Consistency** | `dimensions/d18_stage_flow_consistency.md` | Cross-stage behavior | 30% automated |
 | **D19: Rules File Template Alignment** | `dimensions/d19_rules_file_template_alignment.md` | Child rules file structure (child context only) | 30% automated |
-| **D20: Script Integrity** | `dimensions/d20_script_integrity.md` | Sync/init script correctness and parity | 20% automated |
+| **D20: Script Integrity** | `stages/stage_1_discovery.md` (D20 section) | Sync/init script correctness and parity | 20% automated |
 
 **Usage:** Read dimension guides as needed during discovery. Not all dimensions apply to every audit.
 

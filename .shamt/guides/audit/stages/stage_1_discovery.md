@@ -39,7 +39,7 @@
 
 ### Dimension Focus by Sub-Round
 
-**🚨 CRITICAL:** Only check dimensions assigned to your current sub-round. Do NOT check all 19 dimensions in one discovery phase.
+**🚨 CRITICAL:** Only check dimensions assigned to your current sub-round. Do NOT check all 20 dimensions in one discovery phase.
 
 #### Sub-Round N.1: Core Dimensions
 **Focus on:** D1, D2, D3, D4 (4 dimensions)
@@ -68,7 +68,7 @@
 - **D6: Content Completeness** - Missing sections, gaps, orphaned references
 - **D7: Template Currency** - Templates reflect current workflow and terminology
 - **D8: Documentation Quality** - Required sections present, no TODOs/placeholders
-- **D9: Content Accuracy** - Claims match reality (step counts, durations, etc.)
+- **D9: Content Accuracy** - Claims match reality (step counts, durations, etc.); for `export_workflow.md` and `import_workflow.md`, cross-reference each prose description of script behavior against the actual script to verify accuracy
 
 **Priority Order:**
 1. D6 first (find missing sections)
@@ -97,23 +97,25 @@
 5. D13 last (cross-file dependencies require D10-D12 clean)
 
 #### Sub-Round N.4: Advanced Dimensions
-**Focus on:** D15, D16, D17, D18, D19 (5 dimensions)
+**Focus on:** D15, D16, D17, D18, D19, D20 (6 dimensions)
 **Duration:** 60-90 minutes (full cycle)
 **Why Last:** Advanced checks require all other dimensions to be clean
 
 **Dimensions:**
 - **D15: Context-Sensitive Validation** - Distinguish errors from intentional exceptions
 - **D16: Duplication Detection** - No duplicate content or contradictory instructions
-- **D17: Accessibility** - Navigation aids, TOCs, scannable structure
+- **D17: Accessibility** - Navigation aids, TOCs, scannable structure; for guides with platform-specific commands (bash/PowerShell), verify each platform has a corresponding equivalent
 - **D18: Stage Flow Consistency** - Stage transitions, handoffs, next-guide references
 - **D19: Rules File Template Alignment** - Child rules file retains Shamt structural sections (**child context only** — skip in master context)
+- **D20: Script Integrity** - Sync scripts are functionally correct, parity between bash/PowerShell, output matches guide instructions (see D20 checklist in Priority 5 below)
 
 **Priority Order:**
-1. D17 first (accessibility - missing TOCs)
+1. D17 first (accessibility - missing TOCs and platform parity)
 2. D16 second (duplication detection)
 3. D18 third (stage flow and handoff accuracy)
 4. D15 fourth (context-sensitive validation requires understanding all content)
-5. D19 last (child context only; skip entirely if master context)
+5. D19 fifth (child context only; skip entirely if master context)
+6. D20 last (script integrity — manual review of sync scripts)
 
 ### How to Use This Section
 
@@ -134,7 +136,7 @@ Output: Discovery report with D1, D2, D3, D4 issues ONLY
 ```diff
 
 **Do NOT:**
-- ❌ Check all 19 dimensions in Sub-Round N.1
+- ❌ Check all 20 dimensions in Sub-Round N.1
 - ❌ Check D11 (file size) during Sub-Round N.1 (save for N.3)
 - ❌ Mix dimensions from different sub-rounds
 - ❌ Skip dimensions assigned to current sub-round
@@ -444,6 +446,9 @@ echo "=== Checking RULES_FILE.template.md ==="
 grep -rn "PATTERN" ../../scripts/initialization/RULES_FILE.template.md
 ```
 
+**Also check sync scripts for D20 (all contexts):**
+The four sync scripts (`export.sh`, `export.ps1`, `import.sh`, `import.ps1`) are in scope for D20 (Script Integrity) in Sub-Round N.4. They are not markdown files; the check is a manual code review using the D20 checklist below.
+
 **Master context — additional files (full dimension coverage):**
 When auditing the master repo (`.shamt/shamt_master_path.conf` absent), these master-only files are also in scope for all applicable audit dimensions:
 - `CLAUDE.md` (root) — already in Priority 1 above
@@ -578,6 +583,25 @@ for file in $(find stages -name "*.md"); do
   fi
 done
 ```
+
+**D20: Script Integrity Checklist (Sub-Round N.4)**
+
+Read each of the four sync scripts manually and verify:
+
+```text
+scripts/export/export.sh
+scripts/export/export.ps1
+scripts/import/import.sh
+scripts/import/import.ps1
+```
+
+Checklist for each script pair (bash + PowerShell):
+
+- [ ] All function calls in `.ps1` files resolve to functions defined in the script or PowerShell built-ins — no undefined function calls
+- [ ] Bash and PowerShell scripts are functionally equivalent — same logic, same behavior, same edge case handling
+- [ ] Script next-steps output (what the script prints to the user) matches the corresponding guide's step-by-step instructions
+- [ ] Transient output files written by the script (e.g. `import_diff*.md`, `last_sync.conf`) are listed in `.gitignore`
+- [ ] State writes (e.g. `write_last_sync`) happen before output generation and agent prompt — not at the very end where an interruption would skip them
 
 ---
 
@@ -721,7 +745,7 @@ done
 - Sub-Round N.1: D1 ✓, D2 ✓, D3 ✓, D4 ✓ (Core)
 - Sub-Round N.2: D5 ✓, D6 ✓, D7 ✓, D8 ✓, D9 ✓ (Content)
 - Sub-Round N.3: D10 ✓, D11 ✓, D12 ✓, D13 ✓, D14 ✓ (Structural)
-- Sub-Round N.4: D15 ✓, D16 ✓, D17 ✓, D18 ✓, D19 ✓ (Advanced; D19 child context only)
+- Sub-Round N.4: D15 ✓, D16 ✓, D17 ✓, D18 ✓, D19 ✓, D20 ✓ (Advanced; D19 child context only; D20 manual script review)
 
 ---
 
