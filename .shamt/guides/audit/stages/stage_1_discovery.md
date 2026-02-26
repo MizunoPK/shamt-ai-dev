@@ -614,7 +614,7 @@ Checklist for each script pair (bash + PowerShell):
 ```markdown
 ## Issue #N
 
-**Dimension:** [D1-D19]
+**Dimension:** [D1-D20]
 **File:** path/to/file.md
 **Line:** 123
 **Severity:** Critical/High/Medium/Low
