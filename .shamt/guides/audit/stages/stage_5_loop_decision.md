@@ -19,6 +19,8 @@
 7. [If Exiting Audit](#if-exiting-audit)
 8. [User Presentation](#user-presentation)
 9. [Commit Strategy](#commit-strategy)
+10. [Exit Criteria Decision Matrix](#exit-criteria-decision-matrix)
+11. [See Also](#see-also)
 
 ---
 
@@ -51,8 +53,7 @@
 │  • Round N complete → Proceed to Round N+1 (fresh eyes)         │
 │                                                                  │
 │  AUDIT LEVEL (After Round N complete):                          │
-│  • Minimum 3 rounds complete (12 sub-rounds total)              │
-│  • Latest round ZERO issues (all 4 sub-rounds clean)            │
+│  • 3 CONSECUTIVE zero-issue rounds (consecutive_clean >= 3)     │
 │  • ALL 9 exit criteria met → Consider exit                      │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -73,10 +74,10 @@
 - Use fresh patterns, different approach
 - Reset mental model between rounds
 
-**"Minimum 3 rounds" = 12 sub-rounds total:**
-- 3 rounds × 4 sub-rounds = 12 minimum cycles
-- Real exit trigger: Round with ALL sub-rounds clean + all criteria met
-- You may need 4-6 rounds (16-24 sub-rounds) until achieving clean round
+**"3 consecutive zero-issue rounds" = at minimum 12 sub-rounds total:**
+- Each clean round = 4 sub-rounds, so 3 clean rounds = 12 minimum cycles
+- Exit trigger: 3 CONSECUTIVE rounds all finding zero issues + all 9 criteria met
+- Rounds with issues reset the counter; you may need 5-8+ total rounds
 
 ### Why This Stage Matters
 
@@ -84,7 +85,7 @@
 - Agents naturally want to finish quickly
 - Premature exit = missed issues
 - "Are you sure?" from user = red flag
-- Minimum 3 rounds is NOT arbitrary - it's evidence-based
+- 3 consecutive zero-issue rounds is NOT arbitrary - it's evidence-based
 - SHAMT-7 needed **4 rounds** before achieving zero-issue round
 
 **From monolithic guide:**
@@ -147,19 +148,24 @@
 
 **If ANY N_new > 0 in any sub-round:** MUST loop same sub-round (mandatory)
 
-#### Criterion 4: Minimum Rounds (Sub-Round System)
-- [ ] Completed at least 3 complete rounds (12 sub-rounds total)
-  - [ ] Round 1: Sub-Rounds 1.1, 1.2, 1.3, 1.4 complete
-  - [ ] Round 2: Sub-Rounds 2.1, 2.2, 2.3, 2.4 complete
-  - [ ] Round 3: Sub-Rounds 3.1, 3.2, 3.3, 3.4 complete
+#### Criterion 4: 3 Consecutive Zero-Issue Rounds
+- [ ] Completed at least 3 CONSECUTIVE zero-issue rounds
+  - Track explicitly: `consecutive_clean = [current count]`
+  - Rounds that found issues do NOT count — counter resets to 0 on any issue
+  - [ ] Round with 0 issues — consecutive_clean = 1
+  - [ ] Round with 0 issues — consecutive_clean = 2
+  - [ ] Round with 0 issues — consecutive_clean = 3 ✓
 - [ ] Each round used different patterns than previous
 - [ ] Each sub-round focused on correct dimension set
 - [ ] Clear mental break between rounds (fresh perspective)
-- [ ] All 18 dimensions checked at least 3 times (once per round)
+- [ ] All 20 dimensions checked at least 3 times (once per clean round)
 
-**If Total Rounds < 3:** MUST loop (baseline requirement)
+**If consecutive_clean < 3:** MUST loop (regardless of total rounds completed)
 **If ANY sub-round skipped:** MUST loop (all 4 sub-rounds mandatory)
-**Note:** 3 rounds is minimum, NOT sufficient - must also have zero-issue round
+**If ANY round finds issues:** Reset consecutive_clean to 0 and loop
+
+**Critical distinction:** "Minimum 3 rounds" means 3 CONSECUTIVE zero-issue rounds.
+A round that found issues does not count. Rounds 1(issues), 2(issues), 3(clean) = consecutive_clean of 1, not 3.
 
 #### Criterion 5: All Remaining Documented
 - [ ] All remaining pattern matches are documented
@@ -255,8 +261,8 @@ criteria_met=0
 # Criterion 3: Zero new findings in Stage 4
 [ $N_new -eq 0 ] && ((criteria_met++))
 
-# Criterion 4: Minimum 3 rounds
-[ $round_number -ge 3 ] && ((criteria_met++))
+# Criterion 4: 3 consecutive zero-issue rounds
+[ $consecutive_clean -ge 3 ] && ((criteria_met++))
 
 # Criterion 5: All remaining documented
 [ $undocumented_matches -eq 0 ] && ((criteria_met++))
@@ -376,14 +382,14 @@ Run a focused mini-validation on only the audit files that were changed:
 **Checks to run per changed file:**
 - [ ] D1: No broken cross-references introduced
 - [ ] D2: Consistent terminology (no notation drift)
-- [ ] D9: Internal consistency within changed sections
-- [ ] D15: No duplication introduced
+- [ ] D10: Internal consistency within changed sections
+- [ ] D16: No duplication introduced
 
 **Process:**
 ```text
 For each changed audit file:
   1. Read the changed sections
-  2. Check D1 / D2 / D9 / D15
+  2. Check D1 / D2 / D10 / D16
   3. Issues found → fix immediately → re-check same file
   4. Clean → proceed to next file
 
@@ -530,7 +536,7 @@ The working file is temporary — **do NOT commit it.**
 |-----------|--------------|--------------|
 | D1: Cross-Reference | 20 | 20 |
 | D2: Terminology | 70 | 70 |
-| D10: File Size | 2 | 2 |
+| D11: File Size | 2 | 2 |
 [Continue for all dimensions with issues]
 
 ## Final Verification
@@ -579,7 +585,7 @@ The working file is temporary — **do NOT commit it.**
 - [x] Criterion 1: All issues resolved
 - [x] Criterion 2: Zero new discoveries
 - [x] Criterion 3: Zero verification findings
-- [x] Criterion 4: Minimum 3 rounds completed
+- [x] Criterion 4: 3 consecutive zero-issue rounds completed
 - [x] Criterion 5: All remaining documented
 - [x] Criterion 6: User verification passed
 - [x] Criterion 7: Confidence ≥ 80%
@@ -719,7 +725,7 @@ git diff --name-only main | grep "audit/outputs"
 | 1. All Issues Resolved | Count remaining issues | 0 | LOOP (not optional) |
 | 2. Zero New in Stage 1 | Stage 1 report | 0 issues | LOOP |
 | 3. Zero New in Stage 4 | N_new count | 0 | LOOP |
-| 4. Min Rounds | Count rounds | ≥ 3 | LOOP (not optional) |
+| 4. 3 Consecutive Zero-Issue Rounds | consecutive_clean | ≥ 3 | LOOP (not optional) |
 | 5. All Documented | Undocumented count | 0 | LOOP |
 | 6. User Approved | User response | No challenge | LOOP if challenged |
 | 7. Confidence | Self-assessment | ≥ 80% | LOOP |

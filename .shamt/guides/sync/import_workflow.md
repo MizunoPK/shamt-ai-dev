@@ -104,6 +104,11 @@ When the validation loop passes 3 clean rounds, delete all import diff files:
 rm -f .shamt/import_diff.md .shamt/import_diff_*.md
 ```
 
+```powershell
+# PowerShell:
+Remove-Item .shamt\import_diff.md, .shamt\import_diff_*.md -ErrorAction SilentlyContinue
+```
+
 Do not leave diff files in place after the import is complete — they are temporary and contain dated content.
 
 ---
@@ -143,3 +148,24 @@ Include only files that were part of the import or supplement updates. Do not bu
 **You're unsure whether something is a conflict:**
 - Default to updating your supplement to stay consistent with master
 - Only deviate if there is a specific, documented reason this project needs a different approach
+
+**Import script fails with "Master directory not found":**
+`.shamt/shamt_master_path.conf` is stale — the master repo has moved or you're on a different machine. Update the file with the current path to your local `shamt-ai-dev` clone:
+
+```bash
+echo "/path/to/shamt-ai-dev" > .shamt/shamt_master_path.conf
+```
+
+**SHAMT-2 migration — `.shamt/last_sync.conf` not in your `.gitignore`:**
+If your project was initialized before SHAMT-2, `.shamt/last_sync.conf` was not automatically gitignored at init time. The import script now writes this file after every run. Add it manually to your `.gitignore`:
+
+```
+.shamt/last_sync.conf
+```
+
+**SHAMT-3 migration — `.shamt/import_diff*.md` not in your `.gitignore`:**
+If your project was initialized before SHAMT-3, import diff files were not automatically gitignored at init time. The import script writes these files on every run. Add them manually to your `.gitignore`:
+
+```
+.shamt/import_diff*.md
+```

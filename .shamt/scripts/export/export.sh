@@ -46,9 +46,18 @@ echo "  To:   $MASTER_DIR"
 echo "============================================================"
 echo ""
 
+# --- Dirty tree check --------------------------------------------------------
+
+if ! git -C "$MASTER_DIR" diff --quiet 2>/dev/null || ! git -C "$MASTER_DIR" diff --cached --quiet 2>/dev/null; then
+    echo "  Warning: master working tree has uncommitted changes."
+    echo "  Exported files will be mixed with existing changes. Proceed with care."
+    echo ""
+fi
+
 # --- Compare and copy changed files ------------------------------------------
 
 EXPORTED=()
+DELETED=()
 
 export_dir() {
     local source_dir="$1"  # child's guides/ or scripts/
@@ -80,12 +89,35 @@ export_dir() {
     done < <(find "$source_dir" -type f -print0 | sort -z)
 }
 
+remove_from_master() {
+    local master_dir="$1"  # master's guides/ or scripts/
+
+    [ -d "$master_dir" ] || return 0
+
+    while IFS= read -r -d '' master_file; do
+        local rel_path="${master_file#"$MASTER_SHAMT_DIR/"}"
+
+        # Never touch audit outputs
+        if [[ "$rel_path" == "guides/audit/outputs/"* ]]; then
+            continue
+        fi
+
+        local child_file="$CHILD_SHAMT_DIR/$rel_path"
+        if [ ! -f "$child_file" ]; then
+            rm "$master_file"
+            DELETED+=("$rel_path")
+        fi
+    done < <(find "$master_dir" -type f -print0 | sort -z)
+}
+
 export_dir "$CHILD_SHAMT_DIR/guides" "$MASTER_SHAMT_DIR/guides" "guides"
 export_dir "$CHILD_SHAMT_DIR/scripts" "$MASTER_SHAMT_DIR/scripts" "scripts"
+remove_from_master "$MASTER_SHAMT_DIR/guides"
+remove_from_master "$MASTER_SHAMT_DIR/scripts"
 
 # --- Summary -----------------------------------------------------------------
 
-if [ ${#EXPORTED[@]} -eq 0 ]; then
+if [ ${#EXPORTED[@]} -eq 0 ] && [ ${#DELETED[@]} -eq 0 ]; then
     echo "  No differences found. Child is in sync with master."
     echo ""
     echo "============================================================"
@@ -93,12 +125,23 @@ if [ ${#EXPORTED[@]} -eq 0 ]; then
     exit 0
 fi
 
-echo "  Exported ${#EXPORTED[@]} file(s) to master:"
-echo ""
-for f in "${EXPORTED[@]}"; do
-    echo "    + $f"
-done
-echo ""
+if [ ${#EXPORTED[@]} -gt 0 ]; then
+    echo "  Exported ${#EXPORTED[@]} file(s) to master:"
+    echo ""
+    for f in "${EXPORTED[@]}"; do
+        echo "    + $f"
+    done
+    echo ""
+fi
+
+if [ ${#DELETED[@]} -gt 0 ]; then
+    echo "  Deleted ${#DELETED[@]} file(s) from master (not present in child):"
+    echo ""
+    for f in "${DELETED[@]}"; do
+        echo "    - $f"
+    done
+    echo ""
+fi
 
 # --- Next steps --------------------------------------------------------------
 
@@ -110,8 +153,9 @@ echo "  1. Go to the shamt-ai-dev directory:"
 echo "       cd $MASTER_DIR"
 echo ""
 echo "  2. Create a new branch and commit:"
+echo "       git checkout main"
 echo "       git checkout -b feat/child-sync-$(date +%Y%m%d)"
-echo "       git add .shamt/guides/ .shamt/scripts/"
+echo "       git add -A .shamt/guides/ .shamt/scripts/"
 echo "       git commit -m \"sync: guide/script improvements from child project\""
 echo ""
 echo "  3. Open a PR against main."

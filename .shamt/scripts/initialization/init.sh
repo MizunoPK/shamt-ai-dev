@@ -230,6 +230,18 @@ else
 fi
 echo "  ✓ .shamt/shamt_master_path.conf added to .gitignore (always)"
 
+# Always add last_sync.conf (operational state — never commit)
+if ! grep -qF ".shamt/last_sync.conf" "$GITIGNORE_FILE"; then
+    echo ".shamt/last_sync.conf" >> "$GITIGNORE_FILE"
+fi
+echo "  ✓ .shamt/last_sync.conf added to .gitignore (always)"
+
+# Always add import_diff*.md (transient diff files — never commit)
+if ! grep -qF ".shamt/import_diff" "$GITIGNORE_FILE"; then
+    echo ".shamt/import_diff*.md" >> "$GITIGNORE_FILE"
+fi
+echo "  ✓ .shamt/import_diff*.md added to .gitignore (always)"
+
 # Optionally gitignore .shamt/ and rules file
 if [ "$GITIGNORE_SHAMT" = "true" ]; then
     if ! grep -qF ".shamt/" "$GITIGNORE_FILE"; then

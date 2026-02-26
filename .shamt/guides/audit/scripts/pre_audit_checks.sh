@@ -2,17 +2,20 @@
 # Pre-Audit Automated Checks
 # Runs before manual audit to catch common structural issues
 #
-# Coverage: 11 of 18 dimensions (D1, D3, D8, D9, D10, D11, D13, D14, D16, D17, D18)
-# Estimated: 45-55% of typical issues (based on SHAMT-7 Round 1-2 data)
+# Coverage: 12 of 20 dimensions (D1, D3, D4, D8, D9, D10, D11, D12, D14, D17, D18, D20 partial)
+# Estimated: 45-55% of typical issues (based on SHAMT-2 Round 1-2 data)
 # NOT Checked: D2 (Terminology - requires pattern-specific search, see dimension guide)
+# NOT Checked: D5, D6, D7, D13, D15, D16, D19 (require manual audit); D20 mostly manual
 #
-# Last Updated: 2026-02-19 (D18 Addition)
+# Last Updated: 2026-02-25 (SHAMT-3: D20 added, sync/ scope extended, CHECK 13 gitignore check)
 # Changes:
 #   - Round 3: Simplified file size threshold from 3-tier (600/800/1000) to 1000-line baseline
-#   - Round 3: Added 17 known exceptions for Prerequisites/Exit Criteria checks (now 19 — see known_exceptions.md)
-#   - Meta-Audit: Increased baseline from 1000 → 1250 lines for comprehensive reference guides
+#   - Round 3: Added 17 known exceptions for Prerequisites/Exit Criteria checks (now 19 -- see known_exceptions.md)
+#   - Meta-Audit: Increased baseline from 1000 -> 1250 lines for comprehensive reference guides
 #   - Exceptions documented in audit/reference/known_exceptions.md
-#   - 2026-02-19: Added D18 Character and Format Compliance check (banned Unicode chars)
+#   - 2026-02-19: Added D14 Character and Format Compliance check (banned Unicode chars)
+#   - 2026-02-24: SHAMT-2 dimension renumbering; D19 Rules File Template Alignment added (manual only)
+#   - 2026-02-25: SHAMT-3 Phase 3 — D8/D11/D14 extended to cover sync/, D14 scans RULES_FILE.template.md, CHECK 13 gitignore verification (partial D20)
 
 # set -e  # Exit on error - DISABLED: causes premature exit in file size check loop
 
@@ -37,16 +40,16 @@ echo ""
 cd "$(dirname "$0")/../.." || exit 1
 
 # ============================================================================
-# CHECK 1: File Size Assessment (D10)
+# CHECK 1: File Size Assessment (D11)
 # ============================================================================
 
-echo -e "${BLUE}=== File Size Assessment (D10) ===${NC}"
+echo -e "${BLUE}=== File Size Assessment (D11) ===${NC}"
 echo ""
 
 TOO_LARGE=0
 LARGE=0
 
-for file in $(find stages -name "*.md"); do
+for file in $(find stages sync -name "*.md" 2>/dev/null); do
   lines=$(wc -l < "$file")
 
   if [ "$lines" -gt 1250 ]; then
@@ -71,7 +74,7 @@ echo "        - Meta-Audit (2026-02-05): Increased baseline to 1250 lines for co
 echo ""
 
 # ============================================================================
-# CHECK 1b: Policy Compliance - CLAUDE.md Character Limit (D10)
+# CHECK 1b: Policy Compliance - CLAUDE.md Character Limit (D11)
 # ============================================================================
 
 echo -e "${BLUE}=== Policy Compliance Check ===${NC}"
@@ -100,10 +103,10 @@ fi
 echo ""
 
 # ============================================================================
-# CHECK 2: Structure Validation (D11)
+# CHECK 2: Structure Validation (D12)
 # ============================================================================
 
-echo -e "${BLUE}=== Structure Validation (D11) ===${NC}"
+echo -e "${BLUE}=== Structure Validation (D12) ===${NC}"
 echo ""
 
 MISSING_PREREQ=0
@@ -112,27 +115,27 @@ MISSING_EXIT=0
 required_sections=("Prerequisites" "Exit Criteria" "Overview")
 
 # Known exceptions (documented in audit/reference/known_exceptions.md)
-# Category A: S5 iteration files (14 files)
 declare -a known_exceptions=(
-  "stages/s5/s5_p1_i3_integration.md"
-  "stages/s5/s5_p1_i3_iter5_dataflow.md"
-  "stages/s5/s5_p1_i3_iter5a_downstream.md"
-  "stages/s5/s5_p1_i3_iter6_errorhandling.md"
-  "stages/s5/s5_p1_i3_iter6a_dependencies.md"
-  "stages/s5/s5_p1_i3_iter7_integration.md"
-  "stages/s5/s5_p1_i3_iter7a_compatibility.md"
-  "stages/s5/s5_p3_i1_preparation.md"
-  "stages/s5/s5_p3_i1_iter17_phasing.md"
-  "stages/s5/s5_p3_i1_iter18_rollback.md"
-  "stages/s5/s5_p3_i1_iter19_traceability.md"
-  "stages/s5/s5_p3_i1_iter20_performance.md"
-  "stages/s5/s5_p3_i1_iter21_mockaudit.md"
-  "stages/s5/s5_p3_i1_iter22_consumers.md"
-  # Category B: Optional/auxiliary files (3 files)
+  # Category C: Optional/auxiliary files (3 files)
   "stages/s3/s3_parallel_work_sync.md"
   "stages/s4/s4_feature_testing_card.md"
   "stages/s4/s4_test_strategy_development.md"
 )
+
+# Self-check: warn if any known_exceptions entry no longer exists on disk.
+# Stale entries skew the "Known exceptions skipped" count and mislead future maintainers.
+STALE_EXCEPTIONS=0
+for exception in "${known_exceptions[@]}"; do
+  if [ ! -f "$exception" ]; then
+    echo -e "${YELLOW}⚠️  STALE EXCEPTION:${NC} '$exception' is listed in known_exceptions but does not exist on disk"
+    ((STALE_EXCEPTIONS++))
+  fi
+done
+if [ $STALE_EXCEPTIONS -gt 0 ]; then
+  echo -e "${RED}❌ $STALE_EXCEPTIONS stale known_exception(s) found — remove from pre_audit_checks.sh${NC}"
+  ((CRITICAL_ISSUES += STALE_EXCEPTIONS))
+  ((TOTAL_ISSUES += STALE_EXCEPTIONS))
+fi
 
 for file in stages/*/*.md; do
   # Skip known exceptions (documented design patterns)
@@ -165,28 +168,28 @@ for file in stages/*/*.md; do
 done
 
 if [ $MISSING_PREREQ -eq 0 ] && [ $MISSING_EXIT -eq 0 ]; then
-  echo -e "${GREEN}✅ All required sections present (excluding 19 known exceptions)${NC}"
+  echo -e "${GREEN}✅ All required sections present (excluding 3 known exceptions)${NC}"
 fi
 
 echo ""
 echo "Missing Prerequisites: $MISSING_PREREQ"
 echo "Missing Exit Criteria: $MISSING_EXIT"
-echo "Known exceptions skipped: 19 (see audit/reference/known_exceptions.md)"
+echo "Known exceptions skipped: 3 (see audit/reference/known_exceptions.md)"
 echo ""
 
 # ============================================================================
-# CHECK 3: Documentation Quality (D13)
+# CHECK 3: Documentation Quality (D8)
 # ============================================================================
 
-echo -e "${BLUE}=== Documentation Quality (D13) ===${NC}"
+echo -e "${BLUE}=== Documentation Quality (D8) ===${NC}"
 echo ""
 
-TODO_COUNT=$(grep -rc "TODO\|TBD\|FIXME" stages templates prompts reference 2>/dev/null | grep -v ":0" | wc -l)
-PLACEHOLDER_COUNT=$(grep -rc "\[placeholder\]\|\.\.\." stages templates prompts 2>/dev/null | grep -v ":0" | wc -l)
+TODO_COUNT=$(grep -rc "TODO\|TBD\|FIXME" stages templates prompts reference sync 2>/dev/null | grep -v ":0" | wc -l)
+PLACEHOLDER_COUNT=$(grep -rc "\[placeholder\]\|\.\.\." stages templates prompts sync 2>/dev/null | grep -v ":0" | wc -l)
 
 if [ "$TODO_COUNT" -gt 0 ]; then
   echo -e "${RED}❌ TODOs found:${NC}"
-  grep -rn "TODO\|TBD\|FIXME" stages templates prompts reference 2>/dev/null | grep -v ":0" | head -10
+  grep -rn "TODO\|TBD\|FIXME" stages templates prompts reference sync 2>/dev/null | grep -v ":0" | head -10
   echo ""
   ((CRITICAL_ISSUES += TODO_COUNT))
   ((TOTAL_ISSUES += TODO_COUNT))
@@ -196,7 +199,7 @@ fi
 
 if [ "$PLACEHOLDER_COUNT" -gt 0 ]; then
   echo -e "${YELLOW}⚠️  Placeholders found:${NC}"
-  grep -rn "\[placeholder\]" stages templates prompts 2>/dev/null | grep -v ":0" | head -10
+  grep -rn "\[placeholder\]" stages templates prompts sync 2>/dev/null | grep -v ":0" | head -10
   echo ""
   ((WARNING_ISSUES += PLACEHOLDER_COUNT))
   ((TOTAL_ISSUES += PLACEHOLDER_COUNT))
@@ -210,10 +213,10 @@ echo "Placeholders found: $PLACEHOLDER_COUNT"
 echo ""
 
 # ============================================================================
-# CHECK 4: Content Accuracy - File Counts (D14)
+# CHECK 4: Content Accuracy - File Counts (D9)
 # ============================================================================
 
-echo -e "${BLUE}=== Content Accuracy - File Counts (D14) ===${NC}"
+echo -e "${BLUE}=== Content Accuracy - File Counts (D9) ===${NC}"
 echo ""
 
 # Count actual templates
@@ -240,10 +243,10 @@ fi
 echo ""
 
 # ============================================================================
-# CHECK 5: Accessibility - TOC for Long Files (D16)
+# CHECK 5: Accessibility - TOC for Long Files (D17)
 # ============================================================================
 
-echo -e "${BLUE}=== Accessibility - TOC Check (D16) ===${NC}"
+echo -e "${BLUE}=== Accessibility - TOC Check (D17) ===${NC}"
 echo ""
 
 MISSING_TOC=0
@@ -300,10 +303,10 @@ fi
 echo ""
 
 # ============================================================================
-# CHECK 7: Code Block Language Tags (D16)
+# CHECK 7: Code Block Language Tags (D17)
 # ============================================================================
 
-echo -e "${BLUE}=== Code Block Language Tags (D16) ===${NC}"
+echo -e "${BLUE}=== Code Block Language Tags (D17) ===${NC}"
 echo ""
 
 # NOTE: Do NOT use `grep "^\`\`\`$"` — it matches closing fences (always bare ```),
@@ -353,10 +356,10 @@ fi
 echo ""
 
 # ============================================================================
-# CHECK 8: CLAUDE.md Sync Quick Check (D8)
+# CHECK 8: CLAUDE.md Sync Quick Check (D4)
 # ============================================================================
 
-echo -e "${BLUE}=== CLAUDE.md Sync Check (D8) ===${NC}"
+echo -e "${BLUE}=== CLAUDE.md Sync Check (D4) ===${NC}"
 echo ""
 
 # Check if CLAUDE.md exists
@@ -366,7 +369,7 @@ if [ -f "../../CLAUDE.md" ]; then
 
   if [ "$STAGE_REFS" -gt 0 ]; then
     echo -e "${GREEN}✅ CLAUDE.md found with $STAGE_REFS stage references${NC}"
-    echo "   (Full D8 validation required in manual audit)"
+    echo "   (Full D4 validation required in manual audit)"
   else
     echo -e "${YELLOW}⚠️  CLAUDE.md found but no stage references detected${NC}"
     ((WARNING_ISSUES++))
@@ -381,10 +384,10 @@ fi
 echo ""
 
 # ============================================================================
-# CHECK 9: Workflow Description Consistency (D3, D17)
+# CHECK 9: Workflow Description Consistency (D3, D18)
 # ============================================================================
 
-echo -e "${BLUE}=== Workflow Description Consistency (D3, D17) ===${NC}"
+echo -e "${BLUE}=== Workflow Description Consistency (D3, D18) ===${NC}"
 echo ""
 
 # Find all workflow sequence claims
@@ -404,10 +407,10 @@ fi
 echo ""
 
 # ============================================================================
-# CHECK 10: Prerequisite-Content Consistency (D9)
+# CHECK 10: Prerequisite-Content Consistency (D10)
 # ============================================================================
 
-echo -e "${BLUE}=== Prerequisite-Content Consistency (D9) ===${NC}"
+echo -e "${BLUE}=== Prerequisite-Content Consistency (D10) ===${NC}"
 echo ""
 
 PREREQ_CONFLICTS=0
@@ -438,10 +441,10 @@ fi
 echo ""
 
 # ============================================================================
-# CHECK 11: Stage Flow Consistency (D17)
+# CHECK 11: Stage Flow Consistency (D18)
 # ============================================================================
 
-echo -e "${BLUE}=== Stage Flow Consistency (D17) ===${NC}"
+echo -e "${BLUE}=== Stage Flow Consistency (D18) ===${NC}"
 echo ""
 
 echo "Checking S1 parallelization modes vs S2 router handling..."
@@ -457,24 +460,25 @@ grep -n "Sequential\|Parallel\|Group" stages/s2/s2_feature_deep_dive.md 2>/dev/n
 
 echo ""
 echo -e "${YELLOW}Verify all S1 modes are handled in S2 router${NC}"
-echo "(Full D17 validation required in manual audit)"
+echo "(Full D18 validation required in manual audit)"
 
 echo ""
 
 # ============================================================================
-# CHECK 12: Character and Format Compliance (D18)
+# CHECK 12: Character and Format Compliance (D14)
 # ============================================================================
 
-echo -e "${BLUE}=== Character and Format Compliance (D18) ===${NC}"
+echo -e "${BLUE}=== Character and Format Compliance (D14) ===${NC}"
 echo ""
 
 BANNED_CHAR_FILES=0
 REVIEW_CHAR_FILES=0
 
 # Use python3 to scan for banned Unicode characters
-# Category A/B: BANNED (checkboxes, curly quotes) → Critical violation
-# Category C: REVIEW (em/en dashes) → Warning only (acceptable in prose)
-python3 - <<'PYEOF'
+# Category A/B: BANNED (checkboxes, curly quotes) -> Critical violation
+# Category C: REVIEW (em/en dashes) -> Warning only (acceptable in prose)
+# PYTHONUTF8=1: force UTF-8 stdout on Windows (avoid cp1252 encoding errors with emoji/special chars)
+PYTHONUTF8=1 python3 - <<'PYEOF'
 import os
 import sys
 
@@ -508,16 +512,17 @@ review_total = 0
 
 # Known exceptions: files that intentionally contain banned chars as examples
 EXCEPTIONS = {
-    './audit/dimensions/d18_character_format_compliance.md',  # D18 guide shows the chars it bans
+    './audit/dimensions/d14_character_format_compliance.md',  # D14 guide shows the chars it bans
 }
 
 for root, dirs, files in os.walk('.'):
-    dirs[:] = [d for d in dirs if not d.startswith('.')]
+    # Skip hidden dirs and audit/outputs/ (transient historical files)
+    dirs[:] = [d for d in dirs if not d.startswith('.') and d != 'outputs']
     for fname in files:
         if not fname.endswith('.md'):
             continue
         fpath = os.path.join(root, fname)
-        if fpath in EXCEPTIONS:
+        if fpath.replace('\\', '/') in EXCEPTIONS:
             continue
         try:
             with open(fpath, encoding='utf-8') as f:
@@ -529,7 +534,7 @@ for root, dirs, files in os.walk('.'):
         for char, (display, name, replacement) in BANNED.items():
             count = content.count(char)
             if count > 0:
-                banned_hits.append(f"  {count}x {name} → replace with '{replacement}'")
+                banned_hits.append(f"  {count}x {name} -> replace with '{replacement}'")
                 banned_total += count
 
         if banned_hits:
@@ -542,7 +547,7 @@ for root, dirs, files in os.walk('.'):
         for char, (display, name, replacement) in REVIEW.items():
             count = content.count(char)
             if count > 0:
-                review_hits.append(f"  {count}x {name} (review — OK in prose, replace in lists/code)")
+                review_hits.append(f"  {count}x {name} (review - OK in prose, replace in lists/code)")
                 review_total += count
 
         if review_hits:
@@ -550,6 +555,41 @@ for root, dirs, files in os.walk('.'):
             print(f"{YELLOW}⚠️  REVIEW CHARS:{NC} {fpath}")
             for hit in review_hits:
                 print(hit)
+
+# Also scan extra files outside the guides tree
+EXTRA_FILES = ['../../scripts/initialization/RULES_FILE.template.md']
+for fpath in EXTRA_FILES:
+    if not os.path.isfile(fpath):
+        continue
+    if fpath in EXCEPTIONS:
+        continue
+    try:
+        with open(fpath, encoding='utf-8') as f:
+            content = f.read()
+    except Exception:
+        continue
+    banned_hits = []
+    for char, (display, name, replacement) in BANNED.items():
+        count = content.count(char)
+        if count > 0:
+            banned_hits.append(f"  {count}x {name} -> replace with '{replacement}'")
+            banned_total += count
+    if banned_hits:
+        banned_files += 1
+        print(f"{RED}❌ BANNED CHARS:{NC} {fpath}")
+        for hit in banned_hits:
+            print(hit)
+    review_hits = []
+    for char, (display, name, replacement) in REVIEW.items():
+        count = content.count(char)
+        if count > 0:
+            review_hits.append(f"  {count}x {name} (review - OK in prose, replace in lists/code)")
+            review_total += count
+    if review_hits:
+        review_files += 1
+        print(f"{YELLOW}⚠️  REVIEW CHARS:{NC} {fpath}")
+        for hit in review_hits:
+            print(hit)
 
 if banned_files == 0 and review_files == 0:
     print(f"{GREEN}✅ No banned or review Unicode characters found{NC}")
@@ -559,7 +599,7 @@ elif banned_files == 0:
 else:
     print(f"\nFiles with banned chars (CRITICAL): {banned_files}")
     print(f"Files with review chars (WARNING): {review_files}")
-    print("Fix: See audit/dimensions/d18_character_format_compliance.md for bulk replacement script")
+    print("Fix: See audit/dimensions/d14_character_format_compliance.md for bulk replacement script")
     sys.exit(1)
 
 # Signal review-only to caller
@@ -581,6 +621,53 @@ fi
 echo ""
 echo "Files with banned chars (critical): $BANNED_CHAR_FILES"
 echo "(See output above for full list of review-level chars)"
+echo ""
+
+# ============================================================================
+# CHECK 13: Gitignore Completeness (D20 partial)
+# ============================================================================
+
+echo -e "${BLUE}=== Gitignore Completeness (D20) ===${NC}"
+echo ""
+
+GITIGNORE_FILE="../../.gitignore"
+GITIGNORE_ISSUES=0
+
+if [ ! -f "$GITIGNORE_FILE" ]; then
+  echo -e "${YELLOW}⚠️  No .gitignore found at project root — cannot verify transient file entries${NC}"
+  ((WARNING_ISSUES++))
+  ((TOTAL_ISSUES++))
+  GITIGNORE_ISSUES=1
+else
+  if ! grep -qF ".shamt/import_diff" "$GITIGNORE_FILE"; then
+    echo -e "${RED}❌ .shamt/import_diff*.md is not in .gitignore${NC}"
+    echo "   Add: .shamt/import_diff*.md"
+    ((CRITICAL_ISSUES++))
+    ((TOTAL_ISSUES++))
+    GITIGNORE_ISSUES=1
+  fi
+
+  if ! grep -qF ".shamt/shamt_master_path.conf" "$GITIGNORE_FILE"; then
+    echo -e "${RED}❌ .shamt/shamt_master_path.conf is not in .gitignore${NC}"
+    echo "   Add: .shamt/shamt_master_path.conf"
+    ((CRITICAL_ISSUES++))
+    ((TOTAL_ISSUES++))
+    GITIGNORE_ISSUES=1
+  fi
+
+  if ! grep -qF ".shamt/last_sync.conf" "$GITIGNORE_FILE"; then
+    echo -e "${RED}❌ .shamt/last_sync.conf is not in .gitignore${NC}"
+    echo "   Add: .shamt/last_sync.conf"
+    ((CRITICAL_ISSUES++))
+    ((TOTAL_ISSUES++))
+    GITIGNORE_ISSUES=1
+  fi
+
+  if [ $GITIGNORE_ISSUES -eq 0 ]; then
+    echo -e "${GREEN}✅ All transient Shamt files are gitignored${NC}"
+  fi
+fi
+
 echo ""
 
 # ============================================================================

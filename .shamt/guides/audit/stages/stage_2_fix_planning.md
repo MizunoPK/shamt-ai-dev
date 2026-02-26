@@ -134,8 +134,8 @@ Group 2: Old Paths "stages/s5/round1/" → "stages/s5/s5_p1_"
 Total Issues: 45
 - D1 (Cross-Reference): 20 issues
 - D2 (Terminology): 18 issues
-- D10 (File Size): 2 issues
-- D13 (Documentation Quality): 5 issues
+- D11 (File Size): 2 issues
+- D8 (Documentation Quality): 5 issues
 ```
 
 **Grouped by Pattern:**
@@ -156,14 +156,14 @@ Total Issues: 45
 **Severity:** Critical
 **Automated:** Yes
 
-### Group 3: Missing Prerequisites Sections (D13)
+### Group 3: Missing Prerequisites Sections (D8)
 **Pattern:** N/A (requires manual addition)
 **Count:** 5 instances
 **Files:** 5 files
 **Severity:** Medium
 **Automated:** No
 
-### Group 4: Oversized Files (D10)
+### Group 4: Oversized Files (D11)
 **Pattern:** N/A (requires file split)
 **Count:** 2 instances
 **Files:** 2 files

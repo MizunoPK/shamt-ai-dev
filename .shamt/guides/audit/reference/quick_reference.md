@@ -26,7 +26,7 @@
 
 **I need to know WHEN to audit →** `audit_overview.md` → "When to Run Audits" section
 
-**I need to check ROOT FILE sync →** `dimensions/d8_claude_md_sync.md` → Automated + manual checks
+**I need to check ROOT FILE sync →** `dimensions/d4_claude_md_sync.md` → Automated + manual checks
 
 **I need PRE-BUILT PATTERNS →** See "Common Search Patterns" below or `reference/pattern_library.md` for comprehensive patterns
 
@@ -77,7 +77,7 @@ grep -rn "S[0-9]\.P[0-9]\.I[0-9]" --include="*.md" # S5.P1.I2 (correct format)
 
 ---
 
-### Count Patterns (D4)
+### Count Patterns (D5)
 
 ```bash
 # Find explicit counts that may be outdated
@@ -91,7 +91,7 @@ grep -rn "^- " --include="*.md"                    # Bullet lists
 
 ---
 
-### File Size Check (D10)
+### File Size Check (D11)
 
 ```bash
 # Find files over 1250 lines (potential readability issues)
@@ -110,7 +110,7 @@ done
 
 ---
 
-### CLAUDE.md Sync Check (D8)
+### CLAUDE.md Sync Check (D4)
 
 ```bash
 # Extract paths from CLAUDE.md
@@ -130,14 +130,15 @@ grep -n "S[0-9]" CLAUDE.md | grep -o "S[0-9][0-9]*\(\.P[0-9][0-9]*\)\?\(\.I[0-9]
 
 **ALL 9 must pass to exit audit:**
 
-- [ ] **Criterion 1:** Minimum 3 rounds completed with fresh eyes
+- [ ] **Criterion 1:** All issues resolved (zero open issues across all rounds)
 - [ ] **Criterion 2:** Stage 1 found ZERO new issues this round
 - [ ] **Criterion 3:** Stage 4 verification N_new = 0
-- [ ] **Criterion 4:** All N_remaining documented as intentional
-- [ ] **Criterion 5:** User has NOT challenged results
-- [ ] **Criterion 6:** Confidence ≥ 80%
-- [ ] **Criterion 7:** Pattern diversity ≥ 5 types used
-- [ ] **Criterion 8:** Spot-checks (10+ files) found 0 issues
+- [ ] **Criterion 4:** 3 consecutive zero-issue rounds completed (consecutive_clean >= 3)
+- [ ] **Criterion 5:** All N_remaining documented as intentional
+- [ ] **Criterion 6:** User has NOT challenged results
+- [ ] **Criterion 7:** Confidence ≥ 80%
+- [ ] **Criterion 8:** Pattern diversity ≥ 5 types used
+- [ ] **Criterion 9:** Spot-checks (10+ files) found 0 issues
 
 **If ANY checkbox is unchecked → LOOP to Round N+1**
 
@@ -190,19 +191,23 @@ grep -n "S[0-9]" CLAUDE.md | grep -o "S[0-9][0-9]*\(\.P[0-9][0-9]*\)\?\(\.I[0-9]
 | **D1: Cross-Reference** | File paths, links, stage refs | 90% | After renumbering, restructuring |
 | **D2: Terminology** | Notation, naming conventions | 80% | After notation changes |
 | **D3: Workflow** | Prerequisites, transitions | 40% | After workflow changes |
-| **D4: Count Accuracy** | File counts, list counts | 90% | After adding/removing files |
-| **D5: Completeness** | Missing sections, TODOs | 85% | After major updates |
-| **D6: Template Currency** | Template synchronization | 70% | After template changes |
-| **D7: Context-Sensitive** | Intentional exceptions | 20% | Advanced: distinguishing errors |
-| **D8: CLAUDE.md Sync** | Root file synchronization | 60% | After S10.P1 guide updates |
-| **D9: Intra-File** | Within-file consistency | 80% | File seems internally inconsistent |
-| **D10: File Size** | Readability limits | 100% | Files seem too large |
-| **D11: Structural** | Template compliance | 60% | After structural changes |
-| **D12: Dependencies** | Cross-file dependencies | 30% | After major refactors |
-| **D13: Quality** | Required sections, examples | 90% | General quality check |
-| **D14: Accuracy** | Claims vs reality | 70% | Content seems wrong |
-| **D15: Duplication** | DRY principle | 50% | Suspected duplicate content |
-| **D16: Accessibility** | Navigation, UX | 80% | Usability concerns |
+| **D5: Count Accuracy** | File counts, list counts | 90% | After adding/removing files |
+| **D6: Completeness** | Missing sections, TODOs | 85% | After major updates |
+| **D7: Template Currency** | Template synchronization | 70% | After template changes |
+| **D15: Context-Sensitive** | Intentional exceptions | 20% | Advanced: distinguishing errors |
+| **D4: CLAUDE.md Sync** | Root file synchronization | 60% | After S10.P1 guide updates |
+| **D10: Intra-File** | Within-file consistency | 80% | File seems internally inconsistent |
+| **D11: File Size** | Readability limits | 100% | Files seem too large |
+| **D12: Structural** | Template compliance | 60% | After structural changes |
+| **D13: Dependencies** | Cross-file dependencies | 30% | After major refactors |
+| **D8: Quality** | Required sections, examples | 90% | General quality check |
+| **D9: Accuracy** | Claims vs reality | 70% | Content seems wrong |
+| **D14: Character/Format** | Banned Unicode chars | 100% | After editing any guide file |
+| **D16: Duplication** | DRY principle | 50% | Suspected duplicate content |
+| **D17: Accessibility** | Navigation, UX | 80% | Usability concerns |
+| **D18: Stage Flow** | Cross-stage consistency | 30% | After stage workflow changes |
+| **D19: Rules Alignment** | Rules file structure (child only) | 30% | After import — verify rules file |
+| **D20: Script Integrity** | Sync/init script correctness | 20% | After modifying sync/init scripts |
 
 **Recommended:** Start with D1-D2 (most common issues, highest automation)
 
@@ -325,7 +330,7 @@ done
 - ✅ Zero nagging doubts
 
 ### 80-89%: High Confidence (Exit Threshold)
-- ✅ 3-4 rounds completed
+- ✅ consecutive_clean >= 3 (3+ consecutive zero-issue rounds)
 - ✅ 0 new issues this round
 - ✅ 5+ pattern types used
 - ✅ All folders checked
@@ -382,13 +387,13 @@ wc -l file.md  # Count lines
 ## Scenario Quick Lookup
 
 **"I just completed S10.P1 guide updates"**
-→ Run full audit focusing on D1, D2, D6, D8 (3-4 hours, 3-4 rounds)
+→ Run full audit focusing on D1, D2, D7, D4 (3-4 hours, 5-8 rounds typical)
 
 **"I just did stage renumbering"**
-→ Run full audit focusing on D1, D3, D6, D8, D12 (4-6 hours, 3-4 rounds min)
+→ Run full audit focusing on D1, D3, D7, D4, D13 (4-6 hours, 5-8 rounds typical)
 
 **"I just changed notation system"**
-→ Run full audit focusing on D2, D6, D7, D9 (3-5 hours, 3-4 rounds)
+→ Run full audit focusing on D2, D7, D15, D10 (3-5 hours, 5-8 rounds typical)
 
 **"User reported broken link"**
 → Spot-check (30 min), if widespread → Full D1 audit (2 hours)
@@ -403,7 +408,7 @@ wc -l file.md  # Count lines
 ```text
 ┌─────────────────────────────────────┐
 │  Are ALL 9 exit criteria TRUE?     │
-│  (Minimum 3 rounds, N_new=0, etc.)  │
+│  (consecutive_clean>=3, N_new=0, etc.) │
 └─────────┬───────────────────────────┘
           │
     ┌─────┴─────┐
@@ -432,7 +437,7 @@ wc -l file.md  # Count lines
 → Good! This is normal. Keep looping until Round N finds ZERO new issues. SHAMT-7 needed 4 rounds.
 
 **"Round 3 still found issues"**
-→ Continue to Round 4. Minimum 3 rounds is BASELINE, not target. Exit trigger is ZERO issues, not round count.
+→ Continue. Exit requires 3 CONSECUTIVE zero-issue rounds (consecutive_clean >= 3). Rounds with issues reset the counter to 0.
 
 **"User said 'are you sure?'"**
 → Immediately LOOP back to Round 1. User challenge = evidence you missed something. Do NOT defend previous work.
@@ -490,5 +495,5 @@ wc -l file.md  # Count lines
 
 **This quick reference provides common commands and checklists. For complete methodology, read the full guides.**
 
-**Last Updated:** 2026-02-02
+**Last Updated:** 2026-02-25
 **Version:** 1.0

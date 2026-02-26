@@ -46,6 +46,31 @@ echo "  To:   $CHILD_ROOT"
 echo "============================================================"
 echo ""
 
+# --- Freshness check ---------------------------------------------------------
+
+if git -C "$MASTER_DIR" fetch origin main --quiet 2>/dev/null; then
+    FRESHNESS_LOCAL=$(git -C "$MASTER_DIR" rev-parse main 2>/dev/null || echo "")
+    FRESHNESS_REMOTE=$(git -C "$MASTER_DIR" rev-parse origin/main 2>/dev/null || echo "")
+    if [ -n "$FRESHNESS_LOCAL" ] && [ -n "$FRESHNESS_REMOTE" ] && [ "$FRESHNESS_LOCAL" != "$FRESHNESS_REMOTE" ]; then
+        echo "  Warning: master repo's 'main' branch appears to be behind origin/main."
+        echo "  Consider running 'git pull' in: $MASTER_DIR"
+        echo ""
+        read -rp "  Proceed anyway? [y/N]: " _proceed
+        _proceed="${_proceed:-N}"
+        if [[ ! "$_proceed" =~ ^[Yy]$ ]]; then
+            echo "  Import cancelled."
+            echo ""
+            echo "============================================================"
+            echo ""
+            exit 0
+        fi
+        echo ""
+    fi
+else
+    echo "  No remote configured or fetch unavailable — skipping freshness check."
+    echo ""
+fi
+
 # --- Track changes -----------------------------------------------------------
 
 COPIED=()
@@ -57,6 +82,13 @@ cleanup() {
     rm -rf "$DIFF_DIR"
 }
 trap cleanup EXIT
+
+write_last_sync() {
+    local _sync_date _master_hash
+    _sync_date="$(date +%Y-%m-%d)"
+    _master_hash="$(git -C "$MASTER_DIR" rev-parse --short HEAD 2>/dev/null || echo "unknown")"
+    printf '%s | %s\n' "$_sync_date" "$_master_hash" > "$CHILD_SHAMT_DIR/last_sync.conf"
+}
 
 # --- Import from master (copy + track diffs) ---------------------------------
 
@@ -124,12 +156,23 @@ remove_deleted() {
         if [ ! -f "$master_file" ]; then
             rm "$child_file"
             DELETED+=("$rel_path")
+            # Remove empty parent directories
+            local dir
+            dir="$(dirname "$child_file")"
+            while [ "$dir" != "$CHILD_SHAMT_DIR" ] && [ -d "$dir" ] && [ -z "$(ls -A "$dir")" ]; do
+                rmdir "$dir"
+                dir="$(dirname "$dir")"
+            done
         fi
     done < <(find "$child_dir" -type f -print0 | sort -z)
 }
 
 remove_deleted "$CHILD_SHAMT_DIR/guides" "$MASTER_SHAMT_DIR/guides" "guides/audit/outputs"
 remove_deleted "$CHILD_SHAMT_DIR/scripts" "$MASTER_SHAMT_DIR/scripts" ""
+
+# Record sync state now — before diff generation and output, so a script
+# interruption after syncing still produces an accurate last_sync.conf.
+write_last_sync
 
 # --- Write diff file(s) ------------------------------------------------------
 
@@ -181,6 +224,7 @@ fi
 # --- Summary -----------------------------------------------------------------
 
 if [ ${#COPIED[@]} -eq 0 ] && [ ${#DELETED[@]} -eq 0 ]; then
+    write_last_sync
     echo "  Already up to date. No changes from master."
     echo ""
     echo "============================================================"

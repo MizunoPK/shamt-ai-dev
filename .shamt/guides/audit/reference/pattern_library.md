@@ -2,7 +2,7 @@
 
 **Purpose:** Pre-built search patterns organized by category for efficient audit discovery
 **Audience:** Agents conducting quality audits
-**Last Updated:** 2026-02-06
+**Last Updated:** 2026-02-25
 
 ---
 
@@ -12,15 +12,15 @@
 2. [File Path Patterns (D1)](#file-path-patterns-d1)
 3. [Notation Patterns (D2)](#notation-patterns-d2)
 4. [Stage Reference Patterns (D3)](#stage-reference-patterns-d3)
-5. [Count Verification Patterns (D4)](#count-verification-patterns-d4)
-6. [Template Patterns (D6)](#template-patterns-d6)
-7. [File Size Patterns (D10)](#file-size-patterns-d10)
-8. [Documentation Patterns (D13)](#documentation-patterns-d13)
-9. [Content Accuracy Patterns (D14)](#content-accuracy-patterns-d14)
-10. [Navigation Patterns (D16)](#navigation-patterns-d16)
-11. [Workflow Description Patterns (D3, D17)](#workflow-description-patterns-d3-d17)
-12. [Contradiction Detection Patterns (D15, D17)](#contradiction-detection-patterns-d15-d17)
-13. [Stage Flow Consistency Patterns (D17)](#stage-flow-consistency-patterns-d17)
+5. [Count Verification Patterns (D5)](#count-verification-patterns-d5)
+6. [Template Patterns (D7)](#template-patterns-d7)
+7. [File Size Patterns (D11)](#file-size-patterns-d11)
+8. [Documentation Patterns (D8)](#documentation-patterns-d8)
+9. [Content Accuracy Patterns (D9)](#content-accuracy-patterns-d9)
+10. [Navigation Patterns (D17)](#navigation-patterns-d17)
+11. [Workflow Description Patterns (D3, D18)](#workflow-description-patterns-d3-d18)
+12. [Contradiction Detection Patterns (D16, D18)](#contradiction-detection-patterns-d16-d18)
+13. [Stage Flow Consistency Patterns (D18)](#stage-flow-consistency-patterns-d18)
 
 ---
 
@@ -37,9 +37,9 @@ cd .shamt/guides/audit
 ```
 
 **Pattern Categories:**
-- **High Frequency:** D1, D2, D13 (use every audit round)
-- **Medium Frequency:** D3, D4, D6, D10, D14, D16 (use based on trigger event)
-- **Context-Specific:** D7, D9, D11, D12, D15 (use when issues suspected)
+- **High Frequency:** D1, D2, D8 (use every audit round)
+- **Medium Frequency:** D3, D5, D7, D11, D9, D17 (use based on trigger event)
+- **Context-Specific:** D15, D10, D12, D13, D16 (use when issues suspected)
 
 **Round-by-Round Strategy:**
 - **Round 1:** Use exact patterns (Type 1 from each category)
@@ -204,7 +204,7 @@ grep -rn "After completing.*S[0-9]\|Before starting.*S[0-9]\|Once.*S[0-9].*compl
 
 ---
 
-## Count Verification Patterns (D4)
+## Count Verification Patterns (D5)
 
 ### Pattern 4.1: Explicit Counts
 
@@ -216,11 +216,11 @@ grep -rn "[0-9]+ files\|[0-9]+ stages\|[0-9]+ iterations\|[0-9]+ rounds" --inclu
 ### Pattern 4.2: Dimension Count Claims
 
 ```bash
-# Should be 18 dimensions
-grep -rn "18 dimensions\|all 18\|18 critical" --include="*.md" .
+# Should be 20 dimensions
+grep -rn "20 dimensions\|all 20\|20 critical" --include="*.md" .
 
-# Check for old counts (if previously different)
-grep -rn "14 dimensions\|15 dimensions" --include="*.md" .
+# Check for old counts (stale references to previous dimension counts)
+grep -rn "19 dimensions\|all 19\|19 critical\|18 dimensions\|all 18\|18 critical\|16 dimensions\|16 critical\|14 dimensions\|15 dimensions" --include="*.md" .
 ```
 
 ### Pattern 4.3: Stage Count Claims
@@ -242,7 +242,7 @@ grep -rn "22 iterations" --include="*.md" .
 
 ---
 
-## Template Patterns (D6)
+## Template Patterns (D7)
 
 ### Pattern 6.1: Template File References
 
@@ -263,7 +263,7 @@ grep -rh "templates/.*\.md" --include="*.md" . | grep -o "templates/[^)]*\.md" |
 
 ---
 
-## File Size Patterns (D10)
+## File Size Patterns (D11)
 
 ### Pattern 10.1: Files Exceeding Line Limit
 
@@ -294,7 +294,7 @@ done
 
 ---
 
-## Documentation Patterns (D13)
+## Documentation Patterns (D8)
 
 ### Pattern 13.1: Missing TOC
 
@@ -340,7 +340,7 @@ done
 
 ---
 
-## Content Accuracy Patterns (D14)
+## Content Accuracy Patterns (D9)
 
 ### Pattern 14.1: Duration Claims
 
@@ -358,7 +358,7 @@ grep -rn "[0-9]+ steps\|Step [0-9]+\|steps [0-9]+-[0-9]+" --include="*.md" .
 
 ---
 
-## Navigation Patterns (D16)
+## Navigation Patterns (D17)
 
 ### Pattern 16.1: Broken Anchors
 
@@ -467,7 +467,7 @@ grep -rn -i "next.*stage [0-9]" --include="*.md" .
 
 ---
 
-## Workflow Description Patterns (D3, D17)
+## Workflow Description Patterns (D3, D18)
 
 ### Pattern W1: Stage Sequence Descriptions
 
@@ -511,7 +511,7 @@ done
 
 ---
 
-## Contradiction Detection Patterns (D15, D17)
+## Contradiction Detection Patterns (D16, D18)
 
 ### Pattern C1: Find Contradictory Keywords
 
@@ -554,9 +554,9 @@ done
 
 ---
 
-## Stage Flow Consistency Patterns (D17)
+## Stage Flow Consistency Patterns (D18)
 
-### Pattern D17.1: Handoff Promise Validation
+### Pattern D18.1: Handoff Promise Validation
 
 ```bash
 # Extract what Stage N promises
@@ -566,7 +566,7 @@ grep -A 15 "^## Next Stage\|^## Outputs\|^## Exit Criteria" ../stages/sN/*.md
 grep -A 15 "^## Prerequisites\|^## Inputs\|^## Entry" ../stages/s(N+1)/*.md
 ```
 
-### Pattern D17.2: Workflow Behavior Alignment
+### Pattern D18.2: Workflow Behavior Alignment
 
 ```bash
 # Extract workflow descriptions from all stages
@@ -575,7 +575,7 @@ grep -rn "proceed\|after.*complete\|when.*done\|workflow" --include="*.md" ../st
 # Compare: Do connected stages describe same workflow?
 ```
 
-### Pattern D17.3: Conditional Logic Coverage
+### Pattern D18.3: Conditional Logic Coverage
 
 ```bash
 # Find all conditional logic
@@ -589,7 +589,7 @@ echo "=== S2 router handling ==="
 grep -n "Sequential\|Parallel\|Group" ../stages/s2/s2_feature_deep_dive.md
 ```
 
-### Pattern D17.4: Scope Alignment Validation
+### Pattern D18.4: Scope Alignment Validation
 
 ```bash
 # Check scope at each stage exit

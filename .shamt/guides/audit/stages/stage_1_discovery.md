@@ -39,10 +39,10 @@
 
 ### Dimension Focus by Sub-Round
 
-**🚨 CRITICAL:** Only check dimensions assigned to your current sub-round. Do NOT check all 18 dimensions in one discovery phase.
+**🚨 CRITICAL:** Only check dimensions assigned to your current sub-round. Do NOT check all 20 dimensions in one discovery phase.
 
 #### Sub-Round N.1: Core Dimensions
-**Focus on:** D1, D2, D3, D8 (4 dimensions)
+**Focus on:** D1, D2, D3, D4 (4 dimensions)
 **Duration:** 60-90 minutes (full cycle)
 **Why First:** Broken references and inconsistent notation affect all other checks
 
@@ -50,68 +50,72 @@
 - **D1: Cross-Reference Accuracy** - File paths, links, stage references
 - **D2: Terminology Consistency** - Notation (S#.P#.I#), naming conventions
 - **D3: Workflow Integration** - Prerequisites, stage transitions, workflow continuity
-- **D8: CLAUDE.md Sync** - Root file content matches guide content
+- **D4: CLAUDE.md Sync** - Root file content matches guide content
 
 **Priority Order:**
 1. D1 first (broken references block other work)
 2. D2 second (notation consistency needed for D3)
 3. D3 third (workflow integration depends on correct references)
-4. D8 last (root file sync validates D1-D3)
+4. D4 last (root file sync validates D1-D3)
 
 #### Sub-Round N.2: Content Quality Dimensions
-**Focus on:** D4, D5, D6, D13, D14 (5 dimensions)
+**Focus on:** D5, D6, D7, D8, D9 (5 dimensions)
 **Duration:** 75-120 minutes (full cycle)
 **Why Second:** Content fixes may reveal structural issues
 
 **Dimensions:**
-- **D4: Count Accuracy** - File counts, iteration counts, stage counts
-- **D5: Content Completeness** - Missing sections, gaps, orphaned references
-- **D6: Template Currency** - Templates reflect current workflow and terminology
-- **D13: Documentation Quality** - Required sections present, no TODOs/placeholders
-- **D14: Content Accuracy** - Claims match reality (step counts, durations, etc.)
+- **D5: Count Accuracy** - File counts, iteration counts, stage counts
+- **D6: Content Completeness** - Missing sections, gaps, orphaned references
+- **D7: Template Currency** - Templates reflect current workflow and terminology
+- **D8: Documentation Quality** - Required sections present, no TODOs/placeholders
+- **D9: Content Accuracy** - Claims match reality (step counts, durations, etc.); for `export_workflow.md` and `import_workflow.md`, cross-reference each prose description of script behavior against the actual script to verify accuracy
 
 **Priority Order:**
-1. D5 first (find missing sections)
-2. D13 second (validate required sections present)
-3. D4 third (verify counts accurate)
-4. D14 fourth (validate claims vs reality)
-5. D6 last (templates match current state)
+1. D6 first (find missing sections)
+2. D8 second (validate required sections present)
+3. D5 third (verify counts accurate)
+4. D9 fourth (validate claims vs reality)
+5. D7 last (templates match current state)
 
 #### Sub-Round N.3: Structural Dimensions
-**Focus on:** D9, D10, D11, D12, D18 (5 dimensions)
+**Focus on:** D10, D11, D12, D13, D14 (5 dimensions)
 **Duration:** 60-90 minutes (full cycle)
 **Why Third:** Structure depends on correct content and references
 
 **Dimensions:**
-- **D9: Intra-File Consistency** - Within-file quality (formatting, headers, etc.)
-- **D10: File Size Assessment** - Files within readable limits (CLAUDE.md <40K, guides <1250 lines)
-- **D11: Structural Patterns** - Guides follow expected template structures
-- **D12: Cross-File Dependencies** - Stage prerequisites match outputs, workflow continuity
-- **D18: Character and Format Compliance** - No Unicode checkboxes, curly quotes, or other banned non-ASCII chars
+- **D10: Intra-File Consistency** - Within-file quality (formatting, headers, etc.)
+- **D11: File Size Assessment** - Files within readable limits (CLAUDE.md <40K, guides <1250 lines)
+- **D12: Structural Patterns** - Guides follow expected template structures
+- **D13: Cross-File Dependencies** - Stage prerequisites match outputs, workflow continuity
+- **D14: Character and Format Compliance** - No Unicode checkboxes, curly quotes, or other banned non-ASCII chars
 
 **Priority Order:**
-1. D10 first (file size issues may require splitting)
-2. D18 second (character compliance — 100% automated, run pre-audit script)
-3. D11 third (structural patterns)
-4. D9 fourth (intra-file consistency)
-5. D12 last (cross-file dependencies require D9-D11 clean)
+1. D11 first (file size issues may require splitting)
+2. D14 second (character compliance — 100% automated, run pre-audit script)
+3. D12 third (structural patterns)
+4. D10 fourth (intra-file consistency)
+5. D13 last (cross-file dependencies require D10-D12 clean)
 
 #### Sub-Round N.4: Advanced Dimensions
-**Focus on:** D7, D15, D16, D17 (4 dimensions)
+**Focus on:** D15, D16, D17, D18, D19, D20 (6 dimensions)
 **Duration:** 60-90 minutes (full cycle)
 **Why Last:** Advanced checks require all other dimensions to be clean
 
 **Dimensions:**
-- **D7: Context-Sensitive Validation** - Distinguish errors from intentional exceptions
-- **D15: Duplication Detection** - No duplicate content or contradictory instructions
-- **D16: Accessibility** - Navigation aids, TOCs, scannable structure
-- **D17: Stage Flow Consistency** - Stage transitions, handoffs, next-guide references
+- **D15: Context-Sensitive Validation** - Distinguish errors from intentional exceptions
+- **D16: Duplication Detection** - No duplicate content or contradictory instructions
+- **D17: Accessibility** - Navigation aids, TOCs, scannable structure; for guides with platform-specific commands (bash/PowerShell), verify each platform has a corresponding equivalent
+- **D18: Stage Flow Consistency** - Stage transitions, handoffs, next-guide references
+- **D19: Rules File Template Alignment** - Child rules file retains Shamt structural sections (**child context only** — skip in master context)
+- **D20: Script Integrity** - Sync scripts are functionally correct, parity between bash/PowerShell, output matches guide instructions (**all contexts** — see D20 checklist in Priority 5 below)
 
 **Priority Order:**
-1. D16 first (accessibility - missing TOCs)
-2. D15 second (duplication detection)
-3. D17 third (stage flow and handoff accuracy)
-4. D7 last (context-sensitive validation requires understanding all content)
+1. D17 first (accessibility - missing TOCs and platform parity)
+2. D16 second (duplication detection)
+3. D18 third (stage flow and handoff accuracy)
+4. D15 fourth (context-sensitive validation requires understanding all content)
+5. D19 fifth (child context only; skip entirely if master context)
+6. D20 last (script integrity — manual review of sync scripts)
 
 ### How to Use This Section
 
@@ -124,16 +128,16 @@
 
 **Example:**
 ```text
-Current: Sub-Round 2.1 (Core Dimensions)
-Focus: D1, D2, D3, D8
-Read: d1_cross_reference_accuracy.md, d2_terminology_consistency.md, d3_workflow_integration.md, d8_claude_md_sync.md
+Current: Sub-Round N.1 (Core Dimensions)
+Focus: D1, D2, D3, D4
+Read: d1_cross_reference_accuracy.md, d2_terminology_consistency.md, d3_workflow_integration.md, d4_claude_md_sync.md
 Search: File paths, old notation, prerequisite chains, CLAUDE.md vs guides
-Output: Discovery report with D1, D2, D3, D8 issues ONLY
+Output: Discovery report with D1, D2, D3, D4 issues ONLY
 ```diff
 
 **Do NOT:**
-- ❌ Check all 18 dimensions in Sub-Round N.1
-- ❌ Check D10 (file size) during Sub-Round N.1 (save for N.3)
+- ❌ Check all 20 dimensions in Sub-Round N.1
+- ❌ Check D11 (file size) during Sub-Round N.1 (save for N.3)
 - ❌ Mix dimensions from different sub-rounds
 - ❌ Skip dimensions assigned to current sub-round
 
@@ -278,8 +282,8 @@ Changes:
 Focus on common issue types:
 - Cross-references (D1)
 - Terminology (D2)
-- File sizes (D10)
-- Missing sections (D13)
+- File sizes (D11)
+- Missing sections (D8)
 - Run automated pre-checks first
 
 ### STEP 2: List All Old Patterns
@@ -387,6 +391,18 @@ grep -rn "[PATTERN]" [LOCATION] --include="*.md" [OPTIONS]
 
 ## Discovery Execution
 
+### Audit Context: Master vs Child
+
+**Before starting discovery, identify your audit context:**
+
+Check whether `.shamt/shamt_master_path.conf` exists in the project root:
+- **File absent** → you are auditing the **master Shamt repo** (master context)
+- **File present** → you are auditing a **child project** (child context)
+
+Context determines which files are in scope for full dimension coverage (see Priority 1 below).
+
+---
+
 ### Priority 1: Critical Files (Highest Impact)
 
 **Files that propagate errors to new epics:**
@@ -413,6 +429,31 @@ grep -rn "PATTERN" README.md EPIC_WORKFLOW_USAGE.md
 ```bash
 
 **Why templates first?** Template errors multiply - every new epic created gets the error.
+
+**Also check guides/sync/ (all contexts):**
+The sync guides (`README.md`, `separation_rule.md`, `export_workflow.md`, `import_workflow.md`) are `.md` guide files subject to the same audit dimensions as all other guides. Include `guides/sync/` in every audit run.
+
+```bash
+echo "=== Checking guides/sync/ ==="
+grep -rn "PATTERN" sync/ --include="*.md"
+```
+
+**Also check RULES_FILE.template.md (all contexts):**
+`scripts/initialization/RULES_FILE.template.md` is copied to every new child project at init time as the agent's rules file. Quality issues in this file propagate to all new projects. Include it in every audit run.
+
+```bash
+echo "=== Checking RULES_FILE.template.md ==="
+grep -rn "PATTERN" ../../scripts/initialization/RULES_FILE.template.md
+```
+
+**Also check sync scripts for D20 (all contexts):**
+The four sync scripts (`export.sh`, `export.ps1`, `import.sh`, `import.ps1`) are in scope for D20 (Script Integrity) in Sub-Round N.4. They are not markdown files; the check is a manual code review using the D20 checklist below.
+
+**Master context — additional files (full dimension coverage):**
+When auditing the master repo (`.shamt/shamt_master_path.conf` absent), these master-only files are also in scope for all applicable audit dimensions:
+- `CLAUDE.md` (root) — already in Priority 1 above
+- Root `README.md` — also already in Priority 1 above
+- `scripts/initialization/RULES_FILE.template.md` — already added above
 
 ### Priority 2: Systematic Folder Search
 
@@ -530,7 +571,7 @@ while read path; do
 done < /tmp/all_refs.txt
 ```bash
 
-**Example: D10 File Size Assessment**
+**Example: D11 File Size Assessment**
 ```bash
 # Check for oversized files
 for file in $(find stages -name "*.md"); do
@@ -543,6 +584,25 @@ for file in $(find stages -name "*.md"); do
 done
 ```
 
+**D20: Script Integrity Checklist (Sub-Round N.4)**
+
+Read each of the four sync scripts manually and verify:
+
+```text
+scripts/export/export.sh
+scripts/export/export.ps1
+scripts/import/import.sh
+scripts/import/import.ps1
+```
+
+Checklist for each script pair (bash + PowerShell):
+
+- [ ] All function calls in `.ps1` files resolve to functions defined in the script or PowerShell built-ins — no undefined function calls
+- [ ] Bash and PowerShell scripts are functionally equivalent — same logic, same behavior, same edge case handling
+- [ ] Script next-steps output (what the script prints to the user) matches the corresponding guide's step-by-step instructions
+- [ ] Transient output files written by the script (e.g. `import_diff*.md`, `shamt_master_path.conf`, `last_sync.conf`) are listed in `.gitignore`
+- [ ] State writes (e.g. `write_last_sync`) happen before output generation and agent prompt — not at the very end where an interruption would skip them
+
 ---
 
 ## Documentation Format
@@ -554,7 +614,7 @@ done
 ```markdown
 ## Issue #N
 
-**Dimension:** [D1-D16]
+**Dimension:** [D1-D20]
 **File:** path/to/file.md
 **Line:** 123
 **Severity:** Critical/High/Medium/Low
@@ -606,7 +666,7 @@ done
 |-----------|--------------|-------------------|
 | D1: Cross-Reference | 15 | 10 Critical, 5 High |
 | D2: Terminology | 8 | 3 High, 5 Medium |
-| D10: File Size | 2 | 2 Medium |
+| D11: File Size | 2 | 2 Medium |
 | **TOTAL** | **25** | **13 C, 8 H, 6 M** |
 
 ## Issues by Dimension
@@ -682,10 +742,10 @@ done
 **If ANY criterion incomplete:** Continue discovery until all complete.
 
 **Sub-Round Dimension Checklist:**
-- Sub-Round N.1: D1 ✓, D2 ✓, D3 ✓, D8 ✓ (Core)
-- Sub-Round N.2: D4 ✓, D5 ✓, D6 ✓, D13 ✓, D14 ✓ (Content)
-- Sub-Round N.3: D9 ✓, D10 ✓, D11 ✓, D12 ✓, D18 ✓ (Structural)
-- Sub-Round N.4: D7 ✓, D15 ✓, D16 ✓, D17 ✓ (Advanced)
+- Sub-Round N.1: D1 ✓, D2 ✓, D3 ✓, D4 ✓ (Core)
+- Sub-Round N.2: D5 ✓, D6 ✓, D7 ✓, D8 ✓, D9 ✓ (Content)
+- Sub-Round N.3: D10 ✓, D11 ✓, D12 ✓, D13 ✓, D14 ✓ (Structural)
+- Sub-Round N.4: D15 ✓, D16 ✓, D17 ✓, D18 ✓, D19 ✓, D20 ✓ (Advanced; D19 child context only; D20 manual script review)
 
 ---
 
@@ -744,7 +804,7 @@ done
 - Read relevant dimension guides for deep-dive checks
 - `dimensions/d1_cross_reference_accuracy.md` - File path validation
 - `dimensions/d2_terminology_consistency.md` - Notation patterns
-- `dimensions/d10_file_size_assessment.md` - Automated size checks
+- `dimensions/d11_file_size_assessment.md` - Automated size checks
 
 **Reference Materials:**
 - `reference/pattern_library.md` - Pre-built search patterns

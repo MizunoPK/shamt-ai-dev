@@ -2,10 +2,10 @@
 
 **Purpose:** Documents files that intentionally lack formal "## Prerequisites" or "## Exit Criteria" sections
 
-**Last Updated:** 2026-02-22
+**Last Updated:** 2026-02-25
 
 **Why This Document Exists:**
-Audit Dimension D13 (Documentation Quality) checks for "## Prerequisites" and "## Exit Criteria" sections in workflow guides. However, certain file types intentionally use alternative patterns. This document prevents these files from being flagged as violations in future audits.
+Audit Dimension D8 (Documentation Quality) checks for "## Prerequisites" and "## Exit Criteria" sections in workflow guides. However, certain file types intentionally use alternative patterns. This document prevents these files from being flagged as violations in future audits.
 
 ---
 
@@ -15,7 +15,7 @@ Audit Dimension D13 (Documentation Quality) checks for "## Prerequisites" and "#
 
 **Pattern:** Lightweight iteration guides with inline prerequisites, exit criteria inherited from parent round
 
-**⚠️ NOTE: All 14 files in this category have been DELETED from the filesystem** as part of the S5 v1 → S5 v2 migration. S5 v2 consolidates all iteration content into a single `s5_v2_validation_loop.md` file using an 11-dimension Validation Loop approach. These entries are retained for historical reference only — they cannot produce D13 false positives since the files no longer exist.
+**⚠️ NOTE: All 14 files in this category have been DELETED from the filesystem** as part of the S5 v1 → S5 v2 migration. S5 v2 consolidates all iteration content into a single `s5_v2_validation_loop.md` file using an 11-dimension Validation Loop approach. These entries are retained for historical reference only — they cannot produce D8 false positives since the files no longer exist.
 
 **Design Rationale (historical):**
 - Iteration files were sequential steps within S5 v1 rounds (Round 1, Round 2, Round 3)
@@ -116,33 +116,19 @@ Audit Dimension D13 (Documentation Quality) checks for "## Prerequisites" and "#
     - Exit Criteria: Inherited from s5_v2_validation_loop.md
     - Design: Focused single-iteration guide (S5 v1 only)
 
-**Audit Action:** SKIP these files when checking D13 (Documentation Quality) - Prerequisites/Exit Criteria
+**Audit Action:** SKIP these files when checking D8 (Documentation Quality) - Prerequisites/Exit Criteria
 
 ---
 
-### Category B: S5 Design and Migration Documents (2 files)
+### Category B: S5 Design and Migration Documents (INACTIVE — files deleted)
 
 **Pattern:** Design plans and migration guides (not workflow execution guides)
 
-**Design Rationale:**
-- These are reference documents for understanding S5 v1→v2 transition
-- Not part of active workflow execution path
-- Provide historical context and design decisions
-- Prerequisites/Exit Criteria not applicable to reference documentation
+**Status:** These 2 files no longer exist in the repository. The S5 v1→v2 migration guide and S5 v2 design plan were deleted during S5 cleanup. This exception category is now inactive.
 
-**Missing Sections:** Prerequisites, Exit Criteria
+**Historical Note:** These were reference documents for the S5 v1 (22 iterations) → S5 v2 (Validation Loop) transition. The files lacked Prerequisites/Exit Criteria by design (not workflow execution guides).
 
-**Files:**
-
-   - Type: Migration guide
-   - Purpose: Help agents understand transition from S5 v1 (22 iterations) to S5 v2 (Validation Loop)
-   - Design: Comparison tables, side-by-side workflows, FAQ format
-
-   - Type: Design plan document
-   - Purpose: Document architectural decisions for S5 v2 design
-   - Design: Architecture, dimension definitions, validation loop design
-
-**Audit Action:** SKIP these files when checking D13 (Documentation Quality) - Prerequisites/Exit Criteria
+**Audit Action:** No action needed — files do not exist, exception is inactive.
 
 ---
 
@@ -220,7 +206,52 @@ follows the emoji (space → hyphen after stripping the emoji).
 3. Replace spaces with hyphens — the space after the stripped emoji becomes a leading `-`
 4. Do not trim leading hyphens — `#-name` is valid
 
-**Related:** See D9 Context-Sensitive Rule 5 for full specification.
+**Related:** See D10 Context-Sensitive Rule 5 for full specification.
+
+---
+
+## Category E: Pre-Audit Script Recurring False Positives
+
+**Purpose:** Documents recurring false positives from `pre_audit_checks.sh` that are not covered by the D12 Prerequisites/Exit Criteria check above. These appear every run and must be excluded from fix counts.
+
+---
+
+### E1: D8 TODO/Placeholder Instances (23 Critical)
+
+**Dimension:** D8 (Documentation Quality)
+**Check:** `pre_audit_checks.sh` TODO/placeholder scan
+**Every-run count:** 23 critical, ~35 placeholder matches
+
+**Root Cause:** The D8 check scans all of `.shamt/guides/` including the epic workflow stage guides (s1–s10). Those guides intentionally contain TODO/TBD/placeholder text as instructional examples and checklist items — they teach users to avoid placeholders, so they must reference them.
+
+**Affected files:**
+- `stages/s1/s1_p3_discovery_phase.md` — mentions "TBD" as example of vague description to avoid
+- `stages/s3/s3_epic_planning_approval.md` — checklist item: "no TBD" as acceptance criterion
+- `stages/s5/s5_bugfix_workflow.md` — "Bug Fix TODO: Authentication Error" as a template example
+- `stages/s5/s5_v2_validation_loop.md` — "no TBD" completeness check
+- `stages/s7/s7_p2_qc_rounds.md` — "NO TODOs" as QC requirement (×2 lines)
+- `stages/s10/s10_epic_cleanup.md` — "No placeholder text (e.g., 'TODO', '{fill in later}')" as checklist
+
+**Why acceptable:** All occurrences are meta-content: teaching that real work products must not have TODOs. The stage guides themselves have no incomplete sections. The text is definitionally required to describe the standard.
+
+**Action:** When pre_audit_checks.sh reports "TODOs remaining: 23" — this is the expected baseline. Only investigate if the count rises above 23 or if new files appear in the list.
+
+---
+
+### E2: D10 Prerequisite-Content Conflicts (2 Warnings)
+
+**Dimension:** D10 (Prerequisite-Content Consistency)
+**Check:** `pre_audit_checks.sh` prerequisite-content conflict scan
+**Every-run count:** 2 warnings, always the same file
+
+**Root Cause:** `stages/s2/s2_p2_cross_feature_alignment.md` uses a group-based parallel work pattern where prerequisites define "all features completed S2.P1" but the content describes running on each group after its Group 1 features complete S2.P1. This is correct and intentional — it's a phased parallel execution model, not an inconsistency.
+
+**Affected file:**
+- `stages/s2/s2_p2_cross_feature_alignment.md` — appears twice in the conflict list (same file, two different pattern matches)
+
+**Why acceptable:** The prerequisite says "all features in current group completed S2.P1" and the content describes exactly that pattern applied per-group. The check misidentifies the scoping language as a conflict.
+
+**Action:** When pre_audit_checks.sh reports "Found 2 potential prerequisite-content conflicts" pointing at s2_p2_cross_feature_alignment.md — expected baseline. Only investigate if new files appear in the conflict list.
 
 ---
 
@@ -228,12 +259,18 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 ### For Future Audits
 
-**When running D13 (Documentation Quality) Prerequisites/Exit Criteria checks:**
+**When running D8 (Documentation Quality) Prerequisites/Exit Criteria checks:**
 
 1. **Generate violation list** using automated pattern search
 2. **Cross-reference with this document** before flagging as issues
-3. **Filter out known exceptions** (19 files total)
+3. **Filter out known exceptions** (19 files total — Categories A–D)
 4. **Investigate remaining violations** as potential real issues
+
+**When running `pre_audit_checks.sh` and seeing recurring script output:**
+
+- "TODOs remaining: 23" — expected baseline; see Category E1 above
+- "Found 2 potential prerequisite-content conflicts" pointing at s2_p2_cross_feature_alignment.md — expected; see Category E2 above
+- "⚠️ CLAUDE.md found but no stage references detected" — known script integer-parsing bug (line 370); not a real issue
 
 **Example Audit Workflow:**
 ```bash
@@ -278,7 +315,7 @@ wc -l real_violations.txt  # Should be low count
 - 30 intentional exceptions (documented here)
 
 **Known Audit Tools:**
-- D13 dimension automated checks
+- D8 dimension automated checks
 - audit/scripts/pre_audit_checks.sh
 
 **Future Updates:**
@@ -290,26 +327,26 @@ wc -l real_violations.txt  # Should be low count
 
 ## Summary Statistics
 
-**Total Known Exceptions:** 19 files
+**Total Known Exceptions:** 19 files (historical count)
 
-**By Category:**
-- Category A (S5 Iteration Files): 14 files
-- Category B (S5 Design/Migration Documents): 2 files
-- Category C (Optional/Auxiliary): 3 files
+**Active Exceptions (files that still exist):**
+- Category C (Optional/Auxiliary): **3 active files** — these are the only exceptions that apply to current audits
 
-**Missing Sections:**
+**Inactive Exceptions (files deleted from filesystem):**
+- Category A (S5 Iteration Files): 14 files — DELETED (S5 v1 → v2 migration)
+- Category B (S5 Design/Migration Documents): 2 files — DELETED (no longer exist)
+
+**Missing Sections (historical — based on deleted files):**
 - Missing Prerequisites only: 5 files (s5 iterations 5, 5a, 6, 6a, 7 with inline statements)
 - Missing Exit Criteria only: 3 files (s3_parallel_work_sync, s4_feature_testing_card, s4_test_strategy_development)
 - Missing BOTH: 11 files (remaining s5 iteration files + 2 design docs)
 
-**Design Patterns:**
-- Router + Iteration: 14 files (S5 structure)
-- Design/Migration Reference: 2 files (S5 v1→v2 documentation)
+**Design Patterns (active only):**
 - Optional/Conditional: 1 file (s3_parallel_work_sync)
 - Reference Material: 2 files (s4_feature_testing_card, s4_test_strategy_development)
 
 ---
 
-**Last Verified:** 2026-02-22 (Round 11 audit — confirmed Category A files are all DELETED from filesystem as part of S5 v1 → v2 migration)
-**Next Review:** When new stage/iteration guides added, or if D13 check patterns change
+**Last Verified:** 2026-02-25 (Categories E1 and E2 added — documenting recurring pre_audit_checks.sh false positives)
+**Next Review:** When new stage/iteration guides added, or if D8/D10 check patterns change
 

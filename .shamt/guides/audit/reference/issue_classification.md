@@ -2,7 +2,7 @@
 
 **Purpose:** Severity levels and prioritization criteria for audit issues
 **Audience:** Agents organizing discovery reports and fix plans (Stages 1-2)
-**Last Updated:** 2026-02-05
+**Last Updated:** 2026-02-25
 
 ---
 
@@ -193,7 +193,7 @@ If answer is NO → LOW
 | Old notation in historical section (unmarked) | 🟡 MEDIUM | Should be marked historical |
 | Inconsistent capitalization | 🟢 LOW | Cosmetic |
 
-### D4: Count Accuracy
+### D5: Count Accuracy
 
 | Issue Type | Severity | Reason |
 |------------|----------|--------|
@@ -201,7 +201,7 @@ If answer is NO → LOW
 | Off-by-one error (says 15, actually 16) | 🟡 MEDIUM | Minor inaccuracy |
 | Count in old historical section | 🟢 LOW | Historical reference |
 
-### D5: Content Completeness
+### D6: Content Completeness
 
 | Issue Type | Severity | Reason |
 |------------|----------|--------|
@@ -210,7 +210,7 @@ If answer is NO → LOW
 | TODO marker in main content | 🟠 HIGH | Incomplete content |
 | TODO marker in template | 🟢 LOW | Placeholder (acceptable) |
 
-### D6: Template Currency
+### D7: Template Currency
 
 | Issue Type | Severity | Reason |
 |------------|----------|--------|
@@ -219,7 +219,7 @@ If answer is NO → LOW
 | Template missing new section | 🟠 HIGH | New epics missing content |
 | Template formatting outdated | 🟡 MEDIUM | Cosmetic issue |
 
-### D8: CLAUDE.md Sync
+### D4: CLAUDE.md Sync
 
 | Issue Type | Severity | Reason |
 |------------|----------|--------|
@@ -228,7 +228,7 @@ If answer is NO → LOW
 | Quick reference outdated | 🟠 HIGH | Causes confusion |
 | Minor terminology difference | 🟡 MEDIUM | Slightly inconsistent |
 
-### D10: File Size Assessment
+### D11: File Size Assessment
 
 | Issue Type | Severity | Reason |
 |------------|----------|--------|
@@ -237,7 +237,7 @@ If answer is NO → LOW
 | File 1251-1500 lines | 🟡 MEDIUM | Exceeds guideline |
 | File 1000-1250 lines | 🟢 LOW | Within acceptable range |
 
-### D13: Documentation Quality
+### D8: Documentation Quality
 
 | Issue Type | Severity | Reason |
 |------------|----------|--------|
@@ -331,11 +331,11 @@ Fix Order:
 
 | ID | Issue | Dimension | Severity | Blast Radius | Dependency |
 |----|-------|-----------|----------|--------------|------------|
-| 1 | CLAUDE.md 45K chars | D8, D10 | 🔴 CRITICAL | Root file | None |
-| 2 | Template broken path | D6 | 🔴 CRITICAL | All epics | None |
+| 1 | CLAUDE.md 45K chars | D4, D11 | 🔴 CRITICAL | Root file | None |
+| 2 | Template broken path | D7 | 🔴 CRITICAL | All epics | None |
 | 3 | Stage 2 broken path | D1 | 🔴 CRITICAL | Single guide | None |
 | 4 | Mixed notation S5 guide | D2 | 🟠 HIGH | Single guide | None |
-| 5 | File >1500 lines | D10 | 🟡 MEDIUM | Single file | None |
+| 5 | File >1500 lines | D11 | 🟡 MEDIUM | Single file | None |
 | 6 | Extra blank line | None | 🟢 LOW | Cosmetic | None |
 
 **Fix Order:**
@@ -408,7 +408,7 @@ Limit: 1,250 lines
 ```
 
 **Classification:**
-- **Dimension:** D10 (File Size Assessment)
+- **Dimension:** D11 (File Size Assessment)
 - **Severity:** 🟡 MEDIUM
 - **Reason:** Reduces readability, not blocking
 - **Priority:** Fix in Round 3 (after High issues)
@@ -435,7 +435,7 @@ TOC: Not present
 ```
 
 **Classification:**
-- **Dimension:** D13 (Documentation Quality)
+- **Dimension:** D8 (Documentation Quality)
 - **Severity:** 🟡 MEDIUM
 - **Reason:** Reduces navigation, not confusing
 - **Priority:** Fix in Round 3

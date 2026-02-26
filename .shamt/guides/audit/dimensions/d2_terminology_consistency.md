@@ -662,8 +662,8 @@ grep -rn "stages/s6/\|stages/s7/"
 - **D1: Cross-Reference Accuracy** - Fix broken file paths BEFORE fixing notation (so fixes reference correct paths)
 
 **Related Dimensions:**
-- D6: Template Currency - After fixing notation, update templates to use new notation (see `d6_template_currency.md`)
-- D9: Intra-File Consistency - Verify notation is consistent within each file (see `d9_intra_file_consistency.md`)
+- D7: Template Currency - After fixing notation, update templates to use new notation (see `d7_template_currency.md`)
+- D10: Intra-File Consistency - Verify notation is consistent within each file (see `d10_intra_file_consistency.md`)
 
 **Audit Stages:**
 - `../stages/stage_1_discovery.md` - How to search for notation issues

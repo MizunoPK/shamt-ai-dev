@@ -2,7 +2,7 @@
 
 **Project:** Shamt Master
 **Epic Tag:** SHAMT
-**Next Available Number:** SHAMT-2
+**Next Available Number:** SHAMT-3
 
 ---
 
@@ -10,7 +10,7 @@
 
 | SHAMT # | Epic Name | Branch | Status | Started |
 |---------|-----------|--------|--------|---------|
-| — | — | — | — | — |
+| SHAMT-2 | Audit System Enhancement | feat/SHAMT-2 | In Progress | 2026-02-24 |
 
 ---
 

@@ -32,6 +32,14 @@ If entries are missing, add them now:
 
 ---
 
+## Step 1.5: Run the Full Guide Audit
+
+Before exporting, run the guide audit on the entire `.shamt/guides/` tree (starting from `guides/audit/README.md`). The audit must achieve 3 consecutive zero-issue rounds before you proceed to Step 2.
+
+This step is **mandatory**. Exporting without a full audit risks submitting changes that are internally inconsistent with other guides — cross-references, terminology, or workflow descriptions may need to be updated in files you didn't directly modify.
+
+---
+
 ## Step 2: Run the Export Script
 
 From the project root:
@@ -44,10 +52,11 @@ bash .shamt/scripts/export/export.sh
 
 The script:
 1. Reads the master path from `.shamt/shamt_master_path.conf`
-2. Compares your `guides/` and `scripts/` against master by file hash
-3. Copies all differing files to the master repo
-4. Excludes `guides/audit/outputs/` (your audit history stays local)
-5. Prints a summary of what was copied
+2. Warns if master's working tree has uncommitted changes (exported files would be mixed with them)
+3. Compares your `guides/` and `scripts/` against master by content comparison
+4. Copies all differing files to master, and deletes from master any files absent from your child
+5. Excludes `guides/audit/outputs/` (your audit history stays local)
+6. Prints a summary of what was copied and deleted
 
 Review the output. If files were exported that you didn't intend to change, investigate before opening a PR.
 
@@ -58,8 +67,9 @@ Review the output. If files were exported that you didn't intend to change, inve
 ```bash
 cd /path/to/shamt-ai-dev
 
+git checkout main
 git checkout -b feat/child-sync-YYYY-MM-DD
-git add .shamt/guides/ .shamt/scripts/
+git add -A .shamt/guides/ .shamt/scripts/
 git commit -m "sync: [brief description of improvement]"
 git push origin feat/child-sync-YYYY-MM-DD
 ```
@@ -98,6 +108,17 @@ After the PR is merged, the improvement is available to all Shamt projects on th
 - Guide customizations that only make sense for your tech stack
 - Test command overrides or language-specific instructions
 - Content in `project-specific-configs/` (never exported by the script)
+
+---
+
+## Common Situations
+
+**Export script fails with "Master directory not found":**
+`.shamt/shamt_master_path.conf` is stale — the master repo has moved or you're on a different machine. Update the file with the current path to your local `shamt-ai-dev` clone:
+
+```bash
+echo "/path/to/shamt-ai-dev" > .shamt/shamt_master_path.conf
+```
 
 ---
 

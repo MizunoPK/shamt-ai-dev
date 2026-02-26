@@ -186,7 +186,7 @@ Understood. Restarting audit with adversarial mindset:
 2. **Question previous findings** - Re-verify issues marked "fixed"
 3. **Use new patterns** - Don't rely on previous search strategies
 4. **Manual validation** - Read files directly, not just grep
-5. **Zero confidence threshold** - Won't exit until 5+ consecutive clean rounds
+5. **Zero confidence threshold** - Won't exit until 5+ consecutive clean rounds (elevated above standard 3)
 
 **Starting Round 1 (Fresh Start):**
 [Begin discovery with completely new approach]

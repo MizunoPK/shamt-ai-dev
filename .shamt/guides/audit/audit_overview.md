@@ -23,33 +23,35 @@
 
 This audit ensures **consistency, accuracy, and completeness** across all .shamt/guides files AND related external files.
 
-### The 18 Audit Dimensions
+### The 20 Audit Dimensions
 
-**Core Dimensions (Always Check) - D1, D2, D3, D8:**
+**Core Dimensions (Always Check) - D1, D2, D3, D4:**
 - ✅ **D1: Cross-Reference Accuracy** - All file paths, stage references, and cross-links are valid
 - ✅ **D2: Terminology Consistency** - Notation, naming conventions, and terminology are uniform
 - ✅ **D3: Workflow Integration** - Guides correctly reference each other and form cohesive workflows
-- ✅ **D8: CLAUDE.md Synchronization** - Root file quick references match actual guide content
+- ✅ **D4: CLAUDE.md Synchronization** - Root file quick references match actual guide content
 
-**Content Quality Dimensions - D4, D5, D6, D13, D14:**
-- ✅ **D4: Count Accuracy** - File counts, stage counts, iteration counts match reality
-- ✅ **D5: Content Completeness** - No missing sections, gaps in coverage, or orphaned references
-- ✅ **D6: Template Currency** - Templates reflect current workflow structure and terminology
-- ✅ **D13: Documentation Quality** - All required sections present, no TODOs or placeholders
-- ✅ **D14: Content Accuracy** - Claims in guides match reality (step counts, durations, etc.)
+**Content Quality Dimensions - D5, D6, D7, D8, D9:**
+- ✅ **D5: Count Accuracy** - File counts, stage counts, iteration counts match reality
+- ✅ **D6: Content Completeness** - No missing sections, gaps in coverage, or orphaned references
+- ✅ **D7: Template Currency** - Templates reflect current workflow structure and terminology
+- ✅ **D8: Documentation Quality** - All required sections present, no TODOs or placeholders
+- ✅ **D9: Content Accuracy** - Claims in guides match reality (step counts, durations, etc.)
 
-**Structural Dimensions - D9, D10, D11, D12, D18:**
-- ✅ **D9: Intra-File Consistency** - Within-file quality (headers, checklists, formatting)
-- ✅ **D10: File Size Assessment** - Files within readable limits, complex files split appropriately
-- ✅ **D11: Structural Patterns** - Guides follow expected template structures
-- ✅ **D12: Cross-File Dependencies** - Stage prerequisites match outputs, workflow continuity
-- ✅ **D18: Character and Format Compliance** - Guide files use only agent-readable characters; no Unicode checkboxes, curly quotes, or other problematic non-ASCII chars
+**Structural Dimensions - D10, D11, D12, D13, D14:**
+- ✅ **D10: Intra-File Consistency** - Within-file quality (headers, checklists, formatting)
+- ✅ **D11: File Size Assessment** - Files within readable limits, complex files split appropriately
+- ✅ **D12: Structural Patterns** - Guides follow expected template structures
+- ✅ **D13: Cross-File Dependencies** - Stage prerequisites match outputs, workflow continuity
+- ✅ **D14: Character and Format Compliance** - Guide files use only agent-readable characters; no Unicode checkboxes, curly quotes, or other problematic non-ASCII chars
 
-**Advanced Dimensions - D7, D15, D16, D17:**
-- ✅ **D7: Context-Sensitive Validation** - Same pattern validated differently based on context
-- ✅ **D15: Duplication Detection** - No duplicate content or contradictory instructions
-- ✅ **D16: Accessibility** - Navigation aids, TOCs, scannable structure
-- ✅ **D17: Stage Flow Consistency** - Behavioral continuity and semantic consistency across stage transitions
+**Advanced Dimensions - D15, D16, D17, D18, D19, D20:**
+- ✅ **D15: Context-Sensitive Validation** - Same pattern validated differently based on context
+- ✅ **D16: Duplication Detection** - No duplicate content or contradictory instructions
+- ✅ **D17: Accessibility** - Navigation aids, TOCs, scannable structure
+- ✅ **D18: Stage Flow Consistency** - Behavioral continuity and semantic consistency across stage transitions
+- ✅ **D19: Rules File Template Alignment** - Child project rules file retains Shamt structural sections (child context only)
+- ✅ **D20: Script Integrity** - Sync/init scripts are functionally correct, bash/PS parity, output matches guide instructions, transient files gitignored (manual review)
 
 ---
 
@@ -174,8 +176,8 @@ Issue discovered → Can I fix with confidence?
 - Spot-check random files to verify grep accuracy
 
 **5. Iterative Until Zero**
-- Minimum 3 rounds as baseline (NOT a target - SHAMT-7 needed 4 rounds)
-- TRUE exit trigger: Round N finds ZERO new issues + ALL 9 criteria met
+- 3 CONSECUTIVE zero-issue rounds required (NOT just any 3 rounds - SHAMT-7 needed 4+ total rounds)
+- TRUE exit trigger: consecutive_clean >= 3 + ALL 9 criteria met
 - Continue auditing regardless of round count until criteria satisfied
 - Each round uses completely different patterns
 
@@ -244,7 +246,7 @@ Approaching the audit as if you've never seen these files before, with zero assu
 ```markdown
 Round 1: Started with D1 (cross-references), searched stages/ first
 Round 2: Start with D2 (terminology), search templates/ first
-Round 3: Start with D10 (file sizes), search reference/ first
+Round 3: Start with D11 (file sizes), search reference/ first
 ```markdown
 
 **Pattern Type Rotation:**
@@ -412,28 +414,28 @@ Result: Round 3 found 70+ different issues Round 1 never looked for
 ```text
 ┌─────────────────────────────────────────────────────────────────┐
 │         AUDIT LOOP (Repeat until ZERO new issues found)         │
-│     MINIMUM 3 ROUNDS (each with 4 sub-rounds: 12 cycles min)    │
+│   3 CONSECUTIVE ZERO-ISSUE ROUNDS (12+ sub-rounds min each)     │
 │  EXIT TRIGGER: Round N all 4 sub-rounds ZERO issues + 9 criteria│
 └─────────────────────────────────────────────────────────────────┘
 
 Round N:
   │
-  ├─> Sub-Round N.1: Core Dimensions (D1, D2, D3, D8)
+  ├─> Sub-Round N.1: Core Dimensions (D1, D2, D3, D4)
   │   ├─ S1: Discovery → S2: Planning → S3: Apply → S4: Verify → S5: Loop Decision
   │   └─ If 0 issues found → Sub-Round N.2
   │       If issues found → Fix all → Re-run Sub-Round N.1
   │
-  ├─> Sub-Round N.2: Content Quality (D4, D5, D6, D13, D14)
+  ├─> Sub-Round N.2: Content Quality (D5, D6, D7, D8, D9)
   │   ├─ S1: Discovery → S2: Planning → S3: Apply → S4: Verify → S5: Loop Decision
   │   └─ If 0 issues found → Sub-Round N.3
   │       If issues found → Fix all → Re-run Sub-Round N.2
   │
-  ├─> Sub-Round N.3: Structural (D9, D10, D11, D12)
+  ├─> Sub-Round N.3: Structural (D10, D11, D12, D13, D14)
   │   ├─ S1: Discovery → S2: Planning → S3: Apply → S4: Verify → S5: Loop Decision
   │   └─ If 0 issues found → Sub-Round N.4
   │       If issues found → Fix all → Re-run Sub-Round N.3
   │
-  └─> Sub-Round N.4: Advanced (D7, D15, D16)
+  └─> Sub-Round N.4: Advanced (D15, D16, D17, D18, D19, D20)
       ├─ S1: Discovery → S2: Planning → S3: Apply → S4: Verify → S5: Loop Decision
       └─ If 0 issues found → Round N complete
           If issues found → Fix all → Re-run Sub-Round N.4
@@ -452,11 +454,11 @@ EXIT (only if Round N had 0 issues in all 4 sub-rounds + 9 criteria met)
 **Benefits of the 4 sub-round structure:**
 
 1. **Dependency Management:** Core dimension fixes (broken references) applied before Structural checks (cross-file dependencies)
-2. **Focused Discovery:** Check 4-5 related dimensions per sub-round, not all 18 at once
+2. **Focused Discovery:** Check 4-6 related dimensions per sub-round, not all 20 at once
 3. **Incremental Verification:** Verify fixes before moving to next category
 4. **Mental Clarity:** Fresh mental model between dimension categories
 5. **Better Tracking:** Know exactly which category and dimensions you're auditing
-6. **Prevents Blind Spots:** ALL 18 dimensions checked systematically every round
+6. **Prevents Blind Spots:** ALL 20 dimensions checked systematically every round
 
 ### Dimension Organization by Sub-Round
 
@@ -464,36 +466,39 @@ EXIT (only if Round N had 0 issues in all 4 sub-rounds + 9 criteria met)
 - D1: Cross-Reference Accuracy - File paths, links (90% automated)
 - D2: Terminology Consistency - Notation, naming (80% automated)
 - D3: Workflow Integration - Prerequisites, transitions (40% automated)
-- D8: CLAUDE.md Sync - Root file alignment (60% automated)
+- D4: CLAUDE.md Sync - Root file alignment (60% automated)
 
 **Why First:** Broken references and inconsistent notation affect all other checks
 
 **Sub-Round N.2: Content Quality Dimensions**
-- D4: Count Accuracy - File counts, iteration counts (90% automated)
-- D5: Content Completeness - Missing sections, gaps (85% automated)
-- D6: Template Currency - Template synchronization (70% automated)
-- D13: Documentation Quality - Required sections (90% automated)
-- D14: Content Accuracy - Claims vs reality (70% automated)
+- D5: Count Accuracy - File counts, iteration counts (90% automated)
+- D6: Content Completeness - Missing sections, gaps (85% automated)
+- D7: Template Currency - Template synchronization (70% automated)
+- D8: Documentation Quality - Required sections (90% automated)
+- D9: Content Accuracy - Claims vs reality (70% automated)
 
 **Why Second:** Content fixes may reveal structural issues
 
 **Sub-Round N.3: Structural Dimensions**
-- D9: Intra-File Consistency - Within-file quality (80% automated)
-- D10: File Size Assessment - Readability limits (100% automated)
-- D11: Structural Patterns - Template compliance (60% automated)
-- D12: Cross-File Dependencies - Stage transitions (30% automated)
-- D18: Character and Format Compliance - Banned Unicode chars (100% automated)
+- D10: Intra-File Consistency - Within-file quality (80% automated)
+- D11: File Size Assessment - Readability limits (100% automated)
+- D12: Structural Patterns - Template compliance (60% automated)
+- D13: Cross-File Dependencies - Stage transitions (30% automated)
+- D14: Character and Format Compliance - Banned Unicode chars (100% automated)
 
 **Why Third:** Structure depends on correct content and references
 
 **Sub-Round N.4: Advanced Dimensions**
-- D7: Context-Sensitive Validation - Intentional exceptions (20% automated)
-- D15: Duplication Detection - DRY principle (50% automated)
-- D16: Accessibility - Navigation, UX (80% automated)
+- D15: Context-Sensitive Validation - Intentional exceptions (20% automated)
+- D16: Duplication Detection - DRY principle (50% automated)
+- D17: Accessibility - Navigation, UX (80% automated)
+- D18: Stage Flow Consistency - Cross-stage behavioral continuity (30% automated)
+- D19: Rules File Template Alignment - Child rules file structure (30% automated, child context only)
+- D20: Script Integrity - Sync/init script correctness and bash/PS parity (20% automated, manual review)
 
 **Why Last:** Advanced checks require all other dimensions to be clean
 
-### Why Minimum 3 Rounds (12 Sub-Rounds Total)?
+### Why 3 Consecutive Zero-Issue Rounds (12+ Sub-Rounds Total)?
 
 **3 rounds × 4 sub-rounds = 12 minimum cycles**
 
@@ -552,7 +557,7 @@ EXIT (only if Round N had 0 issues in all 4 sub-rounds + 9 criteria met)
 │  - Sub-Rounds 1, 2, 3, 4 all found 0 new issues                 │
 │                                                                  │
 │  AUDIT LEVEL:                                                   │
-│  - Minimum 3 complete rounds (12 sub-rounds)                    │
+│  - 3 consecutive zero-issue rounds (12+ sub-rounds)             │
 │  - Latest round had 0 issues in all 4 sub-rounds                │
 │  - ALL 9 exit criteria met (see below)                          │
 └─────────────────────────────────────────────────────────────────┘
@@ -564,7 +569,7 @@ Sub-Round N.X found issues → Fix ALL → Re-run Sub-Round N.X → Repeat until
 Sub-Round N.X found ZERO issues → Proceed to Sub-Round N.(X+1)
 Sub-Round N.4 found ZERO issues + Sub-Rounds N.1-N.3 were clean → Round N complete
 Round N complete (all 4 sub-rounds clean) → Round N+1 (fresh patterns)
-Round N complete + Minimum 3 rounds + ALL 9 criteria met → Consider exit
+3 CONSECUTIVE zero-issue rounds (consecutive_clean >= 3) + ALL 9 criteria met → Consider exit
 ```markdown
 
 ### ALL 9 Criteria Must Be Met (Audit Level)
@@ -574,10 +579,10 @@ Round N complete + Minimum 3 rounds + ALL 9 criteria met → Consider exit
 1. ✅ **All issues resolved:** Every issue from ALL rounds AND sub-rounds fixed and verified
 2. ✅ **Zero new issues:** Latest round found ZERO issues in ALL 4 sub-rounds
 3. ✅ **Zero verification findings:** Latest round verifications (S4) found ZERO new issues across all sub-rounds
-4. ✅ **Minimum 3 rounds:** At least 3 complete rounds (12 sub-rounds total) completed
+4. ✅ **3 consecutive zero-issue rounds:** consecutive_clean >= 3 (rounds with issues reset counter)
 5. ✅ **All remaining documented:** All remaining instances documented as intentional
 6. ✅ **User has NOT challenged:** User has not questioned findings
-7. ✅ **Confidence score:** ≥ 80% confidence in completeness across all 18 dimensions
+7. ✅ **Confidence score:** ≥ 80% confidence in completeness across all 20 dimensions
 8. ✅ **Pattern diversity:** ≥ 5 pattern types used per dimension category across rounds
 9. ✅ **Spot-check clean:** 10+ files manually checked per sub-round, zero issues
 
@@ -619,7 +624,7 @@ Round N complete + Minimum 3 rounds + ALL 9 criteria met → Consider exit
 
 **Exit conditions:**
 - ✅ Round N complete (all 4 sub-rounds clean)
-- ✅ Minimum 3 rounds complete (12 sub-rounds total)
+- ✅ 3 consecutive zero-issue rounds complete (consecutive_clean >= 3)
 - ✅ ALL 9 exit criteria met
 - ✅ User approves exit
 
@@ -669,12 +674,12 @@ When agents read guides at task start, overwhelming file size impacts effectiven
 
 The automated pre-audit script (`scripts/pre_audit_checks.sh`) performs two file size checks:
 
-**1. Workflow Guide Size Check (D10):**
+**1. Workflow Guide Size Check (D11):**
 - Checks all `stages/**/*.md` files
 - Flags files >1250 lines as **TOO LARGE** (critical issue)
 - Updated policy: Baseline increased from 1000 → 1250 lines during Meta-Audit (2026-02-05)
 
-**2. CLAUDE.md Character Count (D10 Policy Compliance):**
+**2. CLAUDE.md Character Count (D11 Policy Compliance):**
 - Checks `CLAUDE.md` character count
 - Flags if exceeds 40,000 characters (critical policy violation)
 - Reports overage amount
@@ -731,7 +736,7 @@ If CLAUDE.md exceeds 40,000 characters, extract detailed content to separate fil
 - Automated pre-checks would have caught ~60% of Round 1-2 issues
 
 **Lessons Learned:**
-- Minimum 3 rounds is NOT arbitrary - it's evidence-based
+- 3 consecutive zero-issue rounds is NOT arbitrary - it's evidence-based
 - Pattern diversity is critical (same patterns each round = same blind spots)
 - Fresh eyes approach works (breaking between rounds found new issues)
 - User skepticism is warranted (agents naturally want to finish quickly)
@@ -764,7 +769,7 @@ Result: Agent followed CLAUDE.md, looked for non-existent steps,
 Root cause: CLAUDE.md was NOT in audit scope
 ```
 
-**Audit Dimension:** D8: CLAUDE.md Synchronization
+**Audit Dimension:** D4: CLAUDE.md Synchronization
 
 **How to Check:**
 1. Read CLAUDE.md Stage Workflows section

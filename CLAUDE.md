@@ -20,7 +20,7 @@ shamt-ai-dev/
     │   ├── stages/                     # s1–s10 workflow guides
     │   ├── reference/
     │   ├── audit/
-    │   ├── sync/                       # separation rule, export workflow, import workflow
+    │   ├── sync/                       # README, separation rule, export workflow, import workflow
     │   └── master_dev_workflow/        # guide for improving master guides
     ├── scripts/
     │   ├── initialization/
@@ -34,10 +34,9 @@ shamt-ai-dev/
     │   ├── export/                     # export script
     │   └── import/                     # import script
     └── epics/
-        ├── EPIC_TRACKER.md             # master's own epic tracker
+        ├── EPIC_TRACKER.md             # not actively maintained for master work — see Master Dev Workflow
         ├── requests/
-        ├── done/
-        └── SHAMT-[N]-[name]/           # active epic folders
+        └── done/
 ```
 
 ---
@@ -50,9 +49,10 @@ The PR description will reference `.shamt/CHANGES.md` from the child project for
 
 Review steps:
 1. Read the PR diff — assess whether changes are truly generic (applicable to all Shamt projects)
-2. If generic: approve and merge
-3. If project-specific content has leaked into shared files: request changes
-4. After merging, the import script will distribute the improvement to other child projects on their next import
+2. If project-specific content has leaked into shared files: request changes
+3. If generic: approve and merge
+4. After merging, run the full guide audit on the entire `.shamt/guides/` tree — do not let changes propagate to other child projects on their next import until the audit passes
+5. Commit any audit fixes before the merge is considered complete
 
 **Full workflow guides:** `.shamt/guides/sync/export_workflow.md` (child side) and `.shamt/guides/sync/import_workflow.md` (post-import validation)
 
@@ -64,7 +64,12 @@ For improving the guides directly:
 
 **Guide:** `.shamt/guides/master_dev_workflow/`
 
-This is a lighter process than the full S1–S10 epic workflow, aligned with S10's guide update approach. Use epic tracking in `.shamt/epics/` for significant multi-guide changes.
+Master work does **not** follow the S1-S10 epic workflow and does **not** use EPIC_TRACKER.md. The operating model:
+
+- **Small changes:** Lightweight workflow — read, fix, audit, commit directly to a branch, open PR
+- **Large changes:** Use a design doc at the repo root (e.g., `SHAMT3_DESIGN.md`) for planning, then work on a `feat/SHAMT-N` branch
+- **SHAMT-N numbers:** Sequence markers for change sets, not epic identifiers
+- **No stage gates:** Master work proceeds at judgment, not through S1-S10 phase transitions
 
 ---
 
@@ -93,3 +98,5 @@ When a new AI service is discovered (reported by a child project or user):
 - Zero autonomous conflict resolution — always escalate to user when uncertain
 - Run guide audit after every set of guide changes
 - Never approve child PRs that contain project-specific content in shared guide files
+- When any change affects system behavior (new sync scripts, new guides, new audit scope, new workflow steps): review and update the three master-only files that are not propagated via import — `CLAUDE.md`, root `README.md`, and `scripts/initialization/RULES_FILE.template.md`
+- Audits and validation loops require 3 CONSECUTIVE zero-issue rounds to exit — track `consecutive_clean` explicitly and state it at the end of every round; rounds with issues reset the counter to 0

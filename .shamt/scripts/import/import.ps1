@@ -44,6 +44,37 @@ Write-Host "  To:   $ChildRoot"
 Write-Host "============================================================"
 Write-Host ""
 
+# --- Freshness check ---------------------------------------------------------
+
+try {
+    $null = & git -C $MasterDir fetch origin main --quiet 2>&1
+    if ($LASTEXITCODE -eq 0) {
+        $freshnessLocal = (& git -C $MasterDir rev-parse main 2>&1 | Out-String).Trim()
+        $freshnessRemote = (& git -C $MasterDir rev-parse origin/main 2>&1 | Out-String).Trim()
+        if ($freshnessLocal -ne "" -and $freshnessRemote -ne "" -and $freshnessLocal -ne $freshnessRemote) {
+            Write-Host "  Warning: master repo's 'main' branch appears to be behind origin/main." -ForegroundColor Yellow
+            Write-Host "  Consider running 'git pull' in: $MasterDir" -ForegroundColor Yellow
+            Write-Host ""
+            $proceedChoice = Read-Host "  Proceed anyway? [y/N]"
+            if ([string]::IsNullOrEmpty($proceedChoice)) { $proceedChoice = "N" }
+            if ($proceedChoice -notmatch '^[Yy]$') {
+                Write-Host "  Import cancelled."
+                Write-Host ""
+                Write-Host "============================================================"
+                Write-Host ""
+                exit 0
+            }
+            Write-Host ""
+        }
+    } else {
+        Write-Host "  No remote configured or fetch unavailable — skipping freshness check."
+        Write-Host ""
+    }
+} catch {
+    Write-Host "  No remote configured or fetch unavailable — skipping freshness check."
+    Write-Host ""
+}
+
 # --- Track changes -----------------------------------------------------------
 
 $Copied = @()
@@ -61,6 +92,13 @@ function Get-UnifiedDiff {
         return ""  # No difference (shouldn't happen, but handle it)
     }
     return $result -join "`n"
+}
+
+function Write-LastSync {
+    $syncDate = Get-Date -Format "yyyy-MM-dd"
+    $masterHashResult = & git -C $script:MasterDir rev-parse --short HEAD 2>&1
+    $masterHash = if ($LASTEXITCODE -eq 0) { ($masterHashResult | Out-String).Trim() } else { "unknown" }
+    Set-Content (Join-Path $script:ChildShamtDir "last_sync.conf") "$syncDate | $masterHash" -NoNewline
 }
 
 # --- Import from master (copy + track diffs) ---------------------------------
@@ -139,6 +177,12 @@ function Remove-Deleted {
         if (-not (Test-Path $masterFile)) {
             Remove-Item $childFile -Force
             $script:Deleted += $relPathFwd
+            # Remove empty parent directories
+            $dir = Split-Path $childFile -Parent
+            while ($dir -ne $script:ChildShamtDir -and (Test-Path $dir) -and @(Get-ChildItem $dir).Count -eq 0) {
+                Remove-Item $dir -Force
+                $dir = Split-Path $dir -Parent
+            }
         }
     }
 }
@@ -150,6 +194,10 @@ Remove-Deleted -ChildDir (Join-Path $ChildShamtDir "guides") `
 Remove-Deleted -ChildDir (Join-Path $ChildShamtDir "scripts") `
                -MasterDir (Join-Path $MasterShamtDir "scripts") `
                -SkipPrefix ""
+
+# Record sync state now — before diff generation and output, so a script
+# interruption after syncing still produces an accurate last_sync.conf.
+Write-LastSync
 
 # --- Write diff file(s) ------------------------------------------------------
 
@@ -193,6 +241,7 @@ if ($Sections.Count -gt 0) {
 # --- Summary -----------------------------------------------------------------
 
 if ($Copied.Count -eq 0 -and $Deleted.Count -eq 0) {
+    Write-LastSync
     Write-Host "  Already up to date. No changes from master."
     Write-Host ""
     Write-Host "============================================================"
@@ -236,7 +285,7 @@ if ($DiffFiles.Count -eq 0) {
     foreach ($f in $DiffFiles) { Write-Host "     ```.shamt/$f```" }
 }
 Write-Host ""
-Write-Host "3. For each changed file, check whether your ``project-specific-configs/```"
+Write-Host "3. For each changed file, check whether your ``project-specific-configs/``"
 Write-Host "   supplements are still accurate and consistent with the new content."
 Write-Host ""
 Write-Host "4. Check whether any existing pointers in the changed guide files are"

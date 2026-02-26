@@ -88,6 +88,8 @@ Once a pointer is added by any child project and exported to master via PR, it f
 
 When you modify any file in `.shamt/guides/` or `.shamt/scripts/`, record it in `.shamt/CHANGES.md`. This file is used as context for PR reviewers when you export improvements to master.
 
+> **Note:** This applies to child projects only. In master context (no `shamt_master_path.conf` present), the PR description serves this purpose — do not create `CHANGES.md` in the master repo.
+
 **Location:** `.shamt/CHANGES.md`
 
 **Format** (newest entries at top):

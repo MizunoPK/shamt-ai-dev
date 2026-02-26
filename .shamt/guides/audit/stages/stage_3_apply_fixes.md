@@ -45,7 +45,7 @@ sed -i 's/OLD10/NEW10/g' *.md
 # Problem: If fix #3 broke something, you don't know until the end
 # Problem: Hard to isolate which fix caused the issue
 # Problem: No checkpoints to rollback to
-```bash
+```
 
 **With incremental verification:**
 ```bash

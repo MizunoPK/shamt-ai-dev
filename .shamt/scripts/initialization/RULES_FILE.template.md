@@ -94,3 +94,8 @@ This project syncs improvements with the master Shamt repo via scripts:
 - **Import updates from master:** `bash .shamt/scripts/import/import.sh`
 - **Export improvements to master:** `bash .shamt/scripts/export/export.sh` (then open a PR)
 - **Log shared file changes:** `.shamt/CHANGES.md` (written by agent during S10/audit work)
+- **Sync guide system overview:** `.shamt/guides/sync/README.md`
+
+**When to consider importing:** At the start of a new epic, or if the guides feel stale — check `.shamt/last_sync.conf` for the date of the last import, then run the import script if an update seems warranted.
+
+**If import or export scripts fail with "Master directory not found":** `.shamt/shamt_master_path.conf` is stale (the master repo has moved or you're on a different machine). Update it with the current path to your local `shamt-ai-dev` clone.

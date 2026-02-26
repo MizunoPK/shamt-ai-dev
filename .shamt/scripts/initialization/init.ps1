@@ -221,6 +221,14 @@ $GitignoreFile = Join-Path $TargetDir ".gitignore"
 Add-GitignoreEntry -GitignoreFile $GitignoreFile -Entry ".shamt/shamt_master_path.conf"
 Write-Host "  OK .shamt/shamt_master_path.conf added to .gitignore (always)"
 
+# Always add last_sync.conf (operational state — never commit)
+Add-GitignoreEntry -GitignoreFile $GitignoreFile -Entry ".shamt/last_sync.conf"
+Write-Host "  OK .shamt/last_sync.conf added to .gitignore (always)"
+
+# Always add import_diff*.md (transient diff files — never commit)
+Add-GitignoreEntry -GitignoreFile $GitignoreFile -Entry ".shamt/import_diff*.md"
+Write-Host "  OK .shamt/import_diff*.md added to .gitignore (always)"
+
 # Optionally gitignore .shamt/ and rules file
 if ($GitignoreShamt) {
     Add-GitignoreEntry -GitignoreFile $GitignoreFile -Entry ".shamt/"
