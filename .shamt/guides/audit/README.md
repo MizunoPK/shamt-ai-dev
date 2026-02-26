@@ -94,7 +94,7 @@ Round N complete → Round N+1 (fresh eyes) → EXIT when all criteria met
 ### Sub-Round Benefits
 
 1. **Dependency Management:** Core fixes (broken references) applied before Structural checks
-2. **Focused Discovery:** Check 4-5 related dimensions per sub-round, not all 20 at once
+2. **Focused Discovery:** Check 4-6 related dimensions per sub-round, not all 20 at once
 3. **Incremental Verification:** Verify fixes before moving to next category
 4. **Mental Clarity:** Fresh mental model between dimension categories
 5. **Complete Coverage:** ALL 20 dimensions checked systematically every round

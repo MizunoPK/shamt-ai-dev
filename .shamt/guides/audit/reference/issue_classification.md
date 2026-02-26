@@ -2,7 +2,7 @@
 
 **Purpose:** Severity levels and prioritization criteria for audit issues
 **Audience:** Agents organizing discovery reports and fix plans (Stages 1-2)
-**Last Updated:** 2026-02-05
+**Last Updated:** 2026-02-25
 
 ---
 
