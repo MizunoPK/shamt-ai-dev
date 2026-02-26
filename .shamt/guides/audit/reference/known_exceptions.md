@@ -210,6 +210,51 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 ---
 
+## Category E: Pre-Audit Script Recurring False Positives
+
+**Purpose:** Documents recurring false positives from `pre_audit_checks.sh` that are not covered by the D12 Prerequisites/Exit Criteria check above. These appear every run and must be excluded from fix counts.
+
+---
+
+### E1: D8 TODO/Placeholder Instances (23 Critical)
+
+**Dimension:** D8 (Documentation Quality)
+**Check:** `pre_audit_checks.sh` TODO/placeholder scan
+**Every-run count:** 23 critical, ~35 placeholder matches
+
+**Root Cause:** The D8 check scans all of `.shamt/guides/` including the epic workflow stage guides (s1–s10). Those guides intentionally contain TODO/TBD/placeholder text as instructional examples and checklist items — they teach users to avoid placeholders, so they must reference them.
+
+**Affected files:**
+- `stages/s1/s1_p3_discovery_phase.md` — mentions "TBD" as example of vague description to avoid
+- `stages/s3/s3_epic_planning_approval.md` — checklist item: "no TBD" as acceptance criterion
+- `stages/s5/s5_bugfix_workflow.md` — "Bug Fix TODO: Authentication Error" as a template example
+- `stages/s5/s5_v2_validation_loop.md` — "no TBD" completeness check
+- `stages/s7/s7_p2_qc_rounds.md` — "NO TODOs" as QC requirement (×2 lines)
+- `stages/s10/s10_epic_cleanup.md` — "No placeholder text (e.g., 'TODO', '{fill in later}')" as checklist
+
+**Why acceptable:** All occurrences are meta-content: teaching that real work products must not have TODOs. The stage guides themselves have no incomplete sections. The text is definitionally required to describe the standard.
+
+**Action:** When pre_audit_checks.sh reports "TODOs remaining: 23" — this is the expected baseline. Only investigate if the count rises above 23 or if new files appear in the list.
+
+---
+
+### E2: D10 Prerequisite-Content Conflicts (2 Warnings)
+
+**Dimension:** D10 (Prerequisite-Content Consistency)
+**Check:** `pre_audit_checks.sh` prerequisite-content conflict scan
+**Every-run count:** 2 warnings, always the same file
+
+**Root Cause:** `stages/s2/s2_p2_cross_feature_alignment.md` uses a group-based parallel work pattern where prerequisites define "all features completed S2.P1" but the content describes running on each group after its Group 1 features complete S2.P1. This is correct and intentional — it's a phased parallel execution model, not an inconsistency.
+
+**Affected file:**
+- `stages/s2/s2_p2_cross_feature_alignment.md` — appears twice in the conflict list (same file, two different pattern matches)
+
+**Why acceptable:** The prerequisite says "all features in current group completed S2.P1" and the content describes exactly that pattern applied per-group. The check misidentifies the scoping language as a conflict.
+
+**Action:** When pre_audit_checks.sh reports "Found 2 potential prerequisite-content conflicts" pointing at s2_p2_cross_feature_alignment.md — expected baseline. Only investigate if new files appear in the conflict list.
+
+---
+
 ## How to Use This Document
 
 ### For Future Audits
@@ -218,8 +263,14 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 1. **Generate violation list** using automated pattern search
 2. **Cross-reference with this document** before flagging as issues
-3. **Filter out known exceptions** (19 files total)
+3. **Filter out known exceptions** (19 files total — Categories A–D)
 4. **Investigate remaining violations** as potential real issues
+
+**When running `pre_audit_checks.sh` and seeing recurring script output:**
+
+- "TODOs remaining: 23" — expected baseline; see Category E1 above
+- "Found 2 potential prerequisite-content conflicts" pointing at s2_p2_cross_feature_alignment.md — expected; see Category E2 above
+- "⚠️ CLAUDE.md found but no stage references detected" — known script integer-parsing bug (line 370); not a real issue
 
 **Example Audit Workflow:**
 ```bash
@@ -296,6 +347,6 @@ wc -l real_violations.txt  # Should be low count
 
 ---
 
-**Last Verified:** 2026-02-22 (Round 11 audit — confirmed Category A files are all DELETED from filesystem as part of S5 v1 → v2 migration)
-**Next Review:** When new stage/iteration guides added, or if D8 check patterns change
+**Last Verified:** 2026-02-25 (Categories E1 and E2 added — documenting recurring pre_audit_checks.sh false positives)
+**Next Review:** When new stage/iteration guides added, or if D8/D10 check patterns change
 
