@@ -84,7 +84,7 @@ Table mapping algorithm requirements from spec.md to implementation_plan.md task
 ---
 
 ### Alignment
-Process of ensuring consistency across features (S3) or updating specs after implementation (S8.P1).
+Process of ensuring consistency across features (S2.P2: cross-feature alignment) or updating specs after implementation (S8.P1). S3 does epic-level test planning and approval (Gate 4.5) after S2.P2 alignment is complete.
 
 **See:** Cross-Feature Sanity Check, Post-Feature Alignment
 
