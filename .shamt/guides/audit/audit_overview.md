@@ -23,7 +23,7 @@
 
 This audit ensures **consistency, accuracy, and completeness** across all .shamt/guides files AND related external files.
 
-### The 20 Audit Dimensions
+### The 21 Audit Dimensions
 
 **Core Dimensions (Always Check) - D1, D2, D3, D4:**
 - ✅ **D1: Cross-Reference Accuracy** - All file paths, stage references, and cross-links are valid
@@ -45,13 +45,14 @@ This audit ensures **consistency, accuracy, and completeness** across all .shamt
 - ✅ **D13: Cross-File Dependencies** - Stage prerequisites match outputs, workflow continuity
 - ✅ **D14: Character and Format Compliance** - Guide files use only agent-readable characters; no Unicode checkboxes, curly quotes, or other problematic non-ASCII chars
 
-**Advanced Dimensions - D15, D16, D17, D18, D19, D20:**
+**Advanced Dimensions - D15, D16, D17, D18, D19, D20, D21:**
 - ✅ **D15: Context-Sensitive Validation** - Same pattern validated differently based on context
 - ✅ **D16: Duplication Detection** - No duplicate content or contradictory instructions
 - ✅ **D17: Accessibility** - Navigation aids, TOCs, scannable structure
 - ✅ **D18: Stage Flow Consistency** - Behavioral continuity and semantic consistency across stage transitions
 - ✅ **D19: Rules File Template Alignment** - Child project rules file retains Shamt structural sections (child context only)
 - ✅ **D20: Script Integrity** - Sync/init scripts are functionally correct, bash/PS parity, output matches guide instructions, transient files gitignored (manual review)
+- ✅ **D21: Agent Comprehension Risk** - Each guide unambiguously states its scope near the H1; no migration notes in the instruction path; structurally similar guides have explicit scope differentiation callouts
 
 ---
 
@@ -435,7 +436,7 @@ Round N:
   │   └─ If 0 issues found → Sub-Round N.4
   │       If issues found → Fix all → Re-run Sub-Round N.3
   │
-  └─> Sub-Round N.4: Advanced (D15, D16, D17, D18, D19, D20)
+  └─> Sub-Round N.4: Advanced (D15, D16, D17, D18, D19, D20, D21)
       ├─ S1: Discovery → S2: Planning → S3: Apply → S4: Verify → S5: Loop Decision
       └─ If 0 issues found → Round N complete
           If issues found → Fix all → Re-run Sub-Round N.4
@@ -458,7 +459,7 @@ EXIT (only if Round N had 0 issues in all 4 sub-rounds + 9 criteria met)
 3. **Incremental Verification:** Verify fixes before moving to next category
 4. **Mental Clarity:** Fresh mental model between dimension categories
 5. **Better Tracking:** Know exactly which category and dimensions you're auditing
-6. **Prevents Blind Spots:** ALL 20 dimensions checked systematically every round
+6. **Prevents Blind Spots:** ALL 21 dimensions checked systematically every round
 
 ### Dimension Organization by Sub-Round
 
@@ -495,6 +496,7 @@ EXIT (only if Round N had 0 issues in all 4 sub-rounds + 9 criteria met)
 - D18: Stage Flow Consistency - Cross-stage behavioral continuity (30% automated)
 - D19: Rules File Template Alignment - Child rules file structure (30% automated, child context only)
 - D20: Script Integrity - Sync/init script correctness and bash/PS parity (20% automated, manual review)
+- D21: Agent Comprehension Risk - Per-guide scope clarity, migration note absence, structural similarity differentiation (15% automated)
 
 **Why Last:** Advanced checks require all other dimensions to be clean
 
@@ -582,7 +584,7 @@ Round N complete (all 4 sub-rounds clean) → Round N+1 (fresh patterns)
 4. ✅ **3 consecutive zero-issue rounds:** consecutive_clean >= 3 (rounds with issues reset counter)
 5. ✅ **All remaining documented:** All remaining instances documented as intentional
 6. ✅ **User has NOT challenged:** User has not questioned findings
-7. ✅ **Confidence score:** ≥ 80% confidence in completeness across all 20 dimensions
+7. ✅ **Confidence score:** ≥ 80% confidence in completeness across all 21 dimensions
 8. ✅ **Pattern diversity:** ≥ 5 pattern types used per dimension category across rounds
 9. ✅ **Spot-check clean:** 10+ files manually checked per sub-round, zero issues
 
