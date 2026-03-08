@@ -239,12 +239,12 @@ Parallel S2 work started 6 hours ago. Not all features have completed S2.
 - Delays S3 start but guarantees progress
 - Recommendation: If agent stale or no clear ETA
 
-**Option 4: Proceed to S3 with 2 Features (risky)**
-- Run S3 comparing only Features 01-02
+**Option 4: Run S2.P2 for 2 Features and Defer Feature 03 (risky)**
+- Run S2.P2 (Cross-Feature Alignment) for Features 01-02 only
 - Feature 03 completes S2 independently
-- Re-run S3 after Feature 03 done to catch conflicts
+- After Feature 03 completes S2: run S2.P2 for Feature 03 vs all, then run S3 for all
 - Recommendation: ONLY if Feature 03 is isolated/independent
-- Risk: May find conflicts in second S3 pass requiring rework
+- Risk: May find conflicts in second S2.P2 pass requiring rework
 
 **What would you like me to do?**
 ```
@@ -282,12 +282,12 @@ Parallel S2 work started 6 hours ago. Not all features have completed S2.
 **If Option 4 (Proceed to S3 with 2 Features):**
 - **HIGH RISK - User explicitly chose this**
 - Document decision in EPIC_README.md
-- Run S3 comparing Features 01-02 only
-- Mark Feature 03 as "Deferred from S3 pass 1"
+- Run S2.P2 (Cross-Feature Alignment) for Features 01-02 only
+- Mark Feature 03 as "Deferred from S2.P2 pass 1"
 - After Feature 03 completes S2:
-  - Re-run S3 pairwise comparison: Feature 03 vs Feature 01, Feature 03 vs Feature 02
-  - Resolve any conflicts found
-  - Update specs as needed
+  - Run S2.P2 for Feature 03 vs Feature 01, Feature 03 vs Feature 02
+  - Resolve any conflicts found, update specs
+  - Then run S3 (Epic-Level Docs, Tests, and Approval) for all features
 
 ---
 

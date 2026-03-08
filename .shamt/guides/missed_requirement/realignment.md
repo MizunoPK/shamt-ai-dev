@@ -146,7 +146,7 @@ Resolution: Document integration point, add to both specs
 
 3. **Get user approval for changes:**
    ```markdown
-   During S3 alignment, I found a conflict:
+   During cross-feature re-alignment (S2.P2), I found a conflict:
 
    **Conflict:** {description}
 
@@ -475,7 +475,7 @@ After feature_05: Resume and complete feature_02
 ### Scenario 1: New Feature - No Conflicts Found
 
 **Actions:**
-1. Run S3 pairwise comparison
+1. Run cross-feature re-alignment (S2.P2 pairwise comparison, then S3 approval)
 2. No conflicts found
 3. User signs off
 4. Update epic test plan (S4)
@@ -487,7 +487,7 @@ After feature_05: Resume and complete feature_02
 ### Scenario 2: New Feature - Minor Conflicts
 
 **Actions:**
-1. Run S3 pairwise comparison
+1. Run cross-feature re-alignment (S2.P2 pairwise comparison, then S3 approval)
 2. Find minor conflicts (e.g., naming inconsistency)
 3. Resolve conflicts (update specs)
 4. User approves resolutions
@@ -500,7 +500,7 @@ After feature_05: Resume and complete feature_02
 ### Scenario 3: New Feature - Major Conflicts
 
 **Actions:**
-1. Run S3 pairwise comparison
+1. Run cross-feature re-alignment (S2.P2 pairwise comparison, then S3 approval)
 2. Find major conflicts (e.g., duplicate functionality)
 3. Resolve conflicts (extract to shared utility)
 4. Update multiple feature specs
@@ -515,7 +515,7 @@ After feature_05: Resume and complete feature_02
 ### Scenario 4: Update Unstarted Feature
 
 **Actions:**
-1. Run S3 pairwise comparison
+1. Run cross-feature re-alignment (S2.P2 pairwise comparison, then S3 approval)
 2. Check updated feature vs all others
 3. Resolve any conflicts
 4. Update epic test plan (S4)
