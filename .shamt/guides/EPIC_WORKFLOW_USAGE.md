@@ -78,10 +78,11 @@ Key activities:
 - For each feature: create `spec.md`, `checklist.md`, `RESEARCH_NOTES.md`
 - Run S2.P1 Spec Creation Refinement Validation Loop (Gates 1, 2, 3)
 - Gate 3: User approval of acceptance criteria (in S2.P1.I3, before S5)
+- S2.P2: Cross-Feature Alignment — pairwise comparison of all feature specs to resolve conflicts (Primary agent only; runs after all features complete S2.P1)
 
 **Parallelization option:** `parallel_work/s2_parallel_protocol.md` (3+ features)
 
-**Outputs:** `spec.md`, `checklist.md`, `RESEARCH_NOTES.md` per feature
+**Outputs:** `spec.md`, `checklist.md`, `RESEARCH_NOTES.md` per feature; cross-feature conflict resolutions
 
 ---
 
