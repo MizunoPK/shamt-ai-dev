@@ -438,7 +438,7 @@ cat feature_{XX}_{name}/README.md
 4. Create checklist.md with decisions (data source, update frequency, etc.)
 5. User approves spec
 
-**Output:** Complete feature_05 spec ready for S3 alignment
+**Output:** Complete feature_05 spec ready for S2.P2 (Cross-Feature Alignment) and S3
 
 ---
 
@@ -472,7 +472,7 @@ cat feature_{XX}_{name}/README.md
 ✅ Full S2 rigor applied
 ✅ User approved spec
 
-**Next:** Read `missed_requirement/realignment.md` for PHASE 3 & 4 (S3 & 4 Alignment)
+**Next:** Read `missed_requirement/realignment.md` for PHASE 3 & 4 (S2.P2 + S3 + S4 realignment)
 
 ---
 
