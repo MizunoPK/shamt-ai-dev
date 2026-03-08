@@ -13,7 +13,7 @@
 ## Table of Contents
 
 1. [Overview](#overview)
-1. [PHASE 3: S3 - Cross-Feature Sanity Check](#phase-3-s3---cross-feature-sanity-check)
+1. [PHASE 3: S3 - Epic-Level Docs, Tests, and Approval](#phase-3-s3---epic-level-docs-tests-and-approval)
    - [Critical: Re-align ALL Features](#critical-re-align-all-features)
    - [Step 1: Systematic Pairwise Comparison](#step-1-systematic-pairwise-comparison)
    - [Step 2: Identify Conflicts](#step-2-identify-conflicts)
@@ -55,14 +55,14 @@
 
 **PHASE 3 & 4 ensures epic coherence after adding/updating a feature:**
 
-- **S3:** Cross-feature sanity check (ALL features)
+- **S3:** Epic-Level Docs, Tests, and Approval (epic smoke test update + Gate 4.5 re-approval)
 - **S4:** Update/create feature testing strategy (test_strategy.md)
 - **Resume:** Return to paused work
 - **Later:** Implement new/updated feature in sequence
 
 ---
 
-## PHASE 3: S3 - Cross-Feature Sanity Check
+## PHASE 3: S3 - Epic-Level Docs, Tests, and Approval
 
 ### Critical: Re-align ALL Features
 
@@ -167,7 +167,7 @@ Resolution: Document integration point, add to both specs
 **After all conflicts resolved:**
 
 ```markdown
-S3 cross-feature sanity check complete.
+S3 re-alignment complete (cross-feature conflicts resolved + epic plan updated).
 
 **Features checked:** {count} features, {count} pairwise comparisons
 **Conflicts found:** {count}
@@ -446,7 +446,7 @@ After feature_05: Resume and complete feature_02
 
 **PHASE 3 & 4 complete when:**
 
-**S3 (Cross-Feature Sanity Check):**
+**S3 (Epic-Level Docs, Tests, and Approval):**
 - [x] All feature pairs compared systematically
 - [x] All conflicts identified
 - [x] All conflicts resolved

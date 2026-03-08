@@ -79,7 +79,7 @@ SAVINGS: 4 hours (14% epic-level reduction)
 
 **Sequential (Unchanged):**
 - ❌ S1: Epic Planning (Primary only)
-- ❌ S3: Cross-Feature Sanity Check (Primary only)
+- ❌ S3: Epic-Level Docs, Tests, and Approval (Primary only)
 - ❌ S4: Feature Testing Strategy (Primary only)
 - ❌ S5-S8: Feature Implementation (sequential in this plan)
 - ❌ S9-S10: Epic completion (Primary only)
@@ -556,7 +556,7 @@ All features complete! Proceeding to S3.
 **Total S2 Time:** 2.5 hours
 **Time Saved:** 3.5 hours (vs 6 hours sequential)
 
-🔄 Now running S3 (Cross-Feature Sanity Check)
+🔄 Now running S3 (Epic-Level Docs, Tests, and Approval)
 ```
 
 #### Step 4: Notify Secondaries
@@ -571,16 +571,15 @@ All features complete! Proceeding to S3.
 
 ---
 
-### Phase 7: S3 Cross-Feature Sanity Check (Primary Solo)
+### Phase 7: S3 Epic-Level Docs, Tests, and Approval (Primary Solo)
 
 **Run S3 alone:**
 
-1. Read all specs (all 3 features)
-2. Check for conflicts, overlaps, gaps
-3. Verify alignment with epic
-4. Update specs if needed
-5. Document findings
-6. Complete S3
+1. Follow guide: `stages/s3/s3_epic_planning_approval.md`
+2. S3.P1: Create epic smoke test plan (integration tests across all features)
+3. S3.P2: Refine EPIC_README.md with feature summaries and arch decisions
+4. S3.P3: Gate 4.5 — get user approval of epic plan (mandatory)
+5. Complete S3
 
 **No parallel work in S3** (requires holistic view)
 

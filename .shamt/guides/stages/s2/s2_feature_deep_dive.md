@@ -434,7 +434,7 @@ Ready to begin I1: Feature-Level Discovery.
 **After completing S2.P2:**
 - S2 is COMPLETE for the epic
 - Update EPIC_README.md Feature Tracking table
-- Proceed to S3 (Cross-Feature Sanity Check)
+- Proceed to S3 (Epic-Level Docs, Tests, and Approval)
 
 ---
 
@@ -477,7 +477,7 @@ Ready to begin I1: Feature-Level Discovery.
 - Repeat all iterations
 
 **If ALL features complete S2:**
-- Transition to S3 (Cross-Feature Sanity Check)
+- Transition to S3 (Epic-Level Docs, Tests, and Approval)
 
 📖 **READ:** `stages/s3/s3_epic_planning_approval.md`
 

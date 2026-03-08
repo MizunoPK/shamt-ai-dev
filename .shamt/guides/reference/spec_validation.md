@@ -26,7 +26,7 @@ Spec Validation is a critical gate where you re-validate spec.md against the ori
 
 **When do you use this guide?**
 - After S2 (Feature Deep Dive) complete
-- Before S3 (Cross-Feature Sanity Check)
+- Before S3 (Epic-Level Docs, Tests, and Approval)
 - When you need to validate spec accuracy against epic intent
 
 **Key Outputs:**
@@ -34,7 +34,7 @@ Spec Validation is a critical gate where you re-validate spec.md against the ori
 - ✅ Requirements validated against epic (literal meaning checked)
 - ✅ Spec assumptions questioned and verified
 - ✅ Misalignments identified and corrected
-- ✅ Ready for S3 (Cross-Feature Sanity Check)
+- ✅ Ready for S3 (Epic-Level Docs, Tests, and Approval)
 
 **Time Estimate:**
 30-45 minutes per feature
@@ -326,7 +326,7 @@ These discrepancies suggest spec.md may be fundamentally incorrect.
 
 **Option B:** Fix spec, continue to S3
 - Update spec.md
-- Continue to S3 (Cross-Feature Sanity Check)
+- Continue to S3 (Epic-Level Docs, Tests, and Approval)
 - Risk: May still have subtle errors
 
 **Option C:** Discuss discrepancies first
@@ -589,7 +589,7 @@ After S2.5:
 ## Next Stage
 
 **If Zero Discrepancies:**
-- Proceed to S3 (Cross-Feature Sanity Check)
+- Proceed to S3 (Epic-Level Docs, Tests, and Approval)
 
 **If Discrepancies Found:**
 - Follow user's decision (restart S2 / continue / discuss)

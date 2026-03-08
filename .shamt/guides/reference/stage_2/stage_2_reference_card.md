@@ -229,7 +229,7 @@ S2.P2: Cross-Feature Alignment (20-60 min)
 - [ ] checklist.md has zero unresolved items
 - [ ] SPEC_SUMMARY.md created and user-validated
 
-**Next Stage:** S3 (Cross-Feature Sanity Check) - if all features planned
+**Next Stage:** S3 (Epic-Level Docs, Tests, and Approval) - if all features planned
 **OR:** S2 for next feature - if more features to plan
 
 ---

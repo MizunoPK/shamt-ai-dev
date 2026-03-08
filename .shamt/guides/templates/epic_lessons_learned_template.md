@@ -96,7 +96,7 @@ This document captures:
 
 ---
 
-## S3 Lessons Learned (Cross-Feature Sanity Check)
+## S3 Lessons Learned (Epic-Level Docs, Tests, and Approval)
 
 **What Went Well:**
 - {Positive observation}

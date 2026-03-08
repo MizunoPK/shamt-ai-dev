@@ -121,7 +121,7 @@ Missed requirement handling is complete when the new/updated feature has been pl
 
 3. ⚠️ ALWAYS RETURN TO STAGE 2/3/4
    - S2: Flesh out new/updated feature spec
-   - S3: Cross-feature sanity check (ALL features)
+   - S3: Epic-Level Docs, Tests, and Approval (ALL features)
    - S4: Update/create feature testing strategy (test_strategy.md)
    - Maintains epic-level alignment
 
@@ -145,7 +145,7 @@ Missed requirement handling is complete when the new/updated feature has been pl
 
 7. ⚠️ SAME RIGOR AS ALL FEATURES
    - Full S2 deep dive
-   - Full S3 sanity check (all features)
+   - Full S3 re-alignment (all features)
    - Full S4 test plan update
    - When implemented: Full S5 (S5 → S6 → S7 → S8)
    - No shortcuts
@@ -195,7 +195,7 @@ The missed requirement protocol consists of 4 phases (plus special case):
 **Purpose:** Re-align ALL features and update epic test plan
 
 **Key Activities:**
-- S3: Cross-feature sanity check (ALL features, not just new/updated)
+- S3: Epic-Level Docs, Tests, and Approval (ALL features, not just new/updated)
 - Resolve conflicts between features
 - S4: Create/update feature test_strategy.md + update epic_smoke_test_plan.md
 - Update Epic Progress Tracker
@@ -276,7 +276,7 @@ User decided approach, need to plan?
 
 Planning complete, need to align features?
 └─ Read missed_requirement/realignment.md (PHASE 3 & 4)
-   └─ S3 sanity check + S4 test plan update → Resume work
+   └─ S3 re-alignment + S4 test plan update → Resume work
 
 Discovered during S9 or S10?
 └─ Read missed_requirement/s9_s10_special.md (SPECIAL CASE)
@@ -329,7 +329,7 @@ Discovered during S9 or S10?
 
 1. **Discovery:** Present two options (new feature vs update unstarted)
 2. **Planning:** Full S2 deep dive for new/updated feature
-3. **Realignment:** S3 sanity check + S4 test plan update
+3. **Realignment:** S3 re-alignment + S4 test plan update
 4. **Resume:** Continue paused work
 5. **Implementation:** Feature implemented later in sequence
 

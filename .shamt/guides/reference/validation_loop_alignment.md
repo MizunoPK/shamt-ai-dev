@@ -169,7 +169,7 @@ Round 5: Final sweep
 **S2.P2 Group Alignment:**
 - Use this protocol for all features together
 - Pairwise comparison of all feature pairs
-- Must pass before S3 (cross-feature sanity check)
+- Must pass before S3 (Epic-Level Docs, Tests, and Approval)
 
 ---
 

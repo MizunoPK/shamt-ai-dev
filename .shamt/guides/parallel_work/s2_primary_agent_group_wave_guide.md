@@ -794,7 +794,7 @@ grep "ISSUES:" feature_*/STATUS | grep -v "ISSUES: 0"
 
 ### Next Stage
 
-**S3: Cross-Feature Sanity Check (Epic-Level)**
+**S3: Epic-Level Docs, Tests, and Approval**
 - Groups no longer matter (all features participate equally)
 - Primary agent runs S3 solo
 - Guide: `stages/s3/s3_epic_planning_approval.md`
@@ -825,7 +825,7 @@ grep "ISSUES:" feature_*/STATUS | grep -v "ISSUES: 0"
 3. 💬 Ask questions if needed
 
 **What happens next:**
-- I'll run S3 (Cross-Feature Sanity Check) - Epic-level, all features together
+- I'll run S3 (Epic-Level Docs, Tests, and Approval) - Epic-level, all features together
 - I'll run S4 (Testing Strategy) - Per-feature sequential
 - S5-S8: Implementation (per-feature sequential, no parallelization)
 - S9-S10: Epic QC and cleanup
@@ -846,7 +846,7 @@ grep "ISSUES:" feature_*/STATUS | grep -v "ISSUES: 0"
 - Last Updated: 2026-02-06 17:00
 - Current Stage: S2 → S3 Transition
 - Current Step: All features complete S2, preparing for S3
-- Next Action: Read S3 guide and begin Cross-Feature Sanity Check
+- Next Action: Read S3 guide and begin Epic-Level Testing Strategy (S3.P1)
 - Current Guide: stages/s3/s3_epic_planning_approval.md
 - S2 Status: ✅ COMPLETE (all features, all groups)
 - Groups: No longer matter (S3 is epic-level)
@@ -879,15 +879,14 @@ grep "ISSUES:" feature_*/STATUS | grep -v "ISSUES: 0"
 
 ---
 
-## Next Stage: S3 (Cross-Feature Sanity Check)
+## Next Stage: S3 (Epic-Level Docs, Tests, and Approval)
 
 **S3 is epic-level** - all features participate, no parallelization, no groups
 
 **What I'll do:**
-1. Read epic-level documents (EPIC_README.md, all spec.md files)
-2. Sanity check feature interactions
-3. Create epic testing strategy
-4. Prepare for S4 (per-feature test planning)
+1. S3.P1: Create epic smoke test plan (integration tests across all features)
+2. S3.P2: Refine EPIC_README.md with feature summaries and architecture decisions
+3. S3.P3: Gate 4.5 — get user approval of epic plan before S4
 
 **Estimated time:** 1-2 hours
 

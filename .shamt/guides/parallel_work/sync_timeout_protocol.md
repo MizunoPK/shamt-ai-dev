@@ -138,7 +138,7 @@ BLOCKERS: Waiting for user answer to Question 8
 3. If need help, request assistance
 
 **Sync Impact:**
-- Cannot start S3 (Cross-Feature Sanity Check) until all features complete S2
+- Cannot start S3 (Epic-Level Docs, Tests, and Approval) until all features complete S2
 - Other agents waiting on you
 
 **Please respond within 30 minutes with ETA or escalation.**
@@ -218,7 +218,7 @@ Parallel S2 work started 6 hours ago. Not all features have completed S2.
 - Agent appears: {ACTIVE / STALE / UNKNOWN}
 
 **Impact:**
-- Cannot start S3 (Cross-Feature Sanity Check) until Feature 03 completes S2
+- Cannot start S3 (Epic-Level Docs, Tests, and Approval) until Feature 03 completes S2
 - Features 01 and 02 are blocked waiting
 
 **Recovery Options:**
@@ -296,7 +296,7 @@ Parallel S2 work started 6 hours ago. Not all features have completed S2.
 ### Expected Timeline
 
 **Assumptions:**
-- S3: 30-60 minutes (cross-feature sanity check)
+- S3: 75-105 minutes (Epic-Level Docs, Tests, and Approval)
 - S4: 45-60 minutes per feature (feature testing strategy — 4 iterations)
 - Total: 1-2 hours for Primary to complete both
 

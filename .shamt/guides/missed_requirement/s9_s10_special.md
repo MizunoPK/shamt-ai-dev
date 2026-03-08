@@ -93,7 +93,7 @@ S9.P1 → S9.P2 → S9.P3 → S10 (entire epic flow)
 
 3. **PHASE 3 & 4:** Realignment (S3 & 4)
    - Use `missed_requirement/realignment.md`
-   - Cross-feature sanity check
+   - S3 re-alignment (epic smoke test update + Gate 4.5 re-approval)
    - Update epic test plan
    - **Note:** Epic testing is paused, not a specific feature
 

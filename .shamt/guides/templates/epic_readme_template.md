@@ -388,7 +388,7 @@ Plan  Deep Dive  Check  Strategy  (per feature)   QC
 - [ ] ALL features have `checklist.md` resolved
 - [ ] ALL feature `README.md` files created
 
-**S3 - Cross-Feature Sanity Check:**
+**S3 - Epic-Level Docs, Tests, and Approval:**
 - [ ] All specs compared systematically
 - [ ] Conflicts resolved
 - [ ] User sign-off obtained
