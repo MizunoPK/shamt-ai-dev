@@ -455,7 +455,7 @@ EXIT (only if Round N had 0 issues in all 4 sub-rounds + 9 criteria met)
 **Benefits of the 4 sub-round structure:**
 
 1. **Dependency Management:** Core dimension fixes (broken references) applied before Structural checks (cross-file dependencies)
-2. **Focused Discovery:** Check 4-6 related dimensions per sub-round, not all 20 at once
+2. **Focused Discovery:** Check 4-7 related dimensions per sub-round, not all 21 at once
 3. **Incremental Verification:** Verify fixes before moving to next category
 4. **Mental Clarity:** Fresh mental model between dimension categories
 5. **Better Tracking:** Know exactly which category and dimensions you're auditing

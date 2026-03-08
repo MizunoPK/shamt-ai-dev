@@ -39,7 +39,7 @@
 
 ### Dimension Focus by Sub-Round
 
-**🚨 CRITICAL:** Only check dimensions assigned to your current sub-round. Do NOT check all 20 dimensions in one discovery phase.
+**🚨 CRITICAL:** Only check dimensions assigned to your current sub-round. Do NOT check all 21 dimensions in one discovery phase.
 
 #### Sub-Round N.1: Core Dimensions
 **Focus on:** D1, D2, D3, D4 (4 dimensions)
@@ -97,7 +97,7 @@
 5. D13 last (cross-file dependencies require D10-D12 clean)
 
 #### Sub-Round N.4: Advanced Dimensions
-**Focus on:** D15, D16, D17, D18, D19, D20 (6 dimensions)
+**Focus on:** D15, D16, D17, D18, D19, D20, D21 (7 dimensions)
 **Duration:** 60-90 minutes (full cycle)
 **Why Last:** Advanced checks require all other dimensions to be clean
 
@@ -108,14 +108,16 @@
 - **D18: Stage Flow Consistency** - Stage transitions, handoffs, next-guide references
 - **D19: Rules File Template Alignment** - Child rules file retains Shamt structural sections (**child context only** — skip in master context)
 - **D20: Script Integrity** - Sync scripts are functionally correct, parity between bash/PowerShell, output matches guide instructions (**all contexts** — see D20 checklist in Priority 5 below)
+- **D21: Agent Comprehension Risk** - Each stage guide prominently states its scope; no migration notes in the agent instruction path; structurally similar sibling guides have explicit scope differentiation callouts (see `dimensions/d21_agent_comprehension_risk.md`)
 
 **Priority Order:**
 1. D17 first (accessibility - missing TOCs and platform parity)
 2. D16 second (duplication detection)
 3. D18 third (stage flow and handoff accuracy)
-4. D15 fourth (context-sensitive validation requires understanding all content)
-5. D19 fifth (child context only; skip entirely if master context)
-6. D20 last (script integrity — manual review of sync scripts)
+4. D21 fourth (agent comprehension risk — per-guide scope clarity; run after D18)
+5. D15 fifth (context-sensitive validation requires understanding all content)
+6. D19 sixth (child context only; skip entirely if master context)
+7. D20 last (script integrity — manual review of sync scripts)
 
 ### How to Use This Section
 
@@ -136,7 +138,7 @@ Output: Discovery report with D1, D2, D3, D4 issues ONLY
 ```diff
 
 **Do NOT:**
-- ❌ Check all 20 dimensions in Sub-Round N.1
+- ❌ Check all 21 dimensions in Sub-Round N.1
 - ❌ Check D11 (file size) during Sub-Round N.1 (save for N.3)
 - ❌ Mix dimensions from different sub-rounds
 - ❌ Skip dimensions assigned to current sub-round
@@ -614,7 +616,7 @@ Checklist for each script pair (bash + PowerShell):
 ```markdown
 ## Issue #N
 
-**Dimension:** [D1-D20]
+**Dimension:** [D1-D21]
 **File:** path/to/file.md
 **Line:** 123
 **Severity:** Critical/High/Medium/Low
@@ -745,7 +747,7 @@ Checklist for each script pair (bash + PowerShell):
 - Sub-Round N.1: D1 ✓, D2 ✓, D3 ✓, D4 ✓ (Core)
 - Sub-Round N.2: D5 ✓, D6 ✓, D7 ✓, D8 ✓, D9 ✓ (Content)
 - Sub-Round N.3: D10 ✓, D11 ✓, D12 ✓, D13 ✓, D14 ✓ (Structural)
-- Sub-Round N.4: D15 ✓, D16 ✓, D17 ✓, D18 ✓, D19 ✓, D20 ✓ (Advanced; D19 child context only; D20 manual script review)
+- Sub-Round N.4: D15 ✓, D16 ✓, D17 ✓, D18 ✓, D19 ✓, D20 ✓, D21 ✓ (Advanced; D19 child context only; D20 manual script review)
 
 ---
 
