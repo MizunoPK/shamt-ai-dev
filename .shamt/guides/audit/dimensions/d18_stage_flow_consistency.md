@@ -264,7 +264,7 @@ Scope transitions (epic->feature->group->epic) must be explicit and consistent.
 |-------|--------------|------------|
 | S1 | Epic (planning whole epic) | -> S2 (feature-level) |
 | S2 | Feature (within groups?) | -> S3 (epic-level) |
-| S3 | Epic (cross-feature sanity) | -> S4 (feature-level) |
+| S3 | Epic (smoke tests, docs, Gate 4.5) | -> S4 (feature-level) |
 | S4 | Feature (test strategy) | -> S5 (feature-level) |
 | S5-S8 | Feature (implementation loop) | -> S5 or S9 |
 | S9 | Epic (final QC) | -> S10 (epic-level) |
@@ -347,7 +347,7 @@ After any stage restructuring, check whether the Overview or Purpose section con
 
 ### Scope
 - [ ] S2 exits with all features having completed S2 (epic-level aggregation)
-- [ ] S3 enters at epic level (cross-feature sanity check)
+- [ ] S3 enters at epic level (epic smoke test plan, documentation refinement, Gate 4.5 approval)
 - [ ] No group-level language in S3 that contradicts epic-level entry
 
 ### Agent Comprehension (S3 specific)
@@ -611,7 +611,7 @@ For each stage boundary:
 S2 -> S3:
 S2 operates at feature level
 S3 operates at epic level
-Transition is intentional: aggregate all feature specs for cross-feature sanity check
+Transition is intentional: S2.P2 completes cross-feature alignment, S3 creates epic smoke test plan and gets user approval
 ```
 
 **Validation:** If scope change is documented and intentional -> VALID
