@@ -66,11 +66,10 @@ Items discovered during development and testing that need to be addressed in the
 
 **Discovered:** 2026-03-07
 
-**Problem/Opportunity:** After spec and test strategy are finalized, the agent currently moves into implementation without giving the user an explicit opportunity to review and approve the execution plan. This can lead to wasted work if the planned approach diverges from user expectations.
+**Status:** ✅ DONE — 2026-03-08
 
-**What needs to change:**
-- Add a step in the workflow (likely at the S4→S5 transition or within S5) where the agent produces an implementation plan summary and pauses for explicit user approval before any code is written
-- Define what the plan summary must include: file-level scope, approach per component, known risks, order of operations
-- Update the relevant stage guides (S4, S5) and any validation loop checkpoints to enforce this gate
+**What was done:**
+- `guides/templates/implementation_plan_template.md`: Added "Plan Summary" section (between Validation Loop Completion and User Approval) with 5 required fields — files to be modified/created, approach per component, known risks, implementation phases, and first S6 commit scope. Gate 5 note directs agents to show this section directly, not paraphrase.
+- `guides/stages/s5/s5_v2_validation_loop.md`: Strengthened Gate 5 step 2 — replaced vague "highlight key sections" with explicit requirement to show Plan Summary section directly, verify all 5 fields present, state validation loop result, and require explicit approval. Added `🛑 MANDATORY CHECKPOINT: Gate 5` block immediately after Gate 5 step 4 with a 6-item checklist blocking S6 entry until approval is fully documented.
 
 ---

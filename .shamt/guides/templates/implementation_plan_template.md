@@ -259,6 +259,47 @@ Maps every algorithm in spec.md to exact code location for quick reference durin
 
 ---
 
+## Plan Summary
+*Completed after Validation Loop — required for Gate 5 presentation*
+
+**Purpose:** Human-readable overview for user approval before implementation begins. At Gate 5, show this section to the user directly — do not paraphrase or summarize verbally.
+
+### Files To Be Modified or Created
+
+| File | Action | Rationale |
+|------|--------|-----------|
+| `{path/to/file.py}` | {Modify / Create} | {Why this file needs to change} |
+| `{path/to/other.py}` | {Modify / Create} | {Why this file needs to change} |
+
+### Approach Per Component
+
+- **{Component 1}:** {One sentence describing the approach}
+- **{Component 2}:** {One sentence describing the approach}
+- **{Component N}:** {One sentence describing the approach}
+
+### Known Risks and Open Design Questions
+
+- **Risk:** {Risk description} — Mitigation: {Mitigation strategy}
+- **Risk:** {Risk description} — Mitigation: {Mitigation strategy}
+- **Open question (if any):** {Question} — will be resolved in Task {N}
+
+*If no risks: "No significant risks identified — see Edge Cases section for handled edge cases."*
+
+### Implementation Phases
+
+| Phase | Tasks | Scope |
+|-------|-------|-------|
+| Phase 1: {Phase Name} | Tasks {X–Y} | {What gets built} |
+| Phase 2: {Phase Name} | Tasks {X–Y} | {What gets built} |
+
+### First S6 Commit Scope
+
+**The first commit will include:** {What gets written in the first implementation commit — e.g., "Task 1 only: {brief scope description}"}
+
+**Rationale:** {Why this ordering — e.g., "establishes the interface that later tasks depend on"}
+
+---
+
 ## Version History
 
 **v1.0 ({YYYY-MM-DD HH:MM}) - Phase 1 Complete (Draft Creation):**

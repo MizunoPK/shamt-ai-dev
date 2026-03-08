@@ -1149,9 +1149,11 @@ Next: Present implementation_plan.md to user (Gate 5)
    - Increment version to v1.0
 
 2. **Present to user:**
-   - Use prompt from `prompts_reference_v2.md` → "S5 Complete - Implementation Plan Approval"
-   - Highlight key sections (tasks, phasing, test strategy)
-   - Request explicit approval
+   - Show the **Plan Summary section** of implementation_plan.md directly — do not paraphrase or summarize verbally
+   - The Plan Summary must contain all 5 required fields: files to be modified/created, approach per component, known risks, implementation phases, and first S6 commit scope
+   - If Plan Summary section is missing or incomplete: fill it now before presenting
+   - State explicitly: "Validation loop passed ({N} rounds, last 3 clean). Requesting your approval to proceed to S6."
+   - Request explicit approval — silence or partial response does not count
 
 3. **Wait for user response:**
    - If approved: Document approval timestamp, proceed to S6
@@ -1160,6 +1162,21 @@ Next: Present implementation_plan.md to user (Gate 5)
 4. **Document approval:**
    - Add "User Approved: [timestamp] by [user]" to implementation_plan.md
    - Update feature README.md Agent Status: "S5 complete, S6 ready"
+
+### 🛑 MANDATORY CHECKPOINT: Gate 5
+
+**Before reading s6_execution.md or writing any implementation code, verify ALL:**
+
+- [ ] Validation loop passed — 3 consecutive clean rounds documented in implementation_plan.md
+- [ ] Plan Summary section exists in implementation_plan.md with all 5 required fields filled
+- [ ] Plan Summary was shown to user directly (section text, not a verbal summary)
+- [ ] User gave explicit approval — not assumed from silence or a partial response
+- [ ] Approval documented in implementation_plan.md with timestamp
+- [ ] Feature README.md Agent Status updated to "S5 complete, S6 ready"
+
+**If ANY item is unchecked:** Do NOT proceed to S6 — complete the missing step first.
+
+**If user requested changes:** Make changes, re-validate affected dimensions, update Plan Summary if needed, re-present for approval.
 
 ---
 
