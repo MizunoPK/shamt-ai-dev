@@ -108,7 +108,7 @@ S1 is complete when you have Discovery approved, a validated epic ticket, comple
 
 6. Create GUIDE_ANCHOR.md in epic folder (resumption instructions)
 
-7. epic_smoke_test_plan.md is PLACEHOLDER (will update in S4, S8.P2)
+7. epic_smoke_test_plan.md is PLACEHOLDER (will finalize in S3.P1, update in S8.P2)
    - Initial plan based on assumptions
    - Mark clearly as "INITIAL - WILL UPDATE"
 

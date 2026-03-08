@@ -744,7 +744,7 @@ grep -A 10 "^## Prerequisites" "$stage_file"
 | S1 | None | - |
 | S2 | S1, DISCOVERY.md | DISCOVERY.md in epic folder |
 | S3 | S2 (all features), spec.md files | All feature_XX/spec.md |
-| S4 | S3, epic plan approved | epic_smoke_test_plan.md |
+| S4 | S3, epic plan approved | feature_XX/test_strategy.md |
 | S5 | S4, test_strategy.md | feature_XX/test_strategy.md |
 | S6 | S5, implementation_plan.md | feature_XX/implementation_plan.md |
 | S7 | S6, code complete | Implementation files |

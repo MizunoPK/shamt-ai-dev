@@ -197,7 +197,8 @@ The missed requirement protocol consists of 4 phases (plus special case):
 **Key Activities:**
 - S3: Epic-Level Docs, Tests, and Approval (ALL features, not just new/updated)
 - Resolve conflicts between features
-- S4: Create/update feature test_strategy.md + update epic_smoke_test_plan.md
+- S3.P1: Update epic_smoke_test_plan.md with scenarios for new/updated feature
+- S4: Create/update feature test_strategy.md (per-feature only)
 - Update Epic Progress Tracker
 - Update EPIC_README with new sequence
 
