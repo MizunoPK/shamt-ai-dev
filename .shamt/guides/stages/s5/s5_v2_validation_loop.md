@@ -67,7 +67,7 @@
 
 **Before starting S5 v2:**
 
-- [ ] S4 complete - epic_smoke_test_plan.md updated, test_strategy.md created for this feature
+- [ ] S4 complete - test_strategy.md created for this feature (epic_smoke_test_plan.md updated in S3.P1)
 - [ ] Feature spec.md complete (all sections filled, no TBD)
 - [ ] Feature checklist.md resolved (all user questions answered, Gate 3 passed)
 - [ ] S5 v2 template available: `templates/implementation_plan_template.md`

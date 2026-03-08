@@ -1,6 +1,6 @@
 # PHASE 3 & 4: Realignment (S3 & 4) and Resume
 
-**Purpose:** Re-align ALL features and update epic test plan, then resume paused work
+**Purpose:** Re-align ALL features (S2.P2 + S3), update feature test strategy (S4), then resume paused work
 
 **When to Use:** After PHASE 2 complete, feature spec created/updated
 
@@ -572,13 +572,13 @@ After feature_05: Resume and complete feature_02
 
 ---
 
-### ❌ Anti-Pattern 2: Skip S4
+### ❌ Anti-Pattern 2: Skip S3.P1 or S4
 
-**Mistake:** "Epic test plan doesn't need updates for small feature"
+**Mistake:** "It's a small feature — skip the epic smoke test update or skip creating test_strategy.md"
 
-**Why wrong:** Even small features need epic-level test coverage
+**Why wrong:** Even small features need epic-level test coverage (S3.P1) and a per-feature test strategy (S4)
 
-**Correct:** Always update epic_smoke_test_plan.md
+**Correct:** Always update epic_smoke_test_plan.md in S3.P1 and always create test_strategy.md in S4
 
 ---
 

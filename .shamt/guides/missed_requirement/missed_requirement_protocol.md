@@ -91,7 +91,7 @@ Missed Requirement Protocol treats missing scope as real features - either creat
 - ✅ New feature created OR unstarted feature updated
 - ✅ Feature spec fleshed out (S2)
 - ✅ All features re-aligned (S3)
-- ✅ Epic test plan updated (S4)
+- ✅ Epic smoke test plan updated (S3.P1) + feature test_strategy.md created (S4)
 - ✅ Epic documentation updated for resumability
 - ✅ Ready to resume previous work
 - ✅ New/updated feature implemented when its turn comes in sequence

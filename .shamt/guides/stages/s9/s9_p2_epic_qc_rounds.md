@@ -273,7 +273,7 @@ VALIDATION COMPLETE → Proceed to S9.P3 (User Testing)
 
 ### Validation 1.1: Integration Point Validation
 
-**Review integration points identified in S4 epic_smoke_test_plan.md:**
+**Review integration points identified in S3.P1 epic_smoke_test_plan.md:**
 
 **Find integration points section:**
 ```markdown
@@ -582,10 +582,10 @@ User Goal 3: "Generate top 200 ranked items"
 
 ### Validation 3.2: Verify Epic Success Criteria
 
-**From S4 epic_smoke_test_plan.md, check success criteria:**
+**From S3.P1 epic_smoke_test_plan.md, check success criteria:**
 
 ```markdown
-## Epic Success Criteria (example from S4)
+## Epic Success Criteria (example from S3.P1)
 
 1. All 6 positions have rating multipliers (QB, RB, WR, TE, K, DST)
    ✅ Verified: All 6 position files have multipliers
