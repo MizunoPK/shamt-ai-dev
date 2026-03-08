@@ -46,7 +46,7 @@
 
 | Template | Filename | Use When |
 |----------|----------|----------|
-| [Cross-Feature Sanity Check](#cross-feature-sanity-check) | `cross_feature_sanity_check_template.md` | Comparing features for conflicts or duplications during S2.P2 (Cross-Feature Alignment) |
+| [Cross-Feature Alignment](#cross-feature-alignment) | `cross_feature_sanity_check_template.md` | Comparing features for conflicts or duplications during S2.P2 (Cross-Feature Alignment) |
 
 ### S4: Feature Testing Strategy
 
@@ -236,7 +236,7 @@
 - **Size:** ~259 lines
 - **When to use:** S4 start (creates `test_strategy.md` in feature folder)
 
-#### Cross-Feature Sanity Check
+#### Cross-Feature Alignment
 - **File:** `cross_feature_sanity_check_template.md`
 - **Created:** S2.P2
 - **Purpose:** Comparing features for conflicts, duplications, or integration gaps during S2.P2 cross-feature alignment

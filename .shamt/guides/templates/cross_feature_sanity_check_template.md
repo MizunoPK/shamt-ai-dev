@@ -1,4 +1,4 @@
-# Cross-Feature Sanity Check
+# Cross-Feature Alignment (S2.P2)
 
 **Date:** {YYYY-MM-DD}
 **Epic:** {epic_name}
