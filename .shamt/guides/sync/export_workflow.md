@@ -32,6 +32,44 @@ If entries are missing, add them now:
 
 ---
 
+## Step 1.2: Compare Your Rules File Against the Template
+
+The rules file (e.g., `CLAUDE.md`, `.github/copilot-instructions.md`) lives outside `.shamt/` and is **not exported automatically** by the export script. Generic improvements you have added to it will not reach other Shamt projects unless you back-propagate them to `RULES_FILE.template.md` in the master repo.
+
+Compare:
+- Your rules file (wherever it lives for this AI service)
+- `{master_repo}/scripts/initialization/RULES_FILE.template.md`
+
+For each section in your rules file not present in the template, ask: *would this apply to any Shamt project regardless of tech stack?*
+
+**Signs of generic content (back-propagate):**
+- Rules about Shamt workflow behavior (validation loops, stage transitions, missed requirements)
+- Rules about how agents interact with Shamt system files
+- Conventions that apply regardless of language or domain
+
+**Signs of project-specific content (leave in rules file only):**
+- References to actual tech stack or test commands (`pytest`, `tsc --noEmit`, etc.)
+- Historical context specific to this project
+- Your project's epic tag as a literal value rather than `{{EPIC_TAG}}`
+
+**If generic additions exist:**
+1. Add the content to `RULES_FILE.template.md` in the master repo
+2. Replace your epic tag with `{{EPIC_TAG}}` wherever it appears as a template variable
+3. Add a `CHANGES.md` entry (see `sync/separation_rule.md` for format):
+
+```markdown
+## YYYY-MM-DD — Rules file template: [section name]
+- Modified: `scripts/initialization/RULES_FILE.template.md`
+- Rules file section: [section name or brief description]
+- Reason: [why this is generic]
+```
+
+The template update will be included in the export alongside guide changes.
+
+**If no generic additions:** note "Rules file compared — no template updates needed" and proceed.
+
+---
+
 ## Step 1.5: Check for Epic Tag Contamination
 
 Before running the audit, scan the shared guides for your project's epic tag. If it appears inside `.shamt/guides/` files, those are contaminated and must not be exported.

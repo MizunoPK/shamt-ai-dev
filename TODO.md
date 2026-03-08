@@ -45,6 +45,21 @@ Items discovered during development and testing that need to be addressed in the
 
 ---
 
+### 5. Automate and standardize git procedures for the export workflow
+
+**Discovered:** 2026-03-07 — first export sync test.
+
+**Problem:** The current export workflow requires manual git steps — branch creation, staging, committing, and opening a PR are all done ad-hoc with no standard conventions enforced. This makes exports error-prone and inconsistent across different runs.
+
+**What needs to change:**
+- Define a standard branch naming convention for export syncs (e.g., `feat/child-sync-{YYYYMMDD}` or `feat/sync-{child-tag}-{YYYYMMDD}`)
+- Add a git automation step to the export script or export workflow guide that creates the branch automatically before copying files
+- Define the standard commit message format for export sync commits
+- Add a post-export checklist step that guides the reviewer through opening a PR (or script it if `gh` CLI is available)
+- Consider adding a dry-run mode to the export script that shows what would be copied/deleted before making changes
+
+---
+
 ### 4. Add user review step for implementation plan before execution begins
 
 **Discovered:** 2026-03-07

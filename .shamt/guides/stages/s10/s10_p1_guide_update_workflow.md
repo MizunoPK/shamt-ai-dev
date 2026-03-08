@@ -585,6 +585,25 @@ git commit -m "docs(tracking): Update guide tracking for SHAMT-{N}-{epic_name}"
 - The change is minor wording tweaks with no functional impact
 - The change contradicts a deliberate Shamt design decision
 
+**Always do first (regardless of export decision):**
+
+8.0. **Review your rules file against the master template:**
+
+Compare your project's rules file (wherever it lives: `CLAUDE.md`, `.github/copilot-instructions.md`, etc.) against `.shamt/scripts/initialization/RULES_FILE.template.md`. For each section in your rules file not present in the template, ask: *would this apply to any Shamt project regardless of tech stack?*
+
+- **If generic additions exist** → add them to the template (replace your epic tag with `{{EPIC_TAG}}`), then add a `CHANGES.md` entry for each:
+  ```markdown
+  ## YYYY-MM-DD — Rules file template: [section name]
+  - Modified: `scripts/initialization/RULES_FILE.template.md`
+  - Rules file section: [section name or brief description]
+  - Reason: [why this is generic]
+  ```
+- **If no generic additions** → note "Rules file compared — no template updates needed" and continue.
+
+**Do this step regardless of whether you plan to export.** The rules file template is not touched by the export script (it lives outside `.shamt/guides/` and `.shamt/scripts/`), so it must be updated manually here before any export opportunity is presented to the user.
+
+---
+
 **If improvements are worth exporting:**
 
 8.1. Verify that `CHANGES.md` entries exist for each shared file you modified (see `sync/separation_rule.md` for the required format). Add any missing entries:
@@ -602,6 +621,7 @@ git commit -m "docs(tracking): Update guide tracking for SHAMT-{N}-{epic_name}"
 **Reference:** See `sync/export_workflow.md` for the full export process.
 
 **Checkpoint:**
+- [ ] Rules file compared against `RULES_FILE.template.md`; template updated with generic additions (or "no updates needed" noted)
 - [ ] Assessed whether guide improvements are generic/universal
 - [ ] `CHANGES.md` updated for all shared file modifications (if applicable)
 - [ ] User informed about export opportunity (if applicable) or reason noted (if not)
