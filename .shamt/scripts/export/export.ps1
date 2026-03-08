@@ -8,6 +8,10 @@
 # to the local shamt-ai-dev master repo. Open a PR after running.
 # =============================================================================
 
+param(
+    [switch]$DryRun
+)
+
 $ErrorActionPreference = "Stop"
 
 $ChildShamtDir = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
@@ -80,15 +84,19 @@ function Export-Dir {
 
         if (-not (Test-Path $dstFile)) {
             # New file in child — copy to master
-            $dstDir = Split-Path $dstFile -Parent
-            New-Item -ItemType Directory -Force -Path $dstDir | Out-Null
-            Copy-Item $srcFile $dstFile
+            if (-not $DryRun) {
+                $dstDir = Split-Path $dstFile -Parent
+                New-Item -ItemType Directory -Force -Path $dstDir | Out-Null
+                Copy-Item $srcFile $dstFile
+            }
             $script:Exported += "$relPathFwd (new)"
         } else {
             $srcHash = (Get-FileHash $srcFile -Algorithm MD5).Hash
             $dstHash = (Get-FileHash $dstFile -Algorithm MD5).Hash
             if ($srcHash -ne $dstHash) {
-                Copy-Item $srcFile $dstFile -Force
+                if (-not $DryRun) {
+                    Copy-Item $srcFile $dstFile -Force
+                }
                 $script:Exported += $relPathFwd
             }
         }
@@ -115,7 +123,9 @@ function Remove-FromMaster {
 
         $childFile = Join-Path $ChildShamtPath $relPath
         if (-not (Test-Path $childFile)) {
-            Remove-Item $masterFile -Force
+            if (-not $DryRun) {
+                Remove-Item $masterFile -Force
+            }
             $script:Deleted += $relPathFwd
         }
     }
@@ -137,7 +147,11 @@ if ($Exported.Count -eq 0 -and $Deleted.Count -eq 0) {
 }
 
 if ($Exported.Count -gt 0) {
-    Write-Host "  Exported $($Exported.Count) file(s) to master:"
+    if ($DryRun) {
+        Write-Host "  Would export $($Exported.Count) file(s) to master:"
+    } else {
+        Write-Host "  Exported $($Exported.Count) file(s) to master:"
+    }
     Write-Host ""
     foreach ($f in $Exported) {
         Write-Host "    + $f"
@@ -146,12 +160,37 @@ if ($Exported.Count -gt 0) {
 }
 
 if ($Deleted.Count -gt 0) {
-    Write-Host "  Deleted $($Deleted.Count) file(s) from master (not present in child):"
+    if ($DryRun) {
+        Write-Host "  Would delete $($Deleted.Count) file(s) from master (not present in child):" -ForegroundColor Yellow
+    } else {
+        Write-Host "  Deleted $($Deleted.Count) file(s) from master (not present in child):"
+    }
     Write-Host ""
     foreach ($f in $Deleted) {
         Write-Host "    - $f"
     }
     Write-Host ""
+}
+
+if ($DryRun) {
+    Write-Host "------------------------------------------------------------"
+    Write-Host "  DRY RUN — no changes were made to master." -ForegroundColor Cyan
+    Write-Host "  Re-run without -DryRun to apply."
+    Write-Host ""
+    Write-Host "============================================================"
+    Write-Host ""
+    exit 0
+}
+
+# --- Generate commit message -------------------------------------------------
+
+if ($Exported.Count -le 3 -and $Deleted.Count -eq 0) {
+    $names = $Exported | ForEach-Object { [System.IO.Path]::GetFileName($_ -replace ' \(new\)$', '') }
+    $commitMsg = "sync: " + ($names -join ', ')
+} elseif ($Deleted.Count -gt 0) {
+    $commitMsg = "sync: $($Exported.Count) file(s) updated, $($Deleted.Count) deleted"
+} else {
+    $commitMsg = "sync: $($Exported.Count) guide/script improvements"
 }
 
 # --- Next steps --------------------------------------------------------------
@@ -168,10 +207,16 @@ Write-Host "  2. Create a new branch and commit:"
 Write-Host "       git checkout main"
 Write-Host "       git checkout -b feat/child-sync-$today"
 Write-Host "       git add -A .shamt/guides/ .shamt/scripts/"
-Write-Host "       git commit -m `"sync: guide/script improvements from child project`""
+Write-Host "       git commit -m `"$commitMsg`""
 Write-Host ""
-Write-Host "  3. Open a PR against main."
+Write-Host "  3. Push and open a PR against main:"
+Write-Host "       git push origin feat/child-sync-$today"
 Write-Host ""
+if (Get-Command gh -ErrorAction SilentlyContinue) {
+    Write-Host "  gh is available — open the PR directly:"
+    Write-Host "       gh pr create --title `"$commitMsg`" --body `"<paste .shamt\CHANGES.md entries>`""
+    Write-Host ""
+}
 Write-Host "  Tip: Include content from .shamt\CHANGES.md in the PR description"
 Write-Host "  to give reviewers context on what changed and why."
 Write-Host ""

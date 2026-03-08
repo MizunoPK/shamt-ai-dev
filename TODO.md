@@ -51,14 +51,12 @@ Items discovered during development and testing that need to be addressed in the
 
 **Discovered:** 2026-03-07 — first export sync test.
 
-**Problem:** The current export workflow requires manual git steps — branch creation, staging, committing, and opening a PR are all done ad-hoc with no standard conventions enforced. This makes exports error-prone and inconsistent across different runs.
+**Status:** ✅ DONE — 2026-03-08
 
-**What needs to change:**
-- Define a standard branch naming convention for export syncs (e.g., `feat/child-sync-{YYYYMMDD}` or `feat/sync-{child-tag}-{YYYYMMDD}`)
-- Add a git automation step to the export script or export workflow guide that creates the branch automatically before copying files
-- Define the standard commit message format for export sync commits
-- Add a post-export checklist step that guides the reviewer through opening a PR (or script it if `gh` CLI is available)
-- Consider adding a dry-run mode to the export script that shows what would be copied/deleted before making changes
+**What was done:**
+- `scripts/export/export.sh`: Added `--dry-run` flag — runs comparison and shows what would change without copying or deleting anything. Generates a specific commit message from exported filenames (≤3 files listed by name; otherwise count-based). Adds a conditional `gh pr create` hint at the end of next-steps output when `gh` is on PATH. Adds `git push` command to step 3 output.
+- `scripts/export/export.ps1`: Same additions — `-DryRun` switch, specific commit message, conditional `gh pr create` hint, `git push` in next-steps.
+- `guides/sync/export_workflow.md`: Step 3 updated to show `--dry-run` / `-DryRun` preview usage before apply usage. Step 4 updated to direct users to copy the commit message from script output and added a PR description template (Summary / Changes / Source project).
 
 ---
 

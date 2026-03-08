@@ -107,9 +107,15 @@ This step is **mandatory**. Exporting without a full audit risks submitting chan
 From the project root:
 
 ```bash
+# Preview what would change without modifying master:
+bash .shamt/scripts/export/export.sh --dry-run
+
+# Apply the export:
 bash .shamt/scripts/export/export.sh
-# or on Windows:
-# & ".shamt\scripts\export\export.ps1"
+
+# On Windows:
+# & ".shamt\scripts\export\export.ps1" -DryRun   (preview)
+# & ".shamt\scripts\export\export.ps1"            (apply)
 ```
 
 The script:
@@ -132,16 +138,24 @@ cd /path/to/shamt-ai-dev
 git checkout main
 git checkout -b feat/child-sync-YYYY-MM-DD
 git add -A .shamt/guides/ .shamt/scripts/
-git commit -m "sync: [brief description of improvement]"
+git commit -m "sync: [use the message printed by the export script]"
 git push origin feat/child-sync-YYYY-MM-DD
 ```
 
-Then open a PR against `main` in the shamt-ai-dev repository.
+The export script prints a ready-to-use commit message in its "Next steps" output — copy it exactly. If `gh` CLI is available, the script also prints a ready-to-run `gh pr create` command.
 
-**PR description should include:**
-- A brief summary of what changed and why
-- The relevant entries from your `.shamt/CHANGES.md`
-- Which project contributed the improvement (if you want attribution)
+**PR description template:**
+
+```markdown
+## Summary
+<!-- Brief description of what improved and why -->
+
+## Changes
+<!-- Paste relevant entries from .shamt/CHANGES.md -->
+
+## Source project
+<!-- Optional: which project contributed this improvement -->
+```
 
 ---
 
