@@ -342,7 +342,7 @@ Discovered during S9 or S10?
 **Sub-Guides:**
 - `missed_requirement/discovery.md` - Discovery & user decision
 - `missed_requirement/planning.md` - S2 deep dive
-- `missed_requirement/realignment.md` - S3/4 alignment + resume
+- `missed_requirement/realignment.md` - S2.P2 + S3 + S4 realignment + resume
 - `missed_requirement/s9_s10_special.md` - Epic testing special case
 
 ---

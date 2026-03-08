@@ -41,10 +41,10 @@
    - [Scenario 3: New Feature - Major Conflicts](#scenario-3-new-feature---major-conflicts)
    - [Scenario 4: Update Unstarted Feature](#scenario-4-update-unstarted-feature)
 1. [Anti-Patterns to Avoid](#anti-patterns-to-avoid)
-   - [❌ Anti-Pattern 1: Only Check New/Updated Feature](#❌-anti-pattern-1-only-check-newupdated-feature)
-   - [❌ Anti-Pattern 2: Skip S4](#❌-anti-pattern-2-skip-s4)
-   - [❌ Anti-Pattern 3: Implementing Immediately](#❌-anti-pattern-3-implementing-immediately)
-   - [❌ Anti-Pattern 4: Not Checking Paused Feature's Spec](#❌-anti-pattern-4-not-checking-paused-features-spec)
+   - [❌ Anti-Pattern 1: Only Check New/Updated Feature](#-anti-pattern-1-only-check-newupdated-feature)
+   - [❌ Anti-Pattern 2: Skip S3.P1 or S4](#-anti-pattern-2-skip-s3p1-or-s4)
+   - [❌ Anti-Pattern 3: Implementing Immediately](#-anti-pattern-3-implementing-immediately)
+   - [❌ Anti-Pattern 4: Not Checking Paused Feature's Spec](#-anti-pattern-4-not-checking-paused-features-spec)
 1. [Next Steps](#next-steps)
 
 ---
