@@ -211,6 +211,12 @@ $rulesFilePath = Join-Path $RulesFileDir $RulesFileName
 Set-Content "$ShamtDir\rules_file_path.conf" $rulesFilePath -NoNewline
 Write-Host "  OK Rules file path written to .shamt\rules_file_path.conf"
 
+$syncDate = Get-Date -Format "yyyy-MM-dd"
+$masterHashResult = & git -C $ShamtSourceDir rev-parse --short HEAD 2>&1
+$masterHash = if ($LASTEXITCODE -eq 0) { ($masterHashResult | Out-String).Trim() } else { "unknown" }
+Set-Content (Join-Path $ShamtDir "last_sync.conf") "$syncDate | $masterHash" -NoNewline
+Write-Host "  OK Sync state written to .shamt\last_sync.conf"
+
 # --- Configure .gitignore ----------------------------------------------------
 
 Write-Separator "Configuring .gitignore"
@@ -366,6 +372,7 @@ $initConfigContent = @"
 - [x] Created EPIC_TRACKER.md at .shamt\epics\EPIC_TRACKER.md
 - [x] Written .shamt\shamt_master_path.conf
 - [x] Written .shamt\rules_file_path.conf
+- [x] Written .shamt\last_sync.conf (initialized from master HEAD)
 - [x] Applied configuration substitutions to guides and rules file
 
 ## Agent Remaining Tasks

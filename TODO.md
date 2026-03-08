@@ -23,12 +23,11 @@ Items discovered during development and testing that need to be addressed in the
 
 **Discovered:** 2026-03-07 — first export sync test.
 
-**Problem:** The import script writes `last_sync.conf` only after a successful import that copies files. If a project was initialized via `init.sh` rather than `import.sh` (the original bootstrap path), no `last_sync.conf` is ever created. This means:
-- The export workflow can't tell whether the project has ever synced
-- The import workflow can't warn that the project may be out of date
-- The `copilot-instructions.md` reference to `last_sync.conf` for freshness checks silently fails
+**Status:** ✅ DONE — 2026-03-07
 
-**What needs to change:** The import script (and possibly `init.sh`) should write a `last_sync.conf` even when there are no file differences — i.e., the "already up to date" path should still record the sync date and master commit hash. This ensures the file always exists after any import or init run.
+**What was done:**
+- `import.sh`/`import.ps1`: already wrote `last_sync.conf` unconditionally (before the "already up to date" early exit) — no change needed
+- `init.sh`/`init.ps1`: now write `last_sync.conf` during the "Writing config files" step, using the master HEAD hash at initialization time
 
 ---
 
