@@ -13,6 +13,14 @@
 
 ## Templates by Stage
 
+### Pre-S1: Epic Request Creation
+
+| Template | Filename | Use When |
+|----------|----------|----------|
+| [Epic Request](#epic-request) | `EPIC_REQUEST_TEMPLATE.md` | User asks to create an epic request BEFORE starting S1 |
+
+**⚠️ IMPORTANT:** Epic request files are created in `.shamt/epics/requests/` and left there until user explicitly initiates S1. Do NOT create SHAMT-{N} folders when writing epic requests.
+
 ### S1: Epic Planning
 
 | Template | Filename | Use When |

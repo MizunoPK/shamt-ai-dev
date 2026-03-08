@@ -7,8 +7,21 @@
 - S2.P1.I3: Feature Spec Refinement (embeds Gates 1, 2)
 - S3.P2: Epic Documentation Refinement
 
-**Version:** 2.0 (Updated to extend master protocol)
-**Last Updated:** 2026-02-10
+**Version:** 2.1 (Updated with anti-shortcut enforcement)
+**Last Updated:** 2026-03-02
+
+---
+
+🚨 **BEFORE STARTING: Read the Hard Stop section at the top of `reference/validation_loop_master_protocol.md`** 🚨
+
+**Spec refinement validation requires:**
+1. `VALIDATION_LOG.md` created in the feature folder BEFORE Round 1
+2. Full spec.md re-read (line 1 through end) EVERY round using `read_file`
+3. ALL 9 dimensions (7 master + 2 spec-refinement) documented as PASS/ISSUE per round
+4. `clean_counter` tracked explicitly — resets to 0 on ANY issue found
+5. ≥3 technical claims verified against source code per round
+6. Exit ONLY when `clean_counter = 3`
+7. Never delegate rounds to subagents
 
 ---
 

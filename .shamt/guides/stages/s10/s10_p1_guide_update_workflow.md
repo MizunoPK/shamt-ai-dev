@@ -95,12 +95,18 @@ S10.P1 is complete when all proposals have been reviewed by user, approved chang
    - Commit message: "docs(guides): Apply lessons from SHAMT-{N}-{epic_name}"
    - Do NOT mix guide updates with epic commits
 
-6. ⚠️ Update tracking after applying changes
+6. ⚠️ Check gitignore BEFORE committing guide updates
+   - Run `git check-ignore .shamt/guides/` before staging
+   - If guides are gitignored → apply changes locally, skip commit, inform user
+   - NEVER use `git add -f` to force-commit gitignored files
+   - If guides are NOT gitignored → proceed with normal `git add` and `git commit`
+
+7. ⚠️ Update tracking after applying changes
    - Add entries to reference/guide_update_tracking.md
    - Document approved, modified, and rejected proposals
    - Update metrics section
 
-7. ⚠️ Scope: ENTIRE .shamt/guides/ directory + CLAUDE.md
+8. ⚠️ Scope: ENTIRE .shamt/guides/ directory + CLAUDE.md
    - 🚨 CRITICAL: "Guides" = EVERY FILE in .shamt/guides/
    - This includes: stages/, reference/, templates/, debugging/,
      missed_requirement/, prompts/, and ALL root-level .md files
@@ -453,6 +459,19 @@ When applying changes to "guides", remember:
 
 **Actions:**
 
+6.0. **Check if guides are gitignored (MANDATORY before staging):**
+```bash
+git check-ignore .shamt/guides/ .github/copilot-instructions.md CLAUDE.md 2>/dev/null
+```
+
+- If ANY guide file is reported as ignored → **STOP. Do NOT commit guide changes.**
+  - Changes are applied locally (files are updated on disk)
+  - Inform user: "Guide updates applied locally but not committed — guide files are gitignored in this project."
+  - Skip Steps 6.1–6.3 entirely and proceed to Step 7
+- If NO output (files are not ignored) → proceed with Steps 6.1–6.3
+
+🚨 **NEVER use `git add -f` or `git add --force` to bypass gitignore for guide files.** If guides are gitignored, the project has intentionally excluded them from version control. Respect that decision.
+
 6.1. **Stage guide changes:**
 ```bash
 git add .shamt/guides/
@@ -661,6 +680,9 @@ Use prompt from prompts/guide_update_prompts.md "After Applying Changes" section
 
 ❌ "I'll combine guide updates with epic commit"
    ✅ STOP - Separate commits required for clarity
+
+❌ "git add isn't working for guides, I'll use git add -f"
+   ✅ STOP - Guides are likely gitignored. Apply changes locally, skip commit, inform user. NEVER force-add.
 
 ❌ "No guide gaps found, lessons are all domain-specific"
    ✅ VERIFY - Re-read lessons with fresh eyes, look for patterns

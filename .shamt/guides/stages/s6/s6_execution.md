@@ -932,7 +932,7 @@ python run_[module].py --mode draft
 
 **S7 (Testing & Review) will:**
 - Execute 3-part smoke testing protocol (MANDATORY)
-- Run Feature QC Validation Loop (12 dimensions, 3 consecutive clean rounds)
+- Run Feature QC Validation Loop (16 dimensions, 3 consecutive clean rounds)
 - Follow PR Validation Loop (11 categories + 7 master dimensions)
 - Verify 100% requirement completion
 - Fix ALL issues immediately (no restart needed - validation loop approach)

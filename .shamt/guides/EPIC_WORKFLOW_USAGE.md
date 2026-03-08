@@ -7,6 +7,35 @@ This file provides a complete overview of the Shamt S1-S10 epic-driven developme
 
 ---
 
+## Prerequisites: Epic Request Files
+
+**BEFORE starting S1,** epic requests must be created in `.shamt/epics/requests/`
+
+### Creating an Epic Request
+
+1. User describes the epic they want to build
+2. Agent creates `.shamt/epics/requests/{name}.md` or `.txt`
+3. Agent writes high-level request document:
+   - Requirements, goals, constraints, research findings
+   - Focus on WHAT needs to be done, not HOW to implement
+   - Mention files/areas that MAY need changes (not specific code)
+   - Reference coding practices to follow
+   - **DO NOT** include code snippets or detailed implementation
+4. File remains in `requests/` folder
+
+**DO NOT create SHAMT-{N} folders at this stage. The S1-S10 flow will determine detailed design.**
+
+### Starting S1
+
+1. User says "Start S1 for [epic request name]"
+2. Agent verifies request file exists in `.shamt/epics/requests/`
+3. Agent reads `stages/s1/s1_epic_planning.md`
+4. Agent creates git branch and SHAMT-{N} folder **during S1** (not before)
+
+**SHAMT-{N} folders are ONLY created during S1 execution, never as part of request creation.**
+
+---
+
 ## Workflow Overview
 
 ```text
@@ -30,7 +59,7 @@ Per-feature loop: S5 (Plan) → S6 (Execute) → S7 (Test) → S8 (Align) → re
 **Guide:** `stages/s1/s1_epic_planning.md`
 
 Key activities:
-- Assign KAI/SHAMT number (ask user for next available or custom)
+- Assign SHAMT number (ask user for next available or custom)
 - Create epic folder and EPIC_README.md
 - Create git branch: `{work_type}/{EPIC_TAG}-{N}`
 - Run S1.P3 Discovery Phase (MANDATORY — research loop until 3 consecutive clean iterations)

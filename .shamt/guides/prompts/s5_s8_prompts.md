@@ -405,14 +405,14 @@ I'm reading `stages/s7/s7_p2_qc_rounds.md` and `reference/validation_loop_s7_fea
 
 **The guide requires:**
 - **Validation Loop Protocol** (extends Master Validation Loop):
-  - Check ALL 12 dimensions EVERY round (7 master + 5 S7 QC-specific)
+  - Check ALL 16 dimensions EVERY round (7 master + 9 S7 QC-specific)
   - Exit when 3 consecutive rounds find ZERO issues
   - Fix ALL issues immediately before next round (no deferring)
   - Typical: 6-8 rounds total to achieve 3 consecutive clean
 
-- **12 Dimensions Checked Every Round:**
+- **16 Dimensions Checked Every Round:**
   - Master (7): Empirical Verification, Completeness, Internal Consistency, Traceability, Clarity & Specificity, Upstream Alignment, Standards Compliance
-  - S7 QC (5): Cross-Feature Integration, Error Handling Completeness, End-to-End Functionality, Test Coverage Quality, Requirements Completion
+  - S7 QC (9): Cross-Feature Integration, Error Handling Completeness, End-to-End Functionality, Test Coverage Quality, Requirements Completion, Import & Dependency Hygiene, Cross-Layer & Type Consistency, Input Validation & Path Safety, Test Stub Consistency
 
 - **Key Difference from Old Approach:**
   - OLD: Sequential rounds checking different concerns → Any issue → Restart from S7.P1
@@ -435,7 +435,7 @@ I'm reading `stages/s7/s7_p2_qc_rounds.md` and `reference/validation_loop_s7_fea
 - Current Phase: S7.P2 (Feature QC Validation Loop)
 - Current Guide: reference/validation_loop_s7_feature_qc.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
-- Critical Rules: "12 dimensions checked every round", "3 consecutive clean rounds required", "Fix issues immediately (no restart)", "100% tests passing"
+- Critical Rules: "16 dimensions checked every round", "3 consecutive clean rounds required", "Fix issues immediately (no restart)", "100% tests passing"
 - Progress: Round 1, Clean Count: 0
 - Next Action: Validation Round 1 - Sequential Review + Test Verification
 

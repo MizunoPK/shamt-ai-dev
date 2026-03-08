@@ -87,6 +87,21 @@ Final Review is complete when 3 consecutive validation rounds find ZERO issues a
 
 ## 🛑 Critical Rules
 
+🚨 **S7.P3 IS NOT A LIGHTER VERSION OF S7.P2** 🚨
+
+Even if S7.P2 found and fixed many issues, S7.P3 requires FULL rigor:
+- S7.P2 = **Developer testing** (functional correctness, bug hunting)
+- S7.P3 = **PR reviewer** (code quality, maintainability, production readiness)
+- Both require: empirical verification with `read_file` and `grep_search`, comprehensive checks, file:line citations
+- "S7.P2 was thorough" does NOT justify summarizing S7.P3 categories
+
+**Evidence requirements per PR category:**
+- Each category must cite specific tool calls (grep_search results, read_file findings)
+- "Refactoring looks good ✅" is NOT acceptable — must explain WHY (e.g., "grep_search found 7 field conditionals at lines 76-94, duplication acceptable because each has unique extraction logic")
+- "Performance OK ✅" is NOT acceptable — must calculate impact (e.g., "5-10 briefs × 10ms render = negligible, no memoization needed")
+
+**Historical context:** In a child project Feature 03, an agent summarized Categories 4-11 as "✅ PASS" without investigation after thorough S7.P2. User caught the shortcut, requiring full restart of S7.P3. The different lens (reviewer vs developer) catches different issues.
+
 ```text
 ┌─────────────────────────────────────────────────────────────┐
 │ CRITICAL RULES - These MUST be copied to README Agent Status │
@@ -96,7 +111,7 @@ Final Review is complete when 3 consecutive validation rounds find ZERO issues a
    - Cannot skip any category
    - Each category catches different issues
    - Check all categories every validation round (not just once)
-   - Must document findings for ALL categories
+   - Must document findings for ALL categories with evidence (tool calls, calculations)
 
 2. ⚠️ 3 CONSECUTIVE CLEAN ROUNDS REQUIRED
    - Clean = ZERO issues across all 11 categories
@@ -145,7 +160,7 @@ Final Review is complete when 3 consecutive validation rounds find ZERO issues a
 
 **From S7.P2:**
 - [ ] Validation Loop: PASSED (3 consecutive clean rounds)
-- [ ] All 12 dimensions checked every round (7 master + 5 S7 QC-specific)
+- [ ] All 16 dimensions checked every round (7 master + 9 S7 QC-specific)
 - [ ] Zero issues deferred (fix-and-continue approach used)
 - [ ] All re-reading checkpoints completed
 
@@ -706,7 +721,7 @@ Files updated:
 
 **Validation Loop:**
 - [ ] Validation Loop: PASSED (3 consecutive clean rounds)
-- [ ] All 12 dimensions checked every round (7 master + 5 S7 QC-specific)
+- [ ] All 16 dimensions checked every round (7 master + 9 S7 QC-specific)
 - [ ] Zero issues deferred (fix-and-continue approach used)
 
 **PR Review:**
@@ -781,7 +796,7 @@ Files updated:
 
 ### Validation Loop (S7.P2)
 - [x] Validation Loop passed (3 consecutive clean rounds)
-- [x] All 12 dimensions checked every round (7 master + 5 S7 QC-specific)
+- [x] All 16 dimensions checked every round (7 master + 9 S7 QC-specific)
 - [x] Zero issues deferred (fix-and-continue approach used)
 
 ### PR Review (S7.P3)

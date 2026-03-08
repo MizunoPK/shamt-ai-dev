@@ -102,7 +102,7 @@ This document captures lessons specific to THIS feature's development. This is s
 - Total Rounds: {N}
 - Consecutive Clean Rounds: 3 (exit criteria met)
 - Issues Found & Fixed: {count}
-- All 12 dimensions validated: YES (7 master + 5 S7 QC-specific)
+- All 16 dimensions validated: YES (7 master + 9 S7 QC-specific)
 
 **PR Review Results:**
 - Categories with issues: {List or "None"}

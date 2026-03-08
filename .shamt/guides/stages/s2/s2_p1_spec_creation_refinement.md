@@ -78,6 +78,13 @@ Research feature, draft spec.md and checklist.md, validate with Validation Loop 
   - Check: endpoint override support, mock compatibility, test environment compatibility
   - Document compatibility or workarounds needed
   - Time investment: 15-20 min per library (saves 2+ hours debugging later)
+- **Extensibility & Ownership Questions** (if feature integrates with external services, selectable options, or configurable backends):
+  - **Who controls this choice?** End user (UI dropdown), admin (dashboard config), or ops (env var / deploy-time config)?
+  - **Will users see implementation details?** (e.g., provider name, model ID) or is it abstracted?
+  - **Will we swap providers in the future?** If yes → design for extensibility (provider pattern, dependency injection)
+  - **Runtime switchable or deploy-time config?** (env var reload vs code change)
+  - Add these as checklist questions if answers are unclear — do NOT assume user-facing
+  - **Historical context:** a child project's Feature 01 implemented a user-facing model dropdown when the requirement was actually config-driven provider selection, requiring a full Feature 02 refactor
 - Document findings in research notes
 
 **4. Draft Spec & Checklist (20-30 min)**
@@ -238,6 +245,8 @@ Primary agent reviews during coordination heartbeat (every 15 minutes).
 **2. Validation Loop Validation (15-30 min)** - **EMBEDS GATE 2**
 
 **Reference:** `reference/validation_loop_spec_refinement.md`
+
+🚨 **MANDATORY:** Create `{feature_folder}/VALIDATION_LOG.md` BEFORE starting Round 1. If this file does not exist, the validation loop has not started. Track `clean_counter` in the log (starts at 0, resets on any issue found, exit at 3).
 
 - **Round 1:** Sequential read, requirement traceability check
   - **Gate 2 Check (Spec-to-Epic Alignment):**

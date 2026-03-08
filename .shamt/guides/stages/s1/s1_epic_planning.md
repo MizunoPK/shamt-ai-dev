@@ -178,17 +178,30 @@ S1 is complete when you have Discovery approved, a validated epic ticket, comple
 
 ## Prerequisites Checklist
 
-**Verify BEFORE starting S1:**
+**🚨 CRITICAL: Verify BEFORE starting S1 🚨**
+
+**If you are CREATING an epic request (not starting S1):**
+- ✅ Create file in `.shamt/epics/requests/{name}.md` or `.txt`
+- ✅ Write comprehensive request document
+- ❌ DO NOT create `SHAMT-{N}/` folder
+- ❌ DO NOT create EPIC_README.md
+- ❌ DO NOT create git branch
+- ⏸️ STOP - Request file waits in `requests/` until user initiates S1
+
+**If you are STARTING S1 (user explicitly said to start):**
 
 - [ ] User has created a request file in `.shamt/epics/requests/` (check for .txt or .md file, optionally in a subfolder)
 - [ ] Epic request file contains sufficient detail (problem description, goals, constraints)
 - [ ] No existing epic folder with same name (check `.shamt/epics/` directory)
 - [ ] Git working directory is clean (no uncommitted changes that could conflict)
+- [ ] User has explicitly initiated S1 (not just asking for a request to be written)
 
 **If any prerequisite fails:**
 - ❌ STOP - Do NOT proceed with S1
 - Ask user to resolve prerequisite issue
 - Document blocker in conversation
+
+**REMEMBER:** SHAMT-{N} folders are created in Step 5 of S1, NOT before S1 starts.
 
 ---
 
