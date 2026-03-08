@@ -10,12 +10,12 @@ Items discovered during development and testing that need to be addressed in the
 
 **Discovered:** 2026-03-07 — first export sync test with a Copilot child project (JNJ-Hackathon / KAI tag).
 
-**Problem:** After importing, the Copilot agent replaced `SHAMT-{N}` example references throughout the shared guides with the project's own epic tag (`KAI-{N}`). When those guide files are later exported back to master, they carry project-specific epic tag contamination that would propagate to all future child projects via import.
+**Status:** ✅ DONE — all three required locations addressed in previous sessions
 
-**What needs to change:** Agents working in child projects must understand that `SHAMT-{N}` in the shared guides (`.shamt/guides/`) is a generic placeholder, not a literal reference to the master SHAMT project. They should never substitute it with the child project's epic tag. This rule needs to be clearly stated in:
-- The rules file template (`scripts/initialization/RULES_FILE.template.md`)
-- The export workflow guide (`guides/sync/export_workflow.md`) — as a pre-export check
-- Possibly the import workflow guide as an explicit post-import rule
+**What was done:**
+- `scripts/initialization/RULES_FILE.template.md`: "Shared Guide Rules" section added — explains `SHAMT-{N}` as a universal placeholder with ❌/✅ examples and a rule never to substitute it with the child epic tag
+- `guides/sync/export_workflow.md`: Step 1.5 "Check for Epic Tag Contamination" added — grep command, explicit revert instructions, and acceptable vs. unacceptable contamination examples
+- `guides/sync/import_workflow.md`: Rule added to Step 5 validation loop checklist — includes full explanatory paragraph clarifying that `SHAMT-{N}` is generic and any substitutions must be reverted immediately
 
 ---
 
