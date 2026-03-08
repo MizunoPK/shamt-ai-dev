@@ -35,12 +35,15 @@ Items discovered during development and testing that need to be addressed in the
 
 **Discovered:** 2026-03-07
 
-**Problem/Opportunity:** The current epic request format and S1 discovery process are relatively lightweight. Epic request files lack a structured, formal template that guides the user and agent through thorough upfront discovery — leading to ambiguity that surfaces late in the workflow.
+**Status:** ✅ DONE — 2026-03-08
 
-**What needs to change:**
-- Create a formal `EPIC_REQUEST_TEMPLATE.md` (or improve the existing one) with structured sections that prompt deep exploration: goals, constraints, unknowns, risks, affected systems, success criteria
-- Expand the S1 epic planning guide to include a genuine discovery/Q&A phase — the agent should ask clarifying questions before producing a spec, not after
-- Consider a dedicated "discovery round" step before any spec writing begins
+**What was done:**
+- `guides/reference/validation_loop_discovery.md`: Added 6 new "What Counts as Issue" categories (zero questions asked, alternative interpretations, adjacent systems, implementation decisions, non-functional requirements, success criteria). Added "Adversarial Challenge" blocks to all 3 per-round checklists. Added 6 new exit criteria items. Bumped to v2.1.
+- `guides/stages/s1/s1_p3_discovery_phase.md`: Expanded Step 4 question sources with 5 new categories + zero-questions hard callout. Strengthened MANDATORY CHECKPOINT 1 item 4 and added brainstorm verification item. Added anti-pattern for zero initial questions.
+- `guides/templates/discovery_template.md`: Added 6-category question brainstorm table to Pending Questions section. Agents must fill each category or justify its omission.
+- `DISCOVERY_LOOP_PROPOSAL.md`: Created at repo root documenting the change design (Revision 2, adversarial self-review applied).
+
+**Note:** Creating a formal `EPIC_REQUEST_TEMPLATE.md` is explicitly out of scope for this change and may be tracked separately.
 
 ---
 

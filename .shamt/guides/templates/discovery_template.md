@@ -41,6 +41,17 @@
 
 ### Pending Questions
 
+**Question Brainstorm** — Work through each category before filling the table. Either list questions found, or write a one-line justification for why none apply. *Silence is not acceptable for any category.*
+
+| Category | Questions identified (or justification if none) |
+|----------|--------------------------------------------------|
+| **Functional requirements** — ambiguous terms, implicit expectations, undefined behavior? | |
+| **User workflow / edge cases** — usage patterns beyond the happy path? | |
+| **Implementation approach** — multiple valid ways to build this; does the user have preferences? | |
+| **Constraints** — performance, security, compatibility, scale? | |
+| **Scope boundaries** — what's at the edge — explicitly agreed or assumed? | |
+| **Success criteria** — how does the user concretely verify this is done correctly? | |
+
 | # | Question | Context | Asked |
 |---|----------|---------|-------|
 | {N} | {Question text} | {Why this matters} | {YYYY-MM-DD} |
