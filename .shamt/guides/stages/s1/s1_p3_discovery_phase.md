@@ -243,17 +243,29 @@ Based on initial research, identify questions that need user input:
 - Implicit assumptions that need verification
 - Scope boundaries that are unclear
 - Multiple valid approaches (need user preference)
-- **Implementation approach decisions** — what high-level choices will need to be made? API design, data structures, error handling strategy. Surface these as questions before assuming.
-- **Non-functional requirements** — are there performance targets, security constraints, compatibility requirements, or scale expectations?
-- **Adjacent systems and side effects** — what else in the codebase could be affected? Are there users or workflows not mentioned in the request that will be impacted?
-- **Scope edge cases** — what happens at the boundary of scope? If the user said "add X", what about cases where X partially overlaps with existing Y?
-- **Success criteria** — how will the user know this worked? What does the ideal end state look like in concrete terms?
+- **Implementation approach decisions:** what high-level choices will need to be made? API design, data structures, error handling strategy. Surface these as questions before assuming.
+- **Non-functional requirements:** are there performance targets, security constraints, compatibility requirements, or scale expectations?
+- **Adjacent systems and side effects:** what else in the codebase could be affected? Are there users or workflows not mentioned in the request that will be impacted?
+- **Scope edge cases:** what happens at the boundary of scope? If the user said "add X", what about cases where X partially overlaps with existing Y?
+- **Success criteria:** how will the user know this worked? What does the ideal end state look like in concrete terms?
 
 > 🚨 **If you have identified zero questions after reading the entire request:** You are almost certainly under-questioning. Re-read specifically looking for hidden assumptions — things you accepted as true that the user never explicitly stated.
 
-**Document in DISCOVERY.md:**
+**Document in DISCOVERY.md:** Fill the brainstorm table first, then add questions to the Pending Questions table.
+
 ```markdown
 ### Pending Questions
+
+**Question Brainstorm** — Work through each category before filling the table.
+
+| Category | Questions identified (or justification if none) |
+|----------|--------------------------------------------------|
+| **Functional requirements** | What does "debugging version run" mean? |
+| **User workflow / edge cases** | What if only some scripts need debug mode? |
+| **Implementation approach** | None identified |
+| **Constraints** | None identified |
+| **Scope boundaries** | Do all 6 scripts need this, or subset? |
+| **Success criteria** | How will user verify debug mode works correctly? |
 
 | # | Question | Context | Asked |
 |---|----------|---------|-------|
@@ -895,8 +907,8 @@ X "I read the entire epic request and have no questions for the user"
 1. [ ] Use Read tool to re-read "Critical Rules" section of this guide
 2. [ ] Use Read tool to re-read `reference/validation_loop_discovery.md` (context variant)
 3. [ ] Verify DISCOVERY.md created with initial research documented
-4. [ ] Verify at least one clarifying question was asked of and answered by the user. If no questions were generated, STOP — re-read the request using the question brainstorm categories before proceeding.
-4b. [ ] Verified that question brainstorm categories were worked through — all 6 categories in DISCOVERY.md have either questions listed or an explicit one-line justification for why none apply.
+4. [ ] Verify at least one clarifying question was asked of and answered by the user. If no questions were generated, STOP. Re-read the request using the question brainstorm categories before proceeding.
+4b. [ ] Verified that question brainstorm categories were worked through (all 6 categories in DISCOVERY.md have either questions listed or an explicit one-line justification for why none apply).
 5. [ ] Verify time-box set based on epic size (SMALL: 1-2hrs, MEDIUM: 2-3hrs, LARGE: 3-4hrs)
 6. [ ] Update EPIC_README.md Agent Status:
    - Current Step: "S1.P3.1 complete, starting S1.P3.2 Validation Loop Round 1"

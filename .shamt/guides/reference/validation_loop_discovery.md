@@ -45,12 +45,12 @@ An issue in discovery context is any of:
 - **Gaps in integration understanding:** Integration points not fully explored
 - **Incomplete dependency analysis:** External libraries not verified compatible
 - **Missing error scenarios:** Edge cases not considered
-- **Zero questions asked of user** — if no questions have been posed during Discovery, treat this as a signal of under-questioning. Justify absence of questions explicitly, or treat it as an open issue.
-- **Alternative interpretations not considered** — if the request has only been read one way, without documenting other plausible interpretations and why they were ruled out.
-- **Adjacent systems or workflows not assessed** — any system, file, workflow, or user role that could be affected but hasn't been examined or explicitly ruled out.
-- **Implementation decisions not surfaced** — high-level choices that will need to be made during implementation (approach, API contracts, schema design, error handling strategy) that haven't been flagged as open questions or resolved. Note: this covers high-level architectural choices, not low-level implementation details (those belong in feature specs).
-- **Non-functional requirements absent** — no consideration of performance, security, backward compatibility, or other constraints any production implementation should address.
-- **Success criteria not defined** — no concrete description of what "done" looks like from the user's perspective. How will the user verify the epic was implemented correctly? What is the ideal end state in concrete terms?
+- **Zero questions asked of user:** if no questions have been posed during Discovery, treat this as a signal of under-questioning. Justify absence of questions explicitly, or treat it as an open issue.
+- **Alternative interpretations not considered:** if the request has only been read one way, without documenting other plausible interpretations and why they were ruled out.
+- **Adjacent systems or workflows not assessed:** any system, file, workflow, or user role that could be affected but hasn't been examined or explicitly ruled out.
+- **Implementation decisions not surfaced:** high-level choices that will need to be made during implementation (approach, API contracts, schema design, error handling strategy) that haven't been flagged as open questions or resolved. Note: this covers high-level architectural choices, not low-level implementation details (those belong in feature specs).
+- **Non-functional requirements absent:** no consideration of performance, security, backward compatibility, or other constraints any production implementation should address.
+- **Success criteria not defined:** no concrete description of what "done" looks like from the user's perspective. How will the user verify the epic was implemented correctly? What is the ideal end state in concrete terms?
 
 ---
 
