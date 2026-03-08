@@ -277,6 +277,19 @@ For each transition:
 - [ ] Stage N+1 explicitly states its scope
 - [ ] Scope transition is clear (if changing)
 - [ ] No ambiguity about current scope
+- [ ] **Agent comprehension check:** Would an agent arriving at Stage N+1 from Stage N have an unambiguous understanding of scope *without* needing to re-read Stage N's exit section? If scope is only inferable from prerequisites rather than stated explicitly near the top of the guide, treat this as insufficient.
+
+**Agent Comprehension Risk (separate check):**
+Beyond transition consistency, check whether each stage guide's scope is stated prominently enough to prevent misidentification by an agent transitioning out of a per-feature loop:
+- Is there an explicit callout near the H1 stating "this stage runs once per epic" or "this stage runs once per feature"?
+- Would an agent who has been executing a per-feature loop (S5–S8) and arrives at this stage know immediately whether to apply epic-scope or feature-scope thinking?
+- **Red flag:** Scope is only detectable by reading prerequisites, not by a prominent statement at the top of the guide
+
+**Migration Notes in Agent Instruction Path:**
+After any stage restructuring, check whether the Overview or Purpose section contains "Key Changes from Old X", "Moved from old Y", or similar authoring notes:
+- These notes describe how the guide *was changed* — information useful to a guide maintainer but not to an executing agent
+- They can introduce confusion by referencing prior stage structures the agent has never seen (e.g., mentioning "old S4" while the agent is in S3)
+- **Fix:** Move restructuring history to an appendix or remove it; the Overview should contain only agent-facing instructions
 
 **Example Issue (SHAMT-8):**
 
@@ -336,6 +349,36 @@ For each transition:
 - [ ] S2 exits with all features having completed S2 (epic-level aggregation)
 - [ ] S3 enters at epic level (cross-feature sanity check)
 - [ ] No group-level language in S3 that contradicts epic-level entry
+
+### Agent Comprehension (S3 specific)
+- [ ] S3 has a prominent scope statement near the top stating it runs once per epic
+- [ ] S3's Overview does NOT contain authoring/migration notes ("Key Changes from Old S3", "Moved from old S4") that are not agent instructions
+- [ ] An agent finishing the per-feature S2 loop would unambiguously understand S3 is epic-level before reading any prerequisites
+```
+
+### S3 -> S4 Transition Checklist
+
+```markdown
+## S3 -> S4 Flow Validation
+
+### Handoff Promises
+- [ ] S3 outputs (epic_smoke_test_plan.md, refined EPIC_README.md, Gate 4.5 approval) listed in S4 prerequisites
+- [ ] S3's "after Gate 4.5 approval" condition matches S4's prerequisite "Gate 4.5 passed"
+
+### Workflow Behavior
+- [ ] S3 exits at epic scope; S4 re-enters feature scope (scope transition is explicit)
+- [ ] S4 prerequisites state S3's current canonical title, not a stale stage name
+
+### Scope
+- [ ] S3 is clearly epic-level (tests ACROSS features, not within a single feature)
+- [ ] S4 is clearly feature-level (tests WITHIN a single feature)
+- [ ] S3.P1 content does not contain per-feature test planning (unit tests, edge cases for one feature)
+- [ ] S4 does not contain cross-feature integration scenarios (those belong in S3.P1)
+
+### Structural Similarity Risk
+- [ ] Despite sharing similar test planning templates, S3.P1 and S4 have distinct scope callouts that prevent an agent from treating them as interchangeable
+- [ ] S3.P1 has an explicit "This is NOT per-feature test planning" callout or equivalent
+- [ ] S4 has an explicit "epic test plan (S3) must be complete before per-feature planning begins" callout or equivalent
 ```
 
 ### S8 -> S5/S9 Transition Checklist

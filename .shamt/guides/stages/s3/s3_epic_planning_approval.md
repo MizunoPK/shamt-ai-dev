@@ -1,5 +1,8 @@
 # S3: Epic-Level Documentation, Testing Plans, and Approval
 
+> **SCOPE:** This stage runs **once per epic**, after S2 is complete for ALL features. It is not
+> repeated per feature. Working directory is the **epic folder root**, not a feature folder.
+
 🚨 **MANDATORY READING PROTOCOL**
 
 **Before starting this stage:**
@@ -43,18 +46,12 @@
 **Purpose:** Create epic-level testing strategy, refine epic documentation, get user approval (Gate 4.5)
 
 **Structure:** 3 phases
-- S3.P1: Epic Testing Strategy Development (45-60 min) - Moved from old S4, expanded
+- S3.P1: Epic Testing Strategy Development (45-60 min)
 - S3.P2: Epic Documentation Refinement (20-30 min)
 - S3.P3: Epic Plan Approval (10-15 min) - Gate 4.5 with 3-tier rejection handling
 
 **Time:** 75-105 minutes total
 **Prerequisites:** S2 complete for ALL features (S2.P2 alignment done)
-
-**Key Changes from Old S3:**
-- **Pairwise comparison removed** (moved to S2.P2)
-- **Epic testing strategy from old S4 moved here** (S3.P1)
-- **Two Validation Loops** (testing strategy + documentation)
-- **Gate 4.5 explicit with 3-tier rejection handling**
 
 ---
 
@@ -63,7 +60,10 @@
 ### Purpose
 Create epic_smoke_test_plan.md for end-to-end integration testing when all features complete
 
-**Note:** This phase content was moved from old S4 (s4_epic_testing_strategy.md) and expanded with more detail
+> **This is NOT per-feature test planning.** Tests defined here span multiple features and verify
+> end-to-end workflows across the whole epic. Per-feature unit, integration, edge case, and config
+> tests are written in S4. If you find yourself writing tests for a single feature's internal
+> behavior, stop — that belongs in S4.
 
 ### What Epic-Level Tests Cover
 

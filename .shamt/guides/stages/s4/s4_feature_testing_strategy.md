@@ -107,7 +107,7 @@ S4 is complete when test_strategy.md exists with >90% coverage planned, all edge
 
 **Verify BEFORE starting S4:**
 
-- [ ] S3 (Cross-Feature Sanity Check) complete
+- [ ] S3 (Epic-Level Documentation, Testing Plans, and Approval) complete
 - [ ] Epic test plan approved by user (Gate 4.5 passed)
 - [ ] Feature spec.md finalized and user-approved (Gate 3 passed from S2)
 - [ ] Have read feature spec.md to understand:

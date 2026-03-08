@@ -1,5 +1,4 @@
-# S3: Cross-Feature Sanity Check
-## Parallel Work Sync Verification (Optional)
+# S3 Pre-Check: Parallel Work Sync Verification (Optional)
 
 **When to use:** Only when S2 was executed in parallel mode (Primary + Secondary agents)
 
@@ -258,7 +257,7 @@ Create sync verification record in `epic/research/S3_SYNC_VERIFICATION_{DATE}.md
 
 ## Next Phase
 
-**After sync verification complete:** Proceed to S3.P1 (Prepare Comparison Matrix)
+**After sync verification complete:** Proceed to S3.P1 (Epic Testing Strategy Development)
 
 **See:** `stages/s3/s3_epic_planning_approval.md` for S3 main workflow
 
