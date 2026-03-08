@@ -348,7 +348,7 @@ Read .shamt/guides/templates/{template_name}.md
 | PR Review Issues | ~175 | No | No |
 | Guide Update Proposal | ~257 | No | No |
 | Debugging Guide Updates | ~280 | No | No |
-| Cross-Feature Sanity Check | ~75 | No | No |
+| Cross-Feature Alignment | ~75 | No | No |
 
 **Immutable templates:** Epic Ticket, Spec Summary, Implementation Plan, Bug Fix Notes (after user validation)
 
