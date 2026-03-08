@@ -32,15 +32,39 @@ If entries are missing, add them now:
 
 ---
 
-## Step 1.5: Run the Full Guide Audit
+## Step 1.5: Check for Epic Tag Contamination
 
-Before exporting, run the guide audit on the entire `.shamt/guides/` tree (starting from `guides/audit/README.md`). The audit must achieve 3 consecutive zero-issue rounds before you proceed to Step 2.
+Before running the audit, scan the shared guides for your project's epic tag. If it appears inside `.shamt/guides/` files, those are contaminated and must not be exported.
+
+Run this from your project root (substituting your actual epic tag):
+
+```bash
+grep -r "YOUR_EPIC_TAG-{N}" .shamt/guides/
+# Example: grep -r "KAI-{N}" .shamt/guides/
+```
+
+If any matches are found:
+
+1. **Stop** — do not proceed to Step 2 (audit) until these are resolved
+2. The matches are guide files where an agent incorrectly replaced the generic `SHAMT-{N}` placeholder with your project's epic tag
+3. For each affected file: revert the epic tag substitution back to `SHAMT-{N}`, preserving any other legitimate changes you made to that file
+4. Re-run the grep to confirm zero matches before continuing
+
+**What counts as contamination vs. acceptable:**
+- ❌ Workflow instruction text with your epic tag instead of `SHAMT-{N}` — revert
+- ✅ Attribution comments in file metadata (e.g., "Added from KAI-1 lessons learned") — acceptable, do not revert
+
+---
+
+## Step 2: Run the Full Guide Audit
+
+Before exporting, run the guide audit on the entire `.shamt/guides/` tree (starting from `guides/audit/README.md`). The audit must achieve 3 consecutive zero-issue rounds before you proceed to Step 3.
 
 This step is **mandatory**. Exporting without a full audit risks submitting changes that are internally inconsistent with other guides — cross-references, terminology, or workflow descriptions may need to be updated in files you didn't directly modify.
 
 ---
 
-## Step 2: Run the Export Script
+## Step 3: Run the Export Script
 
 From the project root:
 
@@ -62,7 +86,7 @@ Review the output. If files were exported that you didn't intend to change, inve
 
 ---
 
-## Step 3: Open a PR in shamt-ai-dev
+## Step 4: Open a PR in shamt-ai-dev
 
 ```bash
 cd /path/to/shamt-ai-dev
@@ -83,7 +107,7 @@ Then open a PR against `main` in the shamt-ai-dev repository.
 
 ---
 
-## Step 4: PR Review
+## Step 5: PR Review
 
 The master repo maintainer (or agent) reviews the PR diff:
 

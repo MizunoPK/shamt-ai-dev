@@ -93,6 +93,9 @@ Check for:
 - All pointers correctly placed and not stale
 - No project-specific content inadvertently introduced into shared guides
 - No broken cross-references in updated guides (if the import introduced any)
+- `SHAMT-{N}` placeholder intact throughout `.shamt/guides/` — you must not replace it with your epic tag
+
+**On the last point:** `SHAMT-{N}` appears throughout the shared guides as a generic placeholder for "epic number N." It is not a reference to the master Shamt project — it applies equally to every child project. Never substitute it with your project's epic tag (e.g., do not change `SHAMT-{N}` to `KAI-{N}` or `BAR-{N}`). If you find any such substitutions, revert them immediately before the validation loop can pass.
 
 ---
 

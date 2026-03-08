@@ -56,6 +56,7 @@ Per-feature: S5 (Plan) → S6 (Execute) → S7 (Test) → S8 (Align) → repeat 
 - Defer issues for later
 - Commit without running tests
 - Autonomous conflict resolution (always escalate to user)
+- Replace `SHAMT-{N}` with `{{EPIC_TAG}}-{N}` inside `.shamt/guides/` files — see "Shared Guide Rules" below
 
 ---
 
@@ -85,6 +86,33 @@ Per-feature: S5 (Plan) → S6 (Execute) → S7 (Test) → S8 (Align) → repeat 
 
 See `.shamt/project-specific-configs/CODING_STANDARDS.md` for complete standards. Key points:
 - [Agent: fill in 3–5 key coding rules after analyzing the codebase]
+
+---
+
+## Shared Guide Rules
+
+The files in `.shamt/guides/` are **shared with all Shamt projects** via the export/import sync system. They must stay generic.
+
+**`SHAMT-{N}` is a universal placeholder** — it means "epic number N" in any child project. It does NOT refer to the master Shamt project specifically. When you see `SHAMT-{N}` in a guide, leave it as `SHAMT-{N}`.
+
+❌ **Never do this** in `.shamt/guides/` files:
+```text
+# Wrong — replaces the generic placeholder with a project-specific tag
+git checkout -b feat/{{EPIC_TAG}}-{N}
+```
+
+✅ **Leave it as-is:**
+```text
+# Correct — generic placeholder stays generic
+git checkout -b feat/SHAMT-{N}
+```
+
+Your project's epic tag (`{{EPIC_TAG}}`) belongs in:
+- `.shamt/project-specific-configs/` — project-specific supplements and overrides
+- `.shamt/epics/` — your actual epic folders and work products
+- Commit messages and branch names for real commits
+
+If you modify a shared guide file for a legitimate reason (adding a clarification, fixing a procedure), keep all `SHAMT-{N}` references intact. Only the content changes — never the placeholder.
 
 ---
 
