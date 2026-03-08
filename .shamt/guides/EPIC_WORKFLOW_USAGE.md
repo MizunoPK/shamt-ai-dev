@@ -85,16 +85,16 @@ Key activities:
 
 ---
 
-### S3: Cross-Feature Alignment and Epic Strategy
+### S3: Epic-Level Docs, Tests, and Approval
 
 **Guide:** `stages/s3/s3_epic_planning_approval.md`
 
 Key activities:
-- Review all feature specs for conflicts and gaps
-- Write epic testing strategy and documentation
-- Gate 4.5: User approval (3-tier rejection handling)
+- S3.P1: Create epic smoke test plan (integration tests spanning ALL features)
+- S3.P2: Refine EPIC_README.md with feature summaries and architecture decisions
+- S3.P3: Gate 4.5 — present epic plan to user, mandatory approval before S4
 
-**Outputs:** Epic testing strategy, cross-feature alignment documented
+**Outputs:** `epic_smoke_test_plan.md`, refined `EPIC_README.md`, Gate 4.5 approval
 
 ---
 

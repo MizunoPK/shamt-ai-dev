@@ -189,7 +189,7 @@ Create sync verification record in `epic/research/S3_SYNC_VERIFICATION_{DATE}.md
 **If sync verification fails:**
 - Document which verifications failed
 - Update Agent Status: `BLOCKERS: Waiting for {agent} to complete {task}`
-- Do NOT proceed to S3 comparison until all verifications pass
+- Do NOT proceed to S3 (Epic-Level Docs, Tests, and Approval) until all verifications pass
 
 ---
 

@@ -34,7 +34,7 @@
 **A:** NO. All stages have dependencies and must be completed in order:
 - S1 creates the structure needed for S2
 - S2 specs are validated in S3
-- S3 alignment feeds into S4 test plan
+- S3 epic plan (Gate 4.5 approved) enables S4 feature test strategy
 - S4 test plan evolves through S5 → S9
 - Skipping stages leads to incomplete planning and rework
 
@@ -129,7 +129,7 @@ A: Create ALL feature folders in S1:
 A: YES, this is expected during planning:
 - Update spec.md with changes immediately
 - Document why requirement changed in "Updates History" section
-- If changes affect other features, note for S3 alignment
+- If changes affect other features, note for S2.P2 (Cross-Feature Alignment)
 - If scope grows significantly (>35 items), propose feature split
 
 **Q: What if spec.md requirements seem contradictory?**
