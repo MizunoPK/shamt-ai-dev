@@ -284,11 +284,12 @@ Timeout allowed recovery from crashed agent
 **File:** `.epic_locks/epic_smoke_test_plan.lock`
 
 **Used For:**
-- Updating test plan in S4 (Primary only in S2 plan)
-- Not heavily used in S2 parallelization (S4 is sequential)
+- Creating/finalizing test plan in S3.P1 (Primary only)
+- Updating test plan in S8.P2 (after each feature implementation)
+- Not used in S2 parallelization (S3.P1 and S8.P2 are sequential)
 
 **Frequency:**
-- Only during S4 (Primary only)
+- S3.P1 (once per epic) and S8.P2 (once per feature, sequential)
 
 **Typical Duration:** 60-90 seconds
 

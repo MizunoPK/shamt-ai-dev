@@ -668,10 +668,9 @@ I'll create the epic smoke test plan, refine epic documentation, and get user ap
 
 1. **Follow guide:** `stages/s4/s4_feature_testing_strategy.md`
 
-2. **Update epic_smoke_test_plan.md:**
-   - Add test scenarios for all features
-   - Include cross-feature tests
-   - Document dependencies
+2. **Create test_strategy.md per feature:**
+   - Follow S4 guide for each feature
+   - test_strategy.md is feature-level (NOT epic_smoke_test_plan.md — that was finalized in S3.P1)
 
 3. **Complete S4:**
    - Signal S4 complete
