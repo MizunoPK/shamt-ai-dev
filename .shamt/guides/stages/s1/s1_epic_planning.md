@@ -1164,7 +1164,7 @@ X "This epic is simple, I'll just make one feature"
   --> STOP - Even simple epics go through Discovery + feature breakdown
 
 X "I'll create a detailed test plan now"
-  --> STOP - S1 test plan is placeholder, detailed plan comes in S4
+  --> STOP - S1 test plan is placeholder, detailed plan comes in S3.P1 (updated in S8.P2)
 
 X "I remember the template structure, don't need to check"
   --> STOP - Always use actual template from templates/ folder
@@ -1179,7 +1179,7 @@ X "I'll skip GUIDE_ANCHOR.md, seems optional"
   --> STOP - GUIDE_ANCHOR.md is MANDATORY (critical for resumption after compaction)
 
 X "The epic_smoke_test_plan.md looks incomplete, let me fill it out"
-  --> STOP - It's SUPPOSED to be incomplete (placeholder for S4, S8.P2)
+  --> STOP - It's SUPPOSED to be incomplete (placeholder for S3.P1, updated in S8.P2)
 
 X "I'll number features 1, 2, 3 (no zero-padding)"
   --> STOP - Must use zero-padding: 01, 02, 03 (consistent sorting)
