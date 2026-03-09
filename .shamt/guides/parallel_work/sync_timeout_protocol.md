@@ -335,7 +335,7 @@ Parallel S2 work started 6 hours ago. Not all features have completed S2.
 {
   "agent_id": "Primary",
   "stage": "S4",
-  "phase": "Updating epic_smoke_test_plan.md",
+  "phase": "Creating test_strategy.md for feature_02",
   "last_checkpoint": "2026-01-17T17:15:00Z",
   "status": "IN_PROGRESS"
 }

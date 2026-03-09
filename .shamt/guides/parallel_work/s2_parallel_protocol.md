@@ -589,12 +589,12 @@ All features complete! Proceeding to S3.
 
 **Run S4 alone:**
 
-1. Update epic_smoke_test_plan.md
-2. Add scenarios for all features
-3. Document dependencies
-4. Complete S4
+1. Create test_strategy.md for each feature
+2. Follow S4 guide per feature (feature-level only)
+3. Complete S4
+   - Note: epic_smoke_test_plan.md was finalized in S3.P1; do NOT update it in S4
 
-**No parallel work in S4** (epic-level planning)
+**No parallel work in S4** (sequential feature testing strategy)
 
 ---
 
