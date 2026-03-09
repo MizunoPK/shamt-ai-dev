@@ -586,7 +586,7 @@ Each feature's spec.md starts with Discovery Context section:
 
 Use template from `templates/` folder (see `templates/TEMPLATES_INDEX.md`) → "Epic Smoke Test Plan Template"
 
-**IMPORTANT:** Mark this as INITIAL VERSION (placeholder that will be updated in S4 and S8.P2)
+**IMPORTANT:** Mark this as INITIAL VERSION (placeholder that will be finalized in S3.P1, updated in S8.P2)
 
 **Key characteristics of initial version:**
 - Based on assumptions from epic request (no implementation knowledge yet)

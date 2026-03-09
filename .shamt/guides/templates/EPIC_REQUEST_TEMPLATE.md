@@ -192,7 +192,7 @@
 - **End-to-End Tests:** [What scenarios should be validated]
 - **Performance Tests:** [What metrics matter, if applicable]
 
-**Note:** Detailed test plans will be created during S4 (Feature Testing Strategy).
+**Note:** Epic smoke test plan (end-to-end) is finalized in S3.P1. Per-feature test strategies (test_strategy.md) are created in S4.
 
 ---
 
