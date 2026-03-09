@@ -79,7 +79,7 @@
 - ❌ Skipping S2.P1 Validation Loop (spec validation is embedded in S2.P1.I3)
 - ❌ Not getting user approval for checklist (Gate 3)
 
-### S3: Cross-Feature Sanity Check
+### S3: Epic-Level Docs, Tests, and Approval
 - ❌ Only checking new features (must check ALL pairwise)
 - ❌ Resolving conflicts without user input
 - ❌ Not getting user approval (Gate 4.5 — epic plan + test strategy approval occurs in S3.P3)

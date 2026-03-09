@@ -98,8 +98,9 @@ I'm reading `missed_requirement/missed_requirement_protocol.md` to ensure I foll
   - Step 1-2: Save current feature state, update EPIC_README
 - Step 3: Return to Planning Stages (2/3/4)
   - S2: Flesh out new/updated feature spec (full deep dive)
-  - S3: Re-align ALL features (cross-feature sanity check)
-  - S4: Create/update feature test_strategy.md + update epic_smoke_test_plan.md
+  - S3: Re-align ALL features (Epic-Level Docs, Tests, and Approval)
+  - S3.P1: Update epic_smoke_test_plan.md with scenarios for new/updated feature
+  - S4: Create/update feature test_strategy.md (per-feature only)
 - Step 4: Resume Previous Work
   - Mark planning complete
   - Verify no spec changes affect paused feature

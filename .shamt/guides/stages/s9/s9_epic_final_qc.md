@@ -533,7 +533,7 @@ A: User-reported bugs require restart from S9.P1. Fix bugs using debugging proto
 A: Feature-level testing (S7) validates features in ISOLATION. Epic-level testing (S9) validates features working TOGETHER as a cohesive system.
 
 **Q: Can I use the original epic_smoke_test_plan.md from S1?**
-A: No. You MUST use the EVOLVED epic_smoke_test_plan.md (updated in S4 and S8.P2 (Epic Testing Update)). The original plan is outdated.
+A: No. You MUST use the EVOLVED epic_smoke_test_plan.md (finalized in S3.P1, updated in S8.P2 (Epic Testing Update)). The original plan is outdated.
 
 **Q: Was there an original monolithic guide?**
 A: Yes, S9 was originally a single 1,644-line guide. It has been split into four focused sub-stage guides (S9.P1, P2, P3, P4) for better token efficiency and navigation.

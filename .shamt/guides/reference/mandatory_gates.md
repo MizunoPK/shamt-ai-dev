@@ -13,7 +13,7 @@
 2. [Quick Summary Table](#quick-summary-table)
 3. [S1: Epic Planning](#s1-epic-planning)
 4. [S2: Feature Deep Dive (3 formal gates per feature - NEW: Checklist Approval added)](#s2-feature-deep-dive-3-formal-gates-per-feature---new-checklist-approval-added)
-5. [S3: Cross-Feature Sanity Check (1 gate per epic)](#s3-cross-feature-sanity-check-1-gate-per-epic)
+5. [S3: Epic-Level Docs, Tests, and Approval (1 gate per epic)](#s3-epic-level-docs-tests-and-approval-1-gate-per-epic)
 6. [S4: Feature-Level Testing Strategy (0 formal gates)](#s4-feature-level-testing-strategy-0-formal-gates)
 7. [S5: Implementation Planning](#s5-implementation-planning)
 8. [S6: Implementation Execution](#s6-implementation-execution)
@@ -230,7 +230,7 @@
 
 ---
 
-## S3: Cross-Feature Sanity Check (1 gate per epic)
+## S3: Epic-Level Docs, Tests, and Approval (1 gate per epic)
 
 ### Gate 4.5: Epic Plan Approval
 
@@ -247,7 +247,7 @@
 **If FAIL:**
 - Address user concerns
 - Revise affected feature specs
-- Re-run S3 sanity check
+- Re-run S3 (Epic-Level Docs, Tests, and Approval)
 - Cannot proceed to S4 without sign-off
 
 **Why it matters:** Last checkpoint before significant implementation work begins
@@ -577,7 +577,7 @@ S4 has no formal user approval gates. The epic testing strategy was approved at 
 **When:** During Validation Loop (S7.P2)
 
 **What it checks:**
-- Check ALL 12 dimensions every round (7 master + 5 S7 QC-specific)
+- Check ALL 16 dimensions every round (7 master + 9 S7 QC-specific)
 - 3 consecutive rounds with ZERO issues
 
 **Pass Criteria:**
@@ -591,7 +591,7 @@ S4 has no formal user approval gates. The epic testing strategy was approved at 
 - No restart needed - fix issues and keep going
 
 **Validation Loop Protocol:**
-- Check all 12 dimensions every round (7 master + 5 S7 QC-specific — not different focuses per round)
+- Check all 16 dimensions every round (7 master + 9 S7 QC-specific — not different focuses per round)
 - Fix issues immediately when found
 - Only exit after 3 CONSECUTIVE clean rounds
 

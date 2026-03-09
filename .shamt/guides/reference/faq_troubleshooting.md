@@ -34,7 +34,7 @@
 **A:** NO. All stages have dependencies and must be completed in order:
 - S1 creates the structure needed for S2
 - S2 specs are validated in S3
-- S3 alignment feeds into S4 test plan
+- S3 epic plan (Gate 4.5 approved) enables S4 feature test strategy
 - S4 test plan evolves through S5 → S9
 - Skipping stages leads to incomplete planning and rework
 
@@ -118,7 +118,7 @@ A: Use these guidelines:
 A: Create ALL feature folders in S1:
 - Gives user complete picture of epic scope
 - Allows S2 to work through features systematically
-- Enables cross-feature comparisons during S3
+- Enables cross-feature comparisons during S2.P2 (Cross-Feature Alignment)
 
 ---
 
@@ -129,7 +129,7 @@ A: Create ALL feature folders in S1:
 A: YES, this is expected during planning:
 - Update spec.md with changes immediately
 - Document why requirement changed in "Updates History" section
-- If changes affect other features, note for S3 alignment
+- If changes affect other features, note for S2.P2 (Cross-Feature Alignment)
 - If scope grows significantly (>35 items), propose feature split
 
 **Q: What if spec.md requirements seem contradictory?**
@@ -138,7 +138,7 @@ A: Address immediately:
 1. Document the contradiction clearly
 2. Ask user which requirement takes priority
 3. Update spec.md with resolution
-4. Note in checklist.md for S3 review
+4. Note in checklist.md for S2.P2 (Cross-Feature Alignment) review
 
 **Q: How detailed should spec.md be?**
 
@@ -163,7 +163,7 @@ All iterations are mandatory - don't skip.
 
 ---
 
-### S3: Cross-Feature Sanity Check
+### S3: Epic-Level Docs, Tests, and Approval
 
 **Q: What counts as a "conflict" between features?**
 
@@ -663,7 +663,7 @@ Context window limit reached → Session compacted
    - If >35 items, propose feature split to user
    - Get user approval on split
 5. **Continue S2** until user approves spec
-6. **S3 Cross-Feature Sanity Check** will catch conflicts
+6. **S3 Epic-Level Docs, Tests, and Approval** will catch conflicts
 
 ### Stuck 5: "Context window limit reached mid-implementation"
 
@@ -794,7 +794,7 @@ I understand you want to move quickly, but the Epic-Driven Development v2 workfl
 
 Current status: S2 (Feature Deep Dives)
 Remaining before implementation:
-- S3: Cross-Feature Sanity Check (30-60 min)
+- S3: Epic-Level Docs, Tests, and Approval (30-60 min)
 - S4: Feature Testing Strategy (30-45 min)
 - S5: Implementation Planning (2.5-4 hours)
 

@@ -153,11 +153,6 @@ Feature Planning is where you research each feature, create detailed specificati
 
 **Total Time Estimate:** 2.25-4 hours per feature (2 phases, 3 iterations in P1, 3 gates)
 
-**Key Changes from Old S2:**
-- **S2.P1 now has 3 iterations** (was 9 phases across 3 files)
-- **Validation Loops embed Gates 1 & 2** (systematic validation)
-- **S2.P2 is pairwise comparison** (moved from old S3)
-- **Gate 3 explicit approval required** (including acceptance criteria)
 
 **Exit Condition:** S2 is complete for a feature when spec has user-approved acceptance criteria (Gate 3 passed), Gates 1 & 2 passed via Validation Loops, and cross-feature alignment verified (S2.P2)
 
@@ -434,7 +429,7 @@ Ready to begin I1: Feature-Level Discovery.
 **After completing S2.P2:**
 - S2 is COMPLETE for the epic
 - Update EPIC_README.md Feature Tracking table
-- Proceed to S3 (Cross-Feature Sanity Check)
+- Proceed to S3 (Epic-Level Docs, Tests, and Approval)
 
 ---
 
@@ -477,7 +472,7 @@ Ready to begin I1: Feature-Level Discovery.
 - Repeat all iterations
 
 **If ALL features complete S2:**
-- Transition to S3 (Cross-Feature Sanity Check)
+- Transition to S3 (Epic-Level Docs, Tests, and Approval)
 
 📖 **READ:** `stages/s3/s3_epic_planning_approval.md`
 

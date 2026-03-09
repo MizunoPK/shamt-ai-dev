@@ -93,8 +93,9 @@ S9.P1 → S9.P2 → S9.P3 → S10 (entire epic flow)
 
 3. **PHASE 3 & 4:** Realignment (S3 & 4)
    - Use `missed_requirement/realignment.md`
-   - Cross-feature sanity check
-   - Update epic test plan
+   - S2.P2: cross-feature pairwise alignment for new/updated feature
+   - S3: epic smoke test update (S3.P1) + Gate 4.5 re-approval (S3.P3)
+   - S4: create feature test_strategy.md for new/updated feature
    - **Note:** Epic testing is paused, not a specific feature
 
 ---
@@ -231,7 +232,8 @@ Actions needed:
 2. **Planning:** S2/3/4
    - Create feature_05 spec
    - Align all features
-   - Update epic test plan
+   - S3.P1: Update epic smoke test plan for new/updated feature
+   - S4: Create feature test_strategy.md
 
 3. **Complete remaining features:**
    - Implement feature_04 (S5 → S8)
@@ -269,7 +271,8 @@ Actions needed:
 2. **Planning:** S2/3/4
    - Update feature_03 spec with PDF export
    - Align all features
-   - Update epic test plan
+   - S3.P1: Update epic smoke test plan for new/updated feature
+   - S4: Create feature test_strategy.md
 
 3. **Complete remaining features:**
    - No remaining features

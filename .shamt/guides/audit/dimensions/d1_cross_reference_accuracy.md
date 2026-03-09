@@ -445,6 +445,17 @@ grep -rn "\bS[0-9][a-z]\b\|Stage [0-9][a-z]" --include="*.md" .shamt/guides/ | \
    - Path exists BUT wrong stage referenced
    - "After S5 complete" but should be "After S6 complete"
 
+5. **Prose References to Deleted Content:**
+   - References written as plain text rather than markdown links or code paths
+   - Example: "Proceed to Step 1 (Prepare Comparison Matrix)" when that step no longer exists
+   - Automated scripts only match link syntax and code-formatted paths; plain prose sentences escape all checks
+   - **Manual check:** After any workflow restructuring, search stage guides for prose "Proceed to", "see Step", "go to Phase" phrases and verify the referenced step/phase/section still exists in the target guide
+   - ```bash
+     # Find prose navigation references in a guide folder
+     grep -rn "Proceed to\|See Step\|go to Phase\|Next: Step\|Step [0-9]\." stages/s3/ stages/s4/
+     ```
+   - For each match: open the target guide and confirm the named step exists. No automation will do this for you.
+
 ### Manual Validation Process
 
 **⚠️ CRITICAL: Always Check Root-Level Files First**

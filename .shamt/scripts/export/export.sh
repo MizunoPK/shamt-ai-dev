@@ -11,6 +11,16 @@
 
 set -e
 
+# --- Parse arguments ---------------------------------------------------------
+
+DRY_RUN=false
+for arg in "$@"; do
+    case "$arg" in
+        --dry-run) DRY_RUN=true ;;
+        *) echo "Unknown argument: $arg"; echo "Usage: export.sh [--dry-run]"; exit 1 ;;
+    esac
+done
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CHILD_SHAMT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 CHILD_ROOT="$(cd "$CHILD_SHAMT_DIR/.." && pwd)"
@@ -78,12 +88,16 @@ export_dir() {
 
         if [ ! -f "$dst_file" ]; then
             # New file in child — copy to master
-            mkdir -p "$(dirname "$dst_file")"
-            cp "$src_file" "$dst_file"
+            if [ "$DRY_RUN" = "false" ]; then
+                mkdir -p "$(dirname "$dst_file")"
+                cp "$src_file" "$dst_file"
+            fi
             EXPORTED+=("$rel_path (new)")
         elif ! diff -q "$src_file" "$dst_file" > /dev/null 2>&1; then
             # Files differ — copy to master
-            cp "$src_file" "$dst_file"
+            if [ "$DRY_RUN" = "false" ]; then
+                cp "$src_file" "$dst_file"
+            fi
             EXPORTED+=("$rel_path")
         fi
     done < <(find "$source_dir" -type f -print0 | sort -z)
@@ -104,7 +118,9 @@ remove_from_master() {
 
         local child_file="$CHILD_SHAMT_DIR/$rel_path"
         if [ ! -f "$child_file" ]; then
-            rm "$master_file"
+            if [ "$DRY_RUN" = "false" ]; then
+                rm "$master_file"
+            fi
             DELETED+=("$rel_path")
         fi
     done < <(find "$master_dir" -type f -print0 | sort -z)
@@ -126,7 +142,11 @@ if [ ${#EXPORTED[@]} -eq 0 ] && [ ${#DELETED[@]} -eq 0 ]; then
 fi
 
 if [ ${#EXPORTED[@]} -gt 0 ]; then
-    echo "  Exported ${#EXPORTED[@]} file(s) to master:"
+    if [ "$DRY_RUN" = "true" ]; then
+        echo "  Would export ${#EXPORTED[@]} file(s) to master:"
+    else
+        echo "  Exported ${#EXPORTED[@]} file(s) to master:"
+    fi
     echo ""
     for f in "${EXPORTED[@]}"; do
         echo "    + $f"
@@ -135,12 +155,41 @@ if [ ${#EXPORTED[@]} -gt 0 ]; then
 fi
 
 if [ ${#DELETED[@]} -gt 0 ]; then
-    echo "  Deleted ${#DELETED[@]} file(s) from master (not present in child):"
+    if [ "$DRY_RUN" = "true" ]; then
+        echo "  Would delete ${#DELETED[@]} file(s) from master (not present in child):"
+    else
+        echo "  Deleted ${#DELETED[@]} file(s) from master (not present in child):"
+    fi
     echo ""
     for f in "${DELETED[@]}"; do
         echo "    - $f"
     done
     echo ""
+fi
+
+if [ "$DRY_RUN" = "true" ]; then
+    echo "------------------------------------------------------------"
+    echo "  DRY RUN — no changes were made to master."
+    echo "  Re-run without --dry-run to apply."
+    echo ""
+    echo "============================================================"
+    echo ""
+    exit 0
+fi
+
+# --- Generate commit message -------------------------------------------------
+
+if [ ${#EXPORTED[@]} -le 3 ] && [ ${#DELETED[@]} -eq 0 ]; then
+    NAMES=()
+    for f in "${EXPORTED[@]}"; do
+        NAMES+=("$(basename "${f% (new)}")")
+    done
+    JOINED=$(printf '%s, ' "${NAMES[@]}")
+    COMMIT_MSG="sync: ${JOINED%, }"
+elif [ ${#DELETED[@]} -gt 0 ]; then
+    COMMIT_MSG="sync: ${#EXPORTED[@]} file(s) updated, ${#DELETED[@]} deleted"
+else
+    COMMIT_MSG="sync: ${#EXPORTED[@]} guide/script improvements"
 fi
 
 # --- Next steps --------------------------------------------------------------
@@ -156,10 +205,16 @@ echo "  2. Create a new branch and commit:"
 echo "       git checkout main"
 echo "       git checkout -b feat/child-sync-$(date +%Y%m%d)"
 echo "       git add -A .shamt/guides/ .shamt/scripts/"
-echo "       git commit -m \"sync: guide/script improvements from child project\""
+echo "       git commit -m \"$COMMIT_MSG\""
 echo ""
-echo "  3. Open a PR against main."
+echo "  3. Push and open a PR against main:"
+echo "       git push origin feat/child-sync-$(date +%Y%m%d)"
 echo ""
+if command -v gh &>/dev/null; then
+    echo "  gh is available — open the PR directly:"
+    echo "       gh pr create --title \"$COMMIT_MSG\" --body \"<paste .shamt/CHANGES.md entries>\""
+    echo ""
+fi
 echo "  Tip: Include content from .shamt/CHANGES.md in the PR description"
 echo "  to give reviewers context on what changed and why."
 echo ""

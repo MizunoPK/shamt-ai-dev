@@ -388,15 +388,20 @@ Plan  Deep Dive  Check  Strategy  (per feature)   QC
 - [ ] ALL features have `checklist.md` resolved
 - [ ] ALL feature `README.md` files created
 
-**S3 - Cross-Feature Sanity Check:**
-- [ ] All specs compared systematically
-- [ ] Conflicts resolved
-- [ ] User sign-off obtained
+**S2.P2 - Cross-Feature Alignment:**
+- [ ] All feature pairs compared systematically (pairwise)
+- [ ] Conflicts identified and resolved
+- [ ] Affected specs updated, user approved resolutions
+
+**S3 - Epic-Level Docs, Tests, and Approval:**
+- [ ] S3.P1: `epic_smoke_test_plan.md` created (integration tests across ALL features)
+- [ ] S3.P2: `EPIC_README.md` refined with feature summaries and architecture notes
+- [ ] S3.P3: Gate 4.5 — epic plan approved by user (mandatory before S4)
 
 **S4 - Feature Testing Strategy:**
-- [ ] `epic_smoke_test_plan.md` updated based on deep dives
-- [ ] Integration points identified
-- [ ] Epic success criteria defined
+- [ ] Feature 1: `test_strategy.md` created (>90% coverage planned)
+- [ ] Feature 2: `test_strategy.md` created
+- [ ] {Repeat per feature}
 
 **S5 - Feature Implementation:**
 - [ ] Feature 1: S5→S6→S7→S8 complete

@@ -73,7 +73,7 @@ Epic-level smoke testing validates that ALL features work together as a cohesive
 **When do you use this guide?**
 - After ALL features have completed S8.P2 (Epic Testing Update)
 - No pending bug fixes
-- epic_smoke_test_plan.md has been evolved through Stages S1, S4, and S8.P2
+- epic_smoke_test_plan.md has been evolved through Stages S1, S3.P1, and S8.P2
 - Ready to validate epic as a whole
 
 **Key Outputs:**

@@ -18,7 +18,7 @@
 - [Phase 4: Generate Handoff Packages](#phase-4-generate-handoff-packages)
 - [Phase 5: Parallel S2 Work](#phase-5-parallel-s2-work)
 - [Phase 6: Sync Point — All Features Complete S2](#phase-6-sync-point--all-features-complete-s2)
-- [Phase 7: S3 Cross-Feature Sanity Check (Solo)](#phase-7-s3-cross-feature-sanity-check-solo)
+- [Phase 7: S3 Epic-Level Docs, Tests, and Approval (Solo)](#phase-7-s3-epic-level-docs-tests-and-approval-solo)
 - [Phase 8: S4 Feature Testing Strategy (Solo)](#phase-8-s4-feature-testing-strategy-solo)
 - [Phase 9: Notify Secondary Agents of S3/S4 Completion](#phase-9-notify-secondary-agents-of-s3s4-completion)
 - [Common Scenarios](#common-scenarios)
@@ -618,9 +618,9 @@ done
 **Total S2 Time:** 2.5 hours (from 10:00 to 14:30)
 **Time Saved:** 3.5 hours (vs 6 hours sequential)
 
-🔄 Now running S3 (Cross-Feature Sanity Check)
+🔄 Now running S3 (Epic-Level Docs, Tests, and Approval)
 
-I'll review all 3 specs for conflicts, overlaps, and gaps...
+I'll create the epic smoke test plan, refine epic documentation, and get user approval...
 ```
 
 **To Secondary-A and Secondary-B:**
@@ -628,7 +628,7 @@ I'll review all 3 specs for conflicts, overlaps, and gaps...
 ## Message X (2026-01-15 14:35) ⏳ UNREAD
 **Subject:** S2 Sync Complete - I'm Running S3
 **Status:** All features completed S2
-**Next:** I'm running S3 (Cross-Feature Sanity Check) alone
+**Next:** I'm running S3 (Epic-Level Docs, Tests, and Approval) alone
 **Your Action:** WAIT - No action needed from you right now
 **ETA:** S3 will take ~1 hour, then I'll proceed to S4
 **Note:** Implementation (S5-S8) will be sequential in this plan
@@ -637,7 +637,7 @@ I'll review all 3 specs for conflicts, overlaps, and gaps...
 
 ---
 
-## Phase 7: S3 Cross-Feature Sanity Check (Solo)
+## Phase 7: S3 Epic-Level Docs, Tests, and Approval (Solo)
 
 **Run S3 alone (no parallel work):**
 
@@ -668,10 +668,9 @@ I'll review all 3 specs for conflicts, overlaps, and gaps...
 
 1. **Follow guide:** `stages/s4/s4_feature_testing_strategy.md`
 
-2. **Update epic_smoke_test_plan.md:**
-   - Add test scenarios for all features
-   - Include cross-feature tests
-   - Document dependencies
+2. **Create test_strategy.md per feature:**
+   - Follow S4 guide for each feature
+   - test_strategy.md is feature-level (NOT epic_smoke_test_plan.md — that was finalized in S3.P1)
 
 3. **Complete S4:**
    - Signal S4 complete
@@ -685,7 +684,7 @@ I'll review all 3 specs for conflicts, overlaps, and gaps...
 ```markdown
 ## Message X (2026-01-15 15:30) ⏳ UNREAD
 **Subject:** S3 and S4 Complete - Implementation Sequential
-**Status:** S3 (Cross-Feature Sanity Check) and S4 (Feature Testing Strategy) complete
+**Status:** S3 (Epic-Level Docs, Tests, and Approval) and S4 (Feature Testing Strategy) complete
 **Findings:** No conflicts found with any feature specs
 **Next Steps:**
 - Implementation (S5-S8) will be SEQUENTIAL in this plan

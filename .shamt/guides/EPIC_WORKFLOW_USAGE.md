@@ -7,10 +7,39 @@ This file provides a complete overview of the Shamt S1-S10 epic-driven developme
 
 ---
 
+## Prerequisites: Epic Request Files
+
+**BEFORE starting S1,** epic requests must be created in `.shamt/epics/requests/`
+
+### Creating an Epic Request
+
+1. User describes the epic they want to build
+2. Agent creates `.shamt/epics/requests/{name}.md` or `.txt`
+3. Agent writes high-level request document:
+   - Requirements, goals, constraints, research findings
+   - Focus on WHAT needs to be done, not HOW to implement
+   - Mention files/areas that MAY need changes (not specific code)
+   - Reference coding practices to follow
+   - **DO NOT** include code snippets or detailed implementation
+4. File remains in `requests/` folder
+
+**DO NOT create SHAMT-{N} folders at this stage. The S1-S10 flow will determine detailed design.**
+
+### Starting S1
+
+1. User says "Start S1 for [epic request name]"
+2. Agent verifies request file exists in `.shamt/epics/requests/`
+3. Agent reads `stages/s1/s1_epic_planning.md`
+4. Agent creates git branch and SHAMT-{N} folder **during S1** (not before)
+
+**SHAMT-{N} folders are ONLY created during S1 execution, never as part of request creation.**
+
+---
+
 ## Workflow Overview
 
 ```text
-S1: Epic Planning → S2: Feature Deep Dives → S3: Cross-Feature Sanity Check →
+S1: Epic Planning → S2: Feature Deep Dives → S3: Epic-Level Docs, Tests, and Approval →
 S4: Feature Testing Strategy → S5-S8: Feature Loop → S9: Epic Final QC → S10: Epic Cleanup
 
 Per-feature loop: S5 (Plan) → S6 (Execute) → S7 (Test) → S8 (Align) → repeat or S9
@@ -30,7 +59,7 @@ Per-feature loop: S5 (Plan) → S6 (Execute) → S7 (Test) → S8 (Align) → re
 **Guide:** `stages/s1/s1_epic_planning.md`
 
 Key activities:
-- Assign KAI/SHAMT number (ask user for next available or custom)
+- Assign SHAMT number (ask user for next available or custom)
 - Create epic folder and EPIC_README.md
 - Create git branch: `{work_type}/{EPIC_TAG}-{N}`
 - Run S1.P3 Discovery Phase (MANDATORY — research loop until 3 consecutive clean iterations)
@@ -49,23 +78,24 @@ Key activities:
 - For each feature: create `spec.md`, `checklist.md`, `RESEARCH_NOTES.md`
 - Run S2.P1 Spec Creation Refinement Validation Loop (Gates 1, 2, 3)
 - Gate 3: User approval of acceptance criteria (in S2.P1.I3, before S5)
+- S2.P2: Cross-Feature Alignment — pairwise comparison of all feature specs to resolve conflicts (Primary agent only; runs after all features complete S2.P1)
 
 **Parallelization option:** `parallel_work/s2_parallel_protocol.md` (3+ features)
 
-**Outputs:** `spec.md`, `checklist.md`, `RESEARCH_NOTES.md` per feature
+**Outputs:** `spec.md`, `checklist.md`, `RESEARCH_NOTES.md` per feature; cross-feature conflict resolutions
 
 ---
 
-### S3: Cross-Feature Alignment and Epic Strategy
+### S3: Epic-Level Docs, Tests, and Approval
 
 **Guide:** `stages/s3/s3_epic_planning_approval.md`
 
 Key activities:
-- Review all feature specs for conflicts and gaps
-- Write epic testing strategy and documentation
-- Gate 4.5: User approval (3-tier rejection handling)
+- S3.P1: Create epic smoke test plan (integration tests spanning ALL features)
+- S3.P2: Refine EPIC_README.md with feature summaries and architecture decisions
+- S3.P3: Gate 4.5 — present epic plan to user, mandatory approval before S4
 
-**Outputs:** Epic testing strategy, cross-feature alignment documented
+**Outputs:** `epic_smoke_test_plan.md`, refined `EPIC_README.md`, Gate 4.5 approval
 
 ---
 

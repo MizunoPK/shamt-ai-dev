@@ -135,7 +135,7 @@ Validate the implemented feature through smoke testing, QC rounds, and PR review
 3. E2E Execution Test - End-to-end workflow succeeds (MANDATORY GATE)
 
 **Step 2: Validation Loop (3 consecutive clean rounds)**
-1. Check ALL 12 dimensions every round (7 master + 5 S7 QC-specific)
+1. Check ALL 16 dimensions every round (7 master + 9 S7 QC-specific)
 2. Fix issues immediately, reset clean counter
 3. Exit after 3 consecutive clean rounds
 

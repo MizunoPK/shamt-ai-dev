@@ -380,7 +380,7 @@ DONE (return to previous work)
 
 **SKIP these stages:**
 - ❌ S1 (Epic Planning) - epic already planned
-- ❌ S3 (Cross-Feature Sanity Check) - not needed for single bug
+- ❌ S3 (Epic-Level Docs, Tests, and Approval) - not needed for single bug
 - ❌ S4 (Feature Testing Strategy) - not needed for single bug
 - ❌ S8.P1 - bug fix doesn't affect other specs
 - ❌ S8.P2 (Epic Testing Update) (Epic Testing Plan Update) - handled in S7 (Testing & Review)

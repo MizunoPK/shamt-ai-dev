@@ -475,7 +475,7 @@ bugfix_{priority}_{name}/
 
 **S1 - Epic Planning:** ✅ COMPLETE
 **S2 - Feature Deep Dives:** ✅ COMPLETE
-**S3 - Cross-Feature Sanity Check:** ✅ COMPLETE
+**S3 - Epic-Level Docs, Tests, and Approval:** ✅ COMPLETE
 **S4 - Feature Testing Strategy:** ✅ COMPLETE
 **S5 - Feature Implementation:** ✅ COMPLETE
   - Feature 01: ✅ COMPLETE
@@ -504,7 +504,7 @@ bugfix_{priority}_{name}/
 
 **S1 - Epic Planning:** ✅ COMPLETE
 **S2 - Feature Deep Dives:** ✅ COMPLETE
-**S3 - Cross-Feature Sanity Check:** ✅ COMPLETE
+**S3 - Epic-Level Docs, Tests, and Approval:** ✅ COMPLETE
 **S4 - Feature Testing Strategy:** ✅ COMPLETE
 **S5 - Feature Implementation:** ✅ COMPLETE
   - Feature 01: ✅ COMPLETE

@@ -208,6 +208,7 @@ grep -n "S[0-9]" CLAUDE.md | grep -o "S[0-9][0-9]*\(\.P[0-9][0-9]*\)\?\(\.I[0-9]
 | **D18: Stage Flow** | Cross-stage consistency | 30% | After stage workflow changes |
 | **D19: Rules Alignment** | Rules file structure (child only) | 30% | After import — verify rules file |
 | **D20: Script Integrity** | Sync/init script correctness | 20% | After modifying sync/init scripts |
+| **D21: Agent Comprehension Risk** | Per-guide scope clarity, migration notes, sibling differentiation | 15% | After stage restructuring or adding new guides |
 
 **Recommended:** Start with D1-D2 (most common issues, highest automation)
 

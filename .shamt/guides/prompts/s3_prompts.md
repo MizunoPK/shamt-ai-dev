@@ -1,54 +1,52 @@
-# S3 Prompts: Cross-Feature Sanity Check
+# S3 Prompts: Epic-Level Documentation, Testing Plans, and Approval
 
 **Stage:** 3
-**Purpose:** Cross-feature validation and alignment
+**Purpose:** Epic-level testing strategy, documentation refinement, and user approval (Gate 4.5)
 
 ---
 
-## Starting S3: Cross-Feature Sanity Check
+## Starting S3: Epic-Level Documentation, Testing Plans, and Approval
 
-**User says:** "Review all features" or "Run cross-feature sanity check" or Agent detects ALL features completed S2
+**User says:** "Start S3" or "Run epic-level docs and testing" or Agent detects ALL features completed S2
 
-**Prerequisite:** ALL features have completed S2 (all feature README.md files show "S2 complete")
+**Prerequisite:** ALL features have completed S2 (including S2.P2 Cross-Feature Alignment)
 
 **Agent MUST respond:**
 
 ```markdown
-I'm beginning S3 (Cross-Feature Sanity Check).
+I'm beginning S3 (Epic-Level Documentation, Testing Plans, and Approval).
 
 **Guide I'm following:** stages/s3/s3_epic_planning_approval.md (from CLAUDE.md Stage Workflow table)
 **Prerequisites verified:**
-- [x] Prior stage (S2) fully complete in EPIC_README.md Epic Completion Checklist - all features done S2
+- [x] S2 fully complete for ALL features in EPIC_README.md (Feature Tracking all checked)
+- [x] S2.P2 (Cross-Feature Alignment) complete — feature specs reconciled
+- [x] epic_smoke_test_plan.md exists (initial version from S1)
 - [x] Guide path matches CLAUDE.md Stage Workflow table
 - [x] Read ENTIRE guide using Read tool
 
 **The guide requires:**
-- Systematic pairwise comparison of ALL feature specs
-- Interface validation between features
-- Dependency graph creation and cycle detection
-- Conflict resolution with user clarification
-- **MANDATORY user sign-off** before proceeding to S4
-- NO SKIPPING comparisons (N×N matrix approach)
-- Document conflicts and resolutions
+- S3.P1: Create epic-level smoke test plan (integration tests across ALL features, NOT per-feature tests)
+- S3.P2: Refine EPIC_README.md with feature summaries and architecture decisions
+- S3.P3: Gate 4.5 — present epic plan to user, MANDATORY user approval before S4
+- Each phase uses a 3-consecutive-clean Validation Loop
+- SCOPE: This is epic-level work, not feature-level. Tests defined here span multiple features.
 
 **Prerequisites I'm verifying:**
-✅ ALL features show "S2 complete" in their README.md files
+✅ ALL features show "S2 complete" in EPIC_README.md Feature Tracking:
   - Feature 01 ({name}): ✅
   - Feature 02 ({name}): ✅
   - {Continue for all features}
-✅ All feature spec.md files exist
-✅ All feature checklist.md files resolved
-
-**I'll now proceed with systematic pairwise comparison...**
+✅ S2.P2 (Cross-Feature Alignment) complete
+✅ epic_smoke_test_plan.md exists
 
 **Updating EPIC_README.md Agent Status:**
-- Current Stage: S3 - Cross-Feature Sanity Check
+- Current Stage: S3 — Epic-Level Documentation, Testing Plans, and Approval
 - Current Guide: stages/s3/s3_epic_planning_approval.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
-- Critical Rules: "Pairwise comparison mandatory", "User sign-off required", "No skipping comparisons"
-- Next Action: Create Feature Comparison Matrix and begin pairwise validation
+- Critical Rules: "Epic-level tests only (not per-feature)", "Gate 4.5 user approval mandatory"
+- Next Action: S3.P1 — Review all feature test requirements, identify integration points
 
-Starting cross-feature analysis...
+Starting S3.P1: Epic Testing Strategy Development...
 ```
 
 ---

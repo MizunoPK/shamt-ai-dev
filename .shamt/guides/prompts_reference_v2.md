@@ -12,7 +12,7 @@ This file is the index for all phase transition prompts. Prompts are organized b
 |-------|-------------|-------------|
 | S1 | `prompts/s1_prompts.md` | Starting Epic Planning, Starting Discovery Phase |
 | S2 | `prompts/s2_prompts.md` | Starting Feature Deep Dive, Starting Spec Creation |
-| S3 | `prompts/s3_prompts.md` | Starting Cross-Feature Alignment |
+| S3 | `prompts/s3_prompts.md` | Starting Epic Planning and Approval |
 | S4 | `prompts/s4_prompts.md` | Starting Feature Testing Strategy |
 | S5 | `prompts/s5_s8_prompts.md` | Implementation Plan (S5 v2 Validation Loop), Gate 5 Approval |
 | S6 | `prompts/s5_s8_prompts.md` | Starting Execution, Resuming After Compaction |

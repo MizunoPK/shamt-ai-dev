@@ -225,6 +225,36 @@ find stages -name "*-*-*.md"
 find stages -name "*[A-Z]*.md"
 ```markdown
 
+### Type 5: Within-Folder Stage Title Consistency
+
+**What to Check:**
+All files inside a single `stages/s#/` folder must describe the same stage. A stage restructuring often creates a new primary guide with an updated title while leaving an older sub-guide (parallel-work helper, pre-check, etc.) with the previous stage name in its H1.
+
+**Why This Matters:**
+An agent loading the stage folder sees two files with different titles and no router. It has no way to know which title is canonical. The stale title also contaminates prerequisite references in the *next* stage when those were written against the old name.
+
+**Search Command:**
+
+```bash
+# Extract H1 titles from all files in each stage folder
+for dir in stages/s{1..10}/; do
+  echo "=== $dir ==="
+  grep -h "^# " "$dir"*.md 2>/dev/null
+done
+```
+
+**Validation:**
+For each stage folder, all H1 titles should be consistent:
+- They may differ in specificity ("S3 Pre-Check: ..." vs "S3: Epic-Level ...") but must not claim different stage identities
+- A file titled "S3: Cross-Feature Sanity Check" in the same folder as "S3: Epic-Level Documentation..." is a conflict — one name is stale
+
+**Red Flags:**
+- Two files in `stages/s#/` where the H1 after `S#:` describes a completely different stage purpose
+- A sub-guide (parallel work, pre-check) that retains an old stage name from before a restructuring
+- The stale title matches what the *next* stage's prerequisites use as a name reference
+
+**Automated:** ⚠️ Partial (can extract H1s per folder; requires human judgment on whether titles are consistent or conflicting)
+
 ---
 
 ## How Errors Happen

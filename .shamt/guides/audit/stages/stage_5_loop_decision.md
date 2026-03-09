@@ -158,7 +158,7 @@
 - [ ] Each round used different patterns than previous
 - [ ] Each sub-round focused on correct dimension set
 - [ ] Clear mental break between rounds (fresh perspective)
-- [ ] All 20 dimensions checked at least 3 times (once per clean round)
+- [ ] All 21 dimensions checked at least 3 times (once per clean round)
 
 **If consecutive_clean < 3:** MUST loop (regardless of total rounds completed)
 **If ANY sub-round skipped:** MUST loop (all 4 sub-rounds mandatory)
@@ -670,6 +670,25 @@ Answer thoroughly, then:
 
 **Strategy:** One commit per round (guide fixes ONLY)
 
+**🚨 MANDATORY PRE-COMMIT CHECK:**
+
+Before staging any commit, verify guides are not gitignored:
+
+```bash
+# Check if .shamt/guides/ is gitignored
+git check-ignore .shamt/guides/ 2>/dev/null
+```
+
+- If ANY output (files are ignored) → **STOP. Do NOT commit audit fixes.**
+  - Apply fixes locally (files are updated on disk)
+  - Inform user: "Audit fixes applied locally but not committed — guide files are gitignored in this project."
+  - Skip all commit steps
+- If NO output (files are not ignored) → proceed with commits below
+
+**NEVER use `git add -f` or `git add --force` to bypass gitignore for guide files.**
+
+**Per-Round Commit (if guides are NOT gitignored):**
+
 ```bash
 # For each round, commit ONLY the guide fixes (exclude output files)
 git add stages/ reference/ templates/ debugging/ missed_requirement/ prompts/ *.md
@@ -697,6 +716,10 @@ Verification: Zero remaining issues
 **DO NOT use `git add -A` or `git add .`:**
 - These will commit output files (incorrect)
 - Explicitly list directories/files to commit
+
+**DO NOT use `git add -f` or `git add --force`:**
+- Never force-add gitignored files
+- If guides are gitignored, apply fixes locally but skip commits
 
 ### Final Commit
 

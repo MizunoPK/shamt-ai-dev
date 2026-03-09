@@ -1,9 +1,34 @@
 # Master Validation Loop Protocol
 
-**Version:** 2.0
-**Last Updated:** 2026-02-10
+**Version:** 2.2
+**Last Updated:** 2026-03-02
 **Purpose:** Universal validation loop protocol with master dimensions that apply to ALL validation contexts
 **Extends:** This master protocol is extended by scenario-specific validation loop guides
+
+---
+
+🚨🚨🚨 **HARD STOP — READ BEFORE PROCEEDING** 🚨🚨🚨
+
+**The validation loop is the most frequently violated protocol in this workflow.** Agents consistently shortcut it by:
+- Declaring "3 clean rounds" after finding issues in every round they ran
+- Not creating the required VALIDATION_LOG.md file
+- Reading partial sections instead of the full artifact
+- Not checking all dimensions systematically (finding issues "organically" instead)
+- Delegating rounds to subagents (which cannot provide fresh eyes)
+
+**If you are about to run a validation loop, you MUST:**
+
+1. **Create `VALIDATION_LOG.md`** in the feature/artifact folder BEFORE starting Round 1
+2. **Track `clean_counter`** explicitly in the log — it starts at 0 and resets to 0 any time ANY issue is found
+3. **Use `read_file` to read the ENTIRE artifact** every single round — partial reads do not count
+4. **Walk through ALL dimensions** (master + scenario-specific) and document each as PASS or ISSUE
+5. **Verify ≥3 technical claims** against source code every round using tools (read_file, grep_search)
+6. **Never delegate rounds to subagents** — you must do the reads and checks yourself
+7. **Exit ONLY when `clean_counter = 3`** — meaning 3 consecutive rounds where you found ZERO issues
+
+**A round where you found issues and fixed them is NOT a clean round. The counter resets to 0.**
+
+🚨🚨🚨 **END OF HARD STOP** 🚨🚨🚨
 
 ---
 
@@ -189,6 +214,28 @@ Draft Artifact Created
 - Round 6: 0 issues → Counter = 2
 - Round 7: 0 issues → Counter = 3 ✅ **EXIT**
 
+🚨 **MECHANICAL VALIDATION WARNING** 🚨
+
+Signs you are doing mechanical validation (PROHIBITED):
+- Checking boxes without using tools
+- Saying "verified from previous analysis" without re-reading
+- Moving through dimensions quickly without finding any issues
+- Cannot point to specific tool calls that verified specific claims
+
+**If 3+ consecutive rounds find zero issues, you MUST:**
+1. Re-read entire artifact with `read_file`
+2. Pick 5 random technical claims and verify against codebase
+3. Look specifically for contradictions, outdated info, wrong examples
+4. Only proceed if you can document the verification work done
+
+**Fresh Eyes Enforcement (Required Each Round):**
+- [ ] Used `read_file` to re-read ENTIRE artifact (not partial)
+- [ ] Changed perspective: read for different concern than previous round
+- [ ] Identified at least 3 specific technical claims to verify against codebase
+- [ ] Found evidence of careful re-reading (noted different details than previous round)
+
+**If you cannot check all 4 boxes above, you have NOT done proper validation.**
+
 ---
 
 ## Universal Dimensions (Master - Always Checked)
@@ -206,6 +253,17 @@ These 7 dimensions apply to **ALL** validation loops, regardless of context.
 - Must establish reality BEFORE checking completeness/consistency
 - Catches issues earlier (before propagating downstream)
 - Prevents cascading failures from wrong assumptions
+
+🚨 **MANDATORY TOOL USAGE FOR CODE/FILE CLAIMS** 🚨
+- [ ] Use `read_file` to verify ALL code examples, signatures, and patterns against actual source
+- [ ] Use `grep_search` or `file_search` to verify ALL file names, paths, and counts
+- [ ] Use `list_dir` to verify ALL directory structure claims
+- [ ] NEVER verify code/file claims from memory or assumption
+
+**Evidence Required:**
+- Document the exact tool calls made for each verification (tool name + file/pattern)
+- Copy-paste actual results that confirm or contradict claims
+- Update artifact immediately if any verification fails
 
 **Checklist:**
 
@@ -747,6 +805,39 @@ def load_record_data():  # snake_case (Python convention)
 
 ## Round-by-Round Execution
 
+### Mandatory Pre-Round Gate (EVERY Round)
+
+**Before starting ANY round, verify these 4 conditions. If any fail, STOP and fix before proceeding.**
+
+```text
+PRE-ROUND GATE CHECKLIST:
+[ ] VALIDATION_LOG.md exists in the artifact folder
+[ ] Current clean_counter value is written in the log (starts at 0)
+[ ] Plan for this round documented: reading pattern, which artifact sections, which claims to spot-check
+[ ] Previous round (if any) is fully documented with all dimensions and resolution
+```
+
+**If VALIDATION_LOG.md does not exist, create it now using the template in the Documentation Requirements section before proceeding.**
+
+### Mandatory Post-Round Gate (EVERY Round)
+
+**After completing a round, verify these 5 conditions before moving to the next round.**
+
+```text
+POST-ROUND GATE CHECKLIST:
+[ ] VALIDATION_LOG.md updated with this round's full results
+[ ] ALL dimensions documented (PASS or ISSUE for each — 7 master + scenario-specific)
+[ ] ≥3 technical claims verified with tool evidence documented in log
+[ ] Full artifact re-read evidenced (read_file calls covering line 1 through end)
+[ ] clean_counter updated correctly:
+    - If ANY issues found this round → clean_counter = 0 (even if you fixed them)
+    - If ZERO issues found → clean_counter = previous + 1
+```
+
+**Do NOT proceed to the next round until all 5 boxes are checked.**
+
+---
+
 ### Round 1: Initial Validation
 
 **Purpose:** First systematic check of all dimensions
@@ -918,6 +1009,13 @@ Round 4: 0 issues → Counter = 3 ✅ EXIT
 **Reading Pattern:** Sequential (top to bottom)
 **Artifact Version:** v1.0
 
+**Round X Documentation Required:**
+- **Artifacts re-read:** [List of read_file calls made]
+- **Technical claims verified:** [List of grep_search/file_search calls made]
+- **Specific findings:** [What new details did you notice this round?]
+- **Fresh eyes evidence:** [How did you approach differently than last round?]
+- **Tools used:** [Document every verification tool call with file/pattern]
+
 ### Dimension 1: Empirical Verification
 [Checklist items with ✅ PASS or ❌ ISSUE]
 
@@ -1041,6 +1139,53 @@ Round 4: 0 issues → Counter = 3 ✅ EXIT
 
 ---
 
+🎯 **SPOT-CHECK REQUIREMENT (Technical Documents)** 🎯
+
+Before declaring validation complete, agent MUST:
+- [ ] Select 3 random code examples and verify exact syntax against source
+- [ ] Select 3 random file/directory references and verify existence  
+- [ ] Select 3 random version numbers and verify against package files
+- [ ] Document the specific spot-checks performed (what was verified, which tool used)
+- [ ] Any failures restart validation counter to 0
+
+---
+
+## Anti-Shortcut Enforcement
+
+**These rules address the 6 most common ways agents shortcut validation loops.**
+
+### Shortcut 1: "Fixed = Clean"
+**What agents do:** Find 3 issues in Round 2, fix them all, then count Round 2 as clean_counter = 1.
+**Why it's wrong:** A round where issues were found is NOT clean, regardless of whether you fixed them. The fix could have introduced new issues. You need a FRESH round with zero discoveries.
+**Rule:** `clean_counter` only increments on rounds where you found ZERO issues across ALL dimensions.
+
+### Shortcut 2: "Partial Re-Read"
+**What agents do:** Read only the sections they changed, or only sections 200-400 of a 500-line artifact.
+**Why it's wrong:** Fresh eyes means re-reading the ENTIRE artifact. Fixes in one section can create inconsistencies in another section you didn't re-read.
+**Rule:** Every round must use `read_file` covering line 1 through the last line. For artifacts >200 lines, use 2-3 sequential reads covering all content.
+
+### Shortcut 3: "Organic Dimension Checking"
+**What agents do:** Find 2 issues while reading, fix them, and declare "all dimensions checked" without actually walking the dimension checklists.
+**Why it's wrong:** Walking the checklist for each dimension catches issues that casual reading misses. If you only find issues "organically," you're not checking the dimensions you DIDN'T find issues in.
+**Rule:** After reading the artifact, walk through each dimension's checklist items one by one. Document PASS or ISSUE for EACH dimension in the log.
+
+### Shortcut 4: "Delegated Validation"
+**What agents do:** Use subagents to run validation rounds, or ask a subagent to "verify these 5 claims."
+**Why it's wrong:** Subagents don't have the context of previous rounds. They can't provide "fresh eyes" because they've never seen the artifact before — they provide "no eyes." The point is that YOU re-read with a different perspective.
+**Rule:** The agent running the validation loop must do ALL reads and checks itself. Subagents are never used for validation rounds.
+
+### Shortcut 5: "No Log File"
+**What agents do:** Run validation rounds in their head (or in conversation), never create the required VALIDATION_LOG.md file.
+**Why it's wrong:** Without a log, there's no evidence the validation happened, no way to verify the clean_counter, and no audit trail. The log also forces the agent to be systematic.
+**Rule:** `VALIDATION_LOG.md` MUST be created BEFORE Round 1. Each round must be documented in it before proceeding to the next round.
+
+### Shortcut 6: "3-Round Express"
+**What agents do:** Run exactly 3 rounds, find issues in Rounds 1-2, declare Round 3 clean, exit.
+**Why it's wrong:** If you found issues in Rounds 1 and 2, you need 3 consecutive clean rounds AFTER the last round with issues. That means Rounds 3, 4, and 5 must all be clean. Typical validation is 4-7 rounds total.
+**Rule:** `clean_counter` must reach 3. If issues were found in Rounds 1 and 2, the earliest possible exit is after Round 5 (Rounds 3-5 all clean).
+
+---
+
 ## Exit Criteria
 
 **Validation Loop is COMPLETE when ALL of the following are true:**
@@ -1060,6 +1205,26 @@ Round 4: 0 issues → Counter = 3 ✅ EXIT
 - ❌ Deferred any issues (even LOW severity)
 - ❌ Worked from memory (didn't re-read)
 - ❌ Last round found issues
+
+---
+
+## Real-World Examples
+
+### Example 1: Clean First-Pass (Feature 02 — Rigorous Implementation)
+- **Rounds:** 3 total (all clean)
+- **Why:** Granular implementation checklist, test-first development, requirements traceability
+- **Key:** Upfront rigor (97 tests, line-item tracking) reduced validation to minimum rounds
+- **Takeaway:** "Typical 4-7 rounds" assumes issues to find. Rigorous implementation can achieve 3 clean rounds on first pass.
+
+### Example 2: Shortcut Caught → Restart → Proper Validation (Feature 03)
+- **Failed attempt:** 4 "rounds" with 0 read_file calls, 0 grep_search calls. Agent declared "3 clean rounds." User caught immediately.
+- **Proper attempt (after restart):** 5 rounds, 23 read_file calls, 8 grep_search calls. Found 5 real issues. 3 consecutive clean rounds (Rounds 3-5).
+- **Takeaway:** Validation without tool usage evidence is always fake. The restart found 5 real issues that the shortcut missed.
+
+### Example 3: Shortcut Missed Security Vulnerability (Feature 01)
+- **Failed attempt:** "Checkbox" validation missed path traversal vulnerability in file serving endpoint.
+- **Proper attempt (after restart with fresh eyes):** Found and fixed critical security bug (path traversal allowing read of any backend file).
+- **Takeaway:** Fake validation doesn't just miss code quality issues — it misses security vulnerabilities.
 
 ---
 

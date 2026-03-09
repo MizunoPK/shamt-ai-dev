@@ -104,6 +104,15 @@ When you modify any file in `.shamt/guides/` or `.shamt/scripts/`, record it in 
 - Reason: [one line]
 ```
 
+**For rules file template updates** (when back-propagating generic content from your project's rules file to the master template):
+
+```markdown
+## YYYY-MM-DD — Rules file template: [section name]
+- Modified: `scripts/initialization/RULES_FILE.template.md`
+- Rules file section: [section name or brief description]
+- Reason: [why this is generic]
+```
+
 **When to write CHANGES.md entries:**
 - During S10.P1 when applying approved guide improvements
 - During audit when fixing guide issues

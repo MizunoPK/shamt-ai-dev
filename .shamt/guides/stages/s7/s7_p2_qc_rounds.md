@@ -38,7 +38,7 @@ S7.P1 (Smoke Testing) →
 **BEFORE starting Feature QC, you MUST:**
 
 1. **Read the validation loop guide:** `reference/validation_loop_s7_feature_qc.md`
-   - Understand 12 dimensions (7 master + 5 S7 QC-specific)
+   - Understand 16 dimensions (7 master + 9 S7 QC-specific)
    - Review fresh eyes patterns per round
    - Understand 3 consecutive clean rounds exit criteria
    - Study master protocol: `reference/validation_loop_master_protocol.md`
@@ -52,21 +52,21 @@ S7.P1 (Smoke Testing) →
    - Current Phase: S7.P2 (Feature QC Validation Loop)
    - Current Guide: reference/validation_loop_s7_feature_qc.md
    - Guide Last Read: {YYYY-MM-DD HH:MM}
-   - Critical Rules: "12 dimensions checked every round", "3 consecutive clean rounds required", "Fix issues immediately (no restart)", "100% tests passing"
+   - Critical Rules: "16 dimensions checked every round", "3 consecutive clean rounds required", "Fix issues immediately (no restart)", "100% tests passing"
    - Next Action: Validation Round 1 - Sequential Review + Test Verification
 
 4. **Verify all prerequisites** (see checklist below)
 
 5. **THEN AND ONLY THEN** begin validation loop
 
-**This is NOT optional.** Reading the validation loop guide ensures you check all 12 dimensions systematically.
+**This is NOT optional.** Reading the validation loop guide ensures you check all 16 dimensions systematically.
 
 ---
 
 ## Overview
 
 **What is this guide?**
-Feature QC validates implemented features through systematic validation loop checking 12 dimensions (7 master + 5 S7-specific) every round until 3 consecutive clean rounds achieved.
+Feature QC validates implemented features through systematic validation loop checking 16 dimensions (7 master + 9 S7-specific) every round until 3 consecutive clean rounds achieved.
 
 **When do you use this guide?**
 - S7.P1 complete (Smoke Testing passed all 3 parts)
@@ -75,7 +75,7 @@ Feature QC validates implemented features through systematic validation loop che
 - Before S7.P3 (Final Review)
 
 **Key Outputs:**
-- ✅ All 12 dimensions validated every round
+- ✅ All 16 dimensions validated every round
 - ✅ 3 consecutive clean rounds achieved (zero issues found)
 - ✅ 100% tests passing (verified every round)
 - ✅ All spec requirements implemented (100% coverage)
@@ -87,7 +87,7 @@ Feature QC validates implemented features through systematic validation loop che
 4-5 hours (typically 6-8 validation rounds)
 
 **Exit Condition:**
-Feature QC is complete when 3 consecutive validation rounds find ZERO issues across all 12 dimensions, all tests passing (100%), and feature is production-ready
+Feature QC is complete when 3 consecutive validation rounds find ZERO issues across all 16 dimensions, all tests passing (100%), and feature is production-ready
 
 ---
 
@@ -102,14 +102,14 @@ Feature QC is complete when 3 consecutive validation rounds find ZERO issues acr
 │ CRITICAL RULES - Copy to README Agent Status                │
 └─────────────────────────────────────────────────────────────┘
 
-1. ⚠️ ALL 12 DIMENSIONS CHECKED EVERY ROUND
+1. ⚠️ ALL 16 DIMENSIONS CHECKED EVERY ROUND
    - 7 master dimensions (universal)
-   - 5 S7 QC dimensions (feature-specific)
+   - 9 S7 QC dimensions (feature-specific)
    - Cannot skip any dimension
    - Re-read entire codebase each round (no working from memory)
 
 2. ⚠️ 3 CONSECUTIVE CLEAN ROUNDS REQUIRED
-   - Clean = ZERO issues found across all 12 dimensions
+   - Clean = ZERO issues found across all 16 dimensions
    - Counter resets if ANY issue found
    - Cannot exit early (must achieve 3 consecutive)
    - Typical: 6-8 rounds total to achieve 3 consecutive clean
@@ -170,6 +170,130 @@ Feature QC is complete when 3 consecutive validation rounds find ZERO issues acr
 
 ---
 
+## ⚠️ Insufficient vs Rigorous Validation - Examples
+
+**CRITICAL:** This section was added after Feature 01 (field experience) revealed insufficient validation quality in initial rounds.
+
+**Context:** Agent completed 3 rounds but validation was "checkbox exercise" not rigorous investigation. User challenged quality, agent restarted with true fresh eyes, immediately found critical security vulnerability (path traversal).
+
+**Lesson:** "Fresh eyes" validation must be GENUINE (not checkbox exercise) to catch security issues.
+
+---
+
+### ❌ INSUFFICIENT VALIDATION (Checkbox Approach)
+
+**Characteristics:**
+- Going R1→R2→R3 without breaks (no mental reset)
+- Relying on memory from previous rounds
+- Generic findings with no evidence: "Code looks good ✅"
+- No specific file:line references
+- Skimming code instead of reading line-by-line
+- Assuming design decisions are correct (confirmation bias)
+- Not questioning why code is written a certain way
+- Not using empirical verification (grep_search, read_file)
+
+**Example (Insufficient):**
+```text
+Round 1: Code Quality ✅
+- All files reviewed
+- Error handling present
+- No issues found
+
+Round 2: Clean ✅
+- Code still looks good
+- Tests passing
+- Ready to proceed
+```
+
+**Why This Fails:**
+- No evidence provided (which files? which lines?)
+- No skepticism ("still looks good" assumes R1 was correct)
+- No different perspective (same superficial review)
+- Critical issues missed (security vulnerabilities, logic errors)
+
+---
+
+### ✅ RIGOROUS VALIDATION (Fresh Eyes Approach)
+
+**Characteristics:**
+- Simulate breaks between rounds (clear mental model completely)
+- Re-read ALL files with Read tool each round (not from memory)
+- Skeptical mindset: "Assume everything is wrong, hunt for problems"
+- Specific findings with empirical evidence (file:line references)
+- Question every design decision explicitly
+- Use grep_search for empirical verification
+- Different reading patterns each round (sequential, reverse, random)
+- Deep investigation of "suspicious" areas
+
+**Example (Rigorous):**
+```text
+Round 1 RESTART: Sequential Review - TRUE Fresh Eyes
+- Read spec.md lines 95-280 FIRST (understand requirements before checking code)
+- serve_image endpoint (routes/image_generation.py lines 177-234):
+  * Line 190: filename param from user - NO VALIDATION ❌
+  * Attack vector: GET /temp_images/../../backend/src/llm_config.py
+  * Could read ANY file in backend directory
+  * CRITICAL SECURITY ISSUE - Path Traversal Vulnerability
+- Fix applied: Filename validation + path resolution + boundary check
+- Tests verified: Still pass (74 passed, 3 skipped)
+```
+
+**Why This Works:**
+- Spec read first (requirements before implementation)
+- Specific file:line evidence provided
+- Skeptical investigation found actual vulnerability
+- Fix applied immediately with verification
+- Critical issue caught that checkbox validation missed
+
+---
+
+### Self-Check Checklist: "Am I Truly Using Fresh Eyes?"
+
+**Before declaring round "clean", honestly answer:**
+
+- [ ] **Did I re-read entire codebase THIS round (not from memory)?**
+  - If NO: Not fresh eyes, using cached assumptions
+  
+- [ ] **Did I question design decisions (not just accept them)?**
+  - If NO: Confirmation bias, not skeptical enough
+  
+- [ ] **Did I use grep_search for empirical verification?**
+  - If NO: Assumptions instead of evidence-based validation
+  
+- [ ] **Did I find at LEAST one thing to investigate deeply?**
+  - If NO: Probably skimming, not investigating
+  
+- [ ] **Would I bet my reputation this code is bug-free?**
+  - If NO: Not confident enough, found something suspicious
+  
+- [ ] **Did I check security implications (path traversal, injection, XSS)?**
+  - If NO: Security vulnerabilities likely missed
+  
+- [ ] **Did I verify error handling for EVERY failure scenario?**
+  - If NO: Edge cases and error paths not fully validated
+
+**If NO to ANY question:** Not rigorous enough. Take break, restart round with fresh eyes.
+
+---
+
+### Historical Example: Path Traversal Vulnerability (Feature 01)
+
+**Initial Validation (INSUFFICIENT):**
+- Rounds 1-3: "No issues found ✅" 
+- serve_image endpoint reviewed but no security concerns flagged
+- User challenged: "Did you correctly do full processing?"
+
+**RESTART Validation (RIGOROUS):**
+- Round 1 RESTART: Read spec FIRST, then code with skepticism
+- Found immediately: filename param has no validation
+- Recognized attack vector: `GET /temp_images/../../backend/src/llm_config.py`
+- Impact: Could read configuration files with API keys
+- Fix: Filename validation + path resolution + boundary check
+
+**Conclusion:** Rigorous validation caught critical security issue that checkbox validation missed.
+
+---
+
 ## Workflow Overview
 
 **📖 See `reference/validation_loop_s7_feature_qc.md` for complete validation loop protocol.**
@@ -187,21 +311,21 @@ PREPARATION
    ↓ Run ALL tests (must pass 100%)
 
 ROUND 1: Sequential Review + Test Verification
-   ↓ Check ALL 12 dimensions (7 master + 5 S7 QC)
+   ↓ Check ALL 16 dimensions (7 master + 9 S7 QC)
    ↓ Run tests, read code sequentially, verify requirements
    ↓
    If issues found → Fix ALL immediately → Re-run tests → Round 2
    If clean → Round 2 (count = 1)
 
 ROUND 2: Reverse Review + Integration Focus
-   ↓ Check ALL 12 dimensions again (fresh eyes)
+   ↓ Check ALL 16 dimensions again (fresh eyes)
    ↓ Run tests, read code in reverse, focus on integration
    ↓
    If issues found → Fix ALL immediately → Re-run tests → Round 3
    If clean → Round 3 (count = 2 or 1 depending on previous)
 
 ROUND 3+: Continue Until 3 Consecutive Clean
-   ↓ Check ALL 12 dimensions (different reading patterns)
+   ↓ Check ALL 16 dimensions (different reading patterns)
    ↓ Run tests, spot-checks, E2E verification
    ↓
    Continue until 3 consecutive rounds with ZERO issues
@@ -237,7 +361,7 @@ VALIDATION COMPLETE → Proceed to S7.P3 (Final Review)
 **Primary guide:** `reference/validation_loop_s7_feature_qc.md`
 
 This guide contains:
-- Complete 12-dimension checklist (7 master + 5 S7 QC)
+- Complete 16-dimension checklist (7 master + 9 S7 QC)
 - Fresh eyes patterns for each round
 - Common issues with examples
 - Exit criteria details
@@ -256,12 +380,47 @@ This guide contains:
 6. Upstream Alignment - Matches spec and implementation plan
 7. Standards Compliance - Follows project standards
 
-**S7 QC Dimensions (5):**
+**S7 QC Dimensions (9):**
 8. Cross-Feature Integration - Integration points work
 9. Error Handling Completeness - All errors handled gracefully
 10. End-to-End Functionality - Complete user flow works
 11. Test Coverage Quality - 100% tests passing, adequate coverage
 12. Requirements Completion - 100% complete, zero tech debt
+13. Import & Dependency Hygiene - No unused imports, correct dep groups
+14. Cross-Layer & Type Consistency - Frontend types mirror backend, shared constants
+15. Input Validation & Path Safety - Allowlists, strict decoding, absolute paths
+16. Test Stub Consistency - Mock return values match mock state
+
+**Detailed checklists for dimensions 13-16:**
+
+**Dim 13 — Import & Dependency Hygiene:**
+- [ ] No unused imports in ANY changed file (grep for each import, verify it's referenced)
+- [ ] Every new dependency in pyproject.toml/package.json is actually imported somewhere in src/
+- [ ] Test-only deps (pytest, pytest-asyncio) are in dev/optional group, not main [dependencies]
+- [ ] No stale imports left after refactoring (removed function → removed import)
+- Quick check: `ruff check --select F401 {changed_files}` or `npx tsc --noEmit --noUnusedLocals`
+
+**Dim 14 — Cross-Layer & Type Consistency:**
+- [ ] Frontend TypeScript types mirror backend Pydantic model constraints exactly
+  - Backend `Literal["jpeg", "png"]` → Frontend `"jpeg" | "png"` (NOT `string`)
+  - Backend `int` with `Field(ge=0)` → Frontend with matching runtime validation
+- [ ] Data flows through the FULL pipeline with consistent metadata (provider → route → response → storage → display)
+- [ ] Frontend timeouts >= backend worst-case execution time (with buffer)
+- [ ] Constants used in multiple modules are shared (single source of truth), not independently constructed
+- [ ] UI copy uses consistent terminology per page (don't mix "Assets" and "Images")
+
+**Dim 15 — Input Validation & Path Safety:**
+- [ ] All user-addressable endpoints validate/allowlist inputs (no `else: default`)
+- [ ] Data integrity operations use strict mode (e.g., `base64.b64decode(data, validate=True)`)
+- [ ] External data load functions (localStorage, API responses) validate individual entry shapes
+- [ ] File paths are absolute or derived from `__file__`, NEVER relative to CWD
+- [ ] `exc_info=True` in logging is only used inside `except` blocks
+- [ ] Module-level side effects (logging.basicConfig, load_dotenv) are in entrypoints, not library modules
+
+**Dim 16 — Test Stub Consistency:**
+- [ ] Mock/stub return values are internally consistent with mock state
+  - If mock_output.output_format = "jpeg", then save_image stub should return ".jpeg" URL
+  - Assertions should match what the real code would produce given the mock state
 
 **See validation_loop_s7_feature_qc.md for detailed checklists for each dimension.**
 ```
@@ -369,11 +528,11 @@ Code conventions verified: Follows CODING_STANDARDS.md (type hints, error contex
 ## Validation Round Execution
 
 **For complete validation round instructions, see:**
-- `reference/validation_loop_s7_feature_qc.md` - Complete 12-dimension checklist
+- `reference/validation_loop_s7_feature_qc.md` - Complete 16-dimension checklist
 - `reference/validation_loop_master_protocol.md` - Core validation loop principles
 
 **Each validation round:**
-1. Check ALL 12 dimensions (7 master + 5 S7 QC-specific)
+1. Check ALL 16 dimensions (7 master + 9 S7 QC-specific)
 2. Run all tests (must pass 100%)
 3. Fix ANY issues found immediately
 4. Take 2-5 minute break before next round
@@ -440,7 +599,7 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 
 **REQUIRED ACTIONS:**
 1. [ ] Use Read tool to re-read "Critical Rules" section of this guide
-2. [ ] Use Read tool to re-read `reference/validation_loop_s7_feature_qc.md` (12 dimensions)
+2. [ ] Use Read tool to re-read `reference/validation_loop_s7_feature_qc.md` (16 dimensions)
 3. [ ] Verify 3 consecutive clean rounds documented in VALIDATION_LOOP_LOG.md
 4. [ ] Verify ZERO issues remain (scan implementation one more time)
 5. [ ] Update feature README Agent Status:
@@ -451,7 +610,7 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 
 **Why this checkpoint exists:**
 - Ensures validation loop was properly executed
-- Confirms all 12 dimensions checked every round
+- Confirms all 16 dimensions checked every round
 - 3 minutes of verification prevents hours of rework
 
 **ONLY after completing ALL 6 actions above, proceed to Next Steps section**
@@ -476,11 +635,11 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 ## Summary
 
 **Feature QC Validation Loop validates:**
-- ALL 12 dimensions checked EVERY round (7 master + 5 S7 QC-specific)
+- ALL 16 dimensions checked EVERY round (7 master + 9 S7 QC-specific)
 - Continue until 3 consecutive clean rounds achieved
 - Fix issues immediately (no restart protocol needed)
 
-**12 Dimensions Checked:**
+**16 Dimensions Checked:**
 1. Empirical Verification (master)
 2. Completeness (master)
 3. Internal Consistency (master)
@@ -493,6 +652,10 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 10. End-to-End Functionality (S7 QC)
 11. Test Coverage Quality (S7 QC)
 12. Requirements Completion (S7 QC)
+13. Import & Dependency Hygiene (S7 QC)
+14. Cross-Layer & Type Consistency (S7 QC)
+15. Input Validation & Path Safety (S7 QC)
+16. Test Stub Consistency (S7 QC)
 
 **Critical Success Factors:**
 - Zero tech debt tolerance (100% or INCOMPLETE)

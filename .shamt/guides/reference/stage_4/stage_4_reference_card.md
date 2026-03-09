@@ -66,7 +66,7 @@ STEP 4: Validation Loop (S4.I4 — 15-20 min)
 
 ## Common Pitfalls
 
-### ❌ Pitfall 1: Confusing S4 with Old S4 (Epic Test Plan Update)
+### ❌ Pitfall 1: Updating epic_smoke_test_plan.md in S4 (Wrong Stage)
 **Problem:** Trying to update epic_smoke_test_plan.md in S4
 **Impact:** Doing the wrong work; epic test plan was finalized in S3.P1
 **Solution:** S4 creates FEATURE-level test_strategy.md (one per feature). Epic testing was done in S3.P1.

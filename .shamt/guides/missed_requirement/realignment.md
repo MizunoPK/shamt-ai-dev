@@ -1,6 +1,6 @@
 # PHASE 3 & 4: Realignment (S3 & 4) and Resume
 
-**Purpose:** Re-align ALL features and update epic test plan, then resume paused work
+**Purpose:** Re-align ALL features (S2.P2 + S3), update feature test strategy (S4), then resume paused work
 
 **When to Use:** After PHASE 2 complete, feature spec created/updated
 
@@ -13,20 +13,18 @@
 ## Table of Contents
 
 1. [Overview](#overview)
-1. [PHASE 3: S3 - Cross-Feature Sanity Check](#phase-3-s3---cross-feature-sanity-check)
-   - [Critical: Re-align ALL Features](#critical-re-align-all-features)
+1. [PHASE 3: S2.P2 and S3 — Cross-Feature Alignment + Epic Approval](#phase-3-s2p2-and-s3--cross-feature-alignment--epic-approval)
+   - [Part A: S2.P2 — Cross-Feature Alignment](#part-a-s2p2--cross-feature-alignment-pairwise-comparison)
    - [Step 1: Systematic Pairwise Comparison](#step-1-systematic-pairwise-comparison)
    - [Step 2: Identify Conflicts](#step-2-identify-conflicts)
    - [Step 3: Resolve Conflicts](#step-3-resolve-conflicts)
-   - [Step 4: User Sign-Off on Complete Aligned Plan](#step-4-user-sign-off-on-complete-aligned-plan)
-1. [PHASE 4: S4 - Feature Testing Strategy Update](#phase-4-s4---feature-testing-strategy-update)
-   - [Update epic_smoke_test_plan.md](#update-epic_smoke_test_planmd)
-   - [Step 1: Add Scenarios for New/Updated Feature](#step-1-add-scenarios-for-newupdated-feature)
-1. [Epic Integration Test: Item Scoring with Attribute Status](#epic-integration-test-item-scoring-with-attribute-status)
-   - [Step 2: Update Existing Scenarios](#step-2-update-existing-scenarios)
-1. [Epic Integration Test: Draft Recommendations (UPDATED)](#epic-integration-test-draft-recommendations-updated)
-   - [Step 3: Identify Integration Points](#step-3-identify-integration-points)
-1. [Integration Points](#integration-points)
+   - [Step 4: S2.P2 Complete — All Conflicts Resolved](#step-4-s2p2-complete--all-conflicts-resolved)
+   - [Part B: S3 — Epic-Level Docs, Tests, and Approval](#part-b-s3--epic-level-docs-tests-and-approval)
+   - [Step 5: S3.P1 — Update epic_smoke_test_plan.md](#step-5-s3p1--update-epic_smoke_test_planmd)
+   - [Step 6: Update Existing Scenarios](#step-6-update-existing-scenarios)
+   - [Step 7: Identify Integration Points](#step-7-identify-integration-points)
+   - [Step 8: S3.P3 — Gate 4.5 Re-Approval](#step-8-s3p3--gate-45-re-approval)
+1. [PHASE 4: S4 - Feature Testing Strategy](#phase-4-s4---feature-testing-strategy)
 1. [PHASE 5: Resume Previous Work](#phase-5-resume-previous-work)
    - [Step 1: Mark Planning Complete](#step-1-mark-planning-complete)
 1. [Missed Requirement Tracking](#missed-requirement-tracking)
@@ -43,10 +41,10 @@
    - [Scenario 3: New Feature - Major Conflicts](#scenario-3-new-feature---major-conflicts)
    - [Scenario 4: Update Unstarted Feature](#scenario-4-update-unstarted-feature)
 1. [Anti-Patterns to Avoid](#anti-patterns-to-avoid)
-   - [❌ Anti-Pattern 1: Only Check New/Updated Feature](#❌-anti-pattern-1-only-check-newupdated-feature)
-   - [❌ Anti-Pattern 2: Skip S4](#❌-anti-pattern-2-skip-s4)
-   - [❌ Anti-Pattern 3: Implementing Immediately](#❌-anti-pattern-3-implementing-immediately)
-   - [❌ Anti-Pattern 4: Not Checking Paused Feature's Spec](#❌-anti-pattern-4-not-checking-paused-features-spec)
+   - [❌ Anti-Pattern 1: Only Check New/Updated Feature](#-anti-pattern-1-only-check-newupdated-feature)
+   - [❌ Anti-Pattern 2: Skip S3.P1 or S4](#-anti-pattern-2-skip-s3p1-or-s4)
+   - [❌ Anti-Pattern 3: Implementing Immediately](#-anti-pattern-3-implementing-immediately)
+   - [❌ Anti-Pattern 4: Not Checking Paused Feature's Spec](#-anti-pattern-4-not-checking-paused-features-spec)
 1. [Next Steps](#next-steps)
 
 ---
@@ -55,22 +53,22 @@
 
 **PHASE 3 & 4 ensures epic coherence after adding/updating a feature:**
 
-- **S3:** Cross-feature sanity check (ALL features)
+- **S3:** Epic-Level Docs, Tests, and Approval (epic smoke test update + Gate 4.5 re-approval)
 - **S4:** Update/create feature testing strategy (test_strategy.md)
 - **Resume:** Return to paused work
 - **Later:** Implement new/updated feature in sequence
 
 ---
 
-## PHASE 3: S3 - Cross-Feature Sanity Check
+## PHASE 3: S2.P2 and S3 — Cross-Feature Alignment + Epic Approval
 
-### Critical: Re-align ALL Features
+### Part A: S2.P2 — Cross-Feature Alignment (Pairwise Comparison)
 
-**🚨 FIRST ACTION:** Use "Starting S3" prompt from `prompts/s3_prompts.md`
+**🚨 FIRST ACTION:** Use "Starting S2.P2" prompt from `prompts/s2_prompts.md`
 
-**READ:** `stages/s3/s3_epic_planning_approval.md`
+**READ:** `stages/s2/s2_p2_cross_feature_alignment.md`
 
-**IMPORTANT:** Don't just check the new/updated feature - check ALL feature pairs
+**IMPORTANT:** Don't just check the new/updated feature — check ALL feature pairs
 
 ---
 
@@ -146,7 +144,7 @@ Resolution: Document integration point, add to both specs
 
 3. **Get user approval for changes:**
    ```markdown
-   During S3 alignment, I found a conflict:
+   During cross-feature re-alignment (S2.P2), I found a conflict:
 
    **Conflict:** {description}
 
@@ -162,12 +160,12 @@ Resolution: Document integration point, add to both specs
 
 ---
 
-### Step 4: User Sign-Off on Complete Aligned Plan
+### Step 4: S2.P2 Complete — All Conflicts Resolved
 
 **After all conflicts resolved:**
 
 ```markdown
-S3 cross-feature sanity check complete.
+S2.P2 alignment complete (all cross-feature conflicts resolved).
 
 **Features checked:** {count} features, {count} pairwise comparisons
 **Conflicts found:** {count}
@@ -177,32 +175,28 @@ S3 cross-feature sanity check complete.
 - feature_{XX}: {changes}
 - feature_{YY}: {changes}
 
-**All features are now aligned and ready for implementation.**
-
-Proceed to S4 (Feature Testing Strategy update)? {User confirms}
+**All features now aligned. Proceeding to S3 (Epic-Level Docs, Tests, and Approval).**
 ```
 
 ---
 
-## PHASE 4: S4 - Feature Testing Strategy Update
+### Part B: S3 — Epic-Level Docs, Tests, and Approval
 
-### Update epic_smoke_test_plan.md
+**🚨 FIRST ACTION:** Use "Starting S3" prompt from `prompts/s3_prompts.md`
 
-**🚨 FIRST ACTION:** Use "Starting S4" prompt from `prompts/s4_prompts.md`
-
-**READ:** `stages/s4/s4_feature_testing_strategy.md`
+**READ:** `stages/s3/s3_epic_planning_approval.md`
 
 ---
 
-### Step 1: Add Scenarios for New/Updated Feature
+### Step 5: S3.P1 — Update epic_smoke_test_plan.md
 
 **Questions to answer:**
-- How does it integrate with other features?
+- How does the new/updated feature integrate with other features?
 - What epic-level workflows involve it?
 - What should be tested in S9?
 - What are the integration points?
 
-**Add test scenarios:**
+**Add test scenarios for new/updated feature:**
 
 ```markdown
 ## Epic Integration Test: Item Scoring with Attribute Status
@@ -227,7 +221,7 @@ Proceed to S4 (Feature Testing Strategy update)? {User confirms}
 
 ---
 
-### Step 2: Update Existing Scenarios
+### Step 6: Update Existing Scenarios
 
 **Review existing test scenarios:**
 - Do they need updates due to new/updated feature?
@@ -256,7 +250,7 @@ Proceed to S4 (Feature Testing Strategy update)? {User confirms}
 
 ---
 
-### Step 3: Identify Integration Points
+### Step 7: Identify Integration Points
 
 **Document integration points:**
 
@@ -274,6 +268,42 @@ Proceed to S4 (Feature Testing Strategy update)? {User confirms}
 - player_id (integer, standardized across all features)
 - PlayerData class (utils/DataRecord.py)
 ```
+
+---
+
+### Step 8: S3.P3 — Gate 4.5 Re-Approval
+
+**After S3.P1 (smoke test update) and S3.P2 (EPIC_README refinement) complete:**
+
+```markdown
+S3 re-alignment complete (cross-feature conflicts resolved + epic plan updated + Gate 4.5 re-approved).
+
+**S2.P2 summary:** {count} features checked, {count} conflicts resolved
+**S3.P1:** epic_smoke_test_plan.md updated with new/updated feature scenarios
+**S3.P2:** EPIC_README.md updated
+**Gate 4.5:** Epic plan re-approved
+
+**All features are now aligned and epic plan is current.**
+
+Proceed to S4 (Feature Testing Strategy for new/updated feature)? {User confirms}
+```
+
+---
+
+## PHASE 4: S4 - Feature Testing Strategy
+
+**🚨 FIRST ACTION:** Use "Starting S4" prompt from `prompts/s4_prompts.md`
+
+**READ:** `stages/s4/s4_feature_testing_strategy.md`
+
+Run S4 for the **new/updated feature only** — create or update `test_strategy.md` following the full S4 guide.
+
+**Key S4 outputs for new/updated feature:**
+- `test_strategy.md` with >90% coverage planned
+- Unit tests, integration tests, edge cases, config scenarios
+- Traceability matrix (each test links to requirement)
+
+**Note:** The epic_smoke_test_plan.md was already updated in PHASE 3 Part B (S3.P1). S4 creates per-feature `test_strategy.md` only — do NOT update the epic smoke test plan in S4.
 
 ---
 
@@ -446,20 +476,26 @@ After feature_05: Resume and complete feature_02
 
 **PHASE 3 & 4 complete when:**
 
-**S3 (Cross-Feature Sanity Check):**
+**S2.P2 (Cross-Feature Alignment):**
 - [x] All feature pairs compared systematically
 - [x] All conflicts identified
 - [x] All conflicts resolved
 - [x] Affected specs updated
 - [x] User approved conflict resolutions
-- [x] User signed off on complete aligned plan
+- [x] S2.P2 sign-off complete
 
-**S4 (Feature Testing Strategy):**
-- [x] epic_smoke_test_plan.md updated
+**S3 (Epic-Level Docs, Tests, and Approval):**
+- [x] epic_smoke_test_plan.md updated (S3.P1)
 - [x] New scenarios added for new/updated feature
 - [x] Existing scenarios updated if needed
 - [x] Integration points documented
-- [x] Epic test coverage complete
+- [x] EPIC_README.md refined (S3.P2)
+- [x] Gate 4.5 re-approval obtained (S3.P3)
+
+**S4 (Feature Testing Strategy):**
+- [x] test_strategy.md created/updated for new/updated feature
+- [x] >90% coverage planned
+- [x] Traceability matrix complete
 
 **Resume:**
 - [x] EPIC_README.md updated (planning complete)
@@ -475,10 +511,10 @@ After feature_05: Resume and complete feature_02
 ### Scenario 1: New Feature - No Conflicts Found
 
 **Actions:**
-1. Run S3 pairwise comparison
+1. Run cross-feature re-alignment (S2.P2 pairwise comparison, then S3 approval)
 2. No conflicts found
 3. User signs off
-4. Update epic test plan (S4)
+4. Update epic smoke test plan in S3.P1, then run S4 (create test_strategy.md)
 5. Resume paused work
 6. New feature implemented later in sequence
 
@@ -487,11 +523,11 @@ After feature_05: Resume and complete feature_02
 ### Scenario 2: New Feature - Minor Conflicts
 
 **Actions:**
-1. Run S3 pairwise comparison
+1. Run cross-feature re-alignment (S2.P2 pairwise comparison, then S3 approval)
 2. Find minor conflicts (e.g., naming inconsistency)
 3. Resolve conflicts (update specs)
 4. User approves resolutions
-5. Update epic test plan (S4)
+5. Update epic smoke test plan in S3.P1, then run S4 (create test_strategy.md)
 6. Resume paused work (spec unchanged)
 7. New feature implemented later
 
@@ -500,12 +536,12 @@ After feature_05: Resume and complete feature_02
 ### Scenario 3: New Feature - Major Conflicts
 
 **Actions:**
-1. Run S3 pairwise comparison
+1. Run cross-feature re-alignment (S2.P2 pairwise comparison, then S3 approval)
 2. Find major conflicts (e.g., duplicate functionality)
 3. Resolve conflicts (extract to shared utility)
 4. Update multiple feature specs
 5. User approves resolutions
-6. Update epic test plan (S4)
+6. Update epic smoke test plan in S3.P1, then run S4 (create test_strategy.md)
 7. Resume paused work (spec WAS changed)
 8. User decides: Update implementation_plan.md or handle during implementation
 9. New feature implemented later
@@ -515,10 +551,10 @@ After feature_05: Resume and complete feature_02
 ### Scenario 4: Update Unstarted Feature
 
 **Actions:**
-1. Run S3 pairwise comparison
+1. Run cross-feature re-alignment (S2.P2 pairwise comparison, then S3 approval)
 2. Check updated feature vs all others
 3. Resolve any conflicts
-4. Update epic test plan (S4)
+4. Update epic smoke test plan in S3.P1, then run S4 (create test_strategy.md)
 5. Resume paused work (if any)
 6. Updated feature implemented later (in its original sequence position)
 
@@ -536,13 +572,13 @@ After feature_05: Resume and complete feature_02
 
 ---
 
-### ❌ Anti-Pattern 2: Skip S4
+### ❌ Anti-Pattern 2: Skip S3.P1 or S4
 
-**Mistake:** "Epic test plan doesn't need updates for small feature"
+**Mistake:** "It's a small feature — skip the epic smoke test update or skip creating test_strategy.md"
 
-**Why wrong:** Even small features need epic-level test coverage
+**Why wrong:** Even small features need epic-level test coverage (S3.P1) and a per-feature test strategy (S4)
 
-**Correct:** Always update epic_smoke_test_plan.md
+**Correct:** Always update epic_smoke_test_plan.md in S3.P1 and always create test_strategy.md in S4
 
 ---
 
@@ -570,8 +606,9 @@ After feature_05: Resume and complete feature_02
 
 **After completing PHASE 3 & 4 (Realignment and Resume):**
 
-✅ S3 complete (all features aligned)
-✅ S4 complete (epic test plan updated)
+✅ S2.P2 complete (cross-feature conflicts resolved)
+✅ S3 complete (epic test plan updated + Gate 4.5 re-approved)
+✅ S4 complete (feature test_strategy.md created)
 ✅ Paused feature spec verified
 ✅ Work resumed OR ready to resume
 

@@ -13,6 +13,14 @@
 
 ## Templates by Stage
 
+### Pre-S1: Epic Request Creation
+
+| Template | Filename | Use When |
+|----------|----------|----------|
+| [Epic Request](#epic-request) | `EPIC_REQUEST_TEMPLATE.md` | User asks to create an epic request BEFORE starting S1 |
+
+**⚠️ IMPORTANT:** Epic request files are created in `.shamt/epics/requests/` and left there until user explicitly initiates S1. Do NOT create SHAMT-{N} folders when writing epic requests.
+
 ### S1: Epic Planning
 
 | Template | Filename | Use When |
@@ -34,11 +42,11 @@
 | [Feature Checklist](#feature-checklist) | `feature_checklist_template.md` | Tracking feature decisions |
 | [Feature Lessons Learned](#feature-lessons-learned) | `feature_lessons_learned_template.md` | Creating feature-level lessons document |
 
-### S3: Cross-Feature Alignment
+### S2.P2: Cross-Feature Alignment
 
 | Template | Filename | Use When |
 |----------|----------|----------|
-| [Cross-Feature Sanity Check](#cross-feature-sanity-check) | `cross_feature_sanity_check_template.md` | Comparing features for conflicts or duplications during S3 review |
+| [Cross-Feature Alignment](#cross-feature-alignment) | `cross_feature_sanity_check_template.md` | Comparing features for conflicts or duplications during S2.P2 (Cross-Feature Alignment) |
 
 ### S4: Feature Testing Strategy
 
@@ -228,12 +236,12 @@
 - **Size:** ~259 lines
 - **When to use:** S4 start (creates `test_strategy.md` in feature folder)
 
-#### Cross-Feature Sanity Check
+#### Cross-Feature Alignment
 - **File:** `cross_feature_sanity_check_template.md`
-- **Created:** S3
-- **Purpose:** Comparing features for conflicts, duplications, or integration gaps during S3 cross-feature review
+- **Created:** S2.P2
+- **Purpose:** Comparing features for conflicts, duplications, or integration gaps during S2.P2 cross-feature alignment
 - **Size:** ~75 lines
-- **When to use:** S3 cross-feature review before epic plan approval
+- **When to use:** S2.P2 (Cross-Feature Alignment) — pairwise comparison step
 
 #### Validation Loop Log (S5)
 - **File:** `VALIDATION_LOOP_LOG_S5_template.md`
@@ -340,7 +348,7 @@ Read .shamt/guides/templates/{template_name}.md
 | PR Review Issues | ~175 | No | No |
 | Guide Update Proposal | ~257 | No | No |
 | Debugging Guide Updates | ~280 | No | No |
-| Cross-Feature Sanity Check | ~75 | No | No |
+| Cross-Feature Alignment | ~75 | No | No |
 
 **Immutable templates:** Epic Ticket, Spec Summary, Implementation Plan, Bug Fix Notes (after user validation)
 

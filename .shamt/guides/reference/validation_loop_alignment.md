@@ -14,6 +14,19 @@
 
 ---
 
+🚨 **BEFORE STARTING: Read the Hard Stop section at the top of `reference/validation_loop_master_protocol.md`** 🚨
+
+**All validation loops require:**
+1. `VALIDATION_LOG.md` created in the artifact folder BEFORE Round 1
+2. Full artifact re-read (line 1 through end) EVERY round using `read_file`
+3. ALL dimensions (7 master + scenario-specific) documented as PASS/ISSUE per round
+4. `clean_counter` tracked explicitly — resets to 0 on ANY issue found
+5. ≥3 technical claims verified against source code per round
+6. Exit ONLY when `clean_counter = 3`
+7. Never delegate rounds to subagents
+
+---
+
 ## What's Being Validated
 
 Cross-feature consistency and compatibility including:
@@ -156,7 +169,7 @@ Round 5: Final sweep
 **S2.P2 Group Alignment:**
 - Use this protocol for all features together
 - Pairwise comparison of all feature pairs
-- Must pass before S3 (cross-feature sanity check)
+- Must pass before S3 (Epic-Level Docs, Tests, and Approval)
 
 ---
 

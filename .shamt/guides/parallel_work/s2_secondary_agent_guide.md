@@ -652,7 +652,7 @@ NEXT_ACTION: Waiting for Primary to run S2.P2 (Cross-Feature Alignment) and S3
 
 **Blockers:** None
 **Ready for S3:** Yes
-**Awaiting:** Your S3 Cross-Feature Sanity Check
+**Awaiting:** Your S3 Epic-Level Docs, Tests, and Approval
 **Acknowledge:** No action needed, proceed when all features ready
 ```
 
@@ -665,7 +665,7 @@ NEXT_ACTION: Waiting for Primary to run S2.P2 (Cross-Feature Alignment) and S3
 **Your S2 work is done, now wait for Primary to:**
 - Complete their Feature 01 S2
 - Wait for other secondaries to complete
-- Run S3 (Cross-Feature Sanity Check)
+- Run S3 (Epic-Level Docs, Tests, and Approval)
 - Run S4 (Feature Testing Strategy)
 
 ### Step 2: Monitor Inbox

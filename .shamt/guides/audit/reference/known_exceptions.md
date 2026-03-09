@@ -216,11 +216,11 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 ---
 
-### E1: D8 TODO/Placeholder Instances (23 Critical)
+### E1: D8 TODO/Placeholder Instances (24 Critical)
 
 **Dimension:** D8 (Documentation Quality)
 **Check:** `pre_audit_checks.sh` TODO/placeholder scan
-**Every-run count:** 23 critical, ~35 placeholder matches
+**Every-run count:** 24 critical, ~35 placeholder matches
 
 **Root Cause:** The D8 check scans all of `.shamt/guides/` including the epic workflow stage guides (s1–s10). Those guides intentionally contain TODO/TBD/placeholder text as instructional examples and checklist items — they teach users to avoid placeholders, so they must reference them.
 
@@ -234,7 +234,9 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 **Why acceptable:** All occurrences are meta-content: teaching that real work products must not have TODOs. The stage guides themselves have no incomplete sections. The text is definitionally required to describe the standard.
 
-**Action:** When pre_audit_checks.sh reports "TODOs remaining: 23" — this is the expected baseline. Only investigate if the count rises above 23 or if new files appear in the list.
+**Action:** When pre_audit_checks.sh reports "TODOs remaining: 24" — this is the expected baseline. Only investigate if the count rises above 24 or if new files appear in the list.
+
+**Note:** Baseline updated from 23 → 24 on 2026-03-07 after confirming `stages/s7/s7_p2_qc_rounds.md` contributes 2 lines (83: "✅ Zero tech debt (no TODOs...)" and 133: "NO TODOs, NO temporary solutions") that are pre-existing meta-content.
 
 ---
 
@@ -268,7 +270,7 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 **When running `pre_audit_checks.sh` and seeing recurring script output:**
 
-- "TODOs remaining: 23" — expected baseline; see Category E1 above
+- "TODOs remaining: 24" — expected baseline; see Category E1 above
 - "Found 2 potential prerequisite-content conflicts" pointing at s2_p2_cross_feature_alignment.md — expected; see Category E2 above
 - "⚠️ CLAUDE.md found but no stage references detected" — known script integer-parsing bug (line 370); not a real issue
 

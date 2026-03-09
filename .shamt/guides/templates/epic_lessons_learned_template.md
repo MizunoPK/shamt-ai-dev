@@ -96,7 +96,7 @@ This document captures:
 
 ---
 
-## S3 Lessons Learned (Cross-Feature Sanity Check)
+## S3 Lessons Learned (Epic-Level Docs, Tests, and Approval)
 
 **What Went Well:**
 - {Positive observation}
@@ -126,7 +126,7 @@ This document captures:
 - {Improvement}
 
 **epic_smoke_test_plan.md Evolution:**
-- Changes from S1 → S4: {Summary of how test plan evolved}
+- Changes from S1 → S3.P1 → S8.P2: {Summary of how test plan evolved}
 - Integration points discovered: {N}
 - Key insights: {Insights about testing strategy}
 

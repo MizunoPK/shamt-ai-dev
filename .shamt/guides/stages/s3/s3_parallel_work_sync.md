@@ -1,5 +1,4 @@
-# S3: Cross-Feature Sanity Check
-## Parallel Work Sync Verification (Optional)
+# S3 Pre-Check: Parallel Work Sync Verification (Optional)
 
 **When to use:** Only when S2 was executed in parallel mode (Primary + Secondary agents)
 
@@ -182,7 +181,7 @@ Create sync verification record in `epic/research/S3_SYNC_VERIFICATION_{DATE}.md
 
 **Issues Found:** None
 
-**Next Action:** Proceed to S3 Step 1 (Prepare Comparison Matrix)
+**Next Action:** Proceed to S3.P1 (Epic Testing Strategy Development) — see `stages/s3/s3_epic_planning_approval.md`
 
 **Timestamp:** {YYYY-MM-DD HH:MM}
 ```
@@ -190,7 +189,7 @@ Create sync verification record in `epic/research/S3_SYNC_VERIFICATION_{DATE}.md
 **If sync verification fails:**
 - Document which verifications failed
 - Update Agent Status: `BLOCKERS: Waiting for {agent} to complete {task}`
-- Do NOT proceed to S3 comparison until all verifications pass
+- Do NOT proceed to S3 (Epic-Level Docs, Tests, and Approval) until all verifications pass
 
 ---
 
@@ -210,7 +209,7 @@ Create sync verification record in `epic/research/S3_SYNC_VERIFICATION_{DATE}.md
      **Details:**
      - All {N} features completed S2 successfully
      - Sync verification passed
-     - Primary now running S3 (Cross-Feature Sanity Check)
+     - Primary now running S3 (Epic-Level Documentation, Testing Plans, and Approval)
      - You should WAIT - do NOT proceed to S3
 
      **Next:** After S3 completes, you'll receive notification to proceed to S4
@@ -231,7 +230,7 @@ Create sync verification record in `epic/research/S3_SYNC_VERIFICATION_{DATE}.md
 - ✅ Sync verification documented
 - ✅ Secondary agents notified
 
-**Proceed to:** Step 1 (Prepare Comparison Matrix)
+**Proceed to:** S3.P1 (Epic Testing Strategy Development) — see `stages/s3/s3_epic_planning_approval.md`
 
 **See:** `parallel_work/s2_parallel_protocol.md` → Phase 7 for S3 coordination details
 
@@ -258,7 +257,7 @@ Create sync verification record in `epic/research/S3_SYNC_VERIFICATION_{DATE}.md
 
 ## Next Phase
 
-**After sync verification complete:** Proceed to S3.P1 (Prepare Comparison Matrix)
+**After sync verification complete:** Proceed to S3.P1 (Epic Testing Strategy Development)
 
 **See:** `stages/s3/s3_epic_planning_approval.md` for S3 main workflow
 

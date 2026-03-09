@@ -1,304 +1,150 @@
-# STAGE 3: Cross-Feature Sanity Check - Quick Reference Card
+# S3: Epic-Level Documentation, Testing Plans, and Approval — Quick Reference Card
 
-**Purpose:** One-page summary for systematic feature comparison and conflict resolution
-**Use Case:** Quick lookup when validating epic-wide consistency before implementation
-**Total Time:** 30-60 minutes (scales with feature count)
+**Purpose:** One-page summary for epic-level integration testing, documentation refinement, and approval gate
+**Use Case:** Quick lookup when running S3 after all features complete S2
+**Total Time:** 75-105 minutes (scales with feature count)
+
+> **SCOPE:** Runs **once per epic**, after S2 is complete for ALL features. Not repeated per feature.
 
 ---
 
 ## Workflow Overview
 
 ```text
-STEP 1: Prepare Comparison Matrix (10 min)
-    ├─ List all features
-    ├─ List comparison categories (6 categories)
-    └─ Create comparison template in epic/research/SANITY_CHECK_{DATE}.md
+S3.P1: Epic Testing Strategy Development (45-60 min)
+    ├─ Step 1: Review all feature test requirements (10-15 min)
+    ├─ Step 2: Identify integration points between features (15-20 min)
+    ├─ Step 3: Define epic success criteria — measurable (15-20 min)
+    ├─ Step 4: Create specific test scenarios with commands (15-25 min)
+    ├─ Step 5: Update epic_smoke_test_plan.md (10-15 min)
+    └─ Step 6: Validation Loop — 3 consecutive clean rounds
     ↓
-STEP 2: Systematic Comparison (15-30 min)
-    ├─ Compare features pairwise across 6 categories:
-    │   ├─ Data Structures (field names, types, overlaps)
-    │   ├─ Interfaces & Dependencies (method calls, return types)
-    │   ├─ File Locations & Naming (file paths, naming conflicts)
-    │   ├─ Configuration Keys (config file overlaps)
-    │   ├─ Algorithms & Logic (scoring impacts, dependencies)
-    │   └─ Testing Assumptions (test data, mocks, integration)
-    └─ Document ALL conflicts found
+S3.P2: Epic Documentation Refinement (20-30 min)
+    ├─ Step 1: Consolidate feature details from all spec.md files (10-15 min)
+    ├─ Step 2: Update EPIC_README.md with feature summaries + arch decisions (10-15 min)
+    └─ Step 3: Validation Loop — 3 consecutive clean rounds
     ↓
-STEP 3: Conflict Resolution (10-20 min)
-    ├─ For EACH conflict:
-    │   ├─ Determine correct approach
-    │   ├─ Update affected feature specs
-    │   └─ Document resolution in sanity check file
-    └─ Verify no new conflicts created
-    ↓
-STEP 4: Create Final Plan Summary (5-10 min)
-    ├─ Summarize all features
-    ├─ Document dependencies
-    ├─ Recommended implementation order
-    └─ Risk assessment
-    ↓
-STEP 5: User Sign-Off (10-15 min) ← MANDATORY GATE
-    ├─ Present complete plan to user
-    ├─ WAIT for explicit approval
-    ├─ If changes requested: implement and re-run sanity check
-    └─ Document approval in epic EPIC_README.md
-    ↓
-STEP 6: Mark Complete (2 min)
-    ├─ Update epic EPIC_README.md (S3 complete)
-    └─ Transition to S4
+S3.P3: Epic Plan Approval (10-15 min) ← MANDATORY GATE
+    ├─ Step 1: Create epic summary
+    ├─ Step 2: Gate 4.5 — present to user, wait for explicit approval
+    └─ If rejected: 3-tier rejection handling (S1.P3 / S1.P4 / exit)
 ```
 
 ---
 
-## Step Summary Table
+## Phase Summary Table
 
-| Step | Duration | Key Activities | Outputs | Gate? |
-|------|----------|----------------|---------|-------|
-| 1 | 10 min | Prepare comparison matrix template | SANITY_CHECK_{DATE}.md | No |
-| 2 | 15-30 min | Pairwise comparison across 6 categories | Conflicts documented | No |
-| 3 | 10-20 min | Resolve conflicts, update specs | Updated specs | No |
-| 4 | 5-10 min | Create final plan summary | Plan summary | No |
-| 5 | 10-15 min | Present to user, wait for approval | User sign-off | ✅ YES |
-| 6 | 2 min | Mark complete, transition | EPIC_README updated | No |
+| Phase | Duration | Key Activities | Outputs | Gate? |
+|-------|----------|----------------|---------|-------|
+| S3.P1 | 45-60 min | Integration point mapping, epic success criteria, smoke test scenarios | epic_smoke_test_plan.md | No |
+| S3.P2 | 20-30 min | Feature detail consolidation, EPIC_README.md update | EPIC_README.md | No |
+| S3.P3 | 10-15 min | Epic summary, user approval | User sign-off (Gate 4.5) | ✅ YES |
 
 ---
 
-## Comparison Categories (6 Required)
+## Epic-Level vs Feature-Level Tests
 
-### Category 1: Data Structures
-**Check:**
-- Field names (duplicates? conflicts?)
-- Data types (mismatches?)
-- Data added to files (overlapping columns?)
+| Scope | Where | What |
+|-------|-------|------|
+| **Epic-Level (S3)** | `epic_smoke_test_plan.md` | End-to-end workflows across ALL features; integration points; epic success criteria |
+| **Feature-Level (S4)** | Per-feature test plan | Unit tests; component integration; edge cases within feature boundary |
 
-**Example Conflict:** Feature 1 adds `item_rank` as integer, Feature 2 adds `item_rank` as string
-
-### Category 2: Interfaces & Dependencies
-**Check:**
-- Which features depend on others?
-- Method calls between features
-- Return types expected vs actual
-
-**Example Conflict:** Feature 3 expects `get_projection()` to return dict, but Feature 2 returns list
-
-### Category 3: File Locations & Naming
-**Check:**
-- File creation locations
-- File naming conventions
-- Paths to same files
-
-**Example Conflict:** Feature 1 creates `data/projections.csv`, Feature 4 expects `data/player_projections.csv`
-
-### Category 4: Configuration Keys
-**Check:**
-- Config keys added by each feature
-- Config file locations
-- Key name conflicts
-
-**Example Conflict:** Both Feature 2 and Feature 3 add `THRESHOLD` key to same config file
-
-### Category 5: Algorithms & Logic
-**Check:**
-- Algorithm types (scoring, ranking, filtering)
-- Multiplier/score impacts (do they stack correctly?)
-- Order dependencies (does order matter?)
-
-**Example Conflict:** Feature 2 multiplies score by injury factor, Feature 3 multiplies by matchup factor - order matters
-
-### Category 6: Testing Assumptions
-**Check:**
-- Test data needs
-- Mock dependencies
-- Integration test assumptions
-
-**Example Conflict:** Feature 1 tests assume record data exists, Feature 2 tests assume empty record data
+> **Key Rule:** If you find yourself writing tests for a single feature's internal behavior — stop. That belongs in S4.
 
 ---
 
-## Mandatory Gate
+## Integration Point Map Template (S3.P1 Step 2)
 
-### Gate: User Sign-Off on Complete Plan (Step 5)
-**Location:** stages/s3/s3_epic_planning_approval.md Step 5
-**What it checks:**
-- User reviews complete epic plan (all features, all dependencies)
-- User explicitly approves proceeding to implementation
-- Approval documented
+```markdown
+## Integration Points Identified
 
-**Pass Criteria:** User says "approved" or "looks good" or equivalent confirmation
-**If FAIL:** User requests changes → implement changes → re-run sanity check → get new approval
-
-**Why mandatory:**
-- Last chance to catch scope issues before coding
-- User validates understanding of epic
-- Prevents building wrong thing
+### Integration Point 1: {Name}
+**Features Involved:** {list features}
+**Type:** {Shared data structure | Computational dependency | File system | API}
+**Flow:**
+- Feature X: {what it does}
+- Feature Y: {what it does}
+**Test Need:** {What needs to be verified}
+```
 
 ---
 
-## Decision Points
+## Epic Success Criteria Template (S3.P1 Step 3)
 
-### Decision 1: Conflict Resolution Approach (Step 3)
-**When:** Conflict found between features
-**Options:**
-- Update Feature A spec (if Feature A is wrong)
-- Update Feature B spec (if Feature B is wrong)
-- Update BOTH specs (if both need adjustment)
-- Extract to shared utility (if both features need same thing)
+```markdown
+## Epic Success Criteria
 
-**How to decide:**
-- Which spec is closer to epic intent?
-- Which approach minimizes changes?
-- Ask user if unclear
+**The epic is successful if ALL of these criteria are met:**
 
-### Decision 2: Implementation Order (Step 4)
-**When:** Creating final plan summary
-**Options:**
-- Dependency order (features with no dependencies first)
-- Risk order (riskiest features first)
-- Value order (highest value features first)
+### Criterion 1: {Name}
+✅ **MEASURABLE:** {Specific, verifiable condition}
+**Verification:** {Command or observation}
+```
 
-**How to decide:**
-- Default: Dependency order (safest)
-- If high uncertainty: Risk order (fail fast)
-- User can override with value order
+---
 
-### Decision 3: Re-Run Sanity Check? (Step 5)
-**When:** User requests changes to plan
-**Options:**
-- Re-run full sanity check (if changes affect multiple features)
-- Spot-check affected features only (if change isolated to one feature)
+## Mandatory Gate: Gate 4.5 (S3.P3 Step 2)
 
-**How to decide:**
-- If change affects dependencies → Full re-run
-- If change adds/removes features → Full re-run
-- If change updates single feature spec → Spot-check
+**Location:** `stages/s3/s3_epic_planning_approval.md` — S3.P3
+**What to present:**
+- Epic summary (all features, 1-sentence each)
+- epic_smoke_test_plan.md
+- Estimated timeline (feature count × ~6-8 hours)
+
+**Pass Criteria:** User explicitly approves epic plan and testing strategy
+**If FAIL — 3 Tier Rejection Handling:**
+
+| Tier | User Says | Action |
+|------|-----------|--------|
+| A | "Research was incomplete" | Loop back to S1.P3 (Discovery) |
+| B | "Features defined incorrectly" | Loop back to S1.P4 (Feature Breakdown) |
+| C | "Epic should not proceed" | Exit epic planning |
+
+---
+
+## Prerequisites Checklist
+
+**Before starting S3:**
+- [ ] S2 completed for ALL features in the epic
+- [ ] All feature spec.md files have user-approved acceptance criteria
+- [ ] S2.P2 (Cross-Feature Alignment) completed
+- [ ] EPIC_README.md Feature Tracking shows all S2 checkboxes marked
+- [ ] epic_smoke_test_plan.md exists (initial version from S1)
 
 ---
 
 ## Critical Rules Summary
 
-- ✅ ALL features must complete S2 before S3
-- ✅ Compare ALL features systematically (not just some)
-- ✅ Document ALL conflicts found (even minor ones)
-- ✅ Resolve conflicts BEFORE user sign-off
-- ✅ User sign-off is MANDATORY (cannot skip)
-- ✅ Cannot proceed to S4 without user approval
-- ✅ If user requests changes, implement and RE-RUN sanity check
-- ✅ Update epic EPIC_README.md Epic Completion Checklist
+- ✅ ALL features must complete S2 (including S2.P2) before S3
+- ✅ S3 tests span MULTIPLE features — single-feature tests belong in S4
+- ✅ Each phase (S3.P1, S3.P2) uses a 3-consecutive-clean Validation Loop
+- ✅ Gate 4.5 user approval is MANDATORY — cannot skip
+- ✅ Total rejection → 3-tier handling, NOT a simple loop-back to S3
+- ✅ Update epic EPIC_README.md Agent Status when starting
 
 ---
 
 ## Common Pitfalls
 
-### ❌ Pitfall 1: Skipping Categories
-**Problem:** "I'll just check data structures, that's the main conflict area"
-**Impact:** Interface conflicts, file naming conflicts slip through to S5
-**Solution:** Check ALL 6 categories systematically
+### ❌ Pitfall 1: Writing Feature-Level Tests
+**Problem:** "I'll add unit tests for Feature 3 while I'm here"
+**Impact:** Duplicates S4 work; S4 may conflict
+**Solution:** Epic tests only — cross-feature integration scenarios
 
-### ❌ Pitfall 2: Not Documenting Minor Conflicts
-**Problem:** "This field name difference is small, not worth documenting"
-**Impact:** Small conflicts become bugs in S7 QC
-**Solution:** Document ALL conflicts, even if seem trivial
+### ❌ Pitfall 2: Skipping S2.P2 Prerequisite
+**Problem:** "Features are done individually, that's enough"
+**Impact:** Cross-feature conflicts surface at test time
+**Solution:** Verify S2.P2 (Cross-Feature Alignment) is complete before S3
 
-### ❌ Pitfall 3: Presenting Unresolved Conflicts to User
-**Problem:** "Let the user decide between these conflicting approaches"
-**Impact:** User doesn't have enough context, makes arbitrary decision
-**Solution:** Resolve conflicts FIRST, THEN get user sign-off on resolved plan
+### ❌ Pitfall 3: Vague Success Criteria
+**Problem:** "The features work correctly" is a success criterion
+**Impact:** No way to verify epic is done; QA has no target
+**Solution:** Measurable criteria with specific commands/observations
 
 ### ❌ Pitfall 4: Assuming User Approval
-**Problem:** "The plan looks good, I'll skip user sign-off"
-**Impact:** Implement wrong thing, rework in S7 or user testing
-**Solution:** ALWAYS get explicit user approval (mandatory gate)
-
-### ❌ Pitfall 5: Not Re-Running After User Changes
-**Problem:** "User just changed one feature, no need to re-check"
-**Impact:** User change creates NEW conflicts with other features
-**Solution:** If user requests changes, re-run sanity check (at least spot-check)
-
-### ❌ Pitfall 6: Comparing Features to Incomplete Features
-**Problem:** Comparing Feature 3 spec to Feature 2 (still in S2)
-**Impact:** Feature 2 changes after comparison, conflicts appear later
-**Solution:** Wait until ALL features complete S2
-
----
-
-## Quick Checklist: "Am I Ready for Next Step?"
-
-**Before Step 1:**
-- [ ] ALL features completed S2
-- [ ] All feature specs are complete
-- [ ] All checklist.md items resolved
-- [ ] Epic EPIC_README.md Feature Tracking shows all "[x]" for S2
-
-**Step 1 → Step 2:**
-- [ ] SANITY_CHECK_{DATE}.md created
-- [ ] Comparison matrix template prepared
-- [ ] All 6 categories listed
-
-**Step 2 → Step 3:**
-- [ ] All feature pairs compared across ALL 6 categories
-- [ ] All conflicts documented in matrix
-- [ ] Have complete conflict list
-
-**Step 3 → Step 4:**
-- [ ] ALL conflicts resolved
-- [ ] Affected feature specs updated
-- [ ] No new conflicts created by resolutions
-
-**Step 4 → Step 5:**
-- [ ] Final plan summary created
-- [ ] Dependencies documented
-- [ ] Implementation order recommended
-- [ ] Risk assessment complete
-
-**Step 5 → Step 6:**
-- [ ] Complete plan presented to user
-- [ ] User explicitly approved plan
-- [ ] Approval documented in epic EPIC_README.md
-- [ ] If user requested changes: Changes implemented and sanity check re-run
-
-**Step 6 → S4:**
-- [ ] S3 marked complete in EPIC_README.md
-- [ ] Agent Status updated (next: S4)
-
----
-
-## File Outputs
-
-**Step 1:**
-- `epic/research/SANITY_CHECK_{DATE}.md` (comparison matrix template)
-
-**Step 2:**
-- SANITY_CHECK_{DATE}.md (populated with conflicts)
-
-**Step 3:**
-- Updated feature specs (conflict resolutions)
-- SANITY_CHECK_{DATE}.md (resolutions documented)
-
-**Step 4:**
-- Final plan summary in SANITY_CHECK_{DATE}.md
-
-**Step 5:**
-- Epic EPIC_README.md (user sign-off documented)
-
----
-
-## Scaling with Feature Count
-
-### 2-3 Features (Simple Epic)
-- Time: 30 minutes
-- Comparisons: 3-6 feature pairs
-- Conflicts: Usually 0-2
-
-### 4-5 Features (Medium Epic)
-- Time: 45 minutes
-- Comparisons: 10-15 feature pairs
-- Conflicts: Usually 2-5
-
-### 6+ Features (Complex Epic)
-- Time: 60+ minutes
-- Comparisons: 15+ feature pairs
-- Conflicts: Usually 5+
-- Consider: Breaking epic into sub-epics
+**Problem:** "The plan looks good, I'll skip Gate 4.5"
+**Impact:** Implement wrong scope, rework in S7+ or user testing
+**Solution:** ALWAYS get explicit user approval (Gate 4.5 is mandatory)
 
 ---
 
@@ -306,26 +152,35 @@ STEP 6: Mark Complete (2 min)
 
 | Current Activity | Guide to Read |
 |------------------|---------------|
-| Starting cross-feature sanity check | stages/s3/s3_epic_planning_approval.md |
-| Need comparison examples | stages/s3/s3_epic_planning_approval.md (examples section) |
-| Conflict resolution patterns | stages/s3/s3_epic_planning_approval.md (Step 3) |
+| Starting S3 | `stages/s3/s3_epic_planning_approval.md` |
+| Parallel work pre-check needed | `stages/s3/s3_parallel_work_sync.md` (optional pre-check) |
+| S3.P1 test strategy details | `stages/s3/s3_epic_planning_approval.md` — S3.P1 |
+| S3.P3 rejection handling | `stages/s3/s3_epic_planning_approval.md` — S3.P3 |
+
+---
+
+## File Outputs
+
+| Phase | Output |
+|-------|--------|
+| S3.P1 | `epic/epic_smoke_test_plan.md` (validated) |
+| S3.P2 | `EPIC_README.md` (updated with feature details) |
+| S3.P3 | `EPIC_SUMMARY.md` (optional); user sign-off documented |
 
 ---
 
 ## Exit Conditions
 
 **S3 is complete when:**
-- [ ] All features compared across all 6 categories
-- [ ] All conflicts identified and documented
-- [ ] All conflicts resolved (specs updated)
-- [ ] Final plan summary created
-- [ ] User explicitly approved complete plan
-- [ ] Approval documented in epic EPIC_README.md
+- [ ] epic_smoke_test_plan.md has concrete integration scenarios (3 clean rounds)
+- [ ] EPIC_README.md updated with feature details (3 clean rounds)
+- [ ] Epic summary created
+- [ ] User explicitly approved epic plan (Gate 4.5)
 - [ ] EPIC_README.md shows S3 complete
-- [ ] Ready to start S4 (Feature Testing Strategy)
+- [ ] Ready to start S4 (first feature's Feature Testing Strategy)
 
-**Next Stage:** S4 (Feature Testing Strategy)
+**Next Stage:** S4 (Feature Testing Strategy) — run once per feature
 
 ---
 
-**Last Updated:** 2026-01-04
+**Last Updated:** 2026-03-08

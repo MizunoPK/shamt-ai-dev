@@ -214,6 +214,11 @@ echo "  ✓ Master path written to .shamt/shamt_master_path.conf"
 echo "$RULES_FILE_DIR/$RULES_FILE_NAME" > "$SHAMT_DIR/rules_file_path.conf"
 echo "  ✓ Rules file path written to .shamt/rules_file_path.conf"
 
+_sync_date="$(date +%Y-%m-%d)"
+_master_hash="$(git -C "$SHAMT_SOURCE_DIR" rev-parse --short HEAD 2>/dev/null || echo "unknown")"
+printf '%s | %s\n' "$_sync_date" "$_master_hash" > "$SHAMT_DIR/last_sync.conf"
+echo "  ✓ Sync state written to .shamt/last_sync.conf"
+
 # --- Configure .gitignore ----------------------------------------------------
 
 separator "Configuring .gitignore"
@@ -380,6 +385,7 @@ cat > "$SHAMT_DIR/project-specific-configs/init_config.md" << EOF
 - [x] Created EPIC_TRACKER.md at .shamt/epics/EPIC_TRACKER.md
 - [x] Written .shamt/shamt_master_path.conf
 - [x] Written .shamt/rules_file_path.conf
+- [x] Written .shamt/last_sync.conf (initialized from master HEAD)
 - [x] Applied configuration substitutions to guides and rules file
 
 ## Agent Remaining Tasks

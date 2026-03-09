@@ -105,8 +105,8 @@ Issue/Gap Discovered
    - OR add to existing unstarted feature
 5. User decides: approach + priority (high/medium/low)
 6. Return to S2 (Deep Dive) for new/updated feature
-7. Return to S3 (Sanity Check) to re-align ALL features
-8. Return to S4 (Test Strategy) to update epic test plan
+7. Return to S3 (Epic-Level Docs, Tests, and Approval) to update smoke test plan + get re-approval
+8. Return to S4 (Test Strategy) to create feature test_strategy.md for new/updated feature
 9. Resume paused work
 10. Implement new/updated feature when its turn comes
 

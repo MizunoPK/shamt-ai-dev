@@ -905,7 +905,7 @@ Re-running epic testing now...
 **S7.P2: Validation Loop**
 
 1. **Run Validation Loop:**
-   - Check ALL 12 dimensions every round (7 master + 5 S7 QC-specific)
+   - Check ALL 16 dimensions every round (7 master + 9 S7 QC-specific)
    - Fix issues immediately, reset clean counter
    - Continue until 3 consecutive clean rounds
 

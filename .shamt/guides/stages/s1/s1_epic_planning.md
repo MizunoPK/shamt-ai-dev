@@ -108,7 +108,7 @@ S1 is complete when you have Discovery approved, a validated epic ticket, comple
 
 6. Create GUIDE_ANCHOR.md in epic folder (resumption instructions)
 
-7. epic_smoke_test_plan.md is PLACEHOLDER (will update in S4, S8.P2)
+7. epic_smoke_test_plan.md is PLACEHOLDER (will finalize in S3.P1, update in S8.P2)
    - Initial plan based on assumptions
    - Mark clearly as "INITIAL - WILL UPDATE"
 
@@ -178,17 +178,30 @@ S1 is complete when you have Discovery approved, a validated epic ticket, comple
 
 ## Prerequisites Checklist
 
-**Verify BEFORE starting S1:**
+**🚨 CRITICAL: Verify BEFORE starting S1 🚨**
+
+**If you are CREATING an epic request (not starting S1):**
+- ✅ Create file in `.shamt/epics/requests/{name}.md` or `.txt`
+- ✅ Write comprehensive request document
+- ❌ DO NOT create `SHAMT-{N}/` folder
+- ❌ DO NOT create EPIC_README.md
+- ❌ DO NOT create git branch
+- ⏸️ STOP - Request file waits in `requests/` until user initiates S1
+
+**If you are STARTING S1 (user explicitly said to start):**
 
 - [ ] User has created a request file in `.shamt/epics/requests/` (check for .txt or .md file, optionally in a subfolder)
 - [ ] Epic request file contains sufficient detail (problem description, goals, constraints)
 - [ ] No existing epic folder with same name (check `.shamt/epics/` directory)
 - [ ] Git working directory is clean (no uncommitted changes that could conflict)
+- [ ] User has explicitly initiated S1 (not just asking for a request to be written)
 
 **If any prerequisite fails:**
 - ❌ STOP - Do NOT proceed with S1
 - Ask user to resolve prerequisite issue
 - Document blocker in conversation
+
+**REMEMBER:** SHAMT-{N} folders are created in Step 5 of S1, NOT before S1 starts.
 
 ---
 
@@ -573,7 +586,7 @@ Each feature's spec.md starts with Discovery Context section:
 
 Use template from `templates/` folder (see `templates/TEMPLATES_INDEX.md`) → "Epic Smoke Test Plan Template"
 
-**IMPORTANT:** Mark this as INITIAL VERSION (placeholder that will be updated in S4 and S8.P2)
+**IMPORTANT:** Mark this as INITIAL VERSION (placeholder that will be finalized in S3.P1, updated in S8.P2)
 
 **Key characteristics of initial version:**
 - Based on assumptions from epic request (no implementation knowledge yet)
@@ -1151,7 +1164,7 @@ X "This epic is simple, I'll just make one feature"
   --> STOP - Even simple epics go through Discovery + feature breakdown
 
 X "I'll create a detailed test plan now"
-  --> STOP - S1 test plan is placeholder, detailed plan comes in S4
+  --> STOP - S1 test plan is placeholder, detailed plan comes in S3.P1 (updated in S8.P2)
 
 X "I remember the template structure, don't need to check"
   --> STOP - Always use actual template from templates/ folder
@@ -1166,7 +1179,7 @@ X "I'll skip GUIDE_ANCHOR.md, seems optional"
   --> STOP - GUIDE_ANCHOR.md is MANDATORY (critical for resumption after compaction)
 
 X "The epic_smoke_test_plan.md looks incomplete, let me fill it out"
-  --> STOP - It's SUPPOSED to be incomplete (placeholder for S4, S8.P2)
+  --> STOP - It's SUPPOSED to be incomplete (placeholder for S3.P1, updated in S8.P2)
 
 X "I'll number features 1, 2, 3 (no zero-padding)"
   --> STOP - Must use zero-padding: 01, 02, 03 (consistent sorting)

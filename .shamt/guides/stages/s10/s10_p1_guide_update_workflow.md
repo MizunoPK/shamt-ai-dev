@@ -95,12 +95,18 @@ S10.P1 is complete when all proposals have been reviewed by user, approved chang
    - Commit message: "docs(guides): Apply lessons from SHAMT-{N}-{epic_name}"
    - Do NOT mix guide updates with epic commits
 
-6. ⚠️ Update tracking after applying changes
+6. ⚠️ Check gitignore BEFORE committing guide updates
+   - Run `git check-ignore .shamt/guides/` before staging
+   - If guides are gitignored → apply changes locally, skip commit, inform user
+   - NEVER use `git add -f` to force-commit gitignored files
+   - If guides are NOT gitignored → proceed with normal `git add` and `git commit`
+
+7. ⚠️ Update tracking after applying changes
    - Add entries to reference/guide_update_tracking.md
    - Document approved, modified, and rejected proposals
    - Update metrics section
 
-7. ⚠️ Scope: ENTIRE .shamt/guides/ directory + CLAUDE.md
+8. ⚠️ Scope: ENTIRE .shamt/guides/ directory + CLAUDE.md
    - 🚨 CRITICAL: "Guides" = EVERY FILE in .shamt/guides/
    - This includes: stages/, reference/, templates/, debugging/,
      missed_requirement/, prompts/, and ALL root-level .md files
@@ -453,6 +459,19 @@ When applying changes to "guides", remember:
 
 **Actions:**
 
+6.0. **Check if guides are gitignored (MANDATORY before staging):**
+```bash
+git check-ignore .shamt/guides/ .github/copilot-instructions.md CLAUDE.md 2>/dev/null
+```
+
+- If ANY guide file is reported as ignored → **STOP. Do NOT commit guide changes.**
+  - Changes are applied locally (files are updated on disk)
+  - Inform user: "Guide updates applied locally but not committed — guide files are gitignored in this project."
+  - Skip Steps 6.1–6.3 entirely and proceed to Step 7
+- If NO output (files are not ignored) → proceed with Steps 6.1–6.3
+
+🚨 **NEVER use `git add -f` or `git add --force` to bypass gitignore for guide files.** If guides are gitignored, the project has intentionally excluded them from version control. Respect that decision.
+
 6.1. **Stage guide changes:**
 ```bash
 git add .shamt/guides/
@@ -566,6 +585,25 @@ git commit -m "docs(tracking): Update guide tracking for SHAMT-{N}-{epic_name}"
 - The change is minor wording tweaks with no functional impact
 - The change contradicts a deliberate Shamt design decision
 
+**Always do first (regardless of export decision):**
+
+8.0. **Review your rules file against the master template:**
+
+Compare your project's rules file (wherever it lives: `CLAUDE.md`, `.github/copilot-instructions.md`, etc.) against `.shamt/scripts/initialization/RULES_FILE.template.md`. For each section in your rules file not present in the template, ask: *would this apply to any Shamt project regardless of tech stack?*
+
+- **If generic additions exist** → add them to the template (replace your epic tag with `{{EPIC_TAG}}`), then add a `CHANGES.md` entry for each:
+  ```markdown
+  ## YYYY-MM-DD — Rules file template: [section name]
+  - Modified: `scripts/initialization/RULES_FILE.template.md`
+  - Rules file section: [section name or brief description]
+  - Reason: [why this is generic]
+  ```
+- **If no generic additions** → note "Rules file compared — no template updates needed" and continue.
+
+**Do this step regardless of whether you plan to export.** The rules file template is not touched by the export script (it lives outside `.shamt/guides/` and `.shamt/scripts/`), so it must be updated manually here before any export opportunity is presented to the user.
+
+---
+
 **If improvements are worth exporting:**
 
 8.1. Verify that `CHANGES.md` entries exist for each shared file you modified (see `sync/separation_rule.md` for the required format). Add any missing entries:
@@ -583,6 +621,7 @@ git commit -m "docs(tracking): Update guide tracking for SHAMT-{N}-{epic_name}"
 **Reference:** See `sync/export_workflow.md` for the full export process.
 
 **Checkpoint:**
+- [ ] Rules file compared against `RULES_FILE.template.md`; template updated with generic additions (or "no updates needed" noted)
 - [ ] Assessed whether guide improvements are generic/universal
 - [ ] `CHANGES.md` updated for all shared file modifications (if applicable)
 - [ ] User informed about export opportunity (if applicable) or reason noted (if not)
@@ -661,6 +700,9 @@ Use prompt from prompts/guide_update_prompts.md "After Applying Changes" section
 
 ❌ "I'll combine guide updates with epic commit"
    ✅ STOP - Separate commits required for clarity
+
+❌ "git add isn't working for guides, I'll use git add -f"
+   ✅ STOP - Guides are likely gitignored. Apply changes locally, skip commit, inform user. NEVER force-add.
 
 ❌ "No guide gaps found, lessons are all domain-specific"
    ✅ VERIFY - Re-read lessons with fresh eyes, look for patterns

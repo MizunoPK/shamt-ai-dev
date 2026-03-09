@@ -201,8 +201,25 @@ done
 - Prerequisites reference wrong stage outputs
 - Prerequisites missing critical gates (S5 doesn't mention Gate 5)
 - Prerequisites reference old workflow structure
+- Prerequisites use correct stage *number* but wrong stage *name* in parentheses — the stage may have been renamed and the parenthetical description not updated
 
-**Automated:** ⚠️ Partial (can check file existence, cannot validate semantic correctness)
+**Stage Name Consistency Check (Manual):**
+D3 automated checks validate stage *numbers* only. Stage *names* in prerequisite parentheticals must be verified manually. After any stage rename or restructuring:
+1. Extract all prerequisite stage references with descriptions:
+   ```bash
+   grep -rn "S[0-9].*complete\|Completed S[0-9]" stages/ --include="*.md" | grep "("
+   ```
+2. For each match, open the referenced stage's primary guide and compare its H1 title to the name used in the parenthetical
+3. If they differ: update the parenthetical to match the current canonical title
+
+**Example (real issue):**
+```
+S4 prerequisite: "S3 (Cross-Feature Sanity Check) complete"
+S3 actual title: "S3: Epic-Level Documentation, Testing Plans, and Approval"
+→ ERROR: parenthetical name is stale
+```
+
+**Automated:** ⚠️ Partial (can check file existence and stage numbers, cannot validate parenthetical name accuracy)
 
 ---
 
@@ -727,7 +744,7 @@ grep -A 10 "^## Prerequisites" "$stage_file"
 | S1 | None | - |
 | S2 | S1, DISCOVERY.md | DISCOVERY.md in epic folder |
 | S3 | S2 (all features), spec.md files | All feature_XX/spec.md |
-| S4 | S3, epic plan approved | epic_smoke_test_plan.md |
+| S4 | S3, epic plan approved | feature_XX/test_strategy.md |
 | S5 | S4, test_strategy.md | feature_XX/test_strategy.md |
 | S6 | S5, implementation_plan.md | feature_XX/implementation_plan.md |
 | S7 | S6, code complete | Implementation files |
