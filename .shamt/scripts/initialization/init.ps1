@@ -231,6 +231,10 @@ Write-Host "  OK .shamt/*.conf added to .gitignore (always)"
 Add-GitignoreEntry -GitignoreFile $GitignoreFile -Entry ".shamt/import_diff*.md"
 Write-Host "  OK .shamt/import_diff*.md added to .gitignore (always)"
 
+# Always add VALIDATION_LOG* (transient validation logs — never commit)
+Add-GitignoreEntry -GitignoreFile $GitignoreFile -Entry "*VALIDATION_LOG*"
+Write-Host "  OK *VALIDATION_LOG* added to .gitignore (always)"
+
 # Optionally gitignore .shamt/ and rules file
 if ($GitignoreShamt) {
     Add-GitignoreEntry -GitignoreFile $GitignoreFile -Entry ".shamt/"

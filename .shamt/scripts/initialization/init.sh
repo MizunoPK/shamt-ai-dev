@@ -241,6 +241,12 @@ if ! grep -qF ".shamt/import_diff" "$GITIGNORE_FILE"; then
 fi
 echo "  ✓ .shamt/import_diff*.md added to .gitignore (always)"
 
+# Always add VALIDATION_LOG* (transient validation logs — never commit)
+if ! grep -qF "*VALIDATION_LOG*" "$GITIGNORE_FILE"; then
+    echo "*VALIDATION_LOG*" >> "$GITIGNORE_FILE"
+fi
+echo "  ✓ *VALIDATION_LOG* added to .gitignore (always)"
+
 # Optionally gitignore .shamt/ and rules file
 if [ "$GITIGNORE_SHAMT" = "true" ]; then
     if ! grep -qF ".shamt/" "$GITIGNORE_FILE"; then
