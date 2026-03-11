@@ -477,6 +477,7 @@ Present the feature breakdown from DISCOVERY.md to user for formal approval.
 **Process:**
 
 1. **Draft epic ticket** using template from reference guide
+   - Use the "Definition of Done" section of the epic request as the starting point — pull `Success looks like` and `Failure looks like` entries directly as initial acceptance criteria and failure patterns, then refine based on Discovery findings
 2. **Save to:** `.shamt/epics/{epic_name}/EPIC_TICKET.md`
 3. **Present to user** for validation
 4. **Proceed to Step 4.7** for user sign-off

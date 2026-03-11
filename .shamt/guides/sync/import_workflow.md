@@ -172,3 +172,10 @@ If your project was initialized before SHAMT-3, import diff files were not autom
 ```
 .shamt/import_diff*.md
 ```
+
+**SHAMT-4 migration — individual `.conf` entries not consolidated:**
+If your project was initialized before SHAMT-4, your `.gitignore` may list `.shamt/shamt_master_path.conf` and `.shamt/last_sync.conf` individually, and `.shamt/rules_file_path.conf` may not be gitignored at all. Replace the individual entries with the wildcard:
+
+```
+.shamt/*.conf
+```
