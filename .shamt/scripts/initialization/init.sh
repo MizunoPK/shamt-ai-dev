@@ -401,6 +401,7 @@ Then run a validation loop to complete initialization:
 - [ ] Write ARCHITECTURE.md to \`.shamt/project-specific-configs/\`
 - [ ] Write CODING_STANDARDS.md to \`.shamt/project-specific-configs/\`
 - [ ] Add 3-5 key coding rules to rules file summary section
+- [ ] Fill in Project Context section in rules file (tech stack, runtime, test runner, deployment target, critical gotchas)
 - [ ] Validate all outputs meet quality bar (3 consecutive clean validation rounds)
 - [ ] Mark this file complete: change Status to COMPLETE
 

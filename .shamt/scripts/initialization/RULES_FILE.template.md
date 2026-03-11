@@ -24,6 +24,19 @@
 
 ---
 
+## Project Context
+
+**Tech Stack:** [Agent: fill in — language(s), framework(s), key libraries]
+**Runtime / Version:** [Agent: fill in — e.g. Node 20, Python 3.12, Go 1.22]
+**Package Manager / Build Tool:** [Agent: fill in — e.g. npm, poetry, gradle]
+**Test Runner:** [Agent: fill in — e.g. pytest, jest, go test]
+**Deployment Target:** [Agent: fill in — e.g. Vercel, AWS Lambda, local only, Docker]
+
+**Critical Gotchas:**
+- [Agent: fill in — project-specific things that affect every feature and are easy to get wrong]
+
+---
+
 ## Workflow System
 
 This project uses the **Shamt epic-driven development workflow** (S1–S10).
