@@ -186,9 +186,10 @@ Prerequisites Met?
    - Code style must be uniform
    - Error handling must be consistent
 
-6. ⚠️ 100% test pass rate required
-   - All unit tests must pass
-   - No "expected failures"
+6. ⚠️ Test pass rate required (conditional on Testing Approach)
+   - Options C/D: All unit tests must pass (100%), no "expected failures"
+   - Options B/D: All integration scripts must exit 0
+   - Option A: No automated tests — smoke testing only
    - Fix ALL test failures before marking complete
 
 7. ⚠️ Document EVERYTHING in epic_lessons_learned.md

@@ -63,7 +63,7 @@ Epic Cleanup is the final stage where you commit all changes, verify documentati
 Epic cleanup typically takes 85-130 minutes (including S10.P1 guide updates). Without guide updates, approximately 40-60 minutes.
 
 **Critical Success Factors:**
-1. Run unit tests BEFORE committing (100% pass required)
+1. Run tests per Testing Approach BEFORE committing (Options C/D: unit tests 100% pass; Options B/D: integration scripts all exit code 0)
 2. Verify ALL documentation complete
 3. Write clear commit message describing epic
 4. Move ENTIRE epic folder to done/ (not piecemeal)
@@ -83,10 +83,12 @@ Epic cleanup typically takes 85-130 minutes (including S10.P1 guide updates). Wi
 │    - Verify no pending bug fixes or features                    │
 │    - Verify EPIC_README.md shows S9 complete               │
 │                                                                  │
-│ 2. ⚠️ RUN UNIT TESTS BEFORE COMMITTING (100% PASS REQUIRED)     │
-│    - Execute: {TEST_COMMAND}                     │
-│    - Exit code MUST be 0 (all tests passing)                    │
-│    - If ANY tests fail → Fix before committing                  │
+│ 2. ⚠️ RUN TESTS PER TESTING APPROACH BEFORE COMMITTING           │
+│    Check EPIC_README for Testing Approach (A/B/C/D):            │
+│    - Option A: No automated test requirement — skip this gate   │
+│    - Options C/D: Run unit tests; exit code MUST be 0 (100%)   │
+│    - Options B/D: Run all integration scripts; all exit code 0 │
+│    - If ANY test/script fails → Fix before committing           │
 │                                                                  │
 │ 3. ⚠️ VERIFY ALL DOCUMENTATION COMPLETE                         │
 │    - EPIC_README.md complete and accurate                       │
@@ -163,9 +165,10 @@ Epic cleanup typically takes 85-130 minutes (including S10.P1 guide updates). Wi
 - [ ] No pending bug fixes (or all bug fixes at S7 (Testing & Review))
 
 ### Test Status
-- [ ] All unit tests passing (verified recently)
-- [ ] No test failures
-- [ ] No skipped tests
+- [ ] Testing Approach confirmed (check EPIC_README for A/B/C/D)
+- [ ] **Option A:** No automated test requirement (skip this section)
+- [ ] **Options C/D:** All unit tests passing (verified recently, no failures, no skips)
+- [ ] **Options B/D:** All integration scripts passing (exit code 0, verified recently)
 
 ### Documentation Status
 - [ ] EPIC_README.md exists and is complete
@@ -188,10 +191,12 @@ STAGE 10: Epic Cleanup
 │   ├─ Verify no pending work
 │   └─ Read epic_lessons_learned.md for guide improvements
 │
-├─> STEP 2: Run Unit Tests (100% pass required)
-│   ├─ Execute: {TEST_COMMAND}
-│   ├─ Verify exit code 0 (all tests passing)
-│   └─ If ANY tests fail → Fix and re-run
+├─> STEP 2: Run Tests Per Testing Approach (conditional)
+│   ├─ Check EPIC_README for Testing Approach (A/B/C/D)
+│   ├─ Option A: No automated test requirement → skip to STEP 3
+│   ├─ Options C/D: Run unit tests; exit code 0 required
+│   ├─ Options B/D: Run all integration scripts; all exit code 0 required
+│   └─ If ANY test/script fails → Fix and re-run
 │
 ├─> STEP 3: Documentation Verification
 │   ├─ Verify EPIC_README.md complete
@@ -258,7 +263,7 @@ STAGE 10: Epic Cleanup
 | Step | Focus Area | Time | Mandatory Gate? | Go To |
 |------|-----------|------|-----------------|-------|
 | **Step 1** | Pre-Cleanup Verification | 5 min | No | [Jump](#step-1-pre-cleanup-verification) |
-| **Step 2** | Run Unit Tests | 5 min | ✅ YES (100% pass) | [Jump](#step-2-run-unit-tests) |
+| **Step 2** | Run Tests Per Testing Approach | 5 min | ✅ YES (conditional per A/B/C/D) | [Jump](#step-2-run-tests-per-testing-approach) |
 | **Step 2b** | Investigate Anomalies | 10-30 min | Optional | [Jump](#step-2b-investigate-user-reported-anomalies-if-applicable) |
 | **Step 3** | Documentation Verification | 10 min | No | [Jump](#step-3-documentation-verification) |
 | **Step 4** | Update Guides (Apply Lessons) | 20-45 min | No | [Jump](#step-4-guide-update-from-lessons-learned-mandatory-s10p1) |
@@ -287,7 +292,7 @@ STAGE 10: Epic Cleanup
 | Exit Criteria | All items that must be checked | [Exit Criteria](#exit-criteria) |
 
 **Important:**
-- Step 2: 100% test pass required (MANDATORY)
+- Step 2: Test requirement is MANDATORY but conditional — check Testing Approach (A/B/C/D) in EPIC_README
 - Step 4: Apply ALL lessons from ALL sources (epic + features + bugfixes + debugging)
 - User testing completed in S9 Step 6 (prerequisite for S10)
 
@@ -332,15 +337,24 @@ Use Read tool to load epic_lessons_learned.md and look for "Guide Improvements N
 
 ---
 
-### STEP 2: Run Unit Tests
+### STEP 2: Run Tests Per Testing Approach
 
-**Objective:** Verify 100% of unit tests pass before committing changes.
+**Objective:** Verify all required tests pass before committing changes. Requirements depend on the epic's Testing Approach set at S1.
 
 **Actions:**
 
-**2a. Execute Unit Tests**
+**2a. Check Testing Approach**
 
-Run the complete test suite:
+Read EPIC_README.md and find the `Testing Approach:` field in the header.
+
+- **Option A (smoke only):** No automated test requirement — skip to STEP 3.
+- **Options C/D (unit tests):** Run unit tests per Step 2b.
+- **Options B/D (integration scripts):** Run integration scripts per Step 2c.
+- **Option D (both):** Run both Step 2b and Step 2c.
+
+**2b. Run Unit Tests (Options C/D only)**
+
+Run the complete unit test suite:
 ```bash
 {TEST_COMMAND}
 ```
@@ -355,15 +369,11 @@ Skipped: 0
 EXIT CODE: 0 ✅ (Safe to commit)
 ```
 
-**2b. Verify Exit Code**
-
 Check the exit code:
 ```bash
 echo $?  # On Linux/Mac
 echo %ERRORLEVEL%  # On Windows
 ```
-
-**Expected:** 0 (all tests passing)
 
 **If exit code is NOT 0:**
 - **STOP** - Do NOT commit
@@ -373,6 +383,24 @@ echo %ERRORLEVEL%  # On Windows
 - Only proceed when exit code = 0
 
 **Note:** It is ACCEPTABLE to fix pre-existing test failures during S10 to achieve 100% pass rate.
+
+**2c. Run Integration Scripts (Options B/D only)**
+
+Read the Integration Test Convention from EPIC_README.md and run all integration scripts for all features:
+
+```bash
+## Run each feature's integration script per the Integration Test Convention
+{integration_script_run_command}
+```
+
+**Expected:** All scripts exit with code 0.
+
+**If any script exits non-zero:**
+- **STOP** - Do NOT commit
+- Review script output for failures
+- Fix failing assertions or implementation issues
+- Rerun the script — if fix is a behavior change, notify user
+- Only proceed when all scripts exit code 0
 
 ---
 
@@ -960,10 +988,11 @@ The epic is now complete and ready for user review!
 
 **S10 is COMPLETE when ALL of the following are true:**
 
-### Unit Tests
-- [ ] All unit tests executed: `{TEST_COMMAND}`
-- [ ] Exit code = 0 (100% pass rate)
-- [ ] No test failures or skipped tests
+### Tests (Conditional per Testing Approach)
+- [ ] Testing Approach confirmed from EPIC_README (A/B/C/D)
+- [ ] **Option A:** No automated test requirement (gate skipped)
+- [ ] **Options C/D:** All unit tests executed (`{TEST_COMMAND}`); exit code = 0; no failures or skips
+- [ ] **Options B/D:** All integration scripts executed; all exit code 0
 
 ### Documentation
 - [ ] EPIC_README.md complete and accurate
@@ -1025,7 +1054,7 @@ The epic is now complete and ready for user review!
 **S10 - Epic Cleanup finalizes the epic and archives it for future reference:**
 
 **Key Activities:**
-1. Run unit tests (100% pass required)
+1. Run tests per Testing Approach (unit tests for C/D; integration scripts for B/D; none for A)
 2. Verify all documentation complete
 3. Apply ALL lessons learned to guides (systematic search, 100% application)
 4. Commit epic implementation work with clear message
@@ -1037,7 +1066,7 @@ The epic is now complete and ready for user review!
 10. Celebrate epic completion! 🎉
 
 **Critical Success Factors:**
-- 100% test pass rate before committing
+- Tests pass before committing (conditional per Testing Approach — unit tests for C/D, integration scripts for B/D, nothing for A)
 - Complete documentation (README, lessons learned, test plan)
 - ALL lessons applied (epic + features + bugfixes + debugging)
 - User testing already passed in S9.P3 (prerequisite)
@@ -1048,7 +1077,7 @@ The epic is now complete and ready for user review!
 - PR includes all final cleanup (no post-merge changes needed)
 
 **Common Pitfalls:**
-- Committing without running tests
+- Committing without running required tests (check Testing Approach first — Option A requires none; C/D need unit tests; B/D need integration scripts)
 - Generic commit messages
 - Only checking epic_lessons_learned.md (missing feature/bugfix/debugging lessons)
 - Forgetting debugging lessons (highest priority guide updates)
@@ -1075,7 +1104,7 @@ You've successfully completed all 10 stages of the epic workflow:
 - ✅ S1: Epic Planning (Discovery, breakdown, Git setup)
 - ✅ S2: Feature Deep Dives (spec.md, checklist.md for each feature)
 - ✅ S3: Epic-Level Docs, Tests, and Approval (Gate 4.5)
-- ✅ S4: Feature Testing Strategies
+- ✅ S4: (Deprecated — Test Scope Decision moved to S5 Step 0)
 - ✅ S5-S8: Feature Loop (Planning → Execution → Testing → Alignment)
 - ✅ S9: Epic-Level Final QC (100% test pass, user testing)
 - ✅ S10: Epic Cleanup (guide updates, PR, archival)

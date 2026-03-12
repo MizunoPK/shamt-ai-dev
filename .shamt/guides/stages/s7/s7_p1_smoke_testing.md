@@ -132,18 +132,24 @@ Smoke Testing is complete when ALL 3 parts pass (including data value verificati
 
 **From S6 (Implementation):**
 - [ ] All implementation tasks marked done in `implementation_checklist.md`
-- [ ] All unit tests passing (100% pass rate)
 - [ ] `implementation_checklist.md` all requirements verified
 - [ ] All code committed to git (clean working directory)
+- [ ] Tests per Testing Approach (read EPIC_README):
+  - Option A (smoke only): Mini-QC checkpoints passed — no automated test prerequisite
+  - Option B (integration scripts): Integration test script created (may have partial passes from S6)
+  - Option C (unit tests): Unit tests passing for algorithmic functions identified in S5 (100%)
+  - Option D (both): Both unit tests passing AND integration script created
 
 **Files that must exist:**
 - [ ] `feature_XX_{name}/spec.md` (primary specification)
 - [ ] `feature_XX_{name}/checklist.md` (planning decisions)
 - [ ] `feature_XX_{name}/implementation_plan.md` (implementation guidance)
 - [ ] `feature_XX_{name}/implementation_checklist.md` (progress tracking and requirement verification)
+- [ ] For Options B/D: Integration test script at location per `Integration Test Convention:` in EPIC_README
 
 **Verification:**
-- [ ] Run `{TEST_COMMAND}` → exit code 0
+- [ ] For Options C/D: Run `{UNIT_TEST_COMMAND}` → exit code 0
+- [ ] For Options B/D: Run `{INTEGRATION_SCRIPT_COMMAND}` → verify script runs (full pass not yet required)
 - [ ] Check `git status` → no uncommitted implementation changes
 - [ ] Review implementation_checklist.md → all items marked verified
 
@@ -264,6 +270,40 @@ python run_[module].py --mode rating_helper --dry-run
 
 **📖 See `reference/smoke_testing_pattern.md` for universal E2E test pattern and data validation examples.**
 
+### First: Read the Epic's Testing Approach
+
+Read `Testing Approach:` from EPIC_README (at epic folder root). This determines which Part 3 path to follow.
+
+---
+
+### Part 3 — If Integration Script Opted In (Options B or D)
+
+Parts 1 and 2 are unchanged. For Part 3, run the feature's integration test script instead of the manual 6-step process.
+
+1. **Read `Integration Test Convention:` from EPIC_README** for script location and invocation command
+2. **Run the integration test script:**
+   ```bash
+   ## Use the command from Integration Test Convention in EPIC_README
+   {invocation command from EPIC_README}
+   ```
+3. **The script must pass (exit code 0)**
+   - The 6 manual steps (environment, test data, execution, output structure, data values, logs) are now encoded in the script
+   - The agent's job is to run the script and verify it passes, not to manually execute each step
+4. **If the script fails:**
+   - Investigate root cause per the existing smoke test failure protocol
+   - Fix the issue
+   - Restart from Part 1 after fixing (same as manual failure protocol)
+
+**Note:** The `test_scenario.md` and `expected_results.md` artifacts described below are **superseded by the integration test script** for Options B/D. They do not need to be created separately — the script is the documentation.
+
+**If Part 3 passes (script exit code 0):** Proceed to S7.P2 Validation Loop.
+
+---
+
+### Part 3 — If Smoke Only or Unit Tests Only (Options A or C)
+
+All 3 parts of the existing manual process are retained unchanged. For Option C, unit tests are already a prerequisite to starting S7.P1 (they must already be passing from S6), not a replacement for Part 3 — the manual E2E smoke test still runs to validate real-data behavior.
+
 **🚨 REQUIRED TEST ARTIFACTS (Middle Ground Approach):**
 
 Before executing E2E testing, create standardized test artifacts in epic folder:
@@ -279,12 +319,6 @@ Before executing E2E testing, create standardized test artifacts in epic folder:
    - Include expected value ranges (from spec)
    - List edge cases to verify
    - Define pass/fail criteria
-
-**Benefits:**
-- ✅ Maintains flexible feature-specific testing approach
-- ✅ Adds documentation consistency across features
-- ✅ Enables easier review and verification
-- ✅ Provides reference for future modifications
 
 **Standardized 6-Step E2E Testing Process:**
 

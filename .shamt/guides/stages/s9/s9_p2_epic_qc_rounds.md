@@ -125,11 +125,13 @@ Epic QC Validation Loop is complete when 3 consecutive validation rounds find ZE
    - Continue validation from current round (no restart needed)
    - New approach: Fix and continue vs old: Fix and restart from S9.P1
 
-4. ⚠️ 100% TESTS PASSING MANDATORY
-   - Run ALL tests EVERY validation round
-   - Must achieve 100% pass rate
-   - Any test failure = issue (must fix before next round)
-   - Verify tests still pass after code changes
+4. ⚠️ TEST PASSING REQUIREMENT (CONDITIONAL ON TESTING APPROACH)
+   - Check EPIC_README for Testing Approach (A/B/C/D) before each round
+   - **Option A (smoke only):** No automated test requirement — skip this check
+   - **Option B (integration scripts only):** Run all integration scripts EVERY round; all must exit code 0; any failure = issue
+   - **Option C (unit tests only):** Run ALL unit test suites EVERY round; must achieve 100% pass rate; any failure = issue
+   - **Option D (both):** Run ALL unit tests AND all integration scripts EVERY round; both must pass; any failure = issue
+   - Verify tests still pass after code changes regardless of approach
 
 5. ⚠️ FOCUS ON EPIC-LEVEL VALIDATION
    - Feature-level QC done in S7.P2
@@ -792,7 +794,10 @@ STOP - DO NOT PROCEED TO S9.P3 YET
 
 - [ ] 3 consecutive clean rounds achieved (ZERO issues across all 12 dimensions)
 - [ ] All 12 dimensions checked every round (7 master + 5 epic)
-- [ ] All tests passing (100% pass rate verified every round)
+- [ ] **Option A:** No automated test requirement (smoke only — no check needed)
+- [ ] **Option B:** All integration scripts passing (exit code 0, verified every round)
+- [ ] **Option C:** All unit tests passing (100% pass rate, verified every round)
+- [ ] **Option D:** All unit tests AND all integration scripts passing (verified every round)
 - [ ] VALIDATION_LOOP_LOG.md complete with all rounds documented
 - [ ] Agent Status updated with validation loop completion
 - [ ] Ready to proceed to S9.P3 (User Testing)

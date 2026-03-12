@@ -1,8 +1,12 @@
 # STAGE 4: Feature Testing Strategy - Quick Reference Card
 
-**Purpose:** One-page summary for creating feature-level test strategy before implementation
-**Use Case:** Quick lookup when planning tests in a test-driven development approach
-**Total Time:** 45-60 minutes per feature (4 iterations)
+> **⚠️ DEPRECATED (SHAMT-6):** S4 has been deprecated. Test Scope Decision is now Step 0 of S5.
+> See `stages/s4/s4_feature_testing_strategy.md` for the redirect stub.
+> This file is preserved for reference only — do NOT follow for new epics.
+
+**Purpose:** (Deprecated) One-page summary for creating feature-level test strategy before implementation
+**Status:** DEPRECATED — Test Scope Decision moved to S5 Step 0
+**Total Time:** N/A (deprecated)
 
 ---
 

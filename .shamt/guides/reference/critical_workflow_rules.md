@@ -1,6 +1,6 @@
 # Critical Workflow Rules
 
-**Status:** Reference document for S2/S4/S6 stages
+**Status:** Reference document for S2/S6 stages (S4 deprecated — S5 Step 0 handles test scope)
 **Last Updated:** 2026-02-10
 **Usage:** Copied to README Agent Status during workflow execution
 
@@ -67,7 +67,7 @@
 **When to copy these rules:**
 - Beginning of S2.P1 (Spec Creation and Refinement)
 - Beginning of S2.P2 (Cross-Feature Alignment)
-- Beginning of S4 (Feature Testing Strategy)
+- Beginning of S5 Step 0 (Test Scope Decision — S4 deprecated)
 - Beginning of S6 (Execution)
 
 **Where to copy:**

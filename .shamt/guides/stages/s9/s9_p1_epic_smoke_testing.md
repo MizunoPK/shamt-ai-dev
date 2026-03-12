@@ -107,7 +107,7 @@ Epic Smoke Testing is complete when ALL 4 parts of epic_smoke_test_plan.md pass,
    - Do NOT start if any feature is incomplete
 
 2. ⚠️ Use EVOLVED epic_smoke_test_plan.md (NOT original)
-   - Plan evolved through S1 → S4 → S8.P2 updates
+   - Plan evolved through S1 → S3 → S8.P2 updates
    - Reflects ACTUAL implementation (not initial assumptions)
    - Contains integration scenarios added during S8.P2 (Epic Testing Update)
 
@@ -232,11 +232,11 @@ Part 4: Cross-Feature Integration Test (EPIC-SPECIFIC)
 
 ```markdown
 ## Epic Progress Tracker
-| Feature | S1 | S2 | S3 | S4 | S5 | S6 | S7 (Testing & Review) | S8.P1 (Cross-Feature Alignment) | S8.P2 (Epic Testing Update) |
-|---------|---------|---------|---------|---------|----------|----------|----------|----------|----------|
-| feature_01 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| feature_02 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| feature_03 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Feature | S1 | S2 | S3 | S5 | S6 | S7 | S8.P1 | S8.P2 |
+|---------|---------|---------|---------|----------|----------|----------|----------|----------|
+| feature_01 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| feature_02 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| feature_03 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 ```
 
 **Verify:** EVERY feature shows ✅ in S8.P2 (Epic Testing Update) column.
@@ -382,6 +382,52 @@ print("✅ Epic output integrates all features correctly")
 **This part is UNIQUE to epic-level smoke testing.**
 
 **Objective:** Verify features work together correctly.
+
+### First: Read the Epic's Testing Approach
+
+Read `Testing Approach:` from EPIC_README. This determines which Part 4 path to follow.
+
+---
+
+### Part 4 — If Integration Scripts Opted In (Options B or D)
+
+Run all feature integration scripts in sequence.
+
+1. **Read `Integration Test Convention:` from EPIC_README** for the script location and invocation command
+2. **Run all feature integration scripts:**
+   ```bash
+   ## Use the run-all invocation from Integration Test Convention in EPIC_README
+   ## Examples (use whichever matches the project's framework):
+
+   # pytest
+   pytest tests/integration/ -v
+
+   # bash scripts
+   for script in integration_tests/*.sh; do bash "$script" || exit 1; done
+
+   # Python stdlib
+   for script in integration_tests/test_*_e2e.py; do python "$script" || exit 1; done
+   ```
+3. **Each script must pass (exit code 0)**
+4. **If any script fails:**
+   - Document which feature's script failed and why
+   - Fix the issue
+   - Restart from Part 1 per the existing failure protocol
+5. The `epic_smoke_test_plan.md` remains as the guide for human-readable scenario documentation, but the pass/fail determination in Part 4 comes from script execution results.
+
+**For Option C (unit tests only): Additional check at S9**
+After Parts 1-3 and before declaring S9 complete, also run all unit tests for all features in the epic collectively to verify no cross-feature regressions:
+```bash
+## Run all feature test suites together
+{unit test invocation for all features}
+```
+All must pass before S9 is complete.
+
+---
+
+### Part 4 — If Smoke Only or Unit Tests Only (Options A or C)
+
+Existing manual process is retained. Follow the steps below.
 
 ### Step 1: Identify Integration Points
 

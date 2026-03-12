@@ -158,9 +158,10 @@ Feature QC is complete when 3 consecutive validation rounds find ZERO issues acr
 - [ ] Feature executes end-to-end without crashes
 - [ ] Output data is correct and reasonable
 
-**Unit Tests:**
-- [ ] Run `{TEST_COMMAND}` → exit code 0
-- [ ] All unit tests passing (100% pass rate)
+**Tests (conditional on Testing Approach from EPIC_README):**
+- [ ] Options C/D: Run unit tests → `{TEST_COMMAND}` exit code 0, 100% pass rate
+- [ ] Options B/D: Run integration scripts → exit code 0
+- [ ] Option A: No automated tests required
 
 **Documentation:**
 - [ ] `implementation_checklist.md` all requirements verified

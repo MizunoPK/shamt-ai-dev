@@ -133,13 +133,18 @@ S1 is complete when you have Discovery approved, a validated epic ticket, comple
     - Each feature delivers distinct value
 
 14. Mark completion in EPIC_README.md before transitioning to S2
+
+15. TEST APPROACH IS SET ONCE AT S1 (Step 4.6.5)
+    - Ask user BEFORE finalizing epic ticket (not autonomous decision)
+    - Record in epic ticket AND EPIC_README header
+    - Not re-decided per feature; if user changes mid-epic, document the change in EPIC_README
 ```
 
 ---
 
 ## Critical Decisions Summary
 
-**S1 has 5 major decision points. Know these before starting:**
+**S1 has 6 major decision points. Know these before starting:**
 
 ### Decision Point 1: Determine Work Type (Step 1.0d)
 **Question:** Is this an epic, feat, or fix?
@@ -171,6 +176,16 @@ S1 is complete when you have Discovery approved, a validated epic ticket, comple
 - **If NO:** User corrects misunderstandings, agent updates epic ticket
 - **If YES:** Proceed to folder creation (Step 5)
 - **Impact:** Epic ticket becomes immutable reference - validates agent understanding
+
+### Decision Point 6: Test Approach (Step 4.7)
+**Question:** What automated testing approach should this epic use?
+- **A. Smoke testing only** — no automated test scripts; manual E2E smoke testing at S7 and S9
+- **B. Automated E2E integration scripts only** (Recommended) — runnable scripts that assert on real-data outputs; no unit tests
+- **C. Unit tests for algorithmic functions only** — pure function tests; no integration scripts
+- **D. Both** — algorithmic unit tests + automated E2E integration scripts
+- **Impact:** Controls S3.P1 scope, S4 redirect, S5 test scope decision, S6 test gates, S7.P1 Part 3, S9 Part 4, S10 Gate 7.1/7.1b
+- **Rule:** Set once at S1. If user wants to change mid-epic, agent records the update in EPIC_README with a note.
+- **CRITICAL:** Agent must ask the user — this is not an autonomous decision.
 
 **Note:** Each decision point has clear criteria. Read the detailed section before making decision.
 
@@ -312,9 +327,15 @@ Create epic folder: `.shamt/epics/SHAMT-{N}-{epic_name}/`
 
 **Naming:** Use SHAMT number + snake_case epic name (e.g., `SHAMT-1-improve_recommendation_engine`)
 
-### Step 1.2: Record Epic Request File Location
+### Step 1.2: Move Epic Request File into Epic Folder
 
-Find the request file in `.shamt/epics/requests/` (check subfolders if needed). Note its full path in the EPIC_README.md so it's easy to find. **Do NOT move the file** — it stays in `.shamt/epics/requests/` permanently and is not part of the epic folder.
+Find the request file in `.shamt/epics/requests/` (check subfolders if needed). Move it into the epic folder:
+
+```bash
+mv .shamt/epics/requests/{filename} .shamt/epics/SHAMT-{N}-{epic_name}/
+```
+
+Note the new path in `EPIC_README.md` so it's easy to find.
 
 ### Step 1.3: Create EPIC_README.md
 
@@ -486,6 +507,33 @@ Present the feature breakdown from DISCOVERY.md to user for formal approval.
 - Complete epic ticket template
 - Guidelines for description, acceptance criteria, success indicators, failure patterns
 - Real-world example (Feature 02 epic ticket)
+
+---
+
+### Step 4.6.5: Test Approach Decision (MANDATORY — ask user before finalizing ticket)
+
+**Purpose:** Set the epic's testing approach once, before folder creation. This decision controls behavior across S3, S5, S6, S7, S9, and S10.
+
+**Process:**
+
+1. Before finalizing the epic ticket, ask the user (use AskUserQuestion):
+
+```
+"What automated testing approach should this epic use?"
+
+A. Smoke testing only — no automated test scripts; manual E2E smoke testing at S7 and S9
+B. Automated E2E integration scripts only (Recommended) — runnable scripts that assert on
+   real-data outputs; no unit tests
+C. Unit tests for algorithmic functions only — pure function tests; no integration scripts
+D. Both — algorithmic unit tests + automated E2E integration scripts
+```
+
+2. Record the user's answer in two places (before presenting ticket for validation):
+   - Add `Testing Approach: [A/B/C/D — description]` to the epic ticket draft
+   - Add `Testing Approach: [A/B/C/D — description]` to EPIC_README header block
+   - For Options B or D, also add `Integration Test Convention: [TBD — will be set in S5]` to EPIC_README header
+
+3. **Critical rule:** This preference is set once at S1. It is not re-decided per feature. If the user wants to change it mid-epic, record the update in EPIC_README with a change note.
 
 ---
 
@@ -1132,6 +1180,7 @@ I'll work through all {N} features one-by-one, starting with Feature 01.
 [ ] Feature folders created with 4 files each (README, spec with Discovery Context, checklist, lessons learned)
 [ ] User approved Discovery findings (Step 3)
 [ ] User approved feature breakdown (Step 4)
+[ ] Testing Approach (A/B/C/D) set in EPIC_README and epic ticket (Step 4.6.5)
 [ ] User validated epic ticket (Step 4.7)
 [ ] Agent Status updated for S2 transition
 
@@ -1191,6 +1240,12 @@ X "I'll skip seeding spec.md with Discovery Context"
 X "I'll create a documentation feature to update README/ARCHITECTURE"
   --> STOP - Documentation is handled in S7.P3 (per-feature) and S10 (epic-level), NOT as separate feature
   --> EXCEPTION: Only create documentation feature if user EXPLICITLY requests it
+
+X "I'll decide the testing approach myself (Option B seems fine)"
+  --> STOP - Test approach is NOT an autonomous decision; must ask user via AskUserQuestion at Step 4.6.5
+
+X "I'll set the testing approach per-feature based on what makes sense for each one"
+  --> STOP - Testing approach is set ONCE at S1 for the entire epic, not per feature
 ```
 
 **📖 See:** `reference/stage_1/epic_planning_examples.md` for:
