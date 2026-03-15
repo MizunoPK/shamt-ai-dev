@@ -741,13 +741,7 @@ for p in raw_data:
 
 ## Exit Criteria
 
-**Smoke Testing (S7.P1) is complete when ALL of these are true:**
-
-- [ ] All steps in this phase complete as specified
-- [ ] Agent Status updated with phase completion
-- [ ] Ready to proceed to next phase
-
-**If any criterion unchecked:** Complete missing items before proceeding
+S7.P1 is complete when all 3 parts pass per the Pass/Fail Criteria above and Agent Status is updated.
 
 ---
 ---

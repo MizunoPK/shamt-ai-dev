@@ -671,13 +671,7 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 
 ## Exit Criteria
 
-**Validation Loop (S7.P2) is complete when ALL of these are true:**
-
-- [ ] All steps in this phase complete as specified
-- [ ] Agent Status updated with phase completion
-- [ ] Ready to proceed to next phase
-
-**If any criterion unchecked:** Complete missing items before proceeding
+S7.P2 is complete when the Validation Loop exits with 3 consecutive clean rounds (zero issues, all 16 dimensions) and Agent Status is updated.
 
 ---
 

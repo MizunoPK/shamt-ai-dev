@@ -637,13 +637,7 @@ print("✅ Interface compatibility verified")
 
 ## Exit Criteria
 
-**Epic Smoke Testing (S9.P1) is complete when ALL of these are true:**
-
-- [ ] All steps in this phase complete as specified
-- [ ] Agent Status updated with phase completion
-- [ ] Ready to proceed to next phase
-
-**If any criterion unchecked:** Complete missing items before proceeding
+S9.P1 is complete when all 4 parts pass per the Pass/Fail Criteria above and Agent Status is updated.
 
 ---
 ---
