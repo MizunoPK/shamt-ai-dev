@@ -23,18 +23,19 @@
 3. [Critical Decisions Summary](#critical-decisions-summary)
 4. [Prerequisites Checklist](#prerequisites-checklist)
 5. [Workflow Overview](#workflow-overview)
-6. [Step 1: Initial Setup](#step-1-initial-setup)
-7. [Step 2: Epic Analysis](#step-2-epic-analysis)
-8. [Step 3: Discovery Phase (MANDATORY)](#step-3-discovery-phase-mandatory)
-9. [Step 4: Feature Breakdown Proposal](#step-4-feature-breakdown-proposal)
-10. [Step 5: Epic Structure Creation](#step-5-epic-structure-creation)
-11. [Step 6: Transition to S2](#step-6-transition-to-s2)
-12. [Mandatory Re-Reading Checkpoints](#mandatory-re-reading-checkpoints)
-13. [Exit Criteria](#exit-criteria)
-14. [Common Mistakes to Avoid](#common-mistakes-to-avoid)
-15. [README Agent Status Update Requirements](#readme-agent-status-update-requirements)
-16. [Prerequisites for S2](#prerequisites-for-s2)
-17. [Next Stage](#next-stage)
+6. [Step 0: Sibling Epic Awareness Check](#step-0-sibling-epic-awareness-check)
+7. [Step 1: Initial Setup](#step-1-initial-setup)
+8. [Step 2: Epic Analysis](#step-2-epic-analysis)
+9. [Step 3: Discovery Phase (MANDATORY)](#step-3-discovery-phase-mandatory)
+10. [Step 4: Feature Breakdown Proposal](#step-4-feature-breakdown-proposal)
+11. [Step 5: Epic Structure Creation](#step-5-epic-structure-creation)
+12. [Step 6: Transition to S2](#step-6-transition-to-s2)
+13. [Mandatory Re-Reading Checkpoints](#mandatory-re-reading-checkpoints)
+14. [Exit Criteria](#exit-criteria)
+15. [Common Mistakes to Avoid](#common-mistakes-to-avoid)
+16. [README Agent Status Update Requirements](#readme-agent-status-update-requirements)
+17. [Prerequisites for S2](#prerequisites-for-s2)
+18. [Next Stage](#next-stage)
 
 ---
 
@@ -210,6 +211,8 @@ S1 is complete when you have Discovery approved, a validated epic ticket, comple
 - [ ] Git working directory is clean (no uncommitted changes that could conflict)
 - [ ] User has explicitly initiated S1 (not just asking for a request to be written)
 
+**Parallel Play Note:** If other epics are active, S1–S5 of this epic may run in parallel with them. See the "Parallel Epic Play" section in the project rules file for the S6–S10 coordination requirement — only one agent may be in S6–S9 at a time.
+
 **If any prerequisite fails:**
 - ❌ STOP - Do NOT proceed with S1
 - Ask user to resolve prerequisite issue
@@ -225,6 +228,12 @@ S1 is complete when you have Discovery approved, a validated epic ticket, comple
 +--------------------------------------------------------------+
 |                    STAGE 1 WORKFLOW                          |
 +--------------------------------------------------------------+
+
+Step 0: Sibling Epic Awareness Check (BEFORE Step 1.0)
+   +-- Read EPIC_TRACKER.md
+   +-- List any epics NOT Completed or Archived (active epics)
+   +-- State dependency assessment for each active epic
+   +-- If any dependency found: record in EPIC_README.md ## Dependencies
 
 Step 1: Initial Setup
    +-- Create git branch for epic (Step 1.0 - BEFORE any changes)
@@ -278,6 +287,24 @@ Step 6: Transition to S2
    +-- Update Agent Status (next: S2)
    +-- Announce transition to user
 ```
+
+---
+
+## Step 0: Sibling Epic Awareness Check
+
+**CRITICAL:** This check must happen BEFORE Step 1.0 — before creating your own EPIC_TRACKER entry. Reading first prevents confusing your new entry with existing active epics.
+
+**Steps:**
+
+1. Read `.shamt/epics/EPIC_TRACKER.md`
+2. List any epics that are **NOT** marked Completed or Archived (i.e., any active or unfinished epic, regardless of the exact status label used)
+3. For each active epic, state explicitly:
+   - "This new epic **[does / does not]** depend on work from **[epic name]**, because **[reason]**"
+4. If any dependency exists: note it now — you will record it in `EPIC_README.md` under `## Dependencies` when creating that file in Step 1.3.
+
+**If no active epics exist:** Note "No active epics — no dependency check needed" and proceed to Step 1.0.
+
+**Why before Step 1.0:** Discovering a dependency at S5 or S6 is far more expensive than at creation time. A single read + short reasoning step at S1 prevents plan invalidation later.
 
 ---
 
@@ -1173,6 +1200,7 @@ I'll work through all {N} features one-by-one, starting with Feature 01.
 
 **S1 is complete when ALL of these are true:**
 
+[ ] Sibling epic awareness check completed (Step 0) — any dependencies noted for EPIC_README.md
 [ ] Git branch created and .shamt/epics/EPIC_TRACKER.md updated
 [ ] DISCOVERY.md created and user-approved
 [ ] Epic folder structure complete (EPIC_README, DISCOVERY, test plan, lessons learned, research/, GUIDE_ANCHOR)

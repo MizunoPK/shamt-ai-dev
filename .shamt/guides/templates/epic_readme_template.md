@@ -94,6 +94,19 @@ Plan  Deep Dive  Check  (per feature)   QC
 
 ---
 
+## Dependencies
+
+**Inter-Epic Dependencies:**
+{List any active epics this epic depends on, or "None"}
+
+| Dependency Epic | Reason | Re-Validation Status |
+|-----------------|--------|---------------------|
+| {SHAMT-N — epic name} | {Brief reason this epic's plan depends on that epic's work} | {Pending / Done — {date}} |
+
+**Re-Validation Reminder:** If a dependency epic above completes and merges, trigger the Dependency Re-Validation protocol in `stages/s5/s5_v2_validation_loop.md` before proceeding to S6. The user should provide the PR URL or commit range for the dependency's merged changes.
+
+---
+
 ## Epic Progress Tracker
 
 **Overall Status:** {X/Y features complete}
@@ -378,6 +391,7 @@ Plan  Deep Dive  Check  (per feature)   QC
 ## Workflow Checklist
 
 **S1 - Epic Planning:**
+- [ ] Sibling epic awareness check completed (Step 0) — dependencies recorded in ## Dependencies if any
 - [ ] Epic folder created
 - [ ] All feature folders created
 - [ ] Initial `epic_smoke_test_plan.md` created

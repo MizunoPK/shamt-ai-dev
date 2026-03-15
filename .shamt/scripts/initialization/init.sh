@@ -157,17 +157,18 @@ echo "  ✓ Default branch: $DEFAULT_BRANCH"
 separator "Repository Configuration"
 
 echo "  Should .shamt/ and the rules file be gitignored in this project?"
-echo "  Choose 'yes' for solo/local-only tooling, 'no' to track them in the repo."
+echo "  Default: YES (recommended for solo/multi-agent work — keeps epic state files out of git)."
+echo "  Choose 'no' only if you need to share .shamt/ with other developers via git."
 echo ""
-read -rp "  Gitignore .shamt/ and rules file? [y/N]: " gitignore_choice
-gitignore_choice="${gitignore_choice:-N}"
+read -rp "  Gitignore .shamt/ and rules file? [Y/n]: " gitignore_choice
+gitignore_choice="${gitignore_choice:-Y}"
 if [[ "$gitignore_choice" =~ ^[Yy]$ ]]; then
     GITIGNORE_SHAMT="true"
 else
     GITIGNORE_SHAMT="false"
 fi
 
-echo "  ✓ Gitignore .shamt/ and rules file: $GITIGNORE_SHAMT"
+echo "  ✓ Gitignore .shamt/ and rules file (default: yes): $GITIGNORE_SHAMT"
 
 # --- Confirmation ------------------------------------------------------------
 
@@ -249,6 +250,15 @@ echo "  ✓ *VALIDATION_LOG* added to .gitignore (always)"
 
 # Optionally gitignore .shamt/ and rules file
 if [ "$GITIGNORE_SHAMT" = "true" ]; then
+    # Warn if .shamt/ is already tracked by git (migration required)
+    if [ -n "$(git -C "$TARGET_DIR" ls-files .shamt/ 2>/dev/null | head -1)" ]; then
+        echo ""
+        echo "  ⚠  Warning: .shamt/ is currently tracked by git. To migrate to the gitignored model:"
+        echo "       git rm -r --cached .shamt/"
+        echo "       git commit -m \"stop tracking .shamt/ framework directory\""
+        echo "  Then re-run init or manually add .shamt/ to .gitignore."
+        echo "  (Continuing — adding .shamt/ to .gitignore now; run the commands above when ready)"
+    fi
     if ! grep -qF ".shamt/" "$GITIGNORE_FILE"; then
         echo ".shamt/" >> "$GITIGNORE_FILE"
     fi

@@ -152,6 +152,7 @@ S6 is complete when all implementation tasks from implementation_plan.md are imp
 
 **Verify BEFORE starting S6:**
 
+- [ ] Parallel Epic Coordination: If other epics are active, confirm with the user that no other agent is currently in S6–S9 before proceeding. If unsure — **STOP and ask.**
 - [ ] S5 complete:
   - Validation Loop passed (3 consecutive clean rounds achieved)
   - implementation_plan.md validated and complete
@@ -203,6 +204,7 @@ Step 4: Final Verification
    ├─ All implementation tasks complete
    ├─ All unit tests passing (100%)
    ├─ All requirements checked off
+   ├─ Code comments self-check (no comments in code written or modified)
    └─ Ready for S7 (Testing & Review)
 
 Mark S6 Complete
@@ -806,7 +808,20 @@ Check implementation_checklist.md:
 ✅ All requirements implemented and verified
 ```
 
-### 4.4: Final Smoke Test
+### 4.4: Code Comments Self-Check
+
+Scan all code you have written or modified in this feature — including test files — for any inline comments, docstrings, or explanatory block comments. Remove all of them.
+
+**Allowed to remain:**
+- License/copyright headers
+- Tool-required markers (`# type: ignore`, `# noqa`, `// eslint-disable-next-line`, etc.)
+- Any overrides documented in CODING_STANDARDS.md
+
+If you find comments: remove them now, re-run tests, then continue to Step 4.5.
+
+---
+
+### 4.5: Final Smoke Test
 
 Run feature end-to-end:
 
@@ -838,6 +853,7 @@ python run_[module].py --mode draft
 - [ ] Final verification complete (Step 4):
   - All required tests/scripts passing per Testing Approach
   - All requirements implemented
+  - Code comments self-check passed (no inline comments, docstrings, or explanatory block comments in code written or modified in S6)
   - End-to-end smoke test passed
 - [ ] Feature README.md updated:
   - Agent Status: Phase = POST_IMPLEMENTATION

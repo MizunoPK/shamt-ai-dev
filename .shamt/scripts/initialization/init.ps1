@@ -149,16 +149,17 @@ Write-Host "  OK Default branch: $DefaultBranch"
 Write-Separator "Repository Configuration"
 
 Write-Host "  Should .shamt/ and the rules file be gitignored in this project?"
-Write-Host "  Choose 'yes' for solo/local-only tooling, 'no' to track them in the repo."
+Write-Host "  Default: YES (recommended for solo/multi-agent work — keeps epic state files out of git)."
+Write-Host "  Choose 'no' only if you need to share .shamt/ with other developers via git."
 Write-Host ""
-$gitignoreChoice = Prompt-Input "  Gitignore .shamt/ and rules file? [y/N]" "N"
+$gitignoreChoice = Prompt-Input "  Gitignore .shamt/ and rules file? [Y/n]" "Y"
 if ($gitignoreChoice -match '^[Yy]$') {
     $GitignoreShamt = $true
 } else {
     $GitignoreShamt = $false
 }
 
-Write-Host "  OK Gitignore .shamt/ and rules file: $GitignoreShamt"
+Write-Host "  OK Gitignore .shamt/ and rules file (default: yes): $GitignoreShamt"
 
 # --- Confirmation ------------------------------------------------------------
 
@@ -237,6 +238,16 @@ Write-Host "  OK *VALIDATION_LOG* added to .gitignore (always)"
 
 # Optionally gitignore .shamt/ and rules file
 if ($GitignoreShamt) {
+    # Warn if .shamt/ is already tracked by git (migration required)
+    $trackedCheck = & git -C $TargetDir ls-files .shamt/ 2>&1 | Select-Object -First 1
+    if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($trackedCheck)) {
+        Write-Host ""
+        Write-Host "  WARNING: .shamt/ is currently tracked by git. To migrate to the gitignored model:" -ForegroundColor Yellow
+        Write-Host "       git rm -r --cached .shamt/" -ForegroundColor Yellow
+        Write-Host "       git commit -m ""stop tracking .shamt/ framework directory""" -ForegroundColor Yellow
+        Write-Host "  Then re-run init or manually add .shamt/ to .gitignore." -ForegroundColor Yellow
+        Write-Host "  (Continuing -- adding .shamt/ to .gitignore now; run the commands above when ready)" -ForegroundColor Yellow
+    }
     Add-GitignoreEntry -GitignoreFile $GitignoreFile -Entry ".shamt/"
     if ($RulesFileDir -eq $TargetDir) {
         $RulesGitignorePath = $RulesFileName

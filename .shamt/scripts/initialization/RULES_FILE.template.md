@@ -70,6 +70,19 @@ Per-feature: S5 (Plan) → S6 (Execute) → S7 (Test) → S8 (Align) → repeat 
 - Commit without running tests
 - Autonomous conflict resolution (always escalate to user)
 - Replace `SHAMT-{N}` with `{{EPIC_TAG}}-{N}` inside `.shamt/guides/` files — see "Shared Guide Rules" below
+- Add code comments, docstrings, or inline explanations to implemented code — see `.shamt/project-specific-configs/CODING_STANDARDS.md` for the no-comment policy and any project-specific exceptions
+
+---
+
+## Parallel Epic Play
+
+When multiple epics are active simultaneously in separate agent windows:
+
+- **S1–S5 (planning):** Multiple agents may proceed independently and in parallel. Each agent operates in its own epic's subdirectory under `.shamt/epics/`. No coordination required.
+- **S6–S9 (execution, smoke testing, QC):** Only ONE agent may be in execution at a time. Before starting S6, confirm with the user that no other agent is currently in S6–S9.
+- **S10 (completion):** S10 also writes to `EPIC_TRACKER.md`. Two agents completing S10 simultaneously risk a file-level conflict. Treat S10 like S6–S9: only one at a time. Confirm with the user before starting S10 if another agent may also be finishing.
+
+If you are ready to begin S6 or S10 and are unsure whether another agent is at those stages: **STOP and ask the user to confirm it is safe to proceed.**
 
 ---
 

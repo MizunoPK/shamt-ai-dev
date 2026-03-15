@@ -1352,3 +1352,35 @@ Use `VALIDATION_LOOP_LOG_S5_template.md` to track each round: timestamp, reading
 
 
 **This guide is complete and ready for use. Begin with Phase 1: Draft Creation when S3 is complete (Gate 4.5 passed) and spec.md is finalized. (S4 is deprecated — Test Scope Decision is now Step 0 of S5.)**
+
+---
+
+## Dependency Re-Validation Protocol
+
+**Trigger:** The user informs you that a dependency epic (recorded in this epic's `EPIC_README.md` `## Dependencies` section) has completed and merged.
+
+**When it runs:** After Gate 5 approval and before you begin S6. If multiple dependencies exist, re-validate separately as each one completes — do not batch.
+
+**Scope (not a full S5 redo):**
+
+1. Read the completed dependency's merged code changes. The user should provide the PR URL or commit range — epic artifacts are gitignored and not in git history.
+2. Re-read this epic's `implementation_plan.md`.
+3. Run a focused validation pass checking only:
+   - API/interface changes from the dependency that affect this plan
+   - New files or changed file paths referenced in this plan
+   - Design decisions made in the dependency that contradict assumptions in this plan
+4. If issues found: update the implementation plan accordingly. Do **not** restart all of S5.
+5. If a foundational architectural change invalidates the plan's core approach: **STOP and escalate to the user.** Do not self-repair. A full S5 re-run is not the fallback; user judgment is.
+
+**What requires a plan update:**
+- A function or class this plan calls has changed its signature
+- A file this plan references has moved or been deleted
+- A data model or schema changed in a way that affects this epic's work
+- An architectural decision was made in the dependency that contradicts an assumption in this plan
+
+**What does NOT require a plan update:**
+- Line number changes in files this plan references
+- New files added by the dependency that this plan doesn't touch
+- Formatting or comment changes
+
+**After re-validation:** Update the `Re-Validation Status` field in this epic's `EPIC_README.md` `## Dependencies` table to "Done — {date}", then proceed to S6.

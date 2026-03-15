@@ -270,18 +270,18 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 **Files:**
 
-**F1. stages/s1/s1_epic_planning.md (1304 lines)**
-- **D11 Status:** Exceeds 1250-line baseline by 54 lines
-- **Pre-existing:** Yes — was ~1300 lines before SHAMT-7 (P5 added ~4 lines)
+**F1. stages/s1/s1_epic_planning.md (1331 lines)**
+- **D11 Status:** Exceeds 1250-line baseline by 81 lines
+- **Pre-existing:** Yes — was 1304 lines before SHAMT-9 (P2+P3 added ~27 lines: Step 0, parallel play note, reference card update)
 - **Split candidates:** S1.P1–P3 are each large enough to warrant standalone files
-- **Why deferred:** Splitting requires updating all "read s1_epic_planning.md" references across the guide tree; out of SHAMT-7 scope (redundancy reduction)
+- **Why deferred:** Splitting requires updating all "read s1_epic_planning.md" references across the guide tree; out of SHAMT-9 scope
 - **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
 
-**F2. stages/s5/s5_v2_validation_loop.md (1327 lines)**
-- **D11 Status:** Exceeds 1250-line baseline by 77 lines
-- **Pre-existing:** Yes — was ~1313 lines before SHAMT-7 (P1 + P5 added ~14 lines)
+**F2. stages/s5/s5_v2_validation_loop.md (1386 lines)**
+- **D11 Status:** Exceeds 1250-line baseline by 136 lines
+- **Pre-existing:** Yes — was 1327 lines before SHAMT-9 (P4 added ~59 lines: Dependency Re-Validation Protocol section)
 - **Split candidates:** Phase 1 (Draft), Phase 2 (Validation Loop), dimension reference sections
-- **Why deferred:** Splitting requires updating all "read s5_v2_validation_loop.md" references and agent prompts; out of SHAMT-7 scope
+- **Why deferred:** Splitting requires updating all "read s5_v2_validation_loop.md" references and agent prompts; out of SHAMT-9 scope
 - **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
 
 **F3. reference/validation_loop_master_protocol.md (1413 lines)**
@@ -373,8 +373,8 @@ wc -l real_violations.txt  # Should be low count
   - stages/s3/s3_parallel_work_sync.md (conditional sync guide)
   - stages/s4/s4_feature_testing_strategy.md (deprecation redirect stub)
 - Category F (D11 File Size — pre-existing, deferred splitting): **3 active files**
-  - stages/s1/s1_epic_planning.md (1304 lines, 54 over 1250 baseline)
-  - stages/s5/s5_v2_validation_loop.md (1327 lines, 77 over 1250 baseline)
+  - stages/s1/s1_epic_planning.md (1331 lines, 81 over 1250 baseline)
+  - stages/s5/s5_v2_validation_loop.md (1386 lines, 136 over 1250 baseline)
   - reference/validation_loop_master_protocol.md (1413 lines, 163 over 1250 baseline)
 
 **Inactive Exceptions (files deleted from filesystem):**
