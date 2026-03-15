@@ -5,11 +5,23 @@
 
 🚨 **MANDATORY READING PROTOCOL**
 
-**Before starting this stage:**
+**Before starting this stage — including when resuming a prior session:**
 1. **Quick entry point:** `reference/stage_3/stage_3_reference_card.md` — covers the happy path including Gate 4.5; S3 runs once per epic
 2. **Full guide (this file):** Read entirely for detailed examples or when encountering edge cases
 3. Verify prerequisites (S2 complete for ALL features)
 4. Update epic EPIC_README.md Agent Status with guide name + timestamp
+
+---
+
+## 🚫 FORBIDDEN SHORTCUTS
+
+You CANNOT:
+- Skip S3.P1 (Testing Strategy) and proceed directly to P3 approval
+- Draft the testing strategy from general knowledge rather than following S3.P1 Steps 1–5
+- Skip S3.P2 (Epic Documentation Refinement) because docs appear complete
+- Present the epic plan for approval (P3) before completing both P1 and P2
+
+If you are about to do any of the above: STOP and re-read the relevant section.
 
 ---
 
@@ -57,6 +69,15 @@
 ---
 
 ## S3.P1: Epic Testing Strategy Development
+
+⚠️ **Before starting P1, confirm:**
+- [ ] S3.P2 (Epic Documentation Refinement) is mandatory after P1 — I will not skip it
+- [ ] S3.P3 (Epic Plan Approval) is mandatory after P2 — I will not present for approval mid-phase
+- [ ] I will complete all three phases before Gate 4.5
+
+P1 produces the testing strategy. P2 refines documentation. P3 is the gate. All three are required.
+
+---
 
 ### First: Read the Epic's Testing Approach
 

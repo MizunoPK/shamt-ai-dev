@@ -98,6 +98,10 @@ I'm beginning S5 (Implementation Planning) for {feature_name}.
 - Next Action: Begin draft creation (target 90 minutes)
 
 Starting Phase 1: Draft Creation...
+
+**NEXT MANDATORY STEP (when Phase 1 draft is complete):**
+Use the "Starting S5 v2: Validation Loop Phase" prompt before any other action.
+Do NOT present the draft to the user or proceed to S6 without completing this step.
 ```
 
 ---
@@ -388,6 +392,10 @@ I'm reading `stages/s7/s7_p1_smoke_testing.md` to ensure I follow the 3-part smo
 - Next Action: Smoke Test Part 1 - Import test
 
 Running import test for {feature_name}...
+
+**NEXT MANDATORY STEP (when all 3 smoke testing parts pass):**
+Use the "Starting S7.P2: Feature QC Validation Loop" prompt before any other action.
+Do NOT proceed to S7.P3 or present results to user without completing S7.P2.
 ```
 
 ---

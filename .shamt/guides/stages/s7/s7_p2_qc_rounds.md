@@ -35,7 +35,7 @@ S7.P1 (Smoke Testing) →
 
 ## 🚨 MANDATORY READING PROTOCOL
 
-**BEFORE starting Feature QC, you MUST:**
+**BEFORE starting Feature QC — including when resuming a prior session — you MUST:**
 
 1. **Read the validation loop guide:** `reference/validation_loop_s7_feature_qc.md`
    - Understand 16 dimensions (7 master + 9 S7 QC-specific)
@@ -60,6 +60,18 @@ S7.P1 (Smoke Testing) →
 5. **THEN AND ONLY THEN** begin validation loop
 
 **This is NOT optional.** Reading the validation loop guide ensures you check all 16 dimensions systematically.
+
+---
+
+## 🚫 FORBIDDEN SHORTCUTS
+
+You CANNOT:
+- Declare QC "complete" after a single pass — 3 consecutive clean validation rounds are required
+- Skip the Code Inspection Protocol (MANDATORY) by reviewing code from memory
+- Proceed to S7.P3 without achieving 3 consecutive clean rounds (MANDATORY CHECKPOINT 1)
+- Skip dimensions because "the feature was carefully implemented"
+
+If you are about to do any of the above: STOP and re-read the relevant section.
 
 ---
 
@@ -527,6 +539,13 @@ Code conventions verified: Follows CODING_STANDARDS.md (type hints, error contex
 ---
 
 ## Validation Round Execution
+
+⚠️ **Before starting Round 1, confirm:**
+- [ ] I will not stop after the first round that appears mostly clean
+- [ ] 3 consecutive rounds with zero issues are required — not 3 rounds total, 3 CONSECUTIVE
+- [ ] I will not present QC results to the user or proceed to S7.P3 until the 3-consecutive requirement is met
+
+---
 
 **For complete validation round instructions, see:**
 - `reference/validation_loop_s7_feature_qc.md` - Complete 16-dimension checklist

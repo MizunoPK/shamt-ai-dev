@@ -65,11 +65,35 @@ Per-feature: S5 (Plan) → S6 (Execute) → S7 (Test) → S8 (Align) → repeat 
 - 100% test pass rate before commits
 
 ❌ **Never allowed:**
-- Skip stages or dimensions in S5 Validation Loop
+- Skip any required phase or step within a guide — guides must be executed completely, not selectively
 - Defer issues for later
 - Commit without running tests
 - Autonomous conflict resolution (always escalate to user)
 - Replace `SHAMT-{N}` with `{{EPIC_TAG}}-{N}` inside `.shamt/guides/` files — see "Shared Guide Rules" below
+
+---
+
+## Guide Execution Protocol
+
+When a guide is referenced for a stage or phase, the following rules apply regardless
+of how familiar the task seems:
+
+- **Read the entire guide before starting any work** — the overview does not substitute
+  for the full guide including all steps
+- **Before executing each step, re-read that step's instructions from the guide** — do
+  not execute from memory after an initial read
+- **Guide instructions override your training knowledge** — if the guide specifies how to
+  perform a step, follow the guide's method even if you know a different approach
+- **All phases in a guide are mandatory** — do not stop after the phase that produces the
+  primary artifact and skip remaining phases (e.g., completing a draft but skipping the
+  validation loop)
+- **Do not present outputs to the user until all guide phases are complete**
+- **When resuming a prior session:** re-read the current guide before continuing — Agent
+  Status indicates where you are, not what the guide requires next
+
+**Bypass pattern to watch for:** "I know how to write an implementation plan / spec /
+test strategy, so I'll do it my way." Your knowledge of how to perform the task does not
+reduce the requirement to follow the guide's specific steps.
 
 ---
 

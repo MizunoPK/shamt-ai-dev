@@ -63,11 +63,28 @@
 
 ---
 
-## 🚨 Reading Protocol
+## 🚨 MANDATORY READING PROTOCOL
 
-**Quick entry point:** `reference/stage_5/stage_5_reference_card.md` — covers the S5 v2 workflow, all 11 dimensions, and restart points; use for second or later features.
+Before starting this stage — including when resuming a prior session:
+1. Use Read tool to load THIS ENTIRE GUIDE — not just the overview
+   - Quick entry point: `reference/stage_5/stage_5_reference_card.md` — use for second or later features
+   - Full guide (this file): required for first feature and edge cases
+2. Verify prerequisites checklist below
+3. Update feature README.md Agent Status with guide name + timestamp
 
-**Full guide (this file):** Read entirely for your first time using S5 v2 or when encountering edge cases.
+DO NOT start work based on the overview alone.
+
+---
+
+## 🚫 FORBIDDEN SHORTCUTS
+
+You CANNOT:
+- Draft an implementation plan based on general knowledge — follow Steps 0–7 in Phase 1
+- Skip Phase 2 (Validation Loop) because Phase 1 is "done enough"
+- Present the plan to the user before completing Phase 2 (3 consecutive clean rounds)
+- Proceed to S6 without Gate 5 user approval
+
+If you are about to do any of the above: STOP and re-read the relevant section.
 
 ---
 
@@ -187,6 +204,16 @@ S5 v2 is a **validation loop-based approach** to implementation planning that sy
 ---
 
 ## 🚀 PHASE 1: DRAFT CREATION
+
+⚠️ **Before starting Phase 1, confirm:**
+- [ ] Phase 2 (Validation Loop) is mandatory after Phase 1 — I will not skip it
+- [ ] I will not present the plan to the user until Phase 2 is complete (3 consecutive clean rounds, all exit criteria met)
+
+Phase 1 produces a ~70% quality draft. Phase 2 is what makes it production-ready. Gate 5 (user approval) follows Phase 2.
+
+If you navigated here via the Table of Contents: go back to the beginning and read sequentially — the MANDATORY READING PROTOCOL and FORBIDDEN SHORTCUTS at the top apply to you.
+
+---
 
 **Goal:** Create implementation_plan.md with all 11 dimension sections present
 
