@@ -17,26 +17,29 @@ S8 (ALL features complete) →
 
 **BEFORE starting Epic Smoke Testing, you MUST:**
 
-1. **Read the smoke testing pattern:** `reference/smoke_testing_pattern.md`
-   - Understand universal smoke testing workflow
+1. **Quick entry point:** `reference/stage_9/stage_9_reference_card.md` — covers the epic QC happy path; use for fast navigation
+2. **Full guide (this file):** Read entirely for detailed workflow or when encountering edge cases
+
+3. **Read the smoke testing pattern:** `reference/smoke_testing_pattern.md`
+   - Understand universal smoke testing workflow (Parts 1–4, logging requirements, platform-specific notes)
    - Review critical rules that apply to ALL smoke testing
    - Study common mistakes to avoid
 
-2. **Use the phase transition prompt** from `prompts/s9_prompts.md`
+4. **Use the phase transition prompt** from `prompts/s9_prompts.md`
    - Find "Starting S9: Epic Final QC" prompt
    - Acknowledge critical requirements
    - List requirements from this guide
 
-3. **Update EPIC_README.md Agent Status** with:
+5. **Update EPIC_README.md Agent Status** with:
    - Current Phase: S9.P1 - Epic Smoke Testing
    - Current Guide: `stages/s9/s9_p1_epic_smoke_testing.md`
    - Guide Last Read: {YYYY-MM-DD HH:MM}
    - Critical Rules: "4 parts MANDATORY", "Use EVOLVED test plan", "Verify DATA VALUES", "Restart if ANY fails"
    - Next Action: Execute Step 1 - Pre-QC Verification
 
-4. **Verify all prerequisites** (see checklist below)
+6. **Verify all prerequisites** (see checklist below)
 
-5. **THEN AND ONLY THEN** begin epic smoke testing
+7. **THEN AND ONLY THEN** begin epic smoke testing
 
 **This is NOT optional.** Reading both the pattern and this guide ensures you validate the epic correctly.
 

@@ -3,9 +3,10 @@
 🚨 **MANDATORY READING PROTOCOL**
 
 **Before starting this phase:**
-1. Use Read tool to load THIS ENTIRE GUIDE
-2. Verify prerequisites (S1 complete, feature folder exists)
-3. Update feature README.md Agent Status with guide name + timestamp
+1. **Quick entry point:** `reference/stage_2/stage_2_reference_card.md` — covers S2.P1 and S2.P2 happy path; use for second or later features
+2. **Full guide (this file):** Read entirely for your first time using this stage or when encountering edge cases
+3. Verify prerequisites (S1 complete, feature folder exists)
+4. Update feature README.md Agent Status with guide name + timestamp
 
 ---
 

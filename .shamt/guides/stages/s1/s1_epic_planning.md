@@ -3,16 +3,15 @@
 🚨 **MANDATORY READING PROTOCOL**
 
 **Before starting this guide:**
-1. Use Read tool to load THIS ENTIRE GUIDE
-2. Acknowledge critical requirements (see "Critical Rules" section below)
-3. Verify prerequisites (see "Prerequisites Checklist" section below)
-4. Update epic EPIC_README.md Agent Status with guide name + timestamp
-
-**DO NOT proceed without reading this guide.**
+1. **Quick entry point:** `reference/stage_1/stage_1_reference_card.md` — use for second or later features; covers the happy path
+2. **Full guide (this file):** Read entirely for your first time using this stage or when encountering edge cases
+3. Acknowledge critical requirements (see "Critical Rules" section below)
+4. Verify prerequisites (see "Prerequisites Checklist" section below)
+5. Update epic EPIC_README.md Agent Status with guide name + timestamp
 
 **After session compaction:**
 - Check epic EPIC_README.md Agent Status for current guide
-- READ THIS GUIDE again (full guide, not summary)
+- Re-read this guide (or the reference card if in a repeat pass) before continuing
 - Continue from "Next Action" in Agent Status
 
 ---

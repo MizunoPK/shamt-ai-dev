@@ -6,9 +6,10 @@
 🚨 **MANDATORY READING PROTOCOL**
 
 **Before starting this stage:**
-1. Use Read tool to load THIS ENTIRE GUIDE
-2. Verify prerequisites (S2 complete for ALL features)
-3. Update epic EPIC_README.md Agent Status with guide name + timestamp
+1. **Quick entry point:** `reference/stage_3/stage_3_reference_card.md` — covers the happy path including Gate 4.5; S3 runs once per epic
+2. **Full guide (this file):** Read entirely for detailed examples or when encountering edge cases
+3. Verify prerequisites (S2 complete for ALL features)
+4. Update epic EPIC_README.md Agent Status with guide name + timestamp
 
 ---
 

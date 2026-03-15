@@ -63,6 +63,14 @@
 
 ---
 
+## 🚨 Reading Protocol
+
+**Quick entry point:** `reference/stage_5/stage_5_reference_card.md` — covers the S5 v2 workflow, all 11 dimensions, and restart points; use for second or later features.
+
+**Full guide (this file):** Read entirely for your first time using S5 v2 or when encountering edge cases.
+
+---
+
 ## Prerequisites
 
 **Before starting S5 v2:**

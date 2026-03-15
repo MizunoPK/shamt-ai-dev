@@ -26,12 +26,13 @@
 
 **BEFORE starting S10, you MUST:**
 
-1. **Read this ENTIRE guide** using the Read tool
-2. **Use the phase transition prompt** from `prompts_reference_v2.md` ("Starting Epic Cleanup")
-3. **Acknowledge critical requirements** by listing them explicitly
-4. **Verify ALL prerequisites** using the checklist below
-5. **Update EPIC_README.md Agent Status** to reflect S10 start
-6. **THEN AND ONLY THEN** begin epic cleanup
+1. **Quick entry point:** `reference/stage_10/stage_10_reference_card.md` — covers the full S10 workflow; use this for fast navigation
+2. **Full guide (this file):** Read entirely for detailed step instructions or when encountering edge cases
+3. **Use the phase transition prompt** from `prompts_reference_v2.md` ("Starting Epic Cleanup")
+4. **Acknowledge critical requirements** by listing them explicitly
+5. **Verify ALL prerequisites** using the checklist below
+6. **Update EPIC_README.md Agent Status** to reflect S10 start
+7. **THEN AND ONLY THEN** begin epic cleanup
 
 **Rationale:** S10 is the FINAL stage before epic completion. This stage ensures:
 - All work is committed to git
