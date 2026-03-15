@@ -51,6 +51,8 @@ An issue in discovery context is any of:
 
 Each round includes an **Adversarial Challenge** checklist — questions the agent must ask itself to surface unknowns that backward-looking checks miss.
 
+> **Note:** The per-round Adversarial Challenge checklists in this file (shown in Rounds 1–3 below) serve as the Adversarial Self-Check for Discovery contexts — they satisfy and extend the master protocol's generic 5-question check. No additional self-check step is required in Discovery rounds; the per-round challenges replace it.
+
 > **When any adversarial challenge item returns "No":** Document what is missing as an issue, add any unasked questions to the Pending Questions table, and treat this round as NOT clean (clean counter resets to 0).
 
 ---
@@ -186,7 +188,7 @@ Round 5: Final sweep
 ## Exit Criteria Specific to Discovery
 
 **Can only exit when ALL true:**
-- [ ] 3 consecutive rounds found zero issues
+- [ ] 3 consecutive rounds found zero issues, OR user opted to stop at the 2-round checkpoint (see master protocol Exit Criteria)
 - [ ] All epic/feature components researched
 - [ ] All questions answered
 - [ ] Zero assumptions

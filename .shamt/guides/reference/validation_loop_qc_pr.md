@@ -197,7 +197,7 @@ Round 5: Final sweep
 ## Exit Criteria Specific to QC/PR
 
 **Can only exit when ALL true:**
-- [ ] 3 consecutive rounds found zero issues
+- [ ] 3 consecutive rounds found zero issues, OR user opted to stop at the 2-round checkpoint (see master protocol Exit Criteria)
 - [ ] All tests pass (100% pass rate)
 - [ ] Code matches implementation plan
 - [ ] All requirements implemented

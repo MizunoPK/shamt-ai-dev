@@ -81,7 +81,7 @@ DO NOT start work based on the overview alone.
 You CANNOT:
 - Draft an implementation plan based on general knowledge — follow Steps 0–7 in Phase 1
 - Skip Phase 2 (Validation Loop) because Phase 1 is "done enough"
-- Present the plan to the user before completing Phase 2 (3 consecutive clean rounds)
+- Present the plan to the user or stop before the 2-round checkpoint without user input — the 2-round checkpoint is the only sanctioned early-exit mechanism (see `reference/validation_loop_master_protocol.md` Exit Criteria)
 - Proceed to S6 without Gate 5 user approval
 
 If you are about to do any of the above: STOP and re-read the relevant section.
@@ -207,7 +207,7 @@ S5 v2 is a **validation loop-based approach** to implementation planning that sy
 
 ⚠️ **Before starting Phase 1, confirm:**
 - [ ] Phase 2 (Validation Loop) is mandatory after Phase 1 — I will not skip it
-- [ ] I will not present the plan to the user until Phase 2 is complete (3 consecutive clean rounds, all exit criteria met)
+- [ ] I will not present the plan to the user or stop before the 2-round checkpoint without user input — the 2-round checkpoint is the only sanctioned early-exit mechanism
 
 Phase 1 produces a ~70% quality draft. Phase 2 is what makes it production-ready. Gate 5 (user approval) follows Phase 2.
 
@@ -535,13 +535,19 @@ Each round follows this pattern:
    - Use reading pattern for this round
    - Document EVERY issue found (no matter how minor)
 
-4. REPORT FINDINGS
-   - Count issues by dimension
+4. ADVERSARIAL SELF-CHECK (run after all dimensions, before scoring)
+   - See master protocol for the 5 required questions
+   - Any new issues found → add to this round's issue list
+   - Any open questions that can't be answered locally → Open Questions Protocol
+   - This step may not be skipped — a round may not be scored clean if it is
+
+5. REPORT FINDINGS
+   - Count issues by dimension (including any from Adversarial Self-Check)
    - Report: "Round N: X issues found across Y dimensions"
 
-5. FIX OR CONTINUE
+6. FIX OR CONTINUE
    - If X > 0: Fix ALL issues immediately → Round N+1, RESET counter
-   - If X = 0: Increment clean counter → Check if 3 consecutive clean
+   - If X = 0: Increment clean counter → Check if 3 consecutive clean (or 2-round checkpoint)
 ```
 
 ---
@@ -1234,9 +1240,9 @@ Next: Present implementation_plan.md to user (Gate 5)
 
 **Can ONLY exit when ALL true:**
 
-1. ✅ 3 consecutive rounds found ZERO issues each
-2. ✅ Rounds N-2, N-1, and N all found zero issues
-3. ✅ All 18 dimensions validated in final 3 rounds (7 master + 11 implementation planning)
+1. ✅ 3 consecutive rounds found ZERO issues each, OR user explicitly opted to stop at the 2-round checkpoint (see `reference/validation_loop_master_protocol.md` Exit Criteria for the checkpoint protocol)
+2. ✅ Rounds N-2, N-1, and N all found zero issues (or user opted to stop at 2-round checkpoint)
+3. ✅ All 18 dimensions validated in final clean rounds (7 master + 11 implementation planning)
 4. ✅ All evidence artifacts present in implementation_plan.md
 5. ✅ Confidence level >= MEDIUM
 6. ✅ implementation_plan.md version incremented (v0.1 draft → v1.0 validated)

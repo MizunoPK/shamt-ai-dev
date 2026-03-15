@@ -588,7 +588,7 @@ Requirement 1: Use synchronous file I/O
 **Spec refinement validation is COMPLETE when ALL of the following are true:**
 
 **From Master Protocol:**
-- [ ] 3 consecutive rounds with ZERO issues found
+- [ ] 3 consecutive rounds with ZERO issues found, OR user opted to stop at the 2-round checkpoint (see master protocol Exit Criteria)
 - [ ] All 7 master dimensions checked every round
 - [ ] All 2 spec refinement dimensions checked every round
 - [ ] Validation log complete with all rounds documented

@@ -66,9 +66,9 @@ S7.P1 (Smoke Testing) →
 ## 🚫 FORBIDDEN SHORTCUTS
 
 You CANNOT:
-- Declare QC "complete" after a single pass — 3 consecutive clean validation rounds are required
+- Declare QC "complete" after a single pass — at minimum the 2-round checkpoint requires user input before stopping
 - Skip the Code Inspection Protocol (MANDATORY) by reviewing code from memory
-- Proceed to S7.P3 without achieving 3 consecutive clean rounds (MANDATORY CHECKPOINT 1)
+- Stop before the 2-round checkpoint without user input — the checkpoint is the only sanctioned early-exit mechanism (see `reference/validation_loop_master_protocol.md` Exit Criteria)
 - Skip dimensions because "the feature was carefully implemented"
 
 If you are about to do any of the above: STOP and re-read the relevant section.
@@ -120,10 +120,10 @@ Feature QC is complete when 3 consecutive validation rounds find ZERO issues acr
    - Cannot skip any dimension
    - Re-read entire codebase each round (no working from memory)
 
-2. ⚠️ 3 CONSECUTIVE CLEAN ROUNDS REQUIRED
+2. ⚠️ 3 CONSECUTIVE CLEAN ROUNDS REQUIRED (OR USER CHECKPOINT AT 2)
    - Clean = ZERO issues found across all 16 dimensions
    - Counter resets if ANY issue found
-   - Cannot exit early (must achieve 3 consecutive)
+   - Cannot stop before the 2-round checkpoint without user input — the checkpoint is the only sanctioned early-exit mechanism (see master protocol Exit Criteria)
    - Typical: 6-8 rounds total to achieve 3 consecutive clean
 
 3. ⚠️ FIX ISSUES IMMEDIATELY (NO RESTART PROTOCOL)
@@ -542,8 +542,8 @@ Code conventions verified: Follows CODING_STANDARDS.md (type hints, error contex
 
 ⚠️ **Before starting Round 1, confirm:**
 - [ ] I will not stop after the first round that appears mostly clean
-- [ ] 3 consecutive rounds with zero issues are required — not 3 rounds total, 3 CONSECUTIVE
-- [ ] I will not present QC results to the user or proceed to S7.P3 until the 3-consecutive requirement is met
+- [ ] At minimum I must reach the 2-round checkpoint before stopping — at that point the user decides whether to continue to a 3rd round
+- [ ] I will not present QC results to the user or proceed to S7.P3 until at least the 2-round checkpoint has been presented to the user
 
 ---
 

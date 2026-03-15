@@ -167,7 +167,7 @@ Round 5: Final sweep
 ## Exit Criteria Specific to Alignment
 
 **Can only exit when ALL true:**
-- [ ] 3 consecutive rounds found zero issues
+- [ ] 3 consecutive rounds found zero issues, OR user opted to stop at the 2-round checkpoint (see master protocol Exit Criteria)
 - [ ] No naming conflicts across any features
 - [ ] No approach contradictions across any features
 - [ ] All data structures compatible

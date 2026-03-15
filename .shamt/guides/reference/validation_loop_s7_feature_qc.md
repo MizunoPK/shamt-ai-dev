@@ -721,7 +721,7 @@ All positions supported ✅
 **S7 Feature QC validation is COMPLETE when ALL of the following are true:**
 
 **From Master Protocol:**
-- [ ] 3 consecutive rounds with ZERO issues found
+- [ ] 3 consecutive rounds with ZERO issues found, OR user opted to stop at the 2-round checkpoint (see master protocol Exit Criteria)
 - [ ] All 7 master dimensions checked every round
 - [ ] All 9 S7 QC dimensions checked every round
 - [ ] Validation log complete with all rounds documented
