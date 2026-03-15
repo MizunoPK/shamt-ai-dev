@@ -1316,4 +1316,4 @@ Use `VALIDATION_LOOP_LOG_S5_template.md` to track each round: timestamp, reading
 ---
 
 
-**This guide is complete and ready for use. Begin with Phase 1: Draft Creation when S4 is complete and spec.md is finalized.**
+**This guide is complete and ready for use. Begin with Phase 1: Draft Creation when S3 is complete (Gate 4.5 passed) and spec.md is finalized. (S4 is deprecated — Test Scope Decision is now Step 0 of S5.)**

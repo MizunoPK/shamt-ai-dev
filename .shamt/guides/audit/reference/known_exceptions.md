@@ -153,25 +153,15 @@ Audit Dimension D8 (Documentation Quality) checks for "## Prerequisites" and "##
     - **Design Rationale:** Conditional auxiliary workflow, not standard stage progression
     - **Audit Action:** SKIP - not a standard workflow guide
 
-16. **stages/s4/s4_feature_testing_card.md**
+16. **stages/s4/archive/s4_feature_testing_card.md** *(ARCHIVED — SHAMT-7)*
     - **Type:** Quick reference card / cheat sheet
-    - **Purpose:** At-a-glance iteration checklist for S4
-    - **Full Guides:** References s4_feature_testing_strategy.md, s4_test_strategy_development.md
-    - **Prerequisites:** Line 13 inline - "**Prerequisites:** S3 complete (Gate 4.5 passed), spec.md finalized (Gate 3 passed)"
-    - **Exit Criteria:** Not applicable (reference card, not workflow)
-    - **Missing Sections:** Prerequisites (inline instead), Exit Criteria (not applicable)
-    - **Design Rationale:** Reference material for quick lookup, not step-by-step workflow execution
-    - **Audit Action:** SKIP - reference card, not workflow guide
+    - **Status:** Archived. S4 deprecated in SHAMT-6; files moved to archive/ in SHAMT-7.
+    - **Audit Action:** SKIP — archived file, not in active guide tree
 
-17. **stages/s4/s4_test_strategy_development.md**
+17. **stages/s4/archive/s4_test_strategy_development.md** *(ARCHIVED — SHAMT-7)*
     - **Type:** Detailed iteration guide (Iterations 1-3)
-    - **Purpose:** Deep-dive instructions for S4 Iterations 1-3
-    - **Prerequisites:** Handled in MANDATORY READING PROTOCOL (line 8) - "Verify S4 router guide already read, Verify prerequisites complete (S3 done, Gate 4.5 passed)"
-    - **Exit Criteria:** HAS formal "## Exit Criteria" section at line 768
-    - **Missing Sections:** Prerequisites (handled in MANDATORY READING PROTOCOL instead of separate h2 section)
-    - **Design Rationale:** Prerequisites verification integrated into reading protocol for consistency
-    - **Audit Action:** SKIP for Prerequisites check (has Exit Criteria, Prerequisites in protocol)
-    - **Note:** This is an audit FALSE POSITIVE - file has Exit Criteria but was flagged by Round 2 audit
+    - **Status:** Archived. S4 deprecated in SHAMT-6; files moved to archive/ in SHAMT-7.
+    - **Audit Action:** SKIP — archived file, not in active guide tree
 
 ---
 

@@ -172,7 +172,7 @@ Convert high-level categories to concrete tests with commands:
 
 **6. Validation Loop Validation (15-20 min)**
 
-**Reference:** `reference/validation_loop_test_strategy.md`
+**Reference:** `reference/validation_loop_master_protocol.md`
 
 - **Round 1:** Check test plan completeness
   - All features integrated in tests?

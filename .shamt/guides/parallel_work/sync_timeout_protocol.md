@@ -361,7 +361,7 @@ Parallel S2 work started 6 hours ago. Not all features have completed S2.
 - Feature 03 (Secondary-B): Waiting to proceed to S5
 
 **Request:**
-- ETA for S4 completion?
+- ETA for S3 completion?
 - Any blockers we should know about?
 
 **No urgency** - just checking in. Reply when convenient.
