@@ -705,6 +705,7 @@ None - all S4 scenarios still relevant
 
 **Git:**
 - [ ] epic_smoke_test_plan.md updated
+- [ ] For Options B/D: Scan any integration test script changes for inline comments; remove any found before committing
 - [ ] Changes committed with descriptive message
 - [ ] Commit message includes feature name
 
