@@ -338,40 +338,9 @@ python [run_script].py --complete-draft-workflow --data-folder ./data
 
 ### Step 2: CRITICAL - Verify Epic Output DATA VALUES
 
-**📖 See pattern file for data validation examples.**
+**📖 See `reference/smoke_testing_pattern.md` for data validation approach and examples.**
 
-**Epic-specific validation:**
-
-```python
-## Verify epic-level outputs have correct data
-from pathlib import Path
-import json
-
-## Check final epic output (combines all features)
-epic_output = Path("data/draft_recommendations_final.json")
-assert epic_output.exists(), "Epic output file missing"
-
-with open(epic_output) as f:
-    data = json.load(f)
-
-## Verify data from ALL features integrated correctly
-assert len(data) > 0, "Epic output is empty"
-
-## Verify Feature 01 data present (item info)
-assert all('player_name' in p for p in data), "Missing item names (Feature 01)"
-
-## Verify Feature 02 data present (ratings)
-assert all('rating' in p for p in data), "Missing ratings (Feature 02)"
-
-## Verify Feature 03 data present (recommendations)
-assert all('draft_position' in p for p in data), "Missing positions (Feature 03)"
-
-## Verify values are CORRECT (not placeholders)
-assert data[0]['rating'] != 0.0, "Ratings are placeholder values"
-assert data[0]['draft_position'] > 0, "Positions are invalid"
-
-print("✅ Epic output integrates all features correctly")
-```
+Epic-specific validation requirements: verify that data from ALL features is present and correctly integrated in the epic-level output. Apply the same pattern — verify structure, then verify DATA VALUES are not placeholders and calculations are correct.
 
 **If validation fails:** Document issue, fix, RE-RUN ALL 4 PARTS
 
