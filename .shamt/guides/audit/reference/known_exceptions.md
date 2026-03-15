@@ -132,7 +132,7 @@ Audit Dimension D8 (Documentation Quality) checks for "## Prerequisites" and "##
 
 ---
 
-### Category C: Optional/Auxiliary Files (3 files)
+### Category C: Optional/Auxiliary Files (4 files)
 
 **Pattern:** Support guides used conditionally or as reference material, not standard sequential workflows
 
@@ -162,6 +162,16 @@ Audit Dimension D8 (Documentation Quality) checks for "## Prerequisites" and "##
     - **Type:** Detailed iteration guide (Iterations 1-3)
     - **Status:** Archived. S4 deprecated in SHAMT-6; files moved to archive/ in SHAMT-7.
     - **Audit Action:** SKIP — archived file, not in active guide tree
+
+18. **stages/s4/s4_feature_testing_strategy.md** *(Added — SHAMT-7)*
+    - **Type:** Deprecation redirect stub
+    - **When Used:** Agents encountering S4 guidance are redirected here
+    - **Status:** Active (redirect only — not a workflow guide)
+    - **Prerequisites:** Not applicable (redirect stub, not a workflow stage)
+    - **Exit Criteria:** Not applicable (redirect stub with "Proceed To" pointer to S5)
+    - **Missing Sections:** Prerequisites, Exit Criteria (neither apply to redirect stubs)
+    - **Design Rationale:** Redirect stubs exist only to point agents/users to the replacement. Requiring formal Prerequisites/Exit Criteria would add confusing structure to a one-purpose document.
+    - **Audit Action:** SKIP — deprecation redirect, not a workflow guide
 
 ---
 
@@ -210,7 +220,7 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 **Dimension:** D8 (Documentation Quality)
 **Check:** `pre_audit_checks.sh` TODO/placeholder scan
-**Every-run count:** 24 critical, ~35 placeholder matches
+**Every-run count:** 25 critical, ~35 placeholder matches
 
 **Root Cause:** The D8 check scans all of `.shamt/guides/` including the epic workflow stage guides (s1–s10). Those guides intentionally contain TODO/TBD/placeholder text as instructional examples and checklist items — they teach users to avoid placeholders, so they must reference them.
 
@@ -224,9 +234,9 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 **Why acceptable:** All occurrences are meta-content: teaching that real work products must not have TODOs. The stage guides themselves have no incomplete sections. The text is definitionally required to describe the standard.
 
-**Action:** When pre_audit_checks.sh reports "TODOs remaining: 24" — this is the expected baseline. Only investigate if the count rises above 24 or if new files appear in the list.
+**Action:** When pre_audit_checks.sh reports "TODOs remaining: 25" — this is the expected baseline. Only investigate if the count rises above 25 or if new files appear in the list.
 
-**Note:** Baseline updated from 23 → 24 on 2026-03-07 after confirming `stages/s7/s7_p2_qc_rounds.md` contributes 2 lines (83: "✅ Zero tech debt (no TODOs...)" and 133: "NO TODOs, NO temporary solutions") that are pre-existing meta-content.
+**Note:** Baseline updated from 23 → 24 on 2026-03-07 after confirming `stages/s7/s7_p2_qc_rounds.md` contributes 2 lines (83: "✅ Zero tech debt (no TODOs...)" and 133: "NO TODOs, NO temporary solutions") that are pre-existing meta-content. Updated 24 → 25 on 2026-03-14 after SHAMT-7 audit confirmed `stages/s1/s1_epic_planning.md:533` contributes 1 line (template showing `Integration Test Convention: [TBD — will be set in S5]`) that is instructional placeholder content.
 
 ---
 
@@ -247,6 +257,43 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 ---
 
+---
+
+## Category F: D11 Pre-Existing File Size Exceptions
+
+**Purpose:** Documents stage guide files that exceed the 1250-line D11 baseline but cannot be split within the current SHAMT work scope. These require a dedicated file-splitting SHAMT-N.
+
+**Design Rationale:**
+- Both files are primary stage guides that consolidate what used to be multiple smaller files
+- They were already over the 1250-line threshold before SHAMT-7 (which added only 4–14 lines each)
+- Proper splitting requires creating router files + sub-files + updating all cross-references — a separate refactoring scope
+
+**Files:**
+
+**F1. stages/s1/s1_epic_planning.md (1304 lines)**
+- **D11 Status:** Exceeds 1250-line baseline by 54 lines
+- **Pre-existing:** Yes — was ~1300 lines before SHAMT-7 (P5 added ~4 lines)
+- **Split candidates:** S1.P1–P3 are each large enough to warrant standalone files
+- **Why deferred:** Splitting requires updating all "read s1_epic_planning.md" references across the guide tree; out of SHAMT-7 scope (redundancy reduction)
+- **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
+
+**F2. stages/s5/s5_v2_validation_loop.md (1327 lines)**
+- **D11 Status:** Exceeds 1250-line baseline by 77 lines
+- **Pre-existing:** Yes — was ~1313 lines before SHAMT-7 (P1 + P5 added ~14 lines)
+- **Split candidates:** Phase 1 (Draft), Phase 2 (Validation Loop), dimension reference sections
+- **Why deferred:** Splitting requires updating all "read s5_v2_validation_loop.md" references and agent prompts; out of SHAMT-7 scope
+- **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
+
+**F3. reference/validation_loop_master_protocol.md (1413 lines)**
+- **D11 Status:** Exceeds 1250-line baseline by 163 lines
+- **Pre-existing:** Yes — consolidated master protocol predates SHAMT-7; SHAMT-7 did not modify this file
+- **Split candidates:** Could be split into protocol core + dimension-specific appendices
+- **Why deferred:** This is the central reference document for all validation loop scenarios; splitting requires updating all scenario files (`validation_loop_*.md`) that defer to it; out of SHAMT-7 scope
+- **Note:** `pre_audit_checks.sh` does not scan `reference/` for D11, so this exception is for manual audit rounds only
+- **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
+
+---
+
 ## How to Use This Document
 
 ### For Future Audits
@@ -260,7 +307,7 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 **When running `pre_audit_checks.sh` and seeing recurring script output:**
 
-- "TODOs remaining: 24" — expected baseline; see Category E1 above
+- "TODOs remaining: 25" — expected baseline; see Category E1 above
 - "Found 2 potential prerequisite-content conflicts" pointing at s2_p2_cross_feature_alignment.md — expected; see Category E2 above
 - "⚠️ CLAUDE.md found but no stage references detected" — known script integer-parsing bug (line 370); not a real issue
 
@@ -319,10 +366,16 @@ wc -l real_violations.txt  # Should be low count
 
 ## Summary Statistics
 
-**Total Known Exceptions:** 19 files (historical count)
+**Total Known Exceptions:** 22 files (historical count)
 
 **Active Exceptions (files that still exist):**
-- Category C (Optional/Auxiliary): **3 active files** — these are the only exceptions that apply to current audits
+- Category C (Optional/Auxiliary — Prerequisites/Exit Criteria): **2 active files**
+  - stages/s3/s3_parallel_work_sync.md (conditional sync guide)
+  - stages/s4/s4_feature_testing_strategy.md (deprecation redirect stub)
+- Category F (D11 File Size — pre-existing, deferred splitting): **3 active files**
+  - stages/s1/s1_epic_planning.md (1304 lines, 54 over 1250 baseline)
+  - stages/s5/s5_v2_validation_loop.md (1327 lines, 77 over 1250 baseline)
+  - reference/validation_loop_master_protocol.md (1413 lines, 163 over 1250 baseline)
 
 **Inactive Exceptions (files deleted from filesystem):**
 - Category A (S5 Iteration Files): 14 files — DELETED (S5 v1 → v2 migration)

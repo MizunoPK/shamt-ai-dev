@@ -34,7 +34,7 @@ S1 → S2 → S3 → [S5→S6→S7→S8] → S9 → S10
   ↓        ↓        ↓        ↓           ↓        ↓
 Epic  Features  Sanity  Implementation  Epic    Done
 Plan  Deep Dive  Check  (per feature)   QC
-```
+```text
 (S4 deprecated — Test Scope Decision moved to S5 Step 0)
 
 **You are here:** ➜ Stage {X}

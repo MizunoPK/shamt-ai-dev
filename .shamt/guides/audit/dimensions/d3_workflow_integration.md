@@ -213,7 +213,7 @@ D3 automated checks validate stage *numbers* only. Stage *names* in prerequisite
 3. If they differ: update the parenthetical to match the current canonical title
 
 **Example (real issue):**
-```
+```text
 S4 prerequisite: "S3 (Cross-Feature Sanity Check) complete"
 S3 actual title: "S3: Epic-Level Documentation, Testing Plans, and Approval"
 → ERROR: parenthetical name is stale
@@ -938,6 +938,8 @@ Proceed to S5: Implementation Planning (`stages/s5/s5_v2_validation_loop.md`)
 -Proceed to S5: Implementation Planning (`stages/s5/s5_v2_validation_loop.md`)
 +Proceed to S4: Feature Testing Strategy (`stages/s4/s4_feature_testing_strategy.md`)
 ```markdown
+
+> **Historical note:** S4 was deprecated in SHAMT-6. The fix shown above was correct at the time. The file is now at `stages/s4/archive/s4_feature_testing_strategy.md`.
 
 **Root Cause:** Workflow evolution without systematic update cascade
 

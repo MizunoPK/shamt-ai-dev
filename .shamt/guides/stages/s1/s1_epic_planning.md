@@ -517,7 +517,7 @@ Present the feature breakdown from DISCOVERY.md to user for formal approval.
 
 1. Before finalizing the epic ticket, ask the user (use AskUserQuestion):
 
-```
+```text
 "What automated testing approach should this epic use?"
 
 A. Smoke testing only — no automated test scripts; manual E2E smoke testing at S7 and S9

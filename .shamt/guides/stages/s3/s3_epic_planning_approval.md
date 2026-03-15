@@ -157,9 +157,9 @@ Convert high-level categories to concrete tests with commands:
 ❌ {What failure means}
 
 **Command to verify:**
-```
+~~~bash
 {Actual command to run}
-```
+~~~
 
 [Continue for each test scenario...]
 ```

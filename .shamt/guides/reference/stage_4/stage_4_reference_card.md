@@ -148,10 +148,10 @@ STEP 4: Validation Loop (S4.I4 — 15-20 min)
 
 | Current Activity | Guide to Read |
 |------------------|---------------|
-| Starting S4 | stages/s4/s4_feature_testing_strategy.md |
-| Executing iterations (I1-I3) | stages/s4/s4_test_strategy_development.md |
-| Executing Validation Loop (I4) | stages/s4/s4_validation_loop.md |
-| Need test strategy validation dimensions | reference/validation_loop_test_strategy.md |
+| Starting S4 | stages/s4/archive/s4_feature_testing_strategy.md |
+| Executing iterations (I1-I3) | stages/s4/archive/s4_test_strategy_development.md |
+| Executing Validation Loop (I4) | stages/s4/archive/s4_validation_loop.md |
+| Need test strategy validation dimensions | reference/archive/validation_loop_test_strategy.md |
 
 ---
 

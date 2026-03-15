@@ -8,6 +8,25 @@
 
 ---
 
+## Table of Contents
+
+1. [What is Smoke Testing?](#what-is-smoke-testing)
+2. [Common Smoke Testing Structure](#common-smoke-testing-structure)
+3. [Universal Critical Rules](#universal-critical-rules)
+4. [Part 1: Import Test (Universal Pattern)](#part-1-import-test-universal-pattern)
+5. [Part 2: Entry Point Test (Universal Pattern)](#part-2-entry-point-test-universal-pattern)
+6. [Part 3: E2E Execution Test (Universal Pattern - CRITICAL)](#part-3-e2e-execution-test-universal-pattern---critical)
+7. [Part 4: Cross-Feature Integration (Epic-Level Only)](#part-4-cross-feature-integration-epic-level-only)
+8. [Restart Protocol](#restart-protocol)
+9. [Common Mistakes to Avoid](#common-mistakes-to-avoid)
+10. [Scope-Specific Differences](#scope-specific-differences)
+11. [Part 3 Detail: Testing Approach Paths](#part-3-detail-testing-approach-paths)
+12. [Mandatory Logging Requirements](#mandatory-logging-requirements)
+13. [Platform-Specific Considerations](#platform-specific-considerations)
+14. [Summary](#summary)
+
+---
+
 ## What is Smoke Testing?
 
 **Definition:** Smoke testing is the first validation step after implementation where you verify the system actually runs end-to-end with REAL data through mandatory structured parts.

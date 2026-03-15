@@ -82,12 +82,4 @@
 
 ---
 
-**Referenced by:**
-- `stages/s2/s2_p1_spec_creation_refinement.md`
-- `stages/s2/s2_p2_cross_feature_alignment.md`
-- `stages/s4/s4_feature_testing_strategy.md`
-- `stages/s6/s6_execution.md`
-
----
-
 *End of critical_workflow_rules.md*
