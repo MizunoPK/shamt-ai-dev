@@ -156,19 +156,20 @@ echo "  ✓ Default branch: $DEFAULT_BRANCH"
 
 separator "Repository Configuration"
 
-echo "  Should .shamt/ and the rules file be gitignored in this project?"
+echo "  Should .shamt/ and the rules file be excluded from git in this project?"
+echo "  This uses .git/info/exclude — local only, never committed or visible to other users."
 echo "  Default: YES (recommended for solo/multi-agent work — keeps epic state files out of git)."
 echo "  Choose 'no' only if you need to share .shamt/ with other developers via git."
 echo ""
-read -rp "  Gitignore .shamt/ and rules file? [Y/n]: " gitignore_choice
-gitignore_choice="${gitignore_choice:-Y}"
-if [[ "$gitignore_choice" =~ ^[Yy]$ ]]; then
-    GITIGNORE_SHAMT="true"
+read -rp "  Locally exclude .shamt/ and rules file from git? [Y/n]: " exclude_choice
+exclude_choice="${exclude_choice:-Y}"
+if [[ "$exclude_choice" =~ ^[Yy]$ ]]; then
+    EXCLUDE_SHAMT="true"
 else
-    GITIGNORE_SHAMT="false"
+    EXCLUDE_SHAMT="false"
 fi
 
-echo "  ✓ Gitignore .shamt/ and rules file (default: yes): $GITIGNORE_SHAMT"
+echo "  ✓ Locally exclude .shamt/ and rules file (default: yes): $EXCLUDE_SHAMT"
 
 # --- Confirmation ------------------------------------------------------------
 
@@ -182,7 +183,7 @@ echo "  Rules file:            $RULES_FILE_NAME"
 echo "  Rules file path:       $RULES_FILE_DIR/"
 echo "  Git platform:          $GIT_PLATFORM"
 echo "  Default branch:        $DEFAULT_BRANCH"
-echo "  Gitignore .shamt/:     $GITIGNORE_SHAMT"
+echo "  Exclude .shamt/ (local): $EXCLUDE_SHAMT"
 echo "  Epic directory:        .shamt/epics/"
 echo ""
 read -rp "Proceed with initialization? [Y/n]: " confirm
@@ -220,57 +221,55 @@ _master_hash="$(git -C "$SHAMT_SOURCE_DIR" rev-parse --short HEAD 2>/dev/null ||
 printf '%s | %s\n' "$_sync_date" "$_master_hash" > "$SHAMT_DIR/last_sync.conf"
 echo "  ✓ Sync state written to .shamt/last_sync.conf"
 
-# --- Configure .gitignore ----------------------------------------------------
+# --- Configure local git excludes --------------------------------------------
 
-separator "Configuring .gitignore"
+separator "Configuring local git excludes"
 
-GITIGNORE_FILE="$TARGET_DIR/.gitignore"
+GIT_EXCLUDE_FILE="$TARGET_DIR/.git/info/exclude"
 
-# Always add *.conf wildcard (covers shamt_master_path.conf, last_sync.conf, rules_file_path.conf, etc.)
-if [ -f "$GITIGNORE_FILE" ]; then
-    if ! grep -qF ".shamt/*.conf" "$GITIGNORE_FILE"; then
-        echo ".shamt/*.conf" >> "$GITIGNORE_FILE"
-    fi
+if [ ! -d "$TARGET_DIR/.git/info" ]; then
+    echo "  ⚠  .git/info/ not found — is this a git repository?"
+    echo "  Run 'git init' first, then re-run init to apply local excludes."
+    echo "  Skipping local excludes configuration."
 else
-    echo ".shamt/*.conf" > "$GITIGNORE_FILE"
-fi
-echo "  ✓ .shamt/*.conf added to .gitignore (always)"
+    add_exclude() {
+        local entry="$1"
+        if ! grep -qF "$entry" "$GIT_EXCLUDE_FILE"; then
+            echo "$entry" >> "$GIT_EXCLUDE_FILE"
+        fi
+    }
 
-# Always add import_diff*.md (transient diff files — never commit)
-if ! grep -qF ".shamt/import_diff" "$GITIGNORE_FILE"; then
-    echo ".shamt/import_diff*.md" >> "$GITIGNORE_FILE"
-fi
-echo "  ✓ .shamt/import_diff*.md added to .gitignore (always)"
+    # Always exclude *.conf files (covers shamt_master_path.conf, last_sync.conf, rules_file_path.conf, etc.)
+    add_exclude ".shamt/*.conf"
+    echo "  ✓ .shamt/*.conf added to .git/info/exclude (always)"
 
-# Always add VALIDATION_LOG* (transient validation logs — never commit)
-if ! grep -qF "*VALIDATION_LOG*" "$GITIGNORE_FILE"; then
-    echo "*VALIDATION_LOG*" >> "$GITIGNORE_FILE"
-fi
-echo "  ✓ *VALIDATION_LOG* added to .gitignore (always)"
+    # Always exclude import_diff*.md (transient diff files — never commit)
+    add_exclude ".shamt/import_diff*.md"
+    echo "  ✓ .shamt/import_diff*.md added to .git/info/exclude (always)"
 
-# Optionally gitignore .shamt/ and rules file
-if [ "$GITIGNORE_SHAMT" = "true" ]; then
-    # Warn if .shamt/ is already tracked by git (migration required)
-    if [ -n "$(git -C "$TARGET_DIR" ls-files .shamt/ 2>/dev/null | head -1)" ]; then
-        echo ""
-        echo "  ⚠  Warning: .shamt/ is currently tracked by git. To migrate to the gitignored model:"
-        echo "       git rm -r --cached .shamt/"
-        echo "       git commit -m \"stop tracking .shamt/ framework directory\""
-        echo "  Then re-run init or manually add .shamt/ to .gitignore."
-        echo "  (Continuing — adding .shamt/ to .gitignore now; run the commands above when ready)"
+    # Always exclude VALIDATION_LOG* (transient validation logs — never commit)
+    add_exclude "*VALIDATION_LOG*"
+    echo "  ✓ *VALIDATION_LOG* added to .git/info/exclude (always)"
+
+    # Optionally exclude .shamt/ and rules file
+    if [ "$EXCLUDE_SHAMT" = "true" ]; then
+        # Warn if .shamt/ is already tracked by git (migration required)
+        if [ -n "$(git -C "$TARGET_DIR" ls-files .shamt/ 2>/dev/null | head -1)" ]; then
+            echo ""
+            echo "  ⚠  Warning: .shamt/ is currently tracked by git. To migrate:"
+            echo "       git rm -r --cached .shamt/"
+            echo "       git commit -m \"stop tracking .shamt/ framework directory\""
+            echo "  (Continuing — adding .shamt/ to .git/info/exclude now; run the commands above when ready)"
+        fi
+        add_exclude ".shamt/"
+        if [ "$RULES_FILE_DIR" = "$TARGET_DIR" ]; then
+            RULES_EXCLUDE_PATH="$RULES_FILE_NAME"
+        else
+            RULES_EXCLUDE_PATH="${RULES_FILE_DIR#"$TARGET_DIR"/}/$RULES_FILE_NAME"
+        fi
+        add_exclude "$RULES_EXCLUDE_PATH"
+        echo "  ✓ .shamt/ and $RULES_EXCLUDE_PATH added to .git/info/exclude"
     fi
-    if ! grep -qF ".shamt/" "$GITIGNORE_FILE"; then
-        echo ".shamt/" >> "$GITIGNORE_FILE"
-    fi
-    if [ "$RULES_FILE_DIR" = "$TARGET_DIR" ]; then
-        RULES_GITIGNORE_PATH="$RULES_FILE_NAME"
-    else
-        RULES_GITIGNORE_PATH="${RULES_FILE_DIR#"$TARGET_DIR"/}/$RULES_FILE_NAME"
-    fi
-    if ! grep -qF "$RULES_GITIGNORE_PATH" "$GITIGNORE_FILE"; then
-        echo "$RULES_GITIGNORE_PATH" >> "$GITIGNORE_FILE"
-    fi
-    echo "  ✓ .shamt/ and $RULES_GITIGNORE_PATH added to .gitignore"
 fi
 
 # --- Copy Guides -------------------------------------------------------------
@@ -418,6 +417,7 @@ Then run a validation loop to complete initialization:
 ## Notes
 $( [ "$RULES_FILE_EXISTS" = "true" ] && echo "- Existing rules file was preserved — agent should incorporate it into the new rules file content." || echo "- Rules file written fresh from template." )
 $( [ "$NEEDS_AI_DISCOVERY" = "true" ] && echo "- AI service '$AI_SERVICE' needs rules file convention confirmed. Agent should research and update ai_services.md." )
+$( [ "$EXCLUDE_SHAMT" = "true" ] && echo "- .shamt/ and rules file are excluded via .git/info/exclude (local only — not committed or visible to other users)." || echo "- .shamt/ is not excluded from git — it will be tracked and visible to all repo users." )
 - ARCHITECTURE.md and CODING_STANDARDS.md belong in \`.shamt/project-specific-configs/\`, not the project root.
 - Shared guide files in \`.shamt/guides/\` must remain generic — never write project-specific content into them.
 - The only exception: a pointer note in a shared guide directing the agent to check \`.shamt/project-specific-configs/\` for a supplement.
