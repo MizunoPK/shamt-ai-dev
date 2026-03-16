@@ -11,6 +11,15 @@
 
 ---
 
+## 🚨 MANDATORY READING PROTOCOL
+
+**Before taking any S2 action — including when resuming a prior session:**
+1. Read this ENTIRE routing guide
+2. Check EPIC_README.md Agent Status for current mode (parallel/sequential) and current phase
+3. Use the Parallel Work Check (Section 1 below) to determine your routing path
+
+---
+
 ## Table of Contents
 
 1. [🔀 Parallel Work Check (FIRST PRIORITY)](#-parallel-work-check-first-priority)

@@ -35,7 +35,7 @@ S5 (Implementation Planning) → S6 (Implementation Execution) →
 ---
 ## 🚨 MANDATORY READING PROTOCOL
 
-**BEFORE starting Smoke Testing, you MUST:**
+**BEFORE starting Smoke Testing — including when resuming a prior session — you MUST:**
 
 1. **Read the smoke testing pattern:** `reference/smoke_testing_pattern.md`
    - Understand universal smoke testing workflow (3 parts)
@@ -59,6 +59,16 @@ S5 (Implementation Planning) → S6 (Implementation Execution) →
 5. **THEN AND ONLY THEN** begin smoke testing
 
 **This is NOT optional.** Reading both the pattern and this guide ensures you don't skip critical validation steps.
+
+---
+
+## 🚫 FORBIDDEN SHORTCUTS
+
+You CANNOT:
+- Skip Part 2 (Entry Point Test) or Part 3 (E2E Execution Test) because Part 1 (Import Test) passed — all 3 parts are mandatory; Part 3 is marked CRITICAL because it validates actual runtime behavior
+- Declare smoke testing complete based on Part 1 results alone — Part 3's E2E test with real data verification is required before proceeding to S7.P2
+
+If you are about to do any of the above: STOP and re-read the relevant section.
 
 ---
 

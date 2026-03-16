@@ -270,27 +270,62 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 **Files:**
 
-**F1. stages/s1/s1_epic_planning.md (1331 lines)**
-- **D11 Status:** Exceeds 1250-line baseline by 81 lines
-- **Pre-existing:** Yes — was 1304 lines before SHAMT-9 (P2+P3 added ~27 lines: Step 0, parallel play note, reference card update)
+**F1. stages/s1/s1_epic_planning.md (1332 lines)**
+- **D11 Status:** Exceeds 1250-line baseline by 82 lines
+- **Pre-existing:** Yes — was 1304 lines before SHAMT-9 (P2+P3 added ~28 lines: Step 0, parallel play note, reference card update)
 - **Split candidates:** S1.P1–P3 are each large enough to warrant standalone files
 - **Why deferred:** Splitting requires updating all "read s1_epic_planning.md" references across the guide tree; out of SHAMT-9 scope
 - **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
 
-**F2. stages/s5/s5_v2_validation_loop.md (1386 lines)**
-- **D11 Status:** Exceeds 1250-line baseline by 136 lines
-- **Pre-existing:** Yes — was 1327 lines before SHAMT-9 (P4 added ~59 lines: Dependency Re-Validation Protocol section)
+**F2. stages/s5/s5_v2_validation_loop.md (1392 lines)**
+- **D11 Status:** Exceeds 1250-line baseline by 142 lines
+- **Pre-existing:** Yes — was 1327 lines before SHAMT-9 (P4 added ~65 lines: Dependency Re-Validation Protocol section)
 - **Split candidates:** Phase 1 (Draft), Phase 2 (Validation Loop), dimension reference sections
 - **Why deferred:** Splitting requires updating all "read s5_v2_validation_loop.md" references and agent prompts; out of SHAMT-9 scope
 - **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
 
-**F3. reference/validation_loop_master_protocol.md (1413 lines)**
-- **D11 Status:** Exceeds 1250-line baseline by 163 lines
+**F3. reference/validation_loop_master_protocol.md (1544 lines)**
+- **D11 Status:** Exceeds 1250-line baseline by 294 lines
 - **Pre-existing:** Yes — consolidated master protocol predates SHAMT-7; SHAMT-7 did not modify this file
 - **Split candidates:** Could be split into protocol core + dimension-specific appendices
 - **Why deferred:** This is the central reference document for all validation loop scenarios; splitting requires updating all scenario files (`validation_loop_*.md`) that defer to it; out of SHAMT-7 scope
 - **Note:** `pre_audit_checks.sh` does not scan `reference/` for D11, so this exception is for manual audit rounds only
 - **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
+
+---
+
+## Category G: D22 Lightweight MRP Exceptions (Router and Optional Guides)
+
+**Purpose:** Documents guides that have lightweight MRP (missing FS block) as an intentional design choice.
+
+**D22 Context:** Dimension 22 (Guide Bypass Risk) requires three enforcement mechanisms: MRP with resumption clause, FORBIDDEN SHORTCUTS block, and phase commitment gates. For router guides and optional conditional guides, FORBIDDEN SHORTCUTS are not applicable because there are no procedural steps that could be skipped — the entire guide IS the routing decision or check.
+
+**Files:**
+
+**G1. stages/s2/s2_feature_deep_dive.md** *(Added SHAMT-11 audit)*
+- **Type:** Router guide
+- **MRP:** Present (lightweight — added SHAMT-11 audit) with resumption clause
+- **FORBIDDEN SHORTCUTS:** Not applicable — guide contains routing decision logic only (parallel work check, phase navigation); no procedural steps to shortcut
+- **Audit Action:** PASS D22 — lightweight MRP is the correct pattern for router guides
+
+**G2. stages/s9/s9_epic_final_qc.md** *(Added SHAMT-11 audit)*
+- **Type:** Router guide
+- **MRP:** Present (lightweight — added SHAMT-11 audit) with resumption clause
+- **FORBIDDEN SHORTCUTS:** Not applicable — guide contains routing decision logic only (sub-stage navigation, single-feature shortcut); no procedural steps to shortcut
+- **Audit Action:** PASS D22 — lightweight MRP is the correct pattern for router guides
+
+**G3. stages/s3/s3_parallel_work_sync.md** *(Added SHAMT-11 audit)*
+- **Type:** Optional conditional guide (only when S2 executed in parallel mode)
+- **MRP:** Present (lightweight — added SHAMT-11 audit) with resumption clause
+- **FORBIDDEN SHORTCUTS:** Not present — guide is short (265 lines) and has explicit "Skip this" instructions at the top; FS would be redundant
+- **Audit Action:** PASS D22 — lightweight MRP sufficient for optional auxiliary guides
+
+**G4. stages/s4/s4_feature_testing_strategy.md** *(Added SHAMT-11 audit)*
+- **Type:** Deprecation redirect stub
+- **MRP:** Not present — redirect stub only; no workflow steps to read or follow
+- **FORBIDDEN SHORTCUTS:** Not applicable — redirect stubs have no procedural steps
+- **Design Rationale:** Redirect stubs exist only to point agents to the replacement (stages/s5/s5_v2_validation_loop.md). Requiring MRP/FS would add confusing structure to a one-purpose document.
+- **Audit Action:** SKIP D22 — deprecation redirect stub, not a workflow guide
 
 ---
 
@@ -373,9 +408,14 @@ wc -l real_violations.txt  # Should be low count
   - stages/s3/s3_parallel_work_sync.md (conditional sync guide)
   - stages/s4/s4_feature_testing_strategy.md (deprecation redirect stub)
 - Category F (D11 File Size — pre-existing, deferred splitting): **3 active files**
-  - stages/s1/s1_epic_planning.md (1331 lines, 81 over 1250 baseline)
-  - stages/s5/s5_v2_validation_loop.md (1386 lines, 136 over 1250 baseline)
-  - reference/validation_loop_master_protocol.md (1413 lines, 163 over 1250 baseline)
+  - stages/s1/s1_epic_planning.md (1332 lines, 82 over 1250 baseline)
+  - stages/s5/s5_v2_validation_loop.md (1392 lines, 142 over 1250 baseline)
+  - reference/validation_loop_master_protocol.md (1544 lines, 294 over 1250 baseline)
+- Category G (D22 Lightweight MRP — Router and Optional Guides): **4 active files**
+  - stages/s2/s2_feature_deep_dive.md (router guide — lightweight MRP only, no FS)
+  - stages/s9/s9_epic_final_qc.md (router guide — lightweight MRP only, no FS)
+  - stages/s3/s3_parallel_work_sync.md (optional conditional — lightweight MRP only, no FS)
+  - stages/s4/s4_feature_testing_strategy.md (redirect stub — no MRP or FS)
 
 **Inactive Exceptions (files deleted from filesystem):**
 - Category A (S5 Iteration Files): 14 files — DELETED (S5 v1 → v2 migration)
@@ -389,9 +429,10 @@ wc -l real_violations.txt  # Should be low count
 **Design Patterns (active only):**
 - Optional/Conditional: 1 file (s3_parallel_work_sync)
 - Reference Material: 2 files (s4_feature_testing_card, s4_test_strategy_development)
+- Router (lightweight MRP): 2 files (s2_feature_deep_dive, s9_epic_final_qc)
 
 ---
 
-**Last Verified:** 2026-02-25 (Categories E1 and E2 added — documenting recurring pre_audit_checks.sh false positives)
-**Next Review:** When new stage/iteration guides added, or if D8/D10 check patterns change
+**Last Verified:** 2026-03-15 (Category G added — D22 lightweight MRP exceptions for router and optional guides; SHAMT-11 audit)
+**Next Review:** When new stage/iteration guides added, or if D8/D10/D22 check patterns change
 

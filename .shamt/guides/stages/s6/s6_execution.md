@@ -5,7 +5,7 @@
 
 🚨 **MANDATORY READING PROTOCOL**
 
-**Before starting this guide:**
+**Before starting this guide — including when resuming a prior session:**
 1. Use Read tool to load THIS ENTIRE GUIDE
 2. Acknowledge critical requirements (see "Critical Rules" section below)
 3. Verify prerequisites (see "Prerequisites Checklist" section below)
@@ -17,6 +17,17 @@
 - Check feature README.md Agent Status for current phase
 - READ THIS GUIDE again (full guide, not summary)
 - Continue from "Next Action" in Agent Status
+
+---
+
+## 🚫 FORBIDDEN SHORTCUTS
+
+You CANNOT:
+- Start implementing feature code without completing Step 1 (Interface Verification Protocol) — interface verification is the MANDATORY FIRST STEP and prevents spec drift from incorrect interface assumptions
+- Skip mini-QC checkpoints during Step 3 (Phase-by-Phase Implementation) to save time — mini-QC checkpoints catch integration issues before they compound across phases
+- Commit code without completing Step 4 (Final Verification) — final verification confirms all spec requirements are met before proceeding to S7
+
+If you are about to do any of the above: STOP and re-read the relevant section.
 
 ---
 

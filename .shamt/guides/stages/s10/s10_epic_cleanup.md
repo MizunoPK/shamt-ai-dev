@@ -24,7 +24,7 @@
 
 ## 🚨 MANDATORY READING PROTOCOL
 
-**BEFORE starting S10, you MUST:**
+**BEFORE starting S10 — including when resuming a prior session — you MUST:**
 
 1. **Quick entry point:** `reference/stage_10/stage_10_reference_card.md` — covers the full S10 workflow; use this for fast navigation
 2. **Full guide (this file):** Read entirely for detailed step instructions or when encountering edge cases
@@ -41,6 +41,16 @@
 - Future agents can understand what was accomplished
 
 Rushing this process results in incomplete documentation, missing commits, or disorganized done/ folder.
+
+---
+
+## 🚫 FORBIDDEN SHORTCUTS
+
+You CANNOT:
+- Skip commit verification because "all changes were committed during S5-S9" — use the Prerequisites Checklist to verify all changes are committed; missing commits are a common S10 failure
+- Move the epic folder to done/ before completing ALL cleanup steps — moving to done/ is the FINAL step after all documentation, verification, and commit steps are complete
+
+If you are about to do any of the above: STOP and re-read the relevant section.
 
 ---
 

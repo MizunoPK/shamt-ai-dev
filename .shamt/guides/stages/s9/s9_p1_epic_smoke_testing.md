@@ -15,7 +15,7 @@ S8 (ALL features complete) →
 
 ## 🚨 MANDATORY READING PROTOCOL
 
-**BEFORE starting Epic Smoke Testing, you MUST:**
+**BEFORE starting Epic Smoke Testing — including when resuming a prior session — you MUST:**
 
 1. **Quick entry point:** `reference/stage_9/stage_9_reference_card.md` — covers the epic QC happy path; use for fast navigation
 2. **Full guide (this file):** Read entirely for detailed workflow or when encountering edge cases
@@ -42,6 +42,16 @@ S8 (ALL features complete) →
 7. **THEN AND ONLY THEN** begin epic smoke testing
 
 **This is NOT optional.** Reading both the pattern and this guide ensures you validate the epic correctly.
+
+---
+
+## 🚫 FORBIDDEN SHORTCUTS
+
+You CANNOT:
+- Skip Parts 1-2 (Import/Entry Point Tests) because individual features were smoke-tested in S7.P1 — epic smoke testing validates ALL features working together; per-feature smoke tests do not substitute
+- Declare epic smoke testing complete after Part 3 (E2E) without completing Part 4 (logging and documentation) — all 4 parts are required before proceeding to S9.P2
+
+If you are about to do any of the above: STOP and re-read the relevant section.
 
 ---
 

@@ -2,7 +2,7 @@
 
 🚨 **MANDATORY READING PROTOCOL**
 
-**Before starting this guide:**
+**Before starting this guide — including when resuming a prior session:**
 1. **Quick entry point:** `reference/stage_1/stage_1_reference_card.md` — use for second or later features; covers the happy path
 2. **Full guide (this file):** Read entirely for your first time using this stage or when encountering edge cases
 3. Acknowledge critical requirements (see "Critical Rules" section below)
@@ -13,6 +13,17 @@
 - Check epic EPIC_README.md Agent Status for current guide
 - Re-read this guide (or the reference card if in a repeat pass) before continuing
 - Continue from "Next Action" in Agent Status
+
+---
+
+## 🚫 FORBIDDEN SHORTCUTS
+
+You CANNOT:
+- Skip Step 3 (Discovery Phase) because "the epic requirements are clear from the request file" — Discovery Phase is MANDATORY for every epic; read `s1_p3_discovery_phase.md` before Step 3
+- Skip Dependency Analysis and assume all features are independent — dependency groups determine S2 parallelization and must be identified before Step 4 (Feature Breakdown Proposal)
+- Propose feature breakdown (Step 4) without completing Step 2 (Epic Analysis) — Step 2 requires thorough codebase and scope analysis before breakdown
+
+If you are about to do any of the above: STOP and re-read the relevant section.
 
 ---
 

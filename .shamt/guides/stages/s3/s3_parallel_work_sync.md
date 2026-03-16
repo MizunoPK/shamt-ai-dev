@@ -6,6 +6,15 @@
 
 ---
 
+## 🚨 MANDATORY READING PROTOCOL
+
+**Before starting Parallel Work Sync — including when resuming a prior session:**
+1. Read this ENTIRE guide
+2. Confirm you are the Primary agent and S2 was executed in parallel mode
+3. Verify all secondary agents have sent completion messages before beginning Step 0.1
+
+---
+
 ## Prerequisites
 
 **Before starting parallel work sync:**

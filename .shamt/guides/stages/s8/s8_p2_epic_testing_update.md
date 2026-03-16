@@ -37,7 +37,7 @@ S5 (Implementation Planning) → S6 (Implementation Execution) → S7 (Testing &
 
 ## 🚨 MANDATORY READING PROTOCOL
 
-**BEFORE starting Testing Plan Update, you MUST:**
+**BEFORE starting Testing Plan Update — including when resuming a prior session — you MUST:**
 
 1. **Use the phase transition prompt** from `prompts_reference_v2.md`
    - Find "Starting S8.P2" prompt
@@ -56,6 +56,16 @@ S5 (Implementation Planning) → S6 (Implementation Execution) → S7 (Testing &
 4. **THEN AND ONLY THEN** begin Testing Plan Update workflow
 
 **This is NOT optional.** Reading this guide ensures the test plan stays current and accurate.
+
+---
+
+## 🚫 FORBIDDEN SHORTCUTS
+
+You CANNOT:
+- Proceed to the next feature's S5 without reviewing epic_smoke_test_plan.md — the testing plan review is a mandatory gate that keeps integration scenarios current as the epic evolves
+- Mark the testing plan as "no changes needed" without explicitly reviewing it against the feature just implemented — you must check for new integration points and implementation realities discovered during S6
+
+If you are about to do any of the above: STOP and re-read the relevant section.
 
 ---
 

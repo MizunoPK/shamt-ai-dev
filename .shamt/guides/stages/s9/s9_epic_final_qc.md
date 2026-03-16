@@ -13,6 +13,15 @@
 
 ---
 
+## 🚨 MANDATORY READING PROTOCOL
+
+**Before taking any S9 action — including when resuming a prior session:**
+1. Read this ENTIRE routing guide
+2. Check EPIC_README.md Agent Status for current stage and step
+3. Use the Quick Navigation table (Prerequisites section below) to find the correct sub-stage guide
+
+---
+
 ## Table of Contents
 
 1. [Prerequisites](#prerequisites)
