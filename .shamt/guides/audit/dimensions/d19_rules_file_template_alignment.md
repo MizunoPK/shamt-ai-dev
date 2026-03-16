@@ -30,17 +30,18 @@
 
 ## What This Checks
 
-**D19: Rules File Template Alignment** verifies that a child project's AI rules file has not drifted significantly from the structure provided by `RULES_FILE.template.md`:
+**D19: Rules File Template Alignment** verifies that a child project's AI rules file has not drifted significantly from the structure provided by `RULES_FILE.template.md`, and that the template itself contains current stage references:
 
 1. **Rules file locatable** — `.shamt/rules_file_path.conf` exists and points to a valid file
 2. **Shamt Sync section present** — The rules file contains a Shamt Sync section with import guidance
 3. **Git Conventions section present** — The rules file contains a Git Conventions section
 4. **Key guidance retained** — Critical Shamt-specific guidance (sync workflow, when to import) has not been removed
+5. **Template stage references current** — `.shamt/scripts/initialization/RULES_FILE.template.md` does not contain stale or deprecated stage numbers in the stage overview, Missed Requirement Protocol, or Validation Loop Enforcement header
 
 **Coverage:**
-- Child project's rules file only (CLAUDE.md, AGENTS.md, or equivalent)
-- Not the template itself (D7 handles template currency)
-- Not project-specific additions (those are intentional customizations)
+- Child project's rules file (CLAUDE.md, AGENTS.md, or equivalent)
+- `.shamt/scripts/initialization/RULES_FILE.template.md` — stage-critical sections only (Check 5)
+- Not project-specific additions to the child rules file (those are intentional customizations)
 
 **Key Purpose:**
 Child projects inherit their rules file from `RULES_FILE.template.md` at init time and then customize it. Over time, Shamt-specific sections may be accidentally deleted or overwritten. This dimension flags structural drift before it causes workflow failures.
@@ -154,6 +155,35 @@ grep -n "shamt_master_path" "$RULES_PATH"
 **Pass:** Reference found.
 **Fail:** Reference missing. This is informational — LOW severity only.
 
+### Check 5: Template Stage References Are Current
+
+**What to check:** The template (`.shamt/scripts/initialization/RULES_FILE.template.md`) itself may contain stale stage references that both the child rules file and D7 miss. D19 is the natural place to catch this because it already reads both the template and the child rules file for alignment comparison.
+
+Check three stage-critical sections in the template:
+
+1. Stage overview in `## Workflow System`
+2. Missed Requirement Protocol stage list ("during S2/S3...", "S2/S3 → S5-S8")
+3. Validation Loop Enforcement header (stage list in the 🚨 line)
+
+```bash
+# Check for deprecated stage references in the template
+grep -n "S4\|S2/S3/S4\|, S4," .shamt/scripts/initialization/RULES_FILE.template.md
+
+# Extract the stage overview
+grep -A 8 "Stage overview" .shamt/scripts/initialization/RULES_FILE.template.md
+
+# Check the Validation Loop header stage list
+grep -n "MANDATORY.*Validation Loop" .shamt/scripts/initialization/RULES_FILE.template.md
+
+# Check Missed Requirement Protocol stage scope
+grep -n "S2/S3\|during S" .shamt/scripts/initialization/RULES_FILE.template.md
+```
+
+**Pass:** Stage overview matches current workflow; no deprecated stages in the Missed Req Protocol or Validation Loop header.
+**Fail:** Template contains a stage that has been deprecated or renumbered — file a MEDIUM severity finding. The template will propagate the error to every new project initialized from it.
+
+**Severity:** MEDIUM (not HIGH, because new projects are rare and the error is caught at first audit — but it is higher priority than the structural checks in D19 because it propagates silently).
+
 ---
 
 ## Automated Validation
@@ -187,9 +217,9 @@ cat .shamt/rules_file_path.conf
 
 If missing or invalid, file a LOW severity finding and stop. D19 cannot complete without a valid path.
 
-**Step 3: Run all four checks**
+**Step 3: Run all five checks**
 
-Run the grep commands from the Validation Checks section above for each of the four checks.
+Run the grep commands from the Validation Checks section above for each of the five checks.
 
 **Step 4: Read the Shamt Sync section manually**
 
@@ -219,6 +249,7 @@ For each missing section, create an audit finding following the standard templat
 | Import command missing from Shamt Sync section | MEDIUM | Agent may not know how to trigger a sync |
 | `last_sync.conf` or "when to import" guidance missing | MEDIUM | Agent cannot make informed sync decisions |
 | `shamt_master_path.conf` note missing | LOW | Informational — reduces discoverability of fix procedure |
+| Template contains deprecated/stale stage in stage overview, Missed Req Protocol, or Validation Loop header (Check 5) | MEDIUM | Error propagates silently to every new project initialized from this template |
 
 **Note:** Project-specific additions (extra sections, customized wording) are NOT issues — they are intentional customizations. Only flag when Shamt-specific sections or guidance are absent.
 

@@ -259,8 +259,7 @@ done
 |---------------|-----------------|---------------|
 | S1 | S2 | Points to S3, missing S2 |
 | S2 | S3 (after ALL features) | Says "S4" or "S5" |
-| S3 | S4 | Says "S5" (old workflow) |
-| S4 | S5 | Says "S6" |
+| S3 | S5 (S4 deprecated — Test Scope Decision is S5 Step 0) | Says "S4" (stale) |
 | S5 | S6 | Says "S7" |
 | S6 | S7 | Says "S8" |
 | S7 | S8 | Says "S9" or "S10" |
@@ -745,8 +744,7 @@ grep -A 10 "^## Prerequisites" "$stage_file"
 | S1 | None | - |
 | S2 | S1, DISCOVERY.md | DISCOVERY.md in epic folder |
 | S3 | S2 (all features), spec.md files | All feature_XX/spec.md |
-| S4 | S3, epic plan approved | feature_XX/test_strategy.md |
-| S5 | S4, test_strategy.md | feature_XX/test_strategy.md |
+| S5 | S3 complete; Test Scope Decision made in S5 Step 0 | feature_XX/implementation_plan.md |
 | S6 | S5, implementation_plan.md | feature_XX/implementation_plan.md |
 | S7 | S6, code complete | Implementation files |
 | S8 | S7, feature committed | Git commit for feature |

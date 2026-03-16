@@ -8,6 +8,7 @@
 
 **Focus:** Ensure templates reflect current workflow structure, notation, and stage numbering
 **Typical Issues Found:** 5-10 per major workflow change
+**Scope:** `templates/` directory AND `.shamt/scripts/initialization/RULES_FILE.template.md`
 
 ---
 
@@ -225,6 +226,44 @@ grep -rn "implementation\.md\|spec_v1\.md" templates/
 ```
 
 **Automated:** ⚠️ Partial (can find file references, manual to verify currency)
+
+### Type 6: Initialization Template Stage References
+
+**Scope:** `.shamt/scripts/initialization/RULES_FILE.template.md`
+
+This file is distinct from `templates/` — it is the source template used by `init.sh`/`init.ps1` to generate the child project's AI rules file (e.g., `CLAUDE.md`). Because it is copied once per project at init time and not synced thereafter, stale stage references in it propagate silently to every new project initialized from Shamt.
+
+**Stage-critical sections to check:**
+
+1. **Stage overview** (the workflow diagram in the `## Workflow System` section) — should reflect current stage sequence, including any deprecations
+2. **Missed Requirement Protocol** — lists which stages fall in "CURRENT" scope (e.g., "during S2/S3, before S5") — must not include deprecated stages
+3. **Validation Loop Enforcement header** — lists which stages run a validation loop — must not include deprecated stages
+
+**Pattern — stale stage in overview:**
+```text
+## Workflow System
+
+S1 → ... → S4: Feature Testing Strategy → S5-S8 → ...
+
+[S4 was deprecated — Test Scope Decision moved to S5 Step 0]
+```
+
+**Search Commands:**
+```bash
+# Check for S4 references in initialization template
+grep -n "S4\|S3/S4\|S2/S3/S4" .shamt/scripts/initialization/RULES_FILE.template.md
+
+# Extract stage overview section
+grep -A 10 "Stage overview" .shamt/scripts/initialization/RULES_FILE.template.md
+
+# Check Validation Loop Enforcement header
+grep -n "MANDATORY.*Validation Loop" .shamt/scripts/initialization/RULES_FILE.template.md
+
+# Check Missed Requirement Protocol stage references
+grep -n "S2/S3\|S3/S4\|S2/S3/S4" .shamt/scripts/initialization/RULES_FILE.template.md
+```
+
+**Automated:** ✅ Yes (grep for deprecated stage patterns)
 
 ---
 
