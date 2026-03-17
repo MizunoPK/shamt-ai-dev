@@ -46,7 +46,8 @@ This project uses the **Shamt epic-driven development workflow** (S1–S10).
 **Stage overview:**
 ```
 S1: Epic Planning → S2: Feature Deep Dives → S3: Epic-Level Docs, Tests, and Approval →
-S4: Feature Testing Strategy → S5-S8: Feature Loop → S9: Epic Final QC → S10: Cleanup
+S5-S8: Feature Loop → S9: Epic Final QC → S10: Cleanup
+(S4 deprecated — Test Scope Decision moved to S5 Step 0)
 
 Per-feature: S5 (Plan) → S6 (Execute) → S7 (Test) → S8 (Align) → repeat or S9
 ```
@@ -117,20 +118,20 @@ reduce the requirement to follow the guide's specific steps.
 - **DO NOT** implement it directly — this is a protocol violation
 - **DO** read `.shamt/guides/missed_requirement/missed_requirement_protocol.md` FIRST
 - **DO** present options to user (new feature vs update unstarted feature)
-- **DO** follow the full protocol: Discovery → Planning → Realignment → S2/S3/S4 → S5-S8
+- **DO** follow the full protocol: Discovery → Planning → Realignment → S2/S3 → S5-S8
 
 **Trigger keywords:** "missed", "forgot", "should have", "discovered", "gap", "create another feature", "add a feature for", "we also need"
 
 **Decision tree — "NEW, CURRENT, or MISSED?"**
 - **NEW** requirement (no epic exists) → S1 epic planning
-- **CURRENT** requirement (during S2/S3/S4, before S5) → Update specs in current stage
+- **CURRENT** requirement (during S2/S3, before S5) → Update specs in current stage
 - **MISSED** requirement (after S5 started) → Missed requirement protocol (`.shamt/guides/missed_requirement/`)
 
 ---
 
 ## Validation Loop Enforcement (ALL stages)
 
-🚨 **MANDATORY — applies every time a Validation Loop runs (S2, S3, S4, S5, S7, S8, S9)**
+🚨 **MANDATORY — applies every time a Validation Loop runs (S2, S3, S5, S7, S8, S9)**
 
 **The Validation Loop is the most commonly shortcut protocol. These rules exist because agents consistently:**
 - Declare validation "complete" after finding and fixing issues (without achieving 3 CLEAN rounds)
