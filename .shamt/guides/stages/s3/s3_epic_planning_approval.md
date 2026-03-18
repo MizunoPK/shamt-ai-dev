@@ -359,4 +359,13 @@ Await user decision before proceeding.
 
 ---
 
+**Parallel mode (S5): If `Parallel Mode (S5): enabled` in EPIC_README.md:**
+
+Before reading `s5_v2_validation_loop.md`, generate S5 handoff packages for all secondary agents and send activation messages (Sync Point 2 action). This allows all features to plan their implementation simultaneously.
+
+📖 **READ FIRST:** `parallel_work/s5_parallel_protocol.md` → Sync Point 2 section
+Then proceed with your own S5 as described in `stages/s5/s5_v2_validation_loop.md`.
+
+---
+
 *End of s3_epic_planning_approval.md*

@@ -210,18 +210,37 @@ Create sync verification record in `epic/research/S3_SYNC_VERIFICATION_{DATE}.md
 
 1. **Send notification message:**
    - File: `agent_comms/primary_to_secondary_{x}.md`
-   - Message:
+
+   **If `Parallel Mode (S5): enabled` in EPIC_README.md:**
      ```markdown
      ## Message {N} ({TIMESTAMP}) ⏳ UNREAD
-     **Subject:** S3 Starting - Sync Point Reached
+     **Subject:** S3 Starting — S5 Handoff Package Coming
      **Action:** All features verified complete, S3 beginning now
      **Details:**
      - All {N} features completed S2 successfully
      - Sync verification passed
      - Primary now running S3 (Epic-Level Documentation, Testing Plans, and Approval)
-     - You should WAIT - do NOT proceed to S3
+     - You should WAIT — do NOT proceed to S3
 
-     **Next:** After S3 completes, you'll receive notification to proceed to S5 (S4 is deprecated)
+     **Next:** After S3 completes, you will receive an activation message containing your
+       S5 handoff package. That message is your signal to begin S5 (Implementation Planning).
+     **Acknowledge:** No action needed, this is informational only
+     ```
+
+   **If `Parallel Mode (S5): disabled` in EPIC_README.md:**
+     ```markdown
+     ## Message {N} ({TIMESTAMP}) ⏳ UNREAD
+     **Subject:** S3 Starting — Sequential S5 Mode
+     **Action:** All features verified complete, S3 beginning now
+     **Details:**
+     - All {N} features completed S2 successfully
+     - Sync verification passed
+     - Primary now running S3 (Epic-Level Documentation, Testing Plans, and Approval)
+     - S5 will run sequentially (Parallel Mode (S5) is disabled)
+     - You should WAIT — your next activation will come when your feature reaches S6
+
+     **Next:** No action required. Primary will run S5 for all features sequentially.
+       You will receive an S6 activation message when your feature is ready for implementation.
      **Acknowledge:** No action needed, this is informational only
      ```
 

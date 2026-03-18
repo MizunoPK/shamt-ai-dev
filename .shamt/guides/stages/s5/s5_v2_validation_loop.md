@@ -101,6 +101,14 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 **Note:** S4 is deprecated. The `test_strategy.md` prerequisite has been removed. Test scope
 decisions are now made during Phase 1 of S5 (Test Scope Decision step).
 
+**Parallel mode (S5): If running as a secondary agent in parallel S5:**
+- You must have received an S5 handoff package from Primary (Sync Point 2 activation)
+- Use the handoff package as your starting context (spec.md, checklist.md, EPIC_README.md, smoke test plan, other feature spec paths)
+- Write milestone checkpoints at: Phase 1 exit (draft complete, before validation loop), after each clean validation round
+- After your validation loop passes: signal completion and enter WAITING_FOR_SYNC — do NOT proceed to Gate 5
+- Gate 5 in parallel mode is combined: Primary will run S5-CA and present all plans together; you will receive a notification when combined Gate 5 passes
+- See: `parallel_work/s5_secondary_agent_guide.md` → Completion Signal
+
 **If any prerequisite missing:**
 - ❌ Do NOT start S5 - Return to complete missing prerequisites
 
@@ -1289,6 +1297,15 @@ Next: Present implementation_plan.md to user (Gate 5)
 **If ANY item is unchecked:** Do NOT proceed to S6 — complete the missing step first.
 
 **If user requested changes:** Make changes, re-validate affected dimensions, update Plan Summary if needed, re-present for approval.
+
+**Parallel mode behavior:**
+If running in parallel S5 mode, do NOT present Gate 5 to the user now. Instead:
+- Update STATUS file: `STATUS: WAITING_FOR_SYNC`, `READY_FOR_SYNC: true`, `STAGE: S5`
+- Update checkpoint: `status: "WAITING"`, `ready_for_next_stage: true`
+- Send completion message to Primary (see `parallel_work/s5_secondary_agent_guide.md` → Completion Signal)
+- Primary will run S5-CA (Cross-Plan Alignment) and present a combined Gate 5 to the user for all features together
+- You will receive a notification when combined Gate 5 passes; no action needed on your end
+- You will receive an S6 activation message from Primary when it is your turn to proceed to S6
 
 ---
 

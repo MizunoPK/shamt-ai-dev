@@ -6,6 +6,8 @@ Shamt is a portable, AI-agent-driven development workflow framework. It provides
 - A **sync system** for sharing guide improvements between projects and back to master
 - An **initialization system** for onboarding any project in minutes
 
+**Parallel work (S2 and S5):** When an epic has 2+ features, spec creation (S2) and implementation planning (S5) can be parallelized across multiple agent sessions. See `.shamt/guides/parallel_work/README.md`.
+
 When you import Shamt into a project, you get your own version of Shamt — an AI agent persona configured for your codebase.
 
 ---

@@ -57,7 +57,7 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 - Verify all features in group completed S2.P1:
   - Check completion messages from secondary agents
   - Verify STATUS files show READY_FOR_SYNC = true
-  - Verify checkpoints show WAITING_FOR_SYNC (not stale)
+  - Verify checkpoints show WAITING or COMPLETE (not stale)
   - Check for stale agents (checkpoint >60 min old → escalate)
 - See: `parallel_work/s2_parallel_protocol.md` → Sync Point 1
 - **If any agent missing/stale:** STOP, send status check, wait for response

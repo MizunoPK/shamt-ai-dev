@@ -19,6 +19,7 @@
 **Total Features:** {N}
 **Testing Approach:** {A — Smoke only | B — Integration scripts (Recommended) | C — Unit tests only | D — Both}
 **Integration Test Convention:** {Language/framework, directory, naming pattern, run command — or "N/A (Option A or C)"}
+**Parallel Mode (S5):** {enabled | disabled}
 
 ---
 
@@ -189,7 +190,7 @@ Plan  Deep Dive  Check  (per feature)   QC
 - Groups no longer matter
 - S3: Epic-level (all features together)
 - S4: Deprecated (test scope decision now at S5 Step 0)
-- S5-S8: Per-feature sequential (implementation dependencies checked separately)
+- S5-S8: Per-feature sequential OR parallel (if `Parallel Mode (S5): enabled`, S5 runs in parallel with S5-CA alignment before S6)
 - S9-S10: Epic-level
 
 ### Time Savings Calculation
@@ -268,10 +269,22 @@ Plan  Deep Dive  Check  (per feature)   QC
 - **Verification Complete:** {YES/NO}
 - **Timestamp:** {YYYY-MM-DD HH:MM or "Not reached"}
 
-**S3 → S5 Sync Point:**
+**S3 → S5 Sync Point (SP2):**
 - **Status:** {NOT_REACHED / WAITING / COMPLETE}
 - **Primary Completed S3:** {YES/NO}
 - **All Agents Notified:** {YES/NO}
+- **Timestamp:** {YYYY-MM-DD HH:MM or "Not reached"}
+
+**SP3 — All S5 → S5-CA:** *(if Parallel Mode (S5): enabled)*
+- **Status:** {NOT_REACHED / WAITING / COMPLETE}
+- **All S5 WAITING_FOR_SYNC:** {YES/NO}
+- **S5-CA Complete:** {YES/NO}
+- **Timestamp:** {YYYY-MM-DD HH:MM or "Not reached"}
+
+**SP4 — Gate 5 → S6 Chain:** *(if Parallel Mode (S5): enabled)*
+- **Status:** {NOT_REACHED / WAITING / COMPLETE}
+- **Combined Gate 5 Approved:** {YES/NO}
+- **Feature 01 Activated for S6:** {YES/NO}
 - **Timestamp:** {YYYY-MM-DD HH:MM or "Not reached"}
 
 ### Coordination Status

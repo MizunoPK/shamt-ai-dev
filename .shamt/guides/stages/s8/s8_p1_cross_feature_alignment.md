@@ -284,9 +284,102 @@ STEP 4: Final Verification
   - 2d: Identify Misalignments and Needed Updates
   - 2e: Update Spec.md and Checklist.md
   - 2f: Mark Feature for Rework if Significant Changes
+  - 2.5: Check Remaining Feature's implementation_plan.md (if it exists)
 - Step 3: Handle Features Needing Rework
 - Step 4: Final Verification
 - Step 5: Alignment Validation Loop (MANDATORY)
+
+---
+
+## Step 2.5: Check Remaining Feature's implementation_plan.md (If It Exists)
+
+**This step is conditional.** Only runs when a remaining feature has an `implementation_plan.md` — i.e., S5 was completed in parallel mode during this epic.
+
+**Check:** `{remaining_feature_folder}/implementation_plan.md`
+- If file does not exist: skip this step entirely for that feature
+- If file exists: proceed with the checks below
+
+### What to Check
+
+Read the remaining feature's `implementation_plan.md` and compare it against the just-completed feature's actual code, focusing on these four dimensions:
+
+**D2 — Interface assertions:**
+Does the plan assert that certain functions, classes, or modules exist with specific signatures?
+- Example: "will call `process_records(items: list[Record]) -> Summary`"
+- Check: Does the just-completed feature's actual code match this signature?
+
+**D5 — Cross-feature data flow assumptions:**
+Does the plan read from or write to data produced or consumed by the just-completed feature?
+- Example: "reads `results.json` with field `score`"
+- Check: Does the just-completed feature's output actually use that field name and structure?
+
+**D6 — Error handling assumptions:**
+Does the plan assume a specific error-handling pattern from the completed feature?
+- Example: "calls raise_if_invalid() which raises ValueError on bad input"
+- Check: Is that still the actual behavior?
+
+**D7 — Integration assumptions:**
+Does the plan assume a specific integration behavior (module layout, import path, initialization sequence)?
+- Check: Does the completed feature match those assumptions?
+
+### Classification
+
+After checking, classify the remaining feature's plan:
+
+| Classification | Criteria | Action |
+|---------------|---------|--------|
+| **NO CHANGE** | All D2/D5/D6/D7 assumptions still accurate | Mark plan as reviewed, no update needed |
+| **MINOR PLAN UPDATE** | One or two assumptions changed; fixable inline | Update plan directly; run targeted re-validation (see below) |
+| **SIGNIFICANT PLAN REWORK** | Core approach or multiple assumptions invalidated | Add re-review flag to plan; notify user; do not attempt to fix now |
+| **SPEC UPDATE NEEDED** | Discrepancy is at spec level (not just plan level) | STOP — escalate to user; return to S2 or update spec |
+
+### Actions After Classification
+
+**NO CHANGE:**
+Add a note to `implementation_plan.md`:
+```
+Reviewed at S8 against {completed_feature_name} implementation — no changes needed. [{date}]
+```
+
+**MINOR PLAN UPDATE:**
+1. Update the affected section(s) of `implementation_plan.md` directly
+2. Add note: `Updated at S8 against {completed_feature_name}: {brief reason}. [{date}]`
+3. Run targeted re-validation on affected dimensions:
+   - Re-read the updated plan
+   - Check D2, D5, D6, D7 against the completed feature's code
+   - Confirm the update resolves the discrepancy without introducing new issues
+   - This is a focused check, not a full S5 re-run
+
+**SIGNIFICANT PLAN REWORK:**
+1. Add a prominent flag to the top of `implementation_plan.md`:
+   ```
+   ⚠️ REQUIRES REVIEW BEFORE S6: Plan assumptions may be invalid.
+   Flagged at S8 against {completed_feature_name} implementation. [{date}]
+   Reason: {brief description of what changed}
+   ```
+2. Notify user: describe what changed and why the plan needs review
+3. Do NOT attempt to update the plan now — the scope may require a full S5 re-run
+
+**SPEC UPDATE NEEDED:**
+1. STOP — do not update the plan
+2. Escalate to user immediately: describe the exact spec-level discrepancy
+3. Wait for user decision (update spec? re-run S2? accept current behavior?)
+
+### Documentation
+
+Add a "Step 2.5" entry to the `S8_ALIGNMENT_VALIDATION_{feature_NN}.md` file:
+
+```markdown
+## Step 2.5: implementation_plan.md Check
+
+**Feature:** {remaining_feature_folder}
+**Plan exists:** Yes / No (skip if No)
+
+**Dimensions checked:** D2, D5, D6, D7
+**Classification:** {NO CHANGE | MINOR PLAN UPDATE | SIGNIFICANT PLAN REWORK | SPEC UPDATE NEEDED}
+**Findings:** {description, or "None"}
+**Action taken:** {description, or "None — plan marked as reviewed"}
+```
 
 ---
 

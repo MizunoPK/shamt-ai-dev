@@ -1,8 +1,8 @@
 # Checkpoint Protocol
 
-**Purpose:** Enable recovery from agent failures during parallel S2 work
+**Purpose:** Enable recovery from agent failures during parallel work
 
-**Used For:** S2 parallelization (agent crash recovery, session resumption)
+**Used For:** S2 and S5 parallelization (agent crash recovery, session resumption)
 
 **Checkpoint Files:** `agent_checkpoints/primary.json`, `agent_checkpoints/secondary_a.json`, etc.
 
@@ -86,7 +86,7 @@ The checkpoint system provides **recoverable state** so work can resume without 
 - `agent_type`: primary or secondary
 - `session_id`: Unique ID for this session (generated at start)
 - `feature`: Which feature this agent owns
-- `stage`: Current stage (S2.P1)
+- `stage`: Current stage. Valid values: `S2.P1` (Feature Deep Dive), `S2.P2` (Cross-Feature Alignment), `S5` (Implementation Planning — parallel mode)
 - `phase`: Human-readable phase name
 - `last_checkpoint`: When this checkpoint was last updated
 - `next_checkpoint_expected`: When next update expected (15 min from last)
@@ -506,7 +506,7 @@ restore_checkpoint() {
 2. **Update these fields:**
    - `last_checkpoint`: Current timestamp
    - `next_checkpoint_expected`: +15 minutes
-   - `stage`: Current stage (S2.P1)
+   - `stage`: Current stage (e.g. S2.P1, S2.P2, S5)
    - `current_step`: What you're working on right now
    - `completed_steps`: Add any newly completed steps
    - `files_modified`: Add any files you've edited

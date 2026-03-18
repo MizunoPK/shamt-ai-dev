@@ -85,6 +85,7 @@
 | Template | Filename | Use When |
 |----------|----------|----------|
 | [Handoff Package (S2)](#handoff-package-s2) | `handoff_package_s2_template.md` | Creating handoff package for secondary agents in parallel S2 work |
+| [Handoff Package (S5)](#handoff-package-s5) | `handoff_package_s5_template.md` | Creating handoff package for secondary agents in parallel S5 work |
 | [Feature Status](#feature-status) | `feature_status_template.txt` | STATUS file format for parallel work coordination (each feature folder) |
 
 ### Debugging
@@ -284,6 +285,13 @@
 - **Purpose:** Handoff package for secondary agents in parallel S2 work; contains context, epic info, and feature assignment
 - **Size:** ~242 lines
 - **When to use:** Parallel S2 work — Primary Agent creates one per secondary agent
+
+#### Handoff Package (S5)
+- **File:** `handoff_package_s5_template.md`
+- **Created:** S5 parallel work setup (Primary Agent, SP2 action)
+- **Purpose:** Handoff package for secondary agents in parallel S5 work; contains context, sync point instructions, and milestone checkpoint requirements
+- **Size:** ~198 lines
+- **When to use:** Parallel S5 work — Primary Agent creates one per secondary agent after S3 Gate 4.5 approval
 
 #### Feature Status
 - **File:** `feature_status_template.txt`

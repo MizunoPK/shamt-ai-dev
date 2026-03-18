@@ -84,7 +84,7 @@ I'm starting S2 (Feature Deep Dives) in PARALLEL MODE as Primary Agent.
 ✅ I will verify sync point before S3:
    - All completion messages received
    - All STATUS files: READY_FOR_SYNC = true
-   - All checkpoints fresh and WAITING_FOR_SYNC
+   - All checkpoints fresh and status WAITING or COMPLETE
 
 ✅ I will handle escalations within 15-minute SLA
 
@@ -156,7 +156,7 @@ Starting Stage: S2.P1 (Feature Deep Dive - Research Phase)
 ✅ After completing S2.P1 (all 3 iterations), I will:
    - Send completion message to Primary
    - Update STATUS: READY_FOR_SYNC = true
-   - Update checkpoint: WAITING_FOR_SYNC
+   - Update checkpoint status: WAITING
    - WAIT for Primary to run S3 (do NOT proceed myself)
 
 ✅ I will NOT run S3 myself - Primary runs S3 solo (S4 is deprecated)
@@ -276,9 +276,9 @@ Feature 01 S2 complete. Verifying sync point before S3...
 - [ ] Read feature_04/STATUS - verify READY_FOR_SYNC: true
 
 **Verification 3: Checkpoints**
-- [ ] Read agent_checkpoints/secondary_a.json - verify WAITING_FOR_SYNC + fresh
-- [ ] Read agent_checkpoints/secondary_b.json - verify WAITING_FOR_SYNC + fresh
-- [ ] Read agent_checkpoints/secondary_c.json - verify WAITING_FOR_SYNC + fresh
+- [ ] Read agent_checkpoints/secondary_a.json - verify status WAITING or COMPLETE + fresh
+- [ ] Read agent_checkpoints/secondary_b.json - verify status WAITING or COMPLETE + fresh
+- [ ] Read agent_checkpoints/secondary_c.json - verify status WAITING or COMPLETE + fresh
 
 **Verification 4: Feature Specs**
 - [ ] Read feature_02/spec.md - verify Acceptance Criteria approved
