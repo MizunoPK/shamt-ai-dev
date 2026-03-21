@@ -217,8 +217,8 @@ Starting Validation Round 1...
 **Validation Summary:**
 - Draft Creation: {X minutes}
 - Validation Rounds: {N rounds in Y hours}
-- First Clean Round: Round {N}
-- Final Clean Streak: Rounds {N-2}, {N-1}, {N}
+- Primary Clean Round: Round {N}
+- Sub-Agent Confirmation: Round {N} (Sub-agent A: clean, Sub-agent B: clean)
 
 **All 11 Dimensions Validated:**
 ✅ Requirements Completeness

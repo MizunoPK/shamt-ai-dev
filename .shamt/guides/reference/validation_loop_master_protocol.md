@@ -45,10 +45,12 @@
 6. [Open Questions Protocol](#open-questions-protocol)
 7. [Documentation Requirements](#documentation-requirements)
 8. [Quality Standards](#quality-standards)
-9. [Exit Criteria](#exit-criteria)
-10. [Common Mistakes](#common-mistakes)
-11. [How Scenario-Specific Loops Extend This Master](#how-scenario-specific-loops-extend-this-master)
-12. [Templates](#templates)
+9. [Anti-Shortcut Enforcement](#anti-shortcut-enforcement)
+10. [Exit Criteria](#exit-criteria)
+11. [Real-World Examples](#real-world-examples)
+12. [Common Mistakes](#common-mistakes)
+13. [How Scenario-Specific Loops Extend This Master](#how-scenario-specific-loops-extend-this-master)
+14. [Templates](#templates)
 
 
 ---
