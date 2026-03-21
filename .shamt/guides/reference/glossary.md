@@ -306,9 +306,9 @@ Mandatory checkpoint that must PASS before proceeding.
 ---
 
 ### GO Decision
-S5 v2 Phase 2 complete - indicates readiness to proceed to S6 implementation after achieving 3 consecutive clean validation rounds across all 11 dimensions.
+S5 v2 Phase 2 complete - indicates readiness to proceed to S6 implementation after achieving primary clean round + sub-agent confirmation validation across all 11 dimensions.
 
-**See:** S5 v2 Validation Loop, Phase 2, NO-GO, 3 Consecutive Clean Rounds
+**See:** S5 v2 Validation Loop, Phase 2, NO-GO, Sub-Agent Confirmation
 
 **Guide:** stages/s5/s5_v2_validation_loop.md (Dimension 10: Implementation Readiness)
 
@@ -456,7 +456,7 @@ Test double that simulates real object behavior.
 ---
 
 ### NO-GO Decision
-S5 v2 Validation Loop not converging - indicates NOT ready to proceed to S6. Occurs when unable to achieve 3 consecutive clean rounds within 10 rounds, or when critical dimensions repeatedly fail.
+S5 v2 Validation Loop not converging - indicates NOT ready to proceed to S6. Occurs when unable to achieve primary clean round + sub-agent confirmation within 10 rounds, or when critical dimensions repeatedly fail.
 
 **See:** GO Decision, S5 v2 Validation Loop, Escalation Protocol
 
@@ -615,7 +615,7 @@ Process of continuing work after session compaction.
 
 **[Validation Loop]** Iterative quality control validation:
 
-- Check ALL dimensions every round until 3 consecutive clean rounds
+- Check ALL dimensions every round until primary clean round + sub-agent confirmation
 
 **Historical Context (S5 v1):**
 - S5 v1 had "rounds" (Round 1: I1-I7, Round 2: I8-I13, Round 3: I14-I22)

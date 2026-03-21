@@ -55,7 +55,7 @@
 **Logic:**
 - Gate 4a = Occurs at Dimension 4 validation in S5 Round 1
 - Gate 23a = Occurs at Validation Round (multiple dimensions) in S5 v2 Phase 2
-- Gate 24 = Occurs at Validation Loop complete (3 consecutive clean rounds) in S5 v2 Phase 2
+- Gate 24 = Occurs at Validation Loop complete (primary clean round + sub-agent confirmation) in S5 v2 Phase 2
 
 **Example:** Round 1 has 9 iterations total:
 - Iterations: 1, 2, 3, 4, 5, 5a, 6, 7
@@ -88,7 +88,7 @@
 | S5 | Gate 24: GO/NO-GO Decision | S5 v2 Validation Loop | GO decision (confidence >= MEDIUM) | Yes (Fix + redo) |
 | S5 | Gate 5: Implementation Plan Approval | After S5 v2 | User approves implementation_plan.md | Yes (Revise plan) |
 | S7 | Smoke Part 3 | S7.P1 | Data values verified | Yes (Restart S7.P1) |
-| S7 | Validation Loop | S7.P2 | 3 consecutive clean rounds | No (Fix + continue) |
+| S7 | Validation Loop | S7.P2 | primary clean round + sub-agent confirmation | No (Fix + continue) |
 | S10 | Gate 7.1: Unit Tests (Options C/D only) | S10 | 100% test pass (exit code 0) — skipped for A/B | Yes (Fix tests) |
 | S10 | Gate 7.1b: Integration Scripts (Options B/D only) | S10 | All scripts exit code 0 — skipped for A/C | Yes (Fix scripts) |
 | S10 | User Testing | S10 | ZERO bugs found by user | Yes (S9) |
@@ -275,7 +275,7 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 **How it works:**
 - Draft Creation Phase (60-90 min): Create initial implementation_plan.md
 - Validation Loop Phase (3.5-6 hours): Validate against 11 dimensions each round
-- Exit when 3 consecutive rounds find zero issues
+- Exit when primary clean round achieved + 2 independent sub-agents confirm zero issues
 - Present to user for Gate 5 approval
 
 ---
@@ -448,7 +448,7 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 **If FAIL (discrepancies found):**
 - User chooses Option A, B, or C
 - Follow user's decision
-- Cannot proceed to Validation Loop complete (3 consecutive clean rounds) until resolved
+- Cannot proceed to Validation Loop complete (primary clean round + sub-agent confirmation) until resolved
 
 **Historical Context:**
 - Feature 02 catastrophic bug: spec.md misinterpreted epic notes
@@ -467,7 +467,7 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 **What it checks (comprehensive checklist):**
 - Spec Verification: Complete, validated
 - Implementation Plan Verification: All requirements have tasks, specificity 100%
-- Iteration Completion: S5 v2 Validation Loop complete (all 11 dimensions validated, 3 consecutive clean rounds)
+- Iteration Completion: S5 v2 Validation Loop complete (all 11 dimensions validated, primary clean round + sub-agent confirmation)
 - Mandatory Gates: Iterations 4a, 23a (ALL 4 PARTS), 25 all PASSED
 - Confidence Assessment: >= MEDIUM
 - Integration Verification: Algorithm traceability, integration gaps, interfaces, mocks
@@ -483,7 +483,7 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 **If NO-GO:**
 - Address concerns/blockers
 - Fix failing items
-- Re-evaluate Validation Loop complete (3 consecutive clean rounds)
+- Re-evaluate Validation Loop complete (primary clean round + sub-agent confirmation)
 - Cannot proceed to S6 without GO decision
 
 **Why it matters:** Final checkpoint before writing code (prevents implementing with incomplete/incorrect planning)
@@ -493,7 +493,7 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 ### Gate 5: User Approval of Implementation Plan (MANDATORY CHECKPOINT)
 
 **Location:** Between S5 v2 and S6
-**When:** After S5 v2 Validation Loop achieves 3 consecutive clean rounds
+**When:** After S5 v2 Validation Loop achieves primary clean round + sub-agent confirmation
 
 **What it checks:**
 - User reviews implementation_plan.md (~400 lines) validated through S5 v2 loop
@@ -522,7 +522,7 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 
 **Why it matters:** Gives user visibility and control over implementation approach before code is written. User can request changes to phasing, test strategy, or approach without wasting implementation effort.
 
-**S5 v2 Improvement:** implementation_plan.md quality guaranteed by 3 consecutive clean validation rounds (99%+ quality) before user review.
+**S5 v2 Improvement:** implementation_plan.md quality guaranteed by primary clean round + sub-agent confirmation validation (99%+ quality) before user review.
 
 **Benefits:**
 - User sees full implementation plan before coding
@@ -574,17 +574,17 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 
 ---
 
-### Checkpoint: S7.P2 Validation Loop - 3 Consecutive Clean Rounds
+### Checkpoint: S7.P2 Validation Loop - Primary Clean Round + Sub-Agent Confirmation
 
 **Location:** stages/s7/s7_p2_qc_rounds.md
 **When:** During Validation Loop (S7.P2)
 
 **What it checks:**
 - Check ALL 16 dimensions every round (7 master + 9 S7 QC-specific)
-- 3 consecutive rounds with ZERO issues
+- Primary clean round + sub-agent confirmation required
 
 **Pass Criteria:**
-- 3 consecutive clean rounds achieved
+- primary clean round + sub-agent confirmation achieved
 - Zero issues deferred (fix immediately, reset counter, continue)
 
 **If issues found during a round:**
@@ -596,7 +596,7 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 **Validation Loop Protocol:**
 - Check all 16 dimensions every round (7 master + 9 S7 QC-specific — not different focuses per round)
 - Fix issues immediately when found
-- Only exit after 3 CONSECUTIVE clean rounds
+- Only exit after primary clean round + sub-agent confirmation
 
 **Why it matters:** Ensures feature is production-ready with zero known issues before final review
 
@@ -617,7 +617,7 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 
 **Requirements:**
 - Epic smoke testing passes
-- Validation Loop passes (3 consecutive clean rounds)
+- Validation Loop passes (primary clean round + sub-agent confirmation)
 - If ANY issues → restart S9
 
 ---
@@ -717,7 +717,7 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 **Additional Stage Checkpoints (documented in this file but not formally numbered gates):**
 - S2.P1.I3: User Approval of Acceptance Criteria (referenced as "Gate 4" in this file for completeness — embedded in Gate 3)
 - S7.P1: Smoke Part 3 - E2E Data Validation (labeled "Checkpoint: S7.P1 Part 3" in this file)
-- S7.P2: Validation Loop - 3 Consecutive Clean Rounds (labeled "Checkpoint: S7.P2 Validation Loop" in this file)
+- S7.P2: Validation Loop - Primary Clean Round + Sub-Agent Confirmation (labeled "Checkpoint: S7.P2 Validation Loop" in this file)
 - S10: Unit Tests 100% Pass — Options C/D only (referenced as "Gate 7.1" in this file)
 - S10: Integration Scripts all exit 0 — Options B/D only (referenced as "Gate 7.1b" in this file)
 - S10: User Testing Zero Bugs (referenced as "Gate 7.2" in this file)
@@ -738,7 +738,7 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 - Validation Round (multiple dimensions): 4 parts with specific numbers
 - Dimension 11 validation: Three-way comparison results
 - Smoke Part 3: Data values
-- Validation Loop: 3 consecutive clean rounds
+- Validation Loop: primary clean round + sub-agent confirmation
 
 **Gates with Restart Protocol:** 6
 - Gate 1 (S2.P1.I1) → Return to S2.P1.I1 research

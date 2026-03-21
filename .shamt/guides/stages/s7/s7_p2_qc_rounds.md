@@ -40,7 +40,7 @@ S7.P1 (Smoke Testing) →
 1. **Read the validation loop guide:** `reference/validation_loop_s7_feature_qc.md`
    - Understand 16 dimensions (7 master + 9 S7 QC-specific)
    - Review fresh eyes patterns per round
-   - Understand 3 consecutive clean rounds exit criteria
+   - Understand sub-agent confirmation exit criteria
    - Study master protocol: `reference/validation_loop_master_protocol.md`
 
 2. **Use the phase transition prompt** from `prompts_reference_v2.md`
@@ -52,7 +52,7 @@ S7.P1 (Smoke Testing) →
    - Current Phase: S7.P2 (Feature QC Validation Loop)
    - Current Guide: reference/validation_loop_s7_feature_qc.md
    - Guide Last Read: {YYYY-MM-DD HH:MM}
-   - Critical Rules: "16 dimensions checked every round", "3 consecutive clean rounds required", "Fix issues immediately (no restart)", "100% tests passing"
+   - Critical Rules: "16 dimensions checked every round", "sub-agent confirmation required to exit", "Fix issues immediately (no restart)", "100% tests passing"
    - Next Action: Validation Round 1 - Sequential Review + Test Verification
 
 4. **Verify all prerequisites** (see checklist below)
@@ -66,9 +66,9 @@ S7.P1 (Smoke Testing) →
 ## 🚫 FORBIDDEN SHORTCUTS
 
 You CANNOT:
-- Declare QC "complete" after a single pass — at minimum the 2-round checkpoint requires user input before stopping
+- Declare QC "complete" without completing the sub-agent confirmation — see `reference/validation_loop_master_protocol.md` Exit Criteria for the required sequence
 - Skip the Code Inspection Protocol (MANDATORY) by reviewing code from memory
-- Stop before the 2-round checkpoint without user input — the checkpoint is the only sanctioned early-exit mechanism (see `reference/validation_loop_master_protocol.md` Exit Criteria)
+- Exit before sub-agent confirmation without completing the required exit sequence (see `reference/validation_loop_master_protocol.md` Exit Criteria)
 - Skip dimensions because "the feature was carefully implemented"
 
 If you are about to do any of the above: STOP and re-read the relevant section.
@@ -78,7 +78,7 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 ## Overview
 
 **What is this guide?**
-Feature QC validates implemented features through systematic validation loop checking 16 dimensions (7 master + 9 S7-specific) every round until 3 consecutive clean rounds achieved.
+Feature QC validates implemented features through systematic validation loop checking 16 dimensions (7 master + 9 S7-specific) every primary round until primary clean round + sub-agent confirmation achieved.
 
 **When do you use this guide?**
 - S7.P1 complete (Smoke Testing passed all 3 parts)
@@ -88,7 +88,7 @@ Feature QC validates implemented features through systematic validation loop che
 
 **Key Outputs:**
 - ✅ All 16 dimensions validated every round
-- ✅ 3 consecutive clean rounds achieved (zero issues found)
+- ✅ Primary clean round + sub-agent confirmation achieved (zero issues found)
 - ✅ 100% tests passing (verified every round)
 - ✅ All spec requirements implemented (100% coverage)
 - ✅ All integration points verified and working
@@ -99,7 +99,7 @@ Feature QC validates implemented features through systematic validation loop che
 4-5 hours (typically 6-8 validation rounds)
 
 **Exit Condition:**
-Feature QC is complete when 3 consecutive validation rounds find ZERO issues across all 16 dimensions, all tests passing (100%), and feature is production-ready
+Feature QC is complete when primary clean round + sub-agent confirmation achieved (both independent sub-agents confirm zero issues across all 16 dimensions), all tests passing (100%), and feature is production-ready
 
 ---
 
@@ -120,11 +120,11 @@ Feature QC is complete when 3 consecutive validation rounds find ZERO issues acr
    - Cannot skip any dimension
    - Re-read entire codebase each round (no working from memory)
 
-2. ⚠️ 3 CONSECUTIVE CLEAN ROUNDS REQUIRED (OR USER CHECKPOINT AT 2)
+2. ⚠️ SUB-AGENT CONFIRMATION REQUIRED TO EXIT
    - Clean = ZERO issues found across all 16 dimensions
    - Counter resets if ANY issue found
-   - Cannot stop before the 2-round checkpoint without user input — the checkpoint is the only sanctioned early-exit mechanism (see master protocol Exit Criteria)
-   - Typical: 6-8 rounds total to achieve 3 consecutive clean
+   - After primary declares one clean round: spawn 2 independent sub-agents for parallel confirmation (see master protocol Exit Criteria)
+   - Typical: 4-7 primary rounds to reach clean, then sub-agent confirmation
 
 3. ⚠️ FIX ISSUES IMMEDIATELY (NO RESTART PROTOCOL)
    - If issues found → Fix ALL immediately
@@ -155,7 +155,7 @@ Feature QC is complete when 3 consecutive validation rounds find ZERO issues acr
 - Assume everything is wrong (start each round skeptical)
 - Fresh eyes required (break + re-read between rounds)
 - Zero deferred issues (fix ALL before next round)
-- Exit only after 3 consecutive clean rounds
+- Exit only after primary clean round + sub-agent confirmation
 - See `reference/validation_loop_master_protocol.md` for complete principles
 
 ---
@@ -315,7 +315,7 @@ Round 1 RESTART: Sequential Review - TRUE Fresh Eyes
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
-│     S7.P2 FEATURE QC VALIDATION LOOP (Until 3 Clean)       │
+│     S7.P2 FEATURE QC VALIDATION LOOP (Until Primary Clean + Sub-Agents) │
 └─────────────────────────────────────────────────────────────┘
 
 PREPARATION
@@ -337,18 +337,18 @@ ROUND 2: Reverse Review + Integration Focus
    If issues found → Fix ALL immediately → Re-run tests → Round 3
    If clean → Round 3 (count = 2 or 1 depending on previous)
 
-ROUND 3+: Continue Until 3 Consecutive Clean
+ROUND 3+: Continue Until Primary Clean Round
    ↓ Check ALL 16 dimensions (different reading patterns)
    ↓ Run tests, spot-checks, E2E verification
    ↓
-   Continue until 3 consecutive rounds with ZERO issues
+   Continue until primary clean round achieved → spawn 2 sub-agents for parallel confirmation
    ↓
 VALIDATION COMPLETE → Proceed to S7.P3 (Final Review)
 ```
 
 **Key Difference from Old Approach:**
 - **Old:** 3 sequential rounds checking different concerns → Any issue → Restart from S7.P1
-- **New:** N rounds checking ALL concerns → Fix issues immediately → Continue until 3 consecutive clean
+- **New:** N rounds checking ALL concerns → Fix issues immediately → Continue until primary clean round + sub-agent confirmation
 
 **VALIDATION_LOOP_LOG.md:** Create this file at the start of S7.P2 in the feature folder. Log each round's findings, issues fixed, and clean round counter. Format:
 ```markdown
@@ -541,9 +541,9 @@ Code conventions verified: Follows CODING_STANDARDS.md (type hints, error contex
 ## Validation Round Execution
 
 ⚠️ **Before starting Round 1, confirm:**
-- [ ] I will not stop after the first round that appears mostly clean
-- [ ] At minimum I must reach the 2-round checkpoint before stopping — at that point the user decides whether to continue to a 3rd round
-- [ ] I will not present QC results to the user or proceed to S7.P3 until at least the 2-round checkpoint has been presented to the user
+- [ ] I will not stop after the first round that appears clean — I must trigger sub-agent confirmation
+- [ ] I will spawn 2 independent sub-agents after my first clean round and wait for both to confirm zero issues before exiting
+- [ ] I will not proceed to S7.P3 until sub-agent confirmation is complete (see master protocol Exit Criteria)
 
 ---
 
@@ -556,7 +556,7 @@ Code conventions verified: Follows CODING_STANDARDS.md (type hints, error contex
 2. Run all tests (must pass 100%)
 3. Fix ANY issues found immediately
 4. Take 2-5 minute break before next round
-5. Continue until 3 consecutive clean rounds achieved
+5. Continue until primary clean round + sub-agent confirmation achieved
 
 **Key difference from old approach:**
 - **Old (v1.0):** 3 sequential rounds checking different concerns, restart from S7.P1 on any issue
@@ -613,24 +613,24 @@ Code does: rating = max(0, min(2.0, rating))  # Wrong range!
 
 ## MANDATORY CHECKPOINT 1
 
-**You have achieved 3 consecutive clean validation rounds**
+**Both sub-agents have confirmed zero issues (exit condition met)**
 
 STOP - DO NOT PROCEED TO S7.P3 YET
 
 **REQUIRED ACTIONS:**
 1. [ ] Use Read tool to re-read "Critical Rules" section of this guide
 2. [ ] Use Read tool to re-read `reference/validation_loop_s7_feature_qc.md` (16 dimensions)
-3. [ ] Verify 3 consecutive clean rounds documented in VALIDATION_LOOP_LOG.md
+3. [ ] Verify primary clean round and sub-agent confirmation documented in VALIDATION_LOOP_LOG.md
 4. [ ] Verify ZERO issues remain (scan implementation one more time)
 5. [ ] Update feature README Agent Status:
    - Current Guide: "stages/s7/s7_p3_final_review.md"
-   - Current Step: "S7.P2 complete (3 consecutive clean rounds), ready to start S7.P3"
+   - Current Step: "S7.P2 complete (sub-agent confirmation passed), ready to start S7.P3"
    - Last Updated: [timestamp]
-6. [ ] Output acknowledgment: "CHECKPOINT 1 COMPLETE: Re-read Critical Rules, verified 3 consecutive clean rounds, ZERO issues"
+6. [ ] Output acknowledgment: "CHECKPOINT 1 COMPLETE: Re-read Critical Rules, verified primary clean round and sub-agent confirmation, ZERO issues"
 
 **Why this checkpoint exists:**
 - Ensures validation loop was properly executed
-- Confirms all 16 dimensions checked every round
+- Confirms all 16 dimensions checked every primary round
 - 3 minutes of verification prevents hours of rework
 
 **ONLY after completing ALL 6 actions above, proceed to Next Steps section**
@@ -639,24 +639,24 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 
 ## Next Steps
 
-**If 3 consecutive clean rounds achieved:**
+**If sub-agent confirmation passed:**
 - Document QC results in feature README
-- Update Agent Status: "S7.P2 COMPLETE (3 consecutive clean rounds, zero issues)"
+- Update Agent Status: "S7.P2 COMPLETE (sub-agent confirmation passed, zero issues)"
 - Proceed to **S7.P3: Final Review**
 
 **If still finding issues:**
 - Fix ALL issues immediately (no deferring)
 - Re-run tests (must pass 100%)
-- Continue validation loop until 3 consecutive clean rounds
-- Do NOT proceed to Final Review until clean pass
+- Continue validation loop until primary clean round + sub-agent confirmation
+- Do NOT proceed to Final Review until validation complete
 
 ---
 
 ## Summary
 
 **Feature QC Validation Loop validates:**
-- ALL 16 dimensions checked EVERY round (7 master + 9 S7 QC-specific)
-- Continue until 3 consecutive clean rounds achieved
+- ALL 16 dimensions checked EVERY primary round (7 master + 9 S7 QC-specific)
+- Continue until primary clean round + sub-agent confirmation achieved
 - Fix issues immediately (no restart protocol needed)
 
 **16 Dimensions Checked:**
@@ -679,7 +679,7 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 
 **Critical Success Factors:**
 - Zero tech debt tolerance (100% or INCOMPLETE)
-- 3 consecutive clean rounds required (exit criteria)
+- Primary clean round + sub-agent confirmation required (exit criteria)
 - Fix issues immediately and continue (no restart)
 - Fresh eyes through breaks + re-reading
 - 100% tests passing every round
@@ -690,13 +690,13 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 
 ## Exit Criteria
 
-S7.P2 is complete when the Validation Loop exits with 3 consecutive clean rounds (zero issues, all 16 dimensions) and Agent Status is updated.
+S7.P2 is complete when the Validation Loop exits: primary agent declares one clean round (zero issues, all 16 dimensions) AND both independent sub-agents confirm zero issues. Agent Status is updated.
 
 ---
 
 ## Next Phase
 
-**After completing S7.P2 (3 consecutive clean rounds), proceed to:**
+**After completing S7.P2 (sub-agent confirmation passed), proceed to:**
 - **Phase:** S7.P3 — Final Review
 - **Guide:** `stages/s7/s7_p3_final_review.md`
 

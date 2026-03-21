@@ -37,7 +37,7 @@ STEP 4: Validation Loop (S4.I4 — 15-20 min)
     ├─ Round 1: Sequential read + requirement coverage check
     ├─ Round 2: Edge case enumeration + gap detection
     ├─ Round 3: Random spot-checks + integration verification
-    └─ Exit: 3 consecutive clean rounds
+    └─ Exit: primary clean round + sub-agent confirmation
 ```
 
 ---
@@ -49,7 +49,7 @@ STEP 4: Validation Loop (S4.I4 — 15-20 min)
 | I1 | 15-20 min | Requirement analysis, test enumeration | Test coverage matrix, test case list | No |
 | I2 | 10-15 min | Edge cases, error paths | Edge case catalog, updated matrix | No |
 | I3 | 10-15 min | Config dependency analysis | Config test matrix, final coverage matrix | No |
-| I4 | 15-20 min | Validation Loop (3 consecutive clean rounds) | test_strategy.md (validated) | No gates |
+| I4 | 15-20 min | Validation Loop (primary clean round + sub-agent confirmation) | test_strategy.md (validated) | No gates |
 
 **Note:** S4 has ZERO formal gates. test_strategy.md is agent-validated only (via Validation Loop in I4). User approval is NOT required for test_strategy.md.
 
@@ -60,7 +60,7 @@ STEP 4: Validation Loop (S4.I4 — 15-20 min)
 - ✅ test-driven development (plan tests BEFORE coding)
 - ✅ >90% coverage goal (feature-level, not epic-level)
 - ✅ All 4 iterations MANDATORY (I1, I2, I3, I4)
-- ✅ Validation Loop (I4) requires 3 consecutive clean rounds
+- ✅ Validation Loop (I4) requires primary clean round + sub-agent confirmation
 - ✅ test_strategy.md created in S4, merged into implementation_plan.md in S5.P1.I1
 - ✅ Update README Agent Status after EACH iteration
 - ✅ Zero deferred issues (fix ALL issues immediately in I4 Validation Loop)
@@ -108,7 +108,7 @@ STEP 4: Validation Loop (S4.I4 — 15-20 min)
 - [ ] I1 → I2: Test coverage matrix created
 - [ ] I2 → I3: Edge case catalog created
 - [ ] I3 → I4: Config test matrix created, coverage >90%
-- [ ] I4 → Create test_strategy.md: Validation Loop PASSED (3 consecutive clean rounds)
+- [ ] I4 → Create test_strategy.md: Validation Loop PASSED (primary clean round + sub-agent confirmation)
 
 **Step 4 → S5:**
 - [ ] test_strategy.md exists in feature folder
@@ -159,7 +159,7 @@ STEP 4: Validation Loop (S4.I4 — 15-20 min)
 
 **S4 is complete when:**
 - [ ] All 4 iterations complete (I1, I2, I3, I4)
-- [ ] Validation Loop (I4) passed with 3 consecutive clean rounds
+- [ ] Validation Loop (I4) passed with primary clean round + sub-agent confirmation
 - [ ] test_strategy.md created in `feature_{N}_{name}/` folder
 - [ ] test_strategy.md has all required sections
 - [ ] Coverage goal >90% documented

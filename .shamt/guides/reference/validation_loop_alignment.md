@@ -124,13 +124,10 @@ Round 3: Random pairs + thematic
 - Random check F1 vs F3: 0 issues found
 - Thematic check (all data structures): 0 issues found
 - Thematic check (all error handling): 0 issues found
-- Continue (count = 1 clean)
-
-Round 4: Repeat validation
-- Check: 0 issues found → Continue (count = 2 clean)
-
-Round 5: Final sweep
-- Check: 0 issues found → PASSED (count = 3 consecutive clean)
+- Continue (count = 1 clean) → Trigger sub-agent confirmation
+  - Sub-agent A: 0 issues ✅
+  - Sub-agent B: 0 issues ✅
+  - Both confirmed → PASSED ✅
 ```
 
 ---
@@ -167,7 +164,7 @@ Round 5: Final sweep
 ## Exit Criteria Specific to Alignment
 
 **Can only exit when ALL true:**
-- [ ] 3 consecutive rounds found zero issues, OR user opted to stop at the 2-round checkpoint (see master protocol Exit Criteria)
+- [ ] Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
 - [ ] No naming conflicts across any features
 - [ ] No approach contradictions across any features
 - [ ] All data structures compatible

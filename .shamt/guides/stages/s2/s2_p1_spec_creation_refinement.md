@@ -14,7 +14,7 @@
 
 You CANNOT:
 - Skip I2 (Checklist Resolution) or I3 (Refinement & Alignment) and consider the spec done after I1 — all three iterations are mandatory and must run in sequence
-- Complete I3 without running the Validation Loop because "the spec looks complete" — 3 consecutive clean rounds are required before proceeding to Gate 3 (User Approval)
+- Complete I3 without running the Validation Loop because "the spec looks complete" — primary clean round + sub-agent confirmation is required before proceeding to Gate 3 (User Approval)
 
 If you are about to do any of the above: STOP and re-read the relevant section.
 
@@ -122,7 +122,7 @@ Research feature, draft spec.md and checklist.md, validate with Validation Loop 
   - All 4 categories must pass with evidence
 - **Round 2:** Fresh review with different patterns, find new issues
 - **Round 3:** Final validation
-- **Exit:** 3 consecutive clean rounds (Gate 1 passed as part of validation)
+- **Exit:** primary clean round + sub-agent confirmation (Gate 1 passed as part of validation)
 
 **Outputs:**
 - spec.md (draft, validated, Discovery Context included)
@@ -257,7 +257,7 @@ Primary agent reviews during coordination heartbeat (every 15 minutes).
 
 **Reference:** `reference/validation_loop_spec_refinement.md`
 
-🚨 **MANDATORY:** Create `{feature_folder}/VALIDATION_LOG.md` BEFORE starting Round 1. If this file does not exist, the validation loop has not started. Track `clean_counter` in the log (starts at 0, resets on any issue found, exit at 3).
+🚨 **MANDATORY:** Create `{feature_folder}/VALIDATION_LOG.md` BEFORE starting Round 1. If this file does not exist, the validation loop has not started. Track `clean_counter` in the log (starts at 0, resets on any issue found, exit at 1 then trigger sub-agent confirmation).
 
 - **Round 1:** Sequential read, requirement traceability check
   - **Gate 2 Check (Spec-to-Epic Alignment):**
@@ -269,7 +269,7 @@ Primary agent reviews during coordination heartbeat (every 15 minutes).
   - All criteria must pass
 - **Round 2:** Read in reverse order, gap detection
 - **Round 3:** Random requirement spot-checks, alignment with DISCOVERY.md
-- **Exit:** 3 consecutive clean rounds (Gate 2 passed as part of validation)
+- **Exit:** primary clean round + sub-agent confirmation (Gate 2 passed as part of validation)
 
 **3. If Gaps Found During Validation Loop - LOOP-BACK MECHANISM**
 - Add new questions to checklist.md

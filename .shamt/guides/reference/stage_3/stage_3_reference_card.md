@@ -17,12 +17,12 @@ S3.P1: Epic Testing Strategy Development (45-60 min)
     ├─ Step 3: Define epic success criteria — measurable (15-20 min)
     ├─ Step 4: Create specific test scenarios with commands (15-25 min)
     ├─ Step 5: Update epic_smoke_test_plan.md (10-15 min)
-    └─ Step 6: Validation Loop — 3 consecutive clean rounds
+    └─ Step 6: Validation Loop — primary clean round + sub-agent confirmation
     ↓
 S3.P2: Epic Documentation Refinement (20-30 min)
     ├─ Step 1: Consolidate feature details from all spec.md files (10-15 min)
     ├─ Step 2: Update EPIC_README.md with feature summaries + arch decisions (10-15 min)
-    └─ Step 3: Validation Loop — 3 consecutive clean rounds
+    └─ Step 3: Validation Loop — primary clean round + sub-agent confirmation
     ↓
 S3.P3: Epic Plan Approval (10-15 min) ← MANDATORY GATE
     ├─ Step 1: Create epic summary
@@ -117,7 +117,7 @@ S3.P3: Epic Plan Approval (10-15 min) ← MANDATORY GATE
 
 - ✅ ALL features must complete S2 (including S2.P2) before S3
 - ✅ S3 tests span MULTIPLE features — single-feature test scope is decided at S5 Step 0
-- ✅ Each phase (S3.P1, S3.P2) uses a 3-consecutive-clean Validation Loop
+- ✅ Each phase (S3.P1, S3.P2) uses a Validation Loop (primary clean round + sub-agent confirmation)
 - ✅ Gate 4.5 user approval is MANDATORY — cannot skip
 - ✅ Total rejection → 3-tier handling, NOT a simple loop-back to S3
 - ✅ Update epic EPIC_README.md Agent Status when starting
@@ -172,8 +172,8 @@ S3.P3: Epic Plan Approval (10-15 min) ← MANDATORY GATE
 ## Exit Conditions
 
 **S3 is complete when:**
-- [ ] epic_smoke_test_plan.md has concrete integration scenarios (3 clean rounds)
-- [ ] EPIC_README.md updated with feature details (3 clean rounds)
+- [ ] epic_smoke_test_plan.md has concrete integration scenarios (validation loop passed)
+- [ ] EPIC_README.md updated with feature details (validation loop passed)
 - [ ] Epic summary created
 - [ ] User explicitly approved epic plan (Gate 4.5)
 - [ ] EPIC_README.md shows S3 complete

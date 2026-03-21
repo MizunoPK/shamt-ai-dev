@@ -26,7 +26,7 @@
 
 ## What is the Validation Loop?
 
-**Definition:** The Validation Loop is an iterative quality control process that checks ALL dimensions every round until 3 consecutive clean rounds are achieved.
+**Definition:** The Validation Loop is an iterative quality control process that checks ALL dimensions every round until primary clean round + sub-agent confirmation are achieved.
 
 **Purpose:**
 - Comprehensive validation beyond smoke testing
@@ -50,7 +50,7 @@ Each Round: Check ALL dimensions
    ↓ Pass criteria: ZERO issues found
    ↓
    If CLEAN (0 issues) → Increment clean counter
-      → If 3 consecutive clean rounds → EXIT (proceed to next stage)
+      → If primary clean round + sub-agent confirmation → EXIT (proceed to next stage)
       → Otherwise → Next round
 
    If ISSUES FOUND → Fix immediately
@@ -65,11 +65,11 @@ Each Round: Check ALL dimensions
 
 **These rules apply to ALL QC rounds (feature or epic):**
 
-### 1. ALL 3 Rounds Are MANDATORY
-- Cannot skip any round
-- Must complete in order (Round 1 → 2 → 3)
-- Each round has DIFFERENT focus
-- Each round catches different issues
+### 1. ALL Dimensions Are MANDATORY Every Round
+- Cannot skip any dimension in any round
+- Check ALL dimensions every round (not different focuses per round)
+- Each round checks the same full set of dimensions
+- Exit only after primary clean round + sub-agent confirmation
 
 ### 2. Fix-and-Continue Protocol (v2.0)
 
@@ -78,17 +78,17 @@ VALIDATION LOOP PROTOCOL (v2.0):
 1. Fix ALL issues found immediately
 2. Reset clean counter to 0
 3. Continue validation (no restart needed)
-4. Exit after 3 consecutive clean rounds
+4. Exit after primary clean round + sub-agent confirmation
 
 WHY fix-and-continue?
 - Saves 60-180 minutes per issue vs restart
 - Maintains validation context
-- Still achieves same quality (3 consecutive clean rounds)
+- Still achieves same quality (primary clean round + sub-agent confirmation)
 ```
 
 **Issue Handling:**
 - **Any Round:** Fix issues immediately, reset clean counter, continue
-- **Exit Criteria:** 3 consecutive rounds with ZERO issues
+- **Exit Criteria:** Primary clean round + sub-agent confirmation (zero issues)
 - **Max Rounds:** 10 (escalate to user if exceeded)
 
 ### 3. NO Partial Work Accepted - ZERO TECH DEBT TOLERANCE
@@ -106,17 +106,17 @@ WHY fix-and-continue?
 
 **Must be production-ready with ZERO tech debt**
 
-### 4. Each Round Has Unique Focus
+### 4. Use Fresh Reading Patterns Each Round
 
-**Cannot skip rounds - each catches different issues:**
-- **Round 1:** Basic validation (does it work at basic level?)
-- **Round 2:** Deep verification (does it work correctly with all scenarios?)
-- **Round 3:** Skeptical review (is it ACTUALLY complete and ready?)
+**Vary HOW you read, not WHAT you check:**
+- **Round 1:** Sequential (top-to-bottom read)
+- **Round 2:** Reverse order (bottom-to-top) or section-by-section with different entry point
+- **Round 3+:** Spot-checks, cross-references, adversarial reading
 
-**Progressive validation approach:**
-- Round 1 catches obvious issues
-- Round 2 catches subtle correctness issues
-- Round 3 catches completeness gaps
+**All dimensions checked every round:**
+- Do not skip dimensions because "I checked that last round"
+- Fresh reading pattern helps catch what same-direction reading misses
+- Exit only after primary clean round + sub-agent confirmation
 
 ### 5. Verify DATA VALUES (Not Just Structure)
 
@@ -219,14 +219,14 @@ assert df['player_name'].str.len().min() > 2  # Verify reasonable values
   - **ZERO issues found** (critical, medium, OR minor)
   - Spec re-read confirms 100% implementation
   - Fresh-eyes review finds no gaps
-  - If clean: increment clean counter (need 3 consecutive clean rounds to exit)
+  - If clean: increment clean counter (need primary clean round + sub-agent confirmation to exit)
 - **If issues found:** Fix immediately, reset clean counter to 0, continue
 
 **Scope-Specific Focus:**
 - **Feature-level:** Fresh-eyes spec review, algorithm traceability re-check, integration gap re-check
 - **Epic-level:** End-to-end success criteria, original epic request validation, user experience flows
 
-**Exit Criteria:** 3 consecutive rounds with ZERO issues (not necessarily rounds 1-3; may require rounds 4, 5, 6+)
+**Exit Criteria:** Primary clean round + sub-agent confirmation (may require rounds 4, 5, 6+ if issues found)
 
 ---
 
@@ -291,14 +291,14 @@ assert df['player_name'].str.len().min() > 2  # Verify reasonable values
 
 ## Common Mistakes to Avoid
 
-### ❌ Mistake 1: Skipping Rounds
+### ❌ Mistake 1: Skipping Dimensions Within a Round
 
 ```markdown
-## WRONG - "Round 1 looks good, I'll skip to Round 3"
-## Each round has unique focus - cannot skip
+## WRONG - "Round 1 looks good, I'll only check the dimensions where I expect issues"
+## All dimensions are checked every round - no selective checking
 
-## CORRECT - Complete ALL 3 rounds in order
-Round 1 → Round 2 → Round 3
+## CORRECT - Check ALL dimensions every round, exit after primary clean round + sub-agent confirmation
+Round N → check ALL dimensions → fix any issues → continue until primary clean + sub-agents
 ```
 
 ### ❌ Mistake 2: Skipping Remaining Dimensions After Finding Issue
@@ -352,14 +352,14 @@ assert df['projected_value'].between(0, 500).all()  # Values in range
 ```bash
 Did QC round find issues?
 ├─ NO ISSUES
-│  └─ If clean count < 3: Proceed to next round
-│  └─ If 3 consecutive clean rounds: QC complete, proceed to next stage
+│  └─ If primary clean round not yet achieved: increment counter to 1, trigger sub-agent confirmation
+│  └─ If primary clean round + sub-agent confirmation: QC complete, proceed to next stage
 │
 └─ ISSUES FOUND
    ├─ Fix ALL issues immediately (zero deferral tolerance)
    ├─ Reset consecutive clean counter to 0
    └─ Continue to next round (no restart needed)
-      → Exit only after 3 consecutive clean rounds
+      → Exit only after primary clean round + sub-agent confirmation
       → Max 10 rounds (escalate to user if exceeded)
 ```
 
@@ -432,7 +432,7 @@ Epic-Specific Dimensions (8-12):
 2. Zero tech debt tolerance (fix issues immediately)
 3. Fix-and-continue approach (no restart needed)
 4. Verify DATA VALUES (not just structure)
-5. Exit after 3 consecutive clean rounds
+5. Exit after primary clean round + sub-agent confirmation
 6. Re-reading checkpoints mandatory
 7. Zero tolerance for deferred issues
 

@@ -788,7 +788,7 @@ Loop back to: **S7.P1 Step 1** (NOT back to Validation Loop directly)
 1. Update README Agent Status
 2. Return to smoke testing guide
 3. Run all 3 parts of smoke testing
-4. Then run Validation Loop again (3 consecutive clean rounds)
+4. Then run Validation Loop again (primary clean round + sub-agent confirmation)
 5. If issues found → back to debugging
 6. If zero issues → proceed to S7.P3
 
@@ -907,11 +907,11 @@ Re-running epic testing now...
 1. **Run Validation Loop:**
    - Check ALL 16 dimensions every round (7 master + 9 S7 QC-specific)
    - Fix issues immediately, reset clean counter
-   - Continue until 3 consecutive clean rounds
+   - Continue until primary clean round + sub-agent confirmation
 
 2. **Outcome possibilities:**
 
-   **✅ 3 consecutive clean rounds achieved:**
+   **✅ primary clean round + sub-agent confirmation achieved:**
    - Validation Loop complete
    - Proceed to S7.P3
 
@@ -948,11 +948,11 @@ Re-running epic testing now...
 1. **Run Validation Loop:**
    - Check ALL 12 dimensions every round (7 master + 5 epic-specific)
    - Fix issues immediately, reset clean counter
-   - Continue until 3 consecutive clean rounds
+   - Continue until primary clean round + sub-agent confirmation
 
 2. **Outcome possibilities:**
 
-   **✅ 3 consecutive clean rounds achieved:**
+   **✅ primary clean round + sub-agent confirmation achieved:**
    - Epic Validation Loop complete
    - Proceed to S9.P3 (Epic Final Review)
 
@@ -1016,7 +1016,7 @@ Re-running epic testing now...
 
 **If round is CLEAN (zero issues):**
 - Increment clean round counter
-- If 3 consecutive clean rounds → proceed to Final Review
+- If primary clean round + sub-agent confirmation → proceed to Final Review
 - Otherwise continue to next round
 
 **If round has ISSUES:**

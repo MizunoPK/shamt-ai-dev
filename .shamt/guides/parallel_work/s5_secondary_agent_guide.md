@@ -367,7 +367,7 @@ Append to `agent_comms/{your_id}_to_primary.md`:
 **Files Ready:**
 - implementation_plan.md (complete, all dimensions validated)
 
-**Validation:** 3 consecutive clean rounds achieved
+**Validation:** primary clean round + sub-agent confirmation achieved
 **Blockers:** None
 **Ready for S5-CA:** Yes
 **Awaiting:** Your S5-CA and combined Gate 5
@@ -577,7 +577,7 @@ After S8 complete, send completion message to Primary:
 - [ ] Writing milestone checkpoint after each clean validation round
 
 **Completion Signal:**
-- [ ] S5 validation loop passed (3 consecutive clean rounds)
+- [ ] S5 validation loop passed (primary clean round + sub-agent confirmation)
 - [ ] STATUS updated: WAITING_FOR_SYNC, READY_FOR_SYNC: true
 - [ ] Checkpoint updated: status WAITING, ready_for_next_stage: true
 - [ ] Completion message sent to Primary

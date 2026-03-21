@@ -21,7 +21,7 @@ STAGE 5: Implementation Planning (4.5-7 hours typical, 6-8 validation rounds)
     │
     └─ Phase 2: Validation Loop (stages/s5/s5_v2_validation_loop.md)
         Duration: 3.5-6 hours (typically 6-8 rounds, max 10)
-        Exit Criteria: 3 consecutive clean rounds ← MANDATORY
+        Exit Criteria: primary clean round + sub-agent confirmation ← MANDATORY
         │
         ├─ Round N: Validate ALL 11 Dimensions
         │   ├─ D1: Requirements Completeness
@@ -37,8 +37,8 @@ STAGE 5: Implementation Planning (4.5-7 hours typical, 6-8 validation rounds)
         │   └─ D11: Spec Alignment & Cross-Validation ← EMBEDS Gates 23a, 25
         │
         ├─ Fix ALL Issues Immediately (ZERO deferred issues)
-        ├─ Count consecutive clean rounds
-        └─ Exit when 3 consecutive clean rounds achieved
+        ├─ Track clean round counter (1 = primary clean → trigger sub-agents)
+        └─ Exit when primary clean round + sub-agent confirmation achieved
         ↓
 S6: Implementation Execution (stages/s6/s6_execution.md)
     1-4 hours (varies by complexity)
@@ -58,7 +58,7 @@ S7: Post-Implementation (1.5-2.5 hours, 3 phases)
     ├─ Phase 2: Validation Loop (stages/s7/s7_p2_qc_rounds.md)
     │   ├─ Check ALL 16 dimensions every round (7 master + 9 S7 QC-specific)
     │   ├─ Fix issues immediately, reset clean counter
-    │   └─ 3 consecutive clean rounds required ← MANDATORY
+    │   └─ primary clean round + sub-agent confirmation required ← MANDATORY
     │
     └─ Phase 3: Final Review (stages/s7/s7_p3_final_review.md)
         ├─ PR review (11 categories)
@@ -83,10 +83,10 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 | Stage | Guide | Time | Key Activities | Mandatory Gates |
 |-------|-------|------|----------------|-----------------|
 | S5.P1 | stages/s5/s5_v2_validation_loop.md | 60-90 min | Step 0: Test Scope Decision, draft creation | Draft ready |
-| S5.P2 | stages/s5/s5_v2_validation_loop.md | 3.5-6 hrs | Validation Loop (11 dimensions × 6-8 rounds) | 3 consecutive clean rounds, Gates 4a/7a/23a/24/25 embedded |
+| S5.P2 | stages/s5/s5_v2_validation_loop.md | 3.5-6 hrs | Validation Loop (11 dimensions × 6-8 rounds) | primary clean round + sub-agent confirmation, Gates 4a/7a/23a/24/25 embedded |
 | S6 | stages/s6/s6_execution.md | 1-4 hrs | Execute implementation_plan.md tasks | Tests per approach (conditional) |
 | S7.P1 | stages/s7/s7_p1_smoke_testing.md | 30-45 min | Import, entry point, E2E tests | Part 3 data values |
-| S7.P2 | stages/s7/s7_p2_qc_rounds.md | 45-75 min | Validation Loop, 16 dimensions (7 master + 9 S7 QC) | 3 consecutive clean rounds |
+| S7.P2 | stages/s7/s7_p2_qc_rounds.md | 45-75 min | Validation Loop, 16 dimensions (7 master + 9 S7 QC) | primary clean round + sub-agent confirmation |
 | S7.P3 | stages/s7/s7_p3_final_review.md | 30-45 min | PR review, lessons learned | Zero tech debt |
 | S8.P1 | stages/s8/s8_p1_cross_feature_alignment.md | 15-30 min | Update remaining specs | None |
 | S8.P2 | stages/s8/s8_p2_epic_testing_update.md | 15-30 min | Update epic test plan | None |
@@ -145,9 +145,9 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 - **Criteria:** E2E test with REAL data, verify DATA VALUES (not just file existence)
 - **If FAIL:** Restart from S7.P1 Step 1
 
-**Checkpoint: S7.P2 Validation Loop - 3 Consecutive Clean Rounds**
+**Checkpoint: S7.P2 Validation Loop - Primary Clean Round + Sub-Agent Confirmation**
 - **Location:** stages/s7/s7_p2_qc_rounds.md
-- **Criteria:** 3 consecutive rounds with ZERO issues found
+- **Criteria:** Primary clean round achieved + both sub-agents confirm zero issues
 - **If issues found:** Fix immediately, reset counter, continue (fix-and-continue approach)
 
 ---
@@ -160,7 +160,7 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 **If issues found during Validation Loop (S7.P2):**
 → Fix issues immediately, reset clean counter to 0, continue validation
 → No restart needed - fix-and-continue approach
-→ Continue until 3 consecutive clean rounds achieved
+→ Continue until primary clean round + sub-agent confirmation achieved
 
 **If PR review finds critical issues (S7.P3):**
 → Fix issues, restart from S7.P1 Step 1 (smoke testing)
@@ -201,7 +201,7 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 ## Critical Rules Summary
 
 ### S5 (Implementation Planning)
-- ✅ Complete Validation Loop: all 11 dimensions, 3 consecutive clean rounds (no skipping)
+- ✅ Complete Validation Loop: all 11 dimensions, primary clean round + sub-agent confirmation (no skipping)
 - ✅ Execute iterations IN ORDER (not parallel)
 - ✅ Pass ALL 5 mandatory gates (4a, 7a, 23a, 24, 25)
 - ✅ Achieve >90% test coverage (Round 2)
@@ -216,7 +216,7 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 
 ### S7 (Post-Implementation)
 - ✅ Verify DATA VALUES in smoke testing (not just file existence)
-- ✅ Validation Loop requires 3 consecutive clean rounds
+- ✅ Validation Loop requires primary clean round + sub-agent confirmation
 - ✅ If issues found → fix immediately, reset counter, continue
 - ✅ Zero tech debt tolerance (fix ALL issues immediately)
 - ✅ PR review covers all 11 categories
@@ -232,7 +232,7 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 ### ❌ Pitfall 1: Skipping Iterations
 **Problem:** "Iteration 19 looks similar to 4, I'll skip it"
 **Impact:** Missing algorithm mappings, bugs escape to QC
-**Solution:** ALL 11 dimensions are mandatory (each catches different issue types), and 3 consecutive clean rounds required
+**Solution:** ALL 11 dimensions are mandatory (each catches different issue types), and primary clean round + sub-agent confirmation required
 
 ### ❌ Pitfall 2: Just Checking Boxes (No Evidence)
 **Problem:** Saying "Coverage = 100%" without citing N requirements, M tasks
@@ -268,7 +268,7 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 | Starting implementation planning | stages/s5/s5_v2_validation_loop.md (Phase 1: Draft Creation) |
 | Draft complete, starting validation | stages/s5/s5_v2_validation_loop.md (Phase 2: Validation Loop) |
 | Validation round N complete | stages/s5/s5_v2_validation_loop.md (continue to Round N+1) |
-| 3 consecutive clean rounds achieved | stages/s6/s6_execution.md (proceed to implementation) |
+| primary clean round + sub-agent confirmation achieved | stages/s6/s6_execution.md (proceed to implementation) |
 | Implementation complete | stages/s7/s7_p1_smoke_testing.md |
 | Smoke testing passed | stages/s7/s7_p2_qc_rounds.md |
 | Validation Loop passed | stages/s7/s7_p3_final_review.md |
@@ -281,7 +281,7 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 
 **S5 is complete for a feature when (v2):**
 - [ ] Draft creation complete (implementation_plan.md created)
-- [ ] Validation Loop complete (3 consecutive clean rounds, all 11 dimensions passing)
+- [ ] Validation Loop complete (primary clean round + sub-agent confirmation, all 11 dimensions passing)
 - [ ] All embedded gates passed (Gates 4a, 7a, 23a, 24, 25)
 - [ ] User approval received (Gate 5)
 - [ ] Implementation ready to execute in S6

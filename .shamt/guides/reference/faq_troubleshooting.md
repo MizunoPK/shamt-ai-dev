@@ -41,7 +41,7 @@
 ### Q: What's the difference between a "round", "iteration", and "phase"?
 
 **A:**
-- **Round:** Validation Loop cycle (check all dimensions, fix issues, repeat until 3 consecutive clean rounds)
+- **Round:** Validation Loop cycle (check all dimensions, fix issues, repeat until primary clean round + sub-agent confirmation)
 - **Iteration:** Historical term from S5 v1 (not used in S5 v2)
 - **Phase:** Distinct workflow section (S5 has 2 phases: Draft Creation + Validation Loop; S7 has 3 phases: Smoke Testing, QC Rounds, Final Review)
 - **Stage:** Top-level workflow division (10 stages total: S1-S10)
@@ -214,12 +214,12 @@ A: Make best predictions at S5 Step 0 (Test Scope Decision):
 
 **Q: Can I skip iterations if they don't seem relevant?**
 
-A: NO - All 11 dimensions and the Validation Loop are mandatory (3 consecutive clean rounds):
+A: NO - All 11 dimensions and the Validation Loop are mandatory (primary clean round + sub-agent confirmation):
 - Designed based on historical bugs and missed requirements
 - Each iteration catches specific issue types
 - Skipping iterations = high risk of bugs in S7
 
-**Q: What if S5 v2 Validation Loop isn't converging (not getting 3 consecutive clean rounds)?**
+**Q: What if S5 v2 Validation Loop isn't converging (not getting primary clean round + sub-agent confirmation)?**
 
 A: Follow the escalation protocol:
 1. Review which dimensions are failing repeatedly
@@ -227,7 +227,7 @@ A: Follow the escalation protocol:
 3. Re-run validation round
 4. Track rounds in VALIDATION_LOOP_LOG.md
 5. If exceeded 10 rounds, escalate to user
-6. DO NOT proceed to S6 without 3 consecutive clean rounds
+6. DO NOT proceed to S6 without primary clean round + sub-agent confirmation
 
 **Q: What are the key S5 v2 validation checkpoints?**
 
@@ -236,7 +236,7 @@ A:
 - **Dimension 11:** Spec Alignment & Cross-Validation - prevents catastrophic bugs (implementation_plan.md must match spec.md 100%)
 - **Dimension 10:** Implementation Readiness - final verification before S6 (confidence >= MEDIUM, all dimensions passing)
 
-All 11 dimensions must PASS for 3 consecutive rounds before S6.
+All 11 dimensions must PASS with primary clean round + sub-agent confirmation before S6.
 
 **Q: How long should Round 3 take?**
 
@@ -296,7 +296,7 @@ A: YES - Complete restart protocol:
 A: NO - Use fix-and-continue approach:
 - Fix ALL issues immediately
 - Reset clean counter to 0
-- Continue validation until 3 consecutive clean rounds
+- Continue validation until primary clean round + sub-agent confirmation
 - No restart needed (validation loop approach)
 
 **Q: What if issues found are "minor" like missing type hint?**

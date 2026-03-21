@@ -76,14 +76,14 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 ### When do you use this guide?
 
 **Use this guide when:**
-- S9.P2 complete (validation loop achieved 3 consecutive clean rounds)
+- S9.P2 complete (validation loop achieved primary clean round + sub-agent confirmation)
 - S9.P1 epic smoke testing passed (all 4 parts)
 - S9.P3 user testing passed (user reports "No bugs found")
 - Ready for final epic-level PR review and validation
 
 **Do NOT use this guide if:**
 - S9.P1 smoke testing not complete
-- S9.P2 validation loop not complete (3 consecutive clean rounds required)
+- S9.P2 validation loop not complete (primary clean round + sub-agent confirmation required)
 - S9.P3 user testing not complete
 - Pending bug fixes not yet completed
 
@@ -121,7 +121,7 @@ S9.P4 Workflow (Epic Final Review)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Prerequisites Met?
-  ├─ S9.P2 complete (3 consecutive clean rounds)
+  ├─ S9.P2 complete (primary clean round + sub-agent confirmation)
   ├─ S9.P3 complete (user testing passed)
   └─ All tests passing (100%)
          │
@@ -224,7 +224,7 @@ Prerequisites Met?
 **Before starting S9.P4, verify ALL of these are true:**
 
 ### From S9.P2 (Epic QC Validation Loop)
-- [ ] 3 consecutive clean rounds achieved
+- [ ] primary clean round + sub-agent confirmation achieved
 - [ ] All 12 dimensions checked every round (7 master + 5 epic)
 - [ ] VALIDATION_LOOP_LOG.md complete
 - [ ] S9.P2 completion documented in EPIC_README.md
@@ -264,7 +264,7 @@ Prerequisites Met?
 
 ## S9.P2 Validation Overlap Awareness
 
-**If S9.P2 achieved 3 consecutive clean rounds:**
+**If S9.P2 achieved primary clean round + sub-agent confirmation:**
 
 S9.P2's 12-dimension validation provides strong coverage of many PR review categories. The following have significant overlap:
 
@@ -288,7 +288,7 @@ S9.P2's 12-dimension validation provides strong coverage of many PR review categ
 - **For low-overlap categories:** Thorough review, these are new checks
 - **Defense in depth:** Redundancy is acceptable for critical categories (Correctness, Architecture)
 
-**Note:** This guidance applies ONLY when S9.P2 achieved 3 consecutive clean rounds. If S9.P2 had issues or was shortened, review all 11 categories thoroughly.
+**Note:** This guidance applies ONLY when S9.P2 achieved primary clean round + sub-agent confirmation. If S9.P2 had issues or was shortened, review all 11 categories thoroughly.
 
 ---
 
@@ -301,7 +301,7 @@ S9.P2's 12-dimension validation provides strong coverage of many PR review categ
 2. **Follow the complete hybrid approach:**
    - Round 1: 4 specialized reviews (fresh agent for each)
    - Rounds 2-5: Repeated comprehensive reviews (fresh agent for each)
-   - 2 consecutive clean rounds required to pass
+   - primary clean round + sub-agent confirmation required to pass
    - Maximum 5 rounds total
 
 **Purpose:** Systematic epic-level PR review using fresh agent context to catch issues before final commit.
@@ -333,7 +333,7 @@ S9.P2's 12-dimension validation provides strong coverage of many PR review categ
 
 **Rounds 2-5 (Comprehensive - Fresh Agent Each):**
 - Each round: Fresh agent reviews ALL 11 categories
-- 2 consecutive clean rounds required to pass
+- primary clean round + sub-agent confirmation required to pass
 - Maximum 5 total rounds
 
 ---
@@ -475,7 +475,7 @@ For EACH issue:
 **Restart Protocol:**
 1. Mark all S9 steps as "incomplete" in EPIC_README.md
 2. Re-run S9.P1 (Epic Smoke Testing - all 4 parts)
-3. Re-run S9.P2 (Epic QC Validation Loop - until 3 consecutive clean rounds)
+3. Re-run S9.P2 (Epic QC Validation Loop - until primary clean round + sub-agent confirmation)
 4. Re-run S9.P4 (Epic Final Review - all 11 categories)
 5. Document restart in epic_lessons_learned.md
 
@@ -503,7 +503,7 @@ For EACH issue:
 
 **Verification Checklist:**
 - [ ] S9.P1 Epic smoke testing passed (all 4 parts)
-- [ ] S9.P2 Epic QC Validation Loop passed (3 consecutive clean rounds)
+- [ ] S9.P2 Epic QC Validation Loop passed (primary clean round + sub-agent confirmation)
 - [ ] All 12 dimensions validated (7 master + 5 epic)
 - [ ] S9.P3 User testing passed (no bugs found)
 - [ ] Epic PR review passed (all 11 categories)
@@ -645,7 +645,7 @@ Mark S9.P4 complete and prepare for S10:
 
 ### Overall S9 Completion
 - [ ] S9.P1 complete (Epic Smoke Testing passed)
-- [ ] S9.P2 complete (Epic QC Validation Loop - 3 consecutive clean rounds)
+- [ ] S9.P2 complete (Epic QC Validation Loop - primary clean round + sub-agent confirmation)
 - [ ] S9.P3 complete (User Testing passed - no bugs found)
 - [ ] S9.P4 complete (Epic Final Review passed, issues resolved)
 - [ ] Original epic goals validated and achieved (from S9.P2 dimension 12)
@@ -688,7 +688,7 @@ Mark S9.P4 complete and prepare for S10:
 
 ### Overall S9 Completion
 - [ ] S9.P1 complete (Epic Smoke Testing passed)
-- [ ] S9.P2 complete (Epic QC Validation Loop - 3 consecutive clean rounds)
+- [ ] S9.P2 complete (Epic QC Validation Loop - primary clean round + sub-agent confirmation)
 - [ ] S9.P3 complete (User Testing passed - no bugs found)
 - [ ] S9.P4 complete (Epic Final Review passed, issues resolved)
 - [ ] No pending issues or bug fixes

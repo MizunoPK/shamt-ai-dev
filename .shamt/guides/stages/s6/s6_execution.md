@@ -60,7 +60,7 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 Implementation Execution is where you write the feature code following the implementation_plan.md, keeping spec.md visible at all times, verifying interfaces before coding, and running tests after each step with mini-QC checkpoints.
 
 **When do you use this guide?**
-- S5 complete (Validation Loop passed - 3 consecutive clean rounds achieved)
+- S5 complete (Validation Loop passed - primary clean round + sub-agent confirmation achieved)
 - implementation_plan.md is validated and ready
 - Ready to write feature code
 
@@ -165,7 +165,7 @@ S6 is complete when all implementation tasks from implementation_plan.md are imp
 
 - [ ] Parallel Epic Coordination: If other epics are active, confirm with the user that no other agent is currently in S6–S9 before proceeding. If unsure — **STOP and ask.**
 - [ ] S5 complete:
-  - Validation Loop passed (3 consecutive clean rounds achieved)
+  - Validation Loop passed (primary clean round + sub-agent confirmation achieved)
   - implementation_plan.md validated and complete
   - Gate 5 approval obtained from user
 - [ ] All unit test files created (from implementation_plan.md test tasks)
@@ -997,12 +997,12 @@ python run_[module].py --mode draft
 ⏱️ **ESTIMATE:** 30-45 minutes
 
 **Then continue with:**
-- `stages/s7/s7_p2_qc_rounds.md` - Feature QC Validation Loop (3 consecutive clean rounds)
+- `stages/s7/s7_p2_qc_rounds.md` - Feature QC Validation Loop (primary clean round + sub-agent confirmation)
 - `stages/s7/s7_p3_final_review.md` - PR review and lessons learned
 
 **S7 (Testing & Review) will:**
 - Execute 3-part smoke testing protocol (MANDATORY)
-- Run Feature QC Validation Loop (16 dimensions, 3 consecutive clean rounds)
+- Run Feature QC Validation Loop (16 dimensions, primary clean round + sub-agent confirmation)
 - Follow PR Validation Loop (11 categories + 7 master dimensions)
 - Verify 100% requirement completion
 - Fix ALL issues immediately (no restart needed - validation loop approach)

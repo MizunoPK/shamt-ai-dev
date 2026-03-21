@@ -25,7 +25,7 @@ This checklist supplements the complete PR review protocol. See `reference/valid
 - Hybrid multi-round approach (Round 1: 4 specialized reviews, Rounds 2-5: comprehensive reviews)
 - Fresh agent spawning via Task tool
 - pr_review_issues.md tracking
-- 2 consecutive clean rounds required
+- primary clean round + sub-agent confirmation required
 
 ---
 
@@ -59,7 +59,7 @@ This checklist supplements the complete PR review protocol. See `reference/valid
 3. Use this checklist as **reference for epic-level considerations**
 4. Fresh agents automatically apply 11-category checklist during Rounds 2-5
 5. Document findings in `SHAMT-{N}-{epic_name}/pr_review_issues.md`
-6. Continue until 2 consecutive clean rounds achieved
+6. Continue until primary clean round + sub-agent confirmation achieved
 
 **Epic-Specific Agent Prompt:**
 When spawning fresh agents, provide this context:

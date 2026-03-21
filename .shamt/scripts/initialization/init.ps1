@@ -412,7 +412,7 @@ Then run a validation loop to complete initialization:
 - [ ] Write CODING_STANDARDS.md to `.shamt/project-specific-configs/`
 - [ ] Add 3-5 key coding rules to rules file summary section
 - [ ] Fill in Project Context section in rules file (tech stack, runtime, test runner, deployment target, critical gotchas)
-- [ ] Validate all outputs meet quality bar (3 consecutive clean validation rounds)
+- [ ] Validate all outputs meet quality bar (primary clean round + sub-agent confirmation)
 - [ ] Mark this file complete: change Status to COMPLETE
 
 ## Notes

@@ -81,7 +81,7 @@ DO NOT start work based on the overview alone.
 You CANNOT:
 - Draft an implementation plan based on general knowledge — follow Steps 0–7 in Phase 1
 - Skip Phase 2 (Validation Loop) because Phase 1 is "done enough"
-- Present the plan to the user or stop before the 2-round checkpoint without user input — the 2-round checkpoint is the only sanctioned early-exit mechanism (see `reference/validation_loop_master_protocol.md` Exit Criteria)
+- Present the plan to the user or stop before sub-agent confirmation without completing the exit sequence — see `reference/validation_loop_master_protocol.md` Exit Criteria for the required protocol
 - Proceed to S6 without Gate 5 user approval
 
 If you are about to do any of the above: STOP and re-read the relevant section.
@@ -135,7 +135,7 @@ S5 v2 is a **validation loop-based approach** to implementation planning that sy
 | **Structure** | 22 iterations, 3 rounds | 11 dimensions, 1 validation loop |
 | **Time** | 9-11 hours | 4.5-7 hours (35-50% savings) |
 | **Redundancy** | 3x Algorithm Traceability, 3x Integration Gap | Zero (consolidated into dimensions) |
-| **Quality** | Subjective (agent self-reports) | Objective (3 consecutive clean rounds) |
+| **Quality** | Subjective (agent self-reports) | Objective (primary clean round + sub-agent confirmation) |
 | **Verification** | Single pass per iteration | Multiple passes until clean |
 | **Issue Deferral** | Possible to defer | Impossible (must fix before next round) |
 
@@ -174,7 +174,7 @@ S5 v2 is a **validation loop-based approach** to implementation planning that sy
 
 **The 11 S5 Dimensions (below) provide the detailed implementation planning checklists** that operationalize these master dimensions in the context of creating implementation_plan.md.
 
-**Core Validation Process:** Same as master protocol - 3 consecutive clean rounds required, zero deferred issues, fresh eyes every round.
+**Core Validation Process:** Same as master protocol - primary clean round + sub-agent confirmation required, zero deferred issues, fresh eyes every round.
 
 ---
 
@@ -197,9 +197,10 @@ S5 v2 is a **validation loop-based approach** to implementation planning that sy
     Round 1: Find ~12 issues → Fix all → Round 2
     Round 2: Find ~8 issues → Fix all → Round 3
     Round 3: Find ~3 issues → Fix all → Round 4
-    Round 4: Find 0 issues (clean count = 1)
-    Round 5: Find 0 issues (clean count = 2)
-    Round 6: Find 0 issues (clean count = 3) ✅ PASSED
+    Round 4: Find 0 issues (clean count = 1) → Trigger sub-agent confirmation
+      Sub-agent A (top-to-bottom): 0 issues ✅
+      Sub-agent B (bottom-to-top): 0 issues ✅
+      Both confirmed → ✅ PASSED
                               ↓
 ┌─────────────────────────────────────────────────────────────┐
 │                    GATE 5: USER APPROVAL                     │
@@ -215,7 +216,7 @@ S5 v2 is a **validation loop-based approach** to implementation planning that sy
 
 ⚠️ **Before starting Phase 1, confirm:**
 - [ ] Phase 2 (Validation Loop) is mandatory after Phase 1 — I will not skip it
-- [ ] I will not present the plan to the user or stop before the 2-round checkpoint without user input — the 2-round checkpoint is the only sanctioned early-exit mechanism
+- [ ] I will not present the plan to the user or exit before completing the sub-agent confirmation — see master protocol Exit Criteria for the required sequence
 
 Phase 1 produces a ~70% quality draft. Phase 2 is what makes it production-ready. Gate 5 (user approval) follows Phase 2.
 
@@ -509,7 +510,7 @@ Historical evidence from SHAMT-8 Feature 04 shows test creation tasks missing fr
 
 **Time:** 3.5-6 hours (typically 6-8 rounds)
 
-**Quality Target:** 99%+ complete (3 consecutive clean rounds)
+**Quality Target:** 99%+ complete (primary clean round + sub-agent confirmation)
 
 ---
 
@@ -555,7 +556,7 @@ Each round follows this pattern:
 
 6. FIX OR CONTINUE
    - If X > 0: Fix ALL issues immediately → Round N+1, RESET counter
-   - If X = 0: Increment clean counter → Check if 3 consecutive clean (or 2-round checkpoint)
+   - If X = 0: Increment clean counter → If counter = 1, trigger sub-agent confirmation (see master protocol Exit Criteria)
 ```
 
 ---
@@ -1004,46 +1005,33 @@ All 18 dimensions validated:
 ✅ D10: 5 implementation phases, mocks audited
 ✅ D11: Spec aligned with epic notes
 
-Clean count: 1 consecutive clean round
-Next: Round 5
+Clean count: 1 → Triggering sub-agent confirmation
+Next: Sub-agent parallel confirmation
 
 ─────────────────────────────────────────────────────────
-ROUND 5: Focus on recent changes (25 min)
+SUB-AGENT CONFIRMATION
 ─────────────────────────────────────────────────────────
+Primary agent declared clean round (counter = 1).
+Spawning 2 independent sub-agents in parallel.
+
+Sub-agent A (top-to-bottom read):
 Issues found: 0 ✅
+All 18 dimensions checked. Confirmed zero issues.
 
-Checked all fixes from Rounds 1-3:
-- Requirement additions didn't introduce scope creep
-- Interface verifications are accurate
-- Algorithm mappings complete
-- Task specifications are specific
-- No new issues introduced by fixes
-
-Clean count: 2 consecutive clean rounds
-Next: Round 6
-
-─────────────────────────────────────────────────────────
-ROUND 6: Cross-section validation (25 min)
-─────────────────────────────────────────────────────────
+Sub-agent B (bottom-to-top read):
 Issues found: 0 ✅
+All 18 dimensions checked. Confirmed zero issues.
 
-Verified consistency across all sections:
-- Requirements → Algorithms → Tasks all aligned
-- Dependencies → Integration → Tests all consistent
-- Performance → Implementation phases coherent
-- No contradictions between sections
-
-Clean count: 3 consecutive clean rounds ✅
-Status: PASSED
+Both sub-agents confirmed → ✅ PASSED
 
 ─────────────────────────────────────────────────────────
 VALIDATION LOOP COMPLETE
 ─────────────────────────────────────────────────────────
 
-Total time: 90 min draft + 170 min validation = 4h 20min
-Total rounds: 6
+Total time: 90 min draft + 130 min validation = 3h 40min
+Total rounds: 4 primary + sub-agent confirmation
 Total issues fixed: 23
-Final quality: 99%+ (validated by 3 consecutive clean rounds)
+Final quality: 99%+ (validated by sub-agent parallel confirmation)
 
 Next: Present implementation_plan.md to user (Gate 5)
 ```
@@ -1142,13 +1130,13 @@ Next: Present implementation_plan.md to user (Gate 5)
 
 **Symptom:** Round 4 finds issues in sections that were clean in Round 3
 
-**Cause:** Normal! Fixes can introduce new issues. That's why we need 3 consecutive clean rounds.
+**Cause:** Normal! Fixes can introduce new issues. That's why the primary clean round must find zero issues before triggering sub-agent confirmation.
 
 **Fix:**
 - This is expected behavior, not a problem
 - Keep fixing issues and re-validating
 - Counter resets when issues found (by design)
-- Eventually, fixes won't introduce new issues → 3 clean rounds → exit
+- Eventually, fixes won't introduce new issues → primary clean round + sub-agent confirmation → exit
 
 ---
 
@@ -1206,9 +1194,9 @@ Next: Present implementation_plan.md to user (Gate 5)
 
 **Wrong:** "I've done 3 rounds (found 5, 3, 1 issues), I'm done"
 
-**Right:** Need 3 CONSECUTIVE CLEAN rounds (might be rounds 4-5-6, or 6-7-8)
+**Right:** Need a primary clean round (zero issues found) then sub-agent confirmation (might be rounds 4, 5, 6+)
 
-**Why:** Exit criteria is 3 consecutive rounds with ZERO issues, not 3 rounds total.
+**Why:** Exit criteria is a primary clean round + sub-agent confirmation, not just completing N rounds total.
 
 ---
 
@@ -1248,8 +1236,8 @@ Next: Present implementation_plan.md to user (Gate 5)
 
 **Can ONLY exit when ALL true:**
 
-1. ✅ 3 consecutive rounds found ZERO issues each, OR user explicitly opted to stop at the 2-round checkpoint (see `reference/validation_loop_master_protocol.md` Exit Criteria for the checkpoint protocol)
-2. ✅ Rounds N-2, N-1, and N all found zero issues (or user opted to stop at 2-round checkpoint)
+1. ✅ Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see `reference/validation_loop_master_protocol.md` Exit Criteria for the full sub-agent confirmation protocol)
+2. ✅ The sub-agent confirmation step was completed and both returned zero issues
 3. ✅ All 18 dimensions validated in final clean rounds (7 master + 11 implementation planning)
 4. ✅ All evidence artifacts present in implementation_plan.md
 5. ✅ Confidence level >= MEDIUM
@@ -1265,14 +1253,14 @@ Next: Present implementation_plan.md to user (Gate 5)
 
 1. **Update implementation_plan.md:**
    - Add validation completion timestamp
-   - Add "Validated: 3 consecutive clean rounds (rounds X, Y, Z)"
+   - Add "Validated: primary clean round + sub-agent confirmation (round X)"
    - Increment version to v1.0
 
 2. **Present to user:**
    - Show the **Plan Summary section** of implementation_plan.md directly; do not paraphrase or summarize verbally
    - The Plan Summary must contain all 5 required fields: files to be modified/created, approach per component, known risks, implementation phases, and first S6 commit scope
    - If Plan Summary section is missing or incomplete: fill it now before presenting
-   - State explicitly: "Validation loop passed ({N} rounds, last 3 clean). Requesting your approval to proceed to S6."
+   - State explicitly: "Validation loop passed ({N} primary rounds, sub-agent confirmation complete). Requesting your approval to proceed to S6."
    - Request explicit approval (silence or partial response does not count)
 
 3. **Wait for user response:**
@@ -1287,7 +1275,7 @@ Next: Present implementation_plan.md to user (Gate 5)
 
 **Before reading s6_execution.md or writing any implementation code, verify ALL:**
 
-- [ ] Validation loop passed (3 consecutive clean rounds documented in implementation_plan.md)
+- [ ] Validation loop passed (primary clean round + sub-agent confirmation documented in implementation_plan.md)
 - [ ] Plan Summary section exists in implementation_plan.md with all 5 required fields filled
 - [ ] Plan Summary was shown to user directly (section text, not a verbal summary)
 - [ ] User gave explicit approval (not assumed from silence or a partial response)
@@ -1328,7 +1316,7 @@ If running in parallel S5 mode, do NOT present Gate 5 to the user now. Instead:
 **Stage:** S5 (Implementation Planning)
 **Phase:** Phase 2 - Validation Loop
 **Progress:** Round N complete, X issues found and fixed
-**Clean Count:** Y consecutive clean rounds
+**Clean Count:** Y (0 = issues found this round; 1 = primary clean round → trigger sub-agent confirmation)
 **Last Updated:** [timestamp]
 **Next Action:** Round N+1 validation
 ```
@@ -1337,8 +1325,8 @@ If running in parallel S5 mode, do NOT present Gate 5 to the user now. Instead:
 ```markdown
 **Stage:** S5 (Implementation Planning)
 **Phase:** Gate 5 - User Approval
-**Progress:** Validation loop passed (3 consecutive clean rounds)
-**Quality:** 99%+ (rounds X, Y, Z clean)
+**Progress:** Validation loop passed (primary clean round + sub-agent confirmation)
+**Quality:** 99%+ (round X primary clean, sub-agents confirmed)
 **Last Updated:** [timestamp]
 **Next Action:** Present implementation_plan.md for user approval
 ```

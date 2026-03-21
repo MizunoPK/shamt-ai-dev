@@ -488,7 +488,7 @@ assert result.url.endswith(".jpeg")
 - 7 Master dimensions (universal)
 - 9 S7 Feature QC dimensions (context-specific)
 
-**Process:** See master protocol for 3 consecutive clean rounds requirement
+**Process:** See master protocol for sub-agent confirmation exit requirement
 
 ---
 
@@ -721,9 +721,9 @@ All positions supported ✅
 **S7 Feature QC validation is COMPLETE when ALL of the following are true:**
 
 **From Master Protocol:**
-- [ ] 3 consecutive rounds with ZERO issues found, OR user opted to stop at the 2-round checkpoint (see master protocol Exit Criteria)
-- [ ] All 7 master dimensions checked every round
-- [ ] All 9 S7 QC dimensions checked every round
+- [ ] Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
+- [ ] All 7 master dimensions checked every primary round
+- [ ] All 9 S7 QC dimensions checked every primary round
 - [ ] Validation log complete with all rounds documented
 
 **S7 QC Specific:**
@@ -756,14 +756,14 @@ All positions supported ✅
 **Process:**
 1. Use this validation loop protocol
 2. Check all 16 dimensions (7 master + 9 S7 QC)
-3. Exit when 3 consecutive clean rounds
+3. Exit when primary clean round + sub-agent confirmation
 4. Proceed to S7.P3 (Final Review)
 
 **Replaces:** Old sequential 3-round QC with restart protocol
 
 **Key Difference:**
 - **Old:** Round 1 (Integration) → Round 2 (Consistency) → Round 3 (Success) → Any issue → RESTART from beginning
-- **New:** Check ALL concerns EVERY round → Fix issues immediately → Continue validation until 3 consecutive clean
+- **New:** Check ALL concerns EVERY round → Fix issues immediately → Continue validation until primary clean round + sub-agent confirmation
 
 **Important:** S7.P2 uses fix-and-continue (NOT restart to S7.P1). The CLAUDE.md restart protocol applies to S7.P1 smoke testing only (Part N fails → restart from Part 1). If S7.P2 finds issues, fix immediately and continue — do NOT restart to S7.P1.
 
@@ -799,21 +799,18 @@ Round 3: Spot-Checks + E2E
 - Issues found: 0 ✅
 - Clean counter: 1
 
-Round 4: Repeat Validation
-- Run tests: All pass ✅
-- Fresh eyes, different reading pattern
-- Check all 16 dimensions
-- Issues found: 0 ✅
-- Clean counter: 2
-
-Round 5: Final Sweep
+Round 4: Primary Clean Round
 - Run tests: All pass ✅
 - Complete re-read of implementation
 - Check all 16 dimensions
 - Issues found: 0 ✅
-- Clean counter: 3 → VALIDATION COMPLETE ✅
+- Clean counter: 1 → Triggering sub-agent confirmation
 
-Total: 5 rounds, 4 issues fixed, 3 consecutive clean rounds achieved
+Sub-agent A (top-to-bottom): 0 issues ✅
+Sub-agent B (bottom-to-top): 0 issues ✅
+Both confirmed → VALIDATION COMPLETE ✅
+
+Total: 4 primary rounds + sub-agent confirmation, 4 issues fixed
 Ready for S7.P3 (Final Review)
 ```
 
@@ -1032,17 +1029,17 @@ Ready for S7.P3 (Final Review)
 **S7 Feature QC Validation Loop:**
 - **Extends:** Master Validation Loop Protocol (7 universal dimensions)
 - **Adds:** 9 S7 QC-specific dimensions
-- **Total:** 16 dimensions checked every round
-- **Process:** 3 consecutive clean rounds required
+- **Total:** 16 dimensions checked every primary round
+- **Process:** Primary clean round + 2 independent sub-agents confirming zero issues
 - **Exit:** 100% tests passing, 100% requirements implemented, all integration verified
 - **Quality:** Zero tech debt, ready for production
 
 **Key Principle:**
-> "Every implemented feature must pass comprehensive quality validation (functionality, integration, error handling, testing, completeness) through 3 consecutive clean validation rounds before proceeding to final review."
+> "Every implemented feature must pass comprehensive quality validation (functionality, integration, error handling, testing, completeness) through primary agent validation + independent sub-agent confirmation before proceeding to final review."
 
 **Key Difference from Old Approach:**
 - **Old:** Sequential rounds checking different concerns → Any issue → Restart from beginning
-- **New:** All concerns checked every round → Fix immediately → Continue until 3 consecutive clean
+- **New:** All concerns checked every round → Fix immediately → Continue until primary clean round + sub-agent confirmation
 
 **Time Savings:** 60-180 minutes per bug (eliminates restart overhead)
 

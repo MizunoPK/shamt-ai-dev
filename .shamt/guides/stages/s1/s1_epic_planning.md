@@ -101,8 +101,8 @@ S1 is complete when you have Discovery approved, a validated epic ticket, comple
    - Discovery informs feature breakdown
    - See: stages/s1/s1_p3_discovery_phase.md
 
-3. DISCOVERY LOOP UNTIL 3 CONSECUTIVE CLEAN ITERATIONS
-   - Continue iterating until 3 consecutive iterations produce zero new issues or gaps
+3. DISCOVERY LOOP UNTIL PRIMARY CLEAN ROUND + SUB-AGENT CONFIRMATION
+   - Continue iterating until primary clean round achieved, then spawn 2 sub-agents for parallel confirmation
    - Re-read code/requirements with fresh perspective each iteration
    - User answers questions throughout (not just at end)
    - All findings go in DISCOVERY.md
@@ -165,10 +165,10 @@ S1 is complete when you have Discovery approved, a validated epic ticket, comple
 - **Impact:** Determines branch name format and EPIC_TRACKER classification
 
 ### Decision Point 2: Discovery Loop Exit (Step 3 - S1.P3.2)
-**Question:** Have you completed 3 consecutive clean rounds with zero issues/gaps?
-- **If NO (counter < 3):** Continue Discovery Loop - re-read with fresh perspective
-- **If YES (counter = 3):** Verify exit readiness, proceed to synthesis
-- **Impact:** Premature exit (counter < 3) leads to incomplete understanding; need 3 consecutive clean rounds for high confidence
+**Question:** Have you completed primary clean round + sub-agent confirmation with zero issues/gaps?
+- **If NO (sub-agent confirmation not yet achieved):** Continue Discovery Loop - re-read with fresh perspective
+- **If YES (counter = 1 + sub-agent confirmation):** Verify exit readiness, proceed to synthesis
+- **Impact:** Premature exit (counter < 1) leads to incomplete understanding; need primary clean round + sub-agent confirmation for high confidence
 
 ### Decision Point 3: Discovery Approval (Step 3 - S1.P3.4)
 **Question:** Does the user approve the Discovery findings and recommended approach?
@@ -269,7 +269,7 @@ Step 3: Discovery Phase (MANDATORY)
    |   +-- Document findings in DISCOVERY.md
    |   +-- Identify questions
    |   +-- Ask user, record answers
-   |   +-- Repeat until 3 consecutive clean rounds (zero issues/gaps)
+   |   +-- Repeat until primary clean round + sub-agent confirmation (zero issues/gaps)
    +-- S1.P3.3: Synthesize findings
    |   +-- Compare solution options
    |   +-- Document recommended approach
@@ -461,7 +461,7 @@ After Step 2:
 | MEDIUM (3-5 features) | 2-3 hours |
 | LARGE (6+ features) | 3-4 hours |
 
-**Exit Condition:** Discovery Loop exits when 3 CONSECUTIVE research iterations produce zero new issues or gaps.
+**Exit Condition:** Discovery Loop exits when primary clean round + sub-agent confirmation achieved (both independent sub-agents produce zero new issues or gaps).
 
 **Key Outputs:** DISCOVERY.md (source of truth), solution approach, scope definition, feature breakdown draft
 

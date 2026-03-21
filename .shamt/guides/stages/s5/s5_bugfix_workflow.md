@@ -474,7 +474,7 @@ Integration test:
 - Complete validation across all 11 dimensions
 - Algorithm Traceability (Dimension 3)
 - Spec Alignment & Cross-Validation (Dimension 11, includes Gates 23a, 25)
-- Exit with 3 consecutive clean validation rounds
+- Exit with primary clean round + sub-agent confirmation
 
 **Bug fix TODOs usually shorter:**
 ```markdown
@@ -518,12 +518,12 @@ Integration test:
 
 **Read guides in order:**
 1. stages/s7/s7_p1_smoke_testing.md - Smoke Testing (3 parts - MANDATORY GATE)
-2. stages/s7/s7_p2_qc_rounds.md - Validation Loop (3 consecutive clean rounds)
+2. stages/s7/s7_p2_qc_rounds.md - Validation Loop (primary clean round + sub-agent confirmation)
 3. stages/s7/s7_p3_final_review.md - PR Review (11 categories) + lessons learned
 
 **Same validation as features:**
 - Smoke Testing (3 parts)
-- Validation Loop (3 consecutive clean rounds)
+- Validation Loop (primary clean round + sub-agent confirmation)
 - PR Review (11 categories)
 - Fix-and-continue approach if issues found
 
@@ -568,7 +568,7 @@ python run_[module].py --mode draft
 **Resuming Work:**
 - feature_01_rank_integration: Resuming S7 (Testing & Review) (post-implementation)
   - Resume from: Validation Loop (re-run after bug fix)
-  - Next action: Complete Validation Loop (3 consecutive clean rounds)
+  - Next action: Complete Validation Loop (primary clean round + sub-agent confirmation)
 ```
 
 ---
@@ -723,7 +723,7 @@ Action:
 
 **Why wrong:** Small bugs can have big impacts. Same rigor required.
 
-**Correct:** Full S7 (Testing & Review) validation (smoke tests + Validation Loop (3 consecutive clean rounds) + PR review)
+**Correct:** Full S7 (Testing & Review) validation (smoke tests + Validation Loop (primary clean round + sub-agent confirmation) + PR review)
 
 ---
 
@@ -755,7 +755,7 @@ Action:
 - [ ] bugfix_{priority}_{name}/ folder created with complete structure
 - [ ] notes.txt created and user-verified
 - [ ] Bug fix workflow followed (S2 → S5 → S6 → S7 with full rigor)
-- [ ] Complete Validation Loop in S5 v2 (all 11 dimensions, 3 clean rounds, no shortcuts)
+- [ ] Complete Validation Loop in S5 v2 (all 11 dimensions, primary clean round + sub-agent confirmation, no shortcuts)
 - [ ] QC rounds passed (S7)
 - [ ] Bug fix tested and verified
 - [ ] Epic documentation updated for resumability
@@ -773,7 +773,7 @@ Action:
 1. **Get approval** - User decides priority and timing
 2. **Document thoroughly** - notes.txt user-verified
 3. **Follow simplified workflow** - S2 → S5 → S6 → S7
-4. **Same rigor** - S5 v2 Validation Loop (11 dimensions, 3 clean rounds), QC rounds, no shortcuts
+4. **Same rigor** - S5 v2 Validation Loop (11 dimensions, primary clean round + sub-agent confirmation), QC rounds, no shortcuts
 5. **Resume cleanly** - Return to paused work, verify compatibility
 
 **Critical:**

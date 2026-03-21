@@ -21,7 +21,7 @@
 ## 🚫 FORBIDDEN SHORTCUTS
 
 You CANNOT:
-- Skip S1.P3.2 (Validation Loop Validation) because the DISCOVERY.md draft "looks complete" — the 3 consecutive clean rounds exit criteria is mandatory
+- Skip S1.P3.2 (Validation Loop Validation) because the DISCOVERY.md draft "looks complete" — the primary clean round + sub-agent confirmation exit criteria is mandatory
 - Proceed to S1 Step 4 (Feature Breakdown Proposal) without completing S1.P3.4 User Approval — user approval is MANDATORY before leaving this phase
 - Treat the Discovery Phase as optional for "simple" or "clear" epics — it is mandatory for every epic without exception
 
@@ -69,7 +69,7 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 ## Overview
 
 **What is this guide?**
-The Discovery Phase is a mandatory research and validation process where the agent explores the problem space, creates a comprehensive DISCOVERY.md document, then validates it through Validation Loop protocol until 3 consecutive clean rounds confirm completeness.
+The Discovery Phase is a mandatory research and validation process where the agent explores the problem space, creates a comprehensive DISCOVERY.md document, then validates it through Validation Loop protocol until primary clean round + sub-agent confirmation confirm completeness.
 
 **When do you use this guide?**
 - After completing S1 Step 2 (Epic Analysis)
@@ -86,12 +86,12 @@ The Discovery Phase is a mandatory research and validation process where the age
 **Time-Box by Epic Size:**
 | Epic Size | Discovery Time-Box | Typical Rounds |
 |-----------|-------------------|----------------|
-| SMALL (1-2 features) | 1-2 hours | 4-6 rounds (incl. 3 clean) |
-| MEDIUM (3-5 features) | 2-3 hours | 5-8 rounds (incl. 3 clean) |
-| LARGE (6+ features) | 3-4 hours | 7-10 rounds (incl. 3 clean) |
+| SMALL (1-2 features) | 1-2 hours | 3-5 rounds (incl. primary clean + sub-agents) |
+| MEDIUM (3-5 features) | 2-3 hours | 4-7 rounds (incl. primary clean + sub-agents) |
+| LARGE (6+ features) | 3-4 hours | 6-9 rounds (incl. primary clean + sub-agents) |
 
 **Exit Condition:**
-Discovery Phase is complete when Validation Loop validation produces THREE CONSECUTIVE clean rounds (zero issues/gaps), DISCOVERY.md is complete, and user has approved the recommended approach and feature breakdown.
+Discovery Phase is complete when Validation Loop validation achieves a primary clean round + sub-agent confirmation (zero issues/gaps), DISCOVERY.md is complete, and user has approved the recommended approach and feature breakdown.
 
 **Validation Loop Reference:** `reference/validation_loop_discovery.md`
 
@@ -109,7 +109,7 @@ Discovery Phase is complete when Validation Loop validation produces THREE CONSE
    - Cannot create feature folders until Discovery completes
 
 2. Discovery uses Validation Loop validation (see validation_loop_discovery.md)
-   - Exit criteria: 3 consecutive clean rounds with ZERO issues/gaps
+   - Exit criteria: primary clean round + sub-agent confirmation with ZERO issues/gaps
    - Issues/gaps include: Missing research, incomplete sections, unanswered questions,
      assumptions not verified, integration gaps, unclear scope
    - Re-read DISCOVERY.md with fresh perspective each round
@@ -350,13 +350,13 @@ Document in Discovery Log:
 
 **Reference:** `reference/validation_loop_discovery.md`
 
-The Validation Loop repeats until THREE CONSECUTIVE validation rounds find ZERO issues or gaps in DISCOVERY.md.
+The Validation Loop repeats until primary clean round + sub-agent confirmation: primary agent achieves one clean round (zero issues/gaps), then 2 independent sub-agents both confirm zero issues in DISCOVERY.md.
 
-**Clean Round Counter:** Track consecutive rounds with zero issues/gaps
+**Clean Round Counter:** Track rounds with zero issues/gaps
 - Counter starts at 0
-- Increments when round finds NO issues/gaps
+- Increments to 1 when round finds NO issues/gaps (primary clean round achieved)
 - Resets to 0 when round finds ANY issues/gaps
-- Loop exits when counter reaches 3
+- Loop exits when counter = 1 AND both sub-agents confirm zero issues
 
 **Issues/Gaps Include:**
 - Missing research or incomplete analysis
@@ -385,7 +385,7 @@ C. Fix ALL Issues Immediately (zero tolerance for deferred issues)
    - Clarify scope
        |
        v
-D. Check Exit (update clean round counter, check if counter >= 3)
+D. Check Exit (update clean round counter, check if counter >= 1 → trigger sub-agent confirmation)
 ```
 
 ---
@@ -523,18 +523,17 @@ For EACH issue identified in Step B, you MUST fix it BEFORE continuing to Step D
 
 1. **Check this round:** Were ANY issues/gaps found in Step B?
    - **YES (issues found):** Counter = 0 (reset after fixing all), continue loop
-   - **NO (zero issues):** Counter++ (increment), check counter value
+   - **NO (zero issues):** Counter = 1 (primary clean round achieved) → trigger sub-agent confirmation
 
-2. **Check counter value:**
-   - **Counter = 1:** First clean round, continue loop with fresh perspective
-   - **Counter = 2:** Second clean round, continue loop with fresh perspective
-   - **Counter = 3:** Third clean round, proceed to exit verification
+2. **Trigger sub-agent confirmation:** Spawn 2 independent sub-agents in parallel; both must confirm zero issues to exit.
+   - Both confirm zero issues → verify exit readiness checklist below
+   - Either sub-agent finds issues → Counter resets to 0, continue loop
 
-3. **If counter = 3, verify exit readiness:**
+3. **Exit verification checklist (after sub-agent confirmation):**
    ```markdown
-   ## Validation Loop Exit Verification (After 3 Clean Rounds)
+   ## Validation Loop Exit Verification (After Primary Clean + Sub-Agent Confirmation)
 
-   [ ] 3 consecutive rounds found zero issues/gaps
+   [ ] Primary clean round achieved + both sub-agents confirmed zero issues/gaps
    [ ] All sections of DISCOVERY.md complete
    [ ] All pending questions resolved
    [ ] All assumptions verified
@@ -553,25 +552,25 @@ For EACH issue identified in Step B, you MUST fix it BEFORE continuing to Step D
 
 **Reading Pattern:** {Sequential | Reverse | Random spot-check | Thematic clustering}
 **Issues Found:** {Number}
-**Clean Round Counter:** {0, 1, 2, or 3}
+**Clean Round Counter:** {0 = issues found; 1 = primary clean → trigger sub-agents}
 
 [Issues and fixes documented above...]
 ```
 
-**Why 3 consecutive clean rounds:**
-- Round 1 (clean): Might have missed subtle gaps
-- Round 2 (clean): Might have missed consistency issues
-- Round 3 (clean): High confidence - document is complete
+**Why primary clean round + sub-agent confirmation:**
+- Primary clean round: main agent declares complete with zero issues
+- Sub-agent A confirms: independent fresh-eyes check confirms zero issues
+- Sub-agent B confirms: second independent check confirms zero issues
 
-**Continue loop (counter < 3) if:**
+**Continue loop (counter = 0 OR sub-agents found issues) if:**
 - ANY issues/gaps found (reset counter after fixing)
-- Counter = 1 or 2 (need more clean rounds)
+- Either sub-agent found issues in confirmation step
 - Exit verification checklist has unchecked items
 
-**Exit loop (counter = 3) when:**
-- 3 consecutive rounds found ZERO issues/gaps
+**Exit loop (primary clean round + sub-agent confirmation) when:**
+- Primary agent found ZERO issues/gaps this round
+- Both sub-agents independently confirmed zero issues
 - Exit verification checklist all checked
-- DISCOVERY.md is complete and validated
 
 ---
 
@@ -870,8 +869,8 @@ User approved recommended approach. Confirmed 4-feature breakdown is correct.
 
 ```json
 [ ] DISCOVERY.md created with all sections populated
-[ ] Validation Loop exited (3 consecutive rounds found zero issues/gaps)
-[ ] Clean round counter reached 3
+[ ] Validation Loop exited (primary clean round + sub-agent confirmation achieved)
+[ ] Both sub-agents confirmed zero issues/gaps
 [ ] All pending questions resolved
 [ ] All assumptions verified
 [ ] Solution options documented with comparison
@@ -913,8 +912,8 @@ X "User approved, but I want to add one more feature"
 X "I'll update DISCOVERY.md later with fixes"
   --> STOP - Fix ALL issues immediately in current round
 
-X "One clean round with no issues, I'm done with Discovery"
-  --> STOP - Need 3 CONSECUTIVE clean rounds, not just one
+X "One clean round with no issues, I'm done with Discovery without sub-agent confirmation"
+  --> STOP - After achieving a primary clean round (counter = 1), you MUST trigger sub-agent confirmation: spawn 2 sub-agents in parallel, both must confirm zero issues to exit
 
 X "I've re-read DISCOVERY.md before, I'll skip re-reading"
   --> STOP - MUST re-read completely with fresh perspective each round
@@ -962,7 +961,7 @@ X "I read the entire epic request and have no questions for the user"
 7. [ ] Output acknowledgment: "✅ CHECKPOINT 1 COMPLETE: Re-read Critical Rules and validation_loop_discovery.md, verified DISCOVERY.md drafted"
 
 **Why this checkpoint exists:**
-- Critical Rules define Validation Loop exit condition (3 consecutive clean rounds)
+- Critical Rules define Validation Loop exit condition (primary clean round + sub-agent confirmation)
 - validation_loop_discovery.md defines reading patterns and issue categories
 - 80% of agents forget to re-read with fresh perspective each round
 - 30 seconds now prevents hours of wasted validation rounds
@@ -984,15 +983,15 @@ X "I read the entire epic request and have no questions for the user"
 4. [ ] Update clean round counter:
    - Issues/gaps found? → Counter = 0 (reset after fixing all)
    - Zero issues/gaps? → Counter++
-5. [ ] Check counter value: Counter < 3 = continue loop, Counter = 3 = verify exit readiness
+5. [ ] Check counter value: Counter < 1 = continue loop, Counter = 1 = trigger sub-agent confirmation → verify exit readiness
 6. [ ] Update EPIC_README.md Agent Status:
-   - Current Step: "S1.P3.2 Round N complete, clean counter = {X}, [continuing loop OR proceeding to S1.P3.3]"
+   - Current Step: "S1.P3.2 Round N complete, clean counter = {X}, [continuing loop OR triggering sub-agent confirmation OR proceeding to S1.P3.3]"
    - Last Updated: [timestamp]
 7. [ ] Output acknowledgment: "✅ CHECKPOINT 2 COMPLETE: Re-read Validation Loop section, verified all issues fixed, counter = {X}"
 
 **Why this checkpoint exists:**
-- Validation Loop requires 3 CONSECUTIVE clean rounds
-- 75% of agents exit after first clean round (premature)
+- Validation Loop requires primary clean round + sub-agent confirmation
+- 75% of agents exit after first clean round without triggering sub-agent confirmation (premature)
 - 60% of agents defer issues instead of fixing immediately
 - Premature exit or deferred issues cause incomplete discovery and rework in S2
 
@@ -1008,7 +1007,7 @@ X "I read the entire epic request and have no questions for the user"
 
 **REQUIRED ACTIONS:**
 1. [ ] Use Read tool to re-read "Synthesize Findings" section of this guide
-2. [ ] Verify Validation Loop exited cleanly (counter = 3, zero issues in last 3 rounds)
+2. [ ] Verify Validation Loop exited cleanly (primary clean round + sub-agent confirmation, zero issues)
 3. [ ] Verify all sections of DISCOVERY.md complete:
    - [ ] Executive Summary
    - [ ] Key Findings
@@ -1040,7 +1039,7 @@ X "I read the entire epic request and have no questions for the user"
 
 **S1.P3 (Discovery Phase) is complete when ALL of these are true:**
 
-- [ ] Validation Loop validation complete (3 consecutive clean rounds with zero issues/gaps)
+- [ ] Validation Loop validation complete (primary clean round + sub-agent confirmation with zero issues/gaps)
 - [ ] DISCOVERY.md created and complete with all required sections:
   - [ ] Executive Summary
   - [ ] Key Findings

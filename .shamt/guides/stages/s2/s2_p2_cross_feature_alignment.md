@@ -146,7 +146,7 @@ For each conflict found:
 - **Round 1:** Pairwise comparison in feature order (F1 vs F2, F2 vs F3, etc.)
 - **Round 2:** Pairwise comparison in reverse order (different patterns)
 - **Round 3:** Random pair spot-checks, thematic clustering
-- **Exit:** 3 consecutive clean rounds (no conflicts)
+- **Exit:** primary clean round + sub-agent confirmation (no conflicts)
 - **Zero Tolerance:** ALL issues (HIGH/MEDIUM/LOW) must be resolved
 
 **Outputs:**
@@ -192,7 +192,7 @@ For each conflict found:
 
 - [ ] All pairwise comparisons performed
 - [ ] All conflicts identified and resolved
-- [ ] Validation Loop passed (3 consecutive clean rounds)
+- [ ] Validation Loop passed (primary clean round + sub-agent confirmation)
 - [ ] Comparison matrix created and saved
 - [ ] All spec.md files updated (if conflicts resolved)
 - [ ] Epic EPIC_README.md updated with S2.P2 completion

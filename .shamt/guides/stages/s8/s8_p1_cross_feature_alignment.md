@@ -217,7 +217,7 @@ Post-Feature Alignment is complete when all remaining feature specs are updated 
 **From S7 (Testing & Review) (Post-Implementation):**
 - [ ] S7 (Testing & Review) completed for current feature
 - [ ] All smoke tests passed
-- [ ] S7 Validation Loop passed (3 consecutive clean rounds)
+- [ ] S7 Validation Loop passed (primary clean round + sub-agent confirmation)
 - [ ] PR review complete
 - [ ] lessons_learned.md updated
 - [ ] Feature is production-ready
@@ -387,7 +387,7 @@ Add a "Step 2.5" entry to the `S8_ALIGNMENT_VALIDATION_{feature_NN}.md` file:
 
 **After updating remaining feature specs, validate changes with iterative loop.**
 
-**Goal:** Achieve 2 consecutive clean loops with ZERO issues in updated specs
+**Goal:** Achieve primary clean round + sub-agent confirmation with ZERO issues in updated specs
 
 **When to run:**
 - After EACH feature completes implementation (S6-S7)
@@ -400,7 +400,7 @@ Add a "Step 2.5" entry to the `S8_ALIGNMENT_VALIDATION_{feature_NN}.md` file:
    - **Loop 2 - Implementation Consistency:** Check for contradictions between specs and implementation
 3. Find issues (misalignments, contradictions, missing updates)
 4. Resolve ALL issues (zero tolerance standard)
-5. **Exit condition:** 2 consecutive clean loops (ZERO issues found)
+5. **Exit condition:** primary clean round + sub-agent confirmation (ZERO issues found)
 
 **Differences from S3 Validation Loop:**
 - **S3:** 3 loops, ALL specs, BEFORE implementation (comprehensive)
@@ -421,7 +421,7 @@ Add a "Step 2.5" entry to the `S8_ALIGNMENT_VALIDATION_{feature_NN}.md` file:
 Create `S8_ALIGNMENT_VALIDATION_{feature_NN}.md` with:
 - Loop 1 results (perspective, issues found, resolutions)
 - Loop 2 results (should be 0 issues if Loop 1 was thorough)
-- Exit confirmation: 2 consecutive clean loops achieved
+- Exit confirmation: primary clean round + sub-agent confirmation achieved
 
 **Example from SHAMT-7:**
 After Feature 01 implementation:

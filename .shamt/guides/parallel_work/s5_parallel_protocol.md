@@ -396,7 +396,7 @@ READY_FOR_SYNC: true
 **Responsibilities:**
 
 1. **Feature 01 Owner:**
-   - Complete S5 for Feature 01 (full validation loop, 3 consecutive clean rounds)
+   - Complete S5 for Feature 01 (full validation loop, primary clean round + sub-agent confirmation)
    - Write milestone checkpoints at Phase 1 exit and after each clean round
 
 2. **Coordinator:**
@@ -425,7 +425,7 @@ READY_FOR_SYNC: true
 **Responsibilities:**
 
 1. **Feature Owner:**
-   - Complete S5 for assigned feature (full validation loop, 3 consecutive clean rounds)
+   - Complete S5 for assigned feature (full validation loop, primary clean round + sub-agent confirmation)
    - Write milestone checkpoints at Phase 1 exit and after each clean round
    - Do NOT present Gate 5 to user — signal WAITING_FOR_SYNC
 

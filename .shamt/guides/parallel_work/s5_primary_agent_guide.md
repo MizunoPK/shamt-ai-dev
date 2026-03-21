@@ -453,7 +453,7 @@ Please review all plans. Approve to begin implementation (S6), or request change
 
 ### Scenario 3: You Complete Feature 01 S5 First
 
-1. Complete S5 validation loop (3 consecutive clean rounds)
+1. Complete S5 validation loop (primary clean round + sub-agent confirmation)
 2. Update STATUS: `STATUS: WAITING_FOR_SYNC`, `READY_FOR_SYNC: true`
 3. Update checkpoint: phase: "S5 complete — waiting for secondaries"
 4. Continue monitoring secondary agents
@@ -465,7 +465,7 @@ Please review all plans. Approve to begin implementation (S6), or request change
 2. Decide resolution: which plan to update to resolve conflict
 3. Update affected `implementation_plan.md` directly
 4. Run Dependency Re-Validation Protocol on affected dimensions
-5. Continue S5-CA (need 3 consecutive clean rounds after all conflicts resolved)
+5. Continue S5-CA (need primary clean round + sub-agent confirmation after all conflicts resolved)
 6. Document conflict and resolution in S5-CA alignment file
 
 ### Scenario 5: User Requests Change During Gate 5
@@ -515,7 +515,7 @@ Please review all plans. Approve to begin implementation (S6), or request change
 
 **SP3 — S5-CA:**
 - [ ] All features confirmed complete (STATUS, checkpoints, messages)
-- [ ] S5-CA complete (3 consecutive clean rounds)
+- [ ] S5-CA complete (primary clean round + sub-agent confirmation)
 - [ ] Notifications sent to secondaries (listing updated plans)
 
 **Gate 5:**

@@ -62,7 +62,7 @@ Key activities:
 - Assign SHAMT number (ask user for next available or custom)
 - Create epic folder and EPIC_README.md
 - Create git branch: `{work_type}/{EPIC_TAG}-{N}`
-- Run S1.P3 Discovery Phase (MANDATORY — research loop until 3 consecutive clean iterations)
+- Run S1.P3 Discovery Phase (MANDATORY — research loop until primary clean round + sub-agent confirmation)
 - Break epic into features
 - Get user approval on feature breakdown
 
@@ -115,7 +115,7 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 
 Two-phase approach:
 1. **Draft Creation** (60-90 min): Write `implementation_plan.md`
-2. **Validation Loop** (3.5-6 hours): 11 dimensions, 3 consecutive clean rounds required
+2. **Validation Loop** (3.5-6 hours): 11 dimensions, primary clean round + sub-agent confirmation required
 
 Gate 5: User approval of implementation plan (3-tier rejection handling)
 
@@ -140,7 +140,7 @@ Key activities:
 
 **Guides:**
 - `stages/s7/s7_p1_smoke_testing.md` — S7.P1 Smoke Testing
-- `stages/s7/s7_p2_qc_rounds.md` — S7.P2 QC Rounds (3 rounds)
+- `stages/s7/s7_p2_qc_rounds.md` — S7.P2 QC Rounds (validation loop)
 - `stages/s7/s7_p3_final_review.md` — S7.P3 Final Review
 
 **Protocol:** S7.P2 uses fix-and-continue (fix issues immediately, reset clean counter, no restart). S7.P1 failure or S7.P3 critical issues → restart from S7.P1.
@@ -165,7 +165,7 @@ Key activities:
 
 **Guides:**
 - `stages/s9/s9_p1_epic_smoke_testing.md` — Epic smoke test
-- `stages/s9/s9_p2_epic_qc_rounds.md` — Epic QC Validation Loop (3 rounds)
+- `stages/s9/s9_p2_epic_qc_rounds.md` — Epic QC Validation Loop (primary clean round + sub-agent confirmation)
 - `stages/s9/s9_p3_user_testing.md` — User testing (ZERO bugs required)
 - `stages/s9/s9_p4_epic_final_review.md` — Final review
 

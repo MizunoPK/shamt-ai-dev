@@ -173,7 +173,7 @@
 
 **All issues fixed:** ✅ / ❌
 **Consecutive clean count:** {N}
-**Next:** Round 7 / EXIT if count = 3
+**Next:** Round 7 / Trigger sub-agent confirmation if count = 1
 
 **Notes:**
 - {Any observations}
@@ -196,7 +196,7 @@
 
 **All issues fixed:** ✅ / ❌
 **Consecutive clean count:** {N}
-**Next:** Round 8 / EXIT if count = 3
+**Next:** Round 8 / Trigger sub-agent confirmation if count = 1
 
 **Notes:**
 - {Any observations}
@@ -219,7 +219,7 @@
 
 **All issues fixed:** ✅ / ❌
 **Consecutive clean count:** {N}
-**Next:** Round 9 / EXIT if count = 3
+**Next:** Round 9 / Trigger sub-agent confirmation if count = 1
 
 **Notes:**
 - {Any observations}
@@ -238,7 +238,7 @@
 
 **All issues fixed:** ✅ / ❌
 **Consecutive clean count:** {N}
-**Next:** Round 10 / EXIT if count = 3
+**Next:** Round 10 / Trigger sub-agent confirmation if count = 1
 
 **Notes:**
 - {Any observations}
@@ -272,7 +272,7 @@
 **Status:** ✅ PASSED / ⏸️ ESCALATED / ❌ FAILED
 
 **Exit Reason:**
-- [ ] 3 consecutive clean rounds achieved (rounds {N-2}, {N-1}, {N})
+- [ ] primary clean round + sub-agent confirmation achieved (rounds {N-2}, {N-1}, {N})
 - [ ] 10-round threshold reached (escalated to user)
 - [ ] Spec discrepancy found (returned to S2)
 - [ ] Other: {reason}
@@ -319,7 +319,7 @@
 2. {Issue type} - {count} occurrences
 3. {Issue type} - {count} occurrences
 
-**Final Quality Assessment:** 99%+ (validated by {N} consecutive clean rounds)
+**Final Quality Assessment:** 99%+ (validated by primary clean round + sub-agent confirmation)
 
 ---
 

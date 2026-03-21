@@ -191,7 +191,7 @@
 - **Created:** S5 (accumulated through S5 v2 Validation Loop)
 - **Purpose:** User-approved build guide with tasks, tests, edge cases, matrices
 - **Size:** ~320 lines
-- **When to use:** Throughout S5 v2 — draft in Phase 1, refined through Validation Loop (user approves after 3 consecutive clean rounds)
+- **When to use:** Throughout S5 v2 — draft in Phase 1, refined through Validation Loop (user approves after primary clean round + sub-agent confirmation)
 
 #### Implementation Checklist
 - **File:** `implementation_checklist_template.md`
@@ -247,7 +247,7 @@
 #### Validation Loop Log (S5)
 - **File:** `VALIDATION_LOOP_LOG_S5_template.md`
 - **Created:** S5 (start of Validation Loop)
-- **Purpose:** Tracking S5 implementation planning validation loop progress across all 11 dimensions and consecutive clean rounds
+- **Purpose:** Tracking S5 implementation planning validation loop progress across all 11 dimensions until primary clean round + sub-agent confirmation
 - **Size:** ~205 lines
 - **When to use:** S5 Validation Loop initialization
 
@@ -371,7 +371,7 @@ Read .shamt/guides/templates/{template_name}.md
 1. Create epic folder
 2. Use **Epic README** template
 3. Use **Discovery** template (S1.P3 - mandatory Discovery Phase)
-4. Complete Discovery Loop (exit after 3 consecutive clean rounds with zero issues/gaps)
+4. Complete Discovery Loop (exit after primary clean round + sub-agent confirmation with zero issues/gaps)
 5. Get user approval of Discovery findings
 6. Create feature breakdown (based on Discovery)
 7. Use **Epic Ticket** template (get user validation)

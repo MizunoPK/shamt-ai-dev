@@ -31,7 +31,7 @@ Your job is to assess the impact and ensure your project-specific configuration 
 
 `.shamt/guides/reference/validation_loop_master_protocol.md`
 
-You will run a validation loop (3 consecutive clean rounds required) after completing the assessment below.
+You will run a validation loop (primary clean round + sub-agent confirmation required) after completing the assessment below.
 
 ---
 
@@ -86,7 +86,7 @@ For deleted files:
 
 ## Step 5: Run a Validation Loop
 
-Run a full validation loop using the master protocol (which you re-read in the mandatory first step). The loop must achieve 3 consecutive clean rounds before you may declare the import complete.
+Run a full validation loop using the master protocol (which you re-read in the mandatory first step). The loop must achieve primary clean round + sub-agent confirmation before you may declare the import complete.
 
 Check for:
 - All supplements still accurate and consistent with updated guides
@@ -101,7 +101,7 @@ Check for:
 
 ## Step 6: Delete the Diff Files
 
-When the validation loop passes 3 clean rounds, delete all import diff files:
+When the validation loop achieves primary clean round + sub-agent confirmation, delete all import diff files:
 
 ```bash
 rm -f .shamt/import_diff.md .shamt/import_diff_*.md

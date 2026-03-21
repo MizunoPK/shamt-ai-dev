@@ -4,9 +4,9 @@
 **See:** `reference/validation_loop_master_protocol.md`
 
 **Applicable Stages:**
-- S7.P2: Feature Validation Loop (3 consecutive clean rounds post-smoke testing)
+- S7.P2: Feature Validation Loop (primary clean round + sub-agent confirmation, post-smoke testing)
 - S7.P3: Feature PR Review (final review before commit)
-- S9.P2: Epic Validation Loop (3 consecutive clean rounds post-epic smoke testing)
+- S9.P2: Epic Validation Loop (primary clean round + sub-agent confirmation, post-epic smoke testing)
 - S10.P2: Final PR Review (epic-level)
 
 **Version:** 2.0 (Updated to extend master protocol)
@@ -148,15 +148,10 @@ Round 3: Random spot-checks + integration
 - Run tests: All pass (100% pass rate)
 - Random spot-check 5 functions: 0 issues found
 - Integration verification: End-to-end call stack works correctly
-- Check: 0 issues found → Continue (count = 1 clean)
-
-Round 4: Repeat validation
-- Run tests: All pass
-- Check: 0 issues found → Continue (count = 2 clean)
-
-Round 5: Final sweep
-- Run tests: All pass
-- Check: 0 issues found → PASSED (count = 3 consecutive clean)
+- Check: 0 issues found → (count = 1 clean) → Trigger sub-agent confirmation
+  - Sub-agent A: 0 issues ✅
+  - Sub-agent B: 0 issues ✅
+  - Both confirmed → PASSED ✅
 ```
 
 ---
@@ -177,8 +172,8 @@ Round 5: Final sweep
 
 **S7.P2 Validation Loop (Feature-Level):**
 - Use this protocol after implementation complete
-- Check ALL 16 dimensions every round (7 master + 9 S7 QC-specific)
-- Exit after 3 consecutive clean rounds
+- Check ALL 16 dimensions every primary round (7 master + 9 S7 QC-specific)
+- Exit after primary clean round + sub-agent confirmation
 - Must pass before S7.P3 (PR Review)
 
 **S7.P3 PR Review (Feature-Level):**
@@ -188,8 +183,8 @@ Round 5: Final sweep
 
 **S9.P2 Epic Validation Loop (Epic-Level):**
 - Use this protocol after all features complete
-- Check ALL 12 dimensions every round (7 master + 5 epic-specific)
-- Exit after 3 consecutive clean rounds
+- Check ALL 12 dimensions every primary round (7 master + 5 epic-specific)
+- Exit after primary clean round + sub-agent confirmation
 - Must pass before S9.P3 (User Testing)
 
 ---
@@ -197,7 +192,7 @@ Round 5: Final sweep
 ## Exit Criteria Specific to QC/PR
 
 **Can only exit when ALL true:**
-- [ ] 3 consecutive rounds found zero issues, OR user opted to stop at the 2-round checkpoint (see master protocol Exit Criteria)
+- [ ] Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
 - [ ] All tests pass (100% pass rate)
 - [ ] Code matches implementation plan
 - [ ] All requirements implemented
@@ -214,10 +209,10 @@ Round 5: Final sweep
 
 1. **Fix ALL issues immediately** (no deferring)
 2. **Re-run ALL tests** to verify fixes didn't break anything
-3. **Reset consecutive clean rounds counter to 0**
+3. **Reset clean round counter to 0**
    - Fixes can introduce new issues
    - Must verify fix quality through complete validation
-4. **Continue validation until 3 consecutive clean rounds**
+4. **Continue validation until primary clean round + sub-agent confirmation**
 
 **Key difference from old approach:**
 - **Old (restart protocol):** Any issue → Restart from S7.P1 (smoke testing)
@@ -233,9 +228,10 @@ Round 5: Final sweep
 ```bash
 Round 1: 5 issues → Fix ALL → Continue (counter = 0)
 Round 2: 2 issues (1 missed, 1 introduced by fix) → Fix ALL → Continue (counter = 0)
-Round 3: 0 issues → (counter = 1 clean)
-Round 4: 0 issues → (counter = 2 clean)
-Round 5: 0 issues → PASSED (3 consecutive clean)
+Round 3: 0 issues → (counter = 1 clean) → Trigger sub-agent confirmation
+  Sub-agent A: 0 issues ✅
+  Sub-agent B: 0 issues ✅
+  → PASSED ✅
 ```
 
 ---

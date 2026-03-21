@@ -260,7 +260,7 @@ Step 8.1: Verification Checklist
 - Epic: Improve Draft Helper
 - Features: 3 (rank priority Integration, Matchup System, Performance Tracking)
 - S9.P1 complete: Epic smoke testing passed
-- S9.P2 complete: Validation Loop passed (3 consecutive clean rounds)
+- S9.P2 complete: Validation Loop passed (primary clean round + sub-agent confirmation)
 - Now starting S9.P3: Epic Final Review
 
 ---
@@ -423,7 +423,7 @@ bugfix_high_architecture_inconsistency/
 
 **Restart Actions:**
 - Re-ran S9.P1: Epic Smoke Testing (all 4 parts) - PASSED
-- Re-ran S9.P2: Validation Loop (3 consecutive clean rounds) - PASSED
+- Re-ran S9.P2: Validation Loop (primary clean round + sub-agent confirmation) - PASSED
 - Re-ran S9.P3: Epic PR Review (all 11 categories) - PASSED
   - Architecture category now PASSED (all features use Manager pattern)
 
@@ -443,7 +443,7 @@ bugfix_high_architecture_inconsistency/
 
 **Verification Results:**
 - Epic smoke testing passed
-- Validation Loop passed (3 consecutive clean rounds)
+- Validation Loop passed (primary clean round + sub-agent confirmation)
 - Epic PR review passed (all 11 categories, including Architecture)
 - ✅ NO pending issues or bug fixes
 - ✅ ALL tests passing (2247/2247 tests)
@@ -458,7 +458,7 @@ bugfix_high_architecture_inconsistency/
 
 **S9 - Epic Final QC:** ✅ COMPLETE
 - Epic smoke testing passed: ✅
-- Epic QC rounds passed: ✅ (Rounds 1, 2, 3)
+- Epic QC Validation Loop: ✅ PASSED (primary clean round + sub-agent confirmation)
 - Epic PR review passed: ✅ (11 categories)
 - Issues found: 1 (architectural inconsistency - resolved)
 - Bug fixes completed: 1

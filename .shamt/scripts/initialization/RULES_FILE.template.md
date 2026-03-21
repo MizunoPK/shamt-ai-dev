@@ -134,7 +134,7 @@ reduce the requirement to follow the guide's specific steps.
 🚨 **MANDATORY — applies every time a Validation Loop runs (S2, S3, S5, S7, S8, S9)**
 
 **The Validation Loop is the most commonly shortcut protocol. These rules exist because agents consistently:**
-- Declare validation "complete" after finding and fixing issues (without achieving 3 CLEAN rounds)
+- Declare validation "complete" after finding and fixing issues (without achieving primary clean round + sub-agent confirmation)
 - Skip full artifact re-reads (reading partial sections instead of the entire artifact)
 - Skip dimension checklists (finding issues "organically" instead of walking all dimensions)
 - Never create the required VALIDATION_LOG.md file
@@ -150,15 +150,15 @@ reduce the requirement to follow the guide's specific steps.
 
 4. **Clean counter resets to 0 when ANY issue is found.** A round where you found issues and fixed them is NOT a clean round. The counter only increments on rounds where ZERO issues are found across ALL dimensions.
 
-5. **3 consecutive clean rounds required to exit.** You need counter = 3 (three rounds in a row with zero issues). Typical validation takes 4-7 total rounds. If you're finishing in ≤3 rounds, you are almost certainly doing mechanical validation.
+5. **Sub-agent confirmation required to exit.** After declaring a clean round (counter = 1), spawn 2 independent sub-agents in parallel; both must confirm zero issues to exit. Typical validation takes 3-5 primary rounds total. If you're finishing in ≤2 primary rounds before triggering sub-agents, you are almost certainly doing mechanical validation.
 
 6. **Spot-check technical claims against source code.** Each round must include ≥3 verified technical claims using `read_file`, `grep_search`, or `file_search` against actual source files. Document what you verified and the result.
 
-7. **Never delegate validation rounds to subagents.** The agent running the validation loop must do the reads and checks itself — subagents cannot provide "fresh eyes."
+7. **Never delegate validation rounds to subagents.** The agent running the validation loop must do all primary reads and checks itself — sub-agents cannot provide "fresh eyes" for finding and fixing issues. Exception: after the primary agent declares a clean round, spawning 2 independent sub-agents to confirm the exit condition is the required protocol (not a shortcut).
 
 **Self-check before declaring validation complete:**
 - [ ] VALIDATION_LOG.md exists with documented rounds
-- [ ] Clean counter = 3 (three consecutive zero-issue rounds)
+- [ ] Primary clean round achieved (counter = 1) AND both sub-agents confirmed zero issues
 - [ ] Every round has full artifact re-read evidence (read_file calls covering all lines)
 - [ ] Every round has all dimensions documented (PASS or ISSUE for each)
 - [ ] Every round has ≥3 spot-checked technical claims with tool evidence

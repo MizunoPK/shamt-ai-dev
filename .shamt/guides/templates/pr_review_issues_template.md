@@ -83,7 +83,7 @@
 ### Issue 6: {Brief description}
 ...
 
-**Action Taken:** {RESTART Round 2 / PROCEED to Round 3 / PASSED (2 consecutive clean)}
+**Action Taken:** {RESTART Round 2 / PROCEED to Round 3 / PASSED (primary clean + sub-agent confirmation)}
 
 ---
 
@@ -97,7 +97,7 @@
 ### Issue 7: {Brief description}
 ...
 
-**Action Taken:** {RESTART Round 2 / PROCEED to Round 4 / PASSED (2 consecutive clean)}
+**Action Taken:** {RESTART Round 2 / PROCEED to Round 4 / PASSED (primary clean + sub-agent confirmation)}
 
 ---
 
@@ -111,7 +111,7 @@
 ### Issue 8: {Brief description}
 ...
 
-**Action Taken:** {RESTART Round 2 / PROCEED to Round 5 / PASSED (2 consecutive clean)}
+**Action Taken:** {RESTART Round 2 / PROCEED to Round 5 / PASSED (primary clean + sub-agent confirmation)}
 
 ---
 
@@ -125,7 +125,7 @@
 ### Issue 9: {Brief description}
 ...
 
-**Action Taken:** {RESTART Round 2 / PASSED (2 consecutive clean) / ESCALATE TO USER}
+**Action Taken:** {RESTART Round 2 / PASSED (primary clean + sub-agent confirmation) / ESCALATE TO USER}
 
 ---
 

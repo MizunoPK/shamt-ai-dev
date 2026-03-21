@@ -1,7 +1,7 @@
 # Implementation Plan Template
 
 **Instructions for Agents:**
-This template is used during S5 v2 (Implementation Planning) created through Draft Creation phase and validated through the Validation Loop. The plan is drafted in Phase 1, then systematically validated across 11 dimensions until 3 consecutive clean rounds are achieved.
+This template is used during S5 v2 (Implementation Planning) created through Draft Creation phase and validated through the Validation Loop. The plan is drafted in Phase 1, then systematically validated across 11 dimensions until primary clean round + sub-agent confirmation are achieved.
 
 **Key Principles:**
 - Add sections as iterations complete (not all at once)
@@ -218,7 +218,7 @@ Maps every algorithm in spec.md to exact code location for quick reference durin
 - [ ] Algorithm traceability matrix drafted
 
 **Phase 2 Status:**
-- [ ] Validation Loop complete (3 consecutive clean rounds)
+- [ ] Validation Loop complete (primary clean round + sub-agent confirmation)
 - [ ] Total validation rounds executed: {count}
 - [ ] All 7 master dimensions validated: ✅
 - [ ] All 11 S5-specific dimensions validated: ✅
@@ -309,10 +309,10 @@ Maps every algorithm in spec.md to exact code location for quick reference durin
 
 **v2.0+ ({YYYY-MM-DD HH:MM}) - Phase 2 Validation Loop:**
 - Validation Round {N}: {Summary of issues found and fixed}
-- {Continue tracking validation rounds until 3 consecutive clean rounds}
+- {Continue tracking validation rounds until primary clean round + sub-agent confirmation}
 
 **v{Final} ({YYYY-MM-DD HH:MM}) - Validation Loop Complete:**
-- 3 consecutive clean validation rounds achieved
+- primary clean round + sub-agent confirmation validation achieved
 - All 18 dimensions validated (7 master + 11 S5-specific)
 - Ready for Gate 5 (User Approval)
 

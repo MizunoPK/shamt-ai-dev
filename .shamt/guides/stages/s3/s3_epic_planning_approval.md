@@ -204,7 +204,7 @@ Convert high-level categories to concrete tests with commands:
   - Exit criteria clear?
 - **Round 2:** Fresh review, find gaps in coverage
 - **Round 3:** Final validation, spot-check scenarios
-- **Exit:** 3 consecutive clean rounds
+- **Exit:** primary clean round + sub-agent confirmation
 
 **Outputs:**
 - epic_smoke_test_plan.md (validated, epic-level integration tests with detailed scenarios)
@@ -265,7 +265,7 @@ Refine epic ticket with details from all developed feature specs
   - Integration approach explained?
 - **Round 2:** Fresh review, different reading patterns
 - **Round 3:** Final validation
-- **Exit:** 3 consecutive clean rounds
+- **Exit:** primary clean round + sub-agent confirmation
 
 **Outputs:**
 - EPIC_README.md (updated with feature details)

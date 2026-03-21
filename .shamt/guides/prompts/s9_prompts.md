@@ -29,9 +29,9 @@ I'm beginning S9 (Epic Final QC).
   - Part 3: Epic E2E execution tests (complete workflows with REAL data)
   - Part 4: Cross-feature integration tests (features working together)
   - **CRITICAL:** Verify OUTPUT DATA VALUES (not just structure)
-- **Epic-Level QC Validation Loop** (until 3 consecutive clean rounds):
+- **Epic-Level QC Validation Loop** (until primary clean round + sub-agent confirmation):
   - Check ALL dimensions every round (7 master + 5 epic-specific = 12 total)
-  - 3 consecutive clean rounds required to exit
+  - primary clean round + sub-agent confirmation required to exit
   - Fix issues immediately and continue (no restart for minor issues)
 - **Epic PR Review** (11 categories at EPIC scope):
   - Focus: Architectural consistency across features
@@ -46,7 +46,7 @@ I'm beginning S9 (Epic Final QC).
 - **Validation Loop approach**:
   - Fix issues immediately (no restart for minor issues)
   - Reset clean counter and continue validation
-  - 3 consecutive clean rounds required to exit
+  - primary clean round + sub-agent confirmation required to exit
   - Major issues (user-reported bugs) may require restart
 
 **Critical Distinction:**
@@ -68,7 +68,7 @@ I'm beginning S9 (Epic Final QC).
 - Current Stage: S9.P1 - Epic Smoke Testing
 - Current Guide: stages/s9/s9_p1_epic_smoke_testing.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
-- Critical Rules: "Use EVOLVED test plan", "Verify OUTPUT DATA VALUES", "4-part smoke testing", "12 dimensions checked every round", "3 consecutive clean rounds required"
+- Critical Rules: "Use EVOLVED test plan", "Verify OUTPUT DATA VALUES", "4-part smoke testing", "12 dimensions checked every round", "primary clean round + sub-agent confirmation required"
 - Next Action: Execute Step 1 - Pre-QC Verification
 
 Starting epic smoke testing...

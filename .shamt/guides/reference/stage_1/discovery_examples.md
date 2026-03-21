@@ -9,7 +9,7 @@
 ## Table of Contents
 
 1. [Example 1: Well-Executed Discovery Phase (MEDIUM Epic)](#example-1-well-executed-discovery-phase-medium-epic)
-2. [Example 2: Discovery Loop Exit (3 Consecutive Clean Rounds)](#example-2-discovery-loop-exit-3-consecutive-clean-rounds)
+2. [Example 2: Discovery Loop Exit (Primary Clean Round + Sub-Agent Confirmation)](#example-2-discovery-loop-exit-primary-clean-round--sub-agent-confirmation)
 3. [Example 3: Discovery Revealing Larger Scope](#example-3-discovery-revealing-larger-scope)
 4. [Example 4: Anti-Pattern - Skipping Discovery](#example-4-anti-pattern---skipping-discovery)
 5. [Example 5: Discovery Time-Boxing by Size](#example-5-discovery-time-boxing-by-size)
@@ -188,9 +188,9 @@ When errors occur, what information do you need?
 
 **Questions for User:** None
 
-**Clean Round Counter:** 1 of 3 — two more clean rounds needed before exit.
+**Clean Round Counter:** 1 (primary clean round achieved) — triggering sub-agent confirmation.
 
-*(Note: Example 1 abbreviates iterations 5 and 6 for brevity — both produced zero issues/gaps, reaching counter = 3 and triggering Discovery Loop exit.)*
+*(Note: Example 1 abbreviates for brevity — sub-agent A and sub-agent B both confirm zero issues, completing Discovery Loop exit.)*
 
 ---
 
@@ -259,7 +259,7 @@ Add a debug mode to simulations with:
 
 ---
 
-## Example 2: Discovery Loop Exit (3 Consecutive Clean Rounds)
+## Example 2: Discovery Loop Exit (Primary Clean Round + Sub-Agent Confirmation)
 
 **Epic Request:** "Add JSON export for item rankings"
 
@@ -285,7 +285,7 @@ Add a debug mode to simulations with:
 
 ---
 
-### Iteration 2 - Research (Clean Round 1 of 3)
+### Iteration 2 - Research (Primary Clean Round)
 
 **Files Examined:**
 - Re-reviewed export.py patterns
@@ -297,41 +297,15 @@ Add a debug mode to simulations with:
 
 **Questions for User:** None
 
-**Clean Round Counter:** 1 of 3 — continuing loop.
+**Clean Round Counter:** 1 (primary clean round achieved) — triggering sub-agent confirmation.
 
 ---
 
-### Iteration 3 - Research (Clean Round 2 of 3)
+### Iteration 3 — Sub-Agent Confirmation
 
-**Files Examined:**
-- Checked integration points (data pipeline, file I/O layer)
-- Verified no naming conflicts with existing exports
+**Both sub-agents confirmed:** Zero issues/gaps found.
 
-**Findings:**
-- Integration points confirmed — no changes required
-- Zero issues/gaps found this round
-
-**Questions for User:** None
-
-**Clean Round Counter:** 2 of 3 — continuing loop.
-
----
-
-### Iteration 4 - Research (Clean Round 3 of 3)
-
-**Files Examined:**
-- Final review: error handling patterns, test coverage expectations
-- Confirmed scope boundary (export only, no UI changes)
-
-**Findings:**
-- No new integration concerns
-- Zero issues/gaps found this round
-
-**Questions for User:** None
-
-**Clean Round Counter:** 3 of 3 — exit criterion met.
-
-**Discovery Loop Exit:** 3 consecutive clean rounds with zero issues/gaps completed.
+**Discovery Loop Exit:** primary clean round + sub-agent confirmation with zero issues/gaps completed.
 
 ---
 

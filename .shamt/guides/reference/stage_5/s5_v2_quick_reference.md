@@ -16,7 +16,7 @@
 **Phase 2: Validation Loop (3.5-6 hours, typically 6-8 rounds)**
 - Systematic validation across 11 dimensions
 - Fix ALL issues immediately (zero deferred issues)
-- Exit criteria: 3 consecutive clean rounds (all dimensions passing)
+- Exit criteria: primary clean round + sub-agent confirmation (all dimensions passing)
 - Maximum: 10 rounds (escalate to user if exceeded)
 
 ---
@@ -77,7 +77,7 @@
 
 ### Structure
 - **V1:** Linear 22 iterations (I1 → I2 → ... → I25)
-- **V2:** Iterative validation loop (Draft → Validate 11 dimensions → Fix → Repeat until 3 clean rounds)
+- **V2:** Iterative validation loop (Draft → Validate 11 dimensions → Fix → Repeat until primary clean round + sub-agent confirmation)
 
 ### Time
 - **V1:** 9-11 hours (fixed iterations)
@@ -85,7 +85,7 @@
 
 ### Quality Assurance
 - **V1:** Sequential checks (could skip or defer issues)
-- **V2:** Systematic validation with ZERO deferred issues, 3 consecutive clean rounds required
+- **V2:** Systematic validation with ZERO deferred issues, primary clean round + sub-agent confirmation required
 
 ### File Structure
 - **V1:** 25+ separate files (one per iteration)

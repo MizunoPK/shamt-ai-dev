@@ -295,7 +295,7 @@ Write-Host "5. Check whether any new pointers should be added to the changed fil
 Write-Host ""
 Write-Host "6. Update any affected project-specific files as needed."
 Write-Host ""
-Write-Host "7. Run a validation loop until 3 consecutive clean rounds are achieved."
+Write-Host "7. Run a validation loop until primary clean round + sub-agent confirmation is achieved."
 Write-Host ""
 Write-Host "8. Delete all import diff files when complete."
 Write-Host ""

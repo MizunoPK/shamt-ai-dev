@@ -278,7 +278,7 @@ spec.md Requirements:
 - 7 Master dimensions (universal)
 - 2 Spec Refinement dimensions (context-specific, embed Gates 1 & 2)
 
-**Process:** See master protocol for 3 consecutive clean rounds requirement
+**Process:** See master protocol for sub-agent confirmation exit requirement
 
 ---
 
@@ -588,9 +588,9 @@ Requirement 1: Use synchronous file I/O
 **Spec refinement validation is COMPLETE when ALL of the following are true:**
 
 **From Master Protocol:**
-- [ ] 3 consecutive rounds with ZERO issues found, OR user opted to stop at the 2-round checkpoint (see master protocol Exit Criteria)
-- [ ] All 7 master dimensions checked every round
-- [ ] All 2 spec refinement dimensions checked every round
+- [ ] Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
+- [ ] All 7 master dimensions checked every primary round
+- [ ] All 2 spec refinement dimensions checked every primary round
 - [ ] Validation log complete with all rounds documented
 
 **Spec Refinement Specific:**
@@ -627,7 +627,7 @@ Requirement 1: Use synchronous file I/O
 1. Use this validation loop protocol
 2. Check all 9 dimensions (7 master + 2 spec refinement)
 3. Verify Gates 1 & 2 pass (embedded in dimensions)
-4. Exit when 3 consecutive clean rounds
+4. Exit when primary clean round + sub-agent confirmation
 5. Proceed to Gate 3 (User Checklist Approval)
 
 **User Approval:** Gate 3 (separate from validation loop)
@@ -643,7 +643,7 @@ Requirement 1: Use synchronous file I/O
 **Process:**
 1. Use this validation loop protocol
 2. Check all 9 dimensions (7 master + 2 spec refinement)
-3. Exit when 3 consecutive clean rounds
+3. Exit when primary clean round + sub-agent confirmation
 4. Proceed to S3.P3 (Gate 4.5 - Epic Plan Approval)
 
 **User Approval:** Gate 4.5 (separate from validation loop)
@@ -680,19 +680,11 @@ Round 3: Random Spot-Checks + Alignment
 - Check all 9 dimensions
 - Issues found: 0 ✅
 - Gates 1 & 2 passed (embedded in D8, D9)
-- Clean counter: 1
+- Clean counter: 1 (primary clean round) → trigger sub-agent confirmation
 
-Round 4: Repeat Validation
-- Fresh eyes, different pattern
-- Check all 9 dimensions
-- Issues found: 0 ✅
-- Clean counter: 2
-
-Round 5: Final Sweep
-- Complete re-read
-- Check all 9 dimensions
-- Issues found: 0 ✅
-- Clean counter: 3 → VALIDATION COMPLETE ✅
+Sub-agent A: 0 issues ✅
+Sub-agent B: 0 issues ✅
+Both confirmed → VALIDATION COMPLETE ✅
 
 Next: Proceed to Gate 3 (User Checklist Approval)
 ```
@@ -704,9 +696,9 @@ Next: Proceed to Gate 3 (User Checklist Approval)
 **Spec Refinement Validation Loop:**
 - **Extends:** Master Validation Loop Protocol (7 universal dimensions)
 - **Adds:** 2 spec refinement-specific dimensions
-- **Total:** 9 dimensions checked every round
+- **Total:** 9 dimensions checked every primary round
 - **Embeds:** Gates 1 (Research) & 2 (Alignment) in validation loop
-- **Process:** 3 consecutive clean rounds required
+- **Process:** Primary clean round + 2 independent sub-agents confirming zero issues
 - **Quality:** Zero research gaps, zero scope creep, all requirements sourced
 
 **Key Principle:**

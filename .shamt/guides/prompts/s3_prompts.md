@@ -28,7 +28,7 @@ I'm beginning S3 (Epic-Level Documentation, Testing Plans, and Approval).
 - S3.P1: Create epic-level smoke test plan (integration tests across ALL features, NOT per-feature tests)
 - S3.P2: Refine EPIC_README.md with feature summaries and architecture decisions
 - S3.P3: Gate 4.5 — present epic plan to user, MANDATORY user approval before S5 (S4 is deprecated)
-- Each phase uses a 3-consecutive-clean Validation Loop
+- Each phase uses a primary clean round + sub-agent confirmation Validation Loop
 - SCOPE: This is epic-level work, not feature-level. Tests defined here span multiple features.
 
 **Prerequisites I'm verifying:**

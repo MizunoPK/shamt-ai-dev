@@ -25,7 +25,7 @@ I'm reading `stages/s4/s4_feature_testing_strategy.md` to ensure I create a comp
   - I1: Test Strategy Development — test coverage matrix (unit, integration, edge)
   - I2: Edge Case Enumeration — boundary conditions, error paths
   - I3: Configuration Change Impact — config test matrix
-  - I4: Validation Loop — 3 consecutive clean rounds required
+  - I4: Validation Loop — primary clean round + sub-agent confirmation required
 - >90% coverage goal (feature-level, not epic-level)
 - Traceability required: each test links to a spec.md requirement
 - Output: test_strategy.md (agent-validated only, NO user approval gate)
@@ -42,7 +42,7 @@ validated by Validation Loop (I4), not by user approval.
 - Current Stage: S4 - Feature Testing Strategy
 - Current Guide: stages/s4/s4_feature_testing_strategy.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
-- Critical Rules: "plan tests BEFORE implementation", ">90% coverage goal", "4 iterations mandatory", "Validation Loop (I4) = 3 consecutive clean rounds", "NO user approval gate in S4"
+- Critical Rules: "plan tests BEFORE implementation", ">90% coverage goal", "4 iterations mandatory", "Validation Loop (I4) = primary clean round + sub-agent confirmation", "NO user approval gate in S4"
 - Next Action: Begin I1 (Test Strategy Development) for {feature_name}
 
 Starting feature test strategy...
@@ -52,7 +52,7 @@ Starting feature test strategy...
 
 ## S4 Complete: Transition to S5
 
-**Trigger:** Agent completes S4.I4 Validation Loop (3 consecutive clean rounds), creates test_strategy.md
+**Trigger:** Agent completes S4.I4 Validation Loop (primary clean round + sub-agent confirmation), creates test_strategy.md
 
 **Agent MUST confirm:**
 
@@ -67,7 +67,7 @@ Starting feature test strategy...
 - **Coverage:** {N}% (goal: >90%)
 - **Traceability:** All {N} requirements have test coverage
 
-**Validation Loop (I4) passed:** 3 consecutive clean rounds confirmed
+**Validation Loop (I4) passed:** primary clean round + sub-agent confirmation
 **No user approval needed:** S4 is agent-validated only (Gate 4.5 was in S3.P3)
 
 **Updating feature README.md Agent Status:**

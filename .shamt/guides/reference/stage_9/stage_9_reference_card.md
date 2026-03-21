@@ -30,7 +30,7 @@ S9.P2: Epic Validation Loop (2-3 hours)
     │   ├─ Dimension 11: Error Propagation
     │   └─ Dimension 12: End-to-End Success Criteria
     ├─ Fix issues immediately, reset clean counter
-    ├─ Continue until 3 consecutive clean rounds
+    ├─ Continue until primary clean round + sub-agent confirmation
     │       └─ Fix-and-continue approach (no restart for minor issues)
     ↓
 S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
@@ -54,7 +54,7 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 | Sub-Stage | Steps | Time | Key Activities | Mandatory Gates |
 |-----------|-------|------|----------------|-----------------|
 | S9.P1 | 1-2 | 60-90 min | Pre-QC verification, Epic smoke testing (4 parts) | Part 4 data values |
-| S9.P2 | 3-5 | 2-3 hrs | 3 QC rounds (integration, consistency, success criteria) | All 3 rounds PASS |
+| S9.P2 | 3-5 | 2-3 hrs | Epic QC Validation Loop (integration, consistency, success criteria) | Primary clean round + sub-agent confirmation |
 | S9.P3 | 6-8 | 1-2 hrs | Epic PR review (11 categories), bug fixes, final verification | All 11 categories PASS |
 
 ---
@@ -68,7 +68,7 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 2. **RESTART S9 from S9.P1** (cannot partially continue)
 3. **Re-run ALL 8 steps:**
    - S9.P1: Epic Smoke Testing (all 4 parts)
-   - S9.P2: Validation Loop (3 consecutive clean rounds)
+   - S9.P2: Validation Loop (primary clean round + sub-agent confirmation)
    - S9.P3: Epic PR Review (all 11 categories)
 4. **Document restart** in epic_lessons_learned.md
 
@@ -108,7 +108,7 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 - ✅ ALWAYS use EVOLVED epic_smoke_test_plan.md (not original from S1)
 - ✅ Verify DATA VALUES, not just file existence
 - ✅ Epic-level validation focuses on INTEGRATION (not individual features)
-- ✅ ALL 3 QC rounds are MANDATORY (cannot skip)
+- ✅ Epic QC Validation Loop is MANDATORY (primary clean round + sub-agent confirmation)
 - ✅ If ANY issues found → create bug fix → RESTART S9 from S9.P1
 - ✅ Epic PR review has 11 categories (all mandatory, Architecture MOST IMPORTANT)
 - ✅ Validate against ORIGINAL epic request (re-read `.shamt/epics/requests/{epic_name}.txt`)
@@ -227,7 +227,7 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 ### ❌ Pitfall 3: Skipping Validation Loop
 **Problem:** "Smoke testing passed, I'll skip validation"
 **Impact:** Quality issues slip through, fail in user testing
-**Solution:** Validation Loop with 3 consecutive clean rounds is MANDATORY
+**Solution:** Validation Loop with primary clean round + sub-agent confirmation is MANDATORY
 
 ### ❌ Pitfall 4: Inline Bug Fixes
 **Problem:** "Small bug, I'll fix it inline without bug fix workflow"
@@ -266,7 +266,7 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 - [ ] Cross-feature integration tested
 
 **S9.P2 → S9.P3:**
-- [ ] Validation Loop PASSED (3 consecutive clean rounds)
+- [ ] Validation Loop PASSED (primary clean round + sub-agent confirmation)
 - [ ] All 12 dimensions checked every round
 - [ ] Zero issues deferred (fix-and-continue approach used)
 - [ ] All findings resolved immediately
@@ -314,7 +314,7 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 **S9 is complete when:**
 - [ ] All 8 steps complete (1-8)
 - [ ] Epic smoke testing PASSED (all 4 parts with data values)
-- [ ] All 3 QC rounds PASSED (integration, consistency, success criteria)
+- [ ] Epic QC Validation Loop PASSED (primary clean round + sub-agent confirmation)
 - [ ] Epic PR review PASSED (all 11 categories)
 - [ ] All bug fixes complete (if any) + S9 restarted
 - [ ] epic_lessons_learned.md updated

@@ -48,7 +48,7 @@ S7.P1 (Smoke Testing) → S7.P2 (Validation Loop) →
    - Current Phase: S7.P3 (Final Review - PR Validation Loop)
    - Current Guide: reference/validation_loop_qc_pr.md
    - Guide Last Read: {YYYY-MM-DD HH:MM}
-   - Critical Rules: "3 consecutive clean rounds required", "All 11 PR categories checked every round", "Update guides immediately", "100% completion required"
+   - Critical Rules: "primary clean round + sub-agent confirmation required", "All 11 PR categories checked every round", "Update guides immediately", "100% completion required"
    - Next Action: Begin PR Validation Loop Round 1
 
 3. **Verify all prerequisites** (see checklist below)
@@ -62,7 +62,7 @@ S7.P1 (Smoke Testing) → S7.P2 (Validation Loop) →
 ## 🚫 FORBIDDEN SHORTCUTS
 
 You CANNOT:
-- Skip Step 1 (PR Review Validation Loop) because "the code was already reviewed during S7.P2" — S7.P3 uses fresh-eyes PR review (reference/validation_loop_qc_pr.md), distinct from S7.P2's code quality validation loop; 3 consecutive clean rounds are required
+- Skip Step 1 (PR Review Validation Loop) because "the code was already reviewed during S7.P2" — S7.P3 uses fresh-eyes PR review (reference/validation_loop_qc_pr.md), distinct from S7.P2's code quality validation loop; primary clean round + sub-agent confirmation is required
 - Skip Step 2 (Lessons Learned Capture) to save time — lessons learned documentation is mandatory and feeds into S10.P1 guide improvement; it cannot be deferred
 
 If you are about to do any of the above: STOP and re-read the relevant section.
@@ -80,7 +80,7 @@ Final Review validates production readiness through PR validation loop (7 master
 - Before cross-feature alignment
 
 **Key Outputs:**
-- ✅ PR validation loop complete (3 consecutive clean rounds)
+- ✅ PR validation loop complete (primary clean round + sub-agent confirmation)
 - ✅ All 11 PR categories checked (code quality, testing, security, etc.)
 - ✅ lessons_learned.md updated
 - ✅ Workflow guides updated immediately (lessons applied, not just documented)
@@ -91,7 +91,7 @@ Final Review validates production readiness through PR validation loop (7 master
 2-3 hours (PR validation loop typically 4-6 rounds)
 
 **Exit Condition:**
-Final Review is complete when 3 consecutive validation rounds find ZERO issues across all categories, lessons learned are applied to guides (not just documented), 100% completion is verified, and feature is ready for commit
+Final Review is complete when primary clean round + sub-agent confirmation achieved (zero issues across all categories), lessons learned are applied to guides (not just documented), 100% completion is verified, and feature is ready for commit
 
 ---
 
@@ -123,11 +123,11 @@ Even if S7.P2 found and fixed many issues, S7.P3 requires FULL rigor:
    - Check all categories every validation round (not just once)
    - Must document findings for ALL categories with evidence (tool calls, calculations)
 
-2. ⚠️ 3 CONSECUTIVE CLEAN ROUNDS REQUIRED
+2. ⚠️ PRIMARY CLEAN ROUND + SUB-AGENT CONFIRMATION REQUIRED
    - Clean = ZERO issues across all 11 categories
    - Counter resets if ANY issue found
-   - Cannot exit early (must achieve 3 consecutive)
-   - Typical: 4-6 rounds total to achieve 3 consecutive clean
+   - After primary clean round (counter = 1): spawn 2 independent sub-agents in parallel; both must confirm zero issues to exit
+   - Typical: 3-5 primary rounds total to achieve primary clean round
 
 3. ⚠️ FIX ISSUES IMMEDIATELY (NO RESTART)
    - If issues found → Fix ALL immediately
@@ -169,7 +169,7 @@ Even if S7.P2 found and fixed many issues, S7.P3 requires FULL rigor:
 **Verify these BEFORE starting Final Review:**
 
 **From S7.P2:**
-- [ ] Validation Loop: PASSED (3 consecutive clean rounds)
+- [ ] Validation Loop: PASSED (primary clean round + sub-agent confirmation)
 - [ ] All 16 dimensions checked every round (7 master + 9 S7 QC-specific)
 - [ ] Zero issues deferred (fix-and-continue approach used)
 - [ ] All re-reading checkpoints completed
@@ -246,7 +246,7 @@ Re-Reading Checkpoint
 3. **Follow the complete validation loop approach:**
    - Check all 11 PR categories EVERY round
    - Use fresh eyes patterns (re-read code, different reading orders)
-   - 3 consecutive clean rounds required (standard)
+   - primary clean round + sub-agent confirmation required (standard)
    - Fix issues immediately, continue validation
 
 **Purpose:** Systematic PR validation through comprehensive multi-round review.
@@ -255,7 +255,7 @@ Re-Reading Checkpoint
 - **Assume everything is wrong:** Skeptically verify all code
 - **Fresh eyes:** 2-5 min break + re-read entire codebase each round
 - **No deferred issues:** Fix ALL issues before next round
-- **Exit criteria:** 3 consecutive clean rounds (zero issues)
+- **Exit criteria:** primary clean round + sub-agent confirmation (zero issues)
 
 ---
 
@@ -284,10 +284,10 @@ Re-Reading Checkpoint
 - **Round 1:** Sequential code review, check all categories
 - **Round 2:** Reverse order review, check all categories
 - **Round 3+:** Continue with different reading patterns
-- **Exit:** 3 consecutive rounds with ZERO issues
+   - **Exit:** Primary clean round achieved → spawn 2 sub-agents for parallel confirmation
 
 **Completion:**
-- 3 consecutive clean rounds = PASSED ✅
+- primary clean round + sub-agent confirmation = PASSED ✅
 - Create `pr_review_issues.md` tracking all findings
 
 ---
@@ -601,10 +601,10 @@ Spec requirement: "Add rank multiplier to scoring recommendations"
    - Check ALL 11 categories + 7 master dimensions EVERY round
    - Fresh eyes through breaks + re-reading (NOT agent spawning)
    - Track all findings in `VALIDATION_LOOP_LOG.md`
-   - Continue until 3 consecutive clean rounds
+   - Continue until primary clean round + sub-agent confirmation
 
 3. **After PR validation PASSED:**
-   - Verify VALIDATION_LOOP_LOG.md shows 3 consecutive clean rounds
+   - Verify VALIDATION_LOOP_LOG.md shows primary clean round + sub-agent confirmation
    - Proceed to Step 2 (Lessons Learned)
 
 **The 11 categories above are checked every round** - you run the validation loop following the protocol in validation_loop_qc_pr.md.
@@ -730,7 +730,7 @@ Files updated:
 - [ ] Part 3 (E2E Execution Test): PASSED with data VALUES verified
 
 **Validation Loop:**
-- [ ] Validation Loop: PASSED (3 consecutive clean rounds)
+- [ ] Validation Loop: PASSED (primary clean round + sub-agent confirmation)
 - [ ] All 16 dimensions checked every round (7 master + 9 S7 QC-specific)
 - [ ] Zero issues deferred (fix-and-continue approach used)
 
@@ -805,7 +805,7 @@ Files updated:
 - [x] Output data is correct and reasonable
 
 ### Validation Loop (S7.P2)
-- [x] Validation Loop passed (3 consecutive clean rounds)
+- [x] Validation Loop passed (primary clean round + sub-agent confirmation)
 - [x] All 16 dimensions checked every round (7 master + 9 S7 QC-specific)
 - [x] Zero issues deferred (fix-and-continue approach used)
 
@@ -975,7 +975,7 @@ Decision: Remove out-of-scope code or get user approval
 ### Completion Verification
 - [ ] All S7.P3 completion criteria met (see Completion Criteria section)
 - [ ] All smoke tests passed (3 parts)
-- [ ] All QC rounds passed (3 rounds)
+- [ ] All QC rounds passed (primary clean round + sub-agent confirmation)
 - [ ] PR review complete (11 categories)
 - [ ] Lessons learned captured AND guides updated
 

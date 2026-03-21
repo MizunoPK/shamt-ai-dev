@@ -149,13 +149,11 @@ Round 2: Different order + integration focus
 
 Round 3: Spot-checks + alignment
 - Random spot-check 5 requirements
-- Check: 0 issues found → Continue (count = 1 clean)
+- Check: 0 issues found → Counter = 1 (primary clean round achieved)
+- Trigger sub-agent confirmation: spawn 2 sub-agents in parallel
 
-Round 4: Repeat validation
-- Check: 0 issues found → Continue (count = 2 clean)
-
-Round 5: Final sweep
-- Check: 0 issues found → PASSED (count = 3 consecutive clean)
+Sub-agent confirmation:
+- Both confirm: 0 issues found → PASSED (primary clean + sub-agent confirmation)
 ```
 
 ---
@@ -188,7 +186,7 @@ Round 5: Final sweep
 ## Exit Criteria Specific to Discovery
 
 **Can only exit when ALL true:**
-- [ ] 3 consecutive rounds found zero issues, OR user opted to stop at the 2-round checkpoint (see master protocol Exit Criteria)
+- [ ] Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
 - [ ] All epic/feature components researched
 - [ ] All questions answered
 - [ ] Zero assumptions

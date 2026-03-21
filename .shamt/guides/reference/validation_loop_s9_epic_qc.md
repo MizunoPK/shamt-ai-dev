@@ -283,7 +283,7 @@ Verified: Feature 03 outputs exactly 200 ranked items
 - 7 Master dimensions (universal)
 - 5 Epic QC dimensions (context-specific)
 
-**Process:** See master protocol for 3 consecutive clean rounds requirement
+**Process:** See master protocol for sub-agent confirmation exit requirement
 
 ---
 
@@ -301,8 +301,8 @@ Verified: Feature 03 outputs exactly 200 ranked items
 - User experience flow
 
 **Success Criteria:**
-- All 12 dimensions checked every round
-- 3 consecutive clean rounds achieved
+- All 12 dimensions checked every primary round
+- Primary clean round + sub-agent confirmation achieved
 - ZERO issues found
 - Ready for user testing
 
@@ -424,9 +424,9 @@ Implementation: Only generates top 100 items
 **Epic QC validation is COMPLETE when ALL of the following are true:**
 
 **From Master Protocol:**
-- [ ] 3 consecutive rounds with ZERO issues found, OR user opted to stop at the 2-round checkpoint (see master protocol Exit Criteria)
-- [ ] All 7 master dimensions checked every round
-- [ ] All 5 epic QC dimensions checked every round
+- [ ] Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
+- [ ] All 7 master dimensions checked every primary round
+- [ ] All 5 epic QC dimensions checked every primary round
 - [ ] VALIDATION_LOOP_LOG.md complete with all rounds documented
 
 **Epic QC Specific:**
@@ -443,7 +443,7 @@ Implementation: Only generates top 100 items
 - Inconsistent patterns across features
 - Missing success criteria
 - Architectural conflicts
-- Less than 3 consecutive clean rounds
+- Sub-agent confirmation not yet achieved
 
 ---
 
@@ -458,10 +458,10 @@ Implementation: Only generates top 100 items
 **Process:**
 1. Use this validation loop protocol
 2. Check all 12 dimensions (7 master + 5 epic)
-3. Exit when 3 consecutive clean rounds
+3. Exit when primary clean round + sub-agent confirmation
 4. Proceed to S9.P3 (User Testing)
 
-**Threshold:** 3 consecutive clean rounds (ZERO issues)
+**Threshold:** Primary clean round + both sub-agents confirm zero issues
 
 ---
 
@@ -492,17 +492,15 @@ Round 3: Spot-Checks + Verification
 - Issues found: 0
 - Clean counter: 1
 
-Round 4: Repeat Validation
-- Fresh eyes, different pattern
+Round 4: Primary Clean Round
+- Fresh eyes, complete re-read
 - Check all 12 dimensions
 - Issues found: 0
-- Clean counter: 2
+- Clean counter: 1 → Triggering sub-agent confirmation
 
-Round 5: Final Sweep
-- Complete re-read
-- Check all 12 dimensions
-- Issues found: 0
-- Clean counter: 3 -> VALIDATION COMPLETE
+Sub-agent A (top-to-bottom): 0 issues ✅
+Sub-agent B (bottom-to-top): 0 issues ✅
+Both confirmed → VALIDATION COMPLETE
 ```
 
 ---
@@ -512,8 +510,8 @@ Round 5: Final Sweep
 **S9 Epic QC Validation Loop:**
 - **Extends:** Master Validation Loop Protocol (7 universal dimensions)
 - **Adds:** 5 epic QC-specific dimensions
-- **Total:** 12 dimensions checked every round
-- **Process:** 3 consecutive clean rounds required
+- **Total:** 12 dimensions checked every primary round
+- **Process:** Primary clean round + 2 independent sub-agents confirming zero issues
 - **Focus:** Cross-feature integration, consistency, success criteria
 - **Quality:** Epic works as cohesive whole, ready for user testing
 

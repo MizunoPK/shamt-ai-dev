@@ -165,7 +165,7 @@ Epic cleanup typically takes 85-130 minutes (including S10.P1 guide updates). Wi
 ### S9 Completion
 - [ ] EPIC_README.md shows "S9 - Epic Final QC: ✅ COMPLETE"
 - [ ] Epic smoke testing passed (S9.P1)
-- [ ] Epic QC Validation Loop passed (3 consecutive clean rounds in S9.P2)
+- [ ] Epic QC Validation Loop passed (primary clean round + sub-agent confirmation in S9.P2)
 - [ ] User testing passed (Step 6 - ZERO bugs reported by user)
 - [ ] Epic PR review passed (all 11 categories)
 - [ ] No pending issues from S9
@@ -571,7 +571,7 @@ Key changes:
 Testing:
 - All unit tests passing ({N}/{N})
 - Epic smoke testing passed
-- Epic QC Validation Loop passed (3 consecutive clean rounds)
+- Epic QC Validation Loop passed (primary clean round + sub-agent confirmation)
 ```
 
 **Where:**

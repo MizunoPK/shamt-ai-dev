@@ -59,7 +59,7 @@ This reference provides all templates needed during S9.P3 (Epic Final Review):
 **Date:** {YYYY-MM-DD}
 **Epic:** {epic_name}
 **Review Rounds:** {N} rounds total
-**Final Status:** PASSED (2 consecutive clean rounds achieved)
+**Final Status:** PASSED (primary clean round + sub-agent confirmation achieved)
 
 **Review Summary:**
 - Round 1 (Specialized): {brief summary of findings}
@@ -366,7 +366,7 @@ bugfix_{priority}_{name}/
 
 **Restart Actions:**
 - Re-ran S9.P1: Epic Smoke Testing (all 4 parts) - {PASSED/issues found}
-- Re-ran S9.P2: Validation Loop (3 consecutive clean rounds) - {PASSED/issues found}
+- Re-ran S9.P2: Validation Loop (primary clean round + sub-agent confirmation) - {PASSED/issues found}
 - Re-ran S9.P3: Epic PR Review (all 11 categories) - {PASSED/issues found}
 - ✅ All unit tests passing ({pass_rate}% - {N} tests)
 
@@ -387,7 +387,7 @@ bugfix_{priority}_{name}/
 
 **Restart Actions:**
 - Re-ran S9.P1: Epic Smoke Testing (all 4 parts) - PASSED
-- Re-ran S9.P2: Validation Loop (3 consecutive clean rounds) - PASSED
+- Re-ran S9.P2: Validation Loop (primary clean round + sub-agent confirmation) - PASSED
 - Re-ran S9.P3: Epic PR Review (all 11 categories) - PASSED
 - ✅ All unit tests passing (100% - 2247 tests)
 
@@ -411,7 +411,7 @@ bugfix_{priority}_{name}/
 
 **Verification Results:**
 - ✅/❌ Epic smoke testing passed (all 4 parts)
-- Validation Loop passed (3 consecutive clean rounds)
+- Validation Loop passed (primary clean round + sub-agent confirmation)
 - All 12 dimensions checked every round
 - Zero issues deferred (fix-and-continue approach used)
 - ✅/❌ Epic PR review passed (all 11 categories)
@@ -450,7 +450,7 @@ bugfix_{priority}_{name}/
 
 **Verification Results:**
 - ✅ Epic smoke testing passed (all 4 parts)
-- Validation Loop passed (3 consecutive clean rounds)
+- Validation Loop passed (primary clean round + sub-agent confirmation)
 - All 12 dimensions checked every round
 - Zero issues deferred (fix-and-continue approach used)
 - ✅ Epic PR review passed (all 11 categories)
@@ -487,7 +487,7 @@ bugfix_{priority}_{name}/
 - S9.P2 (Epic Validation Loop): COMPLETE
 - S9.P3 (Epic Final Review): COMPLETE
 - Epic smoke testing passed: Yes
-- Validation Loop passed: Yes (3 consecutive clean rounds)
+- Validation Loop passed: Yes (primary clean round + sub-agent confirmation)
 - Epic PR review passed: ✅ ({N} categories)
 - End-to-end validation passed: ✅
 - Issues found: {N} ({all resolved / N unresolved})
@@ -515,7 +515,7 @@ bugfix_{priority}_{name}/
 - S9.P2 (Epic Validation Loop): COMPLETE
 - S9.P3 (Epic Final Review): COMPLETE
 - Epic smoke testing passed: Yes
-- Validation Loop passed: Yes (3 consecutive clean rounds)
+- Validation Loop passed: Yes (primary clean round + sub-agent confirmation)
 - Epic PR review passed: ✅ (11 categories)
 - End-to-end validation passed: ✅
 - Issues found: 2 (both resolved via bug fixes)
@@ -647,7 +647,7 @@ bugfix_{priority}_{name}/
 
 **S9 Summary:**
 - S9.P1 (Epic Smoke Testing): ✅ {PASSED/issues found}
-- S9.P2 (Epic Validation Loop): {PASSED/issues found} (3 consecutive clean rounds)
+- S9.P2 (Epic Validation Loop): {PASSED/issues found} (primary clean round + sub-agent confirmation)
 - S9.P3 (Epic Final Review): ✅ {PASSED/issues found}
 - Epic PR review: ✅ {PASSED/issues found} ({N} categories)
 - Issues found: {N} ({resolution status})
@@ -671,7 +671,7 @@ bugfix_{priority}_{name}/
 
 **S9 Summary:**
 - S9.P1 (Epic Smoke Testing): ✅ PASSED
-- S9.P2 (Epic Validation Loop): PASSED (3 consecutive clean rounds)
+- S9.P2 (Epic Validation Loop): PASSED (primary clean round + sub-agent confirmation)
 - S9.P3 (Epic Final Review): ✅ PASSED
 - Epic PR review: ✅ PASSED (11 categories)
 - Issues found: 2 (both fixed via bug fixes)

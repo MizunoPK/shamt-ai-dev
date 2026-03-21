@@ -195,7 +195,7 @@ Actions needed:
 
 2. **S9.P2:** Epic QC Validation Loop
    - Check ALL 12 dimensions every round (7 master + 5 epic)
-   - Continue until 3 consecutive clean rounds
+   - Continue until primary clean round + sub-agent confirmation
    - Fix issues immediately, reset counter, continue
 
 3. **S9.P3:** Epic Final Review
@@ -244,7 +244,7 @@ Actions needed:
    - S9.P1 Part 2 (Entry Point Test)
    - S9.P1 Part 3 (E2E Test)
    - S9.P1 Part 4 (Cross-Feature Integration) - includes caching layer
-   - S9.P2 (Validation Loop - 3 consecutive clean rounds)
+   - S9.P2 (Validation Loop - primary clean round + sub-agent confirmation)
    - S9.P3 (User Testing)
    - S9.P4 (Final Review)
    - S10 (Cleanup & User Testing)
@@ -280,7 +280,7 @@ Actions needed:
 
 4. **Restart epic testing:**
    - S9.P1 (Epic Smoke Testing) - feature_03 now includes PDF export
-   - S9.P2 (Epic QC Validation Loop - 3 consecutive clean rounds)
+   - S9.P2 (Epic QC Validation Loop - primary clean round + sub-agent confirmation)
    - S9.P3 (User Testing)
    - S9.P4 (Epic Final Review)
    - S10 (User Testing) - user tests again with PDF export
@@ -363,7 +363,7 @@ Actions needed:
 
 **Epic Testing Restart:**
 - [x] S9.P1 complete (Epic Smoke Testing with new feature)
-- [x] S9.P2 complete (Epic QC Validation Loop - 3 consecutive clean rounds)
+- [x] S9.P2 complete (Epic QC Validation Loop - primary clean round + sub-agent confirmation)
 - [x] S9.P3 complete (Epic Final Review)
 - [x] Ready for S10 (User Testing with new feature)
 

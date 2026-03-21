@@ -367,7 +367,7 @@ Phases within a stage must have correct ordering and dependencies.
 ```text
 S5 Phase 1: Draft Creation
   ↓ Must complete before
-S5 Phase 2: Validation Loop (3 consecutive clean rounds across 11 dimensions)
+S5 Phase 2: Validation Loop (primary clean round + sub-agent confirmation across 11 dimensions)
 ```
 > ⚠️ **S5 v2 Note:** S5 v1 used 3 phases (S5.P1 Round 1, S5.P2 Round 2, S5.P3 Round 3). S5 v2 uses 2 phases only (Draft Creation + Validation Loop). When auditing S5 phase count, expect 2 phases, not 3.
 
@@ -375,7 +375,7 @@ S5 Phase 2: Validation Loop (3 consecutive clean rounds across 11 dimensions)
 ```text
 S7.P1: Smoke Testing (MANDATORY GATE)
   ↓ Must pass before
-S7.P2: Validation Loop (3 consecutive clean rounds)
+S7.P2: Validation Loop (primary clean round + sub-agent confirmation)
   ↓ Must complete before
 S7.P3: Final Review
 ```

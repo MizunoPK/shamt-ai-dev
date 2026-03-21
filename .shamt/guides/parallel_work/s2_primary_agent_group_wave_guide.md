@@ -239,7 +239,7 @@ Read EPIC_README.md "Feature Dependency Groups (S2 Only)" section:
 
 1. **Read:** `stages/s2/s2_p2_cross_feature_alignment.md`
 2. **Execute:** Pairwise comparison of Group 1 specs
-3. **Validation Loop:** 3 consecutive clean rounds (zero deferred issues)
+3. **Validation Loop:** primary clean round + sub-agent confirmation (zero deferred issues)
 4. **Output:** Aligned specs for Group 1
 
 **Note:** This S2.P2 run is ONLY for Group 1 features. You'll run S2.P2 again later for Group 2, and finally across ALL features at wave completion.
@@ -277,7 +277,7 @@ Update Agent Status:
 **Checkpoint Verification:**
 - [ ] All Group 1 features have spec.md (user-approved)
 - [ ] All Group 1 features have checklist.md (user-answered)
-- [ ] S2.P2 validation complete for Group 1 (3 clean rounds)
+- [ ] S2.P2 validation complete for Group 1 (primary clean round + sub-agent confirmation)
 - [ ] EPIC_README.md updated with Group 1 complete status
 - [ ] Agent Status updated for wave transition
 
@@ -642,7 +642,7 @@ grep "READY_FOR_SYNC" feature_0[2-7]_*/STATUS
    - **Read:** `stages/s2/s2_p2_cross_feature_alignment.md`
    - **Scope:** Pairwise comparison of Group 2 features ONLY (Features 02-07)
    - **Process:** Compare each pair, check for conflicts/overlaps/gaps
-   - **Validation Loop:** 3 consecutive clean rounds (zero deferred issues)
+   - **Validation Loop:** primary clean round + sub-agent confirmation (zero deferred issues)
    - **Output:** Aligned Group 2 specs
 
 3. **Update EPIC_README.md:**
@@ -732,7 +732,7 @@ Finalize S2 across ALL features and prepare for S3 transition.
      - Feature 01 ↔ Feature 03
      - [Continue for all 21 pairs in 7-feature epic]
    - **Process:** Check for conflicts, overlaps, gaps across groups
-   - **Validation Loop:** 3 consecutive clean rounds (zero deferred issues)
+   - **Validation Loop:** primary clean round + sub-agent confirmation (zero deferred issues)
 
 3. **Why this matters:**
    - Earlier S2.P2 runs were INTRA-group (within Group 1, within Group 2)
@@ -747,7 +747,7 @@ Finalize S2 across ALL features and prepare for S3 transition.
 
 - [ ] All features have spec.md (user-approved via Gate 3)
 - [ ] All features have checklist.md (user-answered)
-- [ ] S2.P2 validation complete across ALL features (3 clean rounds)
+- [ ] S2.P2 validation complete across ALL features (primary clean round + sub-agent confirmation)
 - [ ] No deferred issues remaining
 - [ ] All secondary agents notified of completion
 
@@ -784,7 +784,7 @@ grep "ISSUES:" feature_*/STATUS | grep -v "ISSUES: 0"
 **Final S2.P2 (Cross-Group Alignment):**
 - Scope: All 7 features
 - Completed: 2026-02-06 17:00
-- Validation: 3 consecutive clean rounds
+- Validation: primary clean round + sub-agent confirmation
 
 ### Time Savings
 
@@ -815,7 +815,7 @@ grep "ISSUES:" feature_*/STATUS | grep -v "ISSUES: 0"
 
 **Final S2.P2 (cross-group alignment):** ✅ Complete
 - All specs aligned across entire epic
-- Validation Loop: 3 consecutive clean rounds passed
+- Validation Loop: primary clean round + sub-agent confirmation passed
 
 ## Your Status
 
@@ -872,7 +872,7 @@ grep "ISSUES:" feature_*/STATUS | grep -v "ISSUES: 0"
 **Deliverables:**
 - ✅ All 7 features have spec.md (user-approved)
 - ✅ All 7 features have checklist.md (user-answered)
-- ✅ Cross-group alignment complete (3 clean validation rounds)
+- ✅ Cross-group alignment complete (primary clean round + sub-agent confirmation)
 - ✅ Zero deferred issues
 
 **Secondary agents:** Notified of completion, can close sessions

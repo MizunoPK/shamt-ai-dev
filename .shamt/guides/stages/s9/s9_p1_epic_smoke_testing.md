@@ -582,7 +582,7 @@ print("✅ Interface compatibility verified")
 **If ALL 4 parts PASSED:**
 - Document epic smoke test results in EPIC_README.md
 - Update Agent Status: "Epic Smoke Testing COMPLETE"
-- Proceed to **S9.P2: Epic QC Validation Loop** (12 dimensions, 3 consecutive clean rounds)
+- Proceed to **S9.P2: Epic QC Validation Loop** (12 dimensions, primary clean round + sub-agent confirmation)
 
 **If ANY part FAILED:**
 - Fix ALL issues identified
@@ -604,7 +604,7 @@ print("✅ Interface compatibility verified")
 - Tests ALL features TOGETHER (not in isolation)
 - 4 parts (adds Part 4: Cross-Feature Integration)
 - Uses EVOLVED test plan (updated through Stages 1, 4, S8.P2)
-- Next: S9.P2 uses validation loop (12 dimensions, 3 consecutive clean rounds)
+- Next: S9.P2 uses validation loop (12 dimensions, primary clean round + sub-agent confirmation)
 
 **Critical Success Factors:**
 - Verify ALL features complete S8.P2 (Epic Testing Update) first

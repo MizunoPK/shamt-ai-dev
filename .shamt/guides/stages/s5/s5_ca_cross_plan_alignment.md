@@ -84,7 +84,7 @@ Verify all agents are genuinely complete before beginning.
 
 **0.4 — Verify all implementation_plan.md files exist:**
 - Confirm `{feature_folder}/implementation_plan.md` exists and is non-empty for each feature
-- Confirm each plan shows "Validated: 3 consecutive clean rounds" (or equivalent) — confirming the individual validation loop passed
+- Confirm each plan shows "Validated: primary clean round + sub-agent confirmation" (or equivalent) — confirming the individual validation loop passed
 
 **If any plan is missing or unvalidated:**
 - ❌ STOP — the feature's S5 is not actually complete

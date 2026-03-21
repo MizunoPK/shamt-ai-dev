@@ -134,10 +134,10 @@ Validate the implemented feature through smoke testing, QC rounds, and PR review
 2. Entry Point Test - Main entry points work
 3. E2E Execution Test - End-to-end workflow succeeds (MANDATORY GATE)
 
-**Step 2: Validation Loop (3 consecutive clean rounds)**
+**Step 2: Validation Loop (primary clean round + sub-agent confirmation)**
 1. Check ALL 16 dimensions every round (7 master + 9 S7 QC-specific)
 2. Fix issues immediately, reset clean counter
-3. Exit after 3 consecutive clean rounds
+3. Exit after primary clean round + sub-agent confirmation
 
 **Step 3: Final Review**
 1. PR Review (11 categories)
@@ -152,7 +152,7 @@ Validate the implemented feature through smoke testing, QC rounds, and PR review
 
 ### Exit Conditions
 - [ ] Smoke testing PASSED (all 3 parts)
-- [ ] Validation Loop PASSED (3 consecutive clean rounds)
+- [ ] Validation Loop PASSED (primary clean round + sub-agent confirmation)
 - [ ] PR review PASSED (all 11 categories)
 - [ ] Lessons learned documented
 - [ ] Feature is production-ready

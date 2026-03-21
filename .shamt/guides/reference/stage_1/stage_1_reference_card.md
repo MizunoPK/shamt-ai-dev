@@ -40,7 +40,7 @@ STEP 3: Discovery Phase (S1.P3) - MANDATORY (1-4 hours)
     |   +-- Document findings in DISCOVERY.md
     |   +-- Identify questions
     |   +-- Ask user, record answers
-    |   +-- Repeat until 3 consecutive clean rounds (zero issues/gaps)
+    |   +-- Repeat until primary clean round + sub-agent confirmation (zero issues/gaps)
     +-- S1.P3.3: Synthesize findings
     +-- S1.P3.4: User approval of recommended approach
     +-- Time-Box: SMALL 1-2hrs, MEDIUM 2-3hrs, LARGE 3-4hrs
@@ -91,7 +91,7 @@ STEP 6: Transition to S2 (5 min)
 ### S1-Gate-A: Discovery Phase Approval (Step 3)
 **Location:** stages/s1/s1_p3_discovery_phase.md S1.P3.4
 **What it checks:**
-- Discovery Loop completed (3 consecutive clean rounds, zero issues/gaps)
+- Discovery Loop completed (primary clean round + sub-agent confirmation, zero issues/gaps)
 - Recommended approach documented
 - Scope defined (in scope / out of scope)
 - User approves findings and approach
@@ -133,7 +133,7 @@ STEP 6: Transition to S2 (5 min)
 | LARGE | 3-4 hours | 5+ features |
 
 **Discovery Loop Exit Condition:**
-- 3 consecutive clean rounds with zero issues/gaps
+- primary clean round + sub-agent confirmation with zero issues/gaps
 - NOT based on time or iteration count
 
 **Key Output:** DISCOVERY.md containing:
@@ -149,7 +149,7 @@ STEP 6: Transition to S2 (5 min)
 
 - Create git branch BEFORE any changes (Step 1.0)
 - **Discovery Phase is MANDATORY for ALL epics (Step 3)**
-- Discovery Loop continues until 3 consecutive clean rounds (zero issues/gaps)
+- Discovery Loop continues until primary clean round + sub-agent confirmation (zero issues/gaps)
 - Feature folders NOT created until Discovery approved
 - Feature breakdown MUST be based on Discovery findings
 - Seed each spec.md with Discovery Context section (Step 5)
@@ -167,12 +167,12 @@ STEP 6: Transition to S2 (5 min)
 ### Pitfall 1: Skipping Discovery Phase
 **Problem:** Jumping to feature breakdown without Discovery
 **Impact:** Features based on assumptions, wrong scope, rework later
-**Solution:** Discovery is MANDATORY - complete Loop until 3 consecutive clean rounds (zero issues/gaps)
+**Solution:** Discovery is MANDATORY - complete Loop until primary clean round + sub-agent confirmation (zero issues/gaps)
 
 ### Pitfall 2: Ending Discovery Prematurely
 **Problem:** Stopping Discovery based on time, not question exhaustion
 **Impact:** Missed requirements, wrong approach, inadequate understanding
-**Solution:** Exit ONLY when 3 consecutive clean rounds produce zero issues/gaps
+**Solution:** Exit ONLY when primary clean round + sub-agent confirmation produces zero issues/gaps
 
 ### Pitfall 3: Not Seeding Specs with Discovery Context
 **Problem:** Creating feature specs without Discovery Context section
@@ -208,7 +208,7 @@ STEP 6: Transition to S2 (5 min)
 
 **Step 3 -> Step 4:**
 - [ ] DISCOVERY.md created and complete
-- [ ] Discovery Loop completed (3 consecutive clean rounds, zero issues/gaps)
+- [ ] Discovery Loop completed (primary clean round + sub-agent confirmation, zero issues/gaps)
 - [ ] Recommended approach documented
 - [ ] Scope defined (in scope / out of scope)
 - [ ] User approved Discovery findings

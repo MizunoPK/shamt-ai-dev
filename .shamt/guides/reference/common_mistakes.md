@@ -25,7 +25,7 @@
 
 ### Skipping Validation Dimensions
 - ❌ "Dimension 7 seems obvious, I'll skip it in this round"
-- ✅ ALL 11 dimensions in S5 v2 are MANDATORY every validation round, and the Validation Loop must be completed (3 consecutive clean rounds)
+- ✅ ALL 11 dimensions in S5 v2 are MANDATORY every validation round, and the Validation Loop must be completed (primary clean round + sub-agent confirmation)
 - **Why:** Each dimension catches specific bug categories
 
 ### Committing Without Tests
@@ -60,7 +60,7 @@
 ### Not Following Validation Loop Protocol
 - ❌ "I fixed the bug, I'll just continue from where I left off"
 - ✅ Fix issue immediately, reset clean counter to 0, continue validation
-- **Why:** Validation Loop uses fix-and-continue approach (3 consecutive clean rounds required)
+- **Why:** Validation Loop uses fix-and-continue approach (primary clean round + sub-agent confirmation required)
 
 ---
 
@@ -90,7 +90,7 @@
 
 ### S5: Implementation Planning
 - ❌ Skipping dimensions or gates in the Validation Loop
-- ❌ Exiting the Validation Loop before achieving 3 consecutive clean rounds (confidence must be MEDIUM or HIGH)
+- ❌ Exiting the Validation Loop before achieving primary clean round + sub-agent confirmation (confidence must be MEDIUM or HIGH)
 - ❌ Proceeding without user approval of implementation_plan.md (Gate 5)
 
 ### S6: Implementation

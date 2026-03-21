@@ -38,8 +38,8 @@ S9.P1 (Epic Smoke) → S9.P2 (Epic QC Validation Loop) →
 
 1. **Verify Prerequisites:**
    - S9.P2 Epic QC Validation Loop COMPLETE
-   - 3 consecutive clean rounds achieved
-   - EPIC_README.md shows "S9.P2: COMPLETE (3 consecutive clean rounds)"
+   - primary clean round + sub-agent confirmation achieved
+   - EPIC_README.md shows "S9.P2: COMPLETE (primary clean round + sub-agent confirmation)"
 
 2. **This is a MANDATORY GATE**
    - You CANNOT skip user testing
@@ -63,8 +63,8 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 **Before starting S9.P3 (User Testing):**
 
 - [ ] S9.P1 complete (Epic Smoke Testing passed all 4 parts)
-- [ ] S9.P2 complete (Validation loop achieved 3 consecutive clean rounds)
-- [ ] EPIC_README.md shows "S9.P2: COMPLETE (3 consecutive clean rounds)"
+- [ ] S9.P2 complete (Validation loop achieved primary clean round + sub-agent confirmation)
+- [ ] EPIC_README.md shows "S9.P2: COMPLETE (primary clean round + sub-agent confirmation)"
 - [ ] All features tested and validated
 - [ ] No pending bug fixes or debugging sessions
 - [ ] Epic is ready for end-user testing
@@ -82,7 +82,7 @@ User Testing is where the actual user tests the complete epic with real data and
 
 **When do you use this step?**
 - After S9.P2 Epic QC Validation Loop complete
-- 3 consecutive clean rounds achieved
+- primary clean round + sub-agent confirmation achieved
 - Before S9.P4 Epic Final Review
 
 **Key Outputs:**
@@ -125,7 +125,7 @@ User testing passes with ZERO bugs reported by user
 4. ⚠️ RESTART S9.P1 AFTER BUG FIXES
    - After fixing user-reported bugs → RESTART from S9.P1 (not S9.P2)
    - Re-run smoke testing (4 parts)
-   - Re-run validation loop (until 3 consecutive clean rounds)
+   - Re-run validation loop (until primary clean round + sub-agent confirmation)
    - Re-run user testing
    - Repeat until user reports "No bugs found"
    - Note: This is different from S9.P2 which uses fix-and-continue
@@ -384,8 +384,8 @@ Update EPIC_README.md:
 2. Execute validation loop:
    - Check ALL 12 dimensions every round (7 master + 5 epic)
    - Fix issues immediately, reset counter, continue
-   - Continue until 3 consecutive clean rounds
-3. Verify 3 consecutive clean rounds achieved
+   - Continue until primary clean round + sub-agent confirmation
+3. Verify primary clean round + sub-agent confirmation achieved
 
 **3c. If S9 finds MORE bugs:**
 - Create new bug fix folders
@@ -438,7 +438,7 @@ Update EPIC_README.md:
 
 **S9.P2 - Epic QC Validation Loop:** ✅ COMPLETE
 - Date completed: {YYYY-MM-DD}
-- Results: 3 consecutive clean rounds achieved (12 dimensions checked)
+- Results: primary clean round + sub-agent confirmation achieved (12 dimensions checked)
 
 **Step 6 - User Testing:** ✅ COMPLETE
 - Date completed: {YYYY-MM-DD}

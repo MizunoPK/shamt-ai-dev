@@ -100,7 +100,7 @@ This document captures lessons specific to THIS feature's development. This is s
 
 **Validation Loop Results:**
 - Total Rounds: {N}
-- Consecutive Clean Rounds: 3 (exit criteria met)
+- Exit criteria: primary clean round + sub-agent confirmation achieved
 - Issues Found & Fixed: {count}
 - All 16 dimensions validated: YES (7 master + 9 S7 QC-specific)
 

@@ -43,7 +43,7 @@ I'm beginning S10 (Epic Cleanup).
   - User reports any bugs discovered during testing
   - If bugs found → Use debugging protocol to fix bugs
   - After ALL bug fixes → RESTART from S9.P1 (Epic Smoke Testing)
-  - Complete full S9.P2 Validation Loop again (3 consecutive clean rounds required)
+  - Complete full S9.P2 Validation Loop again (primary clean round + sub-agent confirmation required)
   - Return to user testing (S9.P3) after validation loop passes
   - Repeat until user testing passes with ZERO bugs
   - CANNOT commit without user approval
