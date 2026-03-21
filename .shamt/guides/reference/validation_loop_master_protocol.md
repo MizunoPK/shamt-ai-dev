@@ -10,11 +10,11 @@
 🚨🚨🚨 **HARD STOP — READ BEFORE PROCEEDING** 🚨🚨🚨
 
 **The validation loop is the most frequently violated protocol in this workflow.** Agents consistently shortcut it by:
-- Declaring "3 clean rounds" after finding issues in every round they ran
+- Declaring "primary clean round" after finding issues in every round they ran
+- Skipping the sub-agent confirmation step entirely and declaring the loop complete
 - Not creating the required VALIDATION_LOG.md file
 - Reading partial sections instead of the full artifact
 - Not checking all dimensions systematically (finding issues "organically" instead)
-- Delegating rounds to subagents (which cannot provide fresh eyes)
 
 **If you are about to run a validation loop, you MUST:**
 
@@ -24,7 +24,7 @@
 4. **Walk through ALL dimensions** (master + scenario-specific) and document each as PASS or ISSUE
 5. **Verify ≥3 technical claims** against source code every round using tools (read_file, grep_search)
 6. **Never delegate rounds to subagents** — you must do the reads and checks yourself
-7. **At 2 consecutive clean rounds: pause and present to the user** (see Exit Criteria for the checkpoint protocol) — the standard is 3 consecutive clean rounds, but the user may opt to stop at 2
+7. **When `consecutive_clean = 1` (primary clean round): spawn 2 independent sub-agents in parallel** — both must confirm zero issues to complete the exit sequence (see Exit Criteria for the required sub-agent confirmation protocol)
 8. **Complete the Adversarial Self-Check** after checking all dimensions in each round — a round may not be scored clean if this step is skipped
 
 **A round where you found issues and fixed them is NOT a clean round. The counter resets to 0.**
@@ -56,19 +56,19 @@
 ## Overview
 
 **What is the Validation Loop?**
-The Validation Loop is a systematic quality assurance process that validates artifacts (specs, plans, code, documentation) through iterative rounds until achieving 3 consecutive clean rounds with zero issues.
+The Validation Loop is a systematic quality assurance process that validates artifacts (specs, plans, code, documentation) through iterative rounds until achieving a primary clean round followed by independent sub-agent confirmation.
 
 **Why use Validation Loops?**
 - **Prevents cascading failures**: Catch issues early before propagating downstream
 - **Eliminates redundant re-verification**: Check all concerns every round (no need to restart)
-- **Guarantees quality**: 3 consecutive clean rounds ensures thorough validation
+- **Guarantees quality**: Primary clean round + independent sub-agent confirmation ensures genuine fresh-eyes validation
 - **Consistent approach**: Same process across all stages and artifacts
 
 **Key Innovation (from S5 v2):**
 - Instead of sequential iterations checking different concerns (S5 v1 had 22 iterations)
 - Use validation dimensions checked EVERY round (S5 v2 has 11 dimensions)
 - Fix issues immediately, continue validation (no restart from beginning)
-- Exit when 3 consecutive rounds have ZERO issues
+- Exit when primary clean round achieved + 2 independent sub-agents confirm zero issues
 
 ---
 
@@ -105,10 +105,11 @@ The Validation Loop is a systematic quality assurance process that validates art
 - Cannot proceed to next round with open issues
 - Fix → Re-validate → Repeat
 
-**2. Three Consecutive Clean Rounds Required**
-- Round N: 0 issues found ✅
-- Round N+1: 0 issues found ✅
-- Round N+2: 0 issues found ✅
+**2. Primary Clean Round + Sub-Agent Confirmation Required**
+- Round N: 0 issues found ✅ (consecutive_clean = 1 — primary clean round)
+- Spawn 2 independent sub-agents in parallel:
+  - Sub-agent A: 0 issues ✅
+  - Sub-agent B: 0 issues ✅
 - **THEN and ONLY THEN**: Exit validation loop
 
 **3. Fresh Eyes Every Round**
@@ -160,63 +161,50 @@ Draft Artifact Created
                 │
                 ├─→ Issues Found? → FIX ALL IMMEDIATELY → Counter resets to 0 → Continue to Round N+1
                 │
-                └─→ 0 Issues? → Counter = 1 → Continue to Round 3
+                └─→ 0 Issues? → Counter = 1 (PRIMARY CLEAN ROUND)
                        │
                        ▼
-                  ┌─────────────────┐
-                  │   ROUND 3       │
-                  │                 │
-                  │ Re-read ENTIRE  │
-                  │ artifact        │
-                  │                 │
-                  │ Check ALL       │
-                  │ Dimensions      │
-                  └─────────────────┘
+                  ┌──────────────────────────┐
+                  │   SUB-AGENT CONFIRMATION │
+                  │                          │
+                  │ Spawn 2 independent      │
+                  │ sub-agents in parallel   │
+                  │                          │
+                  │ Each checks ALL          │
+                  │ Dimensions fresh         │
+                  └──────────────────────────┘
                        │
-                       ├─→ Issues Found? → FIX ALL IMMEDIATELY → Counter resets to 0 → Continue to Round N+1
+                       ├─→ Either sub-agent finds issues? → FIX ALL → Counter resets to 0 → Continue to Round N+1
                        │
-                       └─→ 0 Issues? → Counter = 2 → Continue to Round 4
+                       └─→ Both sub-agents: 0 Issues? ✅
                               │
                               ▼
-                         ┌─────────────────┐
-                         │   ROUND 4       │
-                         │                 │
-                         │ Re-read ENTIRE  │
-                         │ artifact        │
-                         │                 │
-                         │ Check ALL       │
-                         │ Dimensions      │
-                         └─────────────────┘
-                              │
-                              ├─→ Issues Found? → FIX ALL IMMEDIATELY → Counter resets to 0 → Continue to Round N+1
-                              │
-                              └─→ 0 Issues? → Counter = 3 ✅
-                                     │
-                                     ▼
-                              ┌──────────────┐
-                              │   SUCCESS    │
-                              │              │
-                              │ 3 consecutive│
-                              │ clean rounds │
-                              │              │
-                              │ EXIT LOOP    │
-                              └──────────────┘
+                       ┌──────────────┐
+                       │   SUCCESS    │
+                       │              │
+                       │ Primary clean│
+                       │ + sub-agent  │
+                       │ confirmed    │
+                       │              │
+                       │ EXIT LOOP    │
+                       └──────────────┘
 ```
 
 **Counter Reset Rule:**
 - Clean round counter starts at 0
 - Each clean round increments counter
 - ANY issue found → Counter resets to 0
-- Need counter = 3 to exit (or user opts to stop at the 2-round checkpoint — see Exit Criteria)
+- Need counter = 1 to exit, then sub-agent confirmation (see Exit Criteria)
 
 **Example:**
 - Round 1: 5 issues → Fix all → Counter = 0
-- Round 2: 0 issues → Counter = 1
-- Round 3: 0 issues → Counter = 2
-- Round 4: 1 issue → Fix → **Counter resets to 0**
-- Round 5: 0 issues → Counter = 1
-- Round 6: 0 issues → Counter = 2
-- Round 7: 0 issues → Counter = 3 ✅ **EXIT**
+- Round 2: 1 issue → Fix → Counter = 0
+- Round 3: 0 issues → Counter = 1 (PRIMARY CLEAN ROUND) → spawn 2 sub-agents
+  - Sub-agent A: 2 issues found → Fix → Counter resets to 0
+- Round 4: 0 issues → Counter = 1 (PRIMARY CLEAN ROUND) → spawn 2 sub-agents
+  - Sub-agent A: 0 issues ✅
+  - Sub-agent B: 0 issues ✅
+- ✅ **EXIT**
 
 🚨 **MECHANICAL VALIDATION WARNING** 🚨
 
@@ -995,7 +983,7 @@ POST-ROUND GATE CHECKLIST:
 
 ### Round 3+: Achieving Clean Rounds
 
-**Purpose:** Continue validation until 3 consecutive clean rounds
+**Purpose:** Continue validation until primary clean round + sub-agent confirmation
 
 **Process (same as Round 2):**
 1. Re-read entire artifact with fresh eyes
@@ -1005,26 +993,28 @@ POST-ROUND GATE CHECKLIST:
 
 **Counter Logic:**
 
-**Scenario A: Issue found in Round 3**
+**Scenario A: Issue found in first clean attempt**
 ```markdown
 Round 1: 8 issues → Fix → Counter = 0
 Round 2: 2 issues → Fix → Counter = 0
 Round 3: 1 issue → Fix → Counter = 0  ← RESET
-Round 4: 0 issues → Counter = 1
-Round 5: 0 issues → Counter = 2
-Round 6: 0 issues → Counter = 3 ✅ EXIT
+Round 4: 0 issues → Counter = 1 → spawn 2 sub-agents
+  Sub-agent A: 1 issue → Fix → Counter = 0  ← RESET
+Round 5: 0 issues → Counter = 1 → spawn 2 sub-agents
+  Sub-agent A: 0 issues ✅  Sub-agent B: 0 issues ✅
+✅ EXIT
 ```
 
-**Scenario B: Clean from Round 3 onward**
+**Scenario B: Clean primary round, clean sub-agents on first try**
 ```markdown
 Round 1: 5 issues → Fix → Counter = 0
-Round 2: 0 issues → Counter = 1
-Round 3: 0 issues → Counter = 2
-Round 4: 0 issues → Counter = 3 ✅ EXIT
+Round 2: 0 issues → Counter = 1 → spawn 2 sub-agents
+  Sub-agent A: 0 issues ✅  Sub-agent B: 0 issues ✅
+✅ EXIT
 ```
 
 **Maximum Rounds:**
-- No hard maximum (continue until 3 consecutive clean)
+- No hard maximum (continue until primary clean round + sub-agent confirmation)
 - Typical: 4-7 rounds total
 - If exceeding 10 rounds: Re-evaluate approach (may need to redesign artifact)
 
@@ -1096,7 +1086,7 @@ If no Type B questions remain after Steps 2 and 3: proceed to the next round.
 **Validation Start:** {YYYY-MM-DD HH:MM}
 **Validation End:** {YYYY-MM-DD HH:MM}
 **Total Rounds:** {N}
-**Final Status:** ✅ PASSED (3 consecutive clean rounds)
+**Final Status:** ✅ PASSED (primary clean round + sub-agent confirmation)
 
 ---
 
@@ -1127,7 +1117,7 @@ If no Type B questions remain after Steps 2 and 3: proceed to the next round.
 **Round 1 Summary:**
 - Total Issues: {N}
 - Severity Breakdown: HIGH: {N}, MEDIUM: {N}, LOW: {N}
-- Clean Round Counter: {0-3}
+- Clean Round Counter: {0-1}
 - Next Action: Fix {N} issues, proceed to Round 2
 
 ---
@@ -1152,7 +1142,9 @@ If no Type B questions remain after Steps 2 and 3: proceed to the next round.
 
 **Round N Summary:**
 - Total Issues: 0 ✅
-- Clean Round Counter: 3 ✅
+- Clean Round Counter: 1 ✅ (primary clean round)
+- Sub-agent A: 0 issues ✅
+- Sub-agent B: 0 issues ✅
 - Status: VALIDATION COMPLETE
 
 ---
@@ -1278,57 +1270,62 @@ Before declaring validation complete, agent MUST:
 
 ### Shortcut 6: "3-Round Express"
 **What agents do:** Run exactly 3 rounds, find issues in Rounds 1-2, declare Round 3 clean, exit.
-**Why it's wrong:** If you found issues in Rounds 1 and 2, you need 3 consecutive clean rounds AFTER the last round with issues. That means Rounds 3, 4, and 5 must all be clean. Typical validation is 4-7 rounds total.
-**Rule:** `clean_counter` must reach 3. If issues were found in Rounds 1 and 2, the earliest possible exit is after Round 5 (Rounds 3-5 all clean).
+**Why it's wrong:** If you found issues in Rounds 1 and 2, you need a primary clean round + sub-agent confirmation AFTER the last round with issues. Once the first fully clean round is achieved, spawn 2 independent sub-agents; both must confirm zero issues. Typical validation is 4-7 rounds total.
+**Rule:** `clean_counter` must reach 1 (then sub-agent confirmation completes the exit). If issues were found in Rounds 1 and 2, the earliest possible exit is after Round 3 (clean) + sub-agent confirmation.
 
 ---
 
 ## Exit Criteria
 
-**Minimum standard:** 3 consecutive clean rounds with all dimensions passing and all
+**Minimum standard:** Primary clean round + sub-agent confirmation with all dimensions passing and all
 exit criteria met.
 
-**User checkpoint at 2 consecutive clean rounds:**
-When 2 consecutive clean rounds are achieved, STOP before starting Round 3.
+**Sub-agent confirmation trigger (when `consecutive_clean = 1`):**
+When the primary clean round is achieved, proceed immediately to spawn 2 independent sub-agents
+per the Sub-Agent Confirmation Protocol below. No user checkpoint is required before running
+sub-agents — the sub-agent step IS the exit gate.
 
-Present to the user:
-- Current round count and consecutive clean count (e.g., "Round 4 complete — 2 consecutive clean")
-- A brief summary of what was checked in these two rounds and what was confirmed clean
-- The open question: "Round 3 is the standard exit threshold. Do you want to run it,
-  or are you satisfied with the plan at this point?"
-
-If the user opts to stop at 2: record this in Agent Status and proceed to the next stage gate.
-If the user opts to continue: run Round 3 normally; if Round 3 is clean, exit the loop.
-If Round 3 is NOT clean: continue until 3 consecutive clean rounds are achieved or the
-  user again opts to stop after a 2-consecutive-clean checkpoint.
-
-**Note on recurrence:** If Round 3 is not clean and the counter resets, the checkpoint
-triggers again the next time 2 consecutive clean rounds are achieved. Every time the plan
-reaches a 2-clean-round plateau, the user gets to decide whether to push to a 3rd.
+If either sub-agent finds issues: fix immediately, reset `consecutive_clean = 0`, and continue
+validation until a new primary clean round + sub-agent confirmation is achieved.
 
 **Interaction with the 10-round re-evaluation threshold:**
-If the 2-consecutive-clean checkpoint fires at or near the 10-round limit (e.g., clean rounds
-are rounds 9 and 10), do not present the two escalations separately. Present a single combined
-checkpoint to the user:
+If round 10+ is reached without achieving a primary clean round, present a single checkpoint
+to the user:
 
-> "Round 10 reached (re-evaluation threshold) AND 2 consecutive clean rounds achieved.
+> "Round 10 reached (re-evaluation threshold) without achieving a primary clean round.
 > Three options:
-> (a) Accept the plan now — 2 clean rounds is sufficient confidence for this artifact.
-> (b) Run a 3rd round — you are explicitly authorizing proceeding past the 10-round threshold.
+> (a) Accept the artifact now — you are satisfied that the remaining issues are not blocking.
+> (b) Continue validation — you are explicitly authorizing proceeding past the 10-round threshold.
 > (c) Re-evaluate the artifact — the number of rounds needed suggests a structural issue
 >     worth addressing before proceeding."
 
-Option (b) requires explicit user authorization; silence or a vague acknowledgment does not
-count. When the two escalation points coincide, the user receives one combined decision.
+Option (a) requires explicit user authorization; silence or a vague acknowledgment does not
+count.
 
 **Validation Loop is COMPLETE when ALL of the following are true:**
 
-- [ ] 3 consecutive zero-issue rounds achieved (consecutive_clean = 3) OR user explicitly opted to stop at 2-round checkpoint
+- [ ] Primary agent declared a clean round (consecutive_clean = 1) AND both sub-agents independently confirmed zero issues
 - [ ] All 7 master dimensions checked every round
 - [ ] All scenario-specific dimensions checked every round
 - [ ] Validation log complete with all rounds documented
 - [ ] Final artifact version tagged/noted
 - [ ] Summary section completed in validation log
+
+### Sub-Agent Confirmation Protocol
+
+When `consecutive_clean = 1` (primary clean round achieved):
+
+1. **Spawn 2 independent sub-agents in parallel**
+2. **Sub-agent A**: Re-reads artifact top-to-bottom, checks all master + scenario dimensions
+3. **Sub-agent B**: Re-reads artifact bottom-to-top (or in different order), checks all dimensions
+4. **Both must report zero issues** to complete the exit sequence
+5. **If either sub-agent finds an issue**: Fix immediately, reset `consecutive_clean = 0`, continue validation
+
+**Fallback (when sub-agents unavailable):** If the workflow environment cannot spawn sub-agents, fall back to the old exit standard: 3 consecutive clean rounds from the primary agent alone.
+
+**Cannot exit if:**
+- Sub-agent confirmation not yet completed
+- Either sub-agent found any issue
 
 **Cannot exit if:**
 - ❌ You CANNOT stop before the 2-round checkpoint without user input — the checkpoint is the only sanctioned early-exit mechanism
@@ -1436,18 +1433,16 @@ Round 2 Summary:
 ```markdown
 Round 3: 1 issue found → Fixed
 Round 4: 0 issues
-Counter: 2 [WRONG - should reset]
-Round 5: 0 issues
-Counter: 3 → EXIT [WRONG - didn't get 3 consecutive]
+Counter: 1 [then immediately declares EXIT without sub-agent confirmation]
 ```
 
 ✅ **CORRECT:**
 ```markdown
 Round 3: 1 issue found → Fixed
 Counter: RESETS to 0
-Round 4: 0 issues → Counter = 1
-Round 5: 0 issues → Counter = 2
-Round 6: 0 issues → Counter = 3 → EXIT ✅
+Round 4: 0 issues → Counter = 1 (primary clean round) → spawn 2 sub-agents
+  Sub-agent A: 0 issues ✅  Sub-agent B: 0 issues ✅
+EXIT ✅
 ```
 
 ---
@@ -1509,7 +1504,7 @@ Round 3: Check ALL 7 dimensions + scenario-specific
 
 **Round Result:**
 - Issues Found: {N}
-- Clean Round Counter: {0-3}
+- Clean Round Counter: {0-1}
 - Next Action: [Fix issues / Continue to next round / EXIT]
 ```
 

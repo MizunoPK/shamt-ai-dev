@@ -99,4 +99,4 @@ When a new AI service is discovered (reported by a child project or user):
 - Run guide audit after every set of guide changes
 - Never approve child PRs that contain project-specific content in shared guide files
 - When any change affects system behavior (new sync scripts, new guides, new audit scope, new workflow steps): review and update the three master-only files that are not propagated via import — `CLAUDE.md`, root `README.md`, and `scripts/initialization/RULES_FILE.template.md`
-- Audits and validation loops require 3 CONSECUTIVE zero-issue rounds to exit — track `consecutive_clean` explicitly and state it at the end of every round; rounds with issues reset the counter to 0
+- Guide audits require 3 CONSECUTIVE zero-issue rounds to exit (track `consecutive_clean >= 3`). Workflow validation loops (S7.P2, S9.P2, etc.) exit on **primary clean round + independent sub-agent confirmation** (`consecutive_clean = 1`, then spawn 2 parallel sub-agents both confirming zero issues). In both cases, track `consecutive_clean` explicitly and state it at the end of every round; rounds with issues reset the counter to 0.

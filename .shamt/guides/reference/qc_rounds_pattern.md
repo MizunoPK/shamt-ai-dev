@@ -357,7 +357,7 @@ Did QC round find issues?
 │
 └─ ISSUES FOUND
    ├─ Fix ALL issues immediately (zero deferral tolerance)
-   ├─ Reset consecutive clean counter to 0
+   ├─ Reset clean round counter to 0
    └─ Continue to next round (no restart needed)
       → Exit only after primary clean round + sub-agent confirmation
       → Max 10 rounds (escalate to user if exceeded)

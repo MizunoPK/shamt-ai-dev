@@ -124,7 +124,7 @@ S5 v2 is a **validation loop-based approach** to implementation planning that sy
 1. **Phase 1:** Create draft implementation_plan.md (60-90 min, ~70% quality)
 2. **Phase 2:** Validation Loop refines to 99%+ quality (3.5-6 hours, 6-8 rounds typical)
 
-**Exit Criteria:** 3 consecutive validation rounds finding zero issues
+**Exit Criteria:** Primary clean round + independent sub-agent confirmation
 
 ---
 
@@ -520,7 +520,7 @@ Historical evidence from SHAMT-8 Feature 04 shows test creation tasks missing fr
 
 **S5 Context:** Validating implementation_plan.md against 18 dimensions (7 master + 11 implementation planning)
 
-**Exit Criteria:** 3 consecutive rounds finding ZERO issues
+**Exit Criteria:** Primary clean round + independent sub-agent confirmation
 
 ---
 

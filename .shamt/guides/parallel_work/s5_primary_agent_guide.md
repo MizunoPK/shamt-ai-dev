@@ -288,7 +288,7 @@ This guide covers:
 - Step 0: Sync verification (all plans present, all agents confirmed complete)
 - Step 1: Prioritized pairwise plan comparison
 - Step 2: Conflict resolution (update plans directly, run Dependency Re-Validation Protocol on affected dimensions)
-- Step 3: 3 consecutive clean validation rounds
+- Step 3: Primary clean validation round + sub-agent confirmation
 - Step 4: S6 sequencing recommendation (if ordering dependencies found)
 - Step 5: Document and notify
 

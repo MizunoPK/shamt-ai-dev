@@ -337,7 +337,7 @@ After checking, classify the remaining feature's plan:
 
 **NO CHANGE:**
 Add a note to `implementation_plan.md`:
-```
+```text
 Reviewed at S8 against {completed_feature_name} implementation — no changes needed. [{date}]
 ```
 

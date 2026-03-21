@@ -27,7 +27,7 @@ That's it.
 
 ### New Exit Sequence
 
-```
+```text
 Primary agent runs validation rounds normally (finding and fixing issues)
                     ↓
 Primary agent declares a clean round (zero issues found)

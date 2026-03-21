@@ -394,7 +394,7 @@
 3. **Document each round** immediately after completing it:
    - Record all issues found (even if minor)
    - Document fixes applied
-   - Update consecutive clean count
+   - Update clean round counter (0 if issues found; 1 if primary clean round achieved)
    - Add observations/notes
 
 4. **Update final metrics** after validation loop completes:

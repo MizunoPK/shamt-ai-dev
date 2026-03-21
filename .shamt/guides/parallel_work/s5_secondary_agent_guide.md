@@ -221,7 +221,7 @@ Write a full checkpoint at these milestones:
   "phase": "Implementation Planning - Validation Round {N} (clean)",
   "status": "IN_PROGRESS",
   "last_checkpoint": "{timestamp}",
-  "recovery_instructions": "Completed {N} consecutive clean validation rounds. {N}/3 required. Continue validation.",
+  "recovery_instructions": "Completed {N} validation rounds. Consecutive clean: {consecutive_clean}/1 required before sub-agent confirmation. Continue validation.",
   "can_resume": true
 }
 ```

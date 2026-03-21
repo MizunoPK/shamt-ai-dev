@@ -165,11 +165,11 @@ Verify all agents are genuinely complete before beginning.
 
 ---
 
-### Step 3: Validation Loop — 3 Consecutive Clean Rounds
+### Step 3: Validation Loop — Primary Clean Round + Sub-Agent Confirmation
 
 **After all conflicts from Step 1 are resolved:**
 
-Run pairwise comparison again — need 3 consecutive rounds with zero findings.
+Run pairwise comparison again — need primary clean round + sub-agent confirmation.
 
 **Each round:**
 - Re-read all `implementation_plan.md` files
@@ -178,17 +178,17 @@ Run pairwise comparison again — need 3 consecutive rounds with zero findings.
 - If zero findings: increment consecutive count
 
 **Track:**
-```
+```text
 Round 1: [N findings] — consecutive_clean = 0
-Round 2: [N findings] — consecutive_clean = 0  (or 1 if Round 1 was clean)
-Round 3: 0 findings — consecutive_clean = 1
-Round 4: 0 findings — consecutive_clean = 2
-Round 5: 0 findings — consecutive_clean = 3  ✅ EXIT
+Round 2: 0 findings  — consecutive_clean = 1  → spawn 2 sub-agents in parallel
+  Sub-agent A (forward): 0 issues ✅
+  Sub-agent B (reverse): 0 issues ✅
+✅ EXIT
 ```
 
 **Zero tolerance:** Any finding resets the counter, regardless of severity.
 
-**Exit:** 3 CONSECUTIVE clean rounds required. 3 total rounds with some clean is not sufficient.
+**Exit:** Primary clean round + sub-agent confirmation required. When `consecutive_clean = 1`, spawn 2 independent sub-agents in parallel; both must confirm zero issues to exit.
 
 ---
 
@@ -272,9 +272,10 @@ Create `epic/research/S5_CA_PLAN_ALIGNMENT_{DATE}.md`:
 
 - Round 1: {N} findings
 - Round 2: {N} findings
-- Round 3: 0 findings — consecutive_clean = 1
-- Round 4: 0 findings — consecutive_clean = 2
-- Round 5: 0 findings — consecutive_clean = 3 ✅
+- Round 3: 0 findings — consecutive_clean = 1 → spawn 2 sub-agents
+  - Sub-agent A: 0 issues ✅
+  - Sub-agent B: 0 issues ✅
+- ✅ COMPLETE
 
 ---
 
@@ -337,7 +338,7 @@ Add to Agent Status:
 - [ ] Sync verification passed (Step 0): all agents confirmed complete, all plans present
 - [ ] All feature pairs checked for D2, shared-code, ordering, and D5 conflicts (Steps 1–2)
 - [ ] All conflicts resolved (plans updated directly) and targeted re-validation passed
-- [ ] 3 consecutive clean pairwise comparison rounds achieved (Step 3)
+- [ ] Primary clean pairwise comparison round + sub-agent confirmation achieved (Step 3)
 - [ ] S6 sequencing recommendation documented (Step 4)
 - [ ] `epic/research/S5_CA_PLAN_ALIGNMENT_{DATE}.md` created (Step 5)
 - [ ] All secondary agents notified of plan updates (Step 5)
