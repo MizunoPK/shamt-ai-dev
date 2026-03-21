@@ -1154,7 +1154,7 @@ If no Type B questions remain after Steps 2 and 3: proceed to the next round.
 **Total Rounds:** {N}
 **Total Issues Found:** {N}
 **Total Issues Fixed:** {N}
-**Final Clean Rounds:** 3 consecutive ✅
+**Exit Condition:** Primary clean round + sub-agent confirmation ✅
 
 **Issue Breakdown by Dimension:**
 - Dimension 1 (Empirical Verification): {N} issues
@@ -1326,13 +1326,10 @@ When `consecutive_clean = 1` (primary clean round achieved):
 **Cannot exit if:**
 - Sub-agent confirmation not yet completed
 - Either sub-agent found any issue
-
-**Cannot exit if:**
-- ❌ You CANNOT stop before the 2-round checkpoint without user input — the checkpoint is the only sanctioned early-exit mechanism
 - ❌ Skipped any dimensions in any round
 - ❌ Deferred any issues (even LOW severity)
 - ❌ Worked from memory (didn't re-read)
-- ❌ Last round found issues (unless user authorized exit at 2-round checkpoint)
+- ❌ Last round found issues without fixing them all
 
 ---
 
@@ -1474,12 +1471,12 @@ Round 3: Check ALL 7 dimensions + scenario-specific
 **All scenario-specific validation loops:**
 1. **Reference this master protocol** ("See validation_loop_master_protocol.md")
 2. **Inherit all 7 master dimensions** (always checked)
-3. **Add 2-8 scenario-specific dimensions** (context-dependent)
-4. **Total dimensions: 9-15** per scenario
+3. **Add 4-11 scenario-specific dimensions** (context-dependent)
+4. **Total dimensions: 11-18** per scenario
 
 ### Example: S5 Implementation Planning Loop
 
-**Full Guide:** `stages/s5/s5_v2_validation_loop.md` — 11 implementation planning dimensions (7 master + 4 S5-specific) covering requirements coverage, interface verification, algorithm traceability, task quality, data flow, error handling, integration, test coverage, performance, implementation readiness, and spec alignment.
+**Full Guide:** `stages/s5/s5_v2_validation_loop.md` — 18 total dimensions per round (7 master + 11 S5-specific) covering requirements coverage, interface verification, algorithm traceability, task quality, data flow, error handling, integration, test coverage, performance, implementation readiness, and spec alignment.
 
 ## Templates
 

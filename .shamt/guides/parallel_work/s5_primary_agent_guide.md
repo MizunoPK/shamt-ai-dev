@@ -236,7 +236,7 @@ Checkpoint format:
   "last_checkpoint": "{timestamp}",
   "status": "IN_PROGRESS",
   "can_resume": true,
-  "recovery_instructions": "Feature 01 S5 validation complete 2 clean rounds. Waiting for secondaries."
+  "recovery_instructions": "Feature 01 S5 validation round 2 clean (consecutive_clean=1). Triggering sub-agent confirmation."
 }
 ```
 

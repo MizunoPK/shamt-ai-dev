@@ -20,7 +20,7 @@ S9.P1 (Epic Smoke Testing) →
 ## Table of Contents
 
 1. [S9.P2: Epic QC Validation Loop](#s9p2-epic-qc-validation-loop)
-2. [🚨 MANDATORY READING PROTOCOL](#-mandatory-reading-protocol)
+2. [🚨 MANDATORY READING PROTOCOL](#🚨-mandatory-reading-protocol)
 3. [Overview](#overview)
 4. [Critical Rules (Epic-Specific)](#critical-rules)
 5. [Prerequisites Checklist](#prerequisites-checklist)
@@ -836,7 +836,7 @@ STOP - DO NOT PROCEED TO S9.P3 YET
 
 **See also:**
 - `stages/s9/s9_p1_epic_smoke_testing.md` — S9.P1 (Epic Smoke Test, must pass before QC rounds)
-- `reference/validation_loop_master_protocol.md` — Full validation loop protocol for S9
+- `reference/validation_loop_s9_epic_qc.md` — Full validation loop protocol for S9
 
 ---
 

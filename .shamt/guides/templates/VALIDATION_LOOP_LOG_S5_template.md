@@ -272,14 +272,17 @@
 **Status:** ✅ PASSED / ⏸️ ESCALATED / ❌ FAILED
 
 **Exit Reason:**
-- [ ] primary clean round + sub-agent confirmation achieved (rounds {N-2}, {N-1}, {N})
+- [ ] primary clean round + sub-agent confirmation achieved (primary clean: Round {N}; sub-agents confirmed)
 - [ ] 10-round threshold reached (escalated to user)
 - [ ] Spec discrepancy found (returned to S2)
 - [ ] Other: {reason}
 
 **Total Rounds:** {N}
-**First Clean Round:** Round {N}
-**Final Clean Streak:** Rounds {N}, {N+1}, {N+2}
+**Primary Clean Round:** Round {N}
+**Sub-Agent Confirmation (triggered after Round {N}):**
+- Sub-agent A: pattern={top-to-bottom/bottom-to-top}, tool evidence={yes/no}, verdict={clean/issues found}, issues: {none / list}
+- Sub-agent B: pattern={bottom-to-top/top-to-bottom}, tool evidence={yes/no}, verdict={clean/issues found}, issues: {none / list}
+- Overall: {CONFIRMED CLEAN → exit / NOT CONFIRMED → continue loop}
 
 ---
 
