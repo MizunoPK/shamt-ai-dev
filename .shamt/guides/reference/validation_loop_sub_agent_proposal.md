@@ -7,6 +7,18 @@
 
 ---
 
+## Table of Contents
+
+1. [Problem Statement](#problem-statement)
+2. [Proposed Change](#proposed-change)
+3. [Sub-Agent Design](#sub-agent-design)
+4. [Failure Protocol (Sub-Agent Finds Issues)](#failure-protocol-sub-agent-finds-issues)
+5. [Protocol Edge Cases](#protocol-edge-cases)
+6. [Relationship to Existing Prohibition](#relationship-to-existing-prohibition)
+7. [Guide Changes Required on Implementation](#guide-changes-required-on-implementation)
+
+---
+
 ## Problem Statement
 
 The current 2/3-consecutive-clean-rounds exit requirement is a proxy for confidence that an artifact is genuinely done. It exists because a single agent can mechanically declare a round clean — and repeated self-certification by the same agent does not provide genuine independence. Each "fresh eyes" round still uses the same agent that created and refined the artifact, which has increasing investment in being finished.

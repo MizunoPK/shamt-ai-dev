@@ -294,7 +294,7 @@ Actions needed:
 
 | Aspect | Normal (S5) | Special (S9/S10) |
 |--------|-----------------|---------------------|
-| **Planning** | Stages 2/3/4 ✓ | Stages 2/3/4 ✓ |
+| **Planning** | Stages 2/3/4 (done) | Stages 2/3/4 (done) |
 | **Resume paused work** | Resume feature implementation | Not applicable (features done) |
 | **Complete remaining features** | Not required | **REQUIRED - ALL features** |
 | **Implement new/updated feature** | When its turn comes in sequence | **After all remaining features** |

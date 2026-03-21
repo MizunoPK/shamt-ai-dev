@@ -18,6 +18,20 @@
 
 ---
 
+## Table of Contents
+
+1. [What's Being Validated](#whats-being-validated)
+2. [What Counts as "Issue"](#what-counts-as-issue)
+3. [Fresh Eyes Patterns Per Round](#fresh-eyes-patterns-per-round)
+4. [Specific Criteria](#specific-criteria)
+5. [Example Round Sequence](#example-round-sequence)
+6. [Common Issues in QC/PR Context](#common-issues-in-qcpr-context)
+7. [Integration with Stages](#integration-with-stages)
+8. [Exit Criteria Specific to QC/PR](#exit-criteria-specific-to-qcpr)
+9. [Issue Handling: Fix and Continue](#issue-handling-fix-and-continue)
+
+---
+
 ## What's Being Validated
 
 Code, tests, and implementation correctness including:

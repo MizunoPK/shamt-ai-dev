@@ -46,6 +46,7 @@ S9.P1 (Epic Smoke Testing) →
 1. **Read the validation loop guides:**
    - `reference/validation_loop_master_protocol.md` - Core validation loop principles
    - `reference/validation_loop_qc_pr.md` - QC-specific validation patterns
+   - `reference/validation_loop_s9_epic_qc.md` - Epic-specific 12-dimension checklist
    - Understand 12 dimensions (7 master + 5 epic-specific)
    - Review sub-agent confirmation exit criteria
 

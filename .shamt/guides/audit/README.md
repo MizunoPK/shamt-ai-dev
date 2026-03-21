@@ -519,6 +519,8 @@ themselves — not epic workflow guides (those go through S10 lessons learned).
 4. ✅ 3 consecutive zero-issue rounds | 5. ✅ All documented | 6. ✅ User approved
 7. ✅ Confidence ≥80% | 8. ✅ Pattern diversity | 9. ✅ Spot-checks clean
 
+*(Item 4 is correct for guide audits — audits use 3 consecutive zero-issue rounds, distinct from workflow validation loops which use primary clean round + sub-agent confirmation. See CHANGES.md.)*
+
 **See `stages/stage_5_loop_decision.md` for detailed criteria with sub-requirements.**
 
 **IF USER CHALLENGES YOU:**
@@ -553,7 +555,7 @@ Issue discovered → Can I fix with confidence?
 
 - Approach each round as if you've never seen the codebase
 - Question everything, verify everything, assume you missed something
-- Use iterative loops until 3 consecutive zero-issue rounds achieved (typically 5-8 total rounds)
+- Use iterative loops until 3 consecutive zero-issue rounds achieved (typically 5-8 total rounds) *(guide audit protocol — workflow VLs use primary clean round + sub-agent confirmation instead)*
 - Provide evidence, not just claims
 - When user challenges you, THEY ARE USUALLY RIGHT - re-verify immediately
 
