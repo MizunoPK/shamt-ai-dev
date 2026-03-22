@@ -285,7 +285,7 @@ I can enable parallel work for S2 (Feature Deep Dives), reducing planning time:
 TIME SAVINGS: {savings} hours ({percent}% reduction)
 
 **COORDINATION:**
-- You'll need to open {N-1} additional Claude Code sessions
+- I'll spawn {N-1} secondary agents automatically. No new terminals needed.
 - I'll coordinate all agents via EPIC_README.md
 - Implementation (S5-S8) remains sequential in this plan
 
@@ -342,42 +342,31 @@ generate_s2_handoff_package \
 
 **Output:** Copy-paste ready handoff package
 
-#### Step 4: Present to User
+#### Step 4: Spawn Secondaries via Task Tool
 
-```markdown
-📋 SETUP INSTRUCTIONS
+Spawn all secondaries in a **single parallel response** using the Task tool:
 
-You'll need to open {N-1} new Claude Code sessions.
+- `subagent_type: general-purpose, run_in_background: true`
+- Prompt: `"You are a secondary agent for SHAMT-{N} for feature {N}. Your handoff package is at /absolute/path/to/{feature_folder}/HANDOFF_PACKAGE.md. Read it and follow its instructions."`
+- **IMPORTANT:** Use absolute paths — sub-agents have no guaranteed working directory
 
-For each new session:
-1. Open new terminal/window
-2. cd {project_path}
-3. Start Claude Code
-4. Copy-paste handoff package below
+Record `output_file` paths in primary checkpoint under `sub_agent_output_files`.
 
----
+Report: "Spawned {N-1} secondary agents. No new terminals needed."
 
-🚀 SECONDARY AGENT A - HANDOFF PACKAGE
-[Package content]
+**Begin Feature 01 work immediately** — do not wait for secondaries to start.
 
----
+Handle immediate Task call failures: offer manual terminal fallback (user opens session, enters one-line startup) or sequential fallback (Primary takes the feature).
 
-🚀 SECONDARY AGENT B - HANDOFF PACKAGE
-[Package content]
+#### Step 5: First-Heartbeat Check (15 min)
 
----
+At the first coordination heartbeat (~15 min after spawning):
+- Verify STATUS file created for each secondary's feature folder
+- Verify checkpoint JSON created for each secondary in `agent_checkpoints/`
+- If either absent → spawning failure → same escalation as Step 4 failure
+- If both present → secondary successfully started; continue monitoring
 
-Ready to start? Please paste the handoff packages.
-```
-
-#### Step 5: Wait for Startup
-
-**Monitor for secondary agent startup:**
-- Check if checkpoint files created
-- Verify STATUS files created
-- Confirm messages in inbox
-
-**Once all started:** Proceed to Phase 4
+**Proceed to Phase 4** (already underway for Feature 01)
 
 ---
 
@@ -803,8 +792,8 @@ READY_FOR_SYNC: false
 1. Primary offers parallel work
 2. User accepts or declines
 3. If accepted: Primary generates handoffs
-4. User starts secondary sessions
-5. Secondaries self-configure
+4. Primary spawns secondaries via Task tool
+5. Secondaries start automatically
 6. ALL agents begin S2 simultaneously
 
 **Status:** "Parallel work starting"
@@ -913,28 +902,23 @@ Would you like to:
 
 User responds: "1" or "Enable parallel work"
 
-**Step 3: Primary Provides Setup Instructions**
+**Step 3: Primary Spawns Secondary Agents Automatically**
 
 User sees:
 ```text
-📋 SETUP INSTRUCTIONS
+🚀 SPAWNING SECONDARY AGENTS
 
-Open 2 new Claude Code sessions and paste these packages:
+Spawning 2 secondary agents automatically. No new terminals needed.
 
-🚀 SECONDARY AGENT A - HANDOFF PACKAGE
-[Copy-paste block]
+✅ Secondary Agent A spawned (Feature 02)
+✅ Secondary Agent B spawned (Feature 03)
 
-🚀 SECONDARY AGENT B - HANDOFF PACKAGE
-[Copy-paste block]
+Beginning Feature 01 work now.
 ```
 
-**Step 4: User Opens New Sessions**
+**Step 4: Agents Work in Parallel**
 
-User:
-1. Opens new terminal windows (2 for 3-feature epic)
-2. Navigates to project in each
-3. Starts Claude Code in each
-4. Copies handoff package into each session
+Primary begins Feature 01 immediately after spawning secondaries.
 
 **Step 5: Agents Work in Parallel**
 
@@ -964,7 +948,7 @@ You can close this session or keep open to monitor.
 ```
 
 **User Effort:**
-- Initial: 5 minutes (open sessions, paste packages)
+- Initial: None (agents spawned automatically)
 - During: Minimal (just monitor)
 - Benefit: 4 hours saved
 
@@ -975,19 +959,19 @@ You can close this session or keep open to monitor.
 ### Issue 1: Secondary Agent Won't Start
 
 **Symptoms:**
-- Handoff package pasted, but agent doesn't configure
-- No checkpoint file created
-- No STATUS file created
+- Task tool spawn call failed (error returned immediately)
+- OR: No checkpoint file created within 15 min of spawning
+- OR: No STATUS file created within 15 min of spawning
 
 **Diagnosis:**
-- Check epic path in handoff package
-- Verify epic folder exists
-- Check feature folder exists
+- Check Task tool call succeeded (no error in output)
+- Verify handoff file path is absolute and file exists on disk
+- Verify epic folder and feature folder exist
 
 **Fix:**
-- Verify paths are correct
-- Re-generate handoff package with correct paths
-- User pastes corrected package
+- If Task call failed: Re-attempt spawn; offer manual terminal fallback (user opens new Claude Code session and enters one-line startup command) or sequential fallback (Primary takes the feature)
+- If first-heartbeat check fails (15 min): Secondary spawned but not initializing — verify handoff package path is absolute and correct, then re-spawn via Task tool
+- Re-generate handoff package with correct absolute paths if needed
 
 ### Issue 2: Lock Contention (All Agents Waiting)
 
@@ -1135,7 +1119,7 @@ You can close this session or keep open to monitor.
 - ✅ Low-risk (documentation only)
 - ✅ Full coordination infrastructure
 - ✅ Crash recovery
-- ✅ Simple user experience (copy-paste handoffs)
+- ✅ Simple user experience (automatic agent spawning)
 
 ### Key Components
 

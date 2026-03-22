@@ -205,7 +205,7 @@ TIME SAVINGS: 4 hours (67% reduction in S2 time)
 - All features can be researched/specified in parallel
 
 **COORDINATION:**
-- You'll need to open 2 additional Claude Code sessions
+- I'll spawn 2 secondary agents automatically. No new terminals needed.
 - I'll coordinate all agents via EPIC_README.md
 - Implementation (S5-S8) remains sequential in this plan
 
@@ -218,7 +218,7 @@ Would you like to:
 ### Step 3: Handle User Response
 
 **If user chooses Option 1 (Enable parallel work):**
-- Proceed to Phase 3 (Generate Handoffs)
+- Proceed to Phase 4 (Generate Handoffs)
 
 **If user chooses Option 2 (Sequential):**
 - Continue with standard sequential S2 workflow
@@ -344,83 +344,44 @@ echo "✅ Handoff packages saved to feature folders"
 
 **Benefit:** Secondary agents can find them automatically by reading `feature_XX_{name}/HANDOFF_PACKAGE.md`
 
-### Step 4: Present Simplified Startup Instructions to User
+### Step 4: Spawn Secondaries via Task Tool
 
-**NEW SIMPLIFIED PROCESS:** Handoff packages are pre-saved in feature folders. User just spawns agents with one-line instructions.
+**TASK SPAWNING PATTERN:**
 
-````markdown
-Great! I'll set up parallel work for S2.
+**Step 1 — Handoff files already written to disk** (done in Step 3 above)
 
-📋 SETUP INSTRUCTIONS
+**Step 2 — Spawn all secondaries in a single parallel response:**
 
-You'll need to open 2 new Claude Code sessions (one for each secondary agent).
+```
+Task tool call (one per secondary, all in same response):
+  subagent_type: general-purpose
+  run_in_background: true
+  prompt: "You are a secondary agent for SHAMT-{N}. Your handoff package is at
+           /absolute/path/to/{feature_folder}/HANDOFF_PACKAGE.md. Read it and
+           follow its instructions."
 
-**For each new session:**
-1. Open a new terminal/window
-2. Navigate to the project: cd /path/to/project
-3. Start Claude Code in the new window
-4. Enter the one-line startup command below
-
----
-
-🚀 SECONDARY AGENT A STARTUP
-
-In NEW Claude Code session #1, enter:
-
-~~~text
-You are a secondary agent for SHAMT-{N} for feature 02
-~~~
-
-The agent will locate the epic folder automatically, find `feature_02_{name}/HANDOFF_PACKAGE.md`, and self-configure.
-
----
-
-🚀 SECONDARY AGENT B STARTUP
-
-In NEW Claude Code session #2, enter:
-
-~~~text
-You are a secondary agent for SHAMT-{N} for feature 03
-~~~
-
-The agent will locate the epic folder automatically, find `feature_03_{name}/HANDOFF_PACKAGE.md`, and self-configure.
-
----
-
-**Benefits:**
-- ✅ No copy-paste errors
-- ✅ Scalable (works for 2 or 20 features)
-- ✅ Consistent startup for all secondaries
-- ✅ Handoff packages stored in feature folders for audit trail
-
-**After secondary agents start:**
-- They'll self-configure and begin S2
-- I'll monitor their progress via STATUS files and checkpoints
-- All agents will work on S2 simultaneously
-- When all complete S2, I'll run S3
-
-Ready to start? Please enter the startup commands in the new sessions.
-````
-
-### Step 5: Wait for Secondary Agents to Start
-
-**Monitor for secondary agent startup:**
-
-```bash
-# Check if secondary agents created checkpoints
-while true; do
-  if [ -f agent_checkpoints/secondary_a.json ] && \
-     [ -f agent_checkpoints/secondary_b.json ]; then
-    echo "Both secondary agents started!"
-    break
-  fi
-  echo "Waiting for secondary agents to start..."
-  sleep 5
-done
+IMPORTANT: Use absolute paths — sub-agents have no guaranteed working directory.
 ```
 
-**Once both started:**
-- Proceed to Phase 4 (Parallel S2 Work)
+**Step 3 — Record and continue:**
+
+- Store `output_file` paths in `agent_checkpoints/primary.json` under `sub_agent_output_files`
+- Report: "Spawned {N-1} secondary agents. No new terminals needed."
+- **Begin Feature 01 work immediately** — do not wait for secondaries to start
+
+**Step 4 — Handle immediate Task call failures:**
+
+If any Task call returns an error immediately: offer manual terminal fallback (user opens new Claude Code session, enters one-line startup command referencing `{feature_folder}/HANDOFF_PACKAGE.md`) or sequential fallback (Primary takes the feature itself).
+
+**Step 5 — First-heartbeat check (15 min):**
+
+At first coordination heartbeat (~15 min after spawning):
+- Verify STATUS file created in each secondary's feature folder
+- Verify checkpoint JSON created for each secondary in `agent_checkpoints/`
+- If either absent → spawning failure → same escalation as Step 4
+- If both present → secondary successfully started; continue monitoring
+
+**Proceed to Phase 5** (already underway for Feature 01)
 
 ---
 
@@ -755,8 +716,8 @@ I'll now proceed with S5 (Implementation Planning) for Feature 01...
 **Lock File System:** See `lock_file_protocol.md`
 **Communication:** See `communication_protocol.md`
 **Checkpoints:** See `checkpoint_protocol.md`
-**Escalation:** See PLAN_S2_PARALLELIZATION.md "Escalation Protocol" section
-**Workload Management:** See PLAN_S2_PARALLELIZATION.md "Primary Workload Management" section
+**Escalation:** See `s2_parallel_protocol.md` (Phase 7: Escalation Handling)
+**Workload Management:** See `s2_parallel_protocol.md` (Phase 8: Completion and S3 Transition)
 
 ---
 
@@ -767,9 +728,9 @@ I'll now proceed with S5 (Implementation Planning) for Feature 01...
 - [ ] Features analyzed for parallelization
 - [ ] Offered parallel work to user
 - [ ] User accepted
-- [ ] Handoff packages generated
-- [ ] User pasted packages in new sessions
-- [ ] Secondary agents started (checkpoints created)
+- [ ] Handoff packages generated and saved to feature folders
+- [ ] Secondary agents spawned via Task tool
+- [ ] Secondary agents started (verified at first heartbeat — STATUS + checkpoint present)
 
 **During S2 Parallel Work:**
 - [ ] Working on Feature 01 (45-min blocks)

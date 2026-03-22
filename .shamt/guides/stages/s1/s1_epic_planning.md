@@ -901,7 +901,7 @@ I've identified {N} features organized into {M} dependency groups:
 4. After all S2 complete → I run S3 (epic-level)
 
 **Coordination:**
-- You'll open {K} additional Claude Code sessions (when Group 1 done)
+- I'll spawn {K} secondary agents automatically (when Group 1 done)
 - I'll coordinate all agents via files
 - Group 1 completes before Group 2 starts (dependency requirement)
 
@@ -937,7 +937,7 @@ I've identified {N} features with no dependencies - all can parallelize!
 4. After all S2 complete → I run S3 (epic-level)
 
 **Coordination:**
-- You'll open {N-1} additional Claude Code sessions
+- I'll spawn {N-1} secondary agents automatically
 - I'll coordinate all agents via files
 
 Would you like to:

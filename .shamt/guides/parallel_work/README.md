@@ -41,8 +41,8 @@
 ## System Overview
 
 **Agent Roles:**
-- **Primary Agent:** Coordinator + Feature 01 owner (85% feature work, 15% coordination)
-- **Secondary Agent:** Feature owner only (90% feature work, 10% coordination)
+- **Primary Agent:** Coordinator + Feature 01 owner (85% feature work, 15% coordination) — spawns secondary agents automatically via Task tool (no new terminal windows required)
+- **Secondary Agent:** Feature owner only (90% feature work, 10% coordination) — spawned by Primary via Task tool, reads handoff package from disk
 
 **Coordination Mechanisms:**
 - Checkpoints (every 15 minutes) - Crash recovery + staleness detection
@@ -54,7 +54,7 @@
 
 | SP | Transition | Trigger | Actor | Action |
 |----|-----------|---------|-------|--------|
-| SP1 | S1 → S2 | S1 complete, user accepts parallel offer | Primary | Generate S2 handoffs, start secondary sessions |
+| SP1 | S1 → S2 | S1 complete, user accepts parallel offer | Primary | Generate S2 handoffs, primary spawns secondary agents automatically via Task tool |
 | SP2 (extended) | S2 → S3; S3 → S5 | All S2 complete; then Gate 4.5 approval | Primary | Verify S2 complete, run S3 solo; then generate S5 handoffs and activate secondaries |
 | SP3 (new) | S5 → S5-CA → Gate 5 | All S5 complete (all STATUS: WAITING_FOR_SYNC) | Primary | Run S5-CA (cross-plan alignment) + present combined Gate 5 |
 | SP4 (new) | Gate 5 → S6 chain | Combined Gate 5 approved | Primary | Activate Feature 01 for S6; after each S8, activate next feature |
@@ -92,7 +92,7 @@
 
 **Note:** Parallel work is OPTIONAL — workflow works identically in sequential mode.
 
-**S5 parallel requires S2 parallel.** If S2 was sequential, S5 must also be sequential.
+**S5 parallel requires S2 parallel.** If S2 was sequential, S5 must also be sequential. This constraint exists for infrastructure reasons (secondary agents carry S2 context forward); it can be lifted in a future change.
 
 ---
 

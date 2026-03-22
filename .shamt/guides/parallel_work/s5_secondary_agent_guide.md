@@ -323,7 +323,7 @@ Append to `agent_comms/{your_id}_to_primary.md`:
 
 ## Completion Signal
 
-### After S5 Validation Loop Passes (3 Consecutive Clean Rounds)
+### After S5 Validation Loop Passes (Primary Clean Round + Sub-Agent Confirmation)
 
 **Step 1: Verify implementation_plan.md is complete**
 - All required sections present

@@ -57,8 +57,8 @@ I'm starting S2 (Feature Deep Dives) in PARALLEL MODE as Primary Agent.
 - Secondary Agents: {N-1} (Features 02-{N})
 
 **Handoff Packages Generated:**
-- {N-1} handoff packages created in agent_comms/
-- User will spawn secondary agents using these packages
+- {N-1} handoff packages written to feature folders ({feature_XX_name}/HANDOFF_PACKAGE.md)
+- Secondary agents spawned via Task tool automatically
 
 **Time Allocation:**
 - 85% feature work (Feature 01 S2)
@@ -90,7 +90,10 @@ I'm starting S2 (Feature Deep Dives) in PARALLEL MODE as Primary Agent.
 
 ✅ I will follow stale agent protocol if any agent exceeds thresholds
 
-**Next Action:** Wait for secondary agents to send startup messages, then begin S2.P1 for Feature 01
+✅ Task tool spawning MUST use absolute paths — sub-agents have no guaranteed working directory
+   Example prompt path: "/absolute/path/to/epic/feature_02_{name}/HANDOFF_PACKAGE.md"
+
+**Next Action:** Secondary agents spawned via Task tool; begin S2.P1 for Feature 01 immediately
 
 **Reading Guide:** parallel_work/s2_primary_agent_guide.md
 ═══════════════════════════════════════════════════════════
@@ -100,7 +103,7 @@ I'm starting S2 (Feature Deep Dives) in PARALLEL MODE as Primary Agent.
 
 ## Prompt 2: Secondary Agent - Joining Parallel S2
 
-**When to use:** User spawns you with handoff package content
+**When to use:** Primary spawns you via Task tool with handoff at {feature_folder}/HANDOFF_PACKAGE.md
 
 **Acknowledgment required:** Yes (MANDATORY)
 

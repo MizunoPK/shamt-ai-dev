@@ -130,11 +130,13 @@ generate_s2_handoff_package \
 ## User Workflow
 
 1. **Primary generates handoff packages** (one per secondary agent)
-2. **Primary presents packages to user** with copy-paste instructions
-3. **User opens new Claude Code sessions** (one per secondary agent)
-4. **User copies handoff package** into each new session
-5. **Secondary agent self-configures** from handoff package
-6. **Secondary agent begins S2.P1** immediately
+2. **Primary saves each package** to `{FEATURE_FOLDER}/HANDOFF_PACKAGE.md` on disk
+3. **Primary spawns all secondary agents via Task tool** in a single parallel response
+   - `subagent_type: general-purpose, run_in_background: true`
+   - Prompt includes absolute path to `HANDOFF_PACKAGE.md`
+   - No new terminal windows needed
+4. **Secondary agent self-configures** by reading `HANDOFF_PACKAGE.md` from disk
+5. **Secondary agent begins S2.P1** immediately
 
 ---
 
@@ -235,8 +237,8 @@ EOF
 
 ## Notes
 
-- Handoff package is **copy-paste ready** (no manual editing by user)
+- Handoff package is **written to disk automatically** (Primary auto-populates, no manual editing)
 - All configuration is **auto-populated by Primary**
-- Secondary agent **self-configures from package**
-- **Minimal user effort** (just paste and go)
-- Package can be **reused if agent crashes** (same configuration)
+- Secondary agent **self-configures by reading package from disk**
+- **Zero user effort** (agents spawned automatically via Task tool)
+- Package can be **reused if agent crashes** (Primary re-spawns using same file on disk)

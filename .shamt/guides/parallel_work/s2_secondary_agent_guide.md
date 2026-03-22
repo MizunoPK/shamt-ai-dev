@@ -76,13 +76,14 @@ In this case: Read `feature_02_{name}/HANDOFF_PACKAGE.md` from the active epic f
 
 ### Step 1: Receive Handoff Package
 
-**User will provide handoff package via:**
+**Locate your handoff package:**
 
-**Option A (Recommended): File-based handoff**
-- User says: "You are a secondary agent for Feature 02"
-- You read: `feature_02_{name}/HANDOFF_PACKAGE.md`
+**Option A (Normal): File-based handoff (Task tool spawning)**
+- Primary spawned you via Task tool; your prompt includes the path to `HANDOFF_PACKAGE.md`
+- You read: `feature_02_{name}/HANDOFF_PACKAGE.md` (absolute path from your startup prompt)
 
-**Option B (Legacy): Pasted handoff**
+**Option B (Fallback — Task spawning failed): Pasted handoff**
+- Applies only if Task tool spawning failed and user manually starts your session
 - User pastes handoff package into your session:
 
 ```markdown
@@ -732,8 +733,8 @@ Next: Implementation (S5-S8) will be sequential
 
 ### Scenario 4: Session Crashes Mid-Work
 
-1. User restarts session
-2. User pastes handoff package again (or says "resume")
+1. Primary detects stale checkpoint (or Task output_file not updated)
+2. Primary re-spawns secondary via Task tool using existing `{feature_folder}/HANDOFF_PACKAGE.md` on disk (no new handoff generation needed)
 3. You check for existing checkpoint
 4. Read checkpoint: "Resume from S2.P2, 80% done"
 5. Read modified files (spec.md, checklist.md)

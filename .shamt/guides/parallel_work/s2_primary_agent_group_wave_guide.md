@@ -93,7 +93,7 @@ WAVE 1: Group 1 (Foundation)
   ↓
 WAVE TRANSITION: Group 1 → Group 2
   - Primary generates handoff packages for Group 2
-  - User spawns secondary agents (one per Group 2 feature)
+  - Primary spawns secondary agents via Task tool automatically (one per Group 2 feature)
   - Coordination infrastructure initialized
   ↓
 WAVE 2: Group 2 (Dependent on Group 1)
@@ -363,7 +363,7 @@ I'm joining as a secondary agent to help with S2 parallelization for the {epic_n
 
 **What to Read:**
 - `parallel_work/s2_secondary_agent_guide.md` (my complete workflow)
-- `feature_{N}_{name}/HANDOFF.md` (feature-specific context)
+- `feature_{N}_{name}/HANDOFF_PACKAGE.md` (feature-specific context)
 
 **Coordination:**
 - Update checkpoints/ every 15 minutes
@@ -379,7 +379,7 @@ I'm joining as a secondary agent to help with S2 parallelization for the {epic_n
 
 **First actions:**
 1. Read `parallel_work/s2_secondary_agent_guide.md` (your complete guide)
-2. Read `feature_{N}_{name}/HANDOFF.md` (feature-specific setup)
+2. Read `feature_{N}_{name}/HANDOFF_PACKAGE.md` (feature-specific setup)
 3. Read Group 1 specs: `feature_01_*/spec.md` (understand dependencies)
 4. Update Agent Status in `feature_{N}_{name}/README.md`
 5. Begin S2.P1.I1 (Discovery)
@@ -393,12 +393,12 @@ I'm joining as a secondary agent to help with S2 parallelization for the {epic_n
 - "Group 1 Specs Available" with file paths
 - "Group 2 Features (parallel with me)" showing all Group 2 features
 
-#### Step 2.3: Present Handoffs to User
+#### Step 2.3: Spawn Group 2 Secondary Agents via Task Tool
 
-**Create presentation message:**
+**Announce wave transition to user, then spawn immediately:**
 
 ````markdown
-🚀 Group 1 S2 Complete! Ready to spawn Group 2 secondary agents.
+🚀 Group 1 S2 Complete! Spawning Group 2 secondary agents now.
 
 ## Wave 1 Results (Group 1)
 
@@ -407,87 +407,58 @@ I'm joining as a secondary agent to help with S2 parallelization for the {epic_n
 - Time: 2 hours
 - Output: spec.md ready (defines LineBasedRotatingHandler API)
 
-## Wave 2 Setup (Group 2)
+## Wave 2 — Spawning 6 Secondary Agents
 
-**Group 2 features ready to start:**
-- Feature 02: [module]_logging
-- Feature 03: api_client_logging
-- Feature 04: data_processor_logging
-- Feature 05: report_generator_logging
-- Feature 06: cache_manager_logging
-- Feature 07: scheduler_logging
+Group 2 features (all depend on Group 1's spec):
+- Feature 02: [module]_logging → Secondary-A
+- Feature 03: api_client_logging → Secondary-B
+- Feature 04: data_processor_logging → Secondary-C
+- Feature 05: report_generator_logging → Secondary-D
+- Feature 06: cache_manager_logging → Secondary-E
+- Feature 07: scheduler_logging → Secondary-F
 
-**Dependencies satisfied:**
-- All Group 2 features need Feature 01's spec (API reference)
-- Feature 01 spec.md is complete and available
-- Group 2 can now specify their features with API knowledge
+Spawning all 6 via Task tool now. No new terminals needed.
 
-**Parallelization:**
-- 6 secondary agents needed (one per feature)
-- All 6 will execute S2 simultaneously
-- Estimated time: 2 hours (parallel execution)
+✅ Secondary-A spawned (Feature 02)
+✅ Secondary-B spawned (Feature 03)
+✅ Secondary-C spawned (Feature 04)
+✅ Secondary-D spawned (Feature 05)
+✅ Secondary-E spawned (Feature 06)
+✅ Secondary-F spawned (Feature 07)
 
-**Total S2 Time:** 4 hours (Wave 1: 2h + Wave 2: 2h) vs 14 hours sequential
-
----
-
-## Instructions for Wave 2
-
-**Please open 6 new Claude Code sessions and give each one this minimal startup instruction:**
-
-### Secondary-A: Feature 02
-~~~text
-You are a secondary agent for SHAMT-{N} for feature 02
-~~~
-
-### Secondary-B: Feature 03
-~~~text
-You are a secondary agent for SHAMT-{N} for feature 03
-~~~
-
-[Continue for all Group 2 features, incrementing the feature number each time...]
-
-Each agent will automatically locate the epic folder, find their `feature_XX_{name}/HANDOFF_PACKAGE.md`, and self-configure. No copy-paste of handoff content needed.
-
----
-
-**After spawning all 6 agents:**
-- They'll update agent_checkpoints/ to signal startup
-- I'll monitor progress every 15 minutes
-- I'll handle any escalations from agent_comms/
-- After all 6 complete S2.P1 → I'll run S2.P2
-- Then we proceed to S3 (groups no longer matter)
-
-**Let me know when you've spawned all 6 agents and I'll begin coordination.**
+Beginning Wave 2 coordination. I'll verify all agents started at the first heartbeat (15 min).
 ````
 
-#### Step 2.4: Wait for Secondary Agent Startup
+**Task tool calls (all in a single parallel response):**
 
-**Monitor coordination infrastructure:**
+```
+For each Group 2 feature:
+  subagent_type: general-purpose
+  run_in_background: true
+  prompt: "You are a secondary agent for SHAMT-{N}. Your handoff package is at
+           /absolute/path/to/{feature_folder}/HANDOFF_PACKAGE.md. Read it and
+           follow its instructions."
 
-1. **Check agent_checkpoints/ for startup signals:**
-   ```bash
-   ls -lt agent_checkpoints/
+IMPORTANT: Use absolute paths — sub-agents have no guaranteed working directory.
+```
 
-   # Expected files (one per secondary, .json extension):
-   # secondary_a.json (Feature 02)
-   # secondary_b.json (Feature 03)
-   # secondary_c.json (Feature 04)
-   # secondary_d.json (Feature 05)
-   # secondary_e.json (Feature 06)
-   # secondary_f.json (Feature 07)
-   ```
+Record `output_file` paths in `agent_checkpoints/primary.json` under `sub_agent_output_files`.
 
-   > **Path Note:** All coordination paths are relative to the epic folder (not `parallel_work/coordination/`).
-   > Checkpoint files use `.json` extension. Communication files are flat `.md` files in `agent_comms/`.
-   > See CLAUDE.md "S2 Parallel Work Structure Rules" for canonical structure.
+Report: "Spawned {K} secondary agents. No new terminals needed."
 
-2. **Verify all secondaries initialized:**
-   - Each checkpoint file should have "Status: STARTUP" or "Status: IN_PROGRESS"
-   - Last updated within last 5 minutes
-   - Assigned feature matches expected feature
+Handle immediate Task call failures: offer manual terminal fallback or sequential fallback (Primary takes that feature).
 
-3. **Update EPIC_README.md once all agents started:**
+#### Step 2.4: First-Heartbeat Check and EPIC_README Update
+
+1. **First-heartbeat check (15 min after spawning):**
+
+   At first coordination heartbeat (~15 min after spawning), verify each secondary started:
+   - STATUS file exists in each secondary's feature folder
+   - Checkpoint JSON exists in `agent_checkpoints/` for each secondary
+   - If either absent for any secondary → spawning failure → offer Task tool re-spawn or manual terminal fallback
+   - If both present for all secondaries → Wave 2 is running
+
+2. **Update EPIC_README.md after heartbeat check passes:**
    ```markdown
    ## S2 Wave Status
 
@@ -685,8 +656,8 @@ Handle epics with 3+ dependency groups (rare but possible).
 1. **Wave Transition (Group N → Group N+1):**
    - Identify Group N+1 features
    - Generate handoff packages with Group N context
-   - Present to user, spawn secondary agents
-   - Wait for startup
+   - Spawn secondary agents via Task tool (all in one parallel response)
+   - Verify at first heartbeat (15 min)
 
 2. **Wave Execution (Group N+1):**
    - Monitor secondary agents
@@ -1057,9 +1028,9 @@ Proceed with async approach in Feature 02 spec.
    ⚠️ Secondary-A (Feature 02) appears stalled - no checkpoint updates for 30 minutes.
 
    **Options:**
-   1. Check if Secondary-A session is still active
-   2. Spawn replacement secondary agent with same handoff package
-   3. Switch to sequential mode for Feature 02 (I'll take over)
+   1. Check `output_file` from original Task spawn for clues (still running? error?)
+   2. Re-spawn secondary agent via Task tool using existing `feature_02_{name}/HANDOFF_PACKAGE.md` on disk
+   3. Switch to sequential mode for Feature 02 (Primary takes over)
 
    What would you like to do?
    ```
@@ -1168,7 +1139,7 @@ Proceed with async approach in Feature 02 spec.
 | 12:00 | S1 complete, transition to S2 Wave 1 |
 | 12:00-14:00 | Wave 1: Primary executes S2 for Feature 01 (solo) |
 | 14:00 | Feature 01 S2 complete, generate 6 handoff packages |
-| 14:15 | User spawns 6 secondary agents (Secondary-A through Secondary-F) |
+| 14:15 | Primary spawns 6 secondary agents via Task tool (Secondary-A through Secondary-F) |
 | 14:15-16:30 | Wave 2: All 6 Group 2 features execute S2.P1 in parallel |
 | 16:30 | All Group 2 features complete S2.P1 |
 | 16:30-16:50 | Primary runs S2.P2 for Group 2 (pairwise comparison) |

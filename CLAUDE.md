@@ -73,6 +73,24 @@ Master work does **not** follow the S1-S10 epic workflow and does **not** use EP
 
 ---
 
+## Design Doc Validation
+
+When asked to validate a design doc (e.g., `SHAMT{N}_DESIGN.md`), run a validation loop. Each round checks all dimensions:
+
+1. **Completeness** — Are all necessary aspects covered? Is the problem fully stated? Are all affected files identified? Are edge cases and failure modes addressed?
+2. **Correctness** — Are factual claims accurate? Do proposed changes actually work the way described? Are references to existing guides/files accurate?
+3. **Consistency** — Is the design internally consistent? Does it conflict with existing guide conventions or other SHAMT decisions?
+4. **Helpfulness** — Do the proposals actually solve the stated problem? Is the benefit worth the complexity added?
+5. **Improvements** — Are there simpler or better ways to achieve the same goal?
+6. **Missing proposals** — Is anything important left out of scope that should be addressed here?
+7. **Open questions** — Are there unresolved decisions that need to be surfaced before implementation?
+
+**Exit criterion:** Primary clean round (all 7 dimensions pass with no issues) + independent sub-agent confirmation. Same pattern as workflow validation loops: `consecutive_clean = 1`, then spawn 2 parallel sub-agents both confirming zero issues.
+
+Any issue found in any dimension resets `consecutive_clean` to 0.
+
+---
+
 ## Updating the AI Service Registry
 
 When a new AI service is discovered (reported by a child project or user):

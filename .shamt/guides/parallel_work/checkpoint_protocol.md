@@ -77,7 +77,11 @@ The checkpoint system provides **recoverable state** so work can resume without 
     "unread_messages": 0,
     "last_epic_readme_update": "2026-01-15T14:15:00Z",
     "last_status_update": "2026-01-15T14:15:00Z"
-  }
+  },
+  "sub_agent_output_files": [
+    "/tmp/claude-1000/tasks/secondary_a_task.output",
+    "/tmp/claude-1000/tasks/secondary_b_task.output"
+  ]
 }
 ```
 
@@ -99,6 +103,7 @@ The checkpoint system provides **recoverable state** so work can resume without 
 - `completed_steps`: Steps already done
 - `next_steps`: Steps to do next
 - `coordination_state`: Last coordination activity timestamps
+- `sub_agent_output_files`: (Primary checkpoint only) Array of `output_file` paths returned by Task tool when spawning secondary agents. Used for crash detection (check mtime to determine if agent is still running).
 
 ---
 
@@ -262,8 +267,8 @@ fi
 
 **30 minutes (Warning):**
 - Primary checks all secondary checkpoints
-- If `last_checkpoint` > 30 minutes ago → Send warning message
-- Secondary may be slow but still working
+- If `last_checkpoint` > 30 minutes ago → Check Task output file mtime first (see `stale_agent_protocol.md` Step 3.5), then send warning message
+- Secondary may be slow but still working; if output file also stale, escalate immediately
 
 **60 minutes (Failure):**
 - If `last_checkpoint` > 60 minutes ago → Assume agent crashed
@@ -328,7 +333,7 @@ check_stale_agents() {
 **Trigger:** Agent session crashed, user restarts same agent
 
 **Steps:**
-1. **User pastes handoff package again** (or says "resume")
+1. **Primary re-spawns secondary via Task tool** using existing `{feature_folder}/HANDOFF_PACKAGE.md` on disk (no handoff regeneration needed; or says "resume" if agent reconnects)
 2. **Agent checks for existing checkpoint:**
    ```bash
    CHECKPOINT="agent_checkpoints/secondary_a.json"
@@ -392,17 +397,8 @@ I'll continue where I left off...
 **Trigger:** Original agent crashed and won't resume, Primary assigns new agent
 
 **Steps:**
-1. **Primary creates new handoff package:**
-   - Same feature assignment
-   - Note: "Resuming work from crashed agent"
-   - Include checkpoint file path
-2. **User pastes handoff in NEW session:**
-   ```text
-   I'm taking over feature_02_team_penalty from crashed Secondary-A.
-
-   Checkpoint File: agent_checkpoints/secondary_a.json
-   Resume from: S2.P2 Specification Phase
-   ```
+1. **No handoff regeneration needed** — the original `{feature_folder}/HANDOFF_PACKAGE.md` is still on disk.
+2. **Primary re-spawns via Task tool** using existing `{feature_folder}/HANDOFF_PACKAGE.md` on disk. Record the `output_file` path in `agent_checkpoints/primary.json` under `sub_agent_output_files`. If Task tool spawning fails, offer manual terminal fallback (see `stale_agent_protocol.md` Scenario D).
 3. **New agent reads checkpoint:**
    - Same as Scenario 1
    - Understands where previous agent left off

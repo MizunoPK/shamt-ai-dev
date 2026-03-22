@@ -100,9 +100,20 @@ During parallel S2 work, agents may crash, hang, or become unresponsive. The **S
 
 ```text
 Age < 30 minutes → ✅ ACTIVE (no action needed)
-30 ≤ Age < 60 minutes → ⚠️ WARNING (send status check)
+30 ≤ Age < 60 minutes → ⚠️ WARNING (send status check — see Step 3.5)
 Age ≥ 60 minutes → ❌ STALE (escalate to user)
 ```
+
+### Step 3.5: Output File Check (When Age ≥ 30 min)
+
+Before sending the warning message, check the Task output file for additional signal:
+
+1. Read `sub_agent_output_files` from `agent_checkpoints/primary.json`
+2. Find the entry for the stale secondary agent
+3. Check the output file's modification time:
+   - **If output file was modified in the last 30 minutes:** Agent is still running (writing output) but not writing checkpoints. Send warning message and continue monitoring.
+   - **If output file has NOT been modified in 30+ minutes:** Agent has likely stalled or crashed. Treat as if threshold is already at 60+ min — escalate to user immediately.
+   - **If output file not found (first-heartbeat failure):** Agent never started successfully. Escalate to user.
 
 ### Step 4: Document Check
 
@@ -227,11 +238,10 @@ Age ≥ 60 minutes → ❌ STALE (escalate to user)
 - Agent reads checkpoint and continues where left off
 - Recommended if: Agent session compacted but will return
 
-**Option 2: New Agent Takes Over (if agent not returning)**
-- New agent assigned with fresh Agent ID
-- Reads stale agent's checkpoint for context
-- Continues Feature 02 from S2.P2
-- Recommended if: Agent crashed and won't return
+**Option 2: Re-spawn Secondary Agent via Task Tool (if agent not returning)**
+- Primary re-spawns using existing `feature_02_{name}/HANDOFF_PACKAGE.md` on disk (no regeneration needed)
+- New agent reads checkpoint for context and resumes from current_step
+- Recommended if: Agent crashed and won't return (primary option — no user action needed)
 
 **Option 3: Primary Takes Over Feature 02**
 - I (Primary) absorb Feature 02 into my workload
@@ -311,37 +321,35 @@ Age ≥ 60 minutes → ❌ STALE (escalate to user)
 
 ### Scenario D: New Agent Takes Over
 
-**User chose Option 2: New agent takes over**
+**User chose Option 2: Re-spawn Secondary Agent via Task Tool**
 
-**Step D.1: User Spawns New Agent**
+**Step D.1: Primary Re-Spawns Agent via Task Tool**
 
-**User creates new agent session with handoff:**
+**Primary spawns replacement agent using the existing handoff file on disk:**
 
-```markdown
-I'm taking over Feature 02 ({feature_name}) from a stale agent.
+No handoff regeneration needed — the original `feature_02_{name}/HANDOFF_PACKAGE.md` is still on disk.
 
-**Configuration:**
-Epic Path: {epic_path}
-My Assignment: feature_02_{name}
-Primary Agent ID: {primary_id}
-My Agent ID: Secondary-A-New
-Starting Stage: S2.P2 (resuming from stale agent's checkpoint)
+```text
+Task tool call (Primary executes):
+  subagent_type: general-purpose
+  run_in_background: true
+  prompt: "You are a secondary agent for epic {epic_name}, taking over Feature 02
+           ({feature_name}) from a stale agent. Your handoff package is at:
+           /absolute/path/to/epic/feature_02_{name}/HANDOFF_PACKAGE.md
 
-**Previous Agent:**
-- Agent ID: Secondary-A (stale)
-- Last checkpoint: agent_checkpoints/secondary_a.json
-- Work completed: S2.P1 complete, S2.P2 80% done
+           Recovery context:
+           - Stale agent checkpoint (read for context):
+             /absolute/path/to/agent_checkpoints/secondary_a.json
+             (S2.P1 complete, S2.P2 approximately 80% done)
+           - Your new agent ID: Secondary-A-New
 
-**Recovery Instructions:**
-1. Read stale agent's checkpoint for context
-2. Read S2.P2 guide
-3. Continue from "current_step" in checkpoint
-4. Create NEW checkpoint file: agent_checkpoints/secondary_a_new.json
-5. Update feature_02/STATUS with new agent ID
-6. Send message to Primary confirming takeover
-
-Begin now.
+           Read the handoff package first, read the stale checkpoint for context,
+           then resume from current_step in the checkpoint."
 ```
+
+**After spawning:** Record the Task `output_file` path in `agent_checkpoints/primary.json`
+under `sub_agent_output_files`. The new agent will update EPIC_README.md and send a
+takeover notification (see Step D.5).
 
 **Step D.2: New Agent Reads Stale Checkpoint**
 
