@@ -129,6 +129,31 @@ reduce the requirement to follow the guide's specific steps.
 
 ---
 
+## Code Review Workflow
+
+To review a teammate's branch or any external PR (not your own epic work):
+
+**Trigger phrases:** "review branch", "do a code review of", "review the changes on", "re-review"
+
+**Decision tree:**
+- Reviewing someone else's branch/PR → **Code Review Workflow** (this section)
+- Reviewing your own epic's PR → S9.P4 (part of the normal epic flow)
+
+**How to invoke:**
+```
+Read `.shamt/guides/code_review/README.md` and then
+`.shamt/guides/code_review/code_review_workflow.md` and follow
+the workflow to produce a review in `.shamt/code_reviews/{sanitized_branch}/`.
+```
+
+**Key rules:**
+- Never checks out the branch — read-only git commands only (`git fetch`, `git diff`, `git show`, `git log`)
+- If branch cannot be fetched: halt immediately and report to user
+- First review → `review_v1.md`; re-review → `review_v2.md`, etc. (never overwrite)
+- Output stays in `.shamt/code_reviews/` — NOT propagated via import; commit to your project repo
+
+---
+
 ## Validation Loop Enforcement (ALL stages)
 
 🚨 **MANDATORY — applies every time a Validation Loop runs (S2, S3, S5, S7, S8, S9)**

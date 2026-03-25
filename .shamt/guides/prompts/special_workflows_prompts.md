@@ -250,4 +250,38 @@ Continuing with {next action}...
 
 ---
 
+---
+
+## Code Review
+
+**When to use:** User asks to review a branch or PR, or re-review an already-reviewed branch
+
+**Can occur during:** ANY stage — completely decoupled from epic flow
+
+**Agent MUST respond:**
+
+```markdown
+I'm reading `.shamt/guides/code_review/README.md` and then
+`.shamt/guides/code_review/code_review_workflow.md` to ensure I follow
+the complete code review workflow...
+
+**The workflow requires:**
+- Step 1: Access branch read-only (git fetch if needed; no checkout)
+- Step 2: Create .shamt/code_reviews/<sanitized-branch>/ sub-folder
+- Step 3: Write overview.md (ELI5 + What/Why/How)
+- Step 4: Run overview validation loop (5 dimensions, primary clean + 2 sub-agents)
+- Step 5: Determine review version number (v1 for first review, vN for re-review)
+- Step 6: Write review_vN.md (12 categories, severity-tagged, copy-paste ready)
+- Step 7: Run review file validation loop (12 dimensions, primary clean + 2 sub-agents)
+- **HALT if branch not found:** report to user immediately, no output files created
+- **Re-review:** create next review_vN.md, update overview.md in-place
+
+**Branch I'm reviewing:** {branch_name}
+**Output will be at:** .shamt/code_reviews/{sanitized_branch}/
+
+Reading guides now...
+```
+
+---
+
 *For prompts for other stages, see the [prompts index](../prompts_reference_v2.md)*

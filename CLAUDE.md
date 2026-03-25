@@ -91,6 +91,23 @@ Any issue found in any dimension resets `consecutive_clean` to 0.
 
 ---
 
+## Code Review Workflow
+
+To review someone else's branch or PR (not your own epic work):
+
+**Trigger phrases:** "review branch", "do a code review of", "review the changes on", "re-review"
+
+**Guide:** `.shamt/guides/code_review/` (README → code_review_workflow.md)
+
+**What it does:** Produces `.shamt/code_reviews/<sanitized-branch>/` with a validated `overview.md` (ELI5 + What/Why/How) and a versioned `review_vN.md` with copy-paste-ready PR comments.
+
+**Key rules:**
+- Never checks out the branch — read-only git commands only
+- On re-review: creates `review_v2.md`, `review_v3.md`, etc. — never overwrites previous versions
+- If branch cannot be fetched: halt and report to user immediately
+
+---
+
 ## Updating the AI Service Registry
 
 When a new AI service is discovered (reported by a child project or user):
