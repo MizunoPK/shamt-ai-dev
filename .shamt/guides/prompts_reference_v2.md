@@ -20,7 +20,7 @@ This file is the index for all phase transition prompts. Prompts are organized b
 | S8 | `prompts/s5_s8_prompts.md` | Cross-Feature Alignment, Testing Plan Update |
 | S9 | `prompts/s9_prompts.md` | Epic Final QC prompts |
 | S10 | `prompts/s10_prompts.md` | Starting Epic Cleanup, Guide Updates |
-| Guide Updates | `prompts/guide_update_prompts.md` | Presenting proposals, after applying changes |
+| Guide Updates | `prompts/guide_update_prompts.md` | Presenting proposals, after creating proposal doc |
 | Problem Situations | `prompts/problem_situations_prompts.md` | Debugging, missed requirements, resuming after compaction |
 | Special Workflows | `prompts/special_workflows_prompts.md` | Parallel work, conflict handling |
 

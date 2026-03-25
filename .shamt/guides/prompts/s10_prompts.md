@@ -93,7 +93,7 @@ Running unit tests...
 **Agent MUST transition to S10.P1:**
 
 ```markdown
-I'm reading `stages/s10/s10_p1_guide_update_workflow.md` to apply lessons learned to guides...
+I'm reading `stages/s10/s10_p1_guide_update_workflow.md` to create a guide update proposal doc from lessons learned...
 
 **The guide requires:**
 - **Analyze ALL lessons_learned.md files** from this epic:
@@ -106,13 +106,8 @@ I'm reading `stages/s10/s10_p1_guide_update_workflow.md` to apply lessons learne
   - P2 (Medium): Moderate improvements, clarifies ambiguity
   - P3 (Low): Minor improvements, cosmetic fixes
 - **Get user approval INDIVIDUALLY:** Each proposal gets Approve/Modify/Reject/Discuss
-- **Apply only approved changes** to guides
-- **Create separate commit** for guide updates (before epic commit)
-
-**Scope of guide updates:**
-- All files in .shamt/guides/
-- CLAUDE.md (root project instructions)
-- Any files supporting future agents
+- **Create proposal doc** in `.shamt/unimplemented_design_proposals/`
+- **Commit proposal doc** (separate from epic commit)
 
 **User approval process:**
 - Each proposal presented individually with before/after
@@ -137,7 +132,7 @@ I'm reading `stages/s10/s10_p1_guide_update_workflow.md` to apply lessons learne
 - Current Phase: GUIDE_ANALYSIS
 - Current Guide: stages/s10/s10_p1_guide_update_workflow.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
-- Critical Rules: "Analyze ALL lessons", "Prioritize P0-P3", "Individual approval", "Apply only approved", "Separate commit"
+- Critical Rules: "Analyze ALL lessons", "Prioritize P0-P3", "Individual approval", "No guide edits — proposal doc only", "Commit proposal doc"
 - Next Action: Read all lessons_learned.md files and identify guide gaps
 
 Analyzing lessons learned...

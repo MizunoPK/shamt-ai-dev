@@ -15,6 +15,9 @@ Your primary responsibilities here are:
 shamt-ai-dev/
 ├── README.md
 ├── CLAUDE.md                           (this file)
+├── design_docs/
+│   ├── unimplemented/                  # design docs awaiting implementation + proposal docs from child projects
+│   └── finished/                       # design docs that have been implemented
 └── .shamt/
     ├── guides/                         (the canonical guide system)
     │   ├── stages/                     # s1–s10 workflow guides
@@ -54,6 +57,8 @@ Review steps:
 4. After merging, run the full guide audit on the entire `.shamt/guides/` tree — do not let changes propagate to other child projects on their next import until the audit passes
 5. Commit any audit fixes before the merge is considered complete
 
+**Proposal docs:** Child PRs may include files in `design_docs/unimplemented/` (named `{project}-{epic}-SHAMT-UPDATE-PROPOSAL.md`). These are always acceptable — no generic/specific evaluation needed since they are explicitly project-originated proposals for guide changes, not shared guide files themselves. Review for obvious errors but do not apply the separation rule to them.
+
 **Full workflow guides:** `.shamt/guides/sync/export_workflow.md` (child side) and `.shamt/guides/sync/import_workflow.md` (post-import validation)
 
 ---
@@ -67,7 +72,7 @@ For improving the guides directly:
 Master work does **not** follow the S1-S10 epic workflow and does **not** use EPIC_TRACKER.md. The operating model:
 
 - **Small changes:** Lightweight workflow — read, fix, audit, commit directly to a branch, open PR
-- **Large changes:** Use a design doc at the repo root (e.g., `SHAMT3_DESIGN.md`) for planning, then work on a `feat/SHAMT-N` branch
+- **Large changes:** Create a design doc at `design_docs/unimplemented/SHAMT{N}_DESIGN.md` for planning, then work on a `feat/SHAMT-N` branch. When implementation is complete, move the doc to `design_docs/finished/SHAMT{N}_DESIGN.md`
 - **SHAMT-N numbers:** Sequence markers for change sets, not epic identifiers
 - **No stage gates:** Master work proceeds at judgment, not through S1-S10 phase transitions
 
@@ -75,7 +80,7 @@ Master work does **not** follow the S1-S10 epic workflow and does **not** use EP
 
 ## Design Doc Validation
 
-When asked to validate a design doc (e.g., `SHAMT{N}_DESIGN.md`), run a validation loop. Each round checks all dimensions:
+When asked to validate a design doc (e.g., `design_docs/unimplemented/SHAMT{N}_DESIGN.md`), run a validation loop. Each round checks all dimensions:
 
 1. **Completeness** — Are all necessary aspects covered? Is the problem fully stated? Are all affected files identified? Are edge cases and failure modes addressed?
 2. **Correctness** — Are factual claims accurate? Do proposed changes actually work the way described? Are references to existing guides/files accurate?

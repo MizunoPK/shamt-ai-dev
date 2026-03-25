@@ -1,7 +1,7 @@
 # Guide Update Prompts: Lessons Learned to Guide Improvements
 
 **Stage:** 7.5 (Between user testing and final commit)
-**Purpose:** Apply lessons learned from epic to improve guides for future agents
+**Purpose:** Create guide update proposal doc from epic lessons learned (deferred to master for implementation)
 
 ---
 
@@ -14,7 +14,7 @@
 **Agent MUST respond:**
 
 ```markdown
-I'm reading `stages/s10/s10_p1_guide_update_workflow.md` to apply lessons learned to guides...
+I'm reading `stages/s10/s10_p1_guide_update_workflow.md` to create a guide update proposal doc from lessons learned...
 
 **The guide requires:**
 - **Analyze ALL lessons_learned.md files** from this epic:
@@ -27,16 +27,8 @@ I'm reading `stages/s10/s10_p1_guide_update_workflow.md` to apply lessons learne
   - P2 (Medium): Moderate improvements, clarifies ambiguity
   - P3 (Low): Minor improvements, cosmetic fixes
 - **Get user approval INDIVIDUALLY:** Each proposal gets Approve/Modify/Reject/Discuss
-- **Apply only approved changes** to guides
-- **Create separate commit** for guide updates (before epic commit)
-
-**Scope of guide updates:**
-- 🚨 CRITICAL: "Guides" = EVERY FILE in .shamt/guides/
-- This includes: stages/, reference/, templates/, debugging/, missed_requirement/, prompts/, and ALL root-level .md files
-- NOT just stages/ folder (historical issue: 60% missed non-stages/ files)
-- CLAUDE.md (root project instructions)
-- Use Glob pattern="**/*.md" path=".shamt/guides" to discover all files
-- Any files supporting future agents
+- **Create proposal doc** (`{project_name}-{epic_name}-SHAMT-UPDATE-PROPOSAL.md`) in `.shamt/unimplemented_design_proposals/`
+- **Commit proposal doc** (separate from epic commit)
 
 **User approval process:**
 - Each proposal presented individually with before/after
@@ -61,7 +53,7 @@ I'm reading `stages/s10/s10_p1_guide_update_workflow.md` to apply lessons learne
 - Current Phase: GUIDE_ANALYSIS
 - Current Guide: stages/s10/s10_p1_guide_update_workflow.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
-- Critical Rules: "Analyze ALL lessons", "Prioritize P0-P3", "Individual approval", "Apply only approved", "Separate commit"
+- Critical Rules: "Analyze ALL lessons", "Prioritize P0-P3", "Individual approval", "No guide edits — proposal doc only", "Commit proposal doc"
 - Next Action: Read all lessons_learned.md files and identify guide gaps
 
 Analyzing lessons learned...
@@ -149,53 +141,51 @@ I've analyzed all lessons learned from this epic and created prioritized guide u
 - Rejected: {N} proposals
 - Pending discussion: {N} proposals
 
-**Applying approved changes:**
+**Proposals to capture in proposal doc:**
 
 {For each approved/modified proposal:}
 ✅ Proposal P{X}-{N}: {Title}
-   - Updating: {guide_path}
+   - Affected guide: {guide_path}
    - Change: {brief description}
 
 **Next steps:**
-1. Apply all approved changes to guides
-2. Apply user modifications where provided
-3. Create separate commit for guide updates
-4. Update reference/guide_update_tracking.md
-5. Proceed to S10 Step 7 (Final Commit & PR)
+1. Create proposal doc in `.shamt/unimplemented_design_proposals/`
+2. Commit proposal doc
+3. Update reference/guide_update_tracking.md
+4. Proceed to S10 Step 7 (Final Commit & PR)
 
-Applying guide updates...
+Creating proposal doc...
 ```
 
 ---
 
-## After Applying Changes
+## After Creating Proposal Document
 
-**Trigger:** Agent completes applying all approved guide updates
+**Trigger:** Agent completes creating the proposal doc (or determines zero proposals accepted)
 
 **Agent MUST respond:**
 
 ```markdown
-✅ **Guide Updates Applied Successfully**
+✅ **Guide Update Proposal Doc Created**
 
-**Changes committed:**
-- Commit: {commit_hash}
-- Message: "docs(guides): Apply lessons from SHAMT-{N}-{epic_name}"
-- Files modified: {N} guide files
-- Proposals applied: {N} approved + {N} modified
+**Proposal doc:**
+- File: `{project_name}-{epic_name}-SHAMT-UPDATE-PROPOSAL.md`
+- Location: `.shamt/unimplemented_design_proposals/`
+- Commit: {proposal_commit_hash} (or "not committed — gitignored")
 
-**Breakdown by priority:**
-- P0 (Critical): {N} applied
-- P1 (High): {N} applied
-- P2 (Medium): {N} applied
-- P3 (Low): {N} applied
+**Proposals captured:**
+- P0 (Critical): {N}
+- P1 (High): {N}
+- P2 (Medium): {N}
+- P3 (Low): {N}
+- Rejected: {N}
 
 **Updated tracking:**
 - ✅ reference/guide_update_tracking.md updated
-- ✅ Applied lessons logged with commit hash
-- ✅ Rejected lessons documented with rationale
+- ✅ Proposal doc path logged
+- ✅ Rejected proposals documented with rationale
 
-**Benefits for future agents:**
-{List 2-3 key improvements that future agents will see}
+**Next step:** When ready to send proposals to master, run `bash .shamt/scripts/export/export.sh` — this automatically moves the proposal doc to the master repo's `design_docs/unimplemented/`.
 
 **Next: S10 Step 7 - Final Commit & Pull Request**
 
@@ -218,14 +208,14 @@ Following `stages/s10/s10_epic_cleanup.md` Step 7...
 **Your modification:**
 > {User's alternative text}
 
-**I'll apply your version instead of my proposal.**
+**I'll capture your version in the proposal doc instead of my original proposal.**
 
-**Updating guide with your modification:**
-- Guide: {path/to/guide.md}
+**Recording your modification:**
+- Affected guide: {path/to/guide.md}
 - Section: {section}
 - Using your text: "{user's text preview...}"
 
-Applied modification ✅
+Modification recorded ✅
 
 {Continue with next proposal if more exist}
 ```

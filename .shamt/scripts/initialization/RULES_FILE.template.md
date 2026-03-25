@@ -225,12 +225,12 @@ Finding: Line {N} uses `{fieldName}` (verified via grep), matches spec requireme
 
 ### Guide File Commit Rule
 
-🚨 **Before committing guide updates (`.shamt/guides/` or the rules file):**
+🚨 **Before committing guide updates (`.shamt/guides/`, `.shamt/unimplemented_design_proposals/`, or the rules file):**
 
-1. Run `git check-ignore .shamt/guides/` to verify guides are NOT ignored
-2. If guides ARE gitignored → apply changes locally, skip commit, inform user
-3. If guides are NOT gitignored → proceed with `git add` and `git commit`
-4. **NEVER use `git add -f` to force-commit gitignored guide files**
+1. Run `git check-ignore <path>` to verify the file/directory is NOT ignored
+2. If it IS gitignored → apply changes locally, skip commit, inform user
+3. If it is NOT gitignored → proceed with `git add` and `git commit`
+4. **NEVER use `git add -f` to force-commit gitignored files**
 
 ---
 
@@ -344,6 +344,7 @@ When the user addresses feedback that isn't from the automated PR reviewer (e.g.
 | Project-specific configs | `.shamt/project-specific-configs/` | All project-specific supplements and overrides |
 | Guides | `.shamt/guides/` | Full S1–S10 workflow |
 | Completed epics | `.shamt/epics/done/` | Archived epics |
+| Guide update proposals | `.shamt/unimplemented_design_proposals/` | Proposal docs created by S10.P1 (moved to master on export) |
 
 ---
 

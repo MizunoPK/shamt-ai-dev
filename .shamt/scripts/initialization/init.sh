@@ -202,6 +202,7 @@ mkdir -p "$SHAMT_DIR/scripts"
 mkdir -p "$SHAMT_DIR/project-specific-configs"
 mkdir -p "$SHAMT_DIR/epics/requests"
 mkdir -p "$SHAMT_DIR/epics/done"
+mkdir -p "$SHAMT_DIR/unimplemented_design_proposals"
 mkdir -p "$RULES_FILE_DIR"
 
 echo "  ✓ .shamt/ structure created"
@@ -387,7 +388,7 @@ cat > "$SHAMT_DIR/project-specific-configs/init_config.md" << EOF
 - **Default Branch:** $DEFAULT_BRANCH
 
 ## Script Actions Completed
-- [x] Created .shamt/ folder structure (including project-specific-configs/)
+- [x] Created .shamt/ folder structure (including project-specific-configs/ and unimplemented_design_proposals/)
 - [x] Copied guides from master Shamt (audit/outputs/ cleared for fresh start)
 - [x] Copied scripts from master Shamt
 - [x] Placed rules file at $RULES_FILE_DIR/$RULES_FILE_NAME

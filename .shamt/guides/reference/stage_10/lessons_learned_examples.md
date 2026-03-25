@@ -523,7 +523,7 @@ Verify: 5 files checked, 6 lessons applied, 0 skipped
 
 **Total Files:** 1 + N + M
 
-**Goal:** Extract and apply ALL lessons to improve guides for future epics.
+**Goal:** Extract ALL lessons, create guide update proposals, and defer guide improvements to master via `.shamt/unimplemented_design_proposals/`.
 
 ---
 

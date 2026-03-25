@@ -19,6 +19,8 @@ When you import Shamt into a project, you get your own version of Shamt — an A
 shamt-ai-dev/
 ├── README.md                   (this file)
 ├── CLAUDE.md                   (rules file for developing the master Shamt repo itself)
+├── design_docs/
+│   └── unimplemented/          (design docs + guide update proposal docs from child projects)
 └── .shamt/
     ├── guides/                 (the full workflow guide system)
     ├── scripts/

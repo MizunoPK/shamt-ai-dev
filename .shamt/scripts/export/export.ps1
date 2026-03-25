@@ -131,8 +131,29 @@ function Remove-FromMaster {
     }
 }
 
+function Export-Proposals {
+    $SourceDir = Join-Path $ChildShamtDir "unimplemented_design_proposals"
+    $DestDir = Join-Path $MasterDir "design_docs\unimplemented"
+
+    if (-not (Test-Path $SourceDir)) { return }
+
+    Get-ChildItem -Path $SourceDir -File | Sort-Object Name | ForEach-Object {
+        $srcFile = $_.FullName
+        $fileName = $_.Name
+        $dstFile = Join-Path $DestDir $fileName
+
+        if (-not $DryRun) {
+            New-Item -ItemType Directory -Force -Path $DestDir | Out-Null
+            Copy-Item $srcFile $dstFile -Force
+            Remove-Item $srcFile -Force
+        }
+        $script:Exported += "unimplemented_design_proposals/$fileName (moved to master)"
+    }
+}
+
 Export-Dir -SourceDir (Join-Path $ChildShamtDir "guides") -MasterShamtPath $MasterShamtDir -ChildShamtPath $ChildShamtDir
 Export-Dir -SourceDir (Join-Path $ChildShamtDir "scripts") -MasterShamtPath $MasterShamtDir -ChildShamtPath $ChildShamtDir
+Export-Proposals
 Remove-FromMaster -MasterDir (Join-Path $MasterShamtDir "guides") -MasterShamtPath $MasterShamtDir -ChildShamtPath $ChildShamtDir
 Remove-FromMaster -MasterDir (Join-Path $MasterShamtDir "scripts") -MasterShamtPath $MasterShamtDir -ChildShamtPath $ChildShamtDir
 
@@ -185,7 +206,7 @@ if ($DryRun) {
 # --- Generate commit message -------------------------------------------------
 
 if ($Exported.Count -le 3 -and $Deleted.Count -eq 0) {
-    $names = $Exported | ForEach-Object { [System.IO.Path]::GetFileName($_ -replace ' \(new\)$', '') }
+    $names = $Exported | ForEach-Object { [System.IO.Path]::GetFileName(($_ -replace ' \(new\)$', '') -replace ' \(moved to master\)$', '') }
     $commitMsg = "sync: " + ($names -join ', ')
 } elseif ($Deleted.Count -gt 0) {
     $commitMsg = "sync: $($Exported.Count) file(s) updated, $($Deleted.Count) deleted"
@@ -208,6 +229,11 @@ Write-Host "       git checkout main"
 Write-Host "       git checkout -b feat/child-sync-$today"
 Write-Host "       git add -A .shamt/guides/ .shamt/scripts/"
 Write-Host "       git commit -m `"$commitMsg`""
+Write-Host ""
+Write-Host "  Note: If proposal files were moved from .shamt\unimplemented_design_proposals\,"
+Write-Host "  also stage those deletions in your child project before pushing:"
+Write-Host "       git add -A .shamt\unimplemented_design_proposals\"
+Write-Host "       git commit -m `"docs(proposals): Move guide update proposals to master`""
 Write-Host ""
 Write-Host "  3. Push and open a PR against main:"
 Write-Host "       git push origin feat/child-sync-$today"

@@ -327,18 +327,16 @@ This document captures:
 
 ---
 
-## Guide Updates Applied
+## Guide Update Proposals
 
-{Track which guides were updated based on lessons from THIS epic}
+{Track the proposal doc created from lessons in THIS epic (see .shamt/unimplemented_design_proposals/)}
 
-**Guides Updated:**
-- `{guide_name}.md` (v2.{X}): {What was updated}
-- `{guide_name}.md` (v2.{X}): {What was updated}
+**Proposal Doc:**
+- `{project_name}-{epic_name}-SHAMT-UPDATE-PROPOSAL.md` (or "None — no proposals accepted")
 
-**CLAUDE.md Updates:**
-- {Updates made or "None"}
+**Proposals Deferred:** {N} (P0: {N}, P1: {N}, P2: {N}, P3: {N})
 
-**Date Applied:** {YYYY-MM-DD}
+**Date Created:** {YYYY-MM-DD}
 
 ---
 

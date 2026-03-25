@@ -126,8 +126,29 @@ remove_from_master() {
     done < <(find "$master_dir" -type f -print0 | sort -z)
 }
 
+export_proposals() {
+    local source_dir="$CHILD_SHAMT_DIR/unimplemented_design_proposals"
+    local dest_dir="$MASTER_DIR/design_docs/unimplemented"
+
+    [ -d "$source_dir" ] || return 0
+
+    while IFS= read -r -d '' src_file; do
+        local filename
+        filename="$(basename "$src_file")"
+        local dst_file="$dest_dir/$filename"
+
+        if [ "$DRY_RUN" = "false" ]; then
+            mkdir -p "$dest_dir"
+            cp "$src_file" "$dst_file"
+            rm "$src_file"
+        fi
+        EXPORTED+=("unimplemented_design_proposals/$filename (moved to master)")
+    done < <(find "$source_dir" -maxdepth 1 -type f -print0 | sort -z)
+}
+
 export_dir "$CHILD_SHAMT_DIR/guides" "$MASTER_SHAMT_DIR/guides" "guides"
 export_dir "$CHILD_SHAMT_DIR/scripts" "$MASTER_SHAMT_DIR/scripts" "scripts"
+export_proposals
 remove_from_master "$MASTER_SHAMT_DIR/guides"
 remove_from_master "$MASTER_SHAMT_DIR/scripts"
 
@@ -182,7 +203,9 @@ fi
 if [ ${#EXPORTED[@]} -le 3 ] && [ ${#DELETED[@]} -eq 0 ]; then
     NAMES=()
     for f in "${EXPORTED[@]}"; do
-        NAMES+=("$(basename "${f% (new)}")")
+        clean_f="${f% (new)}"
+        clean_f="${clean_f% (moved to master)}"
+        NAMES+=("$(basename "$clean_f")")
     done
     JOINED=$(printf '%s, ' "${NAMES[@]}")
     COMMIT_MSG="sync: ${JOINED%, }"
@@ -206,6 +229,11 @@ echo "       git checkout main"
 echo "       git checkout -b feat/child-sync-$(date +%Y%m%d)"
 echo "       git add -A .shamt/guides/ .shamt/scripts/"
 echo "       git commit -m \"$COMMIT_MSG\""
+echo ""
+echo "  Note: If proposal files were moved from .shamt/unimplemented_design_proposals/,"
+echo "  also stage those deletions in your child project before pushing:"
+echo "       git add -A .shamt/unimplemented_design_proposals/"
+echo "       git commit -m \"docs(proposals): Move guide update proposals to master\""
 echo ""
 echo "  3. Push and open a PR against main:"
 echo "       git push origin feat/child-sync-$(date +%Y%m%d)"
