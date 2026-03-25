@@ -1,6 +1,6 @@
 # Debugging Lessons Integration into Guide Updates
 
-**Purpose:** Explains how debugging lessons flow through the workflow and are applied to improve guides
+**Purpose:** Explains how debugging lessons flow through the workflow and are captured in guide update proposal docs for master to implement
 
 **Date Created:** 2026-01-04
 
@@ -176,11 +176,11 @@ feature_XX_{name}/debugging/
 
 ---
 
-## Where Debugging Lessons Are Applied to Guides
+## Where Debugging Lessons Are Captured for Guide Updates
 
 ### S10.P1: Guide Update from Lessons Learned (MANDATORY)
 
-**This is where ALL debugging lessons are systematically applied to guides**
+**This is where ALL debugging lessons are systematically captured in a guide update proposal doc**
 
 **Note:** Previously S10 Step 4, now a dedicated S10.P1 workflow with user approval for each proposal.
 
@@ -207,18 +207,18 @@ feature_XX_{name}/debugging/
 
 5. **User decides** for each proposal: Approve / Modify / Reject / Discuss
 
-6. **Apply only approved changes** (or user modifications)
+6. **Create proposal doc** in `.shamt/unimplemented_design_proposals/` with all accepted/modified proposals
 
-7. **Create separate commit** for guide updates (before epic commit)
+7. **Commit proposal doc** (separate from epic commit)
 
-8. **Update guide_update_tracking.md** with applied/pending/rejected lessons
+8. **Update guide_update_tracking.md** with proposal doc path, accepted, and rejected lessons
 
 **Debugging-Specific Priority Mapping:**
 - debugging/guide_update_recommendations.md → P0 (Critical) or P1 (High)
 - debugging/process_failure_analysis.md → P1 (High) or P2 (Medium)
 - lessons_learned.md "Guide Improvements Needed" → P2 (Medium) or P3 (Low)
 
-**Why this matters:** Debugging lessons are the MOST ACTIONABLE because they come from actual bugs that reached testing. S10.P1 ensures these lessons get prioritized (P0/P1) and user-approved before being applied to guides.
+**Why this matters:** Debugging lessons are the MOST ACTIONABLE because they come from actual bugs that reached testing. S10.P1 ensures these lessons get prioritized (P0/P1) and user-approved before being captured in the proposal doc for master to implement.
 
 **See:** `stages/s10/s10_p1_guide_update_workflow.md` for complete 9-step workflow
 
@@ -326,8 +326,8 @@ Agents MUST verify (as part of guide_update_tracking.md):
 - Create GUIDE_UPDATE_PROPOSAL.md with proposals
 - Present each proposal to user for approval
 - User approves all 5 critical updates
-- Apply approved updates to guides
-- Update guide_update_tracking.md with applied lessons
+- Create proposal doc and commit it
+- Update guide_update_tracking.md with proposal doc path, accepted, and rejected lessons
 - Future epics now have improved guides
 
 ---
@@ -342,14 +342,14 @@ Agents MUST verify (as part of guide_update_tracking.md):
 - S10.P3 (feature lessons_learned.md)
 - S9.P3 (epic_lessons_learned.md)
 
-**Debugging lessons are applied at:**
-- **S10.P1 (Guide Update from Lessons Learned)** ← ONLY place where guides are updated
+**Debugging lessons are captured at:**
+- **S10.P1 (Guide Update from Lessons Learned)** ← ONLY place where guide update proposal docs are created
 
 **Critical Requirements:**
 1. Must find ALL debugging files (3 types × N features + epic)
 2. Must create GUIDE_UPDATE_PROPOSAL.md with P0-P3 prioritization
 3. Must present each proposal to user for individual approval
-4. Must apply only approved changes (user has full control)
+4. Must NOT apply any changes directly to guides — create proposal doc only
 5. Debugging lessons have HIGHER priority (P0/P1) than general lessons (P2/P3)
 
 **Result:** Every debugging session improves the workflow, preventing same bugs in future epics.

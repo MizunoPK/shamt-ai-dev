@@ -216,13 +216,13 @@ STAGE 10: Epic Cleanup
 │   ├─ Verify all feature README.md files complete
 │   └─ Update any incomplete documentation
 │
-├─> STEP 4: Update Guides (If Needed)
+├─> STEP 4: Run S10.P1 — Guide Update from Lessons Learned
 │   ├─ Find ALL lessons_learned.md files (systematic search)
 │   ├─ Read and extract lessons from EACH file
 │   ├─ Create master checklist of ALL proposed guide updates
-│   ├─ Apply EACH lesson to guides (100% application required)
-│   ├─ Update CLAUDE.md if workflow changed
-│   └─ Verify ALL lessons applied
+│   ├─ Present each proposal to user (individual approval)
+│   ├─ Create proposal doc in .shamt/unimplemented_design_proposals/
+│   └─ Commit proposal doc (or note zero proposals if none accepted)
 │
 ├─> STEP 5: Final Commit (Epic Implementation)
 │   ├─ Review all changes with git status and git diff
@@ -277,7 +277,7 @@ STAGE 10: Epic Cleanup
 | **Step 2** | Run Tests Per Testing Approach | 5 min | ✅ YES (conditional per A/B/C/D) | [Jump](#step-2-run-tests-per-testing-approach) |
 | **Step 2b** | Investigate Anomalies | 10-30 min | Optional | [Jump](#step-2b-investigate-user-reported-anomalies-if-applicable) |
 | **Step 3** | Documentation Verification | 10 min | No | [Jump](#step-3-documentation-verification) |
-| **Step 4** | Update Guides (Apply Lessons) | 20-45 min | No | [Jump](#step-4-guide-update-from-lessons-learned-mandatory-s10p1) |
+| **Step 4** | S10.P1 Guide Update (Create Proposal Doc) | 20-45 min | No | [Jump](#step-4-guide-update-from-lessons-learned-mandatory-s10p1) |
 | **Step 5** | Final Commit (Epic Work) | 10 min | No | [Jump](#step-5-final-commit-epic-implementation) |
 | **Step 6** | Move Epic to done/ | 5 min | No | [Jump](#step-6-move-epic-to-done-folder) |
 | **Step 7** | Update .shamt/epics/EPIC_TRACKER.md | 5 min | No | [Jump](#step-7-update-shamtepicsepic_trackermd) |
@@ -497,7 +497,7 @@ For EACH feature folder, read README.md and verify:
 
 ### STEP 4: Guide Update from Lessons Learned (🚨 MANDATORY - S10.P1)
 
-**Objective:** Apply lessons learned from epic to improve guides for future agents using systematic user-approved workflow.
+**Objective:** Capture lessons learned from epic in a guide update proposal doc, deferred to master for implementation.
 
 **⚠️ CRITICAL:** This is NOT optional. Every epic must run S10.P1 to continuously improve guides.
 
@@ -510,13 +510,12 @@ stages/s10/s10_p1_guide_update_workflow.md
 1. Analyze all lessons_learned.md files (epic + all features)
 2. Create GUIDE_UPDATE_PROPOSAL.md with prioritized proposals (P0-P3)
 3. Present each proposal to user for individual approval
-4. Apply only approved changes to guides
-5. Create separate commit for guide updates
-6. Update guide_update_tracking.md
+4. Create proposal doc in `.shamt/unimplemented_design_proposals/` and commit it
+5. Update guide_update_tracking.md
 
 **Time Estimate:** 20-45 minutes
 
-**Exit Condition:** S10.P1 complete (verify guide_update_tracking.md updated if changes applied)
+**Exit Condition:** S10.P1 complete (verify guide_update_tracking.md updated and proposal doc created, if any proposals accepted)
 
 **NEXT:** After S10.P1 complete, proceed to STEP 5 (Final Commit) for epic code
 
@@ -1015,8 +1014,8 @@ The epic is now complete and ready for user review!
 - [ ] Found ALL lessons_learned.md files (systematic search)
 - [ ] Read ALL files (epic + features + bugfixes + debugging)
 - [ ] Created master checklist of ALL lessons
-- [ ] Applied ALL lessons to guides (100% application rate)
-- [ ] Updated CLAUDE.md if workflow changed
+- [ ] S10.P1 ran (proposal doc created and committed, or zero proposals noted)
+- [ ] guide_update_tracking.md updated
 
 ### S9 Completion (Including User Testing)
 - [ ] User tested complete system (S9 Step 6)
@@ -1067,7 +1066,7 @@ The epic is now complete and ready for user review!
 **Key Activities:**
 1. Run tests per Testing Approach (unit tests for C/D; integration scripts for B/D; none for A)
 2. Verify all documentation complete
-3. Apply ALL lessons learned to guides (systematic search, 100% application)
+3. Run S10.P1 — create guide update proposal doc (systematic review, user-approved)
 4. Commit epic implementation work with clear message
 5. Move entire epic folder to done/ (max 10 epics, delete oldest if needed) and commit
 6. Update .shamt/epics/EPIC_TRACKER.md (move to Completed, add details, increment number) and commit

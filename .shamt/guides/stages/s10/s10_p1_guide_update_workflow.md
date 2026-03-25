@@ -59,15 +59,15 @@ S10.P1 is the mandatory guide improvement workflow where you analyze lessons lea
 **Key Outputs:**
 - ✅ GUIDE_UPDATE_PROPOSAL.md created with prioritized proposals (P0-P3)
 - ✅ User reviewed and approved/rejected each proposal individually
-- ✅ Approved guide updates applied to guides
-- ✅ Separate commit created for guide updates
+- ✅ Proposal doc created in `.shamt/unimplemented_design_proposals/`
+- ✅ Proposal doc committed
 - ✅ reference/guide_update_tracking.md updated
 
 **Time Estimate:**
 20-45 minutes (depends on number of lessons and proposals)
 
 **Exit Condition:**
-S10.P1 is complete when all proposals have been reviewed by user, approved changes applied to guides, separate commit created, and tracking updated
+S10.P1 is complete when all proposals have been reviewed by user, proposal doc created and committed (if any proposals accepted), and tracking updated
 
 ---
 
@@ -88,11 +88,10 @@ S10.P1 is complete when all proposals have been reviewed by user, approved chang
    - User can: Approve / Modify / Reject / Discuss
    - Do NOT batch approvals or assume approval
 
-3. ⚠️ Apply ONLY approved changes
-   - If user approves → apply proposal as-is
-   - If user modifies → apply user's version
-   - If user rejects → skip that change
-   - Do NOT apply rejected proposals
+3. ⚠️ Do NOT edit any guide files — create a proposal doc only
+   - All accepted/modified proposals go into the proposal doc
+   - If user rejects → document in proposal doc's rejected table
+   - Do NOT apply any changes directly to guide files
 
 4. ⚠️ Prioritize ALL proposals (P0-P3)
    - P0 (Critical): Prevents catastrophic bugs, mandatory gate gaps
@@ -100,30 +99,22 @@ S10.P1 is complete when all proposals have been reviewed by user, approved chang
    - P2 (Medium): Moderate improvements, clarifies ambiguity
    - P3 (Low): Minor improvements, cosmetic fixes
 
-5. ⚠️ Separate commit for guide updates
-   - Guide updates committed separately from epic code
-   - Commit message: "docs(guides): Apply lessons from SHAMT-{N}-{epic_name}"
-   - Do NOT mix guide updates with epic commits
+5. ⚠️ Separate commit for the proposal doc
+   - Proposal doc committed separately from epic code
+   - Commit message: "docs(proposals): Add guide update proposals from SHAMT-{N}-{epic_name}"
+   - Do NOT mix proposal doc with epic commits
 
-6. ⚠️ Check gitignore BEFORE committing guide updates
-   - Run `git check-ignore .shamt/guides/` before staging
-   - If guides are gitignored → apply changes locally, skip commit, inform user
+6. ⚠️ Check gitignore BEFORE committing the proposal doc
+   - Run `git check-ignore .shamt/unimplemented_design_proposals/` before staging
+   - If directory is gitignored → create file locally, skip commit, inform user
    - NEVER use `git add -f` to force-commit gitignored files
-   - If guides are NOT gitignored → proceed with normal `git add` and `git commit`
+   - If NOT gitignored → proceed with normal `git add` and `git commit`
 
-7. ⚠️ Update tracking after applying changes
+7. ⚠️ Update tracking after creating the proposal doc
    - Add entries to reference/guide_update_tracking.md
-   - Document approved, modified, and rejected proposals
+   - Document accepted, modified, and rejected proposals
+   - Record path to proposal doc and proposal commit hash
    - Update metrics section
-
-8. ⚠️ Scope: ENTIRE .shamt/guides/ directory + CLAUDE.md
-   - 🚨 CRITICAL: "Guides" = EVERY FILE in .shamt/guides/
-   - This includes: stages/, reference/, templates/, debugging/,
-     missed_requirement/, prompts/, and ALL root-level .md files
-   - CLAUDE.md (root project instructions)
-   - DO NOT limit to just stages/ folder
-   - Use Glob pattern="**/*.md" path=".shamt/guides" to discover all files
-   - Historical issue: 60% of updates missed non-stages/ files
 ```
 
 ---
@@ -415,97 +406,136 @@ Rejected: {N}
 
 ---
 
-### Step 5: Apply Approved Changes
+### Step 5: Create Proposal Document
 
-**Purpose:** Update guides with approved changes and user modifications
+**Purpose:** Write all accepted and rejected proposals into a durable proposal doc for export to master. Do NOT edit any guide files.
 
-**🚨 CRITICAL REMINDER BEFORE APPLYING CHANGES:**
-```bash
-When applying changes to "guides", remember:
-- "Guides" = EVERY FILE in .shamt/guides/
-- NOT just stages/ folder
-- Includes: stages/, reference/, templates/, debugging/,
-  missed_requirement/, prompts/, README.md, etc.
-- If a proposal affects reference/, templates/, or other non-stages/
-  folders, you MUST update those files
-- Use Glob pattern="**/*.md" path=".shamt/guides"
-  to see all files if unsure where to apply changes
-```
+**🚨 CRITICAL:** Do NOT edit any files in `.shamt/guides/`. Proposals are deferred to master for implementation.
 
 **Actions:**
 
-5.1. **For each approved proposal:**
-- Read the affected guide file
-- Locate the section to update
-- Apply the proposed change using Edit tool
-- Verify change applied correctly
+5.1. **Determine the proposal doc filename:**
+- Project name: read from `.shamt/project-specific-configs/init_config.md` (the "Project Name" field)
+- Epic name: the current epic identifier (e.g. `SHAMT-5-auth-rework`)
+- Filename: `{project_name}-{epic_name}-SHAMT-UPDATE-PROPOSAL.md`
+- Example: `myapp-SHAMT-3-user-auth-SHAMT-UPDATE-PROPOSAL.md`
 
-5.2. **For each modified proposal:**
-- Read the affected guide file
-- Locate the section to update
-- Apply user's modification (not original proposal)
-- Verify change applied correctly
+5.2. **If zero proposals were accepted:** Skip this step entirely. Note in the tracking update: "No proposals accepted — no proposal doc created." Proceed to Step 7.
 
-5.3. **Skip rejected proposals:**
-- Do NOT apply rejected changes
-- Document rejection in tracking (next step)
+5.3. **Create the proposal doc** at `.shamt/unimplemented_design_proposals/{filename}`:
 
-5.4. **Verify all changes:**
-- Re-read updated guides
-- Ensure changes are correct
-- Check for any formatting issues
+Use this template structure:
 
-**Checkpoint:**
-- [ ] All approved proposals applied to guides
-- [ ] All modified proposals applied with user's text
-- [ ] Rejected proposals skipped
-- [ ] All changes verified correct
+```markdown
+# {project_name} — {epic_name} Guide Update Proposals
+
+**Status:** Pending Implementation
+**Created:** {YYYY-MM-DD}
+**Source Epic:** {epic_name}
+**Proposals:** {N} accepted, {N} modified, {N} rejected
 
 ---
 
-### Step 6: Create Separate Commit
+## Overview
 
-**Purpose:** Commit guide updates separately from epic code for clear history
+{2–4 sentences: what the epic was, what went wrong or was learned,
+and why these proposals were generated}
+
+---
+
+## Proposal {ID}: {Title}
+
+**Priority:** P0 / P1 / P2 / P3
+**Affected Guide:** `.shamt/guides/path/to/guide.md`
+**Section:** {section name}
+
+### Problem
+
+{What was the issue and why did it occur}
+
+### Current State
+
+\`\`\`markdown
+{exact current text from the guide}
+\`\`\`
+
+### Proposed Change
+
+\`\`\`markdown
+{exact new text — for "modified" proposals, use the user's version}
+\`\`\`
+
+### Rationale
+
+{How this change prevents the issue for future agents}
+
+---
+
+## Rejected Proposals (for reference)
+
+| ID | Title | Priority | Reason Rejected |
+|----|-------|----------|-----------------|
+| P1-2 | {title} | P1 | {user's reason} |
+
+---
+
+## Implementation Notes
+
+- Apply all proposals as a single batch
+- Run full guide audit (3 consecutive clean rounds) before committing
+- Update `reference/guide_update_tracking.md` with implementation entry
+- Delete this file from `design_docs/unimplemented/` after successful implementation and commit
+```
+
+5.4. **For each approved proposal:** populate using the template above with "Current State" and "Proposed Change" showing the original proposed text.
+
+5.5. **For each modified proposal:** populate the same way but use the user's version in "Proposed Change".
+
+5.6. **For rejected proposals:** add to the "Rejected Proposals" table only (do not create a full proposal block).
+
+5.7. **Verify the proposal doc:** re-read it to confirm all accepted/modified proposals are captured with exact current text quoted from the source guide.
+
+**Checkpoint:**
+- [ ] Proposal doc created at `.shamt/unimplemented_design_proposals/{filename}` (or skipped if zero accepted)
+- [ ] All accepted/modified proposals documented with current + proposed text
+- [ ] Rejected proposals in the table
+- [ ] No guide files edited
+
+---
+
+### Step 6: Commit the Proposal Document
+
+**Purpose:** Commit the proposal doc as a standalone commit separate from epic code.
+
+**Skip this step if Step 5 was skipped** (zero accepted proposals). Proceed to Step 7.
 
 **Actions:**
 
-6.0. **Check if guides are gitignored (MANDATORY before staging):**
+6.0. **Check if `.shamt/unimplemented_design_proposals/` is gitignored (MANDATORY before staging):**
 ```bash
-git check-ignore .shamt/guides/ .github/copilot-instructions.md CLAUDE.md 2>/dev/null
+git check-ignore .shamt/unimplemented_design_proposals/ 2>/dev/null
 ```
 
-- If ANY guide file is reported as ignored → **STOP. Do NOT commit guide changes.**
-  - Changes are applied locally (files are updated on disk)
-  - Inform user: "Guide updates applied locally but not committed — guide files are gitignored in this project."
-  - Skip Steps 6.1–6.3 entirely and proceed to Step 7
-- If NO output (files are not ignored) → proceed with Steps 6.1–6.3
+- If the directory is reported as ignored → **STOP. Do NOT commit.**
+  - Proposal doc exists locally (on disk) but will not be committed
+  - Inform user: "Proposal doc created locally but not committed — `.shamt/unimplemented_design_proposals/` is gitignored in this project."
+  - Proceed to Step 7 (record `Proposal commit: (not committed — gitignored)` in tracking)
+- If NO output (not ignored) → proceed with Steps 6.1–6.3
 
-🚨 **NEVER use `git add -f` or `git add --force` to bypass gitignore for guide files.** If guides are gitignored, the project has intentionally excluded them from version control. Respect that decision.
+🚨 **NEVER use `git add -f` or `git add --force`.** Respect the project's gitignore decisions.
 
-6.1. **Stage guide changes:**
+6.1. **Stage the proposal doc:**
 ```bash
-git add .shamt/guides/
-git add CLAUDE.md  # if modified
+git add .shamt/unimplemented_design_proposals/
 ```
 
 6.2. **Create commit:**
 ```bash
-git commit -m "docs(guides): Apply lessons from SHAMT-{N}-{epic_name}
+git commit -m "docs(proposals): Add guide update proposals from SHAMT-{N}-{epic_name}
 
-Proposals applied:
-- P0: {N} critical fixes
-- P1: {N} high priority improvements
-- P2: {N} medium priority improvements
-- P3: {N} low priority improvements
+Proposals: {N} accepted, {N} modified, {N} rejected
 
-Total: {N} approved + {N} modified
-
-Guides updated:
-- {guide1.md}: {brief description}
-- {guide2.md}: {brief description}
-...
-
-See {epic_folder}/GUIDE_UPDATE_PROPOSAL.md for details."
+See .shamt/unimplemented_design_proposals/{project_name}-SHAMT-{N}-{epic_name}-SHAMT-UPDATE-PROPOSAL.md"
 ```
 
 6.3. **Verify commit:**
@@ -514,15 +544,13 @@ git log -1 --stat
 ```
 
 Check:
+- Only the proposal doc was committed (not epic code, not guide files)
 - Commit message is clear
-- Only guide files committed (not epic code)
-- All updated guides included
 
 **Checkpoint:**
-- [ ] Guide changes staged
-- [ ] Separate commit created
-- [ ] Commit message documents what was applied
-- [ ] Commit verified correct
+- [ ] Proposal doc staged and committed (or skipped — gitignored)
+- [ ] Commit message references the proposal doc filename
+- [ ] No guide files in this commit
 
 ---
 
@@ -539,13 +567,14 @@ Check:
 ```
 
 7.2. **Add to Applied Lessons Log:**
-- For each approved/modified proposal:
+- For each accepted/modified proposal:
   - Epic: SHAMT-{N}-{epic_name}
   - Priority: P0/P1/P2/P3
   - Lesson Summary: {brief description}
-  - Guide(s) Updated: {paths}
-  - Date Applied: {YYYY-MM-DD}
-  - Commit: {commit_hash}
+  - Affected Guide(s): {paths}
+  - Date: {YYYY-MM-DD}
+  - Proposal doc: `.shamt/unimplemented_design_proposals/{filename}` (or "no proposals accepted")
+  - Proposal commit: {commit_hash} (or "not committed — gitignored")
 
 7.3. **Add to Rejected Lessons:**
 - For each rejected proposal:
@@ -560,7 +589,7 @@ Check:
 - Increment total epics completed
 - Add proposal counts to totals
 - Update approval rates by priority
-- Update most frequently updated guides list
+- Update most frequently proposed guides list (based on Affected Guide(s) field)
 
 7.5. **Check for patterns:**
 - If same lesson appears 2+ times, consider creating Pattern Analysis entry
@@ -614,27 +643,19 @@ Compare your project's rules file (wherever it lives: `CLAUDE.md`, `.github/copi
 
 ---
 
-**If improvements are worth exporting:**
+**Note: No CHANGES.md entry is needed for the proposal doc.** The proposal doc in `.shamt/unimplemented_design_proposals/` is exported to master automatically when `export.sh` is run — it is not a modification to a shared guide or script file, so it does not require a CHANGES.md entry.
 
-8.1. Verify that `CHANGES.md` entries exist for each shared file you modified (see `sync/separation_rule.md` for the required format). Add any missing entries:
+If a proposal doc was created:
+- Inform the user: "Guide update proposals have been captured in `.shamt/unimplemented_design_proposals/`. When ready to export, run `bash .shamt/scripts/export/export.sh` — this will move the proposal doc to the master repo's `design_docs/unimplemented/` directory automatically."
 
-```markdown
-## YYYY-MM-DD — [brief description]
-- Modified: `.shamt/guides/path/to/guide.md`
-- Reason: [one line]
-```
-
-8.2. Inform the user: "Guide improvements were made that could benefit other Shamt projects. When ready, run `bash .shamt/scripts/export/export.sh` and open a PR to the master repo."
-
-**If improvements are project-specific only:** Note "No export warranted — changes are project-specific" in your completion announcement and proceed.
+If zero proposals were accepted:
+- Note "No export warranted — no proposals accepted" in your completion announcement and proceed.
 
 **Reference:** See `sync/export_workflow.md` for the full export process.
 
 **Checkpoint:**
 - [ ] Rules file compared against `RULES_FILE.template.md`; template updated with generic additions (or "no updates needed" noted)
-- [ ] Assessed whether guide improvements are generic/universal
-- [ ] `CHANGES.md` updated for all shared file modifications (if applicable)
-- [ ] User informed about export opportunity (if applicable) or reason noted (if not)
+- [ ] User informed about proposal doc export path (if applicable) or "no proposals accepted" noted
 
 ---
 
@@ -655,19 +676,19 @@ Compare your project's rules file (wherever it lives: `CLAUDE.md`, `.github/copi
 **Current Guide:** stages/s10/s10_epic_cleanup.md
 **Guide Last Read:** NOT YET (will read when starting Step 7)
 
-**Progress:** S10.P1 complete (guide updates applied)
+**Progress:** S10.P1 complete (proposal doc created)
 **Next Action:** Proceed to S10 Step 7 (Final Commit & Pull Request)
 **Blockers:** None
 
 **S10.P1 Summary:**
 - Proposals: {N} ({approved} approved, {modified} modified, {rejected} rejected)
-- Guides updated: {N} files
-- Commits: {N} (guide updates + tracking)
+- Proposals deferred: {N} (in {project_name}-SHAMT-{N}-{epic_name}-SHAMT-UPDATE-PROPOSAL.md)
+- Commits: {N} (proposal doc + tracking)
 ```
 
 9.2. **Announce completion:**
 
-Use prompt from prompts/guide_update_prompts.md "After Applying Changes" section
+Use prompt from prompts/guide_update_prompts.md "After Creating Proposal Document" section
 
 **Checkpoint:**
 - [ ] EPIC_README.md updated
@@ -683,10 +704,11 @@ Use prompt from prompts/guide_update_prompts.md "After Applying Changes" section
 - [ ] All lessons_learned.md files analyzed
 - [ ] GUIDE_UPDATE_PROPOSAL.md created with all proposals
 - [ ] User reviewed all proposals individually
-- [ ] All approved/modified proposals applied to guides
-- [ ] Separate commit created for guide updates
+- [ ] Proposal doc created in `.shamt/unimplemented_design_proposals/` (if any proposals accepted)
+- [ ] Proposal doc committed (or skipped — gitignored / no accepted proposals)
 - [ ] reference/guide_update_tracking.md updated
-- [ ] Export assessed: CHANGES.md updated if improvements are generic (or project-specific noted)
+- [ ] Rules file compared against template; template updated if generic additions found
+- [ ] User informed about proposal doc export (or "no proposals accepted" noted)
 - [ ] EPIC_README.md shows S10.P1 complete
 - [ ] Ready to proceed to S10 Step 7
 
@@ -702,26 +724,15 @@ Use prompt from prompts/guide_update_prompts.md "After Applying Changes" section
 ❌ "This lesson seems minor, I'll skip it"
    ✅ STOP - Analyze ALL lessons, let priority system categorize
 
-❌ "User will probably approve all P0, I'll batch apply"
-   ✅ STOP - Get individual approval for EACH proposal
-
-❌ "This guide change is obvious, I'll just apply it"
-   ✅ STOP - User must approve ALL changes
-
-❌ "I'll combine guide updates with epic commit"
-   ✅ STOP - Separate commits required for clarity
-
-❌ "git add isn't working for guides, I'll use git add -f"
-   ✅ STOP - Guides are likely gitignored. Apply changes locally, skip commit, inform user. NEVER force-add.
-
 ❌ "No guide gaps found, lessons are all domain-specific"
    ✅ VERIFY - Re-read lessons with fresh eyes, look for patterns
 
-❌ "User rejected P0, I'll apply it anyway since it's critical"
-   ✅ STOP - User decision is final, document rejection
-
 ❌ "I'll update tracking later"
    ✅ STOP - Update tracking immediately while context fresh
+
+❌ "I'll apply the proposals directly to the guide files"
+   ✅ STOP - Proposals are deferred to .shamt/unimplemented_design_proposals/
+   Do NOT edit any .shamt/guides/ files. Create the proposal doc only.
 ```
 
 ---

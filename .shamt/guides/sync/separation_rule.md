@@ -46,6 +46,22 @@ Project-specific content belongs **exclusively** in `.shamt/project-specific-con
 
 ---
 
+### Proposals (`unimplemented_design_proposals/`)
+
+`.shamt/unimplemented_design_proposals/` is a special-purpose staging directory:
+
+- Files here are project-originated proposals for changes to shared guides
+- They are NOT subject to the generic/project-specific separation rule
+- On export, these files are **moved** to the master repo's `design_docs/unimplemented/`
+  directory (copied to master, then deleted from the child). After export the child's
+  directory is empty.
+- Import scripts do not touch `design_docs/` at all — proposal docs are never
+  distributed back to children
+- After a proposal is implemented (master PR merged), the master maintainer manually
+  deletes the file from `design_docs/unimplemented/`. No automated cleanup is needed.
+
+---
+
 ## `project-specific-configs/` Folder Structure
 
 `project-specific-configs/` mirrors the guide folder structure. Supplements for a given guide go in the corresponding mirrored directory:
@@ -114,7 +130,7 @@ When you modify any file in `.shamt/guides/` or `.shamt/scripts/`, record it in 
 ```
 
 **When to write CHANGES.md entries:**
-- During S10.P1 when applying approved guide improvements
+- During S10.P1 when back-propagating generic rules file content to `RULES_FILE.template.md` (Step 8.0) — shared guide improvements are now deferred via the proposal doc mechanism and do not require CHANGES.md entries
 - During audit when fixing guide issues
 - Any time you deliberately improve a shared guide or script
 
@@ -127,11 +143,16 @@ When you modify any file in `.shamt/guides/` or `.shamt/scripts/`, record it in 
 
 ## Enforcement During S10.P1
 
-When applying guide improvements from lessons learned, before writing to any file in `.shamt/guides/`:
+S10.P1 no longer applies shared guide improvements directly. Instead:
 
-1. Confirm the change is generic — would it apply to any Shamt project?
-2. If yes → write it to the shared guide file, record in `CHANGES.md`
-3. If no → write it to `.shamt/project-specific-configs/guides/[mirrored-path]/`, add a pointer to the shared guide if not already present
+- Approved/modified proposals for shared guides are written to the proposal doc in `.shamt/unimplemented_design_proposals/` — not to the guide files themselves
+- Project-specific improvements (to `project-specific-configs/`) are still applied directly during S10.P1
+- Only rules file template updates (Step 8.0) go to `RULES_FILE.template.md` and require a `CHANGES.md` entry
+
+**To determine where a change belongs:**
+1. If it's an improvement to a shared guide file → write it to the proposal doc only
+2. If it's project-specific → write it to `.shamt/project-specific-configs/guides/[mirrored-path]/`, add a pointer to the shared guide if not already present
+3. If it's a generic addition to the rules file → update `RULES_FILE.template.md` and add a `CHANGES.md` entry
 
 ---
 

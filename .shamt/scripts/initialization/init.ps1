@@ -194,6 +194,7 @@ $dirs = @(
     "$ShamtDir\project-specific-configs",
     "$ShamtDir\epics\requests",
     "$ShamtDir\epics\done",
+    "$ShamtDir\unimplemented_design_proposals",
     $RulesFileDir
 )
 foreach ($dir in $dirs) {
@@ -388,7 +389,7 @@ $initConfigContent = @"
 - **Default Branch:** $DefaultBranch
 
 ## Script Actions Completed
-- [x] Created .shamt\ folder structure (including project-specific-configs\)
+- [x] Created .shamt\ folder structure (including project-specific-configs\ and unimplemented_design_proposals\)
 - [x] Copied guides from master Shamt (audit\outputs\ cleared for fresh start)
 - [x] Copied scripts from master Shamt
 - [x] Placed rules file at $RulesFileDir\$RulesFileName

@@ -446,7 +446,7 @@ Plan  Deep Dive  Check  (per feature)   QC
 **S10 - Epic Cleanup:**
 - [ ] Tests passed per Testing Approach (Options C/D: unit tests 100%; Options B/D: integration scripts exit 0; Option A: none)
 - [ ] Documentation verified complete
-- [ ] Guides updated based on lessons learned (if needed)
+- [ ] Guide update proposal doc created (if proposals accepted)
 - [ ] Final commits made
 - [ ] Epic moved to `.shamt/epics/done/{epic_name}/`
 
@@ -487,7 +487,6 @@ Plan  Deep Dive  Check  (per feature)   QC
 - {Achievement 2}
 - {Achievement 3}
 
-**Lessons Applied to Guides:**
-- {Guide update 1 or "None"}
-- {Guide update 2 or "None"}
+**Guide Update Proposals Deferred:**
+- {Proposal doc name or "None"}
 ```

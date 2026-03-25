@@ -176,8 +176,8 @@
 2. Creates GUIDE_UPDATE_PROPOSAL.md with each recommendation as separate proposal
 3. Presents each proposal to user for individual approval
 4. User decides: Approve / Modify / Reject / Discuss
-5. Agent applies only approved changes to guides
-6. Updates guide_update_tracking.md with applied lessons
+5. Agent creates proposal doc in `.shamt/unimplemented_design_proposals/` and commits it
+6. Updates guide_update_tracking.md with proposal doc path, accepted, and rejected lessons
 
 **Priority Assignment Guidelines:**
 

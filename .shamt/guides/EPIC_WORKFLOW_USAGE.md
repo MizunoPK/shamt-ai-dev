@@ -182,7 +182,7 @@ Key activities:
 Key activities:
 - Run unit tests (100% pass required)
 - Verify all documentation
-- S10.P1 Guide Updates (MANDATORY — analyze lessons, propose changes, get user approval, apply, update CHANGES.md and inform user of export opportunity if improvements are generic)
+- S10.P1 Guide Updates (MANDATORY — analyze lessons, propose changes, get user approval, create proposal doc in `.shamt/unimplemented_design_proposals/`, commit it)
 - Commit epic work
 - Move epic to `done/` folder
 - Update `EPIC_TRACKER.md`

@@ -223,7 +223,7 @@
 2. Mark your decision in "User Decision" checkbox: Approve / Modify / Reject / Discuss
 3. For "Modify", provide alternative text in "User Feedback/Modifications" section
 4. For "Discuss", ask questions or request clarification in "User Feedback/Modifications" section
-5. Agent will apply only approved changes (or your modifications)
+5. Agent will capture approved proposals in a proposal doc in `.shamt/unimplemented_design_proposals/`
 
 **Guidelines:**
 - **P0 (Critical):** Strongly recommended - prevents major bugs or misinterpretations
@@ -245,10 +245,9 @@
 - Pending discussion: {N}
 
 **Next Steps:**
-- [ ] Agent applies approved changes to guides
-- [ ] Agent applies user modifications to guides
-- [ ] Agent creates separate commit for guide updates
-- [ ] Agent updates `reference/guide_update_tracking.md` with applied changes
+- [ ] Agent creates proposal doc in `.shamt/unimplemented_design_proposals/`
+- [ ] Agent commits proposal doc
+- [ ] Agent updates `reference/guide_update_tracking.md` with proposal doc path
 - [ ] Agent proceeds with epic commit (S10 Step 7)
 
 ---

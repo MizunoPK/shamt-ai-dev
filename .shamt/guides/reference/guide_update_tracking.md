@@ -1,19 +1,19 @@
-# Guide Update Tracking - Lessons Applied to Guides
+# Guide Update Tracking - Proposal Docs and Rejected Lessons
 
-**Purpose:** Track which lessons learned from epics have been applied to guides, enabling pattern analysis and continuous improvement
+**Purpose:** Track which lessons learned from epics have been captured in guide update proposal docs, enabling pattern analysis and continuous improvement
 
-**Use Case:** After each epic's S10.P1, document approved guide updates to maintain history and identify patterns
+**Use Case:** After each epic's S10.P1, document accepted proposals (with proposal doc path) and rejected lessons to maintain history and identify patterns
 
 ---
 
 ## Overview
 
-This document tracks the feedback loop from implementation → lessons learned → guide updates:
+This document tracks the feedback loop from implementation → lessons learned → guide update proposals:
 
 1. **Epic completes** → Generates lessons_learned.md files
 2. **Agent analyzes lessons** → Creates GUIDE_UPDATE_PROPOSAL.md
-3. **User approves changes** → Agent applies to guides
-4. **Agent logs here** → Creates traceable history
+3. **User approves proposals** → Agent creates proposal doc in `.shamt/unimplemented_design_proposals/`
+4. **Agent logs here** → Creates traceable history (proposal doc path + rejected lessons)
 
 **Benefits:**
 - Visibility into guide evolution over time
@@ -25,10 +25,12 @@ This document tracks the feedback loop from implementation → lessons learned �
 
 ## Applied Lessons Log
 
-**Format:** Epic | Priority | Lesson Summary | Guide(s) Updated | Date | Commit Hash
+**Format (SHAMT-18+):** Epic | Priority | Lesson Summary | Affected Guide(s) | Date | Proposal doc | Proposal commit
 
-| Epic | Priority | Lesson Summary | Guide(s) Updated | Date Applied | Commit |
-|------|----------|----------------|------------------|--------------|--------|
+**Note:** Entries before 2026-03-25 (pre-SHAMT-18) were applied directly to guides without a proposal doc. New entries include the proposal doc path.
+
+| Epic | Priority | Lesson Summary | Affected Guide(s) | Date | Proposal doc | Proposal commit |
+|------|----------|----------------|-------------------|------|--------------|-----------------|
 | SHAMT-11-game_data_fetcher_cli | P1 | S9 Single-Feature Epic Shortcut — skip S9.P1 and S9.P2 for epics with exactly 1 feature and no cross-feature integration; S9.P3 remains mandatory | s9_epic_final_qc.md (Quick Navigation) | 2026-02-20 | pending |
 | SHAMT-11-game_data_fetcher_cli | P1 | "Port the Spec" Mode Trigger Warning — when S2 is framed as porting an existing spec, extra vigilance needed; new decisions found during "verification" still require PENDING → User approval | s2_p1_spec_creation_refinement.md (Correct Status Progression Protocol) | 2026-02-20 | pending |
 | SHAMT-11-game_data_fetcher_cli | P2 | Fix ALL Known Gaps BEFORE Validation Loop — "known gaps OK" applies to Phase 1 drafting, not when starting Phase 2; resolve all Phase 1 Known Gaps before Round 1 | s5_v2_validation_loop.md (Phase 1 → Phase 2 transition) | 2026-02-20 | pending |
@@ -55,16 +57,16 @@ This document tracks the feedback loop from implementation → lessons learned �
 | SHAMT-7-improve_configurability_of_scripts | P2 | S2.P2 Prior Group Review - checklist questions re-ask already-answered questions | s2_p2_specification.md | 2026-02-01 | a25fa1a |
 
 **Instructions:**
-- Add one row per lesson applied (even if multiple guides updated)
-- If one lesson updates multiple guides, list all guides in "Guide(s) Updated" column
-- Include commit hash for traceability
+- Add one row per accepted/modified proposal (even if multiple guides affected)
+- If one lesson affects multiple guides, list all in "Affected Guide(s)" column
+- Include proposal doc path and commit hash for traceability
 - Keep sorted by date (newest first)
 
 ---
 
 ## Pending Lessons
 
-**Format:** Lessons identified but not yet applied (awaiting user approval or deferred)
+**Format:** Lessons identified but not yet resolved (user marked "Discuss" — awaiting clarification)
 
 | Epic | Priority | Lesson Summary | Proposed Guide(s) | Status | Reason Pending |
 |------|----------|----------------|-------------------|--------|----------------|
@@ -72,9 +74,8 @@ This document tracks the feedback loop from implementation → lessons learned �
 | SHAMT-2-example | P2 | Add example of integration gap | s5_v2_validation_loop.md | User Discuss | Needs clarification on example format |
 
 **Instructions:**
-- Add lessons where user marked "Discuss" and hasn't yet approved
-- Remove from this section once approved and moved to "Applied Lessons Log"
-- If lesson is rejected, move to "Rejected Lessons" section
+- Add lessons where user marked "Discuss" and hasn't yet decided
+- Remove once user approves (move to Applied Lessons Log) or rejects (move to Rejected Lessons)
 
 ---
 

@@ -30,6 +30,8 @@ If entries are missing, add them now:
 - Reason: [one line]
 ```
 
+**Note:** Proposal docs in `.shamt/unimplemented_design_proposals/` do **not** require CHANGES.md entries. They are moved to master automatically by the export script and are not modifications to shared guide or script files. Only changes to files in `.shamt/guides/` or `.shamt/scripts/` require CHANGES.md entries.
+
 ---
 
 ## Step 1.2: Compare Your Rules File Against the Template
@@ -124,9 +126,19 @@ The script:
 3. Compares your `guides/` and `scripts/` against master by content comparison
 4. Copies all differing files to master, and deletes from master any files absent from your child
 5. Excludes `guides/audit/outputs/` (your audit history stays local)
-6. Prints a summary of what was copied and deleted
+6. **Moves** any files in `.shamt/unimplemented_design_proposals/` to master's `design_docs/unimplemented/` directory (copy to master, then delete from child)
+7. Prints a summary of what was copied, deleted, and moved
 
 Review the output. If files were exported that you didn't intend to change, investigate before opening a PR.
+
+**If proposal files were moved** (step 6 above), commit the deletions in your child project before proceeding to Step 4:
+
+```bash
+git add -A .shamt/unimplemented_design_proposals/
+git commit -m "docs(proposals): Move guide update proposals to master"
+```
+
+(The `-A` flag is required because files were deleted. If no proposal files existed, skip this substep.)
 
 ---
 
@@ -178,6 +190,7 @@ After the PR is merged, the improvement is available to all Shamt projects on th
 - A new guide section that addresses a workflow gap
 - A corrected procedure that was previously wrong or ambiguous
 - A new template or reference file
+- Proposal docs in `.shamt/unimplemented_design_proposals/` — always eligible, no generic/specific evaluation needed since they are explicitly project-originated and never applied to child project guides
 
 **Do not export:**
 - Examples using your project's actual code, filenames, or APIs

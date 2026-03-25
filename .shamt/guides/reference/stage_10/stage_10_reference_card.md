@@ -34,8 +34,8 @@ STEP 4: Guide Update from Lessons Learned (20-45 min) ← S10.P1 MANDATORY
     ├─ Create GUIDE_UPDATE_PROPOSAL.md (prioritized P0-P3)
     ├─ Present EACH proposal to user (individual approval)
     ├─ User decides: Approve / Modify / Reject / Discuss
-    ├─ Apply only approved changes to guides
-    ├─ Create separate commit for guide updates
+    ├─ Create proposal doc in .shamt/unimplemented_design_proposals/
+    ├─ Commit proposal doc
     └─ Update guide_update_tracking.md
     ↓
 STEP 5: Final Commit — Epic Implementation (5-10 min)
@@ -304,8 +304,8 @@ git checkout main && git fetch origin && git reset --hard origin/main
 **Step 4 → Step 5:**
 - [ ] ALL lessons_learned.md files found (epic + features + bugfixes)
 - [ ] Proposals created and individually approved by user
-- [ ] Approved changes applied to guides
-- [ ] Separate commit created for guide updates
+- [ ] Proposal doc created in .shamt/unimplemented_design_proposals/
+- [ ] Proposal doc committed (or zero proposals noted)
 - [ ] guide_update_tracking.md updated
 
 **Step 5 → Step 6:**
@@ -386,7 +386,7 @@ git checkout main && git fetch origin && git reset --hard origin/main
 - [ ] Pre-cleanup verification passed
 - [ ] Unit tests passed (100%)
 - [ ] Documentation verified complete
-- [ ] Guides updated via S10.P1 (user-approved proposals applied)
+- [ ] S10.P1 complete (proposal doc created and committed)
 - [ ] Epic implementation commit created
 - [ ] Epic folder moved to done/ (git mv + committed)
 - [ ] .shamt/epics/EPIC_TRACKER.md updated and committed
