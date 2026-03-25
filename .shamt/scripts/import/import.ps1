@@ -152,7 +152,7 @@ Import-Dir -MasterDir (Join-Path $MasterShamtDir "guides") `
 
 Import-Dir -MasterDir (Join-Path $MasterShamtDir "scripts") `
            -ChildDir (Join-Path $ChildShamtDir "scripts") `
-           -SkipPrefix ""
+           -SkipPrefix "scripts/import"
 
 # --- Remove files deleted from master ----------------------------------------
 
@@ -193,11 +193,19 @@ Remove-Deleted -ChildDir (Join-Path $ChildShamtDir "guides") `
 
 Remove-Deleted -ChildDir (Join-Path $ChildShamtDir "scripts") `
                -MasterDir (Join-Path $MasterShamtDir "scripts") `
-               -SkipPrefix ""
+               -SkipPrefix "scripts/import"
 
 # Record sync state now — before diff generation and output, so a script
 # interruption after syncing still produces an accurate last_sync.conf.
 Write-LastSync
+
+# --- Import scripts last (avoids overwriting the running script mid-execution) ---
+Import-Dir -MasterDir (Join-Path $MasterShamtDir "scripts\import") `
+           -ChildDir (Join-Path $ChildShamtDir "scripts\import") `
+           -SkipPrefix ""
+Remove-Deleted -ChildDir (Join-Path $ChildShamtDir "scripts\import") `
+               -MasterDir (Join-Path $MasterShamtDir "scripts\import") `
+               -SkipPrefix ""
 
 # --- Write diff file(s) ------------------------------------------------------
 
