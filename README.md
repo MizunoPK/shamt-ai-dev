@@ -3,6 +3,7 @@
 Shamt is a portable, AI-agent-driven development workflow framework. It provides:
 
 - A structured **epic-driven workflow** (S1–S10) for planning, executing, and reviewing software features with an AI agent
+- A **standalone code review workflow** for reviewing any branch or PR with structured, validated, copy-paste-ready comments
 - A **sync system** for sharing guide improvements between projects and back to master
 - An **initialization system** for onboarding any project in minutes
 

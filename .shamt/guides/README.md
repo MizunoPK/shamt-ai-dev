@@ -39,6 +39,7 @@ This directory contains the complete Shamt epic-driven development workflow guid
 | `audit/` | Modular guide audit system |
 | `sync/` | Separation rule, export workflow, import workflow |
 | `master_dev_workflow/` | Guide for improving guides directly |
+| `code_review/` | Standalone branch/PR review workflow |
 
 ---
 
