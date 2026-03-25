@@ -133,7 +133,7 @@ import_dir() {
 }
 
 import_dir "$MASTER_SHAMT_DIR/guides" "$CHILD_SHAMT_DIR/guides" "guides/audit/outputs"
-import_dir "$MASTER_SHAMT_DIR/scripts" "$CHILD_SHAMT_DIR/scripts" ""
+import_dir "$MASTER_SHAMT_DIR/scripts" "$CHILD_SHAMT_DIR/scripts" "scripts/import"
 
 # --- Remove files deleted from master ----------------------------------------
 
@@ -168,11 +168,15 @@ remove_deleted() {
 }
 
 remove_deleted "$CHILD_SHAMT_DIR/guides" "$MASTER_SHAMT_DIR/guides" "guides/audit/outputs"
-remove_deleted "$CHILD_SHAMT_DIR/scripts" "$MASTER_SHAMT_DIR/scripts" ""
+remove_deleted "$CHILD_SHAMT_DIR/scripts" "$MASTER_SHAMT_DIR/scripts" "scripts/import"
 
 # Record sync state now — before diff generation and output, so a script
 # interruption after syncing still produces an accurate last_sync.conf.
 write_last_sync
+
+# --- Import scripts last (avoids overwriting the running script mid-execution) ---
+import_dir "$MASTER_SHAMT_DIR/scripts/import" "$CHILD_SHAMT_DIR/scripts/import" ""
+remove_deleted "$CHILD_SHAMT_DIR/scripts/import" "$MASTER_SHAMT_DIR/scripts/import" ""
 
 # --- Write diff file(s) ------------------------------------------------------
 
