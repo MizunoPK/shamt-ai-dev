@@ -18,7 +18,8 @@ bash .shamt/scripts/import/import.sh
 
 The script has already:
 - Copied updated/new files from master's `guides/` and `scripts/` into your `.shamt/`
-- Removed files that were deleted from master
+- Removed files that were previously imported from master but have since been deleted from master
+- Preserved (without deleting) any files in your `.shamt/` that were never in master — these are child-only files
 - Generated one or more diff files at `.shamt/import_diff.md` (or `.shamt/import_diff_1.md`, `import_diff_2.md`, etc. if the diff was large)
 
 Your job is to assess the impact and ensure your project-specific configuration stays consistent.
@@ -84,6 +85,16 @@ For deleted files:
 
 ---
 
+## Step 4.5: Review Preserved Child-Only Files
+
+If the import script reported preserved files ("child-only files not deleted"), review each one:
+
+- **If it was planned for export to master:** Confirm it is in `.shamt/CHANGES.md`. Keep it in `guides/`. It will be exported via the normal export workflow.
+- **If it is correctly project-specific:** Move it to `.shamt/project-specific-configs/guides/[mirrored-path]/`. Add a pointer to the relevant shared guide if appropriate.
+- **If it is obsolete:** Delete it manually.
+
+---
+
 ## Step 5: Run a Validation Loop
 
 Run a full validation loop using the master protocol (which you re-read in the mandatory first step). The loop must achieve primary clean round + sub-agent confirmation before you may declare the import complete.
@@ -133,9 +144,10 @@ Include only files that were part of the import or supplement updates. Do not bu
 
 ## Common Situations
 
-**No diff files generated, only new files or deletions:**
-- Skim the new files to understand them
+**No diff files generated, only new files, deletions, or preserved child-only files:**
+- Skim any new files to understand them
 - Check whether any deletions affect your supplements
+- Review preserved child-only files per Step 4.5 if any were reported
 - Validation loop is still required, but typically shorter
 
 **Large import with many changed files:**
@@ -179,3 +191,9 @@ If your project was initialized before SHAMT-4, your `.gitignore` may list `.sha
 ```text
 .shamt/*.conf
 ```
+
+**You have pending export work in `guides/` and need to import first:**
+The import script preserves any guide file you created locally that master has never seen. Your work is safe. After completing the import validation loop, your pending export files will still be in `guides/`. Export them via the normal export workflow when ready.
+
+**Your `.shamt/guides/` directory is gitignored:**
+This is a risky configuration. Guide files and `project-specific-configs/` represent intentional decisions that should be version-controlled. If guides are gitignored and the import script deletes a file, there is no git history to recover from. Remove `.shamt/guides/` from your `.gitignore`. The only `.shamt/` entries that should be gitignored are `.shamt/*.conf` (local machine state) and `.shamt/import_diff*.md` (temporary import artifacts).

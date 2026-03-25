@@ -79,8 +79,19 @@ try {
 
 $Copied = @()
 $Deleted = @()
+$Preserved = @()
 $Sections = [System.Collections.Generic.List[string]]::new()
 $SectionLineCounts = [System.Collections.Generic.List[int]]::new()
+
+# --- Read previous sync hash (for deletion safety check) --------------------
+
+$PrevSyncHash = ""
+$lastSyncConf = Join-Path $ChildShamtDir "last_sync.conf"
+if (Test-Path $lastSyncConf) {
+    $lastSyncLine = (Get-Content $lastSyncConf -Raw).Trim()
+    $parts = $lastSyncLine -split ' \| '
+    if ($parts.Count -ge 2) { $PrevSyncHash = $parts[1].Trim() }
+}
 
 # --- Generate unified diff between two files ---------------------------------
 
@@ -96,7 +107,7 @@ function Get-UnifiedDiff {
 
 function Write-LastSync {
     $syncDate = Get-Date -Format "yyyy-MM-dd"
-    $masterHashResult = & git -C $script:MasterDir rev-parse --short HEAD 2>&1
+    $masterHashResult = & git -C $script:MasterDir rev-parse HEAD 2>&1
     $masterHash = if ($LASTEXITCODE -eq 0) { ($masterHashResult | Out-String).Trim() } else { "unknown" }
     Set-Content (Join-Path $script:ChildShamtDir "last_sync.conf") "$syncDate | $masterHash" -NoNewline
 }
@@ -175,13 +186,24 @@ function Remove-Deleted {
 
         $masterFile = Join-Path $script:MasterShamtDir $relPath
         if (-not (Test-Path $masterFile)) {
-            Remove-Item $childFile -Force
-            $script:Deleted += $relPathFwd
-            # Remove empty parent directories
-            $dir = Split-Path $childFile -Parent
-            while ($dir -ne $script:ChildShamtDir -and (Test-Path $dir) -and @(Get-ChildItem $dir).Count -eq 0) {
-                Remove-Item $dir -Force
-                $dir = Split-Path $dir -Parent
+            # Determine whether this file ever came from master
+            $fromMaster = $false
+            if ($script:PrevSyncHash -ne "") {
+                $null = & git -C $script:MasterDir cat-file -e "${script:PrevSyncHash}:.shamt/$relPathFwd" 2>&1
+                if ($LASTEXITCODE -eq 0) { $fromMaster = $true }
+            }
+
+            if ($fromMaster) {
+                Remove-Item $childFile -Force
+                $script:Deleted += $relPathFwd
+                # Remove empty parent directories
+                $dir = Split-Path $childFile -Parent
+                while ($dir -ne $script:ChildShamtDir -and (Test-Path $dir) -and @(Get-ChildItem $dir).Count -eq 0) {
+                    Remove-Item $dir -Force
+                    $dir = Split-Path $dir -Parent
+                }
+            } else {
+                $script:Preserved += $relPathFwd
             }
         }
     }
@@ -248,8 +270,7 @@ if ($Sections.Count -gt 0) {
 
 # --- Summary -----------------------------------------------------------------
 
-if ($Copied.Count -eq 0 -and $Deleted.Count -eq 0) {
-    Write-LastSync
+if ($Copied.Count -eq 0 -and $Deleted.Count -eq 0 -and $Preserved.Count -eq 0) {
     Write-Host "  Already up to date. No changes from master."
     Write-Host ""
     Write-Host "============================================================"
@@ -269,6 +290,12 @@ if ($Deleted.Count -gt 0) {
     Write-Host ""
 }
 
+if ($Preserved.Count -gt 0) {
+    Write-Host "  Preserved $($Preserved.Count) child-only file(s) (not present in master — not deleted):"
+    foreach ($f in $Preserved) { Write-Host "    ~ $f" }
+    Write-Host ""
+}
+
 # --- Agent prompt ------------------------------------------------------------
 
 Write-Host "------------------------------------------------------------"
@@ -285,7 +312,7 @@ Write-Host "1. Re-read the validation loop protocol before proceeding:"
 Write-Host "   ```.shamt/guides/reference/validation_loop_master_protocol.md```"
 Write-Host ""
 if ($DiffFiles.Count -eq 0) {
-    Write-Host "2. No content diffs to review (only new files or deletions)."
+    Write-Host "2. No content diffs to review (only new files, deletions, or preserved child-only files)."
 } elseif ($DiffFiles.Count -eq 1) {
     Write-Host "2. Read the import diff: ```.shamt/$($DiffFiles[0])```"
 } else {
@@ -301,11 +328,26 @@ Write-Host "   still accurately placed."
 Write-Host ""
 Write-Host "5. Check whether any new pointers should be added to the changed files."
 Write-Host ""
-Write-Host "6. Update any affected project-specific files as needed."
-Write-Host ""
-Write-Host "7. Run a validation loop until primary clean round + sub-agent confirmation is achieved."
-Write-Host ""
-Write-Host "8. Delete all import diff files when complete."
+if ($Preserved.Count -gt 0) {
+    Write-Host "6. Review child-only files that were preserved (not deleted):"
+    Write-Host "   These files exist in your .shamt/ but have no presence in master."
+    Write-Host "   For each preserved file, determine:"
+    Write-Host "     (a) Planned export to master -> keep in guides/, add to CHANGES.md if not already recorded"
+    Write-Host "     (b) Correctly project-specific -> move to project-specific-configs/"
+    Write-Host "     (c) Obsolete -> delete manually"
+    Write-Host ""
+    Write-Host "7. Update any affected project-specific files as needed."
+    Write-Host ""
+    Write-Host "8. Run a validation loop until primary clean round + sub-agent confirmation is achieved."
+    Write-Host ""
+    Write-Host "9. Delete all import diff files when complete."
+} else {
+    Write-Host "6. Update any affected project-specific files as needed."
+    Write-Host ""
+    Write-Host "7. Run a validation loop until primary clean round + sub-agent confirmation is achieved."
+    Write-Host ""
+    Write-Host "8. Delete all import diff files when complete."
+}
 Write-Host ""
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 Write-Host ""

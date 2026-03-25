@@ -75,8 +75,16 @@ fi
 
 COPIED=()
 DELETED=()
+PRESERVED=()
 DIFF_DIR="$(mktemp -d)"
 SECTION_NUM=0
+
+# --- Read previous sync hash (for deletion safety check) --------------------
+
+PREV_SYNC_HASH=""
+if [ -f "$CHILD_SHAMT_DIR/last_sync.conf" ]; then
+    PREV_SYNC_HASH="$(awk -F' [|] ' '{print $2}' "$CHILD_SHAMT_DIR/last_sync.conf" 2>/dev/null | tr -d '[:space:]')"
+fi
 
 cleanup() {
     rm -rf "$DIFF_DIR"
@@ -86,7 +94,7 @@ trap cleanup EXIT
 write_last_sync() {
     local _sync_date _master_hash
     _sync_date="$(date +%Y-%m-%d)"
-    _master_hash="$(git -C "$MASTER_DIR" rev-parse --short HEAD 2>/dev/null || echo "unknown")"
+    _master_hash="$(git -C "$MASTER_DIR" rev-parse HEAD 2>/dev/null || echo "unknown")"
     printf '%s | %s\n' "$_sync_date" "$_master_hash" > "$CHILD_SHAMT_DIR/last_sync.conf"
 }
 
@@ -154,15 +162,27 @@ remove_deleted() {
 
         local master_file="$MASTER_SHAMT_DIR/$rel_path"
         if [ ! -f "$master_file" ]; then
-            rm "$child_file"
-            DELETED+=("$rel_path")
-            # Remove empty parent directories
-            local dir
-            dir="$(dirname "$child_file")"
-            while [ "$dir" != "$CHILD_SHAMT_DIR" ] && [ -d "$dir" ] && [ -z "$(ls -A "$dir")" ]; do
-                rmdir "$dir"
-                dir="$(dirname "$dir")"
-            done
+            # Determine whether this file ever came from master
+            local _from_master=false
+            if [ -n "$PREV_SYNC_HASH" ]; then
+                if git -C "$MASTER_DIR" cat-file -e "${PREV_SYNC_HASH}:.shamt/${rel_path}" 2>/dev/null; then
+                    _from_master=true
+                fi
+            fi
+
+            if [ "$_from_master" = true ]; then
+                rm "$child_file"
+                DELETED+=("$rel_path")
+                # Remove empty parent directories
+                local dir
+                dir="$(dirname "$child_file")"
+                while [ "$dir" != "$CHILD_SHAMT_DIR" ] && [ -d "$dir" ] && [ -z "$(ls -A "$dir")" ]; do
+                    rmdir "$dir"
+                    dir="$(dirname "$dir")"
+                done
+            else
+                PRESERVED+=("$rel_path")
+            fi
         fi
     done < <(find "$child_dir" -type f -print0 | sort -z)
 }
@@ -227,8 +247,7 @@ fi
 
 # --- Summary -----------------------------------------------------------------
 
-if [ ${#COPIED[@]} -eq 0 ] && [ ${#DELETED[@]} -eq 0 ]; then
-    write_last_sync
+if [ ${#COPIED[@]} -eq 0 ] && [ ${#DELETED[@]} -eq 0 ] && [ ${#PRESERVED[@]} -eq 0 ]; then
     echo "  Already up to date. No changes from master."
     echo ""
     echo "============================================================"
@@ -252,6 +271,14 @@ if [ ${#DELETED[@]} -gt 0 ]; then
     echo ""
 fi
 
+if [ ${#PRESERVED[@]} -gt 0 ]; then
+    echo "  Preserved ${#PRESERVED[@]} child-only file(s) (not present in master — not deleted):"
+    for f in "${PRESERVED[@]}"; do
+        echo "    ~ $f"
+    done
+    echo ""
+fi
+
 # --- Agent prompt ------------------------------------------------------------
 
 echo "------------------------------------------------------------"
@@ -268,7 +295,7 @@ echo "1. Re-read the validation loop protocol before proceeding:"
 echo "   \`.shamt/guides/reference/validation_loop_master_protocol.md\`"
 echo ""
 if [ ${#DIFF_FILES[@]} -eq 0 ]; then
-    echo "2. No content diffs to review (only new files or deletions)."
+    echo "2. No content diffs to review (only new files, deletions, or preserved child-only files)."
 elif [ ${#DIFF_FILES[@]} -eq 1 ]; then
     echo "2. Read the import diff: \`.shamt/${DIFF_FILES[0]}\`"
 else
@@ -286,11 +313,26 @@ echo "   still accurately placed."
 echo ""
 echo "5. Check whether any new pointers should be added to the changed files."
 echo ""
-echo "6. Update any affected project-specific files as needed."
-echo ""
-echo "7. Run a validation loop until primary clean round + sub-agent confirmation is achieved."
-echo ""
-echo "8. Delete all import diff files when complete."
+if [ ${#PRESERVED[@]} -gt 0 ]; then
+    echo "6. Review child-only files that were preserved (not deleted):"
+    echo "   These files exist in your .shamt/ but have no presence in master."
+    echo "   For each preserved file, determine:"
+    echo "     (a) Planned export to master → keep in guides/, add to CHANGES.md if not already recorded"
+    echo "     (b) Correctly project-specific → move to project-specific-configs/"
+    echo "     (c) Obsolete → delete manually"
+    echo ""
+    echo "7. Update any affected project-specific files as needed."
+    echo ""
+    echo "8. Run a validation loop until primary clean round + sub-agent confirmation is achieved."
+    echo ""
+    echo "9. Delete all import diff files when complete."
+else
+    echo "6. Update any affected project-specific files as needed."
+    echo ""
+    echo "7. Run a validation loop until primary clean round + sub-agent confirmation is achieved."
+    echo ""
+    echo "8. Delete all import diff files when complete."
+fi
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
