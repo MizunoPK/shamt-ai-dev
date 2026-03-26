@@ -13,13 +13,13 @@
 ## Why This is Different
 
 **Normal workflow (discovered during S5):**
-- Plan new/updated feature (Stages 2/3/4)
+- Plan new/updated feature (Stages 2/3)
 - Resume paused work
 - Implement features in sequence
 - Continue to next stage when turn comes
 
 **Special case (discovered during S9/S10):**
-- Plan new/updated feature (Stages 2/3/4) ← SAME
+- Plan new/updated feature (Stages 2/3) ← SAME
 - Resume any paused work
 - **Complete ALL remaining features first** ← DIFFERENT
 - **Implement new/updated feature (full S5)** ← DIFFERENT
@@ -102,7 +102,7 @@ S9.P1 → S9.P2 → S9.P3 → S10 (entire epic flow)
 
 ### Step 4: Complete ALL Remaining Features
 
-**After planning complete (Stages 2/3/4), DON'T return to epic testing:**
+**After planning complete (Stages 2/3), DON'T return to epic testing:**
 
 **Identify remaining features:**
 
@@ -229,11 +229,10 @@ Actions needed:
    - Option 2: Update feature_04
    - User chooses: Create new feature (medium priority)
 
-2. **Planning:** S2/3/4
+2. **Planning:** S2/3
    - Create feature_05 spec
    - Align all features
    - S3.P1: Update epic smoke test plan for new/updated feature
-   - S4: Create feature test_strategy.md
 
 3. **Complete remaining features:**
    - Implement feature_04 (S5 → S8)
@@ -268,11 +267,10 @@ Actions needed:
    - Option 2: Update feature_03_performance_tracker
    - User chooses: Update feature_03 (logical grouping)
 
-2. **Planning:** S2/3/4
+2. **Planning:** S2/3
    - Update feature_03 spec with PDF export
    - Align all features
    - S3.P1: Update epic smoke test plan for new/updated feature
-   - S4: Create feature test_strategy.md
 
 3. **Complete remaining features:**
    - No remaining features
@@ -294,7 +292,7 @@ Actions needed:
 
 | Aspect | Normal (S5) | Special (S9/S10) |
 |--------|-----------------|---------------------|
-| **Planning** | Stages 2/3/4 (done) | Stages 2/3/4 (done) |
+| **Planning** | Stages 2/3 (done) | Stages 2/3 (done) |
 | **Resume paused work** | Resume feature implementation | Not applicable (features done) |
 | **Complete remaining features** | Not required | **REQUIRED - ALL features** |
 | **Implement new/updated feature** | When its turn comes in sequence | **After all remaining features** |

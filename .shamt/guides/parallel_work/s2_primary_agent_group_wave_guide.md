@@ -74,7 +74,7 @@ Organize features into **dependency groups** based on spec-level dependencies. E
 - Both can research/specify in parallel during S2
 - Dependency enforced later during implementation (S5-S8)
 
-**After S2 complete:** Groups no longer matter (S3 is epic-level, S4+ is sequential)
+**After S2 complete:** Groups no longer matter (S3 is epic-level, S5+ is sequential — S4 deprecated)
 
 ---
 

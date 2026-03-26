@@ -349,7 +349,7 @@ Proceed to S5 (Test Scope Decision + Implementation Planning for new/updated fea
 **Inform user:**
 
 ```markdown
-I've completed planning for the missed requirement (Stages 2/3/4 complete).
+I've completed planning for the missed requirement (Stages 2/3 complete).
 
 During S3 alignment, feature_02's spec was updated:
 - Added integration point: Call feature_05.get_attribute_status()
@@ -381,7 +381,6 @@ Planning complete for missed requirement.
 Stages completed:
 - S2: feature_05 spec created ✅
 - S3: All features aligned ✅
-- S4: Feature test strategy created ✅
 
 feature_02's spec remains unchanged. Resuming implementation at S6.
 ```
@@ -414,7 +413,7 @@ When planning complete:
 
 **Resumed After:** Missed requirement planning complete
 - feature_05_injury_tracking spec created and aligned
-- Stages 2/3/4 complete for feature_05
+- Stages 2/3 complete for feature_05
 - feature_02 spec verified (unchanged/updated)
 
 **Current Stage:** S6 (Implementation Execution)

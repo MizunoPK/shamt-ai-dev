@@ -322,7 +322,7 @@ When user reports bugs during S9.P3:
 └─────────────────────────────────────────────────────────────┘
 
 1. ⚠️ ALWAYS use EVOLVED epic_smoke_test_plan.md (not original from S1)
-   - Plan evolved through S4 and S8.P2 (Epic Testing Update)
+   - Plan evolved through S3.P1 (if refined) and S8.P2 (Epic Testing Update)
    - Reflects actual implementation, not assumptions
 
 2. ⚠️ Verify DATA VALUES, not just file existence

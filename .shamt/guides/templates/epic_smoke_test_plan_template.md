@@ -50,14 +50,12 @@
 | Date | Stage | Feature | What Changed | Why |
 |------|-------|---------|--------------|-----|
 | {YYYY-MM-DD} | S1 | (initial) | Initial plan created | Epic planning based on assumptions |
-| {YYYY-MM-DD} | S4 | (all features) | Updated based on deep dives | Discovered {N} integration points, refined scenarios |
 | {YYYY-MM-DD} | S8.P2 | feature_01 | Added Rank integration scenarios | Feature 1 implementation revealed specific multiplier ranges |
 | {YYYY-MM-DD} | S8.P2 | feature_02 | Added matchup cross-check scenarios | Feature 2 integration with Feature 1 needs validation |
 | {YYYY-MM-DD} | S8.P2 | feature_03 | Added performance tracking E2E tests | Feature 3 implementation added CSV persistence |
 
 **Current version is informed by:**
 - S1: Initial assumptions
-- S4: Deep dive findings (Stages 2-3)
 - S8.P2 updates: {List features that have updated this plan}
 
 ---
