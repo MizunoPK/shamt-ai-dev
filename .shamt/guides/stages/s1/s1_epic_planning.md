@@ -194,7 +194,7 @@ S1 is complete when you have Discovery approved, a validated epic ticket, comple
 - **B. Automated E2E integration scripts only** (Recommended) — runnable scripts that assert on real-data outputs; no unit tests
 - **C. Unit tests for algorithmic functions only** — pure function tests; no integration scripts
 - **D. Both** — algorithmic unit tests + automated E2E integration scripts
-- **Impact:** Controls S3.P1 scope, S4 redirect, S5 test scope decision, S6 test gates, S7.P1 Part 3, S9 Part 4, S10 Gate 7.1/7.1b
+- **Impact:** Controls S3.P1 scope, S5 test scope decision, S6 test gates, S7.P1 Part 3, S9 Part 4, S10 Gate 7.1/7.1b
 - **Rule:** Set once at S1. If user wants to change mid-epic, agent records the update in EPIC_README with a note.
 - **CRITICAL:** Agent must ask the user — this is not an autonomous decision.
 
@@ -796,7 +796,6 @@ Features 02-08 were placed in the same group as Feature 01. They could identify 
 **After S2:**
 - Groups no longer matter
 - S3: Epic-level (all features together)
-- S4: Per-feature sequential
 - S5-S8: Per-feature sequential (implementation dependencies checked separately)
 - S9-S10: Epic-level
 

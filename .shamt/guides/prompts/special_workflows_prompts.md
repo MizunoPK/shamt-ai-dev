@@ -56,7 +56,7 @@ I'm reading `stages/s5/s5_bugfix_workflow.md` to ensure I follow the bug fix wor
   - S5 v2: Implementation Planning (Validation Loop with 11 dimensions)
   - S6: Implementation
   - S7: Post-Implementation
-  - SKIP: S1, S3, S4, S8, S9, S10 (epic-level stages)
+  - SKIP: S1, S3, S8, S9, S10 (epic-level stages; S4 deprecated)
 - PHASE 3: Resume Previous Work
   - Mark bug fix complete
   - Verify bug fix doesn't affect paused work
@@ -96,18 +96,17 @@ I'm reading `missed_requirement/missed_requirement_protocol.md` to ensure I foll
   - Step 3: User decides approach + priority + sequence (if new feature)
 - Step 2: Pause Current Work
   - Step 1-2: Save current feature state, update EPIC_README
-- Step 3: Return to Planning Stages (2/3/4)
+- Step 3: Return to Planning Stages (2/3)
   - S2: Flesh out new/updated feature spec (full deep dive)
   - S3: Re-align ALL features (Epic-Level Docs, Tests, and Approval)
   - S3.P1: Update epic_smoke_test_plan.md with scenarios for new/updated feature
-  - S4: Create/update feature test_strategy.md (per-feature only)
 - Step 4: Resume Previous Work
   - Mark planning complete
   - Verify no spec changes affect paused feature
   - Resume from saved state
   - New/updated feature implemented LATER when its turn comes
 - Two options: Create new feature_{XX}_{name}/ OR update unstarted feature
-- ALWAYS return to S2/3/4 for planning
+- ALWAYS return to S2/3 for planning (S4 deprecated — Test Scope Decision at S5 Step 0)
 - Full S5 (S5 → S6 → S7 → S8) when feature gets implemented
 - Priority determines sequence: high = before current, medium = after current, low = at end
 - SPECIAL CASE: If discovered during S9/S10 → Complete all features → Restart epic testing from S9.P1
@@ -127,7 +126,7 @@ I'm reading `missed_requirement/missed_requirement_protocol.md` to ensure I foll
 - Current Phase: MISSED_REQUIREMENT_HANDLING
 - Current Guide: missed_requirement/missed_requirement_protocol.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
-- Critical Rules: "Get user approval first", "Return to S2/3/4", "Update epic docs", "Implement in sequence"
+- Critical Rules: "Get user approval first", "Return to S2/3 (S4 deprecated)", "Update epic docs", "Implement in sequence"
 - Next Action: Present options (new feature vs update unstarted feature)
 
 Presenting to user...

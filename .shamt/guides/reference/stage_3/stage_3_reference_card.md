@@ -128,7 +128,7 @@ S3.P3: Epic Plan Approval (10-15 min) ← MANDATORY GATE
 
 ### ❌ Pitfall 1: Writing Feature-Level Tests
 **Problem:** "I'll add unit tests for Feature 3 while I'm here"
-**Impact:** Duplicates S4 work; S4 may conflict
+**Impact:** This is feature-level work; belongs in S5 Step 0 (Test Scope Decision) and S6 implementation, not S3
 **Solution:** Epic tests only — cross-feature integration scenarios
 
 ### ❌ Pitfall 2: Skipping S2.P2 Prerequisite

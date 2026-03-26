@@ -797,7 +797,6 @@ I understand you want to move quickly, but the Epic-Driven Development v2 workfl
 Current status: S2 (Feature Deep Dives)
 Remaining before implementation:
 - S3: Epic-Level Docs, Tests, and Approval (30-60 min)
-- S4: Feature Testing Strategy (30-45 min)
 - S5: Implementation Planning (2.5-4 hours)
 
 These stages prevent costly rework by catching issues early.

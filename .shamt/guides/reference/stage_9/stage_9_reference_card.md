@@ -217,7 +217,7 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 ### ❌ Pitfall 1: Using Original Test Plan (S1)
 **Problem:** "I'll use the epic_smoke_test_plan.md from S1"
 **Impact:** Test plan is outdated (assumptions, not reality)
-**Solution:** Use EVOLVED test plan (updated in S4 and S8.P2)
+**Solution:** Use EVOLVED test plan (updated in S3.P1 if testing approach requires it, then S8.P2)
 
 ### ❌ Pitfall 2: Only Checking File Existence
 **Problem:** "File exists, so test passed"

@@ -845,7 +845,7 @@ READY_FOR_SYNC: true
 - Contains: Agent Assignment, Sync Status, Progress sections
 
 **epic_smoke_test_plan.md:**
-- Updated in S4 only (Primary)
+- Updated in S3.P1 (Primary only; S4 deprecated)
 - Requires lock (though only Primary uses in S2 plan)
 
 **epic_lessons_learned.md:**

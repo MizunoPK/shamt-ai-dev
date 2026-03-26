@@ -571,7 +571,7 @@ except FileNotFoundError:
 
 **What to check:**
 - Original epic request goals achieved
-- Epic success criteria from S4 met
+- Epic success criteria from S3 epic ticket met
 - User experience flow works correctly
 - Performance meets expectations
 

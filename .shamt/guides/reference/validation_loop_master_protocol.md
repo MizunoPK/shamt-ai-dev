@@ -79,7 +79,7 @@ The Validation Loop is a systematic quality assurance process that validates art
 **Use Validation Loops for:**
 - ✅ Specifications (S2: Feature specs)
 - ✅ Plans (S5: Implementation plans)
-- ✅ Test strategies (S4: Test plans)
+- ✅ Test strategies (S5 Step 0: Test scope decision)
 - ✅ Documentation (S3: Epic documentation)
 - ✅ Code quality (S7: QC rounds)
 - ✅ Cross-artifact alignment (S8: Spec alignment)

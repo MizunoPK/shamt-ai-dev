@@ -372,7 +372,7 @@ Testing Plan Update is complete when epic_smoke_test_plan.md reflects actual imp
 **Actions:**
 1. Open epic_smoke_test_plan.md
 2. Read existing test scenarios
-3. Note what S4 assumptions were
+3. Note what planning-phase assumptions were (from S3 deep dives and S1 epic analysis)
 4. Check if implementation matches assumptions
 
 ---

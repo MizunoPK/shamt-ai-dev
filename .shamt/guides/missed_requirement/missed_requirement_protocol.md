@@ -6,7 +6,7 @@
 
 **When NOT to Use:**
 - Unknown bugs requiring investigation - use debugging/debugging_protocol.md instead
-- Missing scope discovered BEFORE any feature enters S5 - just update specs directly during S2/3/4
+- Missing scope discovered BEFORE any feature enters S5 - just update specs directly during S2/3
 
 ---
 
@@ -56,7 +56,7 @@
    - Current Phase: MISSED_REQUIREMENT_HANDLING
    - Current Guide: missed_requirement/missed_requirement_protocol.md
    - Guide Last Read: {YYYY-MM-DD HH:MM}
-   - Critical Rules: "Get user approval first", "Return to S2/3/4", "Update epic docs"
+   - Critical Rules: "Get user approval first", "Return to S2/3", "Update epic docs"
    - Next Action: Present options to user (new feature vs update unstarted)
 
 3. **Get user approval** before creating/updating features
@@ -68,7 +68,7 @@
 ## Quick Start
 
 **What is this protocol?**
-Missed Requirement Protocol treats missing scope as real features - either creating new features or updating unstarted ones - then temporarily returning to S2/3/4 planning to maintain epic-level coherence before resuming implementation work.
+Missed Requirement Protocol treats missing scope as real features - either creating new features or updating unstarted ones - then temporarily returning to S2/3 planning to maintain epic-level coherence before resuming implementation work.
 
 **When do you use this protocol?**
 - Missing requirement discovered at ANY point after first S5 starts:
@@ -85,7 +85,7 @@ Missed Requirement Protocol treats missing scope as real features - either creat
 **When NOT to use this protocol?**
 - Unknown bugs requiring investigation (use debugging/debugging_protocol.md instead)
 - Example: "Item scores are sometimes wrong but we don't know why"
-- Missing scope discovered BEFORE any feature enters S5 (just update specs directly during S2/3/4)
+- Missing scope discovered BEFORE any feature enters S5 (just update specs directly during S2/3)
 
 **Key Outputs:**
 - ✅ New feature created OR unstarted feature updated
@@ -100,7 +100,7 @@ Missed Requirement Protocol treats missing scope as real features - either creat
 Varies by requirement complexity (1-3 hours for planning stages typical)
 
 **Exit Condition:**
-Missed requirement handling is complete when the new/updated feature has been planned (S2/3/4 complete), epic docs updated, and previous work resumed. The feature itself gets implemented later when its turn comes in the implementation sequence.
+Missed requirement handling is complete when the new/updated feature has been planned (S2/3 complete), epic docs updated, and previous work resumed. The feature itself gets implemented later when its turn comes in the implementation sequence.
 
 ---
 
@@ -108,7 +108,7 @@ Missed requirement handling is complete when the new/updated feature has been pl
 
 ```bash
 1. ⚠️ CAN BE USED AT ANY TIME AFTER FIRST STAGE 5 STARTS
-   - Before any feature enters S5: Just update specs directly during S2/3/4
+   - Before any feature enters S5: Just update specs directly during S2/3
    - After first feature enters S5: Use this protocol for epic coherence
    - Can be discovered during: Implementation, QA, debugging, epic testing, user testing
    - Maintains epic coherence through re-alignment
@@ -146,8 +146,7 @@ Missed requirement handling is complete when the new/updated feature has been pl
 7. ⚠️ SAME RIGOR AS ALL FEATURES
    - Full S2 deep dive
    - Full S3 re-alignment (all features)
-   - Full S4 test plan update
-   - When implemented: Full S5 (S5 → S6 → S7 → S8)
+   - When implemented: Full S5 (S5 → S6 → S7 → S8; Test Scope Decision at S5 Step 0 — S4 deprecated)
    - No shortcuts
 ```
 
@@ -227,7 +226,7 @@ The missed requirement protocol consists of 4 phases (plus special case):
 **Purpose:** Handle missed requirements discovered during epic testing with special restart protocol
 
 **Key Activities:**
-- Complete planning (S2/3/4) as usual
+- Complete planning (S2/3) as usual
 - Complete ALL remaining features (entire S5 sequence)
 - Implement new/updated feature (full S5)
 - **RESTART epic-level testing from S9.P1 Step 1**

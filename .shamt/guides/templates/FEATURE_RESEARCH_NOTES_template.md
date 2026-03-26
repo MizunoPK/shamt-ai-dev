@@ -345,8 +345,7 @@ class FeatureDataModel:
 
 **Future References:**
 - This document will be referenced during:
-  - S4: Test strategy planning (integration points, edge cases)
-  - S5: Implementation planning (code structure, external dependencies)
+  - S5: Implementation planning (code structure, external dependencies, test scope decision)
   - S6: Implementation execution (technical specifications)
   - S8: Post-feature alignment (integration points)
 
