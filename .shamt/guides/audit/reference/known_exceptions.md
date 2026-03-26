@@ -259,6 +259,37 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 ---
 
+### Category E (continued): D12 Companion/Reference Files in stages/
+
+**Purpose:** Documents companion files co-located with their parent guide in a `stages/` directory. These are reference/example materials, not sequential workflow guides, and intentionally lack formal Prerequisites/Exit/Overview sections.
+
+**Design Rationale:**
+- Companion files (examples, troubleshooting guides) live alongside their parent guide for discoverability
+- They are reference material — consulted as needed, not executed linearly
+- Adding formal Prerequisites/Exit Criteria would add confusing structure to one-purpose documents
+
+**Files:**
+
+19. **stages/s5/s5_v2_example.md** *(Added — child-sync-20260326)*
+    - **Type:** Worked example — illustrates a complete S5 v2 validation loop execution
+    - **Parent Guide:** `stages/s5/s5_v2_validation_loop.md`
+    - **Prerequisites:** Not applicable — reference material, not a workflow stage
+    - **Exit Criteria:** Not applicable — reference illustration only
+    - **Overview:** Replaced by `**Purpose:**` front-matter header (line 4)
+    - **Missing Sections:** Prerequisites, Exit Criteria, Overview (all not applicable)
+    - **Audit Action:** SKIP D12 — companion reference file, not a sequential guide
+
+20. **stages/s5/s5_v2_troubleshooting.md** *(Added — child-sync-20260326)*
+    - **Type:** Troubleshooting reference — common issues, fixes, and anti-patterns for S5 v2
+    - **Parent Guide:** `stages/s5/s5_v2_validation_loop.md`
+    - **Prerequisites:** Not applicable — reference material, consulted as needed
+    - **Exit Criteria:** Not applicable — reference lookup, not a workflow stage
+    - **Overview:** Replaced by `**Purpose:**` front-matter header (line 4)
+    - **Missing Sections:** Prerequisites, Exit Criteria, Overview (all not applicable)
+    - **Audit Action:** SKIP D12 — companion reference file, not a sequential guide
+
+---
+
 ## Category F: D11 Pre-Existing File Size Exceptions
 
 **Purpose:** Documents stage guide files that exceed the 1250-line D11 baseline but cannot be split within the current SHAMT work scope. These require a dedicated file-splitting SHAMT-N.
@@ -401,12 +432,15 @@ wc -l real_violations.txt  # Should be low count
 
 ## Summary Statistics
 
-**Total Known Exceptions:** 22 files (historical count)
+**Total Known Exceptions:** 24 files (active)
 
 **Active Exceptions (files that still exist):**
 - Category C (Optional/Auxiliary — Prerequisites/Exit Criteria): **2 active files**
   - stages/s3/s3_parallel_work_sync.md (conditional sync guide)
   - stages/s4/s4_feature_testing_strategy.md (deprecation redirect stub)
+- Category E (D12 Companion/Reference Files in stages/): **2 active files**
+  - stages/s5/s5_v2_example.md (worked example companion — added child-sync-20260326)
+  - stages/s5/s5_v2_troubleshooting.md (troubleshooting reference companion — added child-sync-20260326)
 - Category F (D11 File Size — pre-existing, deferred splitting): **3 active files**
   - stages/s1/s1_epic_planning.md (1332 lines, 82 over 1250 baseline)
   - stages/s5/s5_v2_validation_loop.md (1392 lines, 142 over 1250 baseline)
@@ -433,6 +467,6 @@ wc -l real_violations.txt  # Should be low count
 
 ---
 
-**Last Verified:** 2026-03-15 (Category G added — D22 lightweight MRP exceptions for router and optional guides; SHAMT-11 audit)
+**Last Verified:** 2026-03-25 (Category E extended — D12 companion/reference file exceptions for s5_v2_example.md and s5_v2_troubleshooting.md; child-sync-20260326 merge)
 **Next Review:** When new stage/iteration guides added, or if D8/D10/D22 check patterns change
 
