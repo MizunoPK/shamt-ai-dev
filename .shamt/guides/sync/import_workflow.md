@@ -6,6 +6,23 @@ The import script prints a ready-to-use agent prompt at the end of its run. This
 
 ---
 
+## Table of Contents
+
+1. [When This Applies](#when-this-applies)
+2. [Mandatory First Step: Re-Read the Validation Loop Protocol](#mandatory-first-step-re-read-the-validation-loop-protocol)
+3. [Step 1: Read the Import Diff](#step-1-read-the-import-diff)
+4. [Step 2: For Each Changed File, Check Supplements](#step-2-for-each-changed-file-check-supplements)
+5. [Step 3: Check Pointers](#step-3-check-pointers)
+6. [Step 4: Check for New Files and Deletions](#step-4-check-for-new-files-and-deletions)
+7. [Step 4.2: Apply New Sections from RULES_FILE.template.md](#step-42-apply-new-sections-from-rules_filetemplatemd)
+8. [Step 4.5: Review Preserved Child-Only Files](#step-45-review-preserved-child-only-files)
+9. [Step 5: Run a Validation Loop](#step-5-run-a-validation-loop)
+10. [Step 6: Delete the Diff Files](#step-6-delete-the-diff-files)
+11. [Step 7: Commit](#step-7-commit)
+12. [Common Situations](#common-situations)
+
+---
+
 ## When This Applies
 
 You are reading this guide because the user has just run:
@@ -82,6 +99,23 @@ For new files from master:
 For deleted files:
 - Confirm the deletion makes sense (the guide was retired or merged elsewhere)
 - Check if any of your `project-specific-configs/` supplements referenced the deleted guide — if so, update or remove them
+
+---
+
+## Step 4.2: Apply New Sections from RULES_FILE.template.md
+
+If `scripts/initialization/RULES_FILE.template.md` appears in the import diff:
+
+1. Read the updated template
+2. Compare it against your project's rules file (e.g., `CLAUDE.md` at the project root)
+3. Identify any sections present in the new template that are absent from your rules file
+4. Apply those new sections to your rules file — preserving all project-specific content
+
+This is how new agent capabilities (such as new trigger phrases) reach existing child projects
+after an import. The template is not a guide and the supplement/pointer logic does not apply
+to it — treat any new sections as additions to your rules file, not as overrides.
+
+If no sections are missing, no action is needed.
 
 ---
 

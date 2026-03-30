@@ -588,13 +588,17 @@ done
 
 **D20: Script Integrity Checklist (Sub-Round N.4)**
 
-Read each of the four sync scripts manually and verify:
+Read each of the sync scripts manually and verify:
 
 ```text
 scripts/export/export.sh
 scripts/export/export.ps1
 scripts/import/import.sh
 scripts/import/import.ps1
+scripts/storage/store.sh
+scripts/storage/store.ps1
+scripts/storage/get.sh
+scripts/storage/get.ps1
 ```
 
 Checklist for each script pair (bash + PowerShell):
@@ -602,7 +606,7 @@ Checklist for each script pair (bash + PowerShell):
 - [ ] All function calls in `.ps1` files resolve to functions defined in the script or PowerShell built-ins — no undefined function calls
 - [ ] Bash and PowerShell scripts are functionally equivalent — same logic, same behavior, same edge case handling
 - [ ] Script next-steps output (what the script prints to the user) matches the corresponding guide's step-by-step instructions
-- [ ] Transient output files written by the script (e.g. `import_diff*.md`) and all `.conf` files (via `.shamt/*.conf`) are listed in `.gitignore`
+- [ ] Transient output files written by the script (e.g. `import_diff*.md`) and all `.conf` files (via `.shamt/*.conf`) are listed in `.gitignore` or `.git/info/exclude`
 - [ ] State writes (e.g. `write_last_sync`) happen before output generation and agent prompt — not at the very end where an interruption would skip them
 
 ---

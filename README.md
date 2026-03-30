@@ -26,7 +26,8 @@ shamt-ai-dev/
     ├── scripts/
     │   ├── initialization/     (init scripts + template files)
     │   ├── export/             (export improvements to master)
-    │   └── import/             (import updates from master)
+    │   ├── import/             (import updates from master)
+    │   └── storage/            (store/get .shamt/ across machines)
     └── epics/                  (master Shamt's own epic work)
         └── PROCESS_METRICS.md  (cross-epic aggregate: timing and validation loop statistics)
 ```
@@ -94,6 +95,20 @@ If you've made improvements to your guides that others could benefit from:
 3. Open a PR to this repo with the exported changes
 
 The master maintainer reviews the PR for generality and merges it. Other projects receive the improvement on their next import. See `.shamt/guides/sync/export_workflow.md` for details.
+
+### Syncing state across machines
+
+`.shamt/` is gitignored in child projects by design. If you work on the same project from multiple machines, use the storage scripts to keep your Shamt state in sync:
+
+```bash
+# Save this machine's state
+bash .shamt/scripts/storage/store.sh
+
+# Restore on another machine (after running init.sh first)
+bash .shamt/scripts/storage/get.sh
+```
+
+These scripts use a dedicated Storage repo (a plain git repo you own) as a carrier. See `.shamt/scripts/storage/README.md` for setup instructions.
 
 ---
 

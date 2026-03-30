@@ -395,3 +395,33 @@ This project syncs improvements with the master Shamt repo via scripts:
 **When to consider importing:** At the start of a new epic, or if the guides feel stale — check `.shamt/last_sync.conf` for the date of the last import, then run the import script if an update seems warranted.
 
 **If import or export scripts fail with "Master directory not found":** `.shamt/shamt_master_path.conf` is stale (the master repo has moved or you're on a different machine). Update it with the current path to your local `shamt-ai-dev` clone.
+
+---
+
+## Shamt Storage Sync
+
+Sync `.shamt/` and your AI rules file across machines using a dedicated Storage repo.
+
+**Store (save to Storage repo):**
+Trigger phrases: "store the shamt files", "backup shamt to storage",
+"push shamt files to storage", "save shamt state"
+
+Agent procedure:
+1. Check if `.shamt/storage_path.conf` exists.
+2. If missing: ask the user — "What is the path to your Storage repo? (e.g., `/home/you/RemoteStorage`)" — save their answer to `.shamt/storage_path.conf`.
+3. Run `bash .shamt/scripts/storage/store.sh` (or `& ".shamt\scripts\storage\store.ps1"` on Windows).
+4. Report the script output to the user.
+
+**Get (restore from Storage repo):**
+Trigger phrases: "get the shamt files from storage", "restore shamt from storage",
+"pull shamt files", "sync shamt from storage"
+
+Agent procedure:
+1. Check if `.shamt/storage_path.conf` exists.
+2. If missing: ask the user — "What is the path to your Storage repo?" — save their answer to `.shamt/storage_path.conf`.
+3. Show the user what will be overwritten: list local `.shamt/` contents and any local rules files that would be replaced. Ask: "The get will overwrite your local `.shamt/` and rules files with the version from storage. Proceed? (y/N)"
+4. Once the user confirms in chat, run `bash .shamt/scripts/storage/get.sh --force` (or `get.ps1 -Force`). The `--force` flag skips the script's own stdin prompt.
+5. Report the script output to the user.
+
+**Setup:** Create a plain git repo for storage, clone it on each machine, provide its path on first use.
+**Fresh machine:** Run `init.sh` first (installs storage scripts), then run `get` to restore saved state.

@@ -33,7 +33,8 @@ shamt-ai-dev/
     │   │   ├── init.sh
     │   │   └── init.ps1
     │   ├── export/                     # export script
-    │   └── import/                     # import script
+    │   ├── import/                     # import script
+    │   └── storage/                    # store/get .shamt/ across machines
     └── epics/
         ├── EPIC_TRACKER.md             # not actively maintained for master work — see Master Dev Workflow
         ├── requests/
