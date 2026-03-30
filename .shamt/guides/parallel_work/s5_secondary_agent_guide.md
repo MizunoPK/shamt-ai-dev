@@ -73,6 +73,9 @@ When you join as a Secondary agent for S5, you'll receive an S5 handoff package 
   - STATUS: `{feature_folder}/STATUS`
 - Context files: spec.md, checklist.md, EPIC_README.md, smoke test plan, other feature spec paths
 - Pre-verified interfaces (if Primary provided them)
+- **Timing fields** (for EPIC_METRICS.md):
+  - `Start Timestamp`: filled by primary when spawning you
+  - `Completion Timestamp`: you fill this in before signaling WAITING_FOR_SYNC
 
 ### Step 3: Verify Paths Exist
 
@@ -330,7 +333,14 @@ Append to `agent_comms/{your_id}_to_primary.md`:
 - All S5 validation dimensions clean
 - Test plans documented
 
-**Step 2: Update STATUS**
+**Step 2: Update STATUS and record Completion Timestamp**
+
+Before updating STATUS, fill in `Completion Timestamp` in your `HANDOFF_PACKAGE_S5.md`:
+```text
+Completion Timestamp: {current ISO timestamp}
+```
+Primary reads this at the sync point and records S5 stage duration in `EPIC_METRICS.md`.
+
 ```text
 STAGE: S5
 PHASE: Implementation Planning

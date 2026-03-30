@@ -714,7 +714,7 @@ print(f"✅ Epic workflow completed in {elapsed:.2f}s")
 
 ### Step 3: Continue Validation
 
-- Reset clean counter to 0
+- Reset `consecutive_clean` to 0
 - Continue to next validation round
 - Check ALL 12 dimensions again with fresh eyes
 
@@ -767,7 +767,7 @@ STOP - DO NOT PROCEED TO S9.P3 YET
 **If still finding issues:**
 - Fix ALL issues immediately (no deferring)
 - Re-run tests (must pass 100%)
-- Reset clean counter to 0
+- Reset `consecutive_clean` to 0
 - Continue validation loop until primary clean round + sub-agent confirmation
 - Do NOT proceed to User Testing until validation complete
 

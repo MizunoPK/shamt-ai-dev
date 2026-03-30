@@ -291,6 +291,7 @@ Step 5: Epic Structure Creation
    +-- Create epic_lessons_learned.md
    +-- Create research/ folder
    +-- Create GUIDE_ANCHOR.md
+   +-- Create EPIC_METRICS.md
    +-- Update EPIC_README.md with feature tracking table
 
 Step 6: Transition to S2
@@ -701,6 +702,57 @@ Use template from `templates/` folder (see `templates/TEMPLATES_INDEX.md`) → "
 - Workflow reference diagram
 
 **This file ensures agents can resume correctly after context window limits.**
+
+### Step 5.5b: Create EPIC_METRICS.md
+
+Create `EPIC_METRICS.md` in the epic root folder alongside `EPIC_README.md`.
+
+**Purpose:** Tracks timing and validation loop statistics throughout the epic for process improvement. Used by S10 Step 7e to populate the master `PROCESS_METRICS.md` aggregate.
+
+**Template:**
+
+```markdown
+# EPIC_METRICS: {epic_name}
+
+Branch: {branch_name}
+Start Date: {YYYY-MM-DD}
+End Date: (TBD — fill in at S10)
+Testing Approach: {A/B/C/D — copy from EPIC_README header}
+Feature Count: {N}
+Parallel Agents Used: {e.g., "S2 parallel (3 agents), S5 sequential" or "No"}
+
+## Stage Timing
+
+| Stage | Start | End | Duration |
+|-------|-------|-----|----------|
+| S1 | {YYYY-MM-DD HH:MM} | {YYYY-MM-DD HH:MM} | {min} |
+| S2 (all features) | | | |
+| S3 | | | |
+| S5 (all features) | | | |
+| S6–S8 (all features) | | | |
+| S9 | | | |
+| S10 | | | |
+
+## Validation Loop Summary
+
+| Loop | Stage | Rounds | Top Reset Dims | Notes |
+|------|-------|--------|----------------|-------|
+| (fill as loops complete) | | | | |
+
+## Notes
+
+{Any special circumstances, deferred work, or mid-epic changes worth recording}
+```
+
+**Fill in at S1 Step 5:** Branch, Start Date, Feature Count. Leave End Date and all timing cells blank (TBD).
+
+**Fill in as stages exit:** After each stage exits, record the end time and compute duration.
+
+**Fill in as validation loops exit:** Count rounds from the loop log (VALIDATION_LOG.md for most loops; S8_ALIGNMENT_VALIDATION_{feature_NN}.md for S8.P1 loops — verify filename per loop type). Identify the top reset-causing dimensions and record in the table.
+
+**At S10 Step 5:** Include EPIC_METRICS.md in the commit. The file moves to `done/` with the epic folder at S10 Step 6.
+
+---
 
 ### Step 5.6: Update EPIC_README.md
 
@@ -1170,7 +1222,7 @@ I'll work through all {N} features one-by-one, starting with Feature 01.
 **REQUIRED ACTIONS:**
 1. [ ] Use Read tool to re-read Step 5 section of this guide
 2. [ ] Verify ALL required files created:
-   - [ ] Epic-level: README, DISCOVERY, test plan, lessons learned, research/, GUIDE_ANCHOR
+   - [ ] Epic-level: README, DISCOVERY, test plan, lessons learned, research/, GUIDE_ANCHOR, EPIC_METRICS
    - [ ] Each feature: README, spec with Discovery Context, checklist, lessons learned
 3. [ ] Verify spec.md has Discovery Context section populated
 4. [ ] Verify epic_smoke_test_plan.md marked as "INITIAL - WILL UPDATE"
@@ -1213,7 +1265,7 @@ I'll work through all {N} features one-by-one, starting with Feature 01.
 [ ] Sibling epic awareness check completed (Step 0) — any dependencies noted for EPIC_README.md
 [ ] Git branch created and .shamt/epics/EPIC_TRACKER.md updated
 [ ] DISCOVERY.md created and user-approved
-[ ] Epic folder structure complete (EPIC_README, DISCOVERY, test plan, lessons learned, research/, GUIDE_ANCHOR)
+[ ] Epic folder structure complete (EPIC_README, DISCOVERY, test plan, lessons learned, research/, GUIDE_ANCHOR, EPIC_METRICS)
 [ ] Feature folders created with 4 files each (README, spec with Discovery Context, checklist, lessons learned)
 [ ] User approved Discovery findings (Step 3)
 [ ] User approved feature breakdown (Step 4)

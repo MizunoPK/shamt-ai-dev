@@ -338,7 +338,9 @@ When the user addresses feedback that isn't from the automated PR reviewer (e.g.
 |------|----------|---------|
 | Epic requests | `.shamt/epics/requests/` | Epic request files (BEFORE S1 starts) |
 | Epic tracker | `.shamt/epics/EPIC_TRACKER.md` | All epics + next available number |
+| Process metrics | `.shamt/epics/PROCESS_METRICS.md` | Cross-epic aggregate: timing, loop rounds, reset dimensions |
 | Active epics | `.shamt/epics/{{EPIC_TAG}}-{N}/` | Epic folders (CREATED DURING S1) |
+| Epic metrics | `.shamt/epics/{{EPIC_TAG}}-{N}/EPIC_METRICS.md` | Per-epic timing and validation loop statistics |
 | Architecture | `.shamt/project-specific-configs/ARCHITECTURE.md` | Project structure and design |
 | Coding standards | `.shamt/project-specific-configs/CODING_STANDARDS.md` | Style, naming, testing rules |
 | Project-specific configs | `.shamt/project-specific-configs/` | All project-specific supplements and overrides |

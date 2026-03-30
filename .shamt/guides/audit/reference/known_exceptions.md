@@ -216,27 +216,33 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 ---
 
-### E1: D8 TODO/Placeholder Instances (24 Critical)
+### E1: D8 TODO/Placeholder Instances (27 Critical)
 
 **Dimension:** D8 (Documentation Quality)
 **Check:** `pre_audit_checks.sh` TODO/placeholder scan
-**Every-run count:** 25 critical, ~35 placeholder matches
+**Every-run count:** 27 critical, ~35 placeholder matches
 
 **Root Cause:** The D8 check scans all of `.shamt/guides/` including the epic workflow stage guides (s1–s10). Those guides intentionally contain TODO/TBD/placeholder text as instructional examples and checklist items — they teach users to avoid placeholders, so they must reference them.
 
 **Affected files:**
 - `stages/s1/s1_p3_discovery_phase.md` — mentions "TBD" as example of vague description to avoid
+- `stages/s1/s1_epic_planning.md` — template showing `Integration Test Convention: [TBD — will be set in S5]` and `End Date: (TBD — fill in at S10)` as instructional examples
+- `stages/s2/s2_p1_spec_creation_refinement.md` — "zero questions remain 'UNKNOWN', 'TBD'" as exit criterion
 - `stages/s3/s3_epic_planning_approval.md` — checklist item: "no TBD" as acceptance criterion
 - `stages/s5/s5_bugfix_workflow.md` — "Bug Fix TODO: Authentication Error" as a template example
 - `stages/s5/s5_v2_validation_loop.md` — "no TBD" completeness check
-- `stages/s7/s7_p2_qc_rounds.md` — "NO TODOs" as QC requirement (×2 lines)
+- `stages/s7/s7_p2_qc_rounds.md` — "NO TODOs" as QC requirement (x2 lines)
+- `stages/s7/s7_p3_final_review.md` — "Check: No 'TODO' comments" as review criterion
+- `stages/s8/s8_p1_cross_feature_alignment.md` — "Don't compare to original TODO or plan" (meta-content)
+- `stages/s8/s8_p2_epic_testing_update.md` — "Don't rely on specs or TODO list" / "not specs/TODOs" (meta-content, x2 lines)
 - `stages/s10/s10_epic_cleanup.md` — "No placeholder text (e.g., 'TODO', '{fill in later}')" as checklist
+- (multiple reference/ files — glossary, faq, stage_5 ref card, validation loop guides — all meta-content examples)
 
 **Why acceptable:** All occurrences are meta-content: teaching that real work products must not have TODOs. The stage guides themselves have no incomplete sections. The text is definitionally required to describe the standard.
 
-**Action:** When pre_audit_checks.sh reports "TODOs remaining: 25" — this is the expected baseline. Only investigate if the count rises above 25 or if new files appear in the list.
+**Action:** When pre_audit_checks.sh reports "TODOs remaining: 27" — this is the expected baseline. Only investigate if the count rises above 27 or if new files appear in the list.
 
-**Note:** Baseline updated from 23 → 24 on 2026-03-07 after confirming `stages/s7/s7_p2_qc_rounds.md` contributes 2 lines (83: "✅ Zero tech debt (no TODOs...)" and 133: "NO TODOs, NO temporary solutions") that are pre-existing meta-content. Updated 24 → 25 on 2026-03-14 after SHAMT-7 audit confirmed `stages/s1/s1_epic_planning.md:533` contributes 1 line (template showing `Integration Test Convention: [TBD — will be set in S5]`) that is instructional placeholder content.
+**Note:** Baseline updated from 23 → 24 on 2026-03-07; updated 24 → 25 on 2026-03-14; updated 25 → 27 on 2026-03-30 after SHAMT-20 audit confirmed `stages/s8/s8_p1_cross_feature_alignment.md` and `stages/s8/s8_p2_epic_testing_update.md` contribute meta-content TODO references added by SHAMT-20 changes. Full affected-file list updated to include all 27 files.
 
 ---
 
@@ -301,23 +307,23 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 **Files:**
 
-**F1. stages/s1/s1_epic_planning.md (1332 lines)**
-- **D11 Status:** Exceeds 1250-line baseline by 82 lines
-- **Pre-existing:** Yes — was 1304 lines before SHAMT-9 (P2+P3 added ~28 lines: Step 0, parallel play note, reference card update)
+**F1. stages/s1/s1_epic_planning.md (1394 lines)**
+- **D11 Status:** Exceeds 1250-line baseline by 144 lines
+- **Pre-existing:** Yes — was 1304 lines before SHAMT-9 (~28 lines); SHAMT-20 added ~62 more lines (P2 S3 overlap note, P6 Gate 1.5, P8 S3 early start, P9 metrics references)
 - **Split candidates:** S1.P1–P3 are each large enough to warrant standalone files
-- **Why deferred:** Splitting requires updating all "read s1_epic_planning.md" references across the guide tree; out of SHAMT-9 scope
+- **Why deferred:** Splitting requires updating all "read s1_epic_planning.md" references across the guide tree; out of SHAMT-20 scope
 - **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
 
-**F2. stages/s5/s5_v2_validation_loop.md (1392 lines)**
-- **D11 Status:** Exceeds 1250-line baseline by 142 lines
-- **Pre-existing:** Yes — was 1327 lines before SHAMT-9 (P4 added ~65 lines: Dependency Re-Validation Protocol section)
+**F2. stages/s5/s5_v2_validation_loop.md (1397 lines)**
+- **D11 Status:** Exceeds 1250-line baseline by 147 lines
+- **Pre-existing:** Yes — was 1327 lines before SHAMT-9; SHAMT-20 added ~5 more lines (secondary agent guide references)
 - **Split candidates:** Phase 1 (Draft), Phase 2 (Validation Loop), dimension reference sections
-- **Why deferred:** Splitting requires updating all "read s5_v2_validation_loop.md" references and agent prompts; out of SHAMT-9 scope
+- **Why deferred:** Splitting requires updating all "read s5_v2_validation_loop.md" references and agent prompts; out of SHAMT-20 scope
 - **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
 
-**F3. reference/validation_loop_master_protocol.md (1544 lines)**
-- **D11 Status:** Exceeds 1250-line baseline by 294 lines
-- **Pre-existing:** Yes — consolidated master protocol predates SHAMT-7; SHAMT-7 did not modify this file
+**F3. reference/validation_loop_master_protocol.md (1582 lines)**
+- **D11 Status:** Exceeds 1250-line baseline by 332 lines
+- **Pre-existing:** Yes — consolidated master protocol predates SHAMT-7; grew to 1582 lines through SHAMT-20 additions
 - **Split candidates:** Could be split into protocol core + dimension-specific appendices
 - **Why deferred:** This is the central reference document for all validation loop scenarios; splitting requires updating all scenario files (`validation_loop_*.md`) that defer to it; out of SHAMT-7 scope
 - **Note:** `pre_audit_checks.sh` does not scan `reference/` for D11, so this exception is for manual audit rounds only
@@ -358,6 +364,51 @@ follows the emoji (space → hyphen after stripping the emoji).
 - **Design Rationale:** Redirect stubs exist only to point agents to the replacement (stages/s5/s5_v2_validation_loop.md). Requiring MRP/FS would add confusing structure to a one-purpose document.
 - **Audit Action:** SKIP D22 — deprecation redirect stub, not a workflow guide
 
+**G5. stages/s10/s10_p2_overview_workflow.md** *(Added SHAMT-20 audit)*
+- **Type:** Optional workflow guide (user opt-in phase)
+- **MRP:** Present as `🔔 OPTIONAL READING PROTOCOL` (not MANDATORY) — includes Read tool instruction and resumption clause; "OPTIONAL" signals the opt-in nature of the phase
+- **FORBIDDEN SHORTCUTS:** Present with guide-specific items (Step 1 and Step 3)
+- **Design Rationale:** S10.P2 is intentionally opt-in — users must be asked before the agent proceeds. Using MANDATORY READING PROTOCOL would be misleading for a guide the agent should only read if the user opts in. The OPTIONAL READING PROTOCOL preserves the same content requirements (Read tool, resumption) while signaling the phase is conditional.
+- **Audit Action:** PASS D22 — ORP with resumption clause + guide-specific FORBIDDEN SHORTCUTS provides adequate bypass resistance for an optional guide
+
+---
+
+## Category H: D12 MRP Exceptions (parallel_work/ Guides)
+
+**Purpose:** Documents all guides in `parallel_work/` that intentionally omit MRP. `pre_audit_checks.sh` intentionally does not scan `parallel_work/` for D12, reflecting this design intent.
+
+**D12 Context:** Dimension 12 (Mandatory Reading Protocol) requires all stage guides to have MRP. `parallel_work/` guides are not stage guides — they fall into two types: (1) secondary agent task prompts passed via the Task tool (the guide IS the agent's task, so MRP is redundant); (2) primary agent coordination references read during parallel execution (coordination reference material, not stage entry points where bypass risk exists).
+
+**Files:**
+
+**H1. parallel_work/s2_secondary_agent_guide.md** *(Added SHAMT-20 audit)*
+- **Type:** Task-spawned secondary agent guide (S2 parallel work)
+- **MRP:** Not present — guide is the Task tool prompt itself; secondary agents receive it as their complete task context, not as a browsable guide
+- **FORBIDDEN SHORTCUTS:** Not applicable — guide is a complete task description, not a navigable workflow with skippable sections
+- **Design Rationale:** Secondary agents are spawned via Task tool with this guide as their task. They cannot "skip" reading it — it IS their task. MRP enforcement would be redundant and confusing.
+- **Audit Action:** PASS D12 — task-spawned design eliminates MRP requirement
+
+**H2. parallel_work/s5_secondary_agent_guide.md** *(Added SHAMT-20 audit)*
+- **Type:** Task-spawned secondary agent guide (S5 parallel work)
+- **MRP:** Not present — same rationale as H1
+- **FORBIDDEN SHORTCUTS:** Not applicable — same rationale as H1
+- **Design Rationale:** Same as H1.
+- **Audit Action:** PASS D12 — task-spawned design eliminates MRP requirement
+
+**H3. parallel_work/s2_primary_agent_guide.md** *(Added SHAMT-20 audit, Round 8)*
+- **Type:** Primary agent coordination reference guide (S2 parallel work)
+- **MRP:** Not present — guide is a parallel work coordination reference, not a stage entry point; primary agent reads it during parallel execution, not as a browsable workflow guide
+- **FORBIDDEN SHORTCUTS:** Not applicable — coordination reference, not a sequential workflow with skippable phases
+- **Design Rationale:** `parallel_work/` guides are intentionally excluded from D12 automated checks by `pre_audit_checks.sh`. Primary agent coordination guides are reference material for managing parallel execution — they do not represent stage transitions where MRP bypass risk exists.
+- **Audit Action:** PASS D12 — parallel_work/ coordination reference, not a stage guide
+
+**H4. parallel_work/s5_primary_agent_guide.md** *(Added SHAMT-20 audit, Round 8)*
+- **Type:** Primary agent coordination reference guide (S5 parallel work)
+- **MRP:** Not present — same rationale as H3
+- **FORBIDDEN SHORTCUTS:** Not applicable — same rationale as H3
+- **Design Rationale:** Same as H3.
+- **Audit Action:** PASS D12 — parallel_work/ coordination reference, not a stage guide
+
 ---
 
 ## How to Use This Document
@@ -368,12 +419,12 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 1. **Generate violation list** using automated pattern search
 2. **Cross-reference with this document** before flagging as issues
-3. **Filter out known exceptions** (19 files total — Categories A–D)
+3. **Filter out known exceptions** (see Summary Statistics for current counts; Categories C–H active)
 4. **Investigate remaining violations** as potential real issues
 
 **When running `pre_audit_checks.sh` and seeing recurring script output:**
 
-- "TODOs remaining: 25" — expected baseline; see Category E1 above
+- "TODOs remaining: 27" — expected baseline; see Category E1 above
 - "Found 2 potential prerequisite-content conflicts" pointing at s2_p2_cross_feature_alignment.md — expected; see Category E2 above
 - "⚠️ CLAUDE.md found but no stage references detected" — known script integer-parsing bug (line 370); not a real issue
 
@@ -432,7 +483,7 @@ wc -l real_violations.txt  # Should be low count
 
 ## Summary Statistics
 
-**Total Known Exceptions:** 24 files (active)
+**Total Known Exceptions:** 16 category entries (14 unique active files — s3_parallel_work_sync and s4_feature_testing_strategy appear in both C and G for different exception types)
 
 **Active Exceptions (files that still exist):**
 - Category C (Optional/Auxiliary — Prerequisites/Exit Criteria): **2 active files**
@@ -442,14 +493,20 @@ wc -l real_violations.txt  # Should be low count
   - stages/s5/s5_v2_example.md (worked example companion — added child-sync-20260326)
   - stages/s5/s5_v2_troubleshooting.md (troubleshooting reference companion — added child-sync-20260326)
 - Category F (D11 File Size — pre-existing, deferred splitting): **3 active files**
-  - stages/s1/s1_epic_planning.md (1332 lines, 82 over 1250 baseline)
-  - stages/s5/s5_v2_validation_loop.md (1392 lines, 142 over 1250 baseline)
-  - reference/validation_loop_master_protocol.md (1544 lines, 294 over 1250 baseline)
-- Category G (D22 Lightweight MRP — Router and Optional Guides): **4 active files**
+  - stages/s1/s1_epic_planning.md (1394 lines, 144 over 1250 baseline)
+  - stages/s5/s5_v2_validation_loop.md (1397 lines, 147 over 1250 baseline)
+  - reference/validation_loop_master_protocol.md (1582 lines, 332 over 1250 baseline)
+- Category G (D22 Lightweight MRP — Router and Optional Guides): **5 active files**
   - stages/s2/s2_feature_deep_dive.md (router guide — lightweight MRP only, no FS)
   - stages/s9/s9_epic_final_qc.md (router guide — lightweight MRP only, no FS)
   - stages/s3/s3_parallel_work_sync.md (optional conditional — lightweight MRP only, no FS)
   - stages/s4/s4_feature_testing_strategy.md (redirect stub — no MRP or FS)
+  - stages/s10/s10_p2_overview_workflow.md (optional workflow — ORP instead of MRP, FORBIDDEN SHORTCUTS present)
+- Category H (D12 MRP Exceptions — parallel_work/ Guides): **4 active files**
+  - parallel_work/s2_secondary_agent_guide.md (task-spawned guide — no MRP needed)
+  - parallel_work/s5_secondary_agent_guide.md (task-spawned guide — no MRP needed)
+  - parallel_work/s2_primary_agent_guide.md (coordination reference — no MRP needed)
+  - parallel_work/s5_primary_agent_guide.md (coordination reference — no MRP needed)
 
 **Inactive Exceptions (files deleted from filesystem):**
 - Category A (S5 Iteration Files): 14 files — DELETED (S5 v1 → v2 migration)
@@ -464,9 +521,11 @@ wc -l real_violations.txt  # Should be low count
 - Optional/Conditional: 1 file (s3_parallel_work_sync)
 - Reference Material: 2 files (s4_feature_testing_card, s4_test_strategy_development)
 - Router (lightweight MRP): 2 files (s2_feature_deep_dive, s9_epic_final_qc)
+- Task-Spawned (no MRP): 2 files (s2_secondary_agent_guide, s5_secondary_agent_guide)
+- Coordination Reference (no MRP): 2 files (s2_primary_agent_guide, s5_primary_agent_guide)
 
 ---
 
-**Last Verified:** 2026-03-25 (Category E extended — D12 companion/reference file exceptions for s5_v2_example.md and s5_v2_troubleshooting.md; child-sync-20260326 merge)
+**Last Verified:** 2026-03-30 (updated three times: first pass — E1 baseline 25 → 27, F1/F2/F3 line counts, G5 added for s10_p2_overview_workflow.md; second pass — Category H added for parallel_work secondary agent guides; third pass — H3/H4 added for primary agent guides, Category H title broadened to cover all parallel_work/ guides)
 **Next Review:** When new stage/iteration guides added, or if D8/D10/D22 check patterns change
 

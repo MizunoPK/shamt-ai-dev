@@ -52,7 +52,7 @@ Before proceeding, you must have:
 ## 🚫 FORBIDDEN SHORTCUTS
 
 You CANNOT:
-- Skip Step 6 (Epic PR Review) or any of its 11 categories because "S9.P2 already covered them" — all 11 categories are MANDATORY; S9.P2 results provide supplementary context only, not a replacement for the epic PR review
+- Skip Step 6 (Epic Final Review) or any of its 5 categories because "S9.P2 already covered them" — all 5 categories are MANDATORY; S9.P2 results provide supplementary context only, not a replacement for the epic-scope review
 - Fix issues found in Step 6 inline instead of creating bug fix folders — ALL high/medium priority issues require a bug fix folder and the full S2→S5→S6→S7 workflow
 - Proceed to Step 8 (Final Verification) after creating bug fixes without restarting S9 from S9.P1 — the S9 restart is MANDATORY after any bug fixes created in Step 7
 - Mark S9.P4 complete without updating both EPIC_README.md Epic Progress Tracker and epic_lessons_learned.md with S9.P4 results and insights
@@ -89,8 +89,8 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 
 ### What are the key outputs?
 
-1. **Epic PR Review Results** (documented in epic_lessons_learned.md)
-   - 11 categories reviewed at epic level
+1. **Epic Final Review Results** (documented in epic_lessons_learned.md)
+   - 5 categories reviewed at epic level (cross-feature and epic-scope concerns only)
    - All categories must pass (no failures)
 
 2. **Bug Fixes (if issues found)**
@@ -127,21 +127,15 @@ Prerequisites Met?
          │
          ▼
 ┌─────────────────────────────────────┐
-│ STEP 6: Epic PR Review              │
-│ (11 Categories - Epic Scope)        │
+│ STEP 6: Epic Final Review           │
+│ (5 Categories - Epic Scope)         │
 └─────────────────────────────────────┘
          │
-         ├─ Correctness (epic level)
-         ├─ Code Quality (epic level)
-         ├─ Comments & Documentation
-         ├─ Code Organization
-         ├─ Testing (epic level)
-         ├─ Security (epic level)
-         ├─ Performance (epic level)
-         ├─ Error Handling (epic level)
-         ├─ Architecture (CRITICAL)
-         ├─ Backwards Compatibility
-         └─ Scope & Changes
+         ├─ 1. Cross-Feature Integration
+         ├─ 2. Architecture Coherence
+         ├─ 3. Epic Requirements Coverage
+         ├─ 4. Emergent Quality Patterns
+         └─ 5. Epic Documentation Completeness
          │
          ▼
     Any Issues Found?
@@ -179,7 +173,7 @@ Prerequisites Met?
    - Focus: Architectural consistency, cross-feature impacts
    - Don't repeat feature-level checks
 
-2. ⚠️ ALL 11 categories are MANDATORY
+2. ⚠️ ALL 5 categories are MANDATORY
    - Cannot skip categories
    - All categories must PASS (no exceptions)
    - If ANY category fails → create bug fix
@@ -242,6 +236,7 @@ Prerequisites Met?
 
 ### Feature Completion
 - [ ] All features completed S8.P2 (Epic Testing Update) (Post-Feature Testing Update)
+- [ ] S7.P3 (Final Review) completed and passed for ALL features
 - [ ] No features currently in S6 (Implementation)
 - [ ] No pending feature work
 
@@ -266,142 +261,138 @@ Prerequisites Met?
 
 **If S9.P2 achieved primary clean round + sub-agent confirmation:**
 
-S9.P2's 12-dimension validation provides strong coverage of many PR review categories. The following have significant overlap:
+S9.P2's 12-dimension validation provides strong coverage that overlaps with several S9.P4 categories. Use S9.P2 findings as context, but still verify each category independently:
 
 **Categories with High S9.P2 Coverage (trust but verify):**
-- **Category 1 (Correctness):** S9.P2 Dimension 1 (Empirical Verification) validated all integrations
-- **Category 2 (Code Quality):** S9.P2 Dimension 5 (Clarity & Specificity) validated naming, structure
-- **Category 5 (Testing):** S9.P2 Dimension 12 (Success Criteria) required 100% test pass
-- **Category 8 (Error Handling):** S9.P2 Dimension 10 (Error Handling Consistency) validated patterns
-- **Category 9 (Architecture):** S9.P2 Dimensions 8 & 11 (Integration, Alignment) validated design
+- **Category 1 (Cross-Feature Integration):** S9.P2 Dimension 1 (Empirical Verification) validated integrations; S9.P2 Dimension 8 (Integration Points) validated data flows
+- **Category 2 (Architecture Coherence):** S9.P2 Dimensions 8 & 11 (Integration, Alignment) validated design coherence
 
-**Categories with Lower S9.P2 Coverage (focus review here):**
-- **Category 6 (Security):** Not heavily covered in S9.P2 dimensions
-- **Category 7 (Performance):** Not heavily covered in S9.P2 dimensions
-- **Category 10 (Backwards Compatibility):** Not covered in S9.P2 dimensions
-- **Category 11 (Scope & Changes):** Validate against ORIGINAL user request (not just specs)
-- **Category 4 (Comments & Documentation):** Epic-level documentation only
+**Categories with Lower S9.P2 Coverage (more thorough review needed):**
+- **Category 3 (Epic Requirements Coverage):** Requires re-reading the original request file line-by-line — not fully covered in S9.P2
+- **Category 4 (Emergent Quality Patterns):** Cross-feature inconsistencies may have been partially flagged in S9.P2 Dimension 10 (Error Handling), but naming and logic duplication require explicit review
+- **Category 5 (Epic Documentation Completeness):** Not fully covered in S9.P2
 
 **Approach:**
-- **Still review ALL 11 categories** (no skipping)
-- **For high-overlap categories:** Quick verification, trust S9.P2 findings
-- **For low-overlap categories:** Thorough review, these are new checks
-- **Defense in depth:** Redundancy is acceptable for critical categories (Correctness, Architecture)
+- **Review ALL 5 categories** (no skipping)
+- **For high-overlap categories:** Quick verification against S9.P2 findings, confirm still holds
+- **For lower-overlap categories:** Thorough fresh review
 
-**Note:** This guidance applies ONLY when S9.P2 achieved primary clean round + sub-agent confirmation. If S9.P2 had issues or was shortened, review all 11 categories thoroughly.
+**Note:** This guidance applies ONLY when S9.P2 achieved primary clean round + sub-agent confirmation. If S9.P2 had issues or was shortened, review all 5 categories thoroughly without relying on S9.P2 results.
 
 ---
 
-## STEP 6: Epic PR Review (Multi-Round with Fresh Eyes)
+## STEP 6: Epic Final Review (5 Categories)
 
-**🚨 MANDATORY: READ PR REVIEW PROTOCOL**
+**Purpose:** Systematic review of 5 epic-level categories using the standard primary-agent + sub-agent confirmation protocol. S7.P3 already validated per-feature code quality; this step covers only cross-feature and epic-scope concerns.
 
-**Before proceeding, you MUST:**
-1. **READ:** `reference/validation_loop_qc_pr.md`
-2. **Follow the complete hybrid approach:**
-   - Round 1: 4 specialized reviews (fresh agent for each)
-   - Rounds 2-5: Repeated comprehensive reviews (fresh agent for each)
-   - primary clean round + sub-agent confirmation required to pass
-   - Maximum 5 rounds total
-
-**Purpose:** Systematic epic-level PR review using fresh agent context to catch issues before final commit.
-
-**Why fresh agents?** New agents avoid context bias and provide "fresh eyes" on epic-wide changes.
+**Note:** Per-feature code quality was confirmed in S7.P3. Categories here cover only cross-feature and epic-scope concerns that are invisible until all features are complete together.
 
 ---
 
 ### Overview
 
-**Objective:** Apply PR review protocol to epic-wide changes with focus on architectural consistency.
+**Objective:** Review 5 epic-level categories. Each category focuses on concerns that are only meaningful at epic scope — not individual feature behavior.
 
 **This is NOT feature-level review:**
-- S7 (Testing & Review) already reviewed individual feature correctness
-- S9.P4 reviews EPIC-WIDE concerns:
-  - Architectural consistency ACROSS features
-  - Code duplication BETWEEN features
-  - Cross-feature integration quality
-  - Epic scope completeness
-  - Original epic request validation
+- S7.P3 (Final Review) already reviewed each feature's correctness, code quality, documentation, security, performance, and test coverage
+- S9.P4 reviews EPIC-SCOPE concerns only:
+  - Cross-feature integration correctness
+  - Architectural coherence across features
+  - Epic requirements coverage against original request
+  - Emergent patterns only visible at full-epic scale
+  - Epic documentation completeness
 
-**Round Structure:**
+**5 Review Categories:**
 
-**Round 1 (Specialized - 4 Fresh Agents):**
-- **Round 1a:** Code Quality (epic level) - Fresh agent
-- **Round 1b:** Testing & Performance - Fresh agent
-- **Round 1c:** Security & Error Handling - Fresh agent
-- **Round 1d:** Documentation & Scope - Fresh agent
+1. **Cross-Feature Integration** — Do all features work together correctly? Are integration points verified? Does data flow correctly between features? Are there interface mismatches?
 
-**Rounds 2-5 (Comprehensive - Fresh Agent Each):**
-- Each round: Fresh agent reviews ALL 11 categories
-- primary clean round + sub-agent confirmation required to pass
-- Maximum 5 total rounds
+2. **Architecture Coherence** — Does the overall implementation match the intended architecture? Is there unplanned coupling between features? Has the design drifted from the epic's intended structure?
+
+3. **Epic Requirements Coverage** — Are ALL original epic requirements satisfied? Verify against the epic request file (`.shamt/epics/requests/{epic_name}.txt`) line-by-line. Are any user-stated goals unaddressed?
+
+4. **Emergent Quality Patterns** — Cross-feature inconsistencies only visible at epic scope: inconsistent error handling styles across features, naming inconsistencies between features (same concept named differently), logic duplicated across features that should be shared.
+
+5. **Epic Documentation Completeness** — Does `EPIC_README.md` accurately reflect the actual implementation? Does `epic_lessons_learned.md` cover all stages? Does `epic_smoke_test_plan.md` reflect the actual implementation? Are feature summaries accurate?
+
+**Exit Criteria:** Primary clean round + sub-agent confirmation (standard master protocol)
 
 ---
 
 ### Step-by-Step Workflow
 
-**See:** `reference/stage_9/epic_pr_review_checklist.md` for complete 11-category checklist
+**Step 6.1: Create pr_review_issues.md**
 
-**Step 6.1: Apply Round 1 (Specialized Reviews)**
+```text
+Location: SHAMT-{N}-{epic_name}/pr_review_issues.md
+Purpose: Track issues discovered during epic review
+```
 
-1. **Create pr_review_issues.md file:**
-   ```text
-   Location: SHAMT-{N}-{epic_name}/pr_review_issues.md
-   Purpose: Track issues discovered during PR review rounds
-   ```
+**Step 6.2: Primary Agent Review (5 Categories)**
 
-2. **Launch Round 1a (Code Quality - Fresh Agent):**
-   - Code Quality (Epic Level)
-   - Code Organization & Refactoring (Epic Level)
+Review each category sequentially. For each category:
+- Read relevant code/docs directly (do not rely on memory of earlier stages)
+- Check the S9.P2 validation log for prior findings relevant to this category (trust but verify the most critical claims)
+- Document any issues found in `pr_review_issues.md`
 
-3. **Launch Round 1b (Testing & Performance - Fresh Agent):**
-   - Testing (Epic Level)
-   - Performance (Epic Level)
+**Focus by category:**
 
-4. **Launch Round 1c (Security & Error Handling - Fresh Agent):**
-   - Security (Epic Level)
-   - Error Handling (Epic Level)
+**Category 1 — Cross-Feature Integration:**
+- Read each feature's actual integration points (not just specs)
+- Verify data handoffs between features work correctly
+- Check that error propagation across feature boundaries is handled
 
-5. **Launch Round 1d (Documentation & Scope - Fresh Agent):**
-   - Comments & Documentation (Epic Level)
-   - Scope & Changes (Epic Level)
+**Category 2 — Architecture Coherence:**
+- Compare actual code structure to intended architecture (from DISCOVERY.md and epic ticket)
+- Identify any features that coupled to others in unplanned ways
+- Check for consistent design patterns across features
 
-**Step 6.2: Apply Rounds 2-5 (Comprehensive Reviews)**
+**Category 3 — Epic Requirements Coverage:**
+- Read `.shamt/epics/requests/{epic_name}.txt` (original request)
+- Compare each stated requirement against the actual implementation
+- Flag any goal that appears unaddressed or only partially addressed
 
-**For each round (2-5), launch fresh agent to review ALL 11 categories:**
+**Category 4 — Emergent Quality Patterns:**
+- Scan all features for inconsistent error handling styles
+- Check that the same concept isn't named differently across features
+- Identify logic that is duplicated across features and should be shared (not just noted in one feature)
 
-1. Correctness (Epic Level)
-2. Code Quality (Epic Level)
-3. Comments & Documentation (Epic Level)
-4. Code Organization & Refactoring (Epic Level)
-5. Testing (Epic Level)
-6. Security (Epic Level)
-7. Performance (Epic Level)
-8. Error Handling (Epic Level)
-9. **Architecture (Epic Level - CRITICAL)**
-10. Backwards Compatibility (Epic Level)
-11. Scope & Changes (Epic Level)
+**Category 5 — Epic Documentation Completeness:**
+- Read `EPIC_README.md` and verify it accurately describes the implementation
+- Verify `epic_smoke_test_plan.md` reflects actual test scenarios (not assumptions from S1/S3)
+- Check that `epic_lessons_learned.md` covers insights from all stages
 
-**Each fresh agent:**
-- Reviews ALL 11 categories
-- Documents issues in pr_review_issues.md
-- Returns comprehensive report
+**Step 6.3: Assess Primary Round Results**
 
-**Passing Criteria:**
-- 2 consecutive rounds with ZERO issues = PASS
-- If issues found in any round → Fix and continue
-- Maximum 5 rounds total
+**If primary review found ZERO issues across all 5 categories:**
+- Mark primary round as clean
+- Proceed to Step 6.4 (sub-agent confirmation)
 
-**Step 6.3: Document PR Review Results**
+**If primary review found issues:**
+- Fix all issues found
+- Re-run the primary review (Step 6.2) from the beginning
+- Repeat until a primary round finds zero issues
+
+**Step 6.4: Sub-Agent Confirmation**
+
+After the first clean primary round, spawn 2 independent sub-agents to confirm. Each sub-agent:
+- Reviews all 5 categories independently
+- Has access to the same code and documentation
+- Reports zero issues OR identifies any remaining concerns
+
+**Pass criteria:** Both sub-agents report zero issues → S9.P4 Step 6 PASSED.
+
+If either sub-agent finds issues: fix them, re-run primary review, then spawn 2 new sub-agents.
+
+**Step 6.5: Document Results**
 
 **Update epic_lessons_learned.md with results:**
 
-**See:** `reference/stage_9/epic_final_review_templates.md` Template 1 for PR review results template
+**See:** `reference/stage_9/epic_final_review_templates.md` Template 1 for review results template
 
 **Include:**
-- Date, epic name, total rounds
-- Final status (PASSED/FAILED)
-- Review summary (what was found in each round)
+- Date, epic name, total rounds (primary + sub-agent confirmation)
+- Final status (PASSED)
+- Summary of what was found in each category
 - Total issues found and fixed
 - Epic-level concerns addressed
 
@@ -506,7 +497,7 @@ For EACH issue:
 - [ ] S9.P2 Epic QC Validation Loop passed (primary clean round + sub-agent confirmation)
 - [ ] All 12 dimensions validated (7 master + 5 epic)
 - [ ] S9.P3 User testing passed (no bugs found)
-- [ ] Epic PR review passed (all 11 categories)
+- [ ] Epic final review passed (all 5 categories, primary clean round + sub-agent confirmation)
 - [ ] NO pending issues or bug fixes
 - [ ] ALL tests passing (100% pass rate)
 
@@ -614,20 +605,16 @@ Mark S9.P4 complete and prepare for S10:
 
 **S9.P4 is COMPLETE when ALL of the following are true:**
 
-### Epic PR Review (Step 6)
-- [ ] All 11 categories reviewed: ✅ PASSED
-  - [ ] 1. Correctness (Epic Level): ✅ PASS
-  - [ ] 2. Code Quality (Epic Level): ✅ PASS
-  - [ ] 3. Comments & Documentation (Epic Level): ✅ PASS
-  - [ ] 4. Code Organization & Refactoring (Epic Level): ✅ PASS
-  - [ ] 5. Testing (Epic Level): ✅ PASS
-  - [ ] 6. Security (Epic Level): ✅ PASS
-  - [ ] 7. Performance (Epic Level): ✅ PASS
-  - [ ] 8. Error Handling (Epic Level): ✅ PASS
-  - [ ] 9. Architecture (Epic Level - CRITICAL): ✅ PASS
-  - [ ] 10. Backwards Compatibility (Epic Level): ✅ PASS
-  - [ ] 11. Scope & Changes (Epic Level): ✅ PASS
-- [ ] PR review results documented in epic_lessons_learned.md
+### Epic Final Review (Step 6)
+- [ ] All 5 categories reviewed: ✅ PASSED
+  - [ ] 1. Cross-Feature Integration: ✅ PASS
+  - [ ] 2. Architecture Coherence: ✅ PASS
+  - [ ] 3. Epic Requirements Coverage: ✅ PASS
+  - [ ] 4. Emergent Quality Patterns: ✅ PASS
+  - [ ] 5. Epic Documentation Completeness: ✅ PASS
+- [ ] Primary clean round achieved (zero issues across all 5 categories)
+- [ ] Sub-agent confirmation: both sub-agents reported zero issues ✅
+- [ ] Review results documented in epic_lessons_learned.md
 
 ### Handle Issues (Step 7 - if applicable)
 - [ ] All issues documented (if any found)
@@ -718,9 +705,9 @@ Mark S9.P4 complete and prepare for S10:
 **S9.P4 - Epic Final Review is the final validation before epic completion:**
 
 **Key Activities:**
-1. **Epic PR Review (Step 6):** Apply 11-category checklist to epic-wide changes
-   - Focus: Architectural consistency, cross-feature impacts, epic scope
-   - Critical category: Architecture (Step 6.9)
+1. **Epic Final Review (Step 6):** Review 5 epic-level categories using primary-agent + sub-agent confirmation protocol
+   - Focus: Cross-feature integration, architecture coherence, original requirements coverage, emergent patterns, documentation completeness
+   - Per-feature code quality already confirmed in S7.P3; these 5 categories are purely epic-scope
    - Document results in epic_lessons_learned.md
 
 2. **Handle Issues (Step 7):** Create bug fixes for any discovered issues
@@ -746,12 +733,12 @@ Mark S9.P4 complete and prepare for S10:
 - Ready to proceed to S10
 
 **Common Pitfalls:**
-- Repeating feature-level review instead of epic-level
+- Repeating feature-level review instead of restricting to epic-scope categories
 - Fixing issues inline instead of using bug fix workflow
-- Skipping Architecture category review (most important)
-- Comparing to specs instead of original epic request
+- Skipping Category 3 (Epic Requirements Coverage) line-by-line verification against original request
+- Comparing to specs instead of original epic request (`.shamt/epics/requests/`)
 - Accepting issues instead of creating bug fixes
-- Not documenting PR review results
+- Not documenting review results
 - Proceeding to S10 with pending issues
 
 **See:** `reference/stage_9/epic_final_review_examples.md` for detailed examples of each mistake and best practices

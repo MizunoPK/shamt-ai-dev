@@ -136,7 +136,7 @@ Validate the implemented feature through smoke testing, QC rounds, and PR review
 
 **Step 2: Validation Loop (primary clean round + sub-agent confirmation)**
 1. Check ALL 16 dimensions every round (7 master + 9 S7 QC-specific)
-2. Fix issues immediately, reset clean counter
+2. Fix issues immediately, reset `consecutive_clean`
 3. Exit after primary clean round + sub-agent confirmation
 
 **Step 3: Final Review**

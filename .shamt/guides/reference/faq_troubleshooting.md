@@ -295,7 +295,7 @@ A: YES - Complete restart protocol:
 
 A: NO - Use fix-and-continue approach:
 - Fix ALL issues immediately
-- Reset clean counter to 0
+- Reset `consecutive_clean` to 0
 - Continue validation until primary clean round + sub-agent confirmation
 - No restart needed (validation loop approach)
 

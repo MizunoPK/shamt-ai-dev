@@ -480,6 +480,11 @@ Ready to begin I1: Feature-Level Discovery.
 - Start with S2.P1 (Spec Creation and Refinement)
 - Repeat all iterations
 
+**If N-1 features have completed I3 (final feature still in I3):**
+- S3 early start is possible — see Early Start section in `stages/s3/s3_epic_planning_approval.md`
+- Primary may begin provisional S3.P1 and S3.P2 drafts while the last feature finishes I3
+- S3.P3 (Epic Plan Approval) still requires ALL features to complete I3 before starting
+
 **If ALL features complete S2:**
 - Transition to S3 (Epic-Level Docs, Tests, and Approval)
 

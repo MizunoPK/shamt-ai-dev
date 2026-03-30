@@ -230,7 +230,7 @@ Round 3: Random spot-checks + integration
 
 **Key difference from old approach:**
 - **Old (restart protocol):** Any issue → Restart from S7.P1 (smoke testing)
-- **New (fix and continue):** Any issue → Fix immediately → Reset clean counter → Continue validation
+- **New (fix and continue):** Any issue → Fix immediately → Reset `consecutive_clean` → Continue validation
 
 **Why counter resets:**
 - Fixing Issue A can introduce Issue B

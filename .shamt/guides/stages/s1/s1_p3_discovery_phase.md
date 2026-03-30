@@ -985,7 +985,7 @@ X "I read the entire epic request and have no questions for the user"
    - Zero issues/gaps? → Counter++
 5. [ ] Check counter value: Counter < 1 = continue loop, Counter = 1 = trigger sub-agent confirmation → verify exit readiness
 6. [ ] Update EPIC_README.md Agent Status:
-   - Current Step: "S1.P3.2 Round N complete, clean counter = {X}, [continuing loop OR triggering sub-agent confirmation OR proceeding to S1.P3.3]"
+   - Current Step: "S1.P3.2 Round N complete, `consecutive_clean` = {X}, [continuing loop OR triggering sub-agent confirmation OR proceeding to S1.P3.3]"
    - Last Updated: [timestamp]
 7. [ ] Output acknowledgment: "✅ CHECKPOINT 2 COMPLETE: Re-read Validation Loop section, verified all issues fixed, counter = {X}"
 

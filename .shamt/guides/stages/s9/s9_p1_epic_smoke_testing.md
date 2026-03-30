@@ -48,8 +48,9 @@ S8 (ALL features complete) →
 ## 🚫 FORBIDDEN SHORTCUTS
 
 You CANNOT:
-- Skip Parts 1-2 (Import/Entry Point Tests) because individual features were smoke-tested in S7.P1 — epic smoke testing validates ALL features working together; per-feature smoke tests do not substitute
-- Declare epic smoke testing complete after Part 3 (E2E) without completing Part 4 (logging and documentation) — all 4 parts are required before proceeding to S9.P2
+- Skip Part 1 (Import Test) or Part 2 (Entry Point Test) because individual features were smoke-tested in S7.P1 — epic smoke testing validates ALL features working together; per-feature smoke tests do not substitute. Parts 1 and 2 run concurrently (see Parallelization section below), but both are required before Part 3 can begin
+- Start Part 3 before both Parts 1 and 2 have passed — if either fails, fix and re-run both before Part 3
+- Declare epic smoke testing complete after Part 3 (E2E) without completing Part 4 — all 4 parts are required before proceeding to S9.P2
 
 If you are about to do any of the above: STOP and re-read the relevant section.
 
@@ -129,10 +130,11 @@ Epic Smoke Testing is complete when ALL 4 parts of epic_smoke_test_plan.md pass,
    - Epic testing (S9): Tests ALL features working together
    - Focus: Cross-feature workflows, integration points
 
-4. ⚠️ If smoke testing fails → Fix issues, re-run from Part 1
+4. ⚠️ Parts 1 and 2 run concurrently — both are required before Part 3
+   - After STEP 1: spawn sub-agent for Part 2, run Part 1 yourself
+   - Collect both results; if either fails → fix and re-run both before Part 3
+   - If Part 3 or Part 4 fails → fix and RE-RUN ALL 4 PARTS
    - Do NOT proceed to QC validation loop with failing smoke tests
-   - After fixing → Re-run smoke testing from Part 1
-   - Do NOT skip any parts
 
 5. ⚠️ Execute ALL 4 parts of epic_smoke_test_plan.md
    - Part 1: Epic-level import tests
@@ -203,19 +205,18 @@ STEP 1: Pre-QC Verification
 
 STEP 2: Epic Smoke Testing (4 Parts)
 
-Part 1: Epic Import Test
-   ↓ Import all modules from ALL features
-   ↓ Verify epic-wide imports work
-   ↓
-   If PASS → Part 2
-   If FAIL → Fix, re-run Part 1
+After STEP 1: Spawn sub-agent for Part 2, then run Part 1
 
-Part 2: Epic Entry Point Test
-   ↓ Test epic-level workflows start correctly
-   ↓ Verify all feature modes accessible
+   ┌──────────────────────────────┬──────────────────────────────┐
+   │ PRIMARY: Part 1              │ SUB-AGENT: Part 2            │
+   │ Epic Import Test             │ Epic Entry Point Test        │
+   │ All modules from ALL         │ Epic-level workflows start   │
+   │ features import cleanly      │ correctly, all modes visible │
+   └──────────────────────────────┴──────────────────────────────┘
+   ↓ Collect both results before Part 3
    ↓
-   If PASS → Part 3
-   If FAIL → Fix, re-run Parts 1 & 2
+   If BOTH pass → Part 3
+   If EITHER fails → Fix, re-run both before Part 3
 
 Part 3: Epic E2E Execution Test (CRITICAL)
    ↓ Execute epic workflows with REAL data
@@ -274,6 +275,24 @@ Check epic folder for any `bugfix_{priority}_{name}/` folders. If found, verify 
 - Review user's original goals
 - Understand epic success criteria
 - Keep in mind for Part 3 validation
+
+---
+
+## Parallelization: Parts 1 and 2
+
+After completing STEP 1 (Pre-QC Verification):
+
+1. **Primary agent** proceeds directly to Part 1 (Epic Import Test)
+2. **Spawn a sub-agent** with the Part 2 instructions to run the Epic Entry Point Test simultaneously
+
+**Sub-agent guidance for Part 2:**
+- Read `EPIC_README.md` to identify all feature modes and epic entry points
+- Run the entry point tests per the Part 2: Epic Entry Point Test section in this guide
+- Report pass/fail with the specific commands run and output observed
+
+Collect both results before starting Part 3. Parts 3 and 4 proceed sequentially after Parts 1 and 2 both pass.
+
+**If either Part 1 or Part 2 fails:** Fix the failure, then re-run both parts before attempting Part 3.
 
 ---
 

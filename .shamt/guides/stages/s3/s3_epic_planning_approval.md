@@ -37,9 +37,24 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 
 ---
 
+## Early Start (Optional)
+
+When all but one feature have completed I3 (S2.P1 Iteration 3), the primary agent **may** begin S3 preparation while the final feature finishes I3:
+
+- **S3.P1** (Epic Testing Strategy) and **S3.P2** (Epic Documentation Refinement) can start as provisional drafts
+- Mark all provisional content with: `⚠️ PROVISIONAL — pending final feature spec`
+- **S3.P3** (Epic Plan Approval) still requires ALL features to complete I3 and S2.P2 (Cross-Feature Alignment) before starting
+- If the final feature's spec changes something architectural during I3: update the provisional drafts before presenting to the user in S3.P3
+
+This allows S3.P1 and S3.P2 work to overlap with the last feature's I3, reducing total elapsed time.
+
+---
+
 ## Prerequisites
 
 **Before starting S3:**
+
+**Note:** When N-1 features have completed I3, S3.P1 and S3.P2 may begin as provisional drafts (see Early Start section above). S3.P3 still requires all prerequisites below to be met.
 
 - [ ] S2 completed for ALL features in the epic
 - [ ] All feature spec.md files have acceptance criteria (user-approved)

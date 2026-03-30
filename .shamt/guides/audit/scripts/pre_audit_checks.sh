@@ -139,6 +139,9 @@ declare -a known_exceptions=(
   # (s4_feature_testing_card.md and s4_test_strategy_development.md archived in SHAMT-7)
   "stages/s3/s3_parallel_work_sync.md"
   "stages/s4/s4_feature_testing_strategy.md"  # deprecation redirect stub, not a workflow guide
+  # Category E: D12 companion/reference files in stages/ (2 active files — added child-sync-20260326)
+  "stages/s5/s5_v2_example.md"           # worked example companion, not a workflow guide
+  "stages/s5/s5_v2_troubleshooting.md"   # troubleshooting reference companion, not a workflow guide
 )
 
 # Self-check: warn if any known_exceptions entry no longer exists on disk.
@@ -186,14 +189,15 @@ for file in stages/*/*.md; do
   done
 done
 
+EXCEPTION_COUNT=${#known_exceptions[@]}
 if [ $MISSING_PREREQ -eq 0 ] && [ $MISSING_EXIT -eq 0 ]; then
-  echo -e "${GREEN}✅ All required sections present (excluding 3 known exceptions)${NC}"
+  echo -e "${GREEN}✅ All required sections present (excluding $EXCEPTION_COUNT known exceptions)${NC}"
 fi
 
 echo ""
 echo "Missing Prerequisites: $MISSING_PREREQ"
 echo "Missing Exit Criteria: $MISSING_EXIT"
-echo "Known exceptions skipped: 3 (see audit/reference/known_exceptions.md)"
+echo "Known exceptions skipped: $EXCEPTION_COUNT (see audit/reference/known_exceptions.md)"
 echo ""
 
 # ============================================================================

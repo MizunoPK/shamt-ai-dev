@@ -29,7 +29,7 @@ S9.P2: Epic Validation Loop (2-3 hours)
     │   ├─ Dimension 10: Epic Cohesion & Consistency
     │   ├─ Dimension 11: Error Propagation
     │   └─ Dimension 12: End-to-End Success Criteria
-    ├─ Fix issues immediately, reset clean counter
+    ├─ Fix issues immediately, reset `consecutive_clean`
     ├─ Continue until primary clean round + sub-agent confirmation
     │       └─ Fix-and-continue approach (no restart for minor issues)
     ↓
@@ -188,7 +188,7 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 
 **Pass Criteria:** 100% of success criteria met, user goals achieved
 
-**If issues found:** Fix immediately, reset clean counter, continue validation
+**If issues found:** Fix immediately, reset `consecutive_clean`, continue validation
 
 ---
 

@@ -119,19 +119,19 @@ Each round:
 1. Re-read the entire `overview.md` from line 1 to end (use read_file — partial reads do not count)
 2. Check all 5 dimensions and document PASS or ISSUE for each
 3. Fix any issues found immediately in the file
-4. State `clean_counter = N` at the end of the round
+4. State `consecutive_clean = N` at the end of the round
 
 **Counter rules:**
-- Issues found → fix them → `clean_counter = 0`
-- Zero issues → `clean_counter = 1` → trigger sub-agent confirmation (see Exit Criteria)
+- Issues found → fix them → `consecutive_clean = 0`
+- Zero issues → `consecutive_clean = 1` → trigger sub-agent confirmation (see Exit Criteria)
 
 ### Exit Criteria
 
-After `clean_counter = 1` (primary clean round):
+After `consecutive_clean = 1` (primary clean round):
 1. Spawn 2 independent sub-agents in parallel
 2. Each sub-agent reads the full `overview.md` and checks all 5 dimensions
 3. Both must independently confirm zero issues
-4. If either sub-agent finds an issue: fix it, reset `clean_counter = 0`, continue primary rounds
+4. If either sub-agent finds an issue: fix it, reset `consecutive_clean = 0`, continue primary rounds
 5. Exit only when both sub-agents confirm clean
 
 After the overview loop exits, proceed to Step 5.
@@ -243,18 +243,18 @@ Each round:
 3. Check all 12 dimensions and document PASS or ISSUE for each
 4. Run the Adversarial Self-Check
 5. Fix any issues found immediately in the review file
-6. State `clean_counter = N` at the end of the round
+6. State `consecutive_clean = N` at the end of the round
 
 **Counter tracking:**
 ```
-clean_counter = 0   (tracked in review_validation_log.md)
+consecutive_clean = 0   (tracked in review_validation_log.md)
 
 After each round:
-  - Issues found: fix them, reset clean_counter to 0
-  - Zero issues: clean_counter = 1 → trigger sub-agent confirmation
+  - Issues found: fix them, reset consecutive_clean to 0
+  - Zero issues: consecutive_clean = 1 → trigger sub-agent confirmation
   - Both sub-agents confirm zero issues: EXIT
-  - A sub-agent finds issues: fix them, reset clean_counter to 0, continue
-  - State "clean_counter = N" explicitly at end of every round
+  - A sub-agent finds issues: fix them, reset consecutive_clean to 0, continue
+  - State "consecutive_clean = N" explicitly at end of every round
 ```
 
 ### Exit Criteria

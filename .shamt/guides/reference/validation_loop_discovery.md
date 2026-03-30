@@ -53,7 +53,7 @@ Each round includes an **Adversarial Challenge** checklist — questions the age
 
 > **Note:** The per-round Adversarial Challenge checklists in this file (shown in Rounds 1–3 below) serve as the Adversarial Self-Check for Discovery contexts — they satisfy and extend the master protocol's generic 5-question check. No additional self-check step is required in Discovery rounds; the per-round challenges replace it.
 
-> **When any adversarial challenge item returns "No":** Document what is missing as an issue, add any unasked questions to the Pending Questions table, and treat this round as NOT clean (clean counter resets to 0).
+> **When any adversarial challenge item returns "No":** Document what is missing as an issue, add any unasked questions to the Pending Questions table, and treat this round as NOT clean (`consecutive_clean` resets to 0).
 
 ---
 

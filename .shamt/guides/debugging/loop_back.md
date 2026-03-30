@@ -906,7 +906,7 @@ Re-running epic testing now...
 
 1. **Run Validation Loop:**
    - Check ALL 16 dimensions every round (7 master + 9 S7 QC-specific)
-   - Fix issues immediately, reset clean counter
+   - Fix issues immediately, reset `consecutive_clean`
    - Continue until primary clean round + sub-agent confirmation
 
 2. **Outcome possibilities:**
@@ -947,7 +947,7 @@ Re-running epic testing now...
 
 1. **Run Validation Loop:**
    - Check ALL 12 dimensions every round (7 master + 5 epic-specific)
-   - Fix issues immediately, reset clean counter
+   - Fix issues immediately, reset `consecutive_clean`
    - Continue until primary clean round + sub-agent confirmation
 
 2. **Outcome possibilities:**

@@ -243,7 +243,8 @@ STAGE 10: Epic Cleanup
 │   ├─ Move epic from Active to Completed table
 │   ├─ Add epic detail section with full description
 │   ├─ Increment "Next Available Number"
-│   └─ Commit the .shamt/epics/EPIC_TRACKER.md update
+│   ├─ Commit the .shamt/epics/EPIC_TRACKER.md update
+│   └─ Append summary row to .shamt/epics/PROCESS_METRICS.md and commit
 │
 ├─> STEP 8: S10.P2 — Epic Overview Document (optional)
 │   ├─ Ask user: create SHAMT-{N}-OVERVIEW.md? (yes / no)
@@ -551,6 +552,7 @@ Verify:
 - ✅ No debugging code left in (e.g., print statements)
 - ✅ No commented-out code
 - ✅ No sensitive data (API keys, passwords, etc.)
+- ✅ EPIC_METRICS.md exists and is updated through S9 (Stage Timing table filled in, Validation Loop Summary reflects actual loop data)
 
 **5b. Stage All Epic Changes**
 
@@ -824,6 +826,27 @@ Verify commit successful:
 git log -1 --oneline
 ```
 
+**7e. Append to .shamt/epics/PROCESS_METRICS.md**
+
+Read EPIC_METRICS.md from the archived epic folder to compute the summary row.
+
+If PROCESS_METRICS.md does not yet exist, create it with this header:
+```markdown
+| Epic | Date | Features | Total Time | S5 Avg Rounds | S7 Avg Rounds | S9 Rounds | S9P3 Restarts | Top Reset Dim |
+|------|------|:--------:|:----------:|:-------------:|:-------------:|:---------:|:-------------:|---------------|
+```
+
+Append one row for this epic (extract values from EPIC_METRICS.md):
+```markdown
+| SHAMT-{N} | {date} | {feature count} | {total time} | {S5.P2 avg rounds} | {S7.P2 avg rounds} | {S9.P2 rounds} | {S9.P3 restart count} | {most common reset dim} |
+```
+
+Commit the update:
+```bash
+git add .shamt/epics/PROCESS_METRICS.md
+git commit -m "chore/SHAMT-{N}: append PROCESS_METRICS row"
+```
+
 ---
 
 ### STEP 8: S10.P2 — Epic Overview Document (optional)
@@ -1072,6 +1095,7 @@ The epic is now complete and ready for user review!
 - [ ] Epic detail section added with full description
 - [ ] Next Available Number incremented
 - [ ] .shamt/epics/EPIC_TRACKER.md update committed
+- [ ] .shamt/epics/PROCESS_METRICS.md updated with summary row for this epic and committed
 
 ### S10.P2 — Epic Overview Document (Optional)
 
@@ -1109,7 +1133,7 @@ This phase is opt-in — the question must always be asked, but creating the doc
 3. Run S10.P1 — create guide update proposal doc (systematic review, user-approved)
 4. Commit epic implementation work with clear message
 5. Move entire epic folder to done/ (max 10 epics, delete oldest if needed) and commit
-6. Update .shamt/epics/EPIC_TRACKER.md (move to Completed, add details, increment number) and commit
+6. Update .shamt/epics/EPIC_TRACKER.md (move to Completed, add details, increment number) and commit; append summary row to PROCESS_METRICS.md and commit
 7. Run S10.P2 — ask user about epic overview document; if yes, create `SHAMT-{N}-OVERVIEW.md` at repository root and commit it (optional)
 8. Push all commits to remote branch
 9. Push branch, create Pull Request, recommend squash commit message to user

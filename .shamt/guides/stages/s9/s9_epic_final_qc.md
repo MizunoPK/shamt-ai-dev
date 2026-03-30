@@ -138,7 +138,7 @@ Epic-Level Final QC is where you validate the ENTIRE epic as a cohesive whole af
 **What it covers:**
 - **Validation Loop:** Check ALL 12 dimensions every round (7 master + 5 epic-specific)
 - **Exit Criteria:** primary clean round + sub-agent confirmation with ZERO issues
-- **Issue Handling:** Fix immediately, reset clean counter, continue (no restart for minor issues)
+- **Issue Handling:** Fix immediately, reset `consecutive_clean`, continue (no restart for minor issues)
 
 **Key Outputs:**
 - VALIDATION_LOOP_LOG.md tracking all rounds
@@ -535,7 +535,7 @@ A: No. All 8 steps are mandatory. The split doesn't change workflow, just organi
 A: Check EPIC_README.md Agent Status for current step, then read the guide for that step.
 
 **Q: What if I find issues during S9.P2 (QC Validation Loop)?**
-A: Fix issues immediately, reset clean counter to 0, and continue validation. No restart needed for S9.P2. Continue until primary clean round + sub-agent confirmation.
+A: Fix issues immediately, reset `consecutive_clean` to 0, and continue validation. No restart needed for S9.P2. Continue until primary clean round + sub-agent confirmation.
 
 **Q: What if user finds bugs during S9.P3 (User Testing)?**
 A: User-reported bugs require restart from S9.P1. Fix bugs using debugging protocol, then restart from S9.P1 (smoke testing) through S9.P2 (validation loop) and return to S9.P3.

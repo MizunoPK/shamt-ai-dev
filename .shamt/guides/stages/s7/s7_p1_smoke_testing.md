@@ -65,8 +65,9 @@ S5 (Implementation Planning) → S6 (Implementation Execution) →
 ## 🚫 FORBIDDEN SHORTCUTS
 
 You CANNOT:
-- Skip Part 2 (Entry Point Test) or Part 3 (E2E Execution Test) because Part 1 (Import Test) passed — all 3 parts are mandatory; Part 3 is marked CRITICAL because it validates actual runtime behavior
-- Declare smoke testing complete based on Part 1 results alone — Part 3's E2E test with real data verification is required before proceeding to S7.P2
+- Skip Part 2 (Entry Point Test) — Parts 1 and 2 run concurrently (see Parallelization section below); both are required, and Part 3 cannot begin until both complete and pass
+- Start Part 3 before both Parts 1 and 2 have passed — if either fails, fix and re-run both before attempting Part 3
+- Declare smoke testing complete before Part 3 — Part 3's E2E test with real data verification is required before proceeding to S7.P2; it is marked CRITICAL because it validates actual runtime behavior
 
 If you are about to do any of the above: STOP and re-read the relevant section.
 
@@ -113,8 +114,10 @@ Smoke Testing is complete when ALL 3 parts pass (including data value verificati
    - Use feature's own input/output
    - Epic-level integration tested in S9
 
-2. ⚠️ If smoke testing fails → Fix issues, restart from Part 1
-   - After fixing → Re-run ALL 3 parts
+2. ⚠️ Parts 1 and 2 run concurrently — both are required before Part 3
+   - After identifying test targets: spawn sub-agent for Part 2, run Part 1 yourself
+   - Collect both results; if either fails → fix and re-run both before Part 3
+   - If Part 3 fails → fix and RE-RUN ALL 3 PARTS (including Parts 1+2 re-sync)
    - Do NOT proceed to Validation Loop (S7.P2) until all parts pass
 
 3. ⚠️ Document results in feature README
@@ -174,19 +177,21 @@ Smoke Testing is complete when ALL 3 parts pass (including data value verificati
 │       FEATURE-LEVEL SMOKE TESTING (3 Parts)                 │
 └─────────────────────────────────────────────────────────────┘
 
-Part 1: Import Test
-   ↓ Import all NEW/MODIFIED modules for THIS feature
-   ↓ Verify no import errors
+Step 1: Identify test targets
+   ↓ git log --oneline --name-status origin/main..HEAD (modules for Part 1)
+   ↓ spec.md "Usage" section (entry point for Part 2)
+   ↓ Spawn sub-agent with Part 2 instructions
    ↓
-   If PASS → Part 2
-   If FAIL → Fix, re-run Part 1
-
-Part 2: Entry Point Test
-   ↓ Test script starts with feature mode/options
-   ↓ Verify help text includes feature additions
+   ┌─────────────────────────┬──────────────────────────┐
+   │ PRIMARY: Part 1         │ SUB-AGENT: Part 2        │
+   │ Import Test             │ Entry Point Test         │
+   │ All new/modified        │ Feature mode / options   │
+   │ modules load cleanly    │ start up correctly       │
+   └─────────────────────────┴──────────────────────────┘
+   ↓ Collect both results before Part 3
    ↓
-   If PASS → Part 3
-   If FAIL → Fix, re-run Parts 1 & 2
+   If BOTH pass → Part 3
+   If EITHER fails → Fix, re-run both before Part 3
 
 Part 3: E2E Execution Test (CRITICAL)
    ↓ Execute FEATURE workflow with REAL data
@@ -196,6 +201,24 @@ Part 3: E2E Execution Test (CRITICAL)
    If PASS → Document, proceed to S7.P2
    If FAIL → Fix, RE-RUN ALL 3 PARTS
 ```
+
+---
+
+## Parallelization: Parts 1 and 2
+
+After completing Step 1 (identifying test targets from git history and spec.md):
+
+1. **Primary agent** proceeds directly to Part 1 (Import Test)
+2. **Spawn a sub-agent** with the Part 2 instructions to run the Entry Point Test simultaneously
+
+**Sub-agent guidance for Part 2:**
+- Read the feature's `spec.md` "Usage" section to identify the entry point
+- Run the entry point tests per the Part 2: Entry Point Test section in this guide
+- Report pass/fail with the specific commands run and output observed
+
+Collect both results before starting Part 3.
+
+**If either Part 1 or Part 2 fails:** Fix the failure, then re-run both parts before attempting Part 3.
 
 ---
 

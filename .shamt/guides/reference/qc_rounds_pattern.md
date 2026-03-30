@@ -49,12 +49,12 @@ Each Round: Check ALL dimensions
    ↓ All dimensions checked every round
    ↓ Pass criteria: ZERO issues found
    ↓
-   If CLEAN (0 issues) → Increment clean counter
+   If CLEAN (0 issues) → Increment `consecutive_clean`
       → If primary clean round + sub-agent confirmation → EXIT (proceed to next stage)
       → Otherwise → Next round
 
    If ISSUES FOUND → Fix immediately
-      → Reset clean counter to 0
+      → Reset `consecutive_clean` to 0
       → Continue validation (next round)
       → No restart needed - fix-and-continue approach
 ```
@@ -76,7 +76,7 @@ Each Round: Check ALL dimensions
 ```text
 VALIDATION LOOP PROTOCOL (v2.0):
 1. Fix ALL issues found immediately
-2. Reset clean counter to 0
+2. Reset `consecutive_clean` to 0
 3. Continue validation (no restart needed)
 4. Exit after primary clean round + sub-agent confirmation
 
@@ -87,7 +87,7 @@ WHY fix-and-continue?
 ```
 
 **Issue Handling:**
-- **Any Round:** Fix issues immediately, reset clean counter, continue
+- **Any Round:** Fix issues immediately, reset `consecutive_clean`, continue
 - **Exit Criteria:** Primary clean round + sub-agent confirmation (zero issues)
 - **Max Rounds:** 10 (escalate to user if exceeded)
 
@@ -186,7 +186,7 @@ assert df['player_name'].str.len().min() > 2  # Verify reasonable values
 - **Objective:** Basic validation
 - **Time Estimate:** 10-20 minutes
 - **Pass Criteria:** Scope-specific (see implementation guides)
-- **If issues found:** Fix immediately, reset clean counter to 0, continue to next round
+- **If issues found:** Fix immediately, reset `consecutive_clean` to 0, continue to next round
 
 **Scope-Specific Focus:**
 - **Feature-level:** Unit tests, code structure, output files, interfaces, documentation
@@ -202,7 +202,7 @@ assert df['player_name'].str.len().min() > 2  # Verify reasonable values
 - **Pass Criteria:**
   - ZERO issues found this round
   - All dimensions checked
-- **If issues found:** Fix immediately, reset clean counter to 0, continue to next round
+- **If issues found:** Fix immediately, reset `consecutive_clean` to 0, continue to next round
 
 **Scope-Specific Focus:**
 - **Feature-level:** Baseline comparison, data validation, regression testing, semantic diff, edge cases
@@ -219,8 +219,8 @@ assert df['player_name'].str.len().min() > 2  # Verify reasonable values
   - **ZERO issues found** (critical, medium, OR minor)
   - Spec re-read confirms 100% implementation
   - Fresh-eyes review finds no gaps
-  - If clean: increment clean counter (need primary clean round + sub-agent confirmation to exit)
-- **If issues found:** Fix immediately, reset clean counter to 0, continue
+  - If clean: increment `consecutive_clean` (need primary clean round + sub-agent confirmation to exit)
+- **If issues found:** Fix immediately, reset `consecutive_clean` to 0, continue
 
 **Scope-Specific Focus:**
 - **Feature-level:** Fresh-eyes spec review, algorithm traceability re-check, integration gap re-check
@@ -308,7 +308,7 @@ Round N → check ALL dimensions → fix any issues → continue until primary c
 ## "I found a bug, I'll fix it and move on"
 
 ## CORRECT - Fix issue immediately, then complete ALL remaining dimensions
-Fix D3 issue → reset clean counter → check D4...D12 → continue next round
+Fix D3 issue → reset `consecutive_clean` → check D4...D12 → continue next round
 ```
 
 ### ❌ Mistake 3: Accepting "90% Done"

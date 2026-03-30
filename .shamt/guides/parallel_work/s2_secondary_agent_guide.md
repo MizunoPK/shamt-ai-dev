@@ -96,6 +96,8 @@ My Assignment: feature_02_team_penalty
 Primary Agent ID: Agent-abc123
 My Agent ID: Secondary-A
 Starting Stage: S2.P1 (Feature Deep Dive - Research Phase)
+Start Timestamp: {ISO_TIMESTAMP}         (filled by primary when spawning)
+Completion Timestamp: {ISO_TIMESTAMP}    (filled by secondary before WAITING_FOR_SYNC)
 
 **Coordination:**
 - Inbox: agent_comms/primary_to_secondary_a.md
@@ -110,6 +112,8 @@ Starting Stage: S2.P1 (Feature Deep Dive - Research Phase)
 Begin S2.P1 now.
 ═══════════════════════════════════════════════════════════
 ```
+
+**Timing fields:** The primary fills in `Start Timestamp` when spawning the secondary. The secondary fills in `Completion Timestamp` before updating STATUS to WAITING_FOR_SYNC. Primary reads these timestamps at the sync point and records S2 stage duration in `EPIC_METRICS.md`.
 
 ### Step 2: Parse Configuration
 

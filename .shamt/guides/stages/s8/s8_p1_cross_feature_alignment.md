@@ -59,7 +59,7 @@ S5 (Implementation Planning) → S6 (Implementation Execution) → S7 (Testing &
 ## 🚫 FORBIDDEN SHORTCUTS
 
 You CANNOT:
-- Skip checking remaining feature specs because "the changes were minor" — ALL not-yet-implemented feature specs must be reviewed against the ACTUAL implementation, regardless of perceived change scope
+- Skip the misclassification guard for features listed as "Independent of" the completed feature — this guard is required even when dependency claims are expected to hold (implementation can introduce unexpected dependencies that were unplanned in S2)
 - Skip Step 5 (Alignment Validation Loop) because "no spec changes were needed" — the validation loop must run to confirm zero conflicts, even when no changes are required
 
 If you are about to do any of the above: STOP and re-read the relevant section.
@@ -94,11 +94,11 @@ Post-Feature Alignment is complete when all remaining feature specs are updated 
 ## 🛑 Critical Rules
 
 ```text
-1. ⚠️ REVIEW ALL REMAINING FEATURES (Not just "related" ones)
-   - Don't assume which features are affected
-   - Implementation insights can affect unexpected features
-   - Review EVERY feature that hasn't completed S7 (Testing & Review) yet
-   - Sequentially go through all remaining features
+1. ⚠️ REVIEW DEPENDENCY-TARGETED FEATURES (Targeted by spec.md declarations)
+   - Read the completed feature's spec.md `## Feature Dependencies` section
+   - **Full alignment review:** Review ALL features listed in `## Depended on by` — these directly depend on the completed feature and must be fully reviewed against the ACTUAL implementation
+   - **Misclassification guard:** For features listed as "Independent of" the completed feature, run Step 2.6 — verify the actual implementation has no unexpected calls, data flows, or shared file writes to those features beyond what was declared in S2
+   - Features not mentioned in either section: no review needed (no declared relationship)
 
 2. ⚠️ COMPARE TO ACTUAL IMPLEMENTATION (Not the plan)
    - Don't compare to original TODO or plan
@@ -253,14 +253,17 @@ STEP 1: Identify Remaining Features
    ├─ Determine review order (dependency-based)
    └─ Create review checklist
 
-STEP 2: For Each Remaining Feature (Sequential Review)
-   ├─ Read feature spec (fresh eyes)
-   ├─ Read just-completed feature's ACTUAL code
-   ├─ Compare spec assumptions to actual implementation
-   ├─ Identify misalignments and needed updates
-   ├─ Update spec.md and checklist.md NOW
-   ├─ Mark feature for rework if significant changes
-   └─ Commit changes, move to next feature
+STEP 2: Targeted Review Based on Dependency Declarations
+   ├─ Read completed feature's spec.md `## Feature Dependencies` section
+   ├─ FOR EACH feature in "Depended on by": full alignment review
+   │    ├─ Read feature spec (fresh eyes)
+   │    ├─ Read just-completed feature's ACTUAL code
+   │    ├─ Compare spec assumptions to actual implementation
+   │    ├─ Identify misalignments and needed updates
+   │    ├─ Update spec.md and checklist.md NOW
+   │    └─ Mark for rework if significant changes
+   ├─ FOR EACH feature in "Independent of": run Step 2.6 misclassification guard
+   └─ Features with no declared relationship: no review needed
 
 STEP 3: Handle Features Needing Rework
    ├─ Review significant rework criteria
@@ -285,6 +288,7 @@ STEP 4: Final Verification
   - 2e: Update Spec.md and Checklist.md
   - 2f: Mark Feature for Rework if Significant Changes
   - 2.5: Check Remaining Feature's implementation_plan.md (if it exists)
+  - 2.6: Misclassification Guard for "Independent of" Features
 - Step 3: Handle Features Needing Rework
 - Step 4: Final Verification
 - Step 5: Alignment Validation Loop (MANDATORY)
@@ -379,6 +383,49 @@ Add a "Step 2.5" entry to the `S8_ALIGNMENT_VALIDATION_{feature_NN}.md` file:
 **Classification:** {NO CHANGE | MINOR PLAN UPDATE | SIGNIFICANT PLAN REWORK | SPEC UPDATE NEEDED}
 **Findings:** {description, or "None"}
 **Action taken:** {description, or "None — plan marked as reviewed"}
+```
+
+---
+
+## Step 2.6: Misclassification Guard for "Independent of" Features
+
+**Trigger:** Run for EVERY feature listed as "Independent of" in the completed feature's `spec.md` `## Feature Dependencies` section.
+
+**Purpose:** Spec-time independence declarations can be wrong. An implementation may introduce unexpected calls, data flows, or shared file writes that weren't anticipated during S2. Catching misclassifications here prevents alignment failures downstream.
+
+**Process:**
+
+For each feature listed as "Independent of" the completed feature:
+
+1. Run the diff for the completed feature's implementation:
+   ```bash
+   git diff origin/main..HEAD -- {completed_feature_dir}/
+   ```
+
+2. Scan the diff output for any references to the "Independent of" feature:
+   - Import statements referencing the feature's module or class names
+   - Function calls to the feature's functions or methods
+   - Reads or writes to files owned by that feature
+   - References to shared data structures defined in that feature
+
+3. **If zero unexpected references found:** Log as clean — the independence declaration holds.
+
+4. **If any unexpected references found:** Treat as an alignment issue:
+   - Update the completed feature's spec.md `## Feature Dependencies` section to reflect the actual dependency (move the feature from "Independent of" to "Depends on" or "Depended on by" as appropriate)
+   - Update the affected feature's spec.md if it also needs to know about this dependency
+   - Proceed with a full alignment review of the affected feature (same process as the "Depended on by" review)
+
+**Documentation:**
+
+Record the misclassification guard result in `S8_ALIGNMENT_VALIDATION_{feature_NN}.md`:
+
+```markdown
+## Step 2.6: Misclassification Guard
+
+| Feature | Declared: Independent | Unexpected References Found | Clean? |
+|---------|----------------------|----------------------------|--------|
+| feature_NN | ✅ Independent | None | ✅ |
+| feature_MM | ✅ Independent | Found: calls feature_NN.process() | ❌ — spec updated |
 ```
 
 ---

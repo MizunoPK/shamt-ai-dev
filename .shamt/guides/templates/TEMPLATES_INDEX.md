@@ -334,6 +334,7 @@ Read .shamt/guides/templates/{template_name}.md
 
 | Template | Lines | Immutable | User Validation Required |
 |----------|-------|-----------|-------------------------|
+| Epic Request | ~187 | No | No |
 | Epic README | ~460 | No | No |
 | Discovery | ~350 | Yes (after approval)* | Yes (S1.P3) |
 | Epic Ticket | ~140 | Yes (after validation) | Yes (S1) |
@@ -350,6 +351,7 @@ Read .shamt/guides/templates/{template_name}.md
 | Feature Research Notes | ~367 | No | No |
 | Feature Test Strategy | ~259 | No | No |
 | Handoff Package (S2) | ~242 | No | No |
+| Handoff Package (S5) | ~197 | No | No |
 | Feature Status | ~10 | No | No |
 | Validation Loop Log | ~205 | No | No |
 | Validation Loop Log (S5) | ~411 | No | No |

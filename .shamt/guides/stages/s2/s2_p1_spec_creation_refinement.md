@@ -13,7 +13,8 @@
 ## 🚫 FORBIDDEN SHORTCUTS
 
 You CANNOT:
-- Skip I2 (Checklist Resolution) or I3 (Refinement & Alignment) and consider the spec done after I1 — all three iterations are mandatory and must run in sequence
+- Skip I2 (Checklist Resolution) without passing the I1 Completeness Gate — I2 may only be skipped if Gate 1.5 passes (see Gate 1.5 below). If the gate fails or was not run, I2 is mandatory
+- Skip I3 (Refinement & Alignment) — it is always mandatory; it embeds Gate 2 and Gate 3 which cannot be bypassed
 - Complete I3 without running the Validation Loop because "the spec looks complete" — primary clean round + sub-agent confirmation is required before proceeding to Gate 3 (User Approval)
 
 If you are about to do any of the above: STOP and re-read the relevant section.
@@ -53,10 +54,10 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 
 **Purpose:** Research feature, create spec.md and checklist.md, get user approval (Gate 3)
 
-**Structure:** 3 iterations
-- S2.P1.I1: Feature-Level Discovery (60-90 min) - Embeds Gate 1
-- S2.P1.I2: Checklist Resolution (45-90 min)
-- S2.P1.I3: Refinement & Alignment (30-60 min) - Embeds Gate 2, includes Gate 3
+**Structure:** 3 iterations (I2 is skippable if Gate 1.5 passes)
+- S2.P1.I1: Feature-Level Discovery (60-90 min) - Embeds Gate 1, followed by Gate 1.5
+- S2.P1.I2: Checklist Resolution (45-90 min) - Skippable if Gate 1.5 passes
+- S2.P1.I3: Refinement & Alignment (30-60 min) - Embeds Gate 2, includes Gate 3 (always mandatory)
 
 **Time:** 2.25-4 hours per feature
 **Prerequisites:** S1 complete, DISCOVERY.md exists, feature folder created
@@ -131,6 +132,26 @@ Research feature, draft spec.md and checklist.md, validate with Validation Loop 
 
 **Gates Embedded:**
 - Gate 1: Research Completeness Audit (embedded in Validation Loop Round 1)
+
+---
+
+### Gate 1.5 — I1 Completeness Gate (15 min)
+
+Run **after** the I1 Validation Loop exits. If ALL items below pass → skip I2 and proceed directly to I3. If ANY item fails → proceed normally to I2.
+
+- [ ] All checklist.md questions have been resolved through research (zero questions remain "UNKNOWN", "TBD", or "check with user" in working notes — checklist.md itself remains questions-only per guide convention and is never marked [x])
+- [ ] All acceptance criteria in spec.md are measurable (specific thresholds, not "should work" or "performs well")
+- [ ] All referenced file paths verified with Read tool (no assumed paths remain)
+- [ ] No circular dependencies with other features identified during I1
+- [ ] No scope items flagged for discussion that haven't been resolved
+- [ ] No cross-feature interface assumptions that haven't been verified against other features' I1 specs
+  - *Note: in parallel S2, only features whose I1 is already complete can be checked. If the relevant feature's I1 is not yet complete, this criterion fails → proceed to I2.*
+
+**If ALL items pass:** Note "I2 skipped (Gate 1.5 passed)" in spec.md Change Log. Proceed directly to I3.
+
+**If ANY item fails:** Proceed to I2 normally.
+
+**Important:** Gate 2 (Spec-to-Epic Alignment) and Gate 3 (User Approval) remain mandatory regardless of whether I2 was skipped. S2.P2 (Cross-Feature Alignment) also still runs after all I3s complete.
 
 ---
 
@@ -257,7 +278,7 @@ Primary agent reviews during coordination heartbeat (every 15 minutes).
 
 **Reference:** `reference/validation_loop_spec_refinement.md`
 
-🚨 **MANDATORY:** Create `{feature_folder}/VALIDATION_LOG.md` BEFORE starting Round 1. If this file does not exist, the validation loop has not started. Track `clean_counter` in the log (starts at 0, resets on any issue found, exit at 1 then trigger sub-agent confirmation).
+🚨 **MANDATORY:** Create `{feature_folder}/VALIDATION_LOG.md` BEFORE starting Round 1. If this file does not exist, the validation loop has not started. Track `consecutive_clean` in the log (starts at 0, resets on any issue found, exit at 1 then trigger sub-agent confirmation).
 
 - **Round 1:** Sequential read, requirement traceability check
   - **Gate 2 Check (Spec-to-Epic Alignment):**
@@ -338,7 +359,7 @@ Primary agent reviews during coordination heartbeat (every 15 minutes).
 **S2.P1 complete when ALL true:**
 
 - [ ] I1 complete (spec drafted, research notes created, Gate 1 passed)
-- [ ] I2 complete (all checklist questions resolved with user)
+- [ ] I2 complete OR I2 skipped with Gate 1.5 passed (note in spec.md Change Log required if skipped)
 - [ ] I3 complete (Gate 2 passed, Gate 3 passed)
 - [ ] spec.md finalized and user-approved
 - [ ] checklist.md all items marked [x] (after user approval)

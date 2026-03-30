@@ -556,7 +556,7 @@ Each round follows this pattern:
 
 6. FIX OR CONTINUE
    - If X > 0: Fix ALL issues immediately → Round N+1, RESET counter
-   - If X = 0: Increment clean counter → If counter = 1, trigger sub-agent confirmation (see master protocol Exit Criteria)
+   - If X = 0: Increment `consecutive_clean` → If counter = 1, trigger sub-agent confirmation (see master protocol Exit Criteria)
 ```
 
 ---

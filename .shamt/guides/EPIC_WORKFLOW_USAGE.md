@@ -143,7 +143,7 @@ Key activities:
 - `stages/s7/s7_p2_qc_rounds.md` — S7.P2 QC Rounds (validation loop)
 - `stages/s7/s7_p3_final_review.md` — S7.P3 Final Review
 
-**Protocol:** S7.P2 uses fix-and-continue (fix issues immediately, reset clean counter, no restart). S7.P1 failure or S7.P3 critical issues → restart from S7.P1.
+**Protocol:** S7.P2 uses fix-and-continue (fix issues immediately, reset `consecutive_clean`, no restart). S7.P1 failure or S7.P3 critical issues → restart from S7.P1.
 
 **Outputs:** Feature committed to git, `lessons_learned.md`
 

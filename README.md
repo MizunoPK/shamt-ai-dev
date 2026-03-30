@@ -28,6 +28,7 @@ shamt-ai-dev/
     │   ├── export/             (export improvements to master)
     │   └── import/             (import updates from master)
     └── epics/                  (master Shamt's own epic work)
+        └── PROCESS_METRICS.md  (cross-epic aggregate: timing and validation loop statistics)
 ```
 
 ---

@@ -57,7 +57,7 @@ S7: Post-Implementation (1.5-2.5 hours, 3 phases)
     │
     ├─ Phase 2: Validation Loop (stages/s7/s7_p2_qc_rounds.md)
     │   ├─ Check ALL 16 dimensions every round (7 master + 9 S7 QC-specific)
-    │   ├─ Fix issues immediately, reset clean counter
+    │   ├─ Fix issues immediately, reset `consecutive_clean`
     │   └─ primary clean round + sub-agent confirmation required ← MANDATORY
     │
     └─ Phase 3: Final Review (stages/s7/s7_p3_final_review.md)
@@ -158,7 +158,7 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 → Fix issues, restart from S7.P1 Step 1 (Import Test)
 
 **If issues found during Validation Loop (S7.P2):**
-→ Fix issues immediately, reset clean counter to 0, continue validation
+→ Fix issues immediately, reset `consecutive_clean` to 0, continue validation
 → No restart needed - fix-and-continue approach
 → Continue until primary clean round + sub-agent confirmation achieved
 

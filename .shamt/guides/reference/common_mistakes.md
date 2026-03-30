@@ -59,7 +59,7 @@
 
 ### Not Following Validation Loop Protocol
 - ❌ "I fixed the bug, I'll just continue from where I left off"
-- ✅ Fix issue immediately, reset clean counter to 0, continue validation
+- ✅ Fix issue immediately, reset `consecutive_clean` to 0, continue validation
 - **Why:** Validation Loop uses fix-and-continue approach (primary clean round + sub-agent confirmation required)
 
 ---

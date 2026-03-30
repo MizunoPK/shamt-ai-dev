@@ -67,6 +67,17 @@
 
 ---
 
+## Feature Dependencies
+
+**Depends on:** [Feature NN — reason] (or "None")
+**Depended on by:** [Feature NN — reason] (or "None")
+**Independent of:** [Feature NN] (or "None")
+**Modifies shared files:** [path/to/shared.py] (or "None")
+
+*Populated during S2. Used by S8.P1 to scope alignment review.*
+
+---
+
 ## Functional Requirements
 
 ### Requirement 1: {Requirement Name}

@@ -19,7 +19,7 @@
 **If you are about to run a validation loop, you MUST:**
 
 1. **Create `VALIDATION_LOG.md`** in the feature/artifact folder BEFORE starting Round 1
-2. **Track `clean_counter`** explicitly in the log — it starts at 0 and resets to 0 any time ANY issue is found
+2. **Track `consecutive_clean`** explicitly in the log — it starts at 0 and resets to 0 any time ANY issue is found
 3. **Use `read_file` to read the ENTIRE artifact** every single round — partial reads do not count
 4. **Walk through ALL dimensions** (master + scenario-specific) and document each as PASS or ISSUE
 5. **Verify ≥3 technical claims** against source code every round using tools (read_file, grep_search)
@@ -806,7 +806,7 @@ def load_record_data():  # snake_case (Python convention)
 ```text
 PRE-ROUND GATE CHECKLIST:
 [ ] VALIDATION_LOG.md exists in the artifact folder
-[ ] Current clean_counter value is written in the log (starts at 0)
+[ ] Current consecutive_clean value is written in the log (starts at 0)
 [ ] Plan for this round documented: reading pattern, which artifact sections, which claims to spot-check
 [ ] Previous round (if any) is fully documented with all dimensions and resolution
 ```
@@ -817,11 +817,11 @@ PRE-ROUND GATE CHECKLIST:
 
 Each round follows these steps in this exact order:
 
-1. **Pre-Round Gate** — verify VALIDATION_LOG.md exists, clean_counter is recorded, round plan documented
+1. **Pre-Round Gate** — verify VALIDATION_LOG.md exists, consecutive_clean is recorded, round plan documented
 2. **Re-read entire artifact** — use Read tool, no working from memory, fresh eyes
 3. **Check ALL dimensions** — all master dimensions + all scenario-specific dimensions, systematically (1→N)
 4. **Adversarial Self-Check** — run after all dimensions, before scoring the round (see section below)
-5. **Post-Round Gate** — update VALIDATION_LOG.md, document all dimensions, update clean_counter
+5. **Post-Round Gate** — update VALIDATION_LOG.md, document all dimensions, update consecutive_clean
 
 **The Adversarial Self-Check (step 4) may not be skipped. A round may not be scored clean if it is skipped.**
 
@@ -864,9 +864,9 @@ POST-ROUND GATE CHECKLIST:
 [ ] ≥3 technical claims verified with tool evidence documented in log
 [ ] Full artifact re-read evidenced (read_file calls covering line 1 through end)
 [ ] Adversarial Self-Check completed (all 5 questions answered or recorded as open questions)
-[ ] clean_counter updated correctly:
-    - If ANY issues found this round → clean_counter = 0 (even if you fixed them)
-    - If ZERO issues found → clean_counter = previous + 1
+[ ] consecutive_clean updated correctly:
+    - If ANY issues found this round → consecutive_clean = 0 (even if you fixed them)
+    - If ZERO issues found → consecutive_clean = previous + 1
 ```
 
 **Do NOT proceed to the next round until all 6 boxes are checked.**
@@ -1054,7 +1054,7 @@ If any Type B questions remain after Step 2:
   next round, not just the dimension that raised the question
 - **If the user's answer requires significant plan changes**: restart **the validation loop from Round 1**
   (i.e., Round 1 of Phase 2 — do not redo Phase 1/draft creation unless the answer
-  fundamentally invalidates the draft itself) and reset the clean counter to 0. Minor
+  fundamentally invalidates the draft itself) and reset the `consecutive_clean` to 0. Minor
   clarifications that don't change the plan do not require a restart.
 
   **"Significant" means any of:**
@@ -1181,6 +1181,50 @@ If no Type B questions remain after Steps 2 and 3: proceed to the next round.
 
 ---
 
+### Compact Format (Default)
+
+The compact format is the **default** for all validation logs. Verbose prose remains available for complex multi-step issues where a table cell cannot capture the nuance.
+
+**Scope:** Applies regardless of filename — `VALIDATION_LOG.md`, `S8_ALIGNMENT_VALIDATION_{feature_NN}.md`, or any other loop log file.
+
+```markdown
+## Validation Loop Log: {Artifact Name}
+
+**Artifact:** {file name and version}
+**Validation Start:** {YYYY-MM-DD HH:MM}
+**Validation End:** {YYYY-MM-DD HH:MM}
+**Total Rounds:** {N}
+**Final Status:** ✅ PASSED (primary clean round + sub-agent confirmation)
+
+---
+
+| # | Pattern | D1 | D2 | D3 | D4 | D5 | D6 | D7 | {extra dims} | Issues | Counter |
+|---|---------|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:---:|--------|:-------:|
+| 1 | Sequential | ✅ | ✅ | ❌ | ✅ | ✅ | ❌ | ✅ | D8✅ D9❌ | 3 found + fixed | 0 |
+| 2 | Reverse | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | All ✅ | 0 (adv-check clean) | 1 → spawn |
+
+**Sub-agents (Round 2):**
+- Agent A: 0 issues ✅
+- Agent B: 0 issues ✅ → EXIT
+
+**Issue Notes:**
+- R1-D3: {brief description + tool call evidence — e.g., "Read s2_primary_guide.md:45 — step references file that no longer exists"}
+- R1-D6: {brief description + tool call evidence}
+
+**Spot-check Notes (clean rounds):**
+- R2: Read {file}:{line}, Grep {pattern} → {N} matches ✅
+```
+
+**Rules:**
+
+- **Adversarial check:** Inline the result in the Issues column as `0 (adv-check clean)` when it surfaces no issues. If it surfaces an issue, log it as a normal issue (increments the issue count and resets `consecutive_clean`).
+- **Tool call evidence:** Each ❌ dimension entry **must** cite the specific tool call that found the issue in Issue Notes (e.g., `Read file.md:45`, `Grep "pattern" → 3 matches`). This preserves the ≥3 technical claims requirement.
+- **Clean round tool evidence:** Each clean round must have ≥1 tool call citation in Spot-check Notes (preserves verification, not just assertion).
+- **Extra dimensions:** Scenario-specific dimensions (e.g., S5's D8–D12) appear in the `{extra dims}` column. List them inline as `D8✅ D9❌` or `All ✅` if all pass.
+- **Verbose fallback:** For a complex issue that requires multi-step explanation, add a prose block under Issue Notes below the table entry rather than forcing it into the table.
+
+---
+
 ## Quality Standards
 
 ### Issue Severity Classification
@@ -1246,9 +1290,9 @@ Before declaring validation complete, agent MUST:
 **These rules address the 6 most common ways agents shortcut validation loops.**
 
 ### Shortcut 1: "Fixed = Clean"
-**What agents do:** Find 3 issues in Round 2, fix them all, then count Round 2 as clean_counter = 1.
+**What agents do:** Find 3 issues in Round 2, fix them all, then count Round 2 as consecutive_clean = 1.
 **Why it's wrong:** A round where issues were found is NOT clean, regardless of whether you fixed them. The fix could have introduced new issues. You need a FRESH round with zero discoveries.
-**Rule:** `clean_counter` only increments on rounds where you found ZERO issues across ALL dimensions.
+**Rule:** `consecutive_clean` only increments on rounds where you found ZERO issues across ALL dimensions.
 
 ### Shortcut 2: "Partial Re-Read"
 **What agents do:** Read only the sections they changed, or only sections 200-400 of a 500-line artifact.
@@ -1267,13 +1311,13 @@ Before declaring validation complete, agent MUST:
 
 ### Shortcut 5: "No Log File"
 **What agents do:** Run validation rounds in their head (or in conversation), never create the required VALIDATION_LOG.md file.
-**Why it's wrong:** Without a log, there's no evidence the validation happened, no way to verify the clean_counter, and no audit trail. The log also forces the agent to be systematic.
+**Why it's wrong:** Without a log, there's no evidence the validation happened, no way to verify the consecutive_clean, and no audit trail. The log also forces the agent to be systematic.
 **Rule:** `VALIDATION_LOG.md` MUST be created BEFORE Round 1. Each round must be documented in it before proceeding to the next round.
 
 ### Shortcut 6: "3-Round Express"
 **What agents do:** Run exactly 3 rounds, find issues in Rounds 1-2, declare Round 3 clean, exit.
 **Why it's wrong:** If you found issues in Rounds 1 and 2, you need a primary clean round + sub-agent confirmation AFTER the last round with issues. Once the first fully clean round is achieved, spawn 2 independent sub-agents; both must confirm zero issues. Typical validation is 4-7 rounds total.
-**Rule:** `clean_counter` must reach 1 (then sub-agent confirmation completes the exit). If issues were found in Rounds 1 and 2, the earliest possible exit is after Round 3 (clean) + sub-agent confirmation.
+**Rule:** `consecutive_clean` must reach 1 (then sub-agent confirmation completes the exit). If issues were found in Rounds 1 and 2, the earliest possible exit is after Round 3 (clean) + sub-agent confirmation.
 
 ---
 

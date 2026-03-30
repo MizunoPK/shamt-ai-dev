@@ -45,7 +45,7 @@ I'm beginning S9 (Epic Final QC).
   - Reflects ACTUAL implementation (not assumptions)
 - **Validation Loop approach**:
   - Fix issues immediately (no restart for minor issues)
-  - Reset clean counter and continue validation
+  - Reset `consecutive_clean` and continue validation
   - primary clean round + sub-agent confirmation required to exit
   - Major issues (user-reported bugs) may require restart
 
