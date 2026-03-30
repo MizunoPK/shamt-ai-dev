@@ -823,9 +823,11 @@ Adding historical context shows future agents WHY this dimension exists and what
 **This is a sub-workflow of S10 (Epic Cleanup).**
 
 **After completing S10.P1 (Guide Updates):** Return to `stages/s10/s10_epic_cleanup.md` to continue with:
-- S10.P2: Create PR
-- S10.P3: Update .shamt/epics/EPIC_TRACKER.md
-- S10.P4: Move epic to done/
+- Step 5: Final Commit (Epic Implementation)
+- Step 6: Move Epic to done/ Folder
+- Step 7: Update .shamt/epics/EPIC_TRACKER.md
+- Step 8: S10.P2 — Epic Overview Document (optional)
+- Step 9: Push Branch and Create Pull Request
 
 **📖 RETURN TO:** `stages/s10/s10_epic_cleanup.md`
 

@@ -71,7 +71,7 @@ Epic Cleanup is the final stage where you commit all changes, verify documentati
 - ✅ CLAUDE.md updated if workflow changes made
 
 **Time Estimate:**
-Epic cleanup typically takes 85-130 minutes (including S10.P1 guide updates). Without guide updates, approximately 40-60 minutes.
+Epic cleanup typically takes 85-130 minutes (S10.P2 skipped) or 105-170 minutes (S10.P2 opted in), both including S10.P1 guide updates. Without guide updates, approximately 40-60 minutes.
 
 **Critical Success Factors:**
 1. Run tests per Testing Approach BEFORE committing (Options C/D: unit tests 100% pass; Options B/D: integration scripts all exit code 0)
@@ -245,14 +245,23 @@ STAGE 10: Epic Cleanup
 │   ├─ Increment "Next Available Number"
 │   └─ Commit the .shamt/epics/EPIC_TRACKER.md update
 │
-├─> STEP 8: Push Branch and Create Pull Request
+├─> STEP 8: S10.P2 — Epic Overview Document (optional)
+│   ├─ Ask user: create SHAMT-{N}-OVERVIEW.md? (yes / no)
+│   ├─ If no: skip to STEP 9
+│   ├─ Gather context (git log, git diff, EPIC_README, feature READMEs)
+│   ├─ Plan narrative structure before writing
+│   ├─ Create SHAMT-{N}-OVERVIEW.md at repository root
+│   ├─ Run validation loop (2 consecutive clean rounds)
+│   └─ Commit overview document
+│
+├─> STEP 9: Push Branch and Create Pull Request
 │   ├─ Push all commits to remote branch
 │   ├─ Create Pull Request for user review
 │   ├─ Recommend squash commit message to user
 │   ├─ Wait for user to merge PR
 │   └─ Sync local main (git reset --hard origin/main)
 │
-└─> STEP 9: Final Verification & Completion
+└─> STEP 10: Final Verification & Completion
     ├─ Verify epic in done/ folder
     ├─ Verify original request still in .shamt/epics/requests/
     ├─ Verify git shows clean state
@@ -269,7 +278,7 @@ STAGE 10: Epic Cleanup
 
 ## Quick Navigation
 
-**S10 has 9 main steps. Jump to any step:**
+**S10 has 10 main steps. Jump to any step:**
 
 | Step | Focus Area | Time | Mandatory Gate? | Go To |
 |------|-----------|------|-----------------|-------|
@@ -281,10 +290,11 @@ STAGE 10: Epic Cleanup
 | **Step 5** | Final Commit (Epic Work) | 10 min | No | [Jump](#step-5-final-commit-epic-implementation) |
 | **Step 6** | Move Epic to done/ | 5 min | No | [Jump](#step-6-move-epic-to-done-folder) |
 | **Step 7** | Update .shamt/epics/EPIC_TRACKER.md | 5 min | No | [Jump](#step-7-update-shamtepicsepic_trackermd) |
-| **Step 8** | Push and Create PR | 5 min | No | [Jump](#step-8-push-branch-and-create-pull-request) |
-| **Step 9** | Final Verification | 5 min | No | [Jump](#step-9-final-verification--completion) |
+| **Step 8** | S10.P2 Epic Overview Document | 0 min (skipped) / 20-40 min (opted in) | No | [Jump](#step-8-s10p2--epic-overview-document-optional) |
+| **Step 9** | Push and Create PR | 5 min | No | [Jump](#step-9-push-branch-and-create-pull-request) |
+| **Step 10** | Final Verification | 5 min | No | [Jump](#step-10-final-verification--completion) |
 
-**Total Time:** 85-130 minutes (including S10.P1 guide updates)
+**Total Time:** 85-130 minutes (S10.P2 skipped) or 105-170 minutes (S10.P2 opted in), both including S10.P1 guide updates
 
 **Reference Files (Extracted for Quick Access):**
 
@@ -816,13 +826,35 @@ git log -1 --oneline
 
 ---
 
-### STEP 8: Push Branch and Create Pull Request
+### STEP 8: S10.P2 — Epic Overview Document (optional)
+
+**Objective:** Optionally create a narrative overview document for PR reviewers and developers onboarding onto the work.
+
+**READ THE FULL GUIDE:**
+```text
+stages/s10/s10_p2_overview_workflow.md
+```
+
+**Process Overview:**
+1. Ask the user: "Would you like to create a `SHAMT-{N}-OVERVIEW.md` for PR reviewers?" (yes / no)
+2. If no: skip this step entirely, proceed to STEP 9
+3. If yes: gather context (git log, git diff, epic docs), plan the narrative structure, write the document, run validation loop (2 consecutive clean rounds), commit the document
+
+**Time Estimate:** 0 minutes (skipped) or 20-40 minutes (opted in)
+
+**Exit Condition:** S10.P2 complete after overview doc committed (or phase skipped after user declines)
+
+**NEXT:** After S10.P2 complete (or skipped), proceed to STEP 9 (Push and Create PR)
+
+---
+
+### STEP 9: Push Branch and Create Pull Request
 
 **Objective:** Push all commits to remote and create PR for user review.
 
 **Actions:**
 
-**8a. Verify Working Tree Clean, Then Push**
+**9a. Verify Working Tree Clean, Then Push**
 
 **🛑 BEFORE pushing, verify there are zero uncommitted changes:**
 ```bash
@@ -850,7 +882,7 @@ git log --oneline origin/{work_type}/SHAMT-{number}..HEAD
 
 **Required output:** No output (empty = all commits pushed)
 
-**8b. Create Pull Request**
+**9b. Create Pull Request**
 
 Use GitHub CLI to create PR:
 ```bash
@@ -866,7 +898,7 @@ gh pr create --base main --head {work_type}/SHAMT-{number} \
 - Fill in title and description
 - Click "Create pull request"
 
-**8c. Recommend a Squash Commit Message**
+**9c. Recommend a Squash Commit Message**
 
 Before the user merges, recommend a squash commit message. GitHub squash-merges collapse all branch commits into one, so the message needs to summarize the entire epic.
 
@@ -906,13 +938,13 @@ Testing: {test count} tests passing. {any notable test highlights}
 > Testing: {N} tests passing. Full E2E run validated.
 > ```
 
-**8d. Wait for User to Merge PR**
+**9d. Wait for User to Merge PR**
 
 - User reviews changes in GitHub UI
 - User approves and merges using the recommended squash message (or their own)
 - **DO NOT merge yourself** - user must merge
 
-**8e. Sync Local Main After Merge**
+**9e. Sync Local Main After Merge**
 
 After user confirms the PR is merged, sync local main:
 ```bash
@@ -927,13 +959,13 @@ git reset --hard origin/main
 
 ---
 
-### STEP 9: Final Verification & Completion
+### STEP 10: Final Verification & Completion
 
 **Objective:** Verify epic cleanup complete and celebrate completion!
 
 **Actions:**
 
-**9a. Verify All Commits Pushed**
+**10a. Verify All Commits Pushed**
 
 Check that all commits are on remote:
 ```bash
@@ -942,7 +974,7 @@ git log --oneline origin/{work_type}/SHAMT-{number}..HEAD
 
 **Expected:** No output (all commits pushed)
 
-**9b. Verify PR Created**
+**10b. Verify PR Created**
 
 If using `gh` CLI:
 ```bash
@@ -951,7 +983,7 @@ gh pr view
 
 Or check GitHub web UI to confirm PR exists.
 
-**9c. Verify Git Working Tree Clean**
+**10c. Verify Git Working Tree Clean**
 
 Check git status:
 ```bash
@@ -960,7 +992,7 @@ git status
 
 **Expected:** "Your branch is up to date with 'origin/{work_type}/SHAMT-{number}'", "nothing to commit, working tree clean"
 
-**9d. Celebrate Epic Completion! 🎉**
+**10d. Celebrate Epic Completion! 🎉**
 
 The epic is now complete and ready for user review!
 
@@ -1041,6 +1073,14 @@ The epic is now complete and ready for user review!
 - [ ] Next Available Number incremented
 - [ ] .shamt/epics/EPIC_TRACKER.md update committed
 
+### S10.P2 — Epic Overview Document (Optional)
+
+This phase is opt-in — the question must always be asked, but creating the document is not mandatory.
+
+- [ ] User asked about `SHAMT-{N}-OVERVIEW.md` (yes or no)
+- [ ] If opted in: `SHAMT-{N}-OVERVIEW.md` committed as standalone commit (`docs/SHAMT-{N}: Add epic overview document`)
+- [ ] If declined: no file created; proceeded directly to Push and Create PR
+
 ### Pull Request
 - [ ] All commits pushed to remote branch
 - [ ] Pull Request created with epic summary
@@ -1070,10 +1110,11 @@ The epic is now complete and ready for user review!
 4. Commit epic implementation work with clear message
 5. Move entire epic folder to done/ (max 10 epics, delete oldest if needed) and commit
 6. Update .shamt/epics/EPIC_TRACKER.md (move to Completed, add details, increment number) and commit
-7. Push all commits to remote branch
-8. Push branch, create Pull Request, recommend squash commit message to user
-9. User reviews and merges PR; sync local main (git reset --hard origin/main)
-10. Celebrate epic completion! 🎉
+7. Run S10.P2 — ask user about epic overview document; if yes, create `SHAMT-{N}-OVERVIEW.md` at repository root and commit it (optional)
+8. Push all commits to remote branch
+9. Push branch, create Pull Request, recommend squash commit message to user
+10. User reviews and merges PR; sync local main (git reset --hard origin/main)
+11. Celebrate epic completion! 🎉
 
 **Critical Success Factors:**
 - Tests pass before committing (conditional per Testing Approach — unit tests for C/D, integration scripts for B/D, nothing for A)
@@ -1098,6 +1139,8 @@ The epic is now complete and ready for user review!
 - Moving features individually instead of entire epic
 - Moving original request file (should stay in root)
 - Exceeding 10 epics in done/ folder
+- Writing the S10.P2 overview before planning the narrative structure — this produces a disorganized document that doesn't serve reviewers
+- Skipping S10.P2 without asking the user — the phase is opt-in, but the question must always be asked
 
 **Reference Files:**
 - `reference/stage_10/commit_message_examples.md` - Commit message format and examples

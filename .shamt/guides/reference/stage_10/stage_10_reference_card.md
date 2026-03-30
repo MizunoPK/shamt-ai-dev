@@ -2,7 +2,7 @@
 
 **Purpose:** One-page summary for final epic completion and archival
 **Use Case:** Quick lookup when committing changes and archiving epic
-**Total Time:** 85-130 minutes (includes S10.P1 guide updates)
+**Total Time:** 85-130 minutes (S10.P2 skipped) or 105-170 minutes (S10.P2 opted in), both including S10.P1 guide updates
 **Note:** User testing completed in S9 (Step 6) before S10 begins
 
 ---
@@ -57,14 +57,21 @@ STEP 7: Update .shamt/epics/EPIC_TRACKER.md (5 min)
     ├─ Increment Next Available Number
     └─ Commit the EPIC_TRACKER.md update
     ↓
-STEP 8: Push Branch and Create Pull Request (5 min)
+STEP 8: S10.P2 — Epic Overview Document (0 or 20-40 min, optional)
+    ├─ Ask user: create SHAMT-{N}-OVERVIEW.md? (yes / no)
+    ├─ If no: skip to STEP 9
+    ├─ Gather context, plan narrative, write document
+    ├─ Run validation loop (2 consecutive clean rounds)
+    └─ Commit overview document
+    ↓
+STEP 9: Push Branch and Create Pull Request (5 min)
     ├─ Verify working tree clean, then push all commits
     ├─ Create Pull Request using gh CLI
     ├─ Recommend squash commit message to user
     ├─ Wait for user to review and merge PR
     └─ Sync local main after merge
     ↓
-STEP 9: Final Verification & Completion (5 min)
+STEP 10: Final Verification & Completion (5 min)
     ├─ Verify all commits pushed
     ├─ Verify PR created
     ├─ Verify git working tree clean
@@ -84,8 +91,9 @@ STEP 9: Final Verification & Completion (5 min)
 | 5 | 5-10 min | Final commit (epic implementation) | No |
 | 6 | 5 min | Move epic to done/ folder (git mv + commit) | No |
 | 7 | 5 min | Update .shamt/epics/EPIC_TRACKER.md + commit | No |
-| 8 | 5 min | Push branch + create PR + wait for merge | No |
-| 9 | 5 min | Final verification | No |
+| 8 | 0-40 min | S10.P2 — Epic overview document (opt-in) | No |
+| 9 | 5 min | Push branch + create PR + wait for merge | No |
+| 10 | 5 min | Final verification | No |
 
 **Note:** User testing was moved to S9 (Step 6) - S10 only begins after user testing passes with zero bugs.
 
@@ -207,7 +215,7 @@ git add .shamt/epics/EPIC_TRACKER.md
 git commit -m "chore/SHAMT-{N}: Update EPIC_TRACKER with completed epic"
 ```
 
-### Step 8: Push Branch and Create Pull Request
+### Step 9: Push Branch and Create Pull Request
 ```bash
 git status       # Verify working tree clean
 git push origin {work_type}/SHAMT-{number}
@@ -230,7 +238,7 @@ git checkout main && git fetch origin && git reset --hard origin/main
 - ✅ Commit message must use new format ({commit_type}/SHAMT-{number})
 - ✅ Push branch and create PR for user review
 - ✅ Wait for user to review and merge PR
-- ✅ Update .shamt/epics/EPIC_TRACKER.md in Step 7 (before creating PR in Step 8)
+- ✅ Update .shamt/epics/EPIC_TRACKER.md in Step 7 (before creating PR in Step 9)
 - ✅ Move ENTIRE epic folder (not individual features)
 - ✅ Update CLAUDE.md if guides improved
 - ✅ Verify epic is TRULY complete
@@ -272,7 +280,7 @@ git checkout main && git fetch origin && git reset --hard origin/main
 ### ❌ Pitfall 7: Not Updating .shamt/epics/EPIC_TRACKER.md
 **Problem:** "I'll update EPIC_TRACKER later"
 **Impact:** Active epics list out of date, SHAMT number conflicts
-**Solution:** Update .shamt/epics/EPIC_TRACKER.md in Step 7 (before creating PR in Step 8)
+**Solution:** Update .shamt/epics/EPIC_TRACKER.md in Step 7 (before creating PR in Step 9)
 
 ---
 
@@ -329,6 +337,11 @@ git checkout main && git fetch origin && git reset --hard origin/main
 - [ ] EPIC_TRACKER.md update committed
 
 **Step 8 → Step 9:**
+- [ ] User asked about creating epic overview document (yes or no)
+- [ ] If opted in: `SHAMT-{N}-OVERVIEW.md` committed at repository root
+- [ ] If declined: no file created
+
+**Step 9 → Step 10:**
 - [ ] Working tree clean (git status)
 - [ ] All commits pushed to remote branch
 - [ ] Pull Request created
@@ -336,7 +349,7 @@ git checkout main && git fetch origin && git reset --hard origin/main
 - [ ] User reviewed and merged PR
 - [ ] Local main synced (git reset --hard origin/main)
 
-**Step 9 → Complete:**
+**Step 10 → Complete:**
 - [ ] Epic visible in done/ folder (post-merge)
 - [ ] Git working tree clean
 - [ ] Epic COMPLETE!
@@ -363,6 +376,10 @@ git checkout main && git fetch origin && git reset --hard origin/main
 - Git commit (.shamt/epics/EPIC_TRACKER.md update)
 
 **Step 8:**
+- `SHAMT-{N}-OVERVIEW.md` at repository root (if opted in)
+- Git commit (overview document)
+
+**Step 9:**
 - Remote branch with all commits pushed
 - Pull Request created for user review
 
@@ -382,7 +399,7 @@ git checkout main && git fetch origin && git reset --hard origin/main
 ## Exit Conditions
 
 **S10 is complete when:**
-- [ ] All 9 steps complete (1-9)
+- [ ] All 10 steps complete (1-10)
 - [ ] Pre-cleanup verification passed
 - [ ] Unit tests passed (100%)
 - [ ] Documentation verified complete
