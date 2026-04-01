@@ -62,7 +62,7 @@ echo "Which AI coding assistant will you use with this project?"
 echo ""
 echo "  1) Claude Code (Anthropic)       → CLAUDE.md at project root"
 echo "  2) GitHub Copilot                → .github/copilot-instructions.md"
-echo "  3) Cursor                        → .cursorrules at project root"
+echo "  3) Cursor                        → .cursorrules (legacy) or .cursor/index.mdc (new)"
 echo "  4) Windsurf (Codeium)            → .windsurfrules at project root"
 echo "  5) Amazon Q Developer            → (setup TBD)"
 echo "  6) Other                         → you will specify"
@@ -83,8 +83,20 @@ case "$ai_choice" in
         ;;
     3)
         AI_SERVICE="cursor"
-        RULES_FILE_NAME=".cursorrules"
-        RULES_FILE_DIR="$TARGET_DIR"
+        echo ""
+        echo "  Cursor supports two rules file formats:"
+        echo "    1) Legacy .cursorrules (project root) — still widely used"
+        echo "    2) New .cursor/index.mdc — recommended as of 2026"
+        echo ""
+        read -rp "  Which format? [2]: " cursor_format
+        cursor_format="${cursor_format:-2}"
+        if [ "$cursor_format" = "1" ]; then
+            RULES_FILE_NAME=".cursorrules"
+            RULES_FILE_DIR="$TARGET_DIR"
+        else
+            RULES_FILE_NAME="index.mdc"
+            RULES_FILE_DIR="$TARGET_DIR/.cursor"
+        fi
         ;;
     4)
         AI_SERVICE="windsurf"
