@@ -81,7 +81,7 @@ Write-Host "Which AI coding assistant will you use with this project?"
 Write-Host ""
 Write-Host "  1) Claude Code (Anthropic)       -> CLAUDE.md at project root"
 Write-Host "  2) GitHub Copilot                -> .github/copilot-instructions.md"
-Write-Host "  3) Cursor                        -> .cursorrules at project root"
+Write-Host "  3) Cursor                        -> .cursorrules (legacy) or .cursor\index.mdc (new)"
 Write-Host "  4) Windsurf (Codeium)            -> .windsurfrules at project root"
 Write-Host "  5) Amazon Q Developer            -> (setup TBD)"
 Write-Host "  6) Other                         -> you will specify"
@@ -90,7 +90,22 @@ $aiChoice = Prompt-Input "Enter choice" "1"
 
 switch ($aiChoice) {
     "2" { $AiService = "github_copilot"; $RulesFileName = "copilot-instructions.md"; $RulesFileSubdir = ".github" }
-    "3" { $AiService = "cursor"; $RulesFileName = ".cursorrules"; $RulesFileSubdir = "" }
+    "3" {
+        $AiService = "cursor"
+        Write-Host ""
+        Write-Host "  Cursor supports two rules file formats:"
+        Write-Host "    1) Legacy .cursorrules (project root) - still widely used"
+        Write-Host "    2) New .cursor\index.mdc - recommended as of 2026"
+        Write-Host ""
+        $cursorFormat = Prompt-Input "  Which format?" "2"
+        if ($cursorFormat -eq "1") {
+            $RulesFileName = ".cursorrules"
+            $RulesFileSubdir = ""
+        } else {
+            $RulesFileName = "index.mdc"
+            $RulesFileSubdir = ".cursor"
+        }
+    }
     "4" { $AiService = "windsurf"; $RulesFileName = ".windsurfrules"; $RulesFileSubdir = "" }
     "5" {
         $AiService = "amazon_q"; $RulesFileName = "TBD"; $RulesFileSubdir = ""

@@ -24,9 +24,17 @@ During initialization, the init script reads this file to determine how to name 
 
 ## Cursor
 
+Cursor supports two rules file formats:
+
+### Legacy Format (still supported)
 - **Rules file name:** `.cursorrules`
 - **Rules file location:** Project root
-- **Notes:** Cursor reads `.cursorrules` from the project root. The file uses the same markdown format.
+- **Notes:** Legacy format, still widely used and fully supported. Simple markdown file at project root.
+
+### New Format (recommended as of 2026)
+- **Rules file name:** `index.mdc`
+- **Rules file location:** `.cursor/` directory
+- **Notes:** New format introduced in 2026. The `.mdc` file with Rule Type "Always" is the recommended approach. More context-aware and integrated with Cursor's newer features.
 
 ---
 
