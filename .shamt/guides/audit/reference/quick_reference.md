@@ -133,7 +133,7 @@ grep -n "S[0-9]" CLAUDE.md | grep -o "S[0-9][0-9]*\(\.P[0-9][0-9]*\)\?\(\.I[0-9]
 - [ ] **Criterion 1:** All issues resolved (zero open issues across all rounds)
 - [ ] **Criterion 2:** Stage 1 found ZERO new issues this round
 - [ ] **Criterion 3:** Stage 4 verification N_new = 0
-- [ ] **Criterion 4:** 3 consecutive zero-issue rounds completed (consecutive_clean >= 3)
+- [ ] **Criterion 4:** 3 consecutive clean rounds completed (consecutive_clean >= 3; ≤1 LOW per round is clean)
 - [ ] **Criterion 5:** All N_remaining documented as intentional
 - [ ] **Criterion 6:** User has NOT challenged results
 - [ ] **Criterion 7:** Confidence ≥ 80%
@@ -331,7 +331,7 @@ done
 - ✅ Zero nagging doubts
 
 ### 80-89%: High Confidence (Exit Threshold)
-- ✅ consecutive_clean >= 3 (3+ consecutive zero-issue rounds)
+- ✅ consecutive_clean >= 3 (3+ consecutive clean rounds; ≤1 LOW per round)
 - ✅ 0 new issues this round
 - ✅ 5+ pattern types used
 - ✅ All folders checked
@@ -438,7 +438,7 @@ wc -l file.md  # Count lines
 → Good! This is normal. Keep looping until Round N finds ZERO new issues. SHAMT-7 needed 4 rounds.
 
 **"Round 3 still found issues"**
-→ Continue. Exit requires 3 CONSECUTIVE zero-issue rounds (consecutive_clean >= 3). Rounds with issues reset the counter to 0.
+→ Continue. Exit requires 3 CONSECUTIVE clean rounds (consecutive_clean >= 3; ≤1 LOW per round is clean). Rounds with 2+ LOW or any MEDIUM/HIGH/CRITICAL reset the counter to 0.
 
 **"User said 'are you sure?'"**
 → Immediately LOOP back to Round 1. User challenge = evidence you missed something. Do NOT defend previous work.

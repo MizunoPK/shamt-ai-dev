@@ -59,7 +59,7 @@
 
 ---
 
-### ✅ / ❌ Criterion 4: 3 Consecutive Zero-Issue Rounds
+### ✅ / ❌ Criterion 4: 3 Consecutive Clean Rounds (≤1 LOW each)
 
 - [ ] consecutive_clean >= 3 (state current value: consecutive_clean = [N])
 - [ ] Each clean round used different patterns than previous
@@ -248,7 +248,7 @@
 | 1 | All Issues Resolved | ✅ / ❌ | Yes |
 | 2 | Zero New (Stage 1) | ✅ / ❌ | Yes |
 | 3 | Zero New (Stage 4) | ✅ / ❌ | Yes |
-| 4 | 3 Consecutive Zero-Issue Rounds | ✅ / ❌ | Yes |
+| 4 | 3 Consecutive Clean Rounds (≤1 LOW) | ✅ / ❌ | Yes |
 | 5 | All Documented | ✅ / ❌ | Yes |
 | 6 | No User Challenge | ✅ / ❌ | Yes |
 | 7 | Confidence ≥ 80% | ✅ / ❌ | Yes |
@@ -537,8 +537,8 @@ Based on what was found (or not found) in Round [N], focus on:
 
 ### Common Mistakes
 
-❌ **Claiming exit without 3 consecutive zero-issue rounds**
-- Criterion 4 automatically fails if consecutive_clean < 3 (rounds with issues reset this counter)
+❌ **Claiming exit without 3 consecutive clean rounds**
+- Criterion 4 automatically fails if consecutive_clean < 3 (rounds with 2+ LOW or any MEDIUM/HIGH/CRITICAL reset this counter)
 
 ❌ **Claiming exit with N_new > 0**
 - Criterion 3 automatically fails if new issues found

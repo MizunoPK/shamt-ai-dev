@@ -46,7 +46,7 @@
 ✅ **Claims vs Reality:**
 - "Run pre_audit_checks.sh" → script actually exists
 - "Checks 12 of 22 dimensions" → actually checks 12 (not 11 or 13)
-- "3 consecutive zero-issue rounds" → workflow enforces consecutive_clean >= 3 (not total rounds)
+- "3 consecutive clean rounds (≤1 LOW each)" → workflow enforces consecutive_clean >= 3 (not total rounds)
 
 ✅ **Version Numbers:**
 - "Version 2.0" matches actual workflow version
@@ -231,7 +231,7 @@ done < referenced_files.txt
 ```text
 "Automated validation catches 90%"
 "Checks 12 of 22 dimensions"
-"3 consecutive zero-issue rounds required"
+"3 consecutive clean rounds required (≤1 LOW each)"
 "100% test pass rate enforced"
 ```
 
@@ -249,7 +249,7 @@ grep -rn "minimum [0-9]\+\|required.*[0-9]\+\|enforced" \
 **Validation:**
 - **Manual review** - Check if code actually enforces claim
 - **Example:** "100% test pass rate enforced" → Verify S7, S9, S10 actually check exit codes
-- **Example:** "3 consecutive zero-issue rounds" → Verify S5 uses consecutive_clean >= 3 (not just total rounds)
+- **Example:** "3 consecutive clean rounds" → Verify S5 uses consecutive_clean >= 3 (not just total rounds; ≤1 LOW per round is clean)
 
 ### Type 5: Cross-Guide Claim Consistency
 

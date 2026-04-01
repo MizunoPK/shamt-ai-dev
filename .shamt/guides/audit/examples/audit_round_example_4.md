@@ -330,7 +330,7 @@ $ while read link; do
 1. ✅ All issues resolved (107/109, 2 intentional documented)
 2. ✅ Zero new discoveries in Round 4 Stage 1 (would need Round 5 if found issues)
 3. ✅ Zero verification findings (N_new = 0)
-4. ⚠️ 3 consecutive zero-issue rounds — consecutive_clean = 1 (rounds 1-3 all found issues; Round 4 is first clean round; criterion technically fails)
+4. ⚠️ 3 consecutive clean rounds — consecutive_clean = 1 (rounds 1-3 all found issues; Round 4 is first clean round; criterion technically fails)
 5. ✅ All remaining documented (2 historical refs)
 6. ✅ User has not challenged
 7. ✅ Confidence ≥ 80% (self-assessed: 85%)

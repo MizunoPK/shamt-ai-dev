@@ -588,7 +588,8 @@ Requirement 1: Use synchronous file I/O
 **Spec refinement validation is COMPLETE when ALL of the following are true:**
 
 **From Master Protocol:**
-- [ ] Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
+- [ ] Primary agent declared a clean round (ZERO issues OR exactly 1 LOW-severity issue fixed) AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
+- [ ] Counter logic: 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL resets counter; see `reference/severity_classification_universal.md`
 - [ ] All 7 master dimensions checked every primary round
 - [ ] All 2 spec refinement dimensions checked every primary round
 - [ ] Validation log complete with all rounds documented

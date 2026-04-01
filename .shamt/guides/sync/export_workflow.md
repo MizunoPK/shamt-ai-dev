@@ -98,7 +98,7 @@ If any matches are found:
 
 ## Step 2: Run the Full Guide Audit
 
-Before exporting, run the guide audit on the entire `.shamt/guides/` tree (starting from `guides/audit/README.md`). The audit must achieve 3 consecutive zero-issue rounds before you proceed to Step 3.
+Before exporting, run the guide audit on the entire `.shamt/guides/` tree (starting from `guides/audit/README.md`). The audit must achieve 3 consecutive clean rounds (≤1 LOW per round) before you proceed to Step 3.
 
 This step is **mandatory**. Exporting without a full audit risks submitting changes that are internally inconsistent with other guides — cross-references, terminology, or workflow descriptions may need to be updated in files you didn't directly modify.
 

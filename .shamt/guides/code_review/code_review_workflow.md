@@ -122,8 +122,10 @@ Each round:
 4. State `consecutive_clean = N` at the end of the round
 
 **Counter rules:**
-- Issues found → fix them → `consecutive_clean = 0`
-- Zero issues → `consecutive_clean = 1` → trigger sub-agent confirmation (see Exit Criteria)
+- Clean round = ZERO issues OR exactly 1 LOW-severity issue (fixed)
+- Counter resets to 0 if: 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL issue
+- Zero or 1 LOW → `consecutive_clean = 1` → trigger sub-agent confirmation (see Exit Criteria)
+- See `reference/severity_classification_universal.md` for severity definitions
 
 ### Exit Criteria
 
@@ -267,11 +269,13 @@ Each round:
 consecutive_clean = 0   (tracked in review_validation_log.md)
 
 After each round:
-  - Issues found: fix them, reset consecutive_clean to 0
-  - Zero issues: consecutive_clean = 1 → trigger sub-agent confirmation
+  - Clean round = ZERO issues OR exactly 1 LOW-severity issue (fixed)
+  - 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL: reset consecutive_clean to 0
+  - Clean round: consecutive_clean = 1 → trigger sub-agent confirmation
   - Both sub-agents confirm zero issues: EXIT
-  - A sub-agent finds issues: fix them, reset consecutive_clean to 0, continue
+  - A sub-agent finds ANY issue: fix, reset consecutive_clean to 0, continue
   - State "consecutive_clean = N" explicitly at end of every round
+  - See reference/severity_classification_universal.md for severity definitions
 ```
 
 ### Exit Criteria

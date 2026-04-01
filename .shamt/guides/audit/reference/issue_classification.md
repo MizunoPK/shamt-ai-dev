@@ -2,7 +2,11 @@
 
 **Purpose:** Severity levels and prioritization criteria for audit issues
 **Audience:** Agents organizing discovery reports and fix plans (Stages 1-2)
-**Last Updated:** 2026-02-25
+**Last Updated:** 2026-04-01 (SHAMT-24)
+
+**Universal Guide:** This guide aligns with `reference/severity_classification_universal.md`, which defines the 4-level severity system used across ALL validation contexts in Shamt. The classifications below are guide-audit-specific applications of that universal system.
+
+**Clean Round Rule (SHAMT-24):** A validation round is clean if it has ZERO issues OR exactly ONE LOW-severity issue (fixed). Multiple LOW-severity issues OR any MEDIUM/HIGH/CRITICAL issue resets `consecutive_clean` to 0.
 
 ---
 

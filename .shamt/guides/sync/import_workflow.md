@@ -133,6 +133,8 @@ If the import script reported preserved files ("child-only files not deleted"), 
 
 Run a full validation loop using the master protocol (which you re-read in the mandatory first step). The loop must achieve primary clean round + sub-agent confirmation before you may declare the import complete.
 
+**Clean round definition:** A round is clean if it has ZERO issues OR exactly 1 LOW-severity issue (fixed). Multiple LOW issues or any MEDIUM/HIGH/CRITICAL resets counter. See `reference/severity_classification_universal.md`.
+
 Check for:
 - All supplements still accurate and consistent with updated guides
 - All pointers correctly placed and not stale

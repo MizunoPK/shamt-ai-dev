@@ -206,7 +206,8 @@ Round 3: Random spot-checks + integration
 ## Exit Criteria Specific to QC/PR
 
 **Can only exit when ALL true:**
-- [ ] Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
+- [ ] Primary agent declared a clean round (ZERO issues OR exactly 1 LOW-severity issue fixed) AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
+- [ ] Counter logic: 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL resets counter; see `reference/severity_classification_universal.md`
 - [ ] All tests pass (100% pass rate)
 - [ ] Code matches implementation plan
 - [ ] All requirements implemented
@@ -230,10 +231,13 @@ Round 3: Random spot-checks + integration
 
 **Key difference from old approach:**
 - **Old (restart protocol):** Any issue → Restart from S7.P1 (smoke testing)
-- **New (fix and continue):** Any issue → Fix immediately → Reset `consecutive_clean` → Continue validation
+- **New (fix and continue):** Any issue → Fix immediately → Counter logic → Continue validation
 
-**Why counter resets:**
-- Fixing Issue A can introduce Issue B
+**Counter reset logic:**
+- Clean round = ZERO issues OR exactly 1 LOW-severity issue (fixed) → counter increments
+- 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL → counter resets to 0
+- Fixing Issue A can introduce Issue B → that's why we re-validate
+- See `reference/severity_classification_universal.md` for severity definitions
 - Fresh eyes needed to catch fix-induced issues
 - Cannot guarantee quality by spot-checking only fixed areas
 - Historical evidence: 40% of fixes introduce new issues

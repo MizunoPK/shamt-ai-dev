@@ -1,7 +1,7 @@
 # Master Validation Loop Protocol
 
-**Version:** 2.3
-**Last Updated:** 2026-03-15
+**Version:** 2.4 (SHAMT-24: Single Low-Severity Fix Allowance)
+**Last Updated:** 2026-04-01
 **Purpose:** Universal validation loop protocol with master dimensions that apply to ALL validation contexts
 **Extends:** This master protocol is extended by scenario-specific validation loop guides
 
@@ -19,7 +19,15 @@
 **If you are about to run a validation loop, you MUST:**
 
 1. **Create `VALIDATION_LOG.md`** in the feature/artifact folder BEFORE starting Round 1
-2. **Track `consecutive_clean`** explicitly in the log — it starts at 0 and resets to 0 any time ANY issue is found
+2. **Track `consecutive_clean`** explicitly in the log:
+   - Starts at 0
+   - Resets to 0 when ANY of these occur:
+     * Multiple LOW-severity issues found (2+)
+     * Any MEDIUM, HIGH, or CRITICAL severity issue found
+   - Increments to 1 when EITHER:
+     * Zero issues found (pure clean)
+     * Exactly one LOW-severity issue found and fixed (clean with 1 low fix)
+   - See `reference/severity_classification_universal.md` for severity definitions
 3. **Use `read_file` to read the ENTIRE artifact** every single round — partial reads do not count
 4. **Walk through ALL dimensions** (master + scenario-specific) and document each as PASS or ISSUE
 5. **Verify ≥3 technical claims** against source code every round using tools (read_file, grep_search)
@@ -27,7 +35,7 @@
 7. **When `consecutive_clean = 1` (primary clean round): spawn 2 independent sub-agents in parallel** — both must confirm zero issues to complete the exit sequence (see Exit Criteria for the required sub-agent confirmation protocol)
 8. **Complete the Adversarial Self-Check** after checking all dimensions in each round — a round may not be scored clean if this step is skipped
 
-**A round where you found issues and fixed them is NOT a clean round. The counter resets to 0.**
+**A round where you found multiple issues OR any MEDIUM/HIGH/CRITICAL issue is NOT a clean round — the counter resets to 0. Exception: Exactly 1 LOW-severity issue (fixed) still counts as a clean round.**
 
 🚨🚨🚨 **END OF HARD STOP** 🚨🚨🚨
 
@@ -194,19 +202,26 @@ Draft Artifact Created
 
 **Counter Reset Rule:**
 - Clean round counter starts at 0
-- Each clean round increments counter
-- ANY issue found → Counter resets to 0
+- Counter increments when round is clean:
+  - **Pure Clean:** Zero issues found
+  - **Clean (1 Low Fix):** Exactly one LOW-severity issue found and fixed
+- Counter resets to 0 when round is NOT clean:
+  - Multiple LOW-severity issues found (2+)
+  - Any MEDIUM, HIGH, or CRITICAL severity issue found
 - Need counter = 1 to exit, then sub-agent confirmation (see Exit Criteria)
+- See `reference/severity_classification_universal.md` for severity definitions
 
-**Example:**
-- Round 1: 5 issues → Fix all → Counter = 0
-- Round 2: 1 issue → Fix → Counter = 0
-- Round 3: 0 issues → Counter = 1 (PRIMARY CLEAN ROUND) → spawn 2 sub-agents
-  - Sub-agent A: 2 issues found → Fix → Counter resets to 0
-- Round 4: 0 issues → Counter = 1 (PRIMARY CLEAN ROUND) → spawn 2 sub-agents
+**Example (showing severity-based counter logic):**
+- Round 1: 5 issues (2 HIGH, 2 MEDIUM, 1 LOW) → Fix all → Counter = 0
+- Round 2: 2 issues (2 LOW) → Fix → Counter = 0 (multiple LOW = not clean)
+- Round 3: 1 issue (1 LOW typo) → Fix → Counter = 1 (single LOW allowed) → spawn 2 sub-agents
+  - Sub-agent A: 1 MEDIUM issue found → Fix → Counter resets to 0
+- Round 4: 0 issues → Counter = 1 (pure clean) → spawn 2 sub-agents
   - Sub-agent A: 0 issues ✅
   - Sub-agent B: 0 issues ✅
 - ✅ **EXIT**
+
+**Sub-agent exception:** Sub-agents do NOT get the 1 LOW allowance. ANY issue found by a sub-agent (even LOW) resets the counter to 0.
 
 🚨 **MECHANICAL VALIDATION WARNING** 🚨
 
@@ -229,6 +244,36 @@ Signs you are doing mechanical validation (PROHIBITED):
 - [ ] Found evidence of careful re-reading (noted different details than previous round)
 
 **If you cannot check all 4 boxes above, you have NOT done proper validation.**
+
+---
+
+## Issue Severity Classification (Universal)
+
+**Full Guide:** `reference/severity_classification_universal.md`
+
+### Quick Reference
+
+| Level | Definition | Clean Round Impact |
+|-------|------------|-------------------|
+| **CRITICAL** | Blocks workflow or causes cascading failures | Counter resets to 0 |
+| **HIGH** | Causes significant confusion or wrong decisions | Counter resets to 0 |
+| **MEDIUM** | Reduces quality but doesn't block or confuse | Counter resets to 0 |
+| **LOW** | Cosmetic issues with minimal impact | 1 allowed per round |
+
+### Severity Decision Shortcuts
+
+1. **"If this isn't fixed, can workflow complete?"** → NO = CRITICAL
+2. **"Will this cause agent or user confusion?"** → YES = HIGH
+3. **"Does this reduce quality or usability?"** → YES = MEDIUM
+4. **"Is this purely cosmetic?"** → YES = LOW
+
+### Borderline Cases
+
+**When uncertain between two severity levels, classify as the HIGHER severity.**
+
+- LOW vs MEDIUM unclear → Classify as **MEDIUM**
+- MEDIUM vs HIGH unclear → Classify as **HIGH**
+- HIGH vs CRITICAL unclear → Classify as **CRITICAL**
 
 ---
 
@@ -1283,6 +1328,14 @@ The compact format is the **default** for all validation logs. Verbose prose rem
 
 ### Issue Severity Classification
 
+**Full Guide:** `reference/severity_classification_universal.md`
+
+**CRITICAL Severity:**
+- Blocks workflow (broken file paths, missing required files)
+- Policy violations (CLAUDE.md >40K characters)
+- Template errors that propagate (broken template = all new epics broken)
+- Safety issues (incorrect git commands, data loss risks)
+
 **HIGH Severity:**
 - Made-up facts (Dimension 1 violations)
 - Missing critical requirements (Dimension 2)
@@ -1304,7 +1357,24 @@ The compact format is the **default** for all validation logs. Verbose prose rem
 - Style guideline deviations
 - Documentation formatting
 
-**CRITICAL:** ALL severity levels must be fixed (no "we'll fix LOW later")
+**ALL severity levels must be fixed** (no "we'll fix LOW later").
+
+### Clean Round Status
+
+| Status | Definition | Counter Action |
+|--------|------------|----------------|
+| **Pure Clean** | 0 issues found | Increment |
+| **Clean (1 Low Fix)** | Exactly 1 LOW issue found and fixed | Increment |
+| **Not Clean** | 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL | Reset to 0 |
+
+Document clean round status in validation log:
+```markdown
+**Round N Summary:**
+- Total Issues: {0 or 1}
+- Severity Breakdown: CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: {0 or 1}
+- Clean Round Status: **Pure Clean** ✅ / **Clean (1 Low Fix)** ✅ / **Not Clean** ❌
+- consecutive_clean: {N}
+```
 
 ### Reading Patterns for Fresh Eyes
 
@@ -1600,9 +1670,11 @@ Round 3: Check ALL 7 dimensions + scenario-specific
 ... (as applicable)
 
 **Round Result:**
-- Issues Found: {N}
-- Clean Round Counter: {0-1}
-- Next Action: [Fix issues / Continue to next round / EXIT]
+- Total Issues: {N}
+- Severity Breakdown: CRITICAL: {N}, HIGH: {N}, MEDIUM: {N}, LOW: {N}
+- Clean Round Status: **Pure Clean** / **Clean (1 Low Fix)** / **Not Clean**
+- consecutive_clean: {N}
+- Next Action: [Fix issues / Continue to next round / Trigger sub-agents / EXIT]
 ```
 
 ### Issue Tracking Template
@@ -1611,7 +1683,8 @@ Round 3: Check ALL 7 dimensions + scenario-specific
 ## Issue {N}
 
 **Dimension:** [1-7 or scenario-specific]
-**Severity:** [HIGH / MEDIUM / LOW]
+**Severity:** [CRITICAL / HIGH / MEDIUM / LOW]
+**Severity Rationale:** [Why this severity level? 1-2 sentences]
 **Location:** [Section, line number]
 **Found in Round:** {N}
 
@@ -1631,6 +1704,21 @@ Round 3: Check ALL 7 dimensions + scenario-specific
 **Verified in Round:** {N}
 ```
 
+### Round Summary Template
+
+```markdown
+**Round {N} Summary:**
+- Total Issues: {0, 1, or N}
+- Severity Breakdown: CRITICAL: {N}, HIGH: {N}, MEDIUM: {N}, LOW: {N}
+- Clean Round Status:
+  * **Pure Clean** (0 issues found) ✅
+  * **Clean (1 Low Fix)** (1 LOW-severity issue found & fixed) ✅
+  * **Not Clean** (2+ LOW OR any MEDIUM/HIGH/CRITICAL) ❌
+- Issues Fixed This Round: [List if any]
+- consecutive_clean: {N}
+- Next Action: [Continue / Trigger sub-agents / EXIT]
+```
+
 ---
 
-*End of Master Validation Loop Protocol v2.0*
+*End of Master Validation Loop Protocol v2.4 (SHAMT-24)*

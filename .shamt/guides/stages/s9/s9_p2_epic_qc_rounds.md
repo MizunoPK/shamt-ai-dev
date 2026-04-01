@@ -128,8 +128,9 @@ Epic QC Validation Loop is complete when primary clean round + sub-agent confirm
    - Re-read entire epic codebase each round (no working from memory)
 
 2. ⚠️ SUB-AGENT CONFIRMATION REQUIRED TO EXIT
-   - Clean = ZERO issues found across all 13 dimensions
-   - Counter resets if ANY issue found
+   - Clean round = ZERO issues OR exactly 1 LOW-severity issue (fixed)
+   - Counter resets if: 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL issue
+   - See `reference/severity_classification_universal.md` for severity definitions
    - After primary declares one clean round: spawn 2 independent sub-agents for parallel confirmation (see master protocol Exit Criteria)
    - Typical: 4-7 primary rounds to reach clean, then sub-agent confirmation
 

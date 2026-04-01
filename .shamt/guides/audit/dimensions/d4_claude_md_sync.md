@@ -472,9 +472,9 @@ echo "  - Key concepts aligned (Fresh Eyes, exit criteria, etc.)"
 - [ ] Doesn't duplicate detailed criteria (single source of truth)
 
 **Exit Criteria — Consecutive Rounds:**
-- [ ] CLAUDE.md uses "3 CONSECUTIVE zero-issue rounds" phrasing (not "minimum 3 rounds")
+- [ ] CLAUDE.md uses "3 CONSECUTIVE clean rounds (≤1 LOW each)" phrasing (not "minimum 3 rounds" or "zero-issue")
 - [ ] CLAUDE.md mentions tracking `consecutive_clean` counter explicitly
-- [ ] Consistent with audit guides' messaging (consecutive, not total count)
+- [ ] Consistent with audit guides' messaging (consecutive, not total count; ≤1 LOW per round is clean)
 
 ---
 

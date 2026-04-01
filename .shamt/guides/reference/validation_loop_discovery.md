@@ -186,7 +186,8 @@ Sub-agent confirmation:
 ## Exit Criteria Specific to Discovery
 
 **Can only exit when ALL true:**
-- [ ] Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
+- [ ] Primary agent declared a clean round (ZERO issues OR exactly 1 LOW-severity issue fixed) AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
+- [ ] Counter logic: 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL resets counter; see `reference/severity_classification_universal.md`
 - [ ] All epic/feature components researched
 - [ ] All questions answered
 - [ ] Zero assumptions

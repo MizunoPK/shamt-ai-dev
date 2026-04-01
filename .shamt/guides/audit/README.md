@@ -65,9 +65,10 @@ bash scripts/pre_audit_checks.sh
 
 ```text
 ┌─────────────────────────────────────────────────────────────────┐
-│         AUDIT LOOP (Repeat until ZERO new issues found)         │
-│   3 CONSECUTIVE ZERO-ISSUE ROUNDS (12+ sub-rounds min each)     │
-│  EXIT TRIGGER: Round N all 4 sub-rounds ZERO issues + 9 criteria│
+│         AUDIT LOOP (Repeat until clean rounds achieved)         │
+│   3 CONSECUTIVE CLEAN ROUNDS (where each has ≤1 LOW issue)      │
+│  EXIT TRIGGER: Round N all 4 sub-rounds clean + 9 criteria      │
+│  See: reference/severity_classification_universal.md            │
 └─────────────────────────────────────────────────────────────────┘
 
 Round N:
@@ -142,7 +143,7 @@ Round N complete → Round N+1 (fresh eyes) → EXIT when all criteria met
 - Sub-round finds issues → Fix ALL → Re-run SAME sub-round → Repeat until 0 issues
 - Sub-round clean → Proceed to next sub-round
 - All 4 sub-rounds clean → Round complete → Next round (fresh eyes)
-- 3 CONSECUTIVE zero-issue rounds required to exit (rounds with issues reset the counter to 0)
+- 3 CONSECUTIVE clean rounds required to exit (clean = ≤1 LOW; 2+ LOW or any MEDIUM/HIGH/CRITICAL resets counter to 0)
 
 ---
 
@@ -516,10 +517,10 @@ themselves — not epic workflow guides (those go through S10 lessons learned).
 
 **ALL 9 exit criteria must be met:**
 1. ✅ All issues resolved | 2. ✅ Zero new discoveries | 3. ✅ Zero verification findings
-4. ✅ 3 consecutive zero-issue rounds | 5. ✅ All documented | 6. ✅ User approved
+4. ✅ 3 consecutive clean rounds (≤1 LOW each) | 5. ✅ All documented | 6. ✅ User approved
 7. ✅ Confidence ≥80% | 8. ✅ Pattern diversity | 9. ✅ Spot-checks clean
 
-*(Item 4 is correct for guide audits — audits use 3 consecutive zero-issue rounds, distinct from workflow validation loops which use primary clean round + sub-agent confirmation. See CHANGES.md.)*
+*(Item 4 is correct for guide audits — audits use 3 consecutive clean rounds (≤1 LOW each), distinct from workflow validation loops which use primary clean round + sub-agent confirmation. See `reference/severity_classification_universal.md`.)*
 
 **See `stages/stage_5_loop_decision.md` for detailed criteria with sub-requirements.**
 
@@ -555,7 +556,7 @@ Issue discovered → Can I fix with confidence?
 
 - Approach each round as if you've never seen the codebase
 - Question everything, verify everything, assume you missed something
-- Use iterative loops until 3 consecutive zero-issue rounds achieved (typically 5-8 total rounds) *(guide audit protocol — workflow VLs use primary clean round + sub-agent confirmation instead)*
+- Use iterative loops until 3 consecutive clean rounds achieved (≤1 LOW per round; typically 5-8 total rounds) *(guide audit protocol — workflow VLs use primary clean round + sub-agent confirmation instead)*
 - Provide evidence, not just claims
 - When user challenges you, THEY ARE USUALLY RIGHT - re-verify immediately
 

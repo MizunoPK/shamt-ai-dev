@@ -174,7 +174,13 @@ S5 v2 is a **validation loop-based approach** to implementation planning that sy
 
 **The 11 S5 Dimensions (below) provide the detailed implementation planning checklists** that operationalize these master dimensions in the context of creating implementation_plan.md.
 
-**Core Validation Process:** Same as master protocol - primary clean round + sub-agent confirmation required, zero deferred issues, fresh eyes every round.
+**Severity Classification:** Uses universal 4-level system from `reference/severity_classification_universal.md`:
+- **CRITICAL:** Blocks implementation (missing required sections, broken references)
+- **HIGH:** Causes wrong implementation (incorrect signatures, missing requirements)
+- **MEDIUM:** Reduces quality (incomplete examples, vague acceptance criteria)
+- **LOW:** Cosmetic (typos, formatting)
+
+**Core Validation Process:** Same as master protocol - primary clean round + sub-agent confirmation required, fresh eyes every round. A round is clean if it has ZERO issues OR exactly ONE LOW-severity issue (fixed). Multiple LOW-severity issues OR any MEDIUM/HIGH/CRITICAL issue resets `consecutive_clean` to 0.
 
 ---
 
@@ -194,10 +200,11 @@ S5 v2 is a **validation loop-based approach** to implementation planning that sy
 │                    (3.5-6 hours, 6-8 rounds)                 │
 └─────────────────────────────────────────────────────────────┘
                               ↓
-    Round 1: Find ~12 issues → Fix all → Round 2
-    Round 2: Find ~8 issues → Fix all → Round 3
-    Round 3: Find ~3 issues → Fix all → Round 4
-    Round 4: Find 0 issues (clean count = 1) → Trigger sub-agent confirmation
+    Round 1: Find ~12 issues (3 HIGH, 6 MEDIUM, 3 LOW) → Fix all → Counter = 0
+    Round 2: Find ~8 issues (0 HIGH, 8 MEDIUM) → Fix all → Counter = 0
+    Round 3: Find 1 LOW issue (typo) → Fix → Counter = 1 (single low allowed) → Trigger sub-agent
+      Sub-agent A: 2 MEDIUM issues → Fix → Counter = 0
+    Round 4: Find 0 issues → Counter = 1 (pure clean) → Trigger sub-agent confirmation
       Sub-agent A (top-to-bottom): 0 issues ✅
       Sub-agent B (bottom-to-top): 0 issues ✅
       Both confirmed → ✅ PASSED
@@ -555,8 +562,10 @@ Each round follows this pattern:
    - Report: "Round N: X issues found across Y dimensions"
 
 6. FIX OR CONTINUE
-   - If X > 0: Fix ALL issues immediately → Round N+1, RESET counter
-   - If X = 0: Increment `consecutive_clean` → If counter = 1, trigger sub-agent confirmation (see master protocol Exit Criteria)
+   - If multiple LOW issues OR any MEDIUM/HIGH/CRITICAL: Fix ALL → Round N+1, RESET counter to 0
+   - If exactly 1 LOW issue: Fix → Counter = 1 (clean with 1 low fix) → trigger sub-agent confirmation
+   - If 0 issues: Counter = 1 (pure clean) → trigger sub-agent confirmation
+   - See `reference/severity_classification_universal.md` for severity definitions
 ```
 
 ---

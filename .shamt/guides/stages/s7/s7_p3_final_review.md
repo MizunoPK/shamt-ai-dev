@@ -124,8 +124,9 @@ Even if S7.P2 found and fixed many issues, S7.P3 requires FULL rigor:
    - Must document findings for ALL categories with evidence (tool calls, calculations)
 
 2. ⚠️ PRIMARY CLEAN ROUND + SUB-AGENT CONFIRMATION REQUIRED
-   - Clean = ZERO issues across all 11 categories
-   - Counter resets if ANY issue found
+   - Clean round = ZERO issues OR exactly 1 LOW-severity issue (fixed)
+   - Counter resets if: 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL issue
+   - See `reference/severity_classification_universal.md` for severity definitions
    - After primary clean round (counter = 1): spawn 2 independent sub-agents in parallel; both must confirm zero issues to exit
    - Typical: 3-5 primary rounds total to achieve primary clean round
 

@@ -89,9 +89,9 @@ When asked to validate a design doc (e.g., `SHAMT{N}_DESIGN.md` at repo root), r
 6. **Missing proposals** — Is anything important left out of scope that should be addressed here?
 7. **Open questions** — Are there unresolved decisions that need to be surfaced before implementation?
 
-**Exit criterion:** Primary clean round (all 7 dimensions pass with no issues) + independent sub-agent confirmation. Same pattern as workflow validation loops: `consecutive_clean = 1`, then spawn 2 parallel sub-agents both confirming zero issues.
+**Exit criterion:** Primary clean round (all 7 dimensions pass with no issues OR exactly one LOW-severity issue) + independent sub-agent confirmation. Same pattern as workflow validation loops: `consecutive_clean = 1`, then spawn 2 parallel sub-agents both confirming zero issues.
 
-Any issue found in any dimension resets `consecutive_clean` to 0.
+A round is clean if it has ZERO issues OR exactly ONE LOW-severity issue (fixed). Multiple LOW-severity issues OR any MEDIUM/HIGH/CRITICAL severity issue resets `consecutive_clean` to 0. See `reference/severity_classification_universal.md` for severity definitions.
 
 ---
 
@@ -138,4 +138,4 @@ When a new AI service is discovered (reported by a child project or user):
 - Run guide audit after every set of guide changes
 - Never approve child PRs that contain project-specific content in shared guide files
 - When any change affects system behavior (new sync scripts, new guides, new audit scope, new workflow steps): review and update the three master-only files that are not propagated via import — `CLAUDE.md`, root `README.md`, and `scripts/initialization/RULES_FILE.template.md`
-- Guide audits require 3 CONSECUTIVE zero-issue rounds to exit (track `consecutive_clean >= 3`). Workflow validation loops (S7.P2, S9.P2, etc.) exit on **primary clean round + independent sub-agent confirmation** (`consecutive_clean = 1`, then spawn 2 parallel sub-agents both confirming zero issues). In both cases, track `consecutive_clean` explicitly and state it at the end of every round; rounds with issues reset the counter to 0.
+- Guide audits require 3 CONSECUTIVE clean rounds (where each round has ≤1 LOW-severity issue) to exit (track `consecutive_clean >= 3`). Workflow validation loops (S7.P2, S9.P2, etc.) exit on **primary clean round + independent sub-agent confirmation** (`consecutive_clean = 1`, then spawn 2 parallel sub-agents both confirming zero issues). A round is clean if it has ZERO issues OR exactly ONE LOW-severity issue (fixed). Multiple LOW-severity issues OR any MEDIUM/HIGH/CRITICAL severity issue resets `consecutive_clean` to 0. Track `consecutive_clean` explicitly and state it at the end of every round. See `reference/severity_classification_universal.md` for severity definitions.

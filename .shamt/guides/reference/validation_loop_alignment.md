@@ -164,7 +164,8 @@ Round 3: Random pairs + thematic
 ## Exit Criteria Specific to Alignment
 
 **Can only exit when ALL true:**
-- [ ] Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
+- [ ] Primary agent declared a clean round (ZERO issues OR exactly 1 LOW-severity issue fixed) AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
+- [ ] Counter logic: 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL resets counter; see `reference/severity_classification_universal.md`
 - [ ] No naming conflicts across any features
 - [ ] No approach contradictions across any features
 - [ ] All data structures compatible

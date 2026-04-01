@@ -53,8 +53,10 @@
 │  • Round N complete → Proceed to Round N+1 (fresh eyes)         │
 │                                                                  │
 │  AUDIT LEVEL (After Round N complete):                          │
-│  • 3 CONSECUTIVE zero-issue rounds (consecutive_clean >= 3)     │
+│  • 3 CONSECUTIVE clean rounds (consecutive_clean >= 3)          │
+│    (Clean = ≤1 LOW-severity issue per round; see severity guide)│
 │  • ALL 9 exit criteria met → Consider exit                      │
+│  • See: reference/severity_classification_universal.md          │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -74,10 +76,12 @@
 - Use fresh patterns, different approach
 - Reset mental model between rounds
 
-**"3 consecutive zero-issue rounds" = at minimum 12 sub-rounds total:**
+**"3 consecutive clean rounds" = at minimum 12 sub-rounds total:**
+- A round is clean if it has ≤1 LOW-severity issue (fixed); 2+ LOW or any MEDIUM/HIGH/CRITICAL resets counter
 - Each clean round = 4 sub-rounds, so 3 clean rounds = 12 minimum cycles
-- Exit trigger: 3 CONSECUTIVE rounds all finding zero issues + all 9 criteria met
-- Rounds with issues reset the counter; you may need 5-8+ total rounds
+- Exit trigger: 3 CONSECUTIVE clean rounds + all 9 criteria met
+- Rounds with multiple LOW or any MEDIUM+ severity issues reset the counter; you may need 5-8+ total rounds
+- See `reference/severity_classification_universal.md` for severity definitions
 
 ### Why This Stage Matters
 
@@ -85,8 +89,8 @@
 - Agents naturally want to finish quickly
 - Premature exit = missed issues
 - "Are you sure?" from user = red flag
-- 3 consecutive zero-issue rounds is NOT arbitrary - it's evidence-based
-- SHAMT-7 needed **4 rounds** before achieving zero-issue round
+- 3 consecutive clean rounds is NOT arbitrary - it's evidence-based
+- SHAMT-7 needed **4 rounds** before achieving first clean round
 
 **From monolithic guide:**
 > "Premature completion claims: 3 times (each time, 50+ more issues found)"
@@ -148,13 +152,13 @@
 
 **If ANY N_new > 0 in any sub-round:** MUST loop same sub-round (mandatory)
 
-#### Criterion 4: 3 Consecutive Zero-Issue Rounds
-- [ ] Completed at least 3 CONSECUTIVE zero-issue rounds
+#### Criterion 4: 3 Consecutive Clean Rounds
+- [ ] Completed at least 3 CONSECUTIVE clean rounds (≤1 LOW per round)
   - Track explicitly: `consecutive_clean = [current count]`
-  - Rounds that found issues do NOT count — counter resets to 0 on any issue
-  - [ ] Round with 0 issues — consecutive_clean = 1
-  - [ ] Round with 0 issues — consecutive_clean = 2
-  - [ ] Round with 0 issues — consecutive_clean = 3 ✓
+  - Rounds with 2+ LOW or any MEDIUM/HIGH/CRITICAL reset counter to 0
+  - [ ] Clean round (0 issues OR 1 LOW fixed) — consecutive_clean = 1
+  - [ ] Clean round (0 issues OR 1 LOW fixed) — consecutive_clean = 2
+  - [ ] Clean round (0 issues OR 1 LOW fixed) — consecutive_clean = 3 ✓
 - [ ] Each round used different patterns than previous
 - [ ] Each sub-round focused on correct dimension set
 - [ ] Clear mental break between rounds (fresh perspective)
@@ -162,10 +166,10 @@
 
 **If consecutive_clean < 3:** MUST loop (regardless of total rounds completed)
 **If ANY sub-round skipped:** MUST loop (all 4 sub-rounds mandatory)
-**If ANY round finds issues:** Reset consecutive_clean to 0 and loop
+**If 2+ LOW or any MEDIUM/HIGH/CRITICAL found:** Reset consecutive_clean to 0 and loop
 
-**Critical distinction:** "Minimum 3 rounds" means 3 CONSECUTIVE zero-issue rounds.
-A round that found issues does not count. Rounds 1(issues), 2(issues), 3(clean) = consecutive_clean of 1, not 3.
+**Critical distinction:** "Minimum 3 rounds" means 3 CONSECUTIVE clean rounds.
+A round with 2+ LOW or any higher severity does not count. Rounds 1(issues), 2(issues), 3(clean) = consecutive_clean of 1, not 3.
 
 #### Criterion 5: All Remaining Documented
 - [ ] All remaining pattern matches are documented
@@ -261,7 +265,7 @@ criteria_met=0
 # Criterion 3: Zero new findings in Stage 4
 [ $N_new -eq 0 ] && ((criteria_met++))
 
-# Criterion 4: 3 consecutive zero-issue rounds
+# Criterion 4: 3 consecutive clean rounds (≤1 LOW each)
 [ $consecutive_clean -ge 3 ] && ((criteria_met++))
 
 # Criterion 5: All remaining documented
@@ -585,7 +589,7 @@ The working file is temporary — **do NOT commit it.**
 - [x] Criterion 1: All issues resolved
 - [x] Criterion 2: Zero new discoveries
 - [x] Criterion 3: Zero verification findings
-- [x] Criterion 4: 3 consecutive zero-issue rounds completed
+- [x] Criterion 4: 3 consecutive clean rounds completed (≤1 LOW each)
 - [x] Criterion 5: All remaining documented
 - [x] Criterion 6: User verification passed
 - [x] Criterion 7: Confidence ≥ 80%
@@ -748,7 +752,7 @@ git diff --name-only main | grep "audit/outputs"
 | 1. All Issues Resolved | Count remaining issues | 0 | LOOP (not optional) |
 | 2. Zero New in Stage 1 | Stage 1 report | 0 issues | LOOP |
 | 3. Zero New in Stage 4 | N_new count | 0 | LOOP |
-| 4. 3 Consecutive Zero-Issue Rounds | consecutive_clean | ≥ 3 | LOOP (not optional) |
+| 4. 3 Consecutive Clean Rounds (≤1 LOW) | consecutive_clean | ≥ 3 | LOOP (not optional) |
 | 5. All Documented | Undocumented count | 0 | LOOP |
 | 6. User Approved | User response | No challenge | LOOP if challenged |
 | 7. Confidence | Self-assessment | ≥ 80% | LOOP |

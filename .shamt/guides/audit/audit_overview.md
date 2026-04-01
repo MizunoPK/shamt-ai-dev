@@ -177,11 +177,13 @@ Issue discovered → Can I fix with confidence?
 - Before/after comparisons for every fix
 - Spot-check random files to verify grep accuracy
 
-**5. Iterative Until Zero**
-- 3 CONSECUTIVE zero-issue rounds required (NOT just any 3 rounds - SHAMT-7 needed 4+ total rounds)
+**5. Iterative Until Clean**
+- 3 CONSECUTIVE clean rounds required (NOT just any 3 rounds - SHAMT-7 needed 4+ total rounds)
+- A round is clean if it has ≤1 LOW-severity issue (fixed); 2+ LOW or any MEDIUM/HIGH/CRITICAL resets counter
 - TRUE exit trigger: consecutive_clean >= 3 + ALL 9 criteria met
 - Continue auditing regardless of round count until criteria satisfied
 - Each round uses completely different patterns
+- See `reference/severity_classification_universal.md` for severity definitions
 
 **6. Better to Over-Audit Than Under-Audit**
 - False positives can be resolved
@@ -415,9 +417,9 @@ Result: Round 3 found 70+ different issues Round 1 never looked for
 
 ```text
 ┌─────────────────────────────────────────────────────────────────┐
-│         AUDIT LOOP (Repeat until ZERO new issues found)         │
-│   3 CONSECUTIVE ZERO-ISSUE ROUNDS (12+ sub-rounds min each)     │
-│  EXIT TRIGGER: Round N all 4 sub-rounds ZERO issues + 9 criteria│
+│         AUDIT LOOP (Repeat until clean rounds achieved)         │
+│   3 CONSECUTIVE CLEAN ROUNDS (≤1 LOW each; 12+ sub-rounds min)  │
+│  EXIT TRIGGER: Round N all 4 sub-rounds clean + 9 criteria met  │
 └─────────────────────────────────────────────────────────────────┘
 
 Round N:
@@ -502,7 +504,7 @@ EXIT (only if Round N had 0 issues in all 4 sub-rounds + 9 criteria met)
 
 **Why Last:** Advanced checks require all other dimensions to be clean
 
-### Why 3 Consecutive Zero-Issue Rounds (12+ Sub-Rounds Total)?
+### Why 3 Consecutive Clean Rounds (12+ Sub-Rounds Total)?
 
 **3 rounds × 4 sub-rounds = 12 minimum cycles**
 
@@ -561,9 +563,12 @@ EXIT (only if Round N had 0 issues in all 4 sub-rounds + 9 criteria met)
 │  - Sub-Rounds 1, 2, 3, 4 all found 0 new issues                 │
 │                                                                  │
 │  AUDIT LEVEL:                                                   │
-│  - 3 consecutive zero-issue rounds (12+ sub-rounds)             │
-│  - Latest round had 0 issues in all 4 sub-rounds                │
+│  - 3 consecutive clean rounds (12+ sub-rounds)                  │
+│    (Clean = ≤1 LOW-severity issue per round; 2+ LOW or any      │
+│    MEDIUM/HIGH/CRITICAL resets counter)                         │
+│  - Latest round was clean in all 4 sub-rounds                   │
 │  - ALL 9 exit criteria met (see below)                          │
+│  - See: reference/severity_classification_universal.md          │
 └─────────────────────────────────────────────────────────────────┘
 ```markdown
 
@@ -573,7 +578,7 @@ Sub-Round N.X found issues → Fix ALL → Re-run Sub-Round N.X → Repeat until
 Sub-Round N.X found ZERO issues → Proceed to Sub-Round N.(X+1)
 Sub-Round N.4 found ZERO issues + Sub-Rounds N.1-N.3 were clean → Round N complete
 Round N complete (all 4 sub-rounds clean) → Round N+1 (fresh patterns)
-3 CONSECUTIVE zero-issue rounds (consecutive_clean >= 3) + ALL 9 criteria met → Consider exit
+3 CONSECUTIVE clean rounds (consecutive_clean >= 3; ≤1 LOW per round is clean) + ALL 9 criteria met → Consider exit
 ```markdown
 
 ### ALL 9 Criteria Must Be Met (Audit Level)
@@ -583,7 +588,7 @@ Round N complete (all 4 sub-rounds clean) → Round N+1 (fresh patterns)
 1. ✅ **All issues resolved:** Every issue from ALL rounds AND sub-rounds fixed and verified
 2. ✅ **Zero new issues:** Latest round found ZERO issues in ALL 4 sub-rounds
 3. ✅ **Zero verification findings:** Latest round verifications (S4) found ZERO new issues across all sub-rounds
-4. ✅ **3 consecutive zero-issue rounds:** consecutive_clean >= 3 (rounds with issues reset counter)
+4. ✅ **3 consecutive clean rounds:** consecutive_clean >= 3 (rounds with 2+ LOW or any MEDIUM/HIGH/CRITICAL reset counter; ≤1 LOW per round is clean)
 5. ✅ **All remaining documented:** All remaining instances documented as intentional
 6. ✅ **User has NOT challenged:** User has not questioned findings
 7. ✅ **Confidence score:** ≥ 80% confidence in completeness across all 22 dimensions
@@ -628,7 +633,7 @@ Round N complete (all 4 sub-rounds clean) → Round N+1 (fresh patterns)
 
 **Exit conditions:**
 - ✅ Round N complete (all 4 sub-rounds clean)
-- ✅ 3 consecutive zero-issue rounds complete (consecutive_clean >= 3)
+- ✅ 3 consecutive clean rounds complete (consecutive_clean >= 3; ≤1 LOW per round is clean)
 - ✅ ALL 9 exit criteria met
 - ✅ User approves exit
 
@@ -740,7 +745,7 @@ If CLAUDE.md exceeds 40,000 characters, extract detailed content to separate fil
 - Automated pre-checks would have caught ~60% of Round 1-2 issues
 
 **Lessons Learned:**
-- 3 consecutive zero-issue rounds is NOT arbitrary - it's evidence-based
+- 3 consecutive clean rounds is NOT arbitrary - it's evidence-based
 - Pattern diversity is critical (same patterns each round = same blind spots)
 - Fresh eyes approach works (breaking between rounds found new issues)
 - User skepticism is warranted (agents naturally want to finish quickly)

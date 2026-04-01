@@ -165,7 +165,7 @@ the workflow to produce a review in `.shamt/code_reviews/{sanitized_branch}/`.
 - Skip full artifact re-reads (reading partial sections instead of the entire artifact)
 - Skip dimension checklists (finding issues "organically" instead of walking all dimensions)
 - Never create the required VALIDATION_LOG.md file
-- Treat "issues found and fixed" rounds as clean rounds (they are NOT clean — counter resets to 0)
+- Treat "issues found and fixed" rounds as clean rounds (they are NOT clean — except exactly 1 LOW-severity issue fixed counts as clean; 2+ LOW or any MEDIUM/HIGH/CRITICAL resets counter to 0)
 
 **Non-negotiable requirements:**
 
@@ -175,7 +175,7 @@ the workflow to produce a review in `.shamt/code_reviews/{sanitized_branch}/`.
 
 3. **All dimensions checked every round.** Walk through every dimension checklist (7 master + scenario-specific) and document PASS or ISSUE for each. "I found issues organically" is not sufficient — you must check dimensions you did NOT find issues in too.
 
-4. **Clean counter resets to 0 when ANY issue is found.** A round where you found issues and fixed them is NOT a clean round. The counter only increments on rounds where ZERO issues are found across ALL dimensions.
+4. **Clean counter resets when multiple issues OR higher severity found.** A round is clean if ZERO issues found OR exactly ONE LOW-severity issue found and fixed. Multiple LOW issues (2+) or ANY MEDIUM/HIGH/CRITICAL issue resets the counter to 0. See `reference/severity_classification_universal.md`.
 
 5. **Sub-agent confirmation required to exit.** After declaring a clean round (counter = 1), spawn 2 independent sub-agents in parallel; both must confirm zero issues to exit. Typical validation takes 3-5 primary rounds total. If you're finishing in ≤2 primary rounds before triggering sub-agents, you are almost certainly doing mechanical validation.
 
@@ -189,7 +189,7 @@ the workflow to produce a review in `.shamt/code_reviews/{sanitized_branch}/`.
 - [ ] Every round has full artifact re-read evidence (read_file calls covering all lines)
 - [ ] Every round has all dimensions documented (PASS or ISSUE for each)
 - [ ] Every round has ≥3 spot-checked technical claims with tool evidence
-- [ ] No round that found issues was counted toward the clean counter
+- [ ] Only clean rounds were counted (0 issues OR exactly 1 LOW fixed; 2+ LOW or any MEDIUM/HIGH/CRITICAL resets counter)
 
 🚨 **TOOL USAGE EVIDENCE — MANDATORY PER ROUND**
 

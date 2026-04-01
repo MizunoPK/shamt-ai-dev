@@ -89,7 +89,7 @@ For multi-guide or cross-cutting changes, use a branch with an optional design d
 1. Create branch: `feat/SHAMT-[N]`
 2. For planning: create `SHAMT[N]_DESIGN.md` at the repo root (not in `.shamt/`) to capture scope, decisions, and open questions
 3. Make changes across the affected guides and scripts
-4. Run the full guide audit before merging (3 consecutive zero-issue rounds required)
+4. Run the full guide audit before merging (3 consecutive clean rounds required; ≤1 LOW per round is clean)
 5. Open a PR against `main` — child projects receive the changes on their next import run
 
 **What NOT to do for master work:**
