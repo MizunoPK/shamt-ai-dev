@@ -96,7 +96,7 @@
 ## Overview
 
 **What is S9?**
-Epic-Level Final QC is where you validate the ENTIRE epic as a cohesive whole after ALL features are implemented. This includes epic smoke testing, validation loop QC (12 dimensions, primary clean round + sub-agent confirmation), user testing, and epic-level PR review.
+Epic-Level Final QC is where you validate the ENTIRE epic as a cohesive whole after ALL features are implemented. This includes epic smoke testing, validation loop QC (13 dimensions, primary clean round + sub-agent confirmation), user testing, and epic-level PR review.
 
 **Total Time Estimate:** 4-7 hours (4 phases across 4 guides, validation loop approach)
 
@@ -136,7 +136,7 @@ Epic-Level Final QC is where you validate the ENTIRE epic as a cohesive whole af
 **Read:** `stages/s9/s9_p2_epic_qc_rounds.md`
 
 **What it covers:**
-- **Validation Loop:** Check ALL 12 dimensions every round (7 master + 5 epic-specific)
+- **Validation Loop:** Check ALL 13 dimensions every round (7 master + 6 epic-specific)
 - **Exit Criteria:** primary clean round + sub-agent confirmation with ZERO issues
 - **Issue Handling:** Fix immediately, reset `consecutive_clean`, continue (no restart for minor issues)
 
@@ -152,7 +152,7 @@ Epic-Level Final QC is where you validate the ENTIRE epic as a cohesive whole af
 
 **Why this sub-stage exists:**
 - Deep validation of epic quality using systematic validation loop
-- ALL 12 dimensions checked EVERY round (comprehensive)
+- ALL 13 dimensions checked EVERY round (comprehensive)
 - Fix-and-continue approach (no restart overhead for minor issues)
 - primary clean round + sub-agent confirmation ensuress thorough validation
 
@@ -233,7 +233,7 @@ Start Epic Final QC
           ▼
     ┌─────────────┐
     │   S9.P2     │  Epic QC Validation Loop
-    │  (2-4 hours)│  • Check ALL 12 dimensions every round
+    │  (2-4 hours)│  • Check ALL 13 dimensions every round
     └─────────────┘  • Until primary clean round + sub-agent confirmation
           │          • Fix issues immediately, continue
           │
@@ -333,8 +333,8 @@ When user reports bugs during S9.P3:
    - Feature-level validation done in S7 (Testing & Review)
    - Focus: Cross-feature workflows, integration points, cohesion
 
-4. ⚠️ S9.P2 uses VALIDATION LOOP (12 dimensions, primary clean round + sub-agent confirmation)
-   - Check ALL 12 dimensions every round (7 master + 5 epic-specific)
+4. ⚠️ S9.P2 uses VALIDATION LOOP (13 dimensions, primary clean round + sub-agent confirmation)
+   - Check ALL 13 dimensions every round (7 master + 6 epic-specific)
    - primary clean round + sub-agent confirmation required to exit
    - Fix issues immediately, continue (no restart for S9.P2)
 
@@ -436,7 +436,7 @@ Ready to begin Step 1: Pre-QC Verification.
 - [ ] **All phases complete:**
   - S9.P1: Pre-QC Verification complete
   - S9.P1: Epic Smoke Testing PASSED (all 4 parts)
-  - S9.P2: Epic QC Validation Loop PASSED (primary clean round + sub-agent confirmation, 12 dimensions)
+  - S9.P2: Epic QC Validation Loop PASSED (primary clean round + sub-agent confirmation, 13 dimensions)
   - S9.P3: User Testing PASSED (user reports "No bugs found")
   - S9.P4: Epic PR Review PASSED (all 11 categories)
   - S9.P4: Validate Against Epic Request PASSED
@@ -450,7 +450,7 @@ Ready to begin Step 1: Pre-QC Verification.
 
 - [ ] **Epic QC Validation Loop (S9.P2):**
   - primary clean round + sub-agent confirmation achieved: ✅ PASSED
-  - All 12 dimensions checked every round (7 master + 5 epic): ✅ PASSED
+  - All 13 dimensions checked every round (7 master + 6 epic): ✅ PASSED
   - VALIDATION_LOOP_LOG.md complete: ✅ PASSED
   - All issues fixed immediately (no deferred issues): ✅ PASSED
 
@@ -556,7 +556,7 @@ A: Yes, S9 was originally a single 1,644-line guide. It has been split into four
 **S9 is now split into four focused guides:**
 
 1. **stages/s9/s9_p1_epic_smoke_testing.md** - Epic Smoke Testing (4 parts)
-2. **stages/s9/s9_p2_epic_qc_rounds.md** - Epic QC Validation Loop (12 dimensions, primary clean round + sub-agent confirmation)
+2. **stages/s9/s9_p2_epic_qc_rounds.md** - Epic QC Validation Loop (13 dimensions, primary clean round + sub-agent confirmation)
 3. **stages/s9/s9_p3_user_testing.md** - User Testing & Bug Fix Protocol
 4. **stages/s9/s9_p4_epic_final_review.md** - Epic Final Review (11 categories)
 

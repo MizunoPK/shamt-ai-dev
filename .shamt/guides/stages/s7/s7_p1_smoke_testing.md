@@ -162,6 +162,11 @@ Smoke Testing is complete when ALL 3 parts pass (including data value verificati
 - [ ] Check `git status` → no uncommitted implementation changes
 - [ ] Review implementation_checklist.md → all items marked verified
 
+**Linting (if project has linter configured):**
+- [ ] Run project linter: `{LINT_COMMAND}` (e.g., `ruff check .`, `eslint .`, `cargo clippy`)
+- [ ] Zero errors (warnings acceptable per project standards)
+- [ ] If linter not configured: document in feature README that linting is N/A for this feature
+
 **If ANY prerequisite not met:** Return to S6 and complete it first.
 
 ---

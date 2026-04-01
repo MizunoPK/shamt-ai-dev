@@ -580,7 +580,7 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 **When:** During Validation Loop (S7.P2)
 
 **What it checks:**
-- Check ALL 16 dimensions every round (7 master + 9 S7 QC-specific)
+- Check ALL 17 dimensions every round (7 master + 10 S7 QC-specific)
 - Primary clean round + sub-agent confirmation required
 
 **Pass Criteria:**
@@ -594,7 +594,7 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 - No restart needed - fix issues and keep going
 
 **Validation Loop Protocol:**
-- Check all 16 dimensions every round (7 master + 9 S7 QC-specific — not different focuses per round)
+- Check all 17 dimensions every round (7 master + 10 S7 QC-specific — not different focuses per round)
 - Fix issues immediately when found
 - Only exit after primary clean round + sub-agent confirmation
 

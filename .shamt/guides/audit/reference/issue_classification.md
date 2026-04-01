@@ -131,7 +131,7 @@ If answer is YES + doesn't block → HIGH
 **Examples:**
 - ⚠️ File is 1,500 lines (exceeds 1250 readability limit)
 - ⚠️ File >500 lines has no Table of Contents
-- ⚠️ Says "16 dimensions" but actually 17 listed
+- ⚠️ Says "17 dimensions" but actually 18 listed
 - ⚠️ Some headers use "##" others use "###" inconsistently
 
 **How to Identify:**

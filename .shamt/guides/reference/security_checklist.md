@@ -321,6 +321,46 @@ Use this for validation loop security dimension check:
 
 ---
 
+## Automated Security Scanner Integration
+
+**Purpose:** Language-specific security scanning tools to complement manual security review.
+
+### Language-Specific Security Tool Mapping
+
+| Language | Recommended Tool | Example Command |
+|----------|------------------|-----------------|
+| Python | Bandit | `bandit -r src/ -ll` |
+| JavaScript/TypeScript | ESLint security plugin + npm audit | `npm audit --audit-level=high` |
+| Go | gosec | `gosec ./...` |
+| Java | SpotBugs + FindSecBugs | `mvn spotbugs:check` |
+| Multi-language | Semgrep | `semgrep --config auto .` |
+| Any (GitHub repos) | CodeQL | GitHub Actions integration |
+
+### Using Security Scanners in Validation Loops
+
+**If your project has a security scanner configured:**
+
+1. **Add to RULES_FILE:** Set `Security Scan Command` in your project's rules file
+2. **Run during S7.P2/S9.P2:** Include security scan in validation rounds
+3. **Interpret results:**
+   - Zero high-severity findings required
+   - Medium-severity findings: review and either fix or document as accepted risk
+   - Low-severity findings: address if low effort, otherwise document
+
+### Validation Loop Integration (Dimension 18 for S7, Dimension 14 for S9)
+
+**If project has security scanner configured:**
+- [ ] Run security scanner: `{SECURITY_SCAN_COMMAND}`
+- [ ] Zero high-severity findings
+- [ ] Medium-severity findings reviewed and either fixed or documented as accepted risk
+- [ ] Manual security checks per Quick Security Review Checklist also pass
+
+**If no security scanner configured:**
+- [ ] Skip automated scan
+- [ ] Still verify Quick Security Review Checklist manually
+
+---
+
 ## Resources
 
 - OWASP Top 10: https://owasp.org/www-project-top-ten/

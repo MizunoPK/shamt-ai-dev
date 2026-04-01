@@ -56,7 +56,7 @@ S7: Post-Implementation (1.5-2.5 hours, 3 phases)
     │   └─ Part 3: E2E Test (verify DATA VALUES) ← MANDATORY GATE
     │
     ├─ Phase 2: Validation Loop (stages/s7/s7_p2_qc_rounds.md)
-    │   ├─ Check ALL 16 dimensions every round (7 master + 9 S7 QC-specific)
+    │   ├─ Check ALL 17 dimensions every round (7 master + 10 S7 QC-specific)
     │   ├─ Fix issues immediately, reset `consecutive_clean`
     │   └─ primary clean round + sub-agent confirmation required ← MANDATORY
     │
@@ -86,7 +86,7 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 | S5.P2 | stages/s5/s5_v2_validation_loop.md | 3.5-6 hrs | Validation Loop (11 dimensions × 6-8 rounds) | primary clean round + sub-agent confirmation, Gates 4a/7a/23a/24/25 embedded |
 | S6 | stages/s6/s6_execution.md | 1-4 hrs | Execute implementation_plan.md tasks | Tests per approach (conditional) |
 | S7.P1 | stages/s7/s7_p1_smoke_testing.md | 30-45 min | Import, entry point, E2E tests | Part 3 data values |
-| S7.P2 | stages/s7/s7_p2_qc_rounds.md | 45-75 min | Validation Loop, 16 dimensions (7 master + 9 S7 QC) | primary clean round + sub-agent confirmation |
+| S7.P2 | stages/s7/s7_p2_qc_rounds.md | 45-75 min | Validation Loop, 17 dimensions (7 master + 10 S7 QC) | primary clean round + sub-agent confirmation |
 | S7.P3 | stages/s7/s7_p3_final_review.md | 30-45 min | PR review, lessons learned | Zero tech debt |
 | S8.P1 | stages/s8/s8_p1_cross_feature_alignment.md | 15-30 min | Update remaining specs | None |
 | S8.P2 | stages/s8/s8_p2_epic_testing_update.md | 15-30 min | Update epic test plan | None |
@@ -166,7 +166,7 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 → Fix issues, restart from S7.P1 Step 1 (smoke testing)
 
 **Why fix-and-continue?**
-- Check ALL 16 dimensions every round (7 master + 9 S7 QC-specific)
+- Check ALL 17 dimensions every round (7 master + 10 S7 QC-specific)
 - Fix issues immediately when found
 - More efficient than full restart protocol
 - Zero tech debt tolerance - no deferring issues

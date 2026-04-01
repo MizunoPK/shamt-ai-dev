@@ -235,6 +235,23 @@ Before scoring a round as clean, explicitly ask:
 
 Re-read the diff from the perspective of a skeptic looking for things you let through. A round may NOT be scored clean if this step is skipped.
 
+### Adversarial Linter Check (Required Before Declaring Any Round Clean)
+
+Before scoring a round as clean, explicitly answer:
+
+> "What would ESLint/Ruff/CodeQL flag in this code that I haven't checked?"
+
+Consider:
+- [ ] Unused variables or imports?
+- [ ] Operator confusion (= vs ==, == vs ===)?
+- [ ] Missing null/undefined checks?
+- [ ] Unreachable code after return/throw?
+- [ ] Inconsistent string quotes or formatting?
+- [ ] Type coercion issues?
+- [ ] Security patterns (eval, innerHTML, SQL string concat)?
+
+A round may NOT be scored clean if this check is skipped.
+
 ### Round Structure
 
 Each round:

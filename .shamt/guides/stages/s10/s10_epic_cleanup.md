@@ -224,6 +224,11 @@ STAGE 10: Epic Cleanup
 │   ├─ Create proposal doc in .shamt/unimplemented_design_proposals/
 │   └─ Commit proposal doc (or note zero proposals if none accepted)
 │
+├─> STEP 4b: Log PR Review Findings (optional but recommended)
+│   ├─ Review PR comments for issues S7/S9 QC missed
+│   ├─ Log significant findings in audit/pr_review_findings_log.md
+│   └─ Update category summary counts
+│
 ├─> STEP 5: Final Commit (Epic Implementation)
 │   ├─ Review all changes with git status and git diff
 │   ├─ Stage all epic-related changes
@@ -288,6 +293,7 @@ STAGE 10: Epic Cleanup
 | **Step 2b** | Investigate Anomalies | 10-30 min | Optional | [Jump](#step-2b-investigate-user-reported-anomalies-if-applicable) |
 | **Step 3** | Documentation Verification | 10 min | No | [Jump](#step-3-documentation-verification) |
 | **Step 4** | S10.P1 Guide Update (Create Proposal Doc) | 20-45 min | No | [Jump](#step-4-guide-update-from-lessons-learned-mandatory-s10p1) |
+| **Step 4b** | Log PR Review Findings | 5-15 min | Optional | [Jump](#step-4b-log-pr-review-findings-optional-but-recommended) |
 | **Step 5** | Final Commit (Epic Work) | 10 min | No | [Jump](#step-5-final-commit-epic-implementation) |
 | **Step 6** | Move Epic to done/ | 5 min | No | [Jump](#step-6-move-epic-to-done-folder) |
 | **Step 7** | Update .shamt/epics/EPIC_TRACKER.md | 5 min | No | [Jump](#step-7-update-shamtepicsepic_trackermd) |
@@ -528,7 +534,71 @@ stages/s10/s10_p1_guide_update_workflow.md
 
 **Exit Condition:** S10.P1 complete (verify guide_update_tracking.md updated and proposal doc created, if any proposals accepted)
 
-**NEXT:** After S10.P1 complete, proceed to STEP 5 (Final Commit) for epic code
+**NEXT:** After S10.P1 complete, proceed to STEP 4b (Log PR Review Findings)
+
+---
+
+### STEP 4b: Log PR Review Findings (Optional but Recommended)
+
+**Objective:** Capture any findings from PR reviews (human reviewers, GitHub Copilot, other AI tools) that weren't caught during S7/S9 QC phases.
+
+**When to Execute:**
+- After PR has been reviewed and merged
+- When PR review comments identified legitimate issues that S7/S9 QC missed
+
+**Skip This Step If:**
+- No PR review comments related to code quality/issues
+- All PR comments were style preferences or project-specific
+
+**Process:**
+
+**4b-1. Review PR Comments**
+
+Identify any PR review comments that:
+- Pointed out legitimate issues (bugs, security, code quality)
+- Should have been caught during S7.P2 or S9.P2 validation
+
+**4b-2. Log Significant Findings**
+
+For each significant finding, add an entry to:
+```text
+.shamt/guides/audit/pr_review_findings_log.md
+```
+
+**Entry Format:**
+```markdown
+## Entry [N]: [Short Description]
+
+**Date:** YYYY-MM-DD
+**Epic:** [Epic Name]
+**Source:** [Human Reviewer / GitHub Copilot / Other AI Tool Name]
+**PR:** [PR number or link]
+
+### Finding
+[Describe what the reviewer found]
+
+### Category
+[Security | Error Handling | Type Safety | Performance | Code Quality | Testing | Documentation | Architecture | Other]
+
+### Why QC Missed It
+[Brief analysis: gap in dimensions? Missing checklist? LLM blind spot?]
+
+### Recommended Guide Update
+[Specific proposal if applicable]
+
+### Status
+Pending Review
+```
+
+**4b-3. Update Category Summary**
+
+Update the category count table in pr_review_findings_log.md.
+
+**Time Estimate:** 5-15 minutes (depending on number of findings)
+
+**Exit Condition:** All significant PR review findings logged (or documented that none exist)
+
+**NEXT:** Proceed to STEP 5 (Final Commit) for epic code
 
 ---
 

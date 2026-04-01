@@ -194,7 +194,7 @@ Actions needed:
    - Part 4: Cross-Feature Integration Test ← **Includes new feature**
 
 2. **S9.P2:** Epic QC Validation Loop
-   - Check ALL 12 dimensions every round (7 master + 5 epic)
+   - Check ALL 13 dimensions every round (7 master + 6 epic)
    - Continue until primary clean round + sub-agent confirmation
    - Fix issues immediately, reset counter, continue
 

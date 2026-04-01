@@ -19,8 +19,8 @@
 
 1. [Overview](#overview)
 2. [Master Dimensions (7) - Always Checked](#master-dimensions-7---always-checked)
-3. [S7 Feature QC Dimensions (9) - Context-Specific](#s7-feature-qc-dimensions-9---context-specific)
-4. [Total Dimensions: 16](#total-dimensions-16)
+3. [S7 Feature QC Dimensions (10) - Context-Specific](#s7-feature-qc-dimensions-10---context-specific)
+4. [Total Dimensions: 17 (+1 Optional)](#total-dimensions-17-1-optional)
 5. [What's Being Validated](#whats-being-validated)
 6. [Fresh Eyes Patterns Per Round](#fresh-eyes-patterns-per-round)
 7. [Common Issues in S7 QC Context](#common-issues-in-s7-qc-context)
@@ -47,7 +47,7 @@
 - Code follows project standards
 - Ready for S7.P3 (Final Review)
 
-**Uses:** All 7 master dimensions + 9 S7 QC-specific dimensions = 16 total
+**Uses:** All 7 master dimensions + 10 S7 QC-specific dimensions = 17 total (+1 optional security scan dimension)
 
 ---
 
@@ -105,7 +105,7 @@ These universal dimensions apply to S7 Feature QC validation:
 
 ---
 
-## S7 Feature QC Dimensions (9) - Context-Specific
+## S7 Feature QC Dimensions (10) - Context-Specific
 
 These 9 dimensions are specific to S7.P2 Feature QC validation:
 
@@ -482,11 +482,79 @@ assert result.url.endswith(".jpeg")
 
 ---
 
-## Total Dimensions: 16
+### Dimension 17: Mechanical Code Quality
 
-**Every validation round checks ALL 16 dimensions:**
+**Question:** Have all mechanical/linter-type issues been checked?
+
+**Reference:** See `reference/concrete_issue_patterns.md` for complete patterns.
+
+**Checklist:**
+
+- [ ] Consulted `reference/concrete_issue_patterns.md`
+- [ ] Universal patterns checked (unused imports, dead code, debug statements, magic numbers)
+- [ ] Language-specific patterns checked (error handling, type safety per project language)
+- [ ] Security quick scan completed (no eval, no SQL concat, paths validated)
+- [ ] If linter available: `{LINT_COMMAND}` returns exit code 0
+
+**Quick Check Commands:**
+- Python: `ruff check --select F401,E501 {changed_files}`
+- TypeScript: `npx tsc --noEmit --noUnusedLocals`
+- Go: `go vet ./...`
+
+**Common Violations:**
+
+❌ **WRONG — Mechanical issues not checked:**
+```python
+import os  # unused
+DEBUG = True  # debug flag left in
+magic_value = 42  # magic number
+```
+
+✅ **CORRECT — Clean mechanical quality:**
+```python
+# Only imports that are used
+MAX_RETRIES = 42  # Named constant
+```
+
+---
+
+### Dimension 18: Security Scan (Optional)
+
+**Question:** Has the project's security scanner been run with zero high-severity findings?
+
+**Reference:** See `reference/security_checklist.md` for complete security patterns and tool mapping.
+
+**Applicability:** This dimension is OPTIONAL. Only check if the project has a security scanner configured (check `SECURITY_SCAN_COMMAND` in project rules file).
+
+**Checklist (if security scanner configured):**
+
+- [ ] Run security scanner: `{SECURITY_SCAN_COMMAND}`
+- [ ] Zero high-severity findings
+- [ ] Medium-severity findings reviewed and either fixed or documented as accepted risk
+- [ ] Manual security checks per `reference/security_checklist.md` Quick Security Review Checklist also pass
+
+**If no security scanner configured:**
+- [ ] Skip automated scan
+- [ ] Still verify manual security checklist from `reference/security_checklist.md`
+
+**Language-Specific Security Tools:**
+
+| Language | Recommended Tool | Example Command |
+|----------|------------------|-----------------|
+| Python | Bandit | `bandit -r src/ -ll` |
+| JavaScript/TypeScript | ESLint security plugin + npm audit | `npm audit --audit-level=high` |
+| Go | gosec | `gosec ./...` |
+| Java | SpotBugs + FindSecBugs | `mvn spotbugs:check` |
+| Multi-language | Semgrep | `semgrep --config auto .` |
+
+---
+
+## Total Dimensions: 17 (+1 Optional)
+
+**Every validation round checks ALL 17 mandatory dimensions (+1 optional):**
 - 7 Master dimensions (universal)
-- 9 S7 Feature QC dimensions (context-specific)
+- 10 S7 Feature QC dimensions (context-specific)
+- 1 Optional security scan dimension (if project has security scanner configured)
 
 **Process:** See master protocol for sub-agent confirmation exit requirement
 
@@ -528,11 +596,11 @@ S7 Feature QC-specific reading patterns:
 2. Verify 100% pass rate (exit code 0)
 3. Read implementation code sequentially (top to bottom, file by file)
 4. Read spec.md in parallel (verify requirements covered)
-5. Check all 16 dimensions systematically
+5. Check all 17 dimensions systematically
 6. Document ALL issues found
 
 **Checklist:**
-- [ ] All 16 dimensions checked (7 master + 9 S7 QC)
+- [ ] All 17 dimensions checked (7 master + 10 S7 QC)
 - [ ] All tests passing (100% pass rate)
 - [ ] All spec requirements implemented
 - [ ] Integration points verified
@@ -550,7 +618,7 @@ S7 Feature QC-specific reading patterns:
 3. Focus on integration points (feature boundaries)
 4. Trace data flow across features
 5. Verify error propagation
-6. Check all 16 dimensions systematically
+6. Check all 17 dimensions systematically
 
 **Focus Areas:**
 - Dimension 8 (Cross-Feature Integration) - primary focus
@@ -558,7 +626,7 @@ S7 Feature QC-specific reading patterns:
 - All master dimensions - continue checking
 
 **Checklist:**
-- [ ] All 16 dimensions checked
+- [ ] All 17 dimensions checked
 - [ ] Integration verified (data flow correct, interfaces match)
 - [ ] Error handling comprehensive
 - [ ] No new issues from fixes
@@ -572,7 +640,7 @@ S7 Feature QC-specific reading patterns:
 2. Random spot-check 5-7 functions/classes
 3. End-to-end flow verification (trace from CLI to output)
 4. Performance check (acceptable on expected data volumes)
-5. Check all 16 dimensions systematically
+5. Check all 17 dimensions systematically
 
 **Focus Areas:**
 - Dimension 10 (End-to-End Functionality) - primary focus
@@ -580,7 +648,7 @@ S7 Feature QC-specific reading patterns:
 - Dimension 12 (Requirements Completion) - final check
 
 **Checklist:**
-- [ ] All 16 dimensions checked
+- [ ] All 17 dimensions checked
 - [ ] E2E flow works correctly
 - [ ] Performance acceptable
 - [ ] All requirements 100% complete
@@ -723,7 +791,7 @@ All positions supported ✅
 **From Master Protocol:**
 - [ ] Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
 - [ ] All 7 master dimensions checked every primary round
-- [ ] All 9 S7 QC dimensions checked every primary round
+- [ ] All 10 S7 QC dimensions checked every primary round
 - [ ] Validation log complete with all rounds documented
 
 **S7 QC Specific:**
@@ -755,7 +823,7 @@ All positions supported ✅
 
 **Process:**
 1. Use this validation loop protocol
-2. Check all 16 dimensions (7 master + 9 S7 QC)
+2. Check all 17 dimensions (7 master + 10 S7 QC)
 3. Exit when primary clean round + sub-agent confirmation
 4. Proceed to S7.P3 (Final Review)
 
@@ -778,7 +846,7 @@ Round 1: Sequential + Test Verification
 - Re-run tests: All pass ✅
 - Sequential code review: Found integration point mismatch (Feature B interface)
 - Fix: Update call to feature_b.calculate_score() with correct parameter type
-- Check all 16 dimensions
+- Check all 17 dimensions
 - Issues found: 3 total
 - Clean counter: 0
 
@@ -787,7 +855,7 @@ Round 2: Reverse + Integration Focus
 - Reverse code review: Found missing error handling (FileNotFoundError)
 - Fix: Add try/except with fallback
 - Integration focus: Traced data flow F1→F2→F3, all correct
-- Check all 16 dimensions
+- Check all 17 dimensions
 - Issues found: 1 total
 - Clean counter: 0
 
@@ -795,14 +863,14 @@ Round 3: Spot-Checks + E2E
 - Run tests: All pass ✅
 - Random spot-checks: 6 functions checked, all correct
 - E2E verification: Traced from CLI to output, complete flow works
-- Check all 16 dimensions
+- Check all 17 dimensions
 - Issues found: 0 ✅
 - Clean counter: 1
 
 Round 4: Primary Clean Round
 - Run tests: All pass ✅
 - Complete re-read of implementation
-- Check all 16 dimensions
+- Check all 17 dimensions
 - Issues found: 0 ✅
 - Clean counter: 1 → Triggering sub-agent confirmation
 
@@ -1028,8 +1096,8 @@ Ready for S7.P3 (Final Review)
 
 **S7 Feature QC Validation Loop:**
 - **Extends:** Master Validation Loop Protocol (7 universal dimensions)
-- **Adds:** 9 S7 QC-specific dimensions
-- **Total:** 16 dimensions checked every primary round
+- **Adds:** 10 S7 QC-specific dimensions + 1 optional security scan dimension
+- **Total:** 17 mandatory dimensions checked every primary round (+1 optional if security scanner configured)
 - **Process:** Primary clean round + 2 independent sub-agents confirming zero issues
 - **Exit:** 100% tests passing, 100% requirements implemented, all integration verified
 - **Quality:** Zero tech debt, ready for production

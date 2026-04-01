@@ -19,8 +19,8 @@
 
 1. [Overview](#overview)
 2. [Master Dimensions (7) - Always Checked](#master-dimensions-7---always-checked)
-3. [S9 Epic QC Dimensions (5) - Context-Specific](#s9-epic-qc-dimensions-5---context-specific)
-4. [Total Dimensions: 12](#total-dimensions-12)
+3. [S9 Epic QC Dimensions (6) - Context-Specific](#s9-epic-qc-dimensions-6---context-specific)
+4. [Total Dimensions: 13 (+1 Optional)](#total-dimensions-13-1-optional)
 5. [What's Being Validated](#whats-being-validated)
 6. [Fresh Eyes Patterns Per Round](#fresh-eyes-patterns-per-round)
 7. [Common Issues in S9 QC Context](#common-issues-in-s9-qc-context)
@@ -47,7 +47,7 @@
 - Zero cross-feature issues
 - Ready for S9.P3 (User Testing)
 
-**Uses:** All 7 master dimensions + 5 S9 epic-specific dimensions = 12 total
+**Uses:** All 7 master dimensions + 6 S9 epic-specific dimensions = 13 total (+1 optional security scan dimension)
 
 ---
 
@@ -104,7 +104,7 @@ These universal dimensions apply to S9 Epic QC validation:
 
 ---
 
-## S9 Epic QC Dimensions (5) - Context-Specific
+## S9 Epic QC Dimensions (6) - Context-Specific
 
 These 5 dimensions are specific to S9.P2 Epic QC validation:
 
@@ -277,11 +277,81 @@ Verified: Feature 03 outputs exactly 200 ranked items
 
 ---
 
-## Total Dimensions: 12
+### Dimension 13: Mechanical Code Quality (Epic-Wide)
 
-**Every validation round checks ALL 12 dimensions:**
+**Question:** Have all mechanical/linter-type issues been checked across ALL features?
+
+**Reference:** See `reference/concrete_issue_patterns.md` for complete patterns.
+
+**Checklist:**
+
+- [ ] Consulted `reference/concrete_issue_patterns.md`
+- [ ] Universal patterns checked across ALL features (unused imports, dead code, etc.)
+- [ ] Language-specific patterns checked across ALL features
+- [ ] Security quick scan completed across ALL features
+- [ ] Patterns consistent across features (same style, same conventions)
+- [ ] If linter available: `{LINT_COMMAND}` returns exit code 0 for entire epic
+
+**Epic-Specific Focus:**
+- Verify mechanical quality CONSISTENT across all features
+- Check that features don't introduce conflicting patterns
+- Ensure no feature has mechanical issues that others don't
+
+**Common Violations:**
+
+❌ **WRONG — Inconsistent patterns across features:**
+- Feature 01 uses single quotes, Feature 02 uses double quotes
+- Feature 01 has unused imports, Feature 02 is clean
+
+✅ **CORRECT — Consistent mechanical quality:**
+- All features follow same quote style
+- All features have zero unused imports
+
+---
+
+### Dimension 14: Security Scan (Optional, Epic-Wide)
+
+**Question:** Has the project's security scanner been run across ALL features with zero high-severity findings?
+
+**Reference:** See `reference/security_checklist.md` for complete security patterns and tool mapping.
+
+**Applicability:** This dimension is OPTIONAL. Only check if the project has a security scanner configured (check `SECURITY_SCAN_COMMAND` in project rules file).
+
+**Checklist (if security scanner configured):**
+
+- [ ] Run security scanner: `{SECURITY_SCAN_COMMAND}` across entire epic
+- [ ] Zero high-severity findings across ALL features
+- [ ] Medium-severity findings reviewed and either fixed or documented as accepted risk
+- [ ] Manual security checks per `reference/security_checklist.md` Quick Security Review Checklist pass for ALL features
+- [ ] Security patterns CONSISTENT across all features
+
+**If no security scanner configured:**
+- [ ] Skip automated scan
+- [ ] Still verify manual security checklist from `reference/security_checklist.md` across ALL features
+
+**Epic-Specific Focus:**
+- Verify security measures CONSISTENT across all features
+- Check that features don't introduce conflicting security approaches
+- Ensure cross-feature data flow doesn't create security gaps
+
+**Language-Specific Security Tools:**
+
+| Language | Recommended Tool | Example Command |
+|----------|------------------|-----------------|
+| Python | Bandit | `bandit -r src/ -ll` |
+| JavaScript/TypeScript | ESLint security plugin + npm audit | `npm audit --audit-level=high` |
+| Go | gosec | `gosec ./...` |
+| Java | SpotBugs + FindSecBugs | `mvn spotbugs:check` |
+| Multi-language | Semgrep | `semgrep --config auto .` |
+
+---
+
+## Total Dimensions: 13 (+1 Optional)
+
+**Every validation round checks ALL 13 mandatory dimensions (+1 optional):**
 - 7 Master dimensions (universal)
-- 5 Epic QC dimensions (context-specific)
+- 6 Epic QC dimensions (context-specific)
+- 1 Optional security scan dimension (if project has security scanner configured)
 
 **Process:** See master protocol for sub-agent confirmation exit requirement
 
@@ -301,7 +371,7 @@ Verified: Feature 03 outputs exactly 200 ranked items
 - User experience flow
 
 **Success Criteria:**
-- All 12 dimensions checked every primary round
+- All 13 dimensions checked every primary round
 - Primary clean round + sub-agent confirmation achieved
 - ZERO issues found
 - Ready for user testing
@@ -320,10 +390,10 @@ Epic-specific reading patterns:
 1. Read features sequentially (Feature 01, 02, 03...)
 2. Check integration points between features
 3. Verify data flow across feature boundaries
-4. Check all 12 dimensions
+4. Check all 13 dimensions
 
 **Checklist:**
-- [ ] All 12 dimensions checked (7 master + 5 epic)
+- [ ] All 13 dimensions checked (7 master + 6 epic)
 - [ ] Integration points verified
 - [ ] Data flow validated
 - [ ] Tests passing (100%)
@@ -334,10 +404,10 @@ Epic-specific reading patterns:
 1. Read features in reverse order (Feature 03, 02, 01...)
 2. Focus on consistency across features
 3. Compare patterns between features
-4. Check all 12 dimensions
+4. Check all 13 dimensions
 
 **Checklist:**
-- [ ] All 12 dimensions checked
+- [ ] All 13 dimensions checked
 - [ ] Naming consistency verified
 - [ ] Error handling consistency verified
 - [ ] Architectural patterns compatible
@@ -348,10 +418,10 @@ Epic-specific reading patterns:
 1. Random spot-check 3-5 integration points
 2. Verify success criteria from original epic request
 3. End-to-end scenario validation
-4. Check all 12 dimensions
+4. Check all 13 dimensions
 
 **Checklist:**
-- [ ] All 12 dimensions checked
+- [ ] All 13 dimensions checked
 - [ ] Spot-checked integrations work correctly
 - [ ] Success criteria met (100%)
 - [ ] Ready for user testing
@@ -426,7 +496,7 @@ Implementation: Only generates top 100 items
 **From Master Protocol:**
 - [ ] Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
 - [ ] All 7 master dimensions checked every primary round
-- [ ] All 5 epic QC dimensions checked every primary round
+- [ ] All 6 epic QC dimensions checked every primary round
 - [ ] VALIDATION_LOOP_LOG.md complete with all rounds documented
 
 **Epic QC Specific:**
@@ -457,7 +527,7 @@ Implementation: Only generates top 100 items
 
 **Process:**
 1. Use this validation loop protocol
-2. Check all 12 dimensions (7 master + 5 epic)
+2. Check all 13 dimensions (7 master + 6 epic)
 3. Exit when primary clean round + sub-agent confirmation
 4. Proceed to S9.P3 (User Testing)
 
@@ -470,7 +540,7 @@ Implementation: Only generates top 100 items
 ```text
 Round 1: Sequential Review + Integration
 - Read all features sequentially
-- Check all 12 dimensions
+- Check all 13 dimensions
 - Issues found: 3
   - D8 (Integration): Feature 02 -> 03 data format mismatch
   - D9 (Cohesion): Inconsistent naming pattern in Feature 03
@@ -480,7 +550,7 @@ Round 1: Sequential Review + Integration
 
 Round 2: Reverse Order + Consistency
 - Read features in reverse
-- Check all 12 dimensions
+- Check all 13 dimensions
 - Issues found: 1
   - D10 (Error Handling): Feature 01 returns None, Feature 02 expects exception
 - Fix issue
@@ -488,13 +558,13 @@ Round 2: Reverse Order + Consistency
 
 Round 3: Spot-Checks + Verification
 - Random spot-check integration points
-- Check all 12 dimensions
+- Check all 13 dimensions
 - Issues found: 0
 - Clean counter: 1
 
 Round 4: Primary Clean Round
 - Fresh eyes, complete re-read
-- Check all 12 dimensions
+- Check all 13 dimensions
 - Issues found: 0
 - Clean counter: 1 → Triggering sub-agent confirmation
 
@@ -509,8 +579,8 @@ Both confirmed → VALIDATION COMPLETE
 
 **S9 Epic QC Validation Loop:**
 - **Extends:** Master Validation Loop Protocol (7 universal dimensions)
-- **Adds:** 5 epic QC-specific dimensions
-- **Total:** 12 dimensions checked every primary round
+- **Adds:** 6 epic QC-specific dimensions + 1 optional security scan dimension
+- **Total:** 13 mandatory dimensions checked every primary round (+1 optional if security scanner configured)
 - **Process:** Primary clean round + 2 independent sub-agents confirming zero issues
 - **Focus:** Cross-feature integration, consistency, success criteria
 - **Quality:** Epic works as cohesive whole, ready for user testing

@@ -820,14 +820,67 @@ Each round follows these steps in this exact order:
 1. **Pre-Round Gate** — verify VALIDATION_LOG.md exists, consecutive_clean is recorded, round plan documented
 2. **Re-read entire artifact** — use Read tool, no working from memory, fresh eyes
 3. **Check ALL dimensions** — all master dimensions + all scenario-specific dimensions, systematically (1→N)
-4. **Adversarial Self-Check** — run after all dimensions, before scoring the round (see section below)
-5. **Post-Round Gate** — update VALIDATION_LOG.md, document all dimensions, update consecutive_clean
+4. **Tool-Based Verification** — run available automated checks to complement LLM review (see section below)
+5. **Adversarial Self-Check** — run after all dimensions, before scoring the round (see section below)
+6. **Post-Round Gate** — update VALIDATION_LOG.md, document all dimensions, update consecutive_clean
 
-**The Adversarial Self-Check (step 4) may not be skipped. A round may not be scored clean if it is skipped.**
+**Steps 4 and 5 may not be skipped. A round may not be scored clean if either is skipped.**
 
 ---
 
-### Adversarial Self-Check (Run After All Dimensions, Before Post-Round Gate)
+### Tool-Based Verification (Run After Dimensions, Before Adversarial Self-Check)
+
+**Purpose:** Run available automated tools to catch issues that pattern-based LLM review might miss.
+
+**Why This Step Exists:** LLMs can have blind spots for certain mechanical issues (unused imports, type errors, security patterns) that static analysis tools catch reliably. This step ensures deterministic verification complements LLM review.
+
+**Run These Checks (If Project Has Them Configured):**
+
+```text
+TOOL VERIFICATION CHECKLIST:
+[ ] Linter: `{LINT_COMMAND}` — zero errors required
+[ ] Type checker: `mypy`, `tsc --noEmit`, etc. — zero errors required
+[ ] Security scanner: `{SECURITY_SCAN_COMMAND}` — zero high-severity findings
+[ ] Test suite: `{TEST_COMMAND}` — 100% pass rate required
+```
+
+**If no tools are configured:** Document "N/A - no linter/type checker/security scanner configured for this project" in the validation log and proceed.
+
+**What to Document:**
+```markdown
+## Tool Verification (Round N)
+
+### Linter
+- Command: `ruff check .`
+- Result: ✅ 0 errors / ⚠️ N errors found
+- Issues: [list any issues to fix]
+
+### Type Checker
+- Command: `mypy --ignore-missing-imports .`
+- Result: ✅ 0 errors / ⚠️ N errors found
+- Issues: [list any issues to fix]
+
+### Security Scanner
+- Command: `bandit -r src/ -ll`
+- Result: ✅ 0 high-severity / ⚠️ N findings
+- Issues: [list any issues to fix]
+
+### Tests
+- Command: `pytest -v`
+- Result: ✅ 100% passing / ⚠️ N failures
+- Failures: [list any failures to fix]
+```
+
+**If Any Tool Reports Issues:**
+- Add issues to this round's issue list
+- Fix before scoring the round
+- Round cannot be scored clean with tool failures
+
+**This step may NOT be skipped.** Even if all dimensions pass, tool failures constitute validation issues.
+
+---
+
+### Adversarial Self-Check (Run After Tool Verification, Before Post-Round Gate)
 
 For each question below, state the answer explicitly or record it as an open question
 if no answer can be found. Answering "nothing found" is only valid after genuinely
@@ -863,6 +916,7 @@ POST-ROUND GATE CHECKLIST:
 [ ] ALL dimensions documented (PASS or ISSUE for each — 7 master + scenario-specific)
 [ ] ≥3 technical claims verified with tool evidence documented in log
 [ ] Full artifact re-read evidenced (read_file calls covering line 1 through end)
+[ ] Tool-Based Verification completed (linter, type checker, tests — or "N/A" documented)
 [ ] Adversarial Self-Check completed (all 5 questions answered or recorded as open questions)
 [ ] consecutive_clean updated correctly:
     - If ANY issues found this round → consecutive_clean = 0 (even if you fixed them)

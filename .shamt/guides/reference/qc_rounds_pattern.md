@@ -35,8 +35,8 @@
 - All dimensions checked every round (not different focuses per round)
 
 **Scope-Specific Implementation:**
-- **Feature-level (S7.P2):** 16 dimensions validated (7 master + 9 S7 QC-specific)
-- **Epic-level (S9.P2):** 12 dimensions validated (7 master + 5 epic-specific)
+- **Feature-level (S7.P2):** 17 dimensions validated (7 master + 10 S7 QC-specific)
+- **Epic-level (S9.P2):** 13 dimensions validated (7 master + 6 epic-specific)
 
 ---
 
@@ -373,7 +373,7 @@ for the authoritative protocol.
 
 ### Feature-Level Validation Loop (S7.P2)
 
-**16 Dimensions Checked EVERY Round (7 master + 9 S7 QC-specific):**
+**16 Dimensions Checked EVERY Round (7 master + 10 S7 QC-specific):**
 
 **See `reference/validation_loop_s7_feature_qc.md` for the authoritative dimension checklists.**
 
@@ -386,7 +386,7 @@ Master Dimensions (1-7):
 6. Upstream Alignment - Implementation matches spec.md exactly
 7. Standards Compliance - Follows project coding standards
 
-S7 QC-Specific Dimensions (8-16):
+S7 QC-Specific Dimensions (8-17):
 8. Cross-Feature Integration - Integrates correctly with existing features
 9. Error Handling Completeness - All error scenarios handled gracefully
 10. End-to-End Functionality - E2E execution produces correct data values
@@ -396,6 +396,7 @@ S7 QC-Specific Dimensions (8-16):
 14. Cross-Layer & Type Consistency - Types match across all interface boundaries
 15. Input Validation & Path Safety - All external inputs validated, no path traversal
 16. Test Stub Consistency - Stubs match real interfaces, no silent mismatches
+17. Mechanical Code Quality - Linter-type issues checked (unused imports, dead code, etc.)
 
 **If issues found:** Fix immediately, reset counter, continue
 
@@ -403,7 +404,7 @@ S7 QC-Specific Dimensions (8-16):
 
 ### Epic-Level Validation Loop (S9.P2)
 
-**12 Dimensions Checked EVERY Round (7 master + 5 epic-specific):**
+**12 Dimensions Checked EVERY Round (7 master + 6 epic-specific):**
 
 Master Dimensions (1-7):
 1. Content Accuracy
@@ -414,12 +415,13 @@ Master Dimensions (1-7):
 6. Data Validation
 7. Error Handling
 
-Epic-Specific Dimensions (8-12):
+Epic-Specific Dimensions (8-13):
 8. Cross-Feature Integration Points
 9. Data Flow Validation
 10. Epic Cohesion & Consistency
 11. Error Propagation
 12. End-to-End Success Criteria
+13. Mechanical Code Quality (Epic-Wide) - Consistent linter-type quality across all features
 
 **If issues found:** Fix immediately, reset counter, continue
 

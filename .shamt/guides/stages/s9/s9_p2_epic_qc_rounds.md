@@ -1,6 +1,6 @@
 # S9.P2: Epic QC Validation Loop
 
-**Purpose:** Validate the epic as a cohesive whole through systematic validation loop checking ALL 12 dimensions every primary round until primary clean round + sub-agent confirmation achieved.
+**Purpose:** Validate the epic as a cohesive whole through systematic validation loop checking ALL 13 dimensions every primary round until primary clean round + sub-agent confirmation achieved.
 
 **File:** `s9_p2_epic_qc_rounds.md`
 
@@ -46,8 +46,8 @@ S9.P1 (Epic Smoke Testing) →
 1. **Read the validation loop guides:**
    - `reference/validation_loop_master_protocol.md` - Core validation loop principles
    - `reference/validation_loop_qc_pr.md` - QC-specific validation patterns
-   - `reference/validation_loop_s9_epic_qc.md` - Epic-specific 12-dimension checklist
-   - Understand 12 dimensions (7 master + 5 epic-specific)
+   - `reference/validation_loop_s9_epic_qc.md` - Epic-specific 13-dimension checklist
+   - Understand 13 dimensions (7 master + 6 epic-specific)
    - Review sub-agent confirmation exit criteria
 
 2. **Use the phase transition prompt** from `prompts/s9_prompts.md`
@@ -59,7 +59,7 @@ S9.P1 (Epic Smoke Testing) →
    - Current Phase: S9.P2 - Epic QC Validation Loop
    - Current Guide: `stages/s9/s9_p2_epic_qc_rounds.md`
    - Guide Last Read: {YYYY-MM-DD HH:MM}
-   - Critical Rules: "12 dimensions checked every round", "sub-agent confirmation required to exit", "Fix issues immediately (no restart)", "100% tests passing"
+   - Critical Rules: "13 dimensions checked every round", "sub-agent confirmation required to exit", "Fix issues immediately (no restart)", "100% tests passing"
    - Next Action: Validation Round 1 - Sequential Review
 
 4. **Verify all prerequisites** (see checklist below)
@@ -75,7 +75,7 @@ S9.P1 (Epic Smoke Testing) →
 ## 🚫 FORBIDDEN SHORTCUTS
 
 You CANNOT:
-- Skip epic-specific dimensions (8–12) because feature QC (S7.P2) already verified each feature
+- Skip epic-specific dimensions (8–13) because feature QC (S7.P2) already verified each feature
 - Declare epic QC "complete" after reviewing a subset of features or dimensions
 - Exit before sub-agent confirmation without completing the required exit sequence (see `reference/validation_loop_master_protocol.md` Exit Criteria)
 - Use notes from S7.P2 rounds as a substitute for fresh-eyes epic-level validation
@@ -87,7 +87,7 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 ## Overview
 
 **What is this guide?**
-Epic-level QC Validation Loop validates the epic as a cohesive whole by checking ALL 12 dimensions (7 master + 5 epic-specific) every primary round until primary clean round + sub-agent confirmation achieved. Unlike the old 3-round approach with different focuses, this validation loop checks ALL concerns EVERY round. See `reference/validation_loop_master_protocol.md` for core principles.
+Epic-level QC Validation Loop validates the epic as a cohesive whole by checking ALL 13 dimensions (7 master + 6 epic-specific) every primary round until primary clean round + sub-agent confirmation achieved. Unlike the old 3-round approach with different focuses, this validation loop checks ALL concerns EVERY round. See `reference/validation_loop_master_protocol.md` for core principles.
 
 **When do you use this guide?**
 - After S9.P1 complete (Epic Smoke Testing passed all 4 parts)
@@ -96,7 +96,7 @@ Epic-level QC Validation Loop validates the epic as a cohesive whole by checking
 
 **Key Outputs:**
 - VALIDATION_LOOP_LOG.md tracking all rounds
-- All 12 dimensions validated every round
+- All 13 dimensions validated every round
 - Primary clean round + sub-agent confirmation achieved (zero issues found)
 - 100% tests passing (verified every round)
 - All findings documented in epic_lessons_learned.md
@@ -106,7 +106,7 @@ Epic-level QC Validation Loop validates the epic as a cohesive whole by checking
 2-4 hours (typically 5-8 validation rounds)
 
 **Exit Condition:**
-Epic QC Validation Loop is complete when primary clean round + sub-agent confirmation achieved (both independent sub-agents confirm zero issues across all 12 dimensions), all tests passing (100%), and epic is validated for user testing
+Epic QC Validation Loop is complete when primary clean round + sub-agent confirmation achieved (both independent sub-agents confirm zero issues across all 13 dimensions), all tests passing (100%), and epic is validated for user testing
 
 ---
 
@@ -123,12 +123,12 @@ Epic QC Validation Loop is complete when primary clean round + sub-agent confirm
 
 1. ⚠️ ALL 12 DIMENSIONS CHECKED EVERY ROUND
    - 7 master dimensions (universal)
-   - 5 epic-specific dimensions
+   - 6 epic-specific dimensions
    - Cannot skip any dimension
    - Re-read entire epic codebase each round (no working from memory)
 
 2. ⚠️ SUB-AGENT CONFIRMATION REQUIRED TO EXIT
-   - Clean = ZERO issues found across all 12 dimensions
+   - Clean = ZERO issues found across all 13 dimensions
    - Counter resets if ANY issue found
    - After primary declares one clean round: spawn 2 independent sub-agents for parallel confirmation (see master protocol Exit Criteria)
    - Typical: 4-7 primary rounds to reach clean, then sub-agent confirmation
@@ -191,6 +191,9 @@ Epic QC Validation Loop is complete when primary clean round + sub-agent confirm
 - [ ] Have access to `.shamt/epics/requests/{epic_name}.txt`
 - [ ] Can reference original goals for Round 3
 
+**Code Quality (if project has linter configured):**
+- [ ] Linter passes for all features: `{LINT_COMMAND}` exit code 0 (or N/A if no linter configured)
+
 **If any prerequisite fails:**
 - Do NOT start Epic QC Validation Loop
 - Return to S9.P1 to complete smoke testing
@@ -203,7 +206,7 @@ Epic QC Validation Loop is complete when primary clean round + sub-agent confirm
 ⚠️ **Before starting Round 1, confirm:**
 - [ ] I will not stop after the first round that appears clean — I must trigger sub-agent confirmation
 - [ ] I will spawn 2 independent sub-agents after my first clean round and wait for both to confirm zero issues before exiting
-- [ ] I will check all 12 dimensions (7 master + 5 epic-specific) every round, not just the epic-specific ones
+- [ ] I will check all 13 dimensions (7 master + 6 epic-specific) every round, not just the epic-specific ones
 - [ ] I will not proceed to S10 until sub-agent confirmation is complete (see master protocol Exit Criteria)
 
 ---
@@ -223,21 +226,21 @@ PREPARATION
    ↓ Run ALL tests (must pass 100%)
 
 ROUND 1: Sequential Review + Test Verification
-   ↓ Check ALL 12 dimensions (7 master + 5 epic)
+   ↓ Check ALL 13 dimensions (7 master + 6 epic)
    ↓ Run tests, read code sequentially, verify integration
    ↓
    If issues found → Fix ALL immediately → Re-run tests → Round 2
    If clean → Round 2 (count = 1)
 
 ROUND 2: Reverse Review + Consistency Focus
-   ↓ Check ALL 12 dimensions again (fresh eyes)
+   ↓ Check ALL 13 dimensions again (fresh eyes)
    ↓ Run tests, read code in reverse, focus on consistency
    ↓
    If issues found → Fix ALL immediately → Re-run tests → Round 3
    If clean → Round 3 (count = 2 or 1 depending on previous)
 
 ROUND 3+: Continue Until Primary Clean Round
-   ↓ Check ALL 12 dimensions (different reading patterns)
+   ↓ Check ALL 13 dimensions (different reading patterns)
    ↓ Run tests, spot-checks, success criteria verification
    ↓
    Continue until primary clean round achieved → spawn 2 sub-agents for parallel confirmation
@@ -255,9 +258,162 @@ VALIDATION COMPLETE → Proceed to S9.P3 (User Testing)
 
 ---
 
-## 12 Dimensions Checklist
+## Pre-Validation Context Gathering (Before Round 1)
 
-**Check ALL 12 dimensions EVERY validation round.**
+**Purpose:** Gather structured context before starting validation rounds to catch issues that pattern-based review might miss.
+
+**When:** After S9.P1 (Epic Smoke Testing) passes, before starting Round 1 of S9.P2.
+
+**Why:** Copilot-style reviewers gather full project context before reviewing. This step ensures the validation agent has equivalent awareness of cross-feature state across the entire epic.
+
+### 1. Cross-Feature Change Summary
+
+**For each feature in the epic, document:**
+```markdown
+## Epic Change Summary
+
+### Feature 01: [Name]
+Files modified: [count]
+Key changes:
+- [Summary of major changes]
+
+### Feature 02: [Name]
+Files modified: [count]
+Key changes:
+- [Summary of major changes]
+
+### Cross-Feature Impacts:
+- [List any changes that affect other features]
+- [Shared utilities modified]
+- [Interface changes]
+```
+
+### 2. Deferred Work Scan (Epic-Wide)
+
+**Search ALL features for deferred work markers:**
+```bash
+# Run from epic root
+grep -rn "TODO\|FIXME\|HACK\|XXX\|TEMP\|STUB" --include="*.py" --include="*.ts" --include="*.js" .
+```
+
+**Document each finding:**
+```markdown
+## Deferred Work Across Epic
+
+### Critical (must address before epic complete):
+- [ ] Feature 01: `src/module.py:42` - TODO: Add input validation
+- [ ] Feature 03: `src/engine.py:156` - FIXME: Error handling incomplete
+
+### Acceptable (documented technical debt):
+- [ ] Feature 02: `tests/test_rating.py:89` - TODO: Add edge case test (P2)
+```
+
+### 3. Import/Dependency Analysis (Epic-Wide)
+
+**Check for cross-feature dependency health:**
+```bash
+# Python: Check for unused imports across all features
+# TypeScript: Run unused import check
+# Or use project linter with import rules
+```
+
+**Document:**
+```markdown
+## Epic Dependency Analysis
+
+### Cross-Feature Imports:
+- Feature 02 imports from Feature 01: [list specific imports]
+- Feature 03 imports from Feature 02: [list specific imports]
+- Feature 03 imports from Feature 01: [list specific imports]
+
+### Issues Found:
+- [ ] Circular import risk: [description]
+- [ ] Unused cross-feature import: [file:line]
+```
+
+### 4. Type Coverage (Epic-Wide)
+
+**If using typed language (Python with mypy, TypeScript):**
+```bash
+# Python
+mypy --ignore-missing-imports .
+
+# TypeScript
+tsc --noEmit
+```
+
+**Document:**
+```markdown
+## Epic Type Coverage
+
+### Type Errors by Feature:
+- Feature 01: [count] errors
+- Feature 02: [count] errors
+- Feature 03: [count] errors
+
+### Cross-Feature Type Issues:
+- [ ] Interface mismatch: Feature 01 returns X, Feature 02 expects Y
+- [ ] Missing type annotations at feature boundaries
+```
+
+### 5. Test Status (Epic-Wide)
+
+**Run all tests across the epic:**
+```bash
+# Document command and results
+pytest -v  # or npm test, cargo test, etc.
+```
+
+**Document:**
+```markdown
+## Epic Test Status
+
+### By Feature:
+- Feature 01: [X/Y] tests passing
+- Feature 02: [X/Y] tests passing
+- Feature 03: [X/Y] tests passing
+
+### Integration Tests:
+- Cross-feature integration: [X/Y] tests passing
+
+### Coverage:
+- Epic-wide coverage: [X]%
+- Feature 01: [X]%
+- Feature 02: [X]%
+- Feature 03: [X]%
+
+### Failures to Address:
+- [ ] [test name]: [failure reason]
+```
+
+### 6. Integration Point Status
+
+**For each integration point identified in epic_smoke_test_plan.md:**
+```markdown
+## Integration Point Verification
+
+### Feature 01 → Feature 02:
+- Interface: get_all_items() → RatingSystem.apply_ratings()
+- Status: ✅ Working / ⚠️ Issues found
+- Notes: [any observations]
+
+### Feature 02 → Feature 03:
+- Interface: get_rated_players() → RecommendationEngine.generate()
+- Status: ✅ Working / ⚠️ Issues found
+- Notes: [any observations]
+```
+
+---
+
+**Context gathering output goes in:** `VALIDATION_LOOP_LOG.md` under "Pre-Validation Context" section at the top.
+
+**This step is REQUIRED.** Do not skip to Round 1 without completing context gathering.
+
+---
+
+## 13 Dimensions Checklist
+
+**Check ALL 13 dimensions EVERY validation round.**
 
 **See `reference/validation_loop_master_protocol.md` for master dimension details.**
 
@@ -685,6 +841,25 @@ print(f"✅ Epic workflow completed in {elapsed:.2f}s")
 
 ---
 
+### Adversarial Linter Check (Required Before Declaring Round Clean)
+
+Before scoring a round as clean, explicitly answer:
+
+> "What would ESLint/Ruff/CodeQL flag in this code that I haven't checked?"
+
+Consider across ALL features in the epic:
+- [ ] Unused variables or imports?
+- [ ] Operator confusion (= vs ==, == vs ===)?
+- [ ] Missing null/undefined checks?
+- [ ] Unreachable code after return/throw?
+- [ ] Inconsistent string quotes or formatting?
+- [ ] Type coercion issues?
+- [ ] Security patterns (eval, innerHTML, SQL string concat)?
+
+A round may NOT be scored clean if this check is skipped.
+
+---
+
 ## Issue Handling: Fix and Continue
 
 **When issues are found during validation loop:**
@@ -716,7 +891,7 @@ print(f"✅ Epic workflow completed in {elapsed:.2f}s")
 
 - Reset `consecutive_clean` to 0
 - Continue to next validation round
-- Check ALL 12 dimensions again with fresh eyes
+- Check ALL 13 dimensions again with fresh eyes
 
 **Key difference from old approach:**
 - **Old:** Any issue → Restart from S9.P1 (smoke testing)
@@ -739,7 +914,7 @@ STOP - DO NOT PROCEED TO S9.P3 YET
 2. [ ] Use Read tool to re-read `reference/validation_loop_master_protocol.md` (7 principles)
 3. [ ] Use Read tool to re-read original epic request (`.shamt/epics/requests/{epic_name}.txt`)
 4. [ ] Verify primary clean round and sub-agent confirmation documented in VALIDATION_LOOP_LOG.md
-5. [ ] Verify ALL 12 dimensions checked every primary round
+5. [ ] Verify ALL 13 dimensions checked every primary round
 6. [ ] Update epic_lessons_learned.md with validation findings
 7. [ ] Update EPIC_README.md Agent Status:
    - Current Guide: "stages/s9/s9_p3_user_testing.md"
@@ -749,7 +924,7 @@ STOP - DO NOT PROCEED TO S9.P3 YET
 
 **Why this checkpoint exists:**
 - Ensures validation loop was properly executed
-- Confirms all 12 dimensions checked every round
+- Confirms all 13 dimensions checked every round
 - 3 minutes of verification prevents hours of rework
 
 **ONLY after completing ALL 8 actions above, proceed to Next Steps section**
@@ -776,7 +951,7 @@ STOP - DO NOT PROCEED TO S9.P3 YET
 ## Summary
 
 **Epic-Level QC Validation Loop validates:**
-- ALL 12 dimensions checked EVERY round (7 master + 5 epic-specific)
+- ALL 13 dimensions checked EVERY round (7 master + 6 epic-specific)
 - Continue until primary clean round + sub-agent confirmation achieved
 - Fix issues immediately (no restart protocol for S9.P2)
 
@@ -798,7 +973,7 @@ STOP - DO NOT PROCEED TO S9.P3 YET
 - Focus on epic-wide patterns (not individual features)
 - Cross-feature integration and architectural consistency
 - Validation against original epic request
-- 5 epic-specific dimensions vs 5 S7-specific dimensions
+- 6 epic-specific dimensions vs 5 S7-specific dimensions
 
 **Critical Success Factors:**
 - Primary clean round + sub-agent confirmation required (exit criteria)
@@ -814,8 +989,8 @@ STOP - DO NOT PROCEED TO S9.P3 YET
 
 **Epic QC Validation Loop (S9.P2) is complete when ALL of these are true:**
 
-- [ ] Primary agent declared a clean round (ZERO issues across all 12 dimensions) AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for full sub-agent confirmation protocol)
-- [ ] All 12 dimensions checked every primary round (7 master + 5 epic)
+- [ ] Primary agent declared a clean round (ZERO issues across all 13 dimensions) AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for full sub-agent confirmation protocol)
+- [ ] All 13 dimensions checked every primary round (7 master + 6 epic)
 - [ ] **Option A:** No automated test requirement (smoke only — no check needed)
 - [ ] **Option B:** All integration scripts passing (exit code 0, verified every round)
 - [ ] **Option C:** All unit tests passing (100% pass rate, verified every round)

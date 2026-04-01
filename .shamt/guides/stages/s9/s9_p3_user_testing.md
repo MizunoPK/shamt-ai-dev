@@ -382,7 +382,7 @@ Update EPIC_README.md:
 **3b. Proceed to S9.P2 (Epic QC Validation Loop)**
 1. Read `stages/s9/s9_p2_epic_qc_rounds.md` again
 2. Execute validation loop:
-   - Check ALL 12 dimensions every round (7 master + 5 epic)
+   - Check ALL 13 dimensions every round (7 master + 6 epic)
    - Fix issues immediately, reset counter, continue
    - Continue until primary clean round + sub-agent confirmation
 3. Verify primary clean round + sub-agent confirmation achieved
@@ -438,7 +438,7 @@ Update EPIC_README.md:
 
 **S9.P2 - Epic QC Validation Loop:** ✅ COMPLETE
 - Date completed: {YYYY-MM-DD}
-- Results: primary clean round + sub-agent confirmation achieved (12 dimensions checked)
+- Results: primary clean round + sub-agent confirmation achieved (13 dimensions checked)
 
 **Step 6 - User Testing:** ✅ COMPLETE
 - Date completed: {YYYY-MM-DD}

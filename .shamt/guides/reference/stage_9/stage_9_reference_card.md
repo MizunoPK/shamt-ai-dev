@@ -22,13 +22,14 @@ S9.P1: Epic Smoke Testing (60-90 min)
     │       └─ If FAIL → Fix and restart from Part 1
     ↓
 S9.P2: Epic Validation Loop (2-3 hours)
-    ├─ Check ALL 12 dimensions every round (7 master + 5 epic-specific)
+    ├─ Check ALL 13 dimensions every round (7 master + 6 epic-specific)
     │   ├─ Master dimensions (content, references, integration, etc.)
     │   ├─ Dimension 8: Cross-Feature Integration
     │   ├─ Dimension 9: Data Flow Validation
     │   ├─ Dimension 10: Epic Cohesion & Consistency
     │   ├─ Dimension 11: Error Propagation
-    │   └─ Dimension 12: End-to-End Success Criteria
+    │   ├─ Dimension 12: End-to-End Success Criteria
+    │   └─ Dimension 13: Mechanical Code Quality (Epic-Wide)
     ├─ Fix issues immediately, reset `consecutive_clean`
     ├─ Continue until primary clean round + sub-agent confirmation
     │       └─ Fix-and-continue approach (no restart for minor issues)
@@ -143,7 +144,7 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 
 ---
 
-## Epic-Specific Validation Dimensions (8-12)
+## Epic-Specific Validation Dimensions (8-13)
 
 ### Dimension 8: Cross-Feature Integration
 **Check:**
@@ -187,6 +188,15 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 - Performance benchmarks met (no regressions >100%)
 
 **Pass Criteria:** 100% of success criteria met, user goals achieved
+
+### Dimension 13: Mechanical Code Quality (Epic-Wide)
+**Check:**
+- Linter-type issues checked across ALL features (unused imports, dead code, etc.)
+- Consistent code style across all features
+- No debug statements left in
+- Security quick scan passed (no eval, SQL concat, path traversal)
+
+**Pass Criteria:** Zero linter errors, consistent patterns across all features
 
 **If issues found:** Fix immediately, reset `consecutive_clean`, continue validation
 
@@ -267,7 +277,7 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 
 **S9.P2 → S9.P3:**
 - [ ] Validation Loop PASSED (primary clean round + sub-agent confirmation)
-- [ ] All 12 dimensions checked every round
+- [ ] All 13 dimensions checked every round
 - [ ] Zero issues deferred (fix-and-continue approach used)
 - [ ] All findings resolved immediately
 

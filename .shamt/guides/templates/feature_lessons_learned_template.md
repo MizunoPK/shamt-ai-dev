@@ -102,7 +102,7 @@ This document captures lessons specific to THIS feature's development. This is s
 - Total Rounds: {N}
 - Exit criteria: primary clean round + sub-agent confirmation achieved
 - Issues Found & Fixed: {count}
-- All 16 dimensions validated: YES (7 master + 9 S7 QC-specific)
+- All 17 dimensions validated: YES (7 master + 10 S7 QC-specific)
 
 **PR Review Results:**
 - Categories with issues: {List or "None"}

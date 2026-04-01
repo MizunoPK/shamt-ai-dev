@@ -219,7 +219,7 @@ Prerequisites Met?
 
 ### From S9.P2 (Epic QC Validation Loop)
 - [ ] primary clean round + sub-agent confirmation achieved
-- [ ] All 12 dimensions checked every round (7 master + 5 epic)
+- [ ] All 13 dimensions checked every round (7 master + 6 epic)
 - [ ] VALIDATION_LOOP_LOG.md complete
 - [ ] S9.P2 completion documented in EPIC_README.md
 
@@ -495,7 +495,7 @@ For EACH issue:
 **Verification Checklist:**
 - [ ] S9.P1 Epic smoke testing passed (all 4 parts)
 - [ ] S9.P2 Epic QC Validation Loop passed (primary clean round + sub-agent confirmation)
-- [ ] All 12 dimensions validated (7 master + 5 epic)
+- [ ] All 13 dimensions validated (7 master + 6 epic)
 - [ ] S9.P3 User testing passed (no bugs found)
 - [ ] Epic final review passed (all 5 categories, primary clean round + sub-agent confirmation)
 - [ ] NO pending issues or bug fixes

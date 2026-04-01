@@ -38,7 +38,7 @@ S7.P1 (Smoke Testing) →
 **BEFORE starting Feature QC — including when resuming a prior session — you MUST:**
 
 1. **Read the validation loop guide:** `reference/validation_loop_s7_feature_qc.md`
-   - Understand 16 dimensions (7 master + 9 S7 QC-specific)
+   - Understand 17 dimensions (7 master + 10 S7 QC-specific)
    - Review fresh eyes patterns per round
    - Understand sub-agent confirmation exit criteria
    - Study master protocol: `reference/validation_loop_master_protocol.md`
@@ -52,14 +52,14 @@ S7.P1 (Smoke Testing) →
    - Current Phase: S7.P2 (Feature QC Validation Loop)
    - Current Guide: reference/validation_loop_s7_feature_qc.md
    - Guide Last Read: {YYYY-MM-DD HH:MM}
-   - Critical Rules: "16 dimensions checked every round", "sub-agent confirmation required to exit", "Fix issues immediately (no restart)", "100% tests passing"
+   - Critical Rules: "17 dimensions checked every round", "sub-agent confirmation required to exit", "Fix issues immediately (no restart)", "100% tests passing"
    - Next Action: Validation Round 1 - Sequential Review + Test Verification
 
 4. **Verify all prerequisites** (see checklist below)
 
 5. **THEN AND ONLY THEN** begin validation loop
 
-**This is NOT optional.** Reading the validation loop guide ensures you check all 16 dimensions systematically.
+**This is NOT optional.** Reading the validation loop guide ensures you check all 17 dimensions systematically.
 
 ---
 
@@ -78,7 +78,7 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 ## Overview
 
 **What is this guide?**
-Feature QC validates implemented features through systematic validation loop checking 16 dimensions (7 master + 9 S7-specific) every primary round until primary clean round + sub-agent confirmation achieved.
+Feature QC validates implemented features through systematic validation loop checking 17 dimensions (7 master + 10 S7-specific) every primary round until primary clean round + sub-agent confirmation achieved.
 
 **When do you use this guide?**
 - S7.P1 complete (Smoke Testing passed all 3 parts)
@@ -87,7 +87,7 @@ Feature QC validates implemented features through systematic validation loop che
 - Before S7.P3 (Final Review)
 
 **Key Outputs:**
-- ✅ All 16 dimensions validated every round
+- ✅ All 17 dimensions validated every round
 - ✅ Primary clean round + sub-agent confirmation achieved (zero issues found)
 - ✅ 100% tests passing (verified every round)
 - ✅ All spec requirements implemented (100% coverage)
@@ -99,7 +99,7 @@ Feature QC validates implemented features through systematic validation loop che
 4-5 hours (typically 6-8 validation rounds)
 
 **Exit Condition:**
-Feature QC is complete when primary clean round + sub-agent confirmation achieved (both independent sub-agents confirm zero issues across all 16 dimensions), all tests passing (100%), and feature is production-ready
+Feature QC is complete when primary clean round + sub-agent confirmation achieved (both independent sub-agents confirm zero issues across all 17 dimensions), all tests passing (100%), and feature is production-ready
 
 ---
 
@@ -116,12 +116,12 @@ Feature QC is complete when primary clean round + sub-agent confirmation achieve
 
 1. ⚠️ ALL 16 DIMENSIONS CHECKED EVERY ROUND
    - 7 master dimensions (universal)
-   - 9 S7 QC dimensions (feature-specific)
+   - 10 S7 QC dimensions (feature-specific)
    - Cannot skip any dimension
    - Re-read entire codebase each round (no working from memory)
 
 2. ⚠️ SUB-AGENT CONFIRMATION REQUIRED TO EXIT
-   - Clean = ZERO issues found across all 16 dimensions
+   - Clean = ZERO issues found across all 17 dimensions
    - Counter resets if ANY issue found
    - After primary declares one clean round: spawn 2 independent sub-agents for parallel confirmation (see master protocol Exit Criteria)
    - Typical: 4-7 primary rounds to reach clean, then sub-agent confirmation
@@ -178,6 +178,9 @@ Feature QC is complete when primary clean round + sub-agent confirmation achieve
 **Documentation:**
 - [ ] `implementation_checklist.md` all requirements verified
 - [ ] Smoke test results documented in README Agent Status
+
+**Code Quality (if project has linter configured):**
+- [ ] Linter passes: `{LINT_COMMAND}` exit code 0 (or N/A if no linter configured)
 
 **If ANY prerequisite not met:** Return to S7.P1 and complete it first.
 
@@ -289,6 +292,25 @@ Round 1 RESTART: Sequential Review - TRUE Fresh Eyes
 
 ---
 
+### Adversarial Linter Check (Required Before Declaring Round Clean)
+
+Before scoring a round as clean, explicitly answer:
+
+> "What would ESLint/Ruff/CodeQL flag in this code that I haven't checked?"
+
+Consider:
+- [ ] Unused variables or imports?
+- [ ] Operator confusion (= vs ==, == vs ===)?
+- [ ] Missing null/undefined checks?
+- [ ] Unreachable code after return/throw?
+- [ ] Inconsistent string quotes or formatting?
+- [ ] Type coercion issues?
+- [ ] Security patterns (eval, innerHTML, SQL string concat)?
+
+A round may NOT be scored clean if this check is skipped.
+
+---
+
 ### Historical Example: Path Traversal Vulnerability (Feature 01)
 
 **Initial Validation (INSUFFICIENT):**
@@ -324,21 +346,21 @@ PREPARATION
    ↓ Run ALL tests (must pass 100%)
 
 ROUND 1: Sequential Review + Test Verification
-   ↓ Check ALL 16 dimensions (7 master + 9 S7 QC)
+   ↓ Check ALL 17 dimensions (7 master + 10 S7 QC)
    ↓ Run tests, read code sequentially, verify requirements
    ↓
    If issues found → Fix ALL immediately → Re-run tests → Round 2
    If clean → Round 2 (count = 1)
 
 ROUND 2: Reverse Review + Integration Focus
-   ↓ Check ALL 16 dimensions again (fresh eyes)
+   ↓ Check ALL 17 dimensions again (fresh eyes)
    ↓ Run tests, read code in reverse, focus on integration
    ↓
    If issues found → Fix ALL immediately → Re-run tests → Round 3
    If clean → Round 3 (count = 2 or 1 depending on previous)
 
 ROUND 3+: Continue Until Primary Clean Round
-   ↓ Check ALL 16 dimensions (different reading patterns)
+   ↓ Check ALL 17 dimensions (different reading patterns)
    ↓ Run tests, spot-checks, E2E verification
    ↓
    Continue until primary clean round achieved → spawn 2 sub-agents for parallel confirmation
@@ -367,6 +389,46 @@ VALIDATION COMPLETE → Proceed to S7.P3 (Final Review)
 
 ---
 
+## Pre-Validation Context Gathering (Before Round 1)
+
+**Purpose:** Gather structured context before starting validation rounds, similar to how automated code reviewers index the repo before reviewing.
+
+**Run these commands and document results in VALIDATION_LOOP_LOG.md:**
+
+### 1. Change Summary
+```bash
+git diff --stat HEAD~N  # or vs feature branch base
+```
+Document: Total files changed, lines added/removed
+
+### 2. Deferred Work Scan
+```bash
+grep -rn "TODO\|FIXME\|HACK\|XXX" {feature_folder}/
+```
+Document: Count and locations of deferred work markers (should be ZERO for clean validation)
+
+### 3. Import/Dependency Analysis (if linter available)
+- Python: `ruff check --select F401 .` (unused imports)
+- TypeScript: `npx tsc --noEmit --noUnusedLocals`
+
+Document: Any findings
+
+### 4. Type Coverage (if applicable)
+- Python: `mypy {feature_folder}/ --ignore-missing-imports`
+- TypeScript: Check for `any` usage
+
+Document: Type errors or coverage gaps
+
+### 5. Test Status
+```bash
+{TEST_COMMAND}
+```
+Document: Pass/fail count, any skipped tests
+
+**Only proceed to Round 1 after context gathering is complete and documented.**
+
+---
+
 ## Detailed Validation Process
 
 **🚨 FOLLOW THE COMPLETE VALIDATION LOOP GUIDE:**
@@ -374,7 +436,7 @@ VALIDATION COMPLETE → Proceed to S7.P3 (Final Review)
 **Primary guide:** `reference/validation_loop_s7_feature_qc.md`
 
 This guide contains:
-- Complete 16-dimension checklist (7 master + 9 S7 QC)
+- Complete 17-dimension checklist (7 master + 10 S7 QC)
 - Fresh eyes patterns for each round
 - Common issues with examples
 - Exit criteria details
@@ -548,11 +610,11 @@ Code conventions verified: Follows CODING_STANDARDS.md (type hints, error contex
 ---
 
 **For complete validation round instructions, see:**
-- `reference/validation_loop_s7_feature_qc.md` - Complete 16-dimension checklist
+- `reference/validation_loop_s7_feature_qc.md` - Complete 17-dimension checklist
 - `reference/validation_loop_master_protocol.md` - Core validation loop principles
 
 **Each validation round:**
-1. Check ALL 16 dimensions (7 master + 9 S7 QC-specific)
+1. Check ALL 17 dimensions (7 master + 10 S7 QC-specific)
 2. Run all tests (must pass 100%)
 3. Fix ANY issues found immediately
 4. Take 2-5 minute break before next round
@@ -619,7 +681,7 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 
 **REQUIRED ACTIONS:**
 1. [ ] Use Read tool to re-read "Critical Rules" section of this guide
-2. [ ] Use Read tool to re-read `reference/validation_loop_s7_feature_qc.md` (16 dimensions)
+2. [ ] Use Read tool to re-read `reference/validation_loop_s7_feature_qc.md` (17 dimensions)
 3. [ ] Verify primary clean round and sub-agent confirmation documented in VALIDATION_LOOP_LOG.md
 4. [ ] Verify ZERO issues remain (scan implementation one more time)
 5. [ ] Update feature README Agent Status:
@@ -630,7 +692,7 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 
 **Why this checkpoint exists:**
 - Ensures validation loop was properly executed
-- Confirms all 16 dimensions checked every primary round
+- Confirms all 17 dimensions checked every primary round
 - 3 minutes of verification prevents hours of rework
 
 **ONLY after completing ALL 6 actions above, proceed to Next Steps section**
@@ -655,7 +717,7 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 ## Summary
 
 **Feature QC Validation Loop validates:**
-- ALL 16 dimensions checked EVERY primary round (7 master + 9 S7 QC-specific)
+- ALL 17 dimensions checked EVERY primary round (7 master + 10 S7 QC-specific)
 - Continue until primary clean round + sub-agent confirmation achieved
 - Fix issues immediately (no restart protocol needed)
 
@@ -690,7 +752,7 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 
 ## Exit Criteria
 
-S7.P2 is complete when the Validation Loop exits: primary agent declares one clean round (zero issues, all 16 dimensions) AND both independent sub-agents confirm zero issues. Agent Status is updated.
+S7.P2 is complete when the Validation Loop exits: primary agent declares one clean round (zero issues, all 17 dimensions) AND both independent sub-agents confirm zero issues. Agent Status is updated.
 
 ---
 

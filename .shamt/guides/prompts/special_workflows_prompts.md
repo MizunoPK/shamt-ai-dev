@@ -271,7 +271,7 @@ the complete code review workflow...
 - Step 4: Run overview validation loop (5 dimensions, primary clean + 2 sub-agents)
 - Step 5: Determine review version number (v1 for first review, vN for re-review)
 - Step 6: Write review_vN.md (12 categories, severity-tagged, copy-paste ready)
-- Step 7: Run review file validation loop (12 dimensions, primary clean + 2 sub-agents)
+- Step 7: Run review file validation loop (13 dimensions, primary clean + 2 sub-agents)
 - **HALT if branch not found:** report to user immediately, no output files created
 - **Re-review:** create next review_vN.md, update overview.md in-place
 

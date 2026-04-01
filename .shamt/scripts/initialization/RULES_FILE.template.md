@@ -30,6 +30,8 @@
 **Runtime / Version:** [Agent: fill in — e.g. Node 20, Python 3.12, Go 1.22]
 **Package Manager / Build Tool:** [Agent: fill in — e.g. npm, poetry, gradle]
 **Test Runner:** [Agent: fill in — e.g. pytest, jest, go test]
+**Lint Command:** [Agent: fill in — e.g. `ruff check .`, `eslint .`, `cargo clippy`, or "N/A"]
+**Security Scan Command:** [Agent: fill in — e.g. `bandit -r src/ -ll`, `npm audit --audit-level=high`, or "N/A"]
 **Deployment Target:** [Agent: fill in — e.g. Vercel, AWS Lambda, local only, Docker]
 
 **Critical Gotchas:**

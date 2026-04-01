@@ -186,7 +186,7 @@ Round 3: Random spot-checks + integration
 
 **S7.P2 Validation Loop (Feature-Level):**
 - Use this protocol after implementation complete
-- Check ALL 16 dimensions every primary round (7 master + 9 S7 QC-specific)
+- Check ALL 17 dimensions every primary round (7 master + 10 S7 QC-specific)
 - Exit after primary clean round + sub-agent confirmation
 - Must pass before S7.P3 (PR Review)
 
@@ -197,7 +197,7 @@ Round 3: Random spot-checks + integration
 
 **S9.P2 Epic Validation Loop (Epic-Level):**
 - Use this protocol after all features complete
-- Check ALL 12 dimensions every primary round (7 master + 5 epic-specific)
+- Check ALL 13 dimensions every primary round (7 master + 6 epic-specific)
 - Exit after primary clean round + sub-agent confirmation
 - Must pass before S9.P3 (User Testing)
 

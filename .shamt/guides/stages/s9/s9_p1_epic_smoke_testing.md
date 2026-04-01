@@ -178,6 +178,11 @@ Epic Smoke Testing is complete when ALL 4 parts of epic_smoke_test_plan.md pass,
 - [ ] Epic Progress Tracker shows all features at S8.P2
 - [ ] Agent Status section exists
 
+**Linting (if project has linter configured):**
+- [ ] Run project linter across all features: `{LINT_COMMAND}` (e.g., `ruff check .`, `eslint .`, `cargo clippy`)
+- [ ] Zero errors across entire epic (warnings acceptable per project standards)
+- [ ] If linter not configured: document in EPIC_README that linting is N/A for this epic
+
 **If any prerequisite fails:**
 - ❌ Do NOT start Epic Smoke Testing
 - Complete missing prerequisites first
@@ -601,7 +606,7 @@ print("✅ Interface compatibility verified")
 **If ALL 4 parts PASSED:**
 - Document epic smoke test results in EPIC_README.md
 - Update Agent Status: "Epic Smoke Testing COMPLETE"
-- Proceed to **S9.P2: Epic QC Validation Loop** (12 dimensions, primary clean round + sub-agent confirmation)
+- Proceed to **S9.P2: Epic QC Validation Loop** (13 dimensions, primary clean round + sub-agent confirmation)
 
 **If ANY part FAILED:**
 - Fix ALL issues identified
@@ -623,7 +628,7 @@ print("✅ Interface compatibility verified")
 - Tests ALL features TOGETHER (not in isolation)
 - 4 parts (adds Part 4: Cross-Feature Integration)
 - Uses EVOLVED test plan (updated through Stages 1, 4, S8.P2)
-- Next: S9.P2 uses validation loop (12 dimensions, primary clean round + sub-agent confirmation)
+- Next: S9.P2 uses validation loop (13 dimensions, primary clean round + sub-agent confirmation)
 
 **Critical Success Factors:**
 - Verify ALL features complete S8.P2 (Epic Testing Update) first

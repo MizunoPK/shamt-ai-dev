@@ -170,7 +170,7 @@ Even if S7.P2 found and fixed many issues, S7.P3 requires FULL rigor:
 
 **From S7.P2:**
 - [ ] Validation Loop: PASSED (primary clean round + sub-agent confirmation)
-- [ ] All 16 dimensions checked every round (7 master + 9 S7 QC-specific)
+- [ ] All 17 dimensions checked every round (7 master + 10 S7 QC-specific)
 - [ ] Zero issues deferred (fix-and-continue approach used)
 - [ ] All re-reading checkpoints completed
 
@@ -731,7 +731,7 @@ Files updated:
 
 **Validation Loop:**
 - [ ] Validation Loop: PASSED (primary clean round + sub-agent confirmation)
-- [ ] All 16 dimensions checked every round (7 master + 9 S7 QC-specific)
+- [ ] All 17 dimensions checked every round (7 master + 10 S7 QC-specific)
 - [ ] Zero issues deferred (fix-and-continue approach used)
 
 **PR Review:**
@@ -806,7 +806,7 @@ Files updated:
 
 ### Validation Loop (S7.P2)
 - [x] Validation Loop passed (primary clean round + sub-agent confirmation)
-- [x] All 16 dimensions checked every round (7 master + 9 S7 QC-specific)
+- [x] All 17 dimensions checked every round (7 master + 10 S7 QC-specific)
 - [x] Zero issues deferred (fix-and-continue approach used)
 
 ### PR Review (S7.P3)
