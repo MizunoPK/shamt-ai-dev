@@ -360,7 +360,7 @@ Primary Agent (Opus) at sync points:
 **Estimated savings:** 25-35% on parallel work overhead
 
 **Implementation:**
-1. Update `.shamt/guides/parallel_work/parallel_work_system.md` with Haiku delegation
+1. Update `.shamt/guides/parallel_work/README.md` with Haiku delegation
 2. Update checkpoint examples to show Task tool with `model: "haiku"`
 3. Add STATUS file operation examples with Haiku
 
@@ -743,3 +743,4 @@ Run 5-dimension implementation validation loop:
 | 2026-04-01 | Initial draft created |
 | 2026-04-01 | Fixed file path issues (Round 1 validation): Updated all references to match actual repository structure |
 | 2026-04-01 | Fixed sub-agent findings (Round 2 confirmation): Added Task tool prerequisite verification, fixed D16 reference, clarified dimension count, resolved audit scope, added decision framework examples |
+| 2026-04-01 | Fixed sub-agent finding (Round 3 confirmation): Corrected Proposal 10 file path parallel_work_system.md → README.md |
