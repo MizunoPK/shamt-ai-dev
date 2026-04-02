@@ -94,7 +94,7 @@ S10.P2 is complete when the overview document is committed (if opted in) or the 
 
 5. ⚠️ Validation loop required before committing
    - Run the 4-dimension validation loop (Step 5)
-   - Exit criterion: 2 consecutive clean rounds
+   - Exit criterion: Primary clean round + sub-agent confirmation (consistent with master validation loop protocol)
    - If the same issue persists 3+ rounds: surface to user rather than looping
 
 6. ⚠️ Standalone commit
@@ -285,7 +285,7 @@ List what needs explanation. Do not pad sections explaining obvious things — f
 - The Review Guidance section (Section 10) is actionable, not generic
 - Architecture decisions (Section 5) explain the "why," not just the "what"
 
-**Exit criterion:** 2 consecutive clean rounds with zero issues across all 4 dimensions.
+**Exit criterion:** Primary clean round (zero issues) + independent sub-agent confirmation (consistent with master validation loop protocol)
 
 **Round tracking:**
 - State `consecutive_clean = {n}` at the end of every round
@@ -294,9 +294,9 @@ List what needs explanation. Do not pad sections explaining obvious things — f
 - If the same issue persists across 3+ consecutive rounds, STOP looping — describe the issue to the user and ask for guidance
 
 **Checkpoint:**
-- [ ] Validation round 1 completed (state consecutive_clean)
-- [ ] Validation round 2 completed (state consecutive_clean)
-- [ ] `consecutive_clean = 2` achieved
+- [ ] Primary validation round completed with zero issues (consecutive_clean = 1)
+- [ ] 2 independent sub-agents spawned in parallel to confirm zero issues
+- [ ] Both sub-agents confirmed zero issues (validation loop exits)
 - [ ] All issues found during validation have been fixed
 
 ---
@@ -344,7 +344,7 @@ Verify:
 - [ ] All context gathered (Step 2)
 - [ ] Narrative planned (story spine, organization, foundation/dependent, assumed knowledge)
 - [ ] `SHAMT-{N}-OVERVIEW.md` created at repository root with all 10 sections
-- [ ] Validation loop passed (`consecutive_clean = 2`)
+- [ ] Validation loop passed (primary clean round + sub-agent confirmation)
 - [ ] Overview document committed as standalone commit (`docs/SHAMT-{N}: Add epic overview document`)
 - [ ] Commit verified with `git log -1 --stat`
 - [ ] Ready to proceed to Step 9 (Push and Create PR)
@@ -376,7 +376,7 @@ Verify:
    ✅ Explain the "why" explicitly. Section 5 is the most valuable section to reviewers.
 
 ❌ "One clean validation round is probably enough"
-   ✅ STOP - The exit criterion is 2 consecutive clean rounds. Run both.
+   ✅ STOP - The exit criterion is primary clean round + sub-agent confirmation. Complete both.
 
 ❌ "I'll note the same validation issue and loop again hoping it resolves itself"
    ✅ STOP - If the same issue persists 3+ rounds, surface it to the user.

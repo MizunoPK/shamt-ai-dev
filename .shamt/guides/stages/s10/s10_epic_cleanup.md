@@ -70,6 +70,11 @@ Epic Cleanup is the final stage where you commit all changes, verify documentati
 - ✅ Epic folder moved to `.shamt/epics/done/{epic_name}/`
 - ✅ CLAUDE.md updated if workflow changes made
 
+**Phase Structure:**
+- **S10.P1 (Guide Updates):** MANDATORY — every epic must review guide improvements (based on lessons learned)
+- **S10.P2 (Epic Overview):** OPTIONAL — user decides whether to create narrative overview document
+- **Phase Execution:** P1 and P2 are independent (P2 is not dependent on P1 output). P1 runs first, then S10 asks user about P2.
+
 **Time Estimate:**
 Epic cleanup typically takes 85-130 minutes (S10.P2 skipped) or 105-170 minutes (S10.P2 opted in), both including S10.P1 guide updates. Without guide updates, approximately 40-60 minutes.
 

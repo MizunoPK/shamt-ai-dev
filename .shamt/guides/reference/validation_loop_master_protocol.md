@@ -32,7 +32,7 @@
 4. **Walk through ALL dimensions** (master + scenario-specific) and document each as PASS or ISSUE
 5. **Verify ≥3 technical claims** against source code every round using tools (read_file, grep_search)
 6. **Never delegate rounds to subagents** — you must do the reads and checks yourself
-7. **When `consecutive_clean = 1` (primary clean round): spawn 2 independent sub-agents in parallel** — both must confirm zero issues to complete the exit sequence (see Exit Criteria for the required sub-agent confirmation protocol)
+7. **When `consecutive_clean = 1` (primary clean round): spawn 2 independent sub-agents (using Haiku model) in parallel** — both must confirm zero issues to complete the exit sequence (see Exit Criteria for the required sub-agent confirmation protocol)
 8. **Complete the Adversarial Self-Check** after checking all dimensions in each round — a round may not be scored clean if this step is skipped
 
 **A round where you found multiple issues OR any MEDIUM/HIGH/CRITICAL issue is NOT a clean round — the counter resets to 0. Exception: Exactly 1 LOW-severity issue (fixed) still counts as a clean round.**
