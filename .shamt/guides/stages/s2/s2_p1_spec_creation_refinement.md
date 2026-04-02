@@ -140,10 +140,28 @@ Research feature, draft spec.md and checklist.md, validate with Validation Loop 
 - **Round 3:** Final validation
 - **Exit:** primary clean round + sub-agent confirmation (Gate 1 passed as part of validation)
 
+**Output Files and Locations:**
+
+All output files are saved in the feature folder (`feature_XX_name/`):
+
+| Output | Filename | Purpose | Required |
+|--------|----------|---------|----------|
+| **Spec** | `spec.md` | Feature specification with requirements, acceptance criteria | ✅ Always |
+| **Checklist** | `checklist.md` | Questions needing user input (agents NEVER mark [x]) | ✅ Always |
+| **Research Notes** | `RESEARCH_NOTES.md` | Code locations, integration points, compatibility findings | ✅ Required (except <3 requirement features with no external dependencies) |
+| **Interface Contract** (if applicable) | `INTERFACE_CONTRACT.md` (in feature folder) | API/function signatures, data structures, integration points (extracted from research) | ⚠️ Conditional (if feature integrates with existing code) |
+| **Validation Log** | `VALIDATION_LOG.md` | Records validation loop rounds and outcomes (created in I3) | ✅ Created in I3.P2 |
+
+**Key Locations:**
+- All feature-specific outputs go in `feature_XX_name/` folder
+- Interface contracts live in feature folder (not in codebase)
+- Research notes and spec are primary sources for implementation team
+
 **Outputs:**
 - spec.md (draft, validated, Discovery Context included)
 - checklist.md (QUESTIONS ONLY)
 - RESEARCH_NOTES.md (REQUIRED, with rare exceptions documented above)
+- INTERFACE_CONTRACT.md (if feature integrates with existing code/external systems)
 
 **Gates Embedded:**
 - Gate 1: Research Completeness Audit (embedded in Validation Loop Round 1)

@@ -126,6 +126,20 @@ A **clean round** is defined as:
 
 **Note:** Design doc validation loops (SHAMT-24+) and guide audits use this same "clean round" definition. The term is consistent across all validation contexts.
 
+### Terminology Standardization (SHAMT-27+)
+
+**Inconsistent terminology has been resolved:**
+
+| Old Terminology | Standardized Term | Context |
+|---|---|---|
+| "Primary clean round" | "Clean round" | Refers to any round where 0 or exactly 1 LOW issue found |
+| "Validation iteration" | "Round" | Each iteration of the validation loop |
+| "Sub-agent confirmation" | "Sub-agent confirmation step" | The step after primary clean round where 2 Haiku agents verify |
+| "Acceptable issue" | "Clean (1 Low Fix)" | Exactly one LOW-severity issue found and fixed counts as clean |
+| "Unacceptable issue" | "Not clean" | 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL issue resets counter |
+
+**Going forward, use standardized terms consistently across all validation loop contexts** (S2 specs, S5 plans, S7 QC, design docs, guide audits, etc.)
+
 ## When to Use This Protocol
 
 **Use Validation Loops for:**

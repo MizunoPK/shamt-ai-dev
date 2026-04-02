@@ -182,6 +182,88 @@ This structure is **MANDATORY**. Deviations will cause validation failures and c
 2. `agent_comms/` - Communication FILES only (no subdirectories)
 3. `agent_checkpoints/` - Checkpoint .json FILES only (no subdirectories)
 
+### Handoff Package Format (HANDOFF_PACKAGE.md)
+
+**Purpose:** Each feature's handoff package provides secondary agents with the minimal context needed to work independently on that feature.
+
+**Location:** `feature_XX_{name}/HANDOFF_PACKAGE.md` (created by Primary after S2.P1 validation completes)
+
+**Required Contents:**
+
+```markdown
+## Handoff Package: Feature XX {feature_name}
+
+**Created By:** Primary Agent
+**Date:** {YYYY-MM-DD HH:MM}
+**Feature:** feature_XX_{name}
+**Secondary Agent Assignment:** {agent_id} (or "TBD if not yet spawned")
+
+### Context From Discovery
+
+**Epic-Level Goals:**
+[1-2 sentences from DISCOVERY.md about how this feature fits the epic]
+
+**Feature-Specific Requirements:**
+[Bullet list of feature-specific requirements extracted from DISCOVERY.md]
+
+**Feature Integration Points:**
+[Which other features does this integrate with? What are the touchpoints?]
+
+### Research Findings (From S2.P1 Research)
+
+**Code Locations Relevant to This Feature:**
+- [File:line] - [description]
+- [File:line] - [description]
+
+**Existing Patterns to Follow:**
+- [Pattern 1 with example]
+- [Pattern 2 with example]
+
+**External Dependencies (if any):**
+- [Library/API with compatibility notes]
+
+### Specification Status
+
+**Spec.md Status:** DRAFT / VALIDATED / USER_APPROVED
+**Current Version:** {version}
+**Checklist Items:** {N} total, {answered} answered, {pending} pending
+
+### Outstanding Questions
+
+If checklist.md has pending questions, list them here:
+
+| # | Question | Context | Required By |
+|---|----------|---------|-------------|
+| {N} | {question text} | [brief context] | S2.P1.I2 (before user approval) |
+
+### Known Constraints
+
+- [Any constraint from epic or discovery that affects implementation]
+- [Technical limitation affecting scope]
+
+### Next Steps for Secondary Agent
+
+1. **S2.P1.I2:** Resolve outstanding questions (if any)
+2. **S2.P1.I3:** Run validation loop (reference: reference/validation_loop_spec_refinement.md)
+3. **Gate 3:** Get user approval
+4. **Report:** Submit status file with READY_FOR_SYNC = true
+5. **Wait:** Primary will run S2.P2 (cross-feature alignment) after all secondaries complete S2.P1
+
+**Escalation Contact:** [Primary Agent ID - use this for issues]
+**Escalation Method:** Create message in agent_comms/{YOUR_ID}_to_PRIMARY.md
+
+---
+
+### Optional: Implementation Preview (Added by Primary if helpful)
+
+[If Primary foresees specific implementation challenges, include rough notes here. Optional.]
+```
+
+**Validation:**
+- Handoff must be created AFTER S2.P1 validation passes (Gate 1 passed)
+- Must include all 6 required sections above
+- Secondary agents use this to understand context before starting their S2.P1
+
 ### File Format Requirements
 
 **Checkpoint files:**
