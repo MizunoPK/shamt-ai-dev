@@ -1145,6 +1145,18 @@ Update Agent Status:
 
 I'll now generate handoff packages for {N-1} secondary agents...
 
+**Handoff Package Contents (per secondary agent):**
+- Feature spec.md and checklist.md (so secondary agents know WHAT they're building)
+- Summary of Group 1 feature specs and patterns (so Group 2 can reference without full S2)
+- Link to S2.P1 reference_card (secondary agents use quick start, not full guide)
+- Epic README.md with testing approach and parallel mode configuration
+- EPIC_TRACKER.md current status
+
+**Constraints for Secondary Agents:**
+- Secondary agents do NOT reread full S2.P1 guide (use reference_card)
+- Secondary agents CAN reference Group 1 features for patterns (copy established approaches)
+- Secondary agents CANNOT modify Group 1 specs (read-only reference)
+
 **Next Action:** Generating handoff packages
 ```
 

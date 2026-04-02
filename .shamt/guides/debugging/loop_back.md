@@ -905,7 +905,9 @@ Re-running epic testing now...
 **S7.P2: Validation Loop**
 
 1. **Run Validation Loop:**
-   - Check ALL 17 dimensions every round (7 master + 10 S7 QC-specific)
+   - Check ALL 17 dimensions every round:
+     - **7 master dimensions:** See `reference/validation_loop_master_protocol.md` (Empirical Verification, Completeness, Consistency, Traceability, Clarity, Upstream Alignment, Standards Compliance)
+     - **10 S7 QC-specific dimensions:** See `reference/validation_loop_s7_feature_qc.md` (Requirement Coverage, Interface Verification, Behavior Correctness, Error Handling, Test Case Alignment, Performance Expectations, Security Requirements, Backward Compatibility, Edge Case Handling, Integration Points)
    - Fix issues immediately, reset `consecutive_clean`
    - Continue until primary clean round + sub-agent confirmation
 

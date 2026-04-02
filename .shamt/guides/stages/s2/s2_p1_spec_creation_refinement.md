@@ -158,6 +158,7 @@ Run **after** the I1 Validation Loop exits. If ALL items below pass → skip I2 
 - [ ] All acceptance criteria in spec.md are measurable (specific thresholds, not "should work" or "performs well")
 - [ ] All referenced file paths verified with Read tool (no assumed paths remain)
 - [ ] No circular dependencies with other features identified during I1
+  - *Note: in parallel S2, if other features haven't completed I1 yet, defer circular dependency verification to S2.P2. Mark as FAILED here and revisit in I3.*
 - [ ] No scope items flagged for discussion that haven't been resolved
 - [ ] No cross-feature interface assumptions that haven't been verified against other features' I1 specs
   - *Note: in parallel S2, only features whose I1 is already complete can be checked. If the relevant feature's I1 is not yet complete, this criterion fails → proceed to I2.*
