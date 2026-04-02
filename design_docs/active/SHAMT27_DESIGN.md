@@ -104,9 +104,9 @@ Primary Agent (Opus):
 
 **Implementation:**
 1. Update `.shamt/guides/audit/README.md` to document sub-agent delegation pattern
-2. Update `audit_workflow.md` with explicit Task tool calls showing `model` parameter usage
-3. Update `audit_checklist.md` to indicate which dimensions use which model
-4. Add "Model Selection Notes" section to each dimension's detailed guide
+2. Update `audit_overview.md` with explicit Task tool calls showing `model` parameter usage
+3. Update `stages/stage_1_discovery.md` to indicate which dimensions use which model
+4. Add "Model Selection Notes" section to each dimension's detailed guide (22 dimension files)
 
 ---
 
@@ -128,8 +128,8 @@ Primary Agent (Opus):
 **Estimated savings:** 35-45% per validation (2.2-3.6 hrs)
 
 **Implementation:**
-1. Update `.shamt/guides/stages/s5/implementation_planning_workflow.md` with sub-agent pattern
-2. Update `validation_checklist.md` to show model assignments per dimension
+1. Update `.shamt/guides/stages/s5/s5_v2_validation_loop.md` with sub-agent pattern
+2. Add model assignment documentation to S5 validation workflow
 3. Add explicit Task tool examples with `model: "haiku"` / `model: "sonnet"` parameters
 
 ---
@@ -166,8 +166,8 @@ Primary Agent (Opus) → Clean round
 - Code Review validation (if using sub-agent pattern)
 
 **Implementation:**
-1. Update `reference/validation_loop_universal.md` to specify Haiku for confirmations
-2. Update all workflow guides that spawn sub-agent confirmations
+1. Update `reference/validation_loop_master_protocol.md` to specify Haiku for confirmations
+2. Update all specific validation loop guides (s7, s9, spec_refinement, etc.) that spawn sub-agent confirmations
 3. Add explicit `model: "haiku"` parameter to all Task tool examples for confirmations
 
 ---
@@ -192,9 +192,9 @@ Primary Agent (Opus) completes validation → Spawn Haiku to update Agent Status
 **Estimated savings:** 60-70% on isolated status updates
 
 **Implementation:**
-1. Update `reference/agent_status_universal.md` with delegation rule
+1. Add Agent Status delegation guidance to `reference/critical_workflow_rules.md` or create new section in `model_selection.md`
 2. Add examples showing when to delegate vs. handle inline
-3. Update workflow guides to show Haiku delegation for isolated updates
+3. Update workflow guides to show Haiku delegation for isolated updates (embed in stage workflows)
 
 ---
 
@@ -218,9 +218,9 @@ Primary Agent (Opus):
 **Estimated savings:** 30-40% on Discovery Phase
 
 **Implementation:**
-1. Update `.shamt/guides/stages/s1/discovery_phase_guide.md` with exploration delegation
+1. Update `.shamt/guides/stages/s1/s1_p3_discovery_phase.md` with exploration delegation
 2. Add explicit Task tool examples for Haiku-based exploration
-3. Update `s1_workflow.md` to show phased approach (exploration → synthesis)
+3. Update `s1_epic_planning.md` to show phased approach (exploration → synthesis)
 
 ---
 
@@ -243,7 +243,7 @@ Primary Agent (Opus):
 
 **Implementation:**
 1. Update `.shamt/guides/code_review/code_review_workflow.md` with delegation pattern
-2. Add model selection examples to `code_review_checklist.md`
+2. Add model selection examples to `code_review_workflow.md` and `output_format.md`
 3. Update validation dimensions to show Opus for deep analysis, Sonnet for structure
 
 ---
@@ -319,7 +319,7 @@ Primary Agent (Opus):
 **Implementation:**
 1. Update `.shamt/guides/design_doc_validation/validation_workflow.md` with delegation
 2. Update `master_dev_workflow/master_dev_workflow.md` to show Haiku for file operations
-3. Add model selection examples to validation checklists
+3. Add model selection examples to design doc validation workflow
 
 ---
 
@@ -368,8 +368,8 @@ Primary Agent (Opus):
 
 **Implementation:**
 1. Update `.shamt/guides/debugging/debugging_protocol.md` with delegation
-2. Add Haiku examples for checklist/status operations
-3. Update investigation round examples to show Sonnet for hypothesis work
+2. Add Haiku examples for checklist/status operations to debugging workflow files
+3. Update `investigation.md` to show Sonnet for hypothesis work
 
 ---
 
@@ -390,8 +390,8 @@ Primary Agent (Opus):
 **Estimated savings:** 30-35% on S10.P1
 
 **Implementation:**
-1. Update `.shamt/guides/stages/s10/s10_workflow.md` with delegation
-2. Update `guide_updates_mandatory.md` with model selection examples
+1. Update `.shamt/guides/stages/s10/s10_epic_cleanup.md` with delegation
+2. Update `s10_p1_guide_update_workflow.md` with model selection examples
 3. Add Haiku examples for file read/update operations
 
 ---
@@ -429,27 +429,27 @@ Primary Agent (Opus):
 | Path | Changes |
 |------|---------|
 | `.shamt/guides/audit/README.md` | Add sub-agent delegation pattern overview |
-| `.shamt/guides/audit/audit_workflow.md` | Add Haiku/Sonnet delegation for dimensions, update Task examples |
-| `.shamt/guides/audit/audit_checklist.md` | Indicate model per dimension |
-| `.shamt/guides/stages/s1/discovery_phase_guide.md` | Add exploration delegation to Haiku |
-| `.shamt/guides/stages/s1/s1_workflow.md` | Update Discovery Phase with phased approach |
-| `.shamt/guides/stages/s2/s2_workflow.md` | Add Haiku confirmations to spec validation |
-| `.shamt/guides/stages/s5/implementation_planning_workflow.md` | Add sub-agent delegation pattern |
-| `.shamt/guides/stages/s5/validation_checklist.md` | Show model assignments per dimension |
-| `.shamt/guides/stages/s7/s7_workflow.md` | Add Haiku confirmations to P2 QC |
-| `.shamt/guides/stages/s9/s9_workflow.md` | Add Haiku confirmations to P2 QC |
-| `.shamt/guides/stages/s10/s10_workflow.md` | Add Haiku delegation for file operations |
-| `.shamt/guides/stages/s10/guide_updates_mandatory.md` | Add model selection examples |
+| `.shamt/guides/audit/audit_overview.md` | Add Haiku/Sonnet delegation for dimensions, update Task examples |
+| `.shamt/guides/audit/stages/stage_1_discovery.md` | Indicate model per dimension |
+| `.shamt/guides/stages/s1/s1_p3_discovery_phase.md` | Add exploration delegation to Haiku |
+| `.shamt/guides/stages/s1/s1_epic_planning.md` | Update Discovery Phase with phased approach |
+| `.shamt/guides/stages/s2/s2_p1_spec_creation_refinement.md` | Add Haiku confirmations to spec validation |
+| `.shamt/guides/stages/s5/s5_v2_validation_loop.md` | Add sub-agent delegation pattern |
+| `.shamt/guides/stages/s7/s7_p2_qc_rounds.md` | Add Haiku confirmations to P2 QC |
+| `.shamt/guides/stages/s9/s9_p2_epic_qc_rounds.md` | Add Haiku confirmations to P2 QC |
+| `.shamt/guides/stages/s10/s10_epic_cleanup.md` | Add Haiku delegation for file operations |
+| `.shamt/guides/stages/s10/s10_p1_guide_update_workflow.md` | Add model selection examples |
 
 ### Modified Files - Supporting Workflows
 | Path | Changes |
 |------|---------|
 | `.shamt/guides/code_review/code_review_workflow.md` | Add sub-agent delegation pattern |
-| `.shamt/guides/code_review/code_review_checklist.md` | Add model selection notes |
+| `.shamt/guides/code_review/output_format.md` | Add model selection notes |
 | `.shamt/guides/design_doc_validation/validation_workflow.md` | Add Haiku/Sonnet delegation |
 | `.shamt/guides/master_dev_workflow/master_dev_workflow.md` | Add Haiku for file operations |
 | `.shamt/guides/debugging/debugging_protocol.md` | Add Haiku for checklist/status |
-| `.shamt/guides/parallel_work/parallel_work_system.md` | Add Haiku for STATUS/checkpoints |
+| `.shamt/guides/debugging/investigation.md` | Add Sonnet for hypothesis work |
+| `.shamt/guides/parallel_work/README.md` | Add Haiku for STATUS/checkpoints |
 | `.shamt/guides/sync/export_workflow.md` | Add Haiku for script/grep operations |
 | `.shamt/guides/sync/import_workflow.md` | Add Haiku for script/diff generation, confirmations |
 | `.shamt/guides/missed_requirement/missed_requirement_protocol.md` | Add Haiku for file operations |
@@ -457,9 +457,11 @@ Primary Agent (Opus):
 ### Modified Files - Universal References
 | Path | Changes |
 |------|---------|
-| `.shamt/guides/reference/validation_loop_universal.md` | Specify Haiku for sub-agent confirmations |
-| `.shamt/guides/reference/agent_status_universal.md` | Add delegation rule for isolated updates |
-| `.shamt/guides/reference/task_tool_usage.md` | Add `model` parameter examples (if exists) |
+| `.shamt/guides/reference/validation_loop_master_protocol.md` | Specify Haiku for sub-agent confirmations |
+| `.shamt/guides/reference/validation_loop_s7_feature_qc.md` | Add Haiku confirmation examples |
+| `.shamt/guides/reference/validation_loop_s9_epic_qc.md` | Add Haiku confirmation examples |
+| `.shamt/guides/reference/validation_loop_spec_refinement.md` | Add Haiku confirmation examples |
+| `.shamt/guides/reference/critical_workflow_rules.md` | Add Agent Status delegation rule for isolated updates |
 
 ### Modified Files - Audit
 | Path | Changes |
@@ -491,9 +493,12 @@ Primary Agent (Opus):
 - [ ] Commit reference guide
 
 ### Phase 3: Universal References (1-2 hours)
-- [ ] Update `reference/validation_loop_universal.md` (Proposal 4 - Haiku confirmations)
-- [ ] Update `reference/agent_status_universal.md` (Proposal 5 - delegation rule)
-- [ ] Link model_selection.md from both universal guides
+- [ ] Update `reference/validation_loop_master_protocol.md` (Proposal 4 - Haiku confirmations)
+- [ ] Update `reference/validation_loop_s7_feature_qc.md` (add Haiku confirmation examples)
+- [ ] Update `reference/validation_loop_s9_epic_qc.md` (add Haiku confirmation examples)
+- [ ] Update `reference/validation_loop_spec_refinement.md` (add Haiku confirmation examples)
+- [ ] Update `reference/critical_workflow_rules.md` (Proposal 5 - Agent Status delegation rule)
+- [ ] Link model_selection.md from validation loop guides
 - [ ] Commit universal reference updates
 
 ### Phase 4: High-Impact Workflows (4-6 hours)
@@ -501,30 +506,29 @@ Primary Agent (Opus):
 
 - [ ] Update Guide Audit workflow (Proposal 2)
   - [ ] `.shamt/guides/audit/README.md`
-  - [ ] `.shamt/guides/audit/audit_workflow.md`
-  - [ ] `.shamt/guides/audit/audit_checklist.md`
-  - [ ] Add "Model Selection Notes" to dimension guides (23 files)
+  - [ ] `.shamt/guides/audit/audit_overview.md`
+  - [ ] `.shamt/guides/audit/stages/stage_1_discovery.md`
+  - [ ] Add "Model Selection Notes" to dimension guides (22 dimension files)
 - [ ] Update S5 Implementation Planning (Proposal 3)
-  - [ ] `stages/s5/implementation_planning_workflow.md`
-  - [ ] `stages/s5/validation_checklist.md`
+  - [ ] `stages/s5/s5_v2_validation_loop.md`
 - [ ] Update Discovery Phase (Proposal 6)
-  - [ ] `stages/s1/discovery_phase_guide.md`
-  - [ ] `stages/s1/s1_workflow.md`
+  - [ ] `stages/s1/s1_p3_discovery_phase.md`
+  - [ ] `stages/s1/s1_epic_planning.md`
 - [ ] Update Code Review (Proposal 7)
   - [ ] `code_review/code_review_workflow.md`
-  - [ ] `code_review/code_review_checklist.md`
+  - [ ] `code_review/output_format.md`
 - [ ] Commit Phase 4 changes
 
 ### Phase 5: Stage Workflows (3-4 hours)
 - [ ] Update S2 Spec Refinement (sub-agent confirmations)
-  - [ ] `stages/s2/s2_workflow.md`
+  - [ ] `stages/s2/s2_p1_spec_creation_refinement.md`
 - [ ] Update S7 Feature QC (sub-agent confirmations)
-  - [ ] `stages/s7/s7_workflow.md`
+  - [ ] `stages/s7/s7_p2_qc_rounds.md`
 - [ ] Update S9 Epic QC (sub-agent confirmations)
-  - [ ] `stages/s9/s9_workflow.md`
+  - [ ] `stages/s9/s9_p2_epic_qc_rounds.md`
 - [ ] Update S10 Guide Updates (Proposal 12)
-  - [ ] `stages/s10/s10_workflow.md`
-  - [ ] `stages/s10/guide_updates_mandatory.md`
+  - [ ] `stages/s10/s10_epic_cleanup.md`
+  - [ ] `stages/s10/s10_p1_guide_update_workflow.md`
 - [ ] Commit Phase 5 changes
 
 ### Phase 6: Supporting Workflows (2-3 hours)
@@ -535,9 +539,10 @@ Primary Agent (Opus):
   - [ ] `sync/export_workflow.md`
   - [ ] `sync/import_workflow.md`
 - [ ] Update Parallel Work (Proposal 10)
-  - [ ] `parallel_work/parallel_work_system.md`
+  - [ ] `parallel_work/README.md`
 - [ ] Update Debugging Protocol (Proposal 11)
   - [ ] `debugging/debugging_protocol.md`
+  - [ ] `debugging/investigation.md`
 - [ ] Update Missed Requirement Protocol
   - [ ] `missed_requirement/missed_requirement_protocol.md`
 - [ ] Commit Phase 6 changes
@@ -719,3 +724,4 @@ Run 5-dimension implementation validation loop:
 | Date | Change |
 |------|--------|
 | 2026-04-01 | Initial draft created |
+| 2026-04-01 | Fixed file path issues (Round 1 validation): Updated all references to match actual repository structure |
