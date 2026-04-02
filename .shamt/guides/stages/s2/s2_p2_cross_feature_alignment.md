@@ -191,11 +191,16 @@ For each conflict found:
 **S2.P2 complete when ALL true:**
 
 - [ ] All pairwise comparisons performed
-- [ ] All conflicts identified and resolved
+- [ ] All conflicts identified **and resolved** (not just documented, but specs updated)
+  - If conflicts found and resolved: specs updated
+  - If conflicts found and unresolvable: escalate to user (contact feature owners)
+- [ ] **Zero unresolved conflicts** remain
 - [ ] Validation Loop passed (primary clean round + sub-agent confirmation)
-- [ ] Comparison matrix created and saved
+- [ ] Comparison matrix created and saved to `s2_p2_cross_feature_alignment.md`
 - [ ] All spec.md files updated (if conflicts resolved)
 - [ ] Epic EPIC_README.md updated with S2.P2 completion
+
+**Success Criteria:** All features in this group can proceed to S3 without integration conflicts.
 
 ---
 
@@ -204,7 +209,7 @@ For each conflict found:
 **After S2.P2 complete:**
 
 - If more groups remain → Loop back to S2.P1 for next group
-- If all groups complete → Proceed to S3
+- If all groups complete → **Proceed to S3** (no loop back)
 
 📖 **READ:** `stages/s3/s3_epic_planning_approval.md` (when all groups done)
 

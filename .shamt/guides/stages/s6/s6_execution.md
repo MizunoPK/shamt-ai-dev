@@ -250,7 +250,7 @@ External Dependencies to Verify:
 
 ```bash
 ## Example: Verify ConfigManager.get_rank_multiplier
-code [module]/util/ConfigManager.py:234
+code -g "src/util/ConfigManager.py:234"
 ```
 
 3. **Copy-paste EXACT signature:**

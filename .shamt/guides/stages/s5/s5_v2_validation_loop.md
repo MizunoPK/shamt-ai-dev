@@ -1405,7 +1405,17 @@ Use `VALIDATION_LOOP_LOG_S5_template.md` to track each round: timestamp, reading
    - New files or changed file paths referenced in this plan
    - Design decisions made in the dependency that contradict assumptions in this plan
 4. If issues found: update the implementation plan accordingly. Do **not** restart all of S5.
-5. If a foundational architectural change invalidates the plan's core approach: **STOP and escalate to the user.** Do not self-repair. A full S5 re-run is not the fallback; user judgment is.
+5. If a foundational architectural change invalidates the plan's core approach: **STOP and escalate immediately.**
+
+   **ESCALATION PROTOCOL:**
+   - Document the architectural issue in the validation loop log with specific details
+   - Report to user: "I found foundational architectural change: [specific issue]. Current plan assumes [what was assumed] but implementation requires [what's needed]."
+   - **Do not self-repair.** Await user decision:
+     - Re-validate against new architecture (user approves changes)
+     - Create new design doc (if scope changes significantly)
+     - Proceed as-is (user accepts the new approach)
+   - Update implementation plan only after explicit user approval
+   - A full S5 re-run is NOT the fallback — user judgment is required first.
 
 **What requires a plan update:**
 - A function or class this plan calls has changed its signature

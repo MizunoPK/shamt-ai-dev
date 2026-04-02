@@ -107,12 +107,18 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 
 ### Time estimate
 
-**60-90 minutes** (if no issues found)
-- Epic PR Review: 30-45 minutes
+**60-90 minutes for SMALL/MEDIUM epics** (if no issues found)
+- Epic PR Review: 30-45 minutes (scales with epic size; see note below)
 - Final Verification: 15-30 minutes
 - Documentation updates: 15 minutes
 
+**+30-60 minutes for LARGE epics** (5+ features, 500+ files changed)
+- Epic PR Review may take 60-90 minutes instead of 30-45
+- Review complexity grows with feature count and file changes
+
 **+2-4 hours per bug fix** (if issues found, includes S9 restart)
+
+**Note:** Epic PR Review time scales with epic scope. The 30-45 minute estimate assumes 2-3 features or <300 files changed. For larger epics, allocate 60-90 minutes.
 
 ### Workflow overview
 

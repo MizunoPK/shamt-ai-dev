@@ -69,13 +69,17 @@ Epic Planning is the first stage where you create the git branch, analyze the us
 - Ready to start S2 (feature deep dives)
 
 **Time Estimate:**
-2-5 hours (varies by epic size, includes Discovery Phase)
+1.5-5 hours depending on epic size (includes Discovery Phase)
 
-| Epic Size | Estimated Time |
-|-----------|---------------|
-| SMALL (1-2 features) | 2-3 hours |
-| MEDIUM (3-5 features) | 3-4 hours |
-| LARGE (6+ features) | 4-5 hours |
+**Use the table below based on your feature count:**
+
+| Epic Size | Features | Estimated Time |
+|-----------|----------|---------------|
+| SMALL | 1-2 | 2-3 hours |
+| MEDIUM | 3-5 | 3-4 hours |
+| LARGE | 6+ | 4-5 hours |
+
+**Note:** This estimate is for S1 epic planning only. S2 (feature deep dives) begins after S1 approval.
 
 **Exit Condition:**
 S1 is complete when you have Discovery approved, a validated epic ticket, complete folder structure, and user has confirmed the feature breakdown
