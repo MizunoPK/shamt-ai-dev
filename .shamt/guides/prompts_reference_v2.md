@@ -1,5 +1,9 @@
 # Shamt Phase Transition Prompts — Index
 
+**Last Updated:** 2026-04-02
+**Version:** 1.0
+**Status:** Current
+
 This file is the index for all phase transition prompts. Prompts are organized by stage in the `prompts/` directory.
 
 **Using prompts is MANDATORY** at every stage transition. Using the correct prompt ensures the agent reads the full guide and acknowledges critical requirements before proceeding.

@@ -1,5 +1,9 @@
 # Shamt Epic Workflow — Comprehensive Usage Guide
 
+**Last Updated:** 2026-04-02
+**Version:** 1.0
+**Status:** Current
+
 This file provides a complete overview of the Shamt S1-S10 epic-driven development workflow.
 
 **For stage-specific detail:** Read the full guide for each stage (listed below).

@@ -1,5 +1,9 @@
 # Shamt Guides — Index
 
+**Last Updated:** 2026-04-02
+**Version:** 1.0
+**Status:** Current
+
 This directory contains the complete Shamt epic-driven development workflow guide system.
 
 ---
