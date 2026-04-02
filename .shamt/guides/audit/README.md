@@ -59,6 +59,54 @@ bash scripts/pre_audit_checks.sh
 
 ---
 
+## Model Selection for Token Optimization (SHAMT-27)
+
+**Guide audits can save 40-50% tokens** through strategic model delegation. Use the following pattern:
+
+### Sub-Agent Delegation Pattern
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → Pre-audit checks script (D1-D12 automated)
+├─ Spawn Haiku → File counting, cross-reference grep (D13, D14, D15)
+├─ Spawn Sonnet → Structural dimensions (D11 file size, D12 patterns, D16 duplication)
+├─ Primary handles → Content/correctness (D2-D5, D7-D9 accuracy, completeness, consistency)
+├─ Primary handles → Adversarial self-check
+└─ Spawn 2x Haiku (parallel) → Sub-agent confirmations (zero-issue verification)
+```
+
+**Model Selection by Dimension:**
+
+| Dimension | Model | Rationale |
+|-----------|-------|-----------|
+| D1-D12 (pre-audit script) | Haiku | Automated script execution |
+| D13, D14, D15 (cross-refs, format, context) | Haiku | File counting, grep operations |
+| D11 (file size), D12 (patterns), D16 (duplication) | Sonnet | Structural analysis |
+| D2-D5, D7-D9 (accuracy, completeness, consistency) | Opus | Deep content validation |
+| D17-D23 (advanced) | Opus | Complex analysis |
+| Adversarial self-check | Opus | Critical review |
+| Sub-agent confirmations | Haiku | Focused verification (70-80% savings) |
+
+**Example Task Tool Call for Haiku File Counting:**
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="description">Count dimension guide files</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="prompt">Count dimension guide files in .shamt/guides/audit/dimensions/ (exclude d10_examples.md and d16_examples.md).
+
+Command: ls .shamt/guides/audit/dimensions/ | grep "^d[0-9]" | grep -v example | wc -l
+
+Report the count.</parameter>
+</invoke>
+```
+
+**See:** `reference/model_selection.md` for complete guidance on when to use each model.
+
+**Estimated Savings:** 40-50% token reduction per audit round (from 4.5-6.5 hrs Opus → ~2.5-3.5 hrs mixed).
+
+---
+
 ## Audit Process Overview (Sub-Round System)
 
 **The audit uses a 4 sub-round structure per round, organized by dimension category:**

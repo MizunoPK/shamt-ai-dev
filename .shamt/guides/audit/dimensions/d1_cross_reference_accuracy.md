@@ -4,6 +4,7 @@
 **Category:** Core Dimensions (Always Check)
 **Automation Level:** 90% automated
 **Priority:** HIGH
+**Model Selection (SHAMT-27):** Haiku (automated script execution) - See `reference/model_selection.md`
 **Last Updated:** 2026-02-04
 
 **Focus:** Ensure all file paths, stage references, and cross-links point to existing, correct locations

@@ -62,6 +62,42 @@
 
 ---
 
+## Agent Status Delegation (SHAMT-27)
+
+**When to update Agent Status inline vs delegate:**
+
+**DO inline (primary agent handles):**
+- When primary agent is already working with the file (e.g., just updated spec.md, now updating Agent Status in same file)
+- When task is part of larger operation (e.g., writing multiple sections of README)
+- When context is already loaded
+
+**DELEGATE to Haiku when:**
+- Agent Status update is an isolated operation (primary agent finished work, only needs status update)
+- Updating multiple STATUS files in parallel (e.g., parallel work checkpoints)
+- Mechanical text replacement with no analysis needed
+
+**Why delegate isolated updates:**
+- 60-70% token savings (Haiku vs Sonnet/Opus)
+- No quality degradation (mechanical operation)
+- Faster execution (Haiku has lower latency)
+
+**Example Task Tool Call for isolated Agent Status update:**
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="description">Update Agent Status</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="prompt">Update Agent Status in [file path] to:
+"Agent Status: [new status]"
+
+Use Edit tool to update the Agent Status section.</parameter>
+</invoke>
+```
+
+**See:** `reference/model_selection.md` for complete model selection guidance
+
+---
+
 ## Usage Instructions
 
 **When to copy these rules:**

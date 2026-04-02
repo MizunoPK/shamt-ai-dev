@@ -101,6 +101,21 @@ Feature QC validates implemented features through systematic validation loop che
 **Exit Condition:**
 Feature QC is complete when primary clean round + sub-agent confirmation achieved (both independent sub-agents confirm zero issues across all 17 dimensions), all tests passing (100%), and feature is production-ready
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+Feature QC can save 30-40% tokens through delegation:
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → Run tests, count files, verify file existence
+├─ Spawn Sonnet → Read implementation code for dimension checks
+├─ Primary handles → 17-dimension validation, deep correctness checks, test analysis
+├─ Spawn Haiku (2x in parallel) → Sub-agent confirmations (exit criteria)
+└─ Primary writes → Validation log, issue fixes
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
 ---
 
 ## 🛑 Critical Rules

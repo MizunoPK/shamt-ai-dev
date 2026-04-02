@@ -4,6 +4,7 @@
 **Category:** Advanced Dimensions
 **Automation Level:** 15% automated
 **Priority:** HIGH
+**Model Selection (SHAMT-27):** Opus (complex analysis) - See `reference/model_selection.md`
 **Last Updated:** 2026-03-08
 
 **Focus:** Verify that individual guides are unambiguously comprehensible to an arriving agent — correct scope, no authoring noise in the instruction path, no confusion from structural similarity to sibling guides

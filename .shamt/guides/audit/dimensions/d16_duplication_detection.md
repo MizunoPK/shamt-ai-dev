@@ -4,6 +4,7 @@
 **Category:** Advanced Dimensions
 **Automation Level:** 50% automated
 **Priority:** MEDIUM
+**Model Selection (SHAMT-27):** Sonnet (structural analysis) - See `reference/model_selection.md`
 **Last Updated:** 2026-02-04
 
 **Focus:** Identify duplicate content across guides and enforce DRY principle through consolidation

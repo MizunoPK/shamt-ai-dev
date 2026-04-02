@@ -4,6 +4,7 @@
 **Category:** Structural Dimensions
 **Automation Level:** 100% automated
 **Priority:** MEDIUM
+**Model Selection (SHAMT-27):** Haiku (automated) or Sonnet (manual analysis) - See `reference/model_selection.md`
 **Last Updated:** 2026-02-05
 
 **Focus:** Ensure files are appropriately sized for agent comprehension and usability

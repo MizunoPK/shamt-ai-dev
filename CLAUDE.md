@@ -228,3 +228,26 @@ Child projects maintain ARCHITECTURE.md and CODING_STANDARDS.md through the S1-S
 - Never approve child PRs that contain project-specific content in shared guide files
 - When any change affects system behavior (new sync scripts, new guides, new audit scope, new workflow steps): review and update the three master-only files that are not propagated via import — `CLAUDE.md`, root `README.md`, and `scripts/initialization/RULES_FILE.template.md`
 - Guide audits require 3 CONSECUTIVE clean rounds (where each round has ≤1 LOW-severity issue) to exit (track `consecutive_clean >= 3`). Workflow validation loops (S7.P2, S9.P2, etc.) exit on **primary clean round + independent sub-agent confirmation** (`consecutive_clean = 1`, then spawn 2 parallel sub-agents both confirming zero issues). A round is clean if it has ZERO issues OR exactly ONE LOW-severity issue (fixed). Multiple LOW-severity issues OR any MEDIUM/HIGH/CRITICAL severity issue resets `consecutive_clean` to 0. Track `consecutive_clean` explicitly and state it at the end of every round. See `reference/severity_classification_universal.md` for severity definitions.
+
+---
+
+## Model Selection for Token Optimization (SHAMT-27)
+
+**Purpose:** Save 30-50% tokens across workflows through strategic model delegation
+
+**Quick Reference:**
+- **Haiku** (cheap, fast): File operations, git operations, grep/glob searches, tests, sub-agent confirmations
+- **Sonnet** (balanced): Code reading, structural analysis, medium-complexity tasks
+- **Opus** (deep reasoning): Validation, root cause analysis, design decisions, complex multi-dimensional checks
+
+**Key Workflows:**
+- **Guide Audit:** 40-50% savings (Haiku for pre-checks/counting, Sonnet for structural, Opus for content)
+- **Validation Loops:** 30-45% savings (Haiku for mechanical, Sonnet for code reading, Opus for validation)
+- **Code Review:** 30-40% savings (Haiku for git ops, Sonnet for ELI5, Opus for issue classification)
+- **Sub-Agent Confirmations:** 70-80% savings (always use Haiku - focused verification, not deep reasoning)
+
+**Complete Guide:** See `.shamt/guides/reference/model_selection.md` for decision framework, task catalog, Task tool examples, and common mistakes.
+
+**When to Use:** Spawn sub-agents with the `model` parameter in the Task tool when delegation will save tokens without degrading quality. Always delegate sub-agent confirmations to Haiku.
+
+**When NOT to Use:** Parallel work coordination (use Sonnet for consistency), tasks requiring existing context (avoid context switching overhead).

@@ -63,6 +63,29 @@
 
 ---
 
+## Model Selection for Token Optimization (SHAMT-27)
+
+Validation loops can save 30-45% tokens through strategic delegation:
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → File existence checks, counting, grep searches
+├─ Spawn Sonnet → Read files for structural validation, pattern analysis
+├─ Primary handles → Multi-dimensional validation, deep content analysis, adversarial self-check
+├─ Primary writes → Validation log, artifact fixes, dimension assessments
+├─ Spawn Haiku (2x in parallel) → Sub-agent confirmations (exit criteria)
+└─ Primary completes → Exit sequence after both sub-agents confirm zero issues
+```
+
+**Delegation by Task Type:**
+- **Haiku:** File operations (existence, counting), grep searches, cross-reference validation, sub-agent confirmations (70-80% savings for these tasks)
+- **Sonnet:** Reading implementation code, structural pattern analysis, medium-complexity checks (40-50% savings)
+- **Opus:** Validation dimensions requiring deep reasoning, correctness checks, adversarial self-check, decision-making (best model for core validation work)
+
+**See:** `reference/model_selection.md` for complete Task tool examples and delegation patterns.
+
+---
+
 ## Overview
 
 **What is the Validation Loop?**
@@ -1490,6 +1513,28 @@ When `consecutive_clean = 1` (primary clean round achieved):
 3. **Sub-agent B**: Re-reads artifact bottom-to-top (or in different order), checks all dimensions
 4. **Both must report zero issues** to complete the exit sequence
 5. **If either sub-agent finds an issue**: Fix immediately, reset `consecutive_clean = 0`, continue validation
+
+**Model Selection (SHAMT-27):**
+- **ALWAYS use Haiku for sub-agent confirmations** (70-80% token savings)
+- Sub-agent confirmations are focused verification tasks (not deep reasoning)
+- Primary agent (Opus) already did deep validation; sub-agents verify zero missed issues
+- See `reference/model_selection.md` for complete model selection guidance
+
+**Example Task Tool Call:**
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="description">Confirm zero issues</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="prompt">You are a sub-agent tasked with confirming zero issues in [artifact].
+
+Read [artifact path] and validate against all dimensions. Report ANY issue found (even LOW severity) or confirm zero issues.
+
+IMPORTANT: You do NOT get the "1 LOW issue allowance" - report ANY issue.
+
+Output: "CONFIRMED: Zero issues found" OR list all issues with severity.</parameter>
+</invoke>
+```
 
 **Fallback (when sub-agents unavailable):** If the workflow environment cannot spawn sub-agents, fall back to the old exit standard: 3 consecutive clean rounds from the primary agent alone.
 

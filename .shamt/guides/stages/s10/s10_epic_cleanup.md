@@ -73,6 +73,20 @@ Epic Cleanup is the final stage where you commit all changes, verify documentati
 **Time Estimate:**
 Epic cleanup typically takes 85-130 minutes (S10.P2 skipped) or 105-170 minutes (S10.P2 opted in), both including S10.P1 guide updates. Without guide updates, approximately 40-60 minutes.
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+S10 cleanup can save 20-30% tokens through delegation:
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → Run tests, verify file existence, count files
+├─ Spawn Sonnet → Read documentation for completeness checks
+├─ Primary handles → Commit message writing, CLAUDE.md updates, decision-making
+└─ Primary executes → Git operations, file moves, final verification
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
 **Critical Success Factors:**
 1. Run tests per Testing Approach BEFORE committing (Options C/D: unit tests 100% pass; Options B/D: integration scripts all exit code 0)
 2. Verify ALL documentation complete

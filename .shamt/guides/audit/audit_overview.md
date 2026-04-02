@@ -56,6 +56,29 @@ This audit ensures **consistency, accuracy, and completeness** across all .shamt
 - ✅ **D21: Agent Comprehension Risk** - Each guide unambiguously states its scope near the H1; no migration notes in the instruction path; structurally similar guides have explicit scope differentiation callouts
 - ✅ **D22: Guide Bypass Risk** - Each guide has MANDATORY READING PROTOCOL; FORBIDDEN SHORTCUTS block naming guide-specific bypasses; phase commitment gate for multi-phase guides; NEXT MANDATORY STEP footers in phase transition prompts
 
+### Model Selection for Dimensions (SHAMT-27)
+
+**Token optimization:** Audit rounds can save 40-50% tokens through strategic model delegation.
+
+**Dimension-to-Model Mapping:**
+
+- **Haiku** (mechanical operations):
+  - D1-D12 automated script
+  - D13, D14, D15 (file counting, grep, format checking)
+  - Sub-agent confirmations
+
+- **Sonnet** (structural analysis):
+  - D11 (file size assessment)
+  - D12 (structural patterns)
+  - D16 (duplication detection)
+
+- **Opus** (deep validation):
+  - D2-D5, D7-D9 (accuracy, completeness, consistency, terminology)
+  - D17-D23 (advanced dimensions)
+  - Adversarial self-check
+
+**See:** `reference/model_selection.md` for complete Task tool examples and delegation patterns.
+
 ---
 
 ## What This Audit Does NOT Cover

@@ -87,6 +87,20 @@ Missed Requirement Protocol treats missing scope as real features - either creat
 - Example: "Item scores are sometimes wrong but we don't know why"
 - Missing scope discovered BEFORE any feature enters S5 (just update specs directly during S2/3)
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+Missed requirement handling can save 15-25% tokens through delegation:
+
+```
+Primary Agent (Opus - design decisions for feature integration):
+├─ Spawn Haiku → Read existing feature specs, verify file structure
+├─ Spawn Sonnet → Read epic docs, identify integration points
+├─ Primary handles → User approval, feature creation/update, S2/S3 planning, epic doc updates
+└─ Primary writes → New/updated feature specs, EPIC_README updates, smoke test plan
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
 **Key Outputs:**
 - ✅ New feature created OR unstarted feature updated
 - ✅ Feature spec fleshed out (S2)

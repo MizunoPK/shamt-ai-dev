@@ -26,6 +26,21 @@ Step 6: Write review_vN.md
 Step 7: Run review file validation loop (12 dimensions)
 ```
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+Code reviews can save 30-40% tokens through delegation:
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → Git operations (branch fetch, file list, commit messages)
+├─ Spawn Sonnet → Overview.md ELI5 section (summarization)
+├─ Primary handles → Issue classification, actionable comments, adversarial self-check
+├─ Primary writes → review_vN.md
+└─ Spawn Sonnet → Final formatting
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
 ---
 
 ## Step 1 — Access the Branch

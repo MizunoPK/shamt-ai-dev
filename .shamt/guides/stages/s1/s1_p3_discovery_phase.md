@@ -95,6 +95,20 @@ Discovery Phase is complete when Validation Loop validation achieves a primary c
 
 **Validation Loop Reference:** `reference/validation_loop_discovery.md`
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+Discovery Phase can save 30-40% tokens through delegation:
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → File tree exploration, keyword grep searches, file counting
+├─ Spawn Sonnet → Architecture pattern analysis, code convention identification
+├─ Primary handles → Problem space synthesis, gap identification, DISCOVERY.md writing
+├─ Primary runs → Discovery validation loop (Haiku for confirmations)
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
 ---
 
 ## Critical Rules

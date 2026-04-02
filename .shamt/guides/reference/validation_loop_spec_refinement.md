@@ -31,6 +31,24 @@
 
 ---
 
+## Model Selection for Token Optimization (SHAMT-27)
+
+Spec refinement validation can save 25-35% tokens through delegation (9 dimensions):
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → File tree exploration, keyword searches (grep)
+├─ Spawn Sonnet → Read implementation code, identify patterns
+├─ Primary handles → 9-dimension validation, deep spec analysis, design decisions
+├─ Primary writes → Spec.md updates, checklist resolution, validation log
+├─ Spawn Haiku (2x in parallel) → Sub-agent confirmations
+└─ Primary completes → Exit after both confirm zero issues (embeds Gates 1, 2)
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
+---
+
 ## Overview
 
 **Purpose:** Validate specification documents for completeness, accuracy, and alignment before user approval
@@ -589,6 +607,7 @@ Requirement 1: Use synchronous file I/O
 
 **From Master Protocol:**
 - [ ] Primary agent declared a clean round (ZERO issues OR exactly 1 LOW-severity issue fixed) AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
+- [ ] Sub-agent confirmations use **Haiku model** for token efficiency (70-80% savings) - see `reference/model_selection.md`
 - [ ] Counter logic: 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL resets counter; see `reference/severity_classification_universal.md`
 - [ ] All 7 master dimensions checked every primary round
 - [ ] All 2 spec refinement dimensions checked every primary round

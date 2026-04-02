@@ -9,6 +9,20 @@ Use this when:
 
 This process is intentionally lighter than the full S1-S10 epic workflow. It's aligned with S10's lessons-learned update approach.
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+Master dev workflow can save 15-25% tokens through delegation:
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → Verify guide file paths, count files affected
+├─ Spawn Sonnet → Read guides to understand current state
+├─ Primary handles → Design decisions, guide writing, audit running
+└─ Primary executes → Git operations, commits, PR creation
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
 ---
 
 ## When to Use This vs. the Full Epic Workflow

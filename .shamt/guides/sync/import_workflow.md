@@ -4,6 +4,21 @@ This guide describes what the agent does after the user runs `import.sh` (or `im
 
 The import script prints a ready-to-use agent prompt at the end of its run. This guide is the full reference behind that prompt.
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+Import workflow can save 20-30% tokens through delegation:
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → Read import diff files, count changed files
+├─ Spawn Sonnet → Read supplement files, read pointer files for consistency
+├─ Primary handles → Assess impact, update supplements, validation loop
+├─ Spawn Haiku (2x in parallel) → Sub-agent confirmations (exit criteria)
+└─ Primary executes → Git operations, diff file deletion, commit
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
 ---
 
 ## Table of Contents

@@ -6,6 +6,22 @@
 - S2 parallel: Epics with 3+ features (40-60% time reduction for S2 phase)
 - S5 parallel: Epics with 2+ features where S2 parallel was used (~4.5-7 hours gross savings per parallel feature)
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+Parallel work coordination can save 10-20% tokens through delegation:
+
+```
+Primary Agent (Sonnet - balanced for coordination):
+├─ Spawn Haiku → Read STATUS files, check checkpoints, verify file locks
+├─ Spawn Sonnet (2-3x) → Secondary agents for features (same model as primary for consistency)
+├─ Primary handles → Coordination, handoff generation, sync point management
+└─ Primary executes → Feature 01 work, cross-plan alignment, final verification
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
+**Note:** All parallel agents (primary + secondaries) use **Sonnet** for consistency - parallel work requires stable reasoning across agents, not optimized for individual tasks.
+
 ---
 
 ## Quick Navigation

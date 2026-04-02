@@ -2,6 +2,21 @@
 
 Export is how improvements you've made to shared guides and scripts flow back to the master Shamt repo for distribution to other projects.
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+Export workflow can save 25-35% tokens through delegation:
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → Run export script, verify file existence, grep for epic tag contamination
+├─ Spawn Sonnet → Read CHANGES.md, compare rules file against template
+├─ Spawn Haiku → Run guide audit (delegates within audit per audit model selection)
+├─ Primary handles → Review changes, ensure separation rule compliance, PR decisions
+└─ Primary executes → Git operations, PR creation
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
 ---
 
 ## When to Export

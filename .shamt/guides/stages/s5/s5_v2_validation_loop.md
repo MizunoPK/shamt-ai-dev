@@ -529,6 +529,21 @@ Historical evidence from SHAMT-8 Feature 04 shows test creation tasks missing fr
 
 **Exit Criteria:** Primary clean round + independent sub-agent confirmation
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+Use strategic model delegation to save 35-45% tokens per validation:
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → File existence checks, step numbering, checklist format
+├─ Spawn Sonnet → Testability, clarity, breakdown quality (structural dimensions)
+├─ Primary handles → Completeness vs spec, correctness, edge cases, conflicts (deep analysis)
+├─ Primary handles → Empirical verification (≥3 claims) + adversarial self-check
+└─ Spawn 2x Haiku (parallel) → Sub-agent confirmations
+```
+
+**See:** `reference/model_selection.md` for complete Task tool examples.
+
 ---
 
 ### Round Structure

@@ -62,6 +62,21 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 **Time:** 2.25-4 hours per feature
 **Prerequisites:** S1 complete, DISCOVERY.md exists, feature folder created
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+Spec refinement can save 25-35% tokens through delegation:
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → File tree exploration (glob), keyword searches (grep)
+├─ Spawn Sonnet → Read implementation code, identify patterns
+├─ Primary handles → Write spec.md, make design decisions, validation loop primary rounds
+├─ Spawn Haiku (2x in parallel) → Sub-agent confirmations
+└─ Primary writes → Final spec.md updates, checklist resolution
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
 ---
 
 ## S2.P1.I1: Feature-Level Discovery (60-90 min)

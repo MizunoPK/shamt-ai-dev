@@ -4,6 +4,7 @@
 **Category:** Core Dimensions (Always Check)
 **Automation Level:** 80% automated
 **Priority:** HIGH
+**Model Selection (SHAMT-27):** Opus (deep content validation) - See `reference/model_selection.md`
 **Last Updated:** 2026-02-04
 
 **Focus:** Ensure notation, naming conventions, and terminology are uniform across all guides

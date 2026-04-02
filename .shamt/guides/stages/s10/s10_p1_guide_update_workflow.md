@@ -69,6 +69,20 @@ S10.P1 is the mandatory guide improvement workflow where you analyze lessons lea
 **Exit Condition:**
 S10.P1 is complete when all proposals have been reviewed by user, proposal doc created and committed (if any proposals accepted), and tracking updated
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+S10.P1 guide updates can save 15-25% tokens through delegation:
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → Read lessons_learned.md files
+├─ Spawn Sonnet → Read guide files to identify improvement opportunities
+├─ Primary handles → Analyze patterns, write proposals, prioritize (P0-P3)
+└─ Primary writes → GUIDE_UPDATE_PROPOSAL.md, tracking updates
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
 ---
 
 ## Critical Rules

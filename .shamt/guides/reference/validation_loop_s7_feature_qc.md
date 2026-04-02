@@ -29,6 +29,24 @@
 
 ---
 
+## Model Selection for Token Optimization (SHAMT-27)
+
+S7 Feature QC validation can save 30-40% tokens through delegation (17 dimensions):
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → Run tests, count files, verify existence
+├─ Spawn Sonnet → Read implementation code for dimension checks
+├─ Primary handles → 17-dimension validation, deep correctness analysis, test result analysis
+├─ Primary writes → Validation log, issue fixes
+├─ Spawn Haiku (2x in parallel) → Sub-agent confirmations
+└─ Primary completes → Exit after both confirm zero issues
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
+---
+
 ## Overview
 
 **Purpose:** Validate implemented feature quality before final review and commit
@@ -794,6 +812,7 @@ All positions supported ✅
 
 **From Master Protocol:**
 - [ ] Primary agent declared a clean round (ZERO issues OR exactly 1 LOW-severity issue fixed) AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
+- [ ] Sub-agent confirmations use **Haiku model** for token efficiency (70-80% savings) - see `reference/model_selection.md`
 - [ ] Counter logic: 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL resets counter; see `reference/severity_classification_universal.md`
 - [ ] All 7 master dimensions checked every primary round
 - [ ] All 10 S7 QC dimensions checked every primary round

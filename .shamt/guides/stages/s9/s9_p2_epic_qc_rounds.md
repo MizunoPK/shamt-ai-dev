@@ -108,6 +108,21 @@ Epic-level QC Validation Loop validates the epic as a cohesive whole by checking
 **Exit Condition:**
 Epic QC Validation Loop is complete when primary clean round + sub-agent confirmation achieved (both independent sub-agents confirm zero issues across all 13 dimensions), all tests passing (100%), and epic is validated for user testing
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+Epic QC can save 35-45% tokens through delegation:
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → Run full test suite, count features/files
+├─ Spawn Sonnet → Read cross-feature integration code, check consistency patterns
+├─ Primary handles → 13-dimension validation, architectural alignment, cohesion analysis
+├─ Spawn Haiku (2x in parallel) → Sub-agent confirmations (exit criteria)
+└─ Primary writes → Validation log, epic lessons learned
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
 ---
 
 ## Critical Rules

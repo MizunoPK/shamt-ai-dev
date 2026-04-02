@@ -77,6 +77,21 @@ Debugging Protocol is an investigation-centric process integrated into QC/Smoke 
 - During Epic Testing (S9): Issues discovered during epic smoke/QC
 - Issues have UNKNOWN root cause requiring investigation
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+Debugging protocol can save 25-35% tokens through delegation:
+
+```
+Primary Agent (Opus - deep reasoning for root cause analysis):
+├─ Spawn Haiku → Run tests, verify file existence, read logs
+├─ Spawn Sonnet → Read implementation code for context, trace execution paths
+├─ Primary handles → Root cause analysis, hypothesis formation, fix design
+├─ Primary writes → ISSUES_CHECKLIST.md, investigation notes, code fixes
+└─ Primary verifies → Re-run tests, loop back to original QC phase
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
 **When NOT to use this protocol?**
 - Missing requirement where solution is known (use missed_requirement_workflow.md)
 - Example: "We forgot to add validation" ← This is a missed requirement, not a bug

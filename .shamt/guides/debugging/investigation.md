@@ -67,6 +67,21 @@
 
 **Goal:** Confirm root cause with concrete evidence
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+Investigation rounds can save 30-40% tokens through delegation (same as debugging_protocol.md):
+
+```
+Primary Agent (Opus - deep reasoning for root cause analysis):
+├─ Spawn Haiku → Run diagnostic tests, verify file existence, read logs/stack traces
+├─ Spawn Sonnet → Read implementation code, trace execution paths, identify suspicious areas
+├─ Primary handles → Form hypotheses, rank likelihood, analyze test results, confirm root cause
+├─ Primary writes → Investigation rounds documentation, issue file updates
+└─ Primary proceeds → Solution design (PHASE 3) after root cause confirmed
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
 ---
 
 ## Before Starting Investigation

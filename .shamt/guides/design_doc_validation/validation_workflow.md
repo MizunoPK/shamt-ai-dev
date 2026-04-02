@@ -2,6 +2,21 @@
 
 This guide provides the step-by-step process for validating a design doc using the 7-dimension validation loop.
 
+**Model Selection for Token Optimization (SHAMT-27):**
+
+Design doc validation can save 20-30% tokens through delegation:
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → Verify file paths exist, count files in proposals
+├─ Spawn Sonnet → Read referenced guide files for context validation
+├─ Primary handles → 7-dimension validation, design analysis, issue classification
+├─ Spawn Haiku (2x in parallel) → Sub-agent confirmations (exit criteria)
+└─ Primary writes → Validation log, design doc fixes
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
 ---
 
 ## Prerequisites

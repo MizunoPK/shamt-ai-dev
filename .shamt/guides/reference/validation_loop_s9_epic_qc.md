@@ -29,6 +29,24 @@
 
 ---
 
+## Model Selection for Token Optimization (SHAMT-27)
+
+S9 Epic QC validation can save 35-45% tokens through delegation (13 dimensions):
+
+```
+Primary Agent (Opus):
+├─ Spawn Haiku → Run full test suite, count features/files
+├─ Spawn Sonnet → Read cross-feature integration code, check consistency patterns
+├─ Primary handles → 13-dimension validation, architectural alignment, cohesion analysis
+├─ Primary writes → Validation log, epic lessons learned
+├─ Spawn Haiku (2x in parallel) → Sub-agent confirmations
+└─ Primary completes → Exit after both confirm zero issues
+```
+
+**See:** `reference/model_selection.md` for Task tool examples.
+
+---
+
 ## Overview
 
 **Purpose:** Validate epic as a cohesive whole after all features complete
@@ -495,6 +513,7 @@ Implementation: Only generates top 100 items
 
 **From Master Protocol:**
 - [ ] Primary agent declared a clean round (ZERO issues OR exactly 1 LOW-severity issue fixed) AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for the sub-agent confirmation protocol)
+- [ ] Sub-agent confirmations use **Haiku model** for token efficiency (70-80% savings) - see `reference/model_selection.md`
 - [ ] Counter logic: 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL resets counter; see `reference/severity_classification_universal.md`
 - [ ] All 7 master dimensions checked every primary round
 - [ ] All 6 epic QC dimensions checked every primary round
