@@ -27,9 +27,14 @@ shamt-ai-dev/
     │   ├── stages/                     # s1–s10 workflow guides
     │   ├── reference/
     │   ├── audit/
-    │   ├── sync/                       # README, separation rule, export workflow, import workflow
-    │   ├── master_dev_workflow/        # guide for improving master guides
+    │   ├── code_review/                # code review workflow guides
+    │   ├── debugging/                  # debugging and troubleshooting guides
     │   ├── design_doc_validation/      # design doc validation guides
+    │   ├── master_dev_workflow/        # guide for improving master guides
+    │   ├── missed_requirement/         # missed requirement recovery guides
+    │   ├── parallel_work/              # parallel work coordination guides
+    │   ├── prompts/                    # prompt templates and reference cards
+    │   ├── sync/                       # README, separation rule, export workflow, import workflow
     │   └── templates/                  # templates (design_doc_template.md)
     ├── scripts/
     │   ├── initialization/

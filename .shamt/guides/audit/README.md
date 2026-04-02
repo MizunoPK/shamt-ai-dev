@@ -65,6 +65,8 @@ bash scripts/pre_audit_checks.sh
 
 ### Sub-Agent Delegation Pattern
 
+**Note:** "Spawn Haiku/Sonnet/Opus" means using Task tool with `subagent_type="general-purpose"` and `model="haiku/sonnet/opus"`. See example below.
+
 ```
 Primary Agent (Opus):
 ├─ Spawn Haiku → Pre-audit checks script (D1-D12 automated)

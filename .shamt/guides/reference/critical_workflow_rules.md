@@ -1,7 +1,7 @@
 # Critical Workflow Rules
 
 **Status:** Reference document for S2/S6 stages (S4 deprecated — S5 Step 0 handles test scope)
-**Last Updated:** 2026-02-10
+**Last Updated:** 2026-04-02
 **Usage:** Copied to README Agent Status during workflow execution
 
 ---

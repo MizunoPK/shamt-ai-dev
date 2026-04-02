@@ -19,7 +19,7 @@
 
 1. [Overview](#overview)
 2. [Master Dimensions (7) - Always Checked](#master-dimensions-7---always-checked)
-3. [S7 Feature QC Dimensions (10) - Context-Specific](#s7-feature-qc-dimensions-10---context-specific)
+3. [S7 Feature QC Dimensions (11) - Context-Specific](#s7-feature-qc-dimensions-11---context-specific)
 4. [Total Dimensions: 17 (+1 Optional)](#total-dimensions-17-1-optional)
 5. [What's Being Validated](#whats-being-validated)
 6. [Fresh Eyes Patterns Per Round](#fresh-eyes-patterns-per-round)

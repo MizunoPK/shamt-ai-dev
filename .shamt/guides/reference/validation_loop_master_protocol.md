@@ -67,6 +67,8 @@
 
 Validation loops can save 30-45% tokens through strategic delegation:
 
+**Note:** "Spawn Haiku/Sonnet/Opus" means using Task tool with `subagent_type="general-purpose"` and `model="haiku/sonnet/opus"`.
+
 ```
 Primary Agent (Opus):
 ├─ Spawn Haiku → File existence checks, counting, grep searches

@@ -50,6 +50,32 @@ Is this medium-complexity analysis (patterns, drafting, classification)?
 └─ NO → Default to Sonnet (balanced fallback)
 ```
 
+### 🚨 CRITICAL: How to Use Models in Task Tool
+
+**When you see "Spawn Haiku/Sonnet/Opus" in delegation patterns, this means:**
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>  <!-- Always use this -->
+  <parameter name="model">haiku</parameter>  <!-- OR sonnet OR opus -->
+  <parameter name="description">Brief description</parameter>
+  <parameter name="prompt">Task details...</parameter>
+</invoke>
+```
+
+**DO NOT use:**
+- ❌ `<parameter name="subagent_type">Haiku</parameter>` - This will fail
+- ❌ `<parameter name="subagent_type">Sonnet</parameter>` - This will fail
+- ❌ `<parameter name="subagent_type">Opus</parameter>` - This will fail
+
+**Available subagent_type values:**
+- `general-purpose` - Use this for model delegation (with `model` parameter)
+- `Bash` - For bash-specific tasks
+- `Explore` - For codebase exploration
+- `Plan` - For planning tasks
+
+**The `model` parameter is what controls Haiku/Sonnet/Opus selection, NOT the subagent_type.**
+
 ---
 
 ## Decision Framework
