@@ -1580,6 +1580,8 @@ When `consecutive_clean = 1` (primary clean round achieved):
 4. **Both must report zero issues** to complete the exit sequence
 5. **If either sub-agent finds an issue**: Fix immediately, reset `consecutive_clean = 0`, continue validation
 
+**See Also:** Sub-agent handoff package format is specified in "Sub-Agent Handoff Package" section above. Each scenario-specific validation loop (S2 specs, S5 plans, S7 QC, S9 epic validation) uses this same master handoff format.
+
 #### Sub-Agent Handoff Package (Context Passed to Each Sub-Agent)
 
 When spawning sub-agents for confirmation, provide the following context:
@@ -1604,7 +1606,9 @@ When spawning sub-agents for confirmation, provide the following context:
 
 **Model Selection (SHAMT-27):**
 - **ALWAYS use Haiku for sub-agent confirmations** (70-80% token savings)
-- Sub-agent confirmations are focused verification tasks (not deep reasoning)
+  - **Why Haiku?** Sub-agents only verify "zero issues found" or "report any issues" — a focused, deterministic task
+  - **Why not Sonnet?** Sonnet is better at code analysis and pattern recognition (deeper reasoning). Sub-agents don't need this — they need speed and cost-efficiency for confirmation.
+  - **Accuracy vs Cost:** Haiku is 70-80% cheaper than Sonnet but sufficient for confirmation (primary agent Opus already did deep validation; sub-agents just verify primary agent didn't miss anything obvious)
 - Primary agent (Opus) already did deep validation; sub-agents verify zero missed issues
 - See `reference/model_selection.md` for complete model selection guidance
 

@@ -84,11 +84,17 @@ The Discovery Phase is a mandatory research and validation process where the age
 - Feature breakdown ready to propose
 
 **Time-Box by Epic Size:**
-| Epic Size | Discovery Time-Box | Typical Rounds | Time-Box Rationale |
-|-----------|-------------------|---|---|
-| SMALL (1-2 features) | 1-2 hours | 3-5 rounds (incl. primary clean + sub-agents) | 1-2 hours covers: initial research (15-20 min), 2-3 discovery rounds (15-20 min each), sub-agent confirmations (5-10 min). Assumes fewer scope ambiguities. |
-| MEDIUM (3-5 features) | 2-3 hours | 4-7 rounds (incl. primary clean + sub-agents) | 2-3 hours covers: initial research (20-30 min), 3-5 discovery rounds (20-30 min each), integration gap resolution (10-15 min), sub-agent confirmations (5-10 min). More features = more integration points. |
-| LARGE (6+ features) | 3-4 hours | 6-9 rounds (incl. primary clean + sub-agents) | 3-4 hours covers: extended research (30-45 min), 4-7 discovery rounds (25-35 min each), multiple integration passes, complex dependency verification (15-20 min), sub-agent confirmations (5-10 min). More rounds needed for cross-feature validation. |
+| Epic Size | Discovery Time-Box | Typical Rounds | Time Per Round | Time-Box Rationale |
+|-----------|---|---|---|---|
+| SMALL (1-2 features) | 1-2 hours | 3-5 rounds (incl. primary clean + sub-agents) | 15-25 min/round | 1-2 hours covers: initial research (15-20 min), 2-3 discovery rounds (15-20 min each), sub-agent confirmations (5-10 min). Assumes fewer scope ambiguities. |
+| MEDIUM (3-5 features) | 2-3 hours | 4-7 rounds (incl. primary clean + sub-agents) | 20-30 min/round | 2-3 hours covers: initial research (20-30 min), 3-5 discovery rounds (20-30 min each), integration gap resolution (10-15 min), sub-agent confirmations (5-10 min). More features = more integration points. |
+| LARGE (6+ features) | 3-4 hours | 6-9 rounds (incl. primary clean + sub-agents) | 25-35 min/round | 3-4 hours covers: extended research (30-45 min), 4-7 discovery rounds (25-35 min each), multiple integration passes, complex dependency verification (15-20 min), sub-agent confirmations (5-10 min). More rounds needed for cross-feature validation. |
+
+**Mapping Hours to Rounds:**
+- Each "round" is a complete re-read of DISCOVERY.md + issue checking + fix application
+- Typical round: 15-35 minutes depending on file size and complexity
+- Formula: `(Time-box in hours) ÷ (Time per round) = Typical rounds`
+- Example: SMALL epic 1.5 hours ÷ 20 min/round = 4.5 rounds ≈ 3-5 rounds (matches table)
 
 **Exit Condition:**
 Discovery Phase is complete when Validation Loop validation achieves a primary clean round + sub-agent confirmation (zero issues/gaps), DISCOVERY.md is complete, and user has approved the recommended approach and feature breakdown.

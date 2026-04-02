@@ -152,10 +152,12 @@ All output files are saved in the feature folder (`feature_XX_name/`):
 | **Interface Contract** (if applicable) | `INTERFACE_CONTRACT.md` (in feature folder) | API/function signatures, data structures, integration points (extracted from research) | ⚠️ Conditional (if feature integrates with existing code) |
 | **Validation Log** | `VALIDATION_LOG.md` | Records validation loop rounds and outcomes (created in I3) | ✅ Created in I3.P2 |
 
-**Key Locations:**
+**Key Locations and Versioning:**
 - All feature-specific outputs go in `feature_XX_name/` folder
 - Interface contracts live in feature folder (not in codebase)
 - Research notes and spec are primary sources for implementation team
+- **spec.md Versioning:** Start at v1.0 (I1 draft), increment to v1.1 after Round 1 fixes (I3), finalize at v1.x after user approval (Gate 3 passed)
+- **Versioning Rule:** Each validation loop round that finds issues → increment patch version (v1.0 → v1.1 → v1.2). User approval finalizes version as "approved"
 
 **Outputs:**
 - spec.md (draft, validated, Discovery Context included)
