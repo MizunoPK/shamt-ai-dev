@@ -1273,6 +1273,21 @@ Next: Present implementation_plan.md to user (Gate 5)
 
 ### Gate 5: User Approval
 
+**Purpose:** Get explicit user sign-off on implementation plan before code execution begins
+
+**Pass Criteria:**
+- Validation loop passed (primary clean round + sub-agent confirmation documented)
+- Plan Summary section exists with all 5 required fields: files modified/created, approach per component, known risks, implementation phases, first S6 commit scope
+- User has reviewed Plan Summary directly (section text shown, not paraphrased)
+- User gave explicit approval (said "yes", "approved", "looks good", not silence or partial response)
+- Approval timestamp documented in implementation_plan.md
+
+**If fail:**
+- Make requested changes
+- Re-validate affected dimensions in validation loop
+- Update Plan Summary if changes affect approach
+- Re-present for approval
+
 **After validation loop passes:**
 
 1. **Update implementation_plan.md:**

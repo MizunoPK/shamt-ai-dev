@@ -2,8 +2,8 @@
 
 **Purpose:** Comprehensive list of ALL mandatory gates from S1-S10
 **Use Case:** Quick lookup for gate requirements, criteria, and failure consequences
-**Total Gates:** 10 formal gates + additional stage checkpoints
-**Formal Gates:** 1, 2, 3, 4.5, 5, 4a, 7a, 23a, 24, 25 (see CLAUDE.md for authoritative list)
+**Total Gates:** 11 formal gates (including 1 optional) + additional stage checkpoints
+**Formal Gates:** 1, 1.5 (optional - can skip I2), 2, 3, 4.5, 5, 4a, 7a, 23a, 24, 25 (see CLAUDE.md for authoritative list)
 
 ---
 
@@ -77,7 +77,8 @@
 | Stage | Gate | Location | Pass Criteria | Restart if Fail? |
 |-------|------|----------|---------------|------------------|
 | S1 | None | - | User confirmation recommended | No |
-| S2 | Gate 1: Research Audit | S2.P1 | All 4 categories with evidence | Yes (Redo research) |
+| S2 | Gate 1: Research Audit | S2.P1.I1 | All 4 categories with evidence | Yes (Redo research) |
+| S2 | Gate 1.5: I1 Completeness | S2.P1 (optional) | All 6 criteria pass = skip I2 | No (fail = proceed to I2) |
 | S2 | Gate 2: Spec Alignment | S2.P1.I3 | Zero scope creep + zero missing | Yes (Revise spec) |
 | S2 | Gate 3: Checklist Approval | S2.P1.I3 | User answers ALL questions (100%) | Yes (Revise/Re-present) |
 | S3 | Gate 4.5: Epic Plan Approval | S3.P3 | User approves complete plan | Yes (S3) |
@@ -138,6 +139,48 @@
 - Must PASS before proceeding to S2.P1.I2
 
 **Why it matters:** Ensures research is thorough before writing spec (prevents spec based on assumptions)
+
+---
+
+### Gate 1.5: S2.P1 - I1 Completeness Gate (OPTIONAL - Can Skip I2)
+
+**Location:** stages/s2/s2_p1_spec_creation_refinement.md
+**When:** After S2.P1.I1 validation loop exits (before I2)
+
+**What it checks:**
+- Determines if Checklist Resolution (I2) is needed or can be skipped
+- All checklist questions resolved through research (no unknowns remain)
+- All acceptance criteria measurable
+- All file paths verified
+- No unresolved circular dependencies or cross-feature assumptions
+
+**Pass Criteria (ALL must be true to skip I2):**
+- Zero "UNKNOWN", "TBD", or "check with user" questions remain in research notes
+- All acceptance criteria in spec.md use measurable values (not "should work")
+- All referenced file paths verified with Read tool
+- No circular dependencies with other features
+- No scope items flagged for discussion
+- Cross-feature interface assumptions verified (or deferred to S2.P2 in parallel mode)
+
+**If ALL criteria pass:**
+- Skip I2 (Checklist Resolution)
+- Note "I2 skipped (Gate 1.5 passed)" in spec.md Change Log
+- Proceed directly to I3 (Refinement & Alignment)
+- Gates 2 and 3 still mandatory
+
+**If ANY criterion fails:**
+- Proceed normally to I2 (Checklist Resolution)
+- Treat I1 research as foundation
+- Resolve failed items with user
+- Gates 2 and 3 still mandatory
+
+**In Parallel Mode:**
+- Circular dependency checks may fail if other features' I1 isn't complete
+- Cross-feature checks may fail if referenced features' I1 isn't complete
+- Mark as FAILED and defer to S2.P2 (Primary runs cross-feature alignment)
+- Still proceed to I2 normally
+
+**Why it matters:** Reduces unnecessary iteration when research is thorough; prevents premature closure when research gaps exist
 
 ---
 
@@ -702,8 +745,9 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 
 ## Summary Statistics
 
-**Formal Gates (10 total - see CLAUDE.md for authoritative list):**
+**Formal Gates (11 total - see CLAUDE.md for authoritative list):**
 - Gate 1 (S2.P1.I1): Research Completeness Audit
+- Gate 1.5 (S2.P1): I1 Completeness Gate (optional - can skip I2 if passes)
 - Gate 2 (S2.P1.I3): Spec-to-Epic Alignment
 - Gate 3 (S2.P1.I3): User Checklist Approval
 - Gate 4.5 (S3.P3): Epic Plan Approval
@@ -724,7 +768,7 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 
 **Gate Distribution by Stage:**
 - S1: 0 formal gates
-- S2: 3 formal gates per feature (Gates 1, 2, 3)
+- S2: 4 formal gates per feature (Gates 1, 1.5 optional, 2, 3) - Gate 1.5 can skip I2
 - S3: 1 formal gate (Gate 4.5)
 - S4: (Deprecated — 0 formal gates; Test Scope Decision moved to S5 Step 0)
 - S5 v2: 1 formal user gate (Gate 5 - User Approval), 5 embedded validation gates (4a, 7a, 23a, 24, 25 now embedded in 11 validation dimensions)

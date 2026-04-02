@@ -276,7 +276,14 @@ Start Feature Deep Dive
 
 ## Mandatory Gates
 
-**S2 has THREE mandatory gates that cannot be skipped:**
+**S2 has FOUR gates, THREE of which are mandatory:**
+
+- **Gate 1:** MANDATORY - Research Completeness Audit (S2.P1.I1)
+- **Gate 1.5:** OPTIONAL - I1 Completeness Gate (can skip I2 if passes)
+- **Gate 2:** MANDATORY - Spec-to-Epic Alignment Check (S2.P1.I3)
+- **Gate 3:** MANDATORY - User Approval (S2.P1.I3)
+
+Gates 1, 2, 3 cannot be skipped. Gate 1.5 can skip I2 if all criteria pass; all other gates remain mandatory.
 
 ### Gate 1: Research Completeness Audit (S2.P1.I1)
 
@@ -297,6 +304,33 @@ Start Feature Deep Dive
 - Re-run audit
 
 **Cannot proceed to S2.P1.I2 without passing this gate.**
+
+---
+
+### Gate 1.5: I1 Completeness Gate (S2.P1 - OPTIONAL, can skip I2)
+
+**Purpose:** Determine if Checklist Resolution (I2) is needed or if research is comprehensive enough to proceed directly to Refinement (I3)
+
+**Pass Criteria (ALL must be true):**
+- All checklist.md questions resolved through research (no "UNKNOWN", "TBD", or "check with user" markers remain)
+- All acceptance criteria in spec.md are measurable (specific values, not vague terms like "should work")
+- All referenced file paths verified with Read tool (no assumptions)
+- No circular dependencies with other features identified in I1 research
+- No scope items flagged for discussion that haven't been resolved
+- All cross-feature interface assumptions verified (if parallel mode: only features whose I1 is complete can be checked)
+
+**If ALL criteria pass:**
+- Note "I2 skipped (Gate 1.5 passed)" in spec.md Change Log
+- Proceed directly to I3 (Refinement & Alignment)
+- Gates 2 & 3 still mandatory
+
+**If ANY criterion fails:**
+- Proceed normally to I2 (Checklist Resolution)
+- Treat I1 research as foundation
+- Resolve failed items with user in I2
+- Gates 2 & 3 still mandatory
+
+**Note:** In parallel mode, circular dependency and cross-feature checks may be deferred if other features' I1 isn't complete yet. Mark as FAILED here and revisit in S2.P2.
 
 ---
 
@@ -325,8 +359,13 @@ Start Feature Deep Dive
 
 **Purpose:** Get explicit user sign-off on acceptance criteria before implementation planning
 
+**Important:** Acceptance Criteria ≠ Exit Criteria
+- **Acceptance Criteria** (in spec.md): What user will validate in S7 (QC phase) - e.g., "button displays and responds to clicks"
+- **Exit Criteria** (for workflows): When phase gates are passed - e.g., "Gate 3 passed = user approved spec"
+- See `stages/s2/s2_p1_spec_creation_refinement.md` for detailed distinction
+
 **Pass Criteria:**
-- Acceptance Criteria section created in spec.md
+- Acceptance Criteria section created in spec.md (measurable success conditions for user validation)
 - User has reviewed acceptance criteria
 - User explicitly approved (said "yes", "approved", "looks good", etc.)
 - Approval checkbox marked [x]
