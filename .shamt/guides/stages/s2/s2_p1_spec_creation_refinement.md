@@ -329,10 +329,29 @@ Primary agent reviews during coordination heartbeat (every 15 minutes).
 - Get user approval before proceeding
 
 **4.5. Create Acceptance Criteria Section (5-10 min)** - **MANDATORY BEFORE GATE 3**
+
+**IMPORTANT DISTINCTION: Acceptance Criteria vs Exit Criteria**
+
+- **Acceptance Criteria** (in spec.md, user-facing):
+  - Measurable success conditions that the USER will validate
+  - "This feature is done when [specific observable behavior]"
+  - Examples: "User can click button and see result", "API returns 200 and correct data"
+  - User validates acceptance criteria in S7 (QC phase)
+  - Goes in the "Acceptance Criteria" section of spec.md
+
+- **Exit Criteria** (in CLAUDE.md, protocol-facing):
+  - Conditions that gate phase completion in the workflow
+  - "Feature/Phase is complete when [phase requirements met]"
+  - Examples: "Spec validated via validation loop", "Code reviewed", "Tests pass"
+  - Agent verifies exit criteria; NOT user-facing
+  - Goes in workflow guides (like this file, Exit Criteria section)
+
+**This Section (Acceptance Criteria):**
 - Add "Acceptance Criteria" section to spec.md
 - For each requirement, define measurable success criteria
 - Define "Done" for each requirement
 - Clear pass/fail conditions
+- These are what USER will validate in S7
 
 **5. Gate 3: User Checklist Approval (5-10 min)** - **SEPARATE FROM VALIDATION LOOP**
 - Present final spec.md to user (including Acceptance Criteria)

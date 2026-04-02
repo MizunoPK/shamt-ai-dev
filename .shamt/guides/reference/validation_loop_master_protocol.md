@@ -107,6 +107,25 @@ The Validation Loop is a systematic quality assurance process that validates art
 
 ---
 
+## Terminology: "Clean Round" Definition
+
+**IMPORTANT: "Clean round" has one meaning across ALL contexts.**
+
+A **clean round** is defined as:
+- **Primary agent round** where either:
+  - ZERO issues found (pure clean), OR
+  - Exactly ONE LOW-severity issue found and fixed (clean with 1 low fix)
+- Increments `consecutive_clean` counter by 1
+- Requires fresh-eyes re-read of entire artifact with different perspective
+
+**NOT a "clean round":**
+- Rounds where 2+ LOW issues found (reset counter to 0)
+- Rounds where any MEDIUM/HIGH/CRITICAL issue found (reset counter to 0)
+- Sub-agent confirmations finding ANY issue (reset counter to 0)
+- Rounds where you worked from memory instead of re-reading
+
+**Note:** Design doc validation loops (SHAMT-24+) and guide audits use this same "clean round" definition. The term is consistent across all validation contexts.
+
 ## When to Use This Protocol
 
 **Use Validation Loops for:**
@@ -223,6 +242,37 @@ Draft Artifact Created
                        │              │
                        │ EXIT LOOP    │
                        └──────────────┘
+```
+
+**Clean Round Counter Semantics (State Machine Definition):**
+
+**Initial State:** `consecutive_clean = 0` (no clean round achieved yet)
+
+**State Transitions (Deterministic Rules):**
+
+| Event | Counter Before | Counter After | Rationale |
+|-------|---|---|---|
+| Round discovered ZERO issues | any | +1 (increment) | Pure clean round |
+| Round found exactly 1 LOW issue + fixed immediately | any | +1 (increment) | Clean with acceptable single fix |
+| Round found 2+ LOW issues (any severity combo) | any | 0 (reset) | Multiple issues = not clean |
+| Round found any MEDIUM/HIGH/CRITICAL issue | any | 0 (reset) | Significant issues = not clean |
+| Sub-agent found ANY issue (even LOW) | 1 (primary clean) | 0 (reset) | Sub-agents get no allowance |
+| Sub-agent confirmed zero issues AND other sub-agent also zero | 1 | EXIT (validation complete) | Both confirmations = loop exits |
+
+**Counter Semantics Clarifications:**
+- **Increment means:** Counter goes from its current value to current + 1 (usually 0→1 on first clean round)
+- **Reset means:** Counter always goes to 0, regardless of current value
+- **Exit condition:** Counter must equal 1 (from primary clean) AND both sub-agents must independently confirm zero issues
+- **Primary vs Sub-agent rules differ:** Primary agent gets "1 LOW issue allowance" per round; sub-agents get zero allowance
+- **"Fixing" does NOT increment counter:** A round where you found and fixed issues still resets the counter to 0; only rounds that start with zero issues (or exactly one LOW issue found mid-round) increment the counter
+
+**Example State Transitions:**
+```
+Round 1: 3 issues found → Fix all → counter = 0 (reset)
+Round 2: 0 issues found → counter = 1 (increment)
+Round 3 (sub-agent A): 1 issue found → counter = 0 (reset)
+Round 4: 0 issues found → counter = 1 (increment)
+Round 5 (sub-agent B): 0 issues found → EXIT ✅
 ```
 
 **Counter Reset Rule:**
@@ -1515,6 +1565,28 @@ When `consecutive_clean = 1` (primary clean round achieved):
 3. **Sub-agent B**: Re-reads artifact bottom-to-top (or in different order), checks all dimensions
 4. **Both must report zero issues** to complete the exit sequence
 5. **If either sub-agent finds an issue**: Fix immediately, reset `consecutive_clean = 0`, continue validation
+
+#### Sub-Agent Handoff Package (Context Passed to Each Sub-Agent)
+
+When spawning sub-agents for confirmation, provide the following context:
+
+**Required Context (All of the following must be included):**
+1. **Artifact Path:** Full absolute path to the artifact being validated
+2. **Artifact Version:** Current version (e.g., "v1.3 - after Round 4 fixes")
+3. **Validation Context:** Explicit note that this is Round N primary clean round + sub-agent confirmation step
+4. **Master Dimensions:** List all 7 master dimensions to check (copy from this protocol)
+5. **Scenario-Specific Dimensions:** List all scenario-specific dimensions for this validation context (e.g., S5's D8-D12 if validating an implementation plan)
+6. **Severity Classification:** Link to `reference/severity_classification_universal.md` or include quick reference table
+7. **Clean Round Requirements:** Explicit note that sub-agents do NOT get the "1 LOW issue allowance" — ANY issue found (even LOW) resets counter to 0
+
+**Information NOT Passed (Sub-agents work fresh):**
+- Previous round results (sub-agents discover independently)
+- Known issue categories (sub-agents might find different issues)
+- Fix attempts (sub-agents validate current state, not history)
+
+**Sub-Agent Response Format (What to Expect):**
+- **CONFIRMED: Zero issues found** — plain text confirmation with no details needed
+- **Issues Found: {N}** — brief list with severity and location (no detailed prose needed)
 
 **Model Selection (SHAMT-27):**
 - **ALWAYS use Haiku for sub-agent confirmations** (70-80% token savings)

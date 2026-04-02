@@ -84,11 +84,11 @@ The Discovery Phase is a mandatory research and validation process where the age
 - Feature breakdown ready to propose
 
 **Time-Box by Epic Size:**
-| Epic Size | Discovery Time-Box | Typical Rounds |
-|-----------|-------------------|----------------|
-| SMALL (1-2 features) | 1-2 hours | 3-5 rounds (incl. primary clean + sub-agents) |
-| MEDIUM (3-5 features) | 2-3 hours | 4-7 rounds (incl. primary clean + sub-agents) |
-| LARGE (6+ features) | 3-4 hours | 6-9 rounds (incl. primary clean + sub-agents) |
+| Epic Size | Discovery Time-Box | Typical Rounds | Time-Box Rationale |
+|-----------|-------------------|---|---|
+| SMALL (1-2 features) | 1-2 hours | 3-5 rounds (incl. primary clean + sub-agents) | 1-2 hours covers: initial research (15-20 min), 2-3 discovery rounds (15-20 min each), sub-agent confirmations (5-10 min). Assumes fewer scope ambiguities. |
+| MEDIUM (3-5 features) | 2-3 hours | 4-7 rounds (incl. primary clean + sub-agents) | 2-3 hours covers: initial research (20-30 min), 3-5 discovery rounds (20-30 min each), integration gap resolution (10-15 min), sub-agent confirmations (5-10 min). More features = more integration points. |
+| LARGE (6+ features) | 3-4 hours | 6-9 rounds (incl. primary clean + sub-agents) | 3-4 hours covers: extended research (30-45 min), 4-7 discovery rounds (25-35 min each), multiple integration passes, complex dependency verification (15-20 min), sub-agent confirmations (5-10 min). More rounds needed for cross-feature validation. |
 
 **Exit Condition:**
 Discovery Phase is complete when Validation Loop validation achieves a primary clean round + sub-agent confirmation (zero issues/gaps), DISCOVERY.md is complete, and user has approved the recommended approach and feature breakdown.

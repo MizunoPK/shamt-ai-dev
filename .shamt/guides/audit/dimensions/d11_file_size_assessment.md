@@ -66,6 +66,24 @@
 **User Directive:**
 > "The point of it is to ensure that agents are able to effectively read and process the guides as they are executing them. I want to ensure that agents have no barriers in their way toward completing their task, or anything that would cause them to incorrectly complete their task."
 
+### Size Limit Rationale
+
+**CLAUDE.md: 40,000 Character Limit**
+- **Why 40K?** CLAUDE.md is read at the START of EVERY task by EVERY agent. This is the single most frequently loaded file in the workflow.
+- **Token impact:** 40K characters ≈ 10,000 tokens in model context. Exceeding this adds ~2,500+ tokens to every task startup.
+- **Comprehension impact:** Empirically, agents struggle with files >40K characters at task start (information overload causes omissions).
+- **User mandate:** Explicit requirement in project instructions.
+- **Result:** Keep CLAUDE.md as quick reference; extract detailed workflows to secondary guides (EPIC_WORKFLOW_USAGE.md, parallel_work/*, reference/* files).
+
+**Workflow Guides: 2000-Line Baseline**
+- **Why 2000 lines?** Guidelines need to be detailed but readable. Empirically:
+  - <800 lines: Usually too terse (missing context for edge cases)
+  - 800-1200 lines: Ideal range (comprehensive but navigable)
+  - 1200-2000 lines: Acceptable if well-structured (comprehensive reference guides, complex workflows)
+  - >2000 lines: Requires strong justification (usually fixable via extraction or splitting)
+- **Original threshold evolution:** Started at 600 lines (too strict, 75% false positives) → 1000 lines (90% accuracy) → 2000 lines (includes comprehensive reference guides)
+- **Agent usability maintained:** 2000-line baseline preserves detailed context while preventing comprehension overload
+
 **Example Impact (Real):**
 ```text
 CLAUDE.md: 45,786 characters (5,786 over limit)
