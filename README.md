@@ -6,6 +6,7 @@ Shamt is a portable, AI-agent-driven development workflow framework. It provides
 - A **standalone code review workflow** for reviewing any branch or PR with structured, validated, copy-paste-ready comments
 - A **sync system** for sharing guide improvements between projects and back to master
 - An **initialization system** for onboarding any project in minutes
+- **Shamt Lite** — A lightweight alternative (10 files) with validation loops, discovery, and code review without the full S1-S10 epic workflow
 
 **Parallel work (S2 and S5):** When an epic has 2+ features, spec creation (S2) and implementation planning (S5) can be parallelized across multiple agent sessions. See `.shamt/guides/parallel_work/README.md`.
 
@@ -24,7 +25,12 @@ shamt-ai-dev/
 └── .shamt/
     ├── guides/                 (the full workflow guide system)
     ├── scripts/
-    │   ├── initialization/     (init scripts + template files)
+    │   ├── initialization/
+    │   │   ├── init.sh / init.ps1              (full Shamt initialization)
+    │   │   ├── init_lite.sh / init_lite.ps1    (Shamt Lite initialization)
+    │   │   ├── SHAMT_LITE.template.md          (standalone lite rules file)
+    │   │   ├── reference/                      (lite reference files)
+    │   │   └── templates/                      (lite + full templates)
     │   ├── export/             (export improvements to master)
     │   ├── import/             (import updates from master)
     │   └── storage/            (store/get .shamt/ across machines)
@@ -34,7 +40,38 @@ shamt-ai-dev/
 
 ---
 
-## How to Initialize a New Project
+## Shamt Lite: Lightweight Alternative
+
+**Use Shamt Lite when:**
+- You want validation loops and quality patterns without the full S1-S10 epic workflow
+- You're working on a smaller project or don't need epic tracking
+- You just need validation loops, discovery protocol, and code review workflows
+
+**What you get (10 files total):**
+- `SHAMT_LITE.md` — Standalone rules file with 5 core patterns (validation loops, severity classification, discovery protocol, code review process, question brainstorming)
+- 3 reference files (severity details, validation mechanics, question brainstorming examples)
+- 4 templates (discovery, code review, architecture, coding standards)
+- 2 init scripts (Bash + PowerShell)
+
+**How to initialize Shamt Lite:**
+
+**Linux / Mac (Bash):**
+```bash
+bash /path/to/shamt-ai-dev/.shamt/scripts/initialization/init_lite.sh YourProjectName
+```
+
+**Windows (PowerShell):**
+```powershell
+& "C:\path\to\shamt-ai-dev\.shamt\scripts\initialization\init_lite.ps1" YourProjectName
+```
+
+This creates a `shamt-lite/` folder with all files. Copy `shamt-lite/SHAMT_LITE.md` to your AI service's rules file (e.g., `CLAUDE.md`, `.cursorrules`, `copilot-instructions.md`) and start using validation loops immediately.
+
+**Key principle:** `SHAMT_LITE.md` is standalone and executable. An agent can run validation loops, perform discovery, and conduct code reviews using only the instructions in Part 1 of that file, without reading any supporting files.
+
+---
+
+## How to Initialize a New Project (Full Shamt)
 
 ### 1. Clone this repo
 

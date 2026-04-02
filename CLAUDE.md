@@ -33,13 +33,23 @@ shamt-ai-dev/
     │   └── templates/                  # templates (design_doc_template.md)
     ├── scripts/
     │   ├── initialization/
-    │   │   ├── RULES_FILE.template.md  # AI rules file template
-    │   │   ├── ARCHITECTURE.template.md
-    │   │   ├── CODING_STANDARDS.template.md
+    │   │   ├── init.sh / init.ps1                           # Full Shamt initialization
+    │   │   ├── init_lite.sh / init_lite.ps1                 # Shamt Lite initialization
+    │   │   ├── RULES_FILE.template.md                       # AI rules file template (full)
+    │   │   ├── SHAMT_LITE.template.md                       # Standalone lite rules file
+    │   │   ├── ARCHITECTURE.template.md                     # Full template
+    │   │   ├── CODING_STANDARDS.template.md                 # Full template
     │   │   ├── EPIC_TRACKER.template.md
-    │   │   ├── ai_services.md          # known AI service registry
-    │   │   ├── init.sh
-    │   │   └── init.ps1
+    │   │   ├── ai_services.md                               # Known AI service registry
+    │   │   ├── reference/
+    │   │   │   ├── severity_classification_lite.md
+    │   │   │   ├── validation_exit_criteria_lite.md
+    │   │   │   └── question_brainstorm_categories_lite.md
+    │   │   └── templates/
+    │   │       ├── discovery_lite.template.md
+    │   │       ├── code_review_lite.template.md
+    │   │       ├── architecture_lite.template.md
+    │   │       └── coding_standards_lite.template.md
     │   ├── export/                     # export script
     │   ├── import/                     # import script
     │   └── storage/                    # store/get .shamt/ across machines
@@ -195,6 +205,33 @@ When a new AI service is discovered (reported by a child project or user):
 2. Add an entry to `.shamt/scripts/initialization/ai_services.md`
 3. Update the init scripts if the service needs special handling
 4. Commit the change with a descriptive message
+
+---
+
+## Shamt Lite
+
+**What it is:** A standalone lightweight version of Shamt (10 files total) that provides validation loops, discovery protocol, and code review workflows without the full S1-S10 epic framework.
+
+**Target users:** Developers who want quality patterns and systematic validation but don't need epic tracking or the full workflow.
+
+**Master repo storage:** All Shamt Lite files are stored in `.shamt/scripts/initialization/`:
+- `SHAMT_LITE.template.md` — Standalone rules file with 5 core patterns
+- `init_lite.sh` / `init_lite.ps1` — Initialization scripts
+- `reference/` — 3 reference files (severity, validation, question brainstorming)
+- `templates/` — 4 templates (discovery, code review, architecture, coding standards)
+
+**Deployment:** When users run `init_lite.sh` or `init_lite.ps1`, these files are copied to `shamt-lite/` in their project with template variables replaced ({{PROJECT_NAME}}, {{DATE}}).
+
+**Key principle:** `SHAMT_LITE.md` is standalone and executable. An agent can run all 5 patterns using only Part 1 of that file without reading any supporting files. Supporting files in `reference/` and `templates/` provide optional depth and copy-paste convenience.
+
+**When to update Shamt Lite:**
+- When validation loop mechanics change in the canonical guides
+- When severity classification rules are refined
+- When discovery protocol or question brainstorming framework improves
+- When code review workflow is updated
+- Never copy epic-specific content into lite files
+
+**Maintenance rule:** Shamt Lite files are NOT synced via import/export. They are maintained directly in the master repo and versioned independently.
 
 ---
 
