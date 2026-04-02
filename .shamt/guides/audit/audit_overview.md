@@ -23,7 +23,7 @@
 
 This audit ensures **consistency, accuracy, and completeness** across all .shamt/guides files AND related external files.
 
-### The 22 Audit Dimensions
+### The 23 Audit Dimensions
 
 **Core Dimensions (Always Check) - D1, D2, D3, D4:**
 - ✅ **D1: Cross-Reference Accuracy** - All file paths, stage references, and cross-links are valid
@@ -31,12 +31,13 @@ This audit ensures **consistency, accuracy, and completeness** across all .shamt
 - ✅ **D3: Workflow Integration** - Guides correctly reference each other and form cohesive workflows
 - ✅ **D4: CLAUDE.md Synchronization** - Root file quick references match actual guide content
 
-**Content Quality Dimensions - D5, D6, D7, D8, D9:**
+**Content Quality Dimensions - D5, D6, D7, D8, D9, D23:**
 - ✅ **D5: Count Accuracy** - File counts, stage counts, iteration counts match reality
 - ✅ **D6: Content Completeness** - No missing sections, gaps in coverage, or orphaned references
 - ✅ **D7: Template Currency** - Templates reflect current workflow structure and terminology
 - ✅ **D8: Documentation Quality** - All required sections present, no TODOs or placeholders
 - ✅ **D9: Content Accuracy** - Claims in guides match reality (step counts, durations, etc.)
+- ✅ **D23: Architecture/Standards Currency** - ARCHITECTURE.md and CODING_STANDARDS.md accurate and up-to-date
 
 **Structural Dimensions - D10, D11, D12, D13, D14:**
 - ✅ **D10: Intra-File Consistency** - Within-file quality (headers, checklists, formatting)
@@ -429,7 +430,7 @@ Round N:
   │   └─ If 0 issues found → Sub-Round N.2
   │       If issues found → Fix all → Re-run Sub-Round N.1
   │
-  ├─> Sub-Round N.2: Content Quality (D5, D6, D7, D8, D9)
+  ├─> Sub-Round N.2: Content Quality (D5, D6, D7, D8, D9, D23)
   │   ├─ S1: Discovery → S2: Planning → S3: Apply → S4: Verify → S5: Loop Decision
   │   └─ If 0 issues found → Sub-Round N.3
   │       If issues found → Fix all → Re-run Sub-Round N.2
@@ -458,11 +459,11 @@ EXIT (only if Round N had 0 issues in all 4 sub-rounds + 9 criteria met)
 **Benefits of the 4 sub-round structure:**
 
 1. **Dependency Management:** Core dimension fixes (broken references) applied before Structural checks (cross-file dependencies)
-2. **Focused Discovery:** Check 4-8 related dimensions per sub-round, not all 22 at once
+2. **Focused Discovery:** Check 4-8 related dimensions per sub-round, not all 23 at once
 3. **Incremental Verification:** Verify fixes before moving to next category
 4. **Mental Clarity:** Fresh mental model between dimension categories
 5. **Better Tracking:** Know exactly which category and dimensions you're auditing
-6. **Prevents Blind Spots:** ALL 22 dimensions checked systematically every round
+6. **Prevents Blind Spots:** ALL 23 dimensions checked systematically every round
 
 ### Dimension Organization by Sub-Round
 
@@ -480,6 +481,7 @@ EXIT (only if Round N had 0 issues in all 4 sub-rounds + 9 criteria met)
 - D7: Template Currency - Template synchronization (70% automated)
 - D8: Documentation Quality - Required sections (90% automated)
 - D9: Content Accuracy - Claims vs reality (70% automated)
+- D23: Architecture/Standards Currency - ARCHITECTURE.md and CODING_STANDARDS.md accuracy (50% automated)
 
 **Why Second:** Content fixes may reveal structural issues
 
@@ -591,7 +593,7 @@ Round N complete (all 4 sub-rounds clean) → Round N+1 (fresh patterns)
 4. ✅ **3 consecutive clean rounds:** consecutive_clean >= 3 (rounds with 2+ LOW or any MEDIUM/HIGH/CRITICAL reset counter; ≤1 LOW per round is clean)
 5. ✅ **All remaining documented:** All remaining instances documented as intentional
 6. ✅ **User has NOT challenged:** User has not questioned findings
-7. ✅ **Confidence score:** ≥ 80% confidence in completeness across all 22 dimensions
+7. ✅ **Confidence score:** ≥ 80% confidence in completeness across all 23 dimensions
 8. ✅ **Pattern diversity:** ≥ 5 pattern types used per dimension category across rounds
 9. ✅ **Spot-check clean:** 10+ files manually checked per sub-round, zero issues
 

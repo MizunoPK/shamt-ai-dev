@@ -1,5 +1,38 @@
 # {{PROJECT_NAME}} — Architecture
 
+**Last Updated:** {{DATE}}
+**Maintained By:** AI agents during epic workflow (S7.P3, S10)
+
+---
+
+## Update History
+
+| Date | Change | Epic/Reason |
+|------|--------|-------------|
+| {{DATE}} | Initial creation | Project initialization |
+
+---
+
+## Update Triggers
+
+Update this document when:
+- New modules, services, or major components are added
+- Data flow between components changes
+- Integration patterns are added or modified
+- Significant dependencies are added
+- Architectural decisions are made that affect multiple features
+
+---
+
+## How to Update
+
+1. Make changes to relevant sections
+2. Update "Last Updated" date at top
+3. Add row to "Update History" table
+4. Commit with message: "docs: Update ARCHITECTURE.md - {brief description}"
+
+---
+
 > **Note to agent:** This file was scaffolded by Shamt initialization. Replace all sections below with content researched from the actual codebase. Use the FF project's ARCHITECTURE.md as a reference for the level of detail expected.
 
 ---

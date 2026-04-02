@@ -510,6 +510,53 @@ For EACH feature folder, read README.md and verify:
 
 **If ANY feature README incomplete:** Update incomplete README files.
 
+**3e. Review Architecture and Coding Standards Documents**
+
+**Purpose:** Ensure epic-level changes are reflected in project documentation.
+
+**Process:**
+
+1. **Review ARCHITECTURE.md:**
+   - Read the current document
+   - Compare against changes made in this epic
+   - Check: Are all new components/modules documented?
+   - Check: Are data flows still accurate?
+   - Check: Are integration patterns current?
+
+2. **Review CODING_STANDARDS.md:**
+   - Read the current document
+   - Consider patterns established across all features
+   - Check: Are new conventions documented?
+   - Check: Do documented conventions match what we actually did?
+
+3. **Cross-Feature Pattern Check:**
+   - Did multiple features establish the same pattern? -> Document it
+   - Did we make consistent decisions about similar problems? -> Document them
+   - Did we deviate from documented conventions? -> Either fix code or update doc
+
+4. **Document Review Results:**
+
+```markdown
+## Architecture/Standards Review (S10)
+
+**Review Date:** {YYYY-MM-DD}
+
+### ARCHITECTURE.md
+- [ ] Reviewed and current - no updates needed
+- [ ] Updated: {list changes made}
+- [ ] Issues noted for future: {list}
+
+### CODING_STANDARDS.md
+- [ ] Reviewed and current - no updates needed
+- [ ] Updated: {list changes made}
+- [ ] Issues noted for future: {list}
+
+### Cross-Feature Patterns Documented
+- {Pattern 1}: Added to {file}
+- {Pattern 2}: Added to {file}
+- None identified
+```
+
 ---
 
 ### STEP 4: Guide Update from Lessons Learned (🚨 MANDATORY - S10.P1)

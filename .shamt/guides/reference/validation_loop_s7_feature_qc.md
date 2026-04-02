@@ -343,8 +343,12 @@ $ {TEST_COMMAND}
 **Documentation:**
 - [ ] All public functions have docstrings
 - [ ] Complex logic has explanatory comments
-- [ ] ARCHITECTURE.md updated (if architecture changed)
 - [ ] README.md updated (if user-facing changes)
+
+**Architecture/Standards Currency (see S7.P3 Step 1b for full assessment):**
+- [ ] Considered whether this feature impacts ARCHITECTURE.md
+- [ ] Considered whether this feature impacts CODING_STANDARDS.md
+- [ ] If impacts identified: Flag for S7.P3 Step 1b assessment
 
 **Common Violations:**
 

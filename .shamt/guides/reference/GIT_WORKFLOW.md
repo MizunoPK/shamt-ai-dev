@@ -81,7 +81,7 @@ git commit -m "fix/SHAMT-1: Fix item name validation in draft mode"
 ```
 
 **When to Commit:**
-- After S7 S10.P3 (Feature completed, reviewed, tested)
+- After S7.P3 (Feature completed, reviewed, tested)
 - After S10 cleanup (Epic completed, ready for PR)
 - Not during Stages 1-4 (planning only)
 - Not during S5-S6 (implementation in progress)
@@ -266,7 +266,7 @@ git commit -m "feat/SHAMT-1: Add Rank integration to RecordManager" -m "
 
 **Question:** Do all features in an epic use the same branch?
 
-**Answer:** Yes. All features within an epic use the same branch (`epic/SHAMT-{number}`). Features are committed individually after S7 S10.P3, but all commits go to the same epic branch.
+**Answer:** Yes. All features within an epic use the same branch (`epic/SHAMT-{number}`). Features are committed individually after S7.P3, but all commits go to the same epic branch.
 
 **Example:**
 ```bash
@@ -343,7 +343,7 @@ git push origin epic/SHAMT-{number} --force-with-lease
 ### Commit Frequency
 
 **✅ DO:**
-- Commit after each feature completes S7 S10.P3
+- Commit after each feature completes S7.P3
 - Commit after S10 cleanup completes
 - Commit with meaningful messages
 

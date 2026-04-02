@@ -256,6 +256,40 @@ Research the problem space and document findings in DISCOVERY.md:
 - Key Findings
 - Solution Options (if multiple approaches exist)
 
+### Step 3b: Review Architecture Context
+
+1. Read ARCHITECTURE.md (if exists)
+2. Read CODING_STANDARDS.md (if exists)
+3. **Check for undocumented additions** (teammate changes, external updates):
+   - Compare top-level source directories against ARCHITECTURE.md
+   - Check if any new directories/modules exist that aren't documented
+   - Check git log since Last Updated for dependency changes
+   - Check for significant modules (>5 files or >500 LOC) not mentioned
+   - Check for new entry point files not documented
+   - If undocumented additions found: note them and plan to update docs during this epic
+4. Document in DISCOVERY.md:
+   - Which existing components/patterns are relevant
+   - Whether this epic might require updates to either file
+   - Any inaccuracies or undocumented additions noticed
+
+**Undocumented Additions Quick Check:**
+
+```bash
+# Run at start of S1.P3 to detect teammate changes
+LAST_UPDATED=$(grep -i "last updated" ARCHITECTURE.md | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' | head -1)
+echo "ARCHITECTURE.md last updated: $LAST_UPDATED"
+echo ""
+echo "Source directories not mentioned in ARCHITECTURE.md:"
+for dir in src/*/ app/*/ lib/*/; do
+  [ -d "$dir" ] && ! grep -qi "$(basename $dir)" ARCHITECTURE.md && echo "  - $dir"
+done
+echo ""
+echo "Commits since last update:"
+git log --since="$LAST_UPDATED" --oneline | head -10
+```
+
+**Rationale:** Reading these docs during Discovery ensures the agent understands existing architecture before proposing features, surfaces any obvious staleness early, and catches teammate changes that occurred between epics.
+
 ### Step 4: Extract Initial Questions
 
 Based on initial research, identify questions that need user input:

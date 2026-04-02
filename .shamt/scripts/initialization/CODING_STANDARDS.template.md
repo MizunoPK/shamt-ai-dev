@@ -1,5 +1,37 @@
 # {{PROJECT_NAME}} — Coding Standards
 
+**Last Updated:** {{DATE}}
+**Maintained By:** AI agents during epic workflow (S7.P3, S10)
+
+---
+
+## Update History
+
+| Date | Change | Epic/Reason |
+|------|--------|-------------|
+| {{DATE}} | Initial creation | Project initialization |
+
+---
+
+## Update Triggers
+
+Update this document when:
+- New coding patterns are established that others should follow
+- Convention decisions are made (naming, structure, organization)
+- Existing conventions are found problematic and changed
+- Project-specific rules emerge from implementation experience
+
+---
+
+## How to Update
+
+1. Make changes to relevant sections
+2. Update "Last Updated" date at top
+3. Add row to "Update History" table
+4. Commit with message: "docs: Update CODING_STANDARDS.md - {brief description}"
+
+---
+
 > **Note to agent:** This file was scaffolded by Shamt initialization. Replace all sections with standards researched from the actual codebase. Look at existing code style, linting configs, test patterns, and any existing standards docs.
 
 ---

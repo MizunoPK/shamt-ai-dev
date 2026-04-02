@@ -28,6 +28,30 @@
 
 ---
 
+## Architecture Context
+
+**ARCHITECTURE.md Review Date:** {YYYY-MM-DD}
+**CODING_STANDARDS.md Review Date:** {YYYY-MM-DD}
+
+### Relevant Existing Architecture
+{Summary of components/patterns from ARCHITECTURE.md that this epic will interact with}
+
+### Potential Architecture Changes
+- [ ] This epic may add new modules/services
+- [ ] This epic may change data flow patterns
+- [ ] This epic may introduce new integration patterns
+- [ ] This epic may add new dependencies
+- [ ] No architecture changes expected
+
+### Undocumented Additions Found
+{List any directories, modules, dependencies, or entry points found in codebase but not in ARCHITECTURE.md}
+- None found / {list items}
+
+### Notes
+{Any observations about current architecture docs - outdated sections, missing components, etc.}
+
+---
+
 ## Discovery Questions
 
 {Questions identified during research that need answers. Updated throughout Discovery Loop.}

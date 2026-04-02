@@ -355,7 +355,19 @@ When the user addresses feedback that isn't from the automated PR reviewer (e.g.
 ## Coding Standards
 
 See `.shamt/project-specific-configs/CODING_STANDARDS.md` for complete standards. Key points:
-- [Agent: fill in 3–5 key coding rules after analyzing the codebase]
+- [Agent: fill in 3-5 key coding rules after analyzing the codebase]
+
+---
+
+## Architecture & Coding Standards Maintenance
+
+Your ARCHITECTURE.md and CODING_STANDARDS.md are maintained through the epic workflow:
+
+- **S1.P3 (Step 3b):** Check for undocumented additions at epic start
+- **S7.P3 (Step 1b):** Complete Documentation Impact Assessment after each feature
+- **S10 (Step 3e):** Final review at epic completion
+
+Keep "Last Updated" current and add entries to "Update History" when making changes.
 
 ---
 

@@ -492,9 +492,10 @@ wc -l real_violations.txt  # Should be low count
 - Category E (D12 Companion/Reference Files in stages/): **2 active files**
   - stages/s5/s5_v2_example.md (worked example companion — added child-sync-20260326)
   - stages/s5/s5_v2_troubleshooting.md (troubleshooting reference companion — added child-sync-20260326)
-- Category F (D11 File Size — pre-existing, deferred splitting): **3 active files**
+- Category F (D11 File Size — pre-existing, deferred splitting): **4 active files**
   - stages/s1/s1_epic_planning.md (1394 lines, 144 over 1250 baseline)
-  - stages/s5/s5_v2_validation_loop.md (1397 lines, 147 over 1250 baseline)
+  - stages/s5/s5_v2_validation_loop.md (1406 lines, 156 over 1250 baseline)
+  - stages/s10/s10_epic_cleanup.md (1316 lines, 66 over 1250 baseline — grew due to SHAMT-25 Step 3e)
   - reference/validation_loop_master_protocol.md (1582 lines, 332 over 1250 baseline)
 - Category G (D22 Lightweight MRP — Router and Optional Guides): **5 active files**
   - stages/s2/s2_feature_deep_dive.md (router guide — lightweight MRP only, no FS)

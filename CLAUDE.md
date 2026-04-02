@@ -123,6 +123,20 @@ When a new AI service is discovered (reported by a child project or user):
 
 ---
 
+## Architecture & Coding Standards Maintenance
+
+Child projects maintain ARCHITECTURE.md and CODING_STANDARDS.md through the S1-S10 workflow:
+
+- **S1.P3 Discovery:** Review existing docs, check for undocumented additions (Step 3b)
+- **S7.P3 Final Review:** Complete Documentation Impact Assessment (Step 1b)
+- **S10 Cleanup:** Final Architecture/Standards Review (Step 3e)
+
+**Audit:** D23 (Architecture/Standards Currency) validates document freshness and accuracy during audits. Threshold: 60 days.
+
+**Master role:** When reviewing child PRs that update these templates, verify metadata sections (Last Updated, Update History, Update Triggers, How to Update) are present.
+
+---
+
 ## Git Conventions
 
 - **Branch format:** `feat/SHAMT-{N}` or `fix/SHAMT-{N}`

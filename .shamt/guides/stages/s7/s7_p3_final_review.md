@@ -614,6 +614,64 @@ Spec requirement: "Add rank multiplier to scoring recommendations"
 
 ---
 
+## Step 1b: Documentation Impact Assessment
+
+**Purpose:** Ensure architectural and convention decisions from this feature are captured in project documentation.
+
+**Time:** 5-10 minutes
+
+### Process
+
+**1b-1. Review Feature Changes**
+
+Consider what this feature introduced:
+- New modules, classes, or services?
+- New integration patterns or data flows?
+- New coding patterns that should be followed?
+- Decisions about how to handle specific scenarios?
+
+**1b-2. Complete Assessment Checklist**
+
+Document in the feature README.md:
+
+```markdown
+## Documentation Impact Assessment
+
+**Date:** {YYYY-MM-DD}
+
+### Architecture Impact
+- [ ] This feature added new modules/services -> Update ARCHITECTURE.md
+- [ ] This feature changed data flow or integration patterns -> Update ARCHITECTURE.md
+- [ ] This feature added significant dependencies -> Update ARCHITECTURE.md
+- [ ] No architecture changes
+
+### Coding Standards Impact
+- [ ] This feature established patterns others should follow -> Update CODING_STANDARDS.md
+- [ ] This feature made convention decisions (naming, structure, etc.) -> Update CODING_STANDARDS.md
+- [ ] This feature revealed existing conventions are problematic -> Update CODING_STANDARDS.md
+- [ ] No coding standards changes
+
+### Actions Taken
+- [ ] Reviewed ARCHITECTURE.md - no updates needed
+- [ ] Reviewed CODING_STANDARDS.md - no updates needed
+- [ ] Updated ARCHITECTURE.md: {describe changes}
+- [ ] Updated CODING_STANDARDS.md: {describe changes}
+- [ ] Noted issues for S10 guide update process: {describe}
+```
+
+**1b-3. Make Updates (If Needed)**
+
+If any checkbox indicates updates needed:
+1. Open the relevant file
+2. Add/modify the relevant section
+3. Update the "Last Updated" date
+4. Add entry to "Update History" table
+5. Continue to Step 2 (Lessons Learned)
+
+**Note:** This assessment is advisory, not blocking. Even if no updates are needed, the assessment must be completed and documented.
+
+---
+
 ## Step 2: Lessons Learned Capture
 
 **📖 See `reference/validation_loop_qc_pr.md` for fresh perspective review approach (optional).**
