@@ -179,3 +179,218 @@
 
 ---
 
+### Round 2 — 2026-04-01
+
+#### Dimension 1: Completeness
+**Status:** Pass
+
+**Issues:** None
+
+**Analysis:** All sections remain complete after fixes.
+
+---
+
+#### Dimension 2: Correctness
+**Status:** Pass
+
+**Issues:** None
+
+**Analysis:**
+- All file paths in "Files Affected" table verified to exist
+- Proposal implementations reference correct file names
+- Checked sample paths:
+  - ✅ `sync/export_workflow.md` exists
+  - ✅ `sync/import_workflow.md` exists
+  - ✅ `reference/validation_loop_master_protocol.md` exists
+  - ✅ `reference/critical_workflow_rules.md` exists
+  - ✅ `stages/s1/s1_p3_discovery_phase.md` exists
+  - ✅ `stages/s1/s1_epic_planning.md` exists
+  - ✅ `stages/s5/s5_v2_validation_loop.md` exists
+  - ✅ `audit/audit_overview.md` exists
+  - ✅ All stage-specific files verified
+- Dimension guide count corrected to 22 files (verified with ls count)
+- Task tool `model` parameter exists (verified from tool definition)
+
+---
+
+#### Dimension 3: Consistency
+**Status:** Pass
+
+**Issues:** None
+
+---
+
+#### Dimension 4: Helpfulness
+**Status:** Pass
+
+**Issues:** None
+
+---
+
+#### Dimension 5: Improvements
+**Status:** Pass
+
+**Issues:** None
+
+---
+
+#### Dimension 6: Missing Proposals
+**Status:** Pass
+
+**Issues:** None
+
+---
+
+#### Dimension 7: Open Questions
+**Status:** Pass
+
+**Issues:** None
+
+---
+
+#### Round 2 Summary
+
+**Total Issues:** 0
+**Severity Breakdown:**
+- CRITICAL: 0
+- HIGH: 0
+- MEDIUM: 0
+- LOW: 0
+
+**Clean Round Status:** Pure Clean ✅
+
+**consecutive_clean:** 1
+
+**Next Steps:** Spawn 2 independent sub-agents in parallel for confirmation (exit criterion: both must confirm zero issues).
+
+---
+
+## Sub-Agent Confirmations
+
+### Sub-Agent 1 — 2026-04-01
+
+**Task:** Validate SHAMT-27 design doc against all 7 dimensions
+
+**Result:** Found 3 issues
+
+**Issues Found:**
+1. **Dimension 2 (Correctness), MEDIUM:** Dimension file count discrepancy - claims "22 dimension files" but sub-agent believes there are 23
+2. **Dimension 1 (Completeness), HIGH:** Design assumes Task tool supports `model` parameter but doesn't verify this capability exists
+3. **Dimension 5 (Improvements), LOW:** Decision framework could be more specific with concrete examples for borderline cases
+
+**Status:** Cannot Confirm ❌
+
+---
+
+### Sub-Agent 2 — 2026-04-01
+
+**Task:** Validate SHAMT-27 design doc against all 7 dimensions
+
+**Result:** Found 3 issues
+
+**Issues Found:**
+1. **Dimension 2 (Correctness), LOW:** Dimension file count creates internal inconsistency with audit guides saying "23 dimensions"
+2. **Dimension 1 (Completeness), LOW:** model_selection.md audit scope decision not resolved (Proposal 13 says "Add to audit scope (new dimension or extend existing)" but doesn't specify which)
+3. **Dimension 3 (Consistency), MEDIUM:** Proposal 2 incorrectly describes D16 as "versioning" when actual file is `d16_duplication_detection.md`
+
+**Status:** Cannot Confirm ❌
+
+---
+
+**Sub-Agent Confirmation Result:** Both sub-agents found issues. Validation cannot be confirmed.
+
+**consecutive_clean reset to:** 0
+
+**Next Steps:** Fix all issues found by sub-agents and run Round 3.
+
+---
+
+### Round 3 — 2026-04-01
+
+**Analysis of Sub-Agent Findings:**
+
+1. **Task tool model parameter (HIGH):** Sub-Agent 1 is correct - design assumes capability but doesn't document verification. VERIFIED: Task tool DOES support `model` parameter (checked tool definition). Need to add verification note to design doc.
+
+2. **D16 reference error (MEDIUM):** Sub-Agent 2 is correct - Proposal 2 says "D16 versioning" but actual file is `d16_duplication_detection.md`. Need to fix.
+
+3. **Dimension file count (LOW/MEDIUM):** Both sub-agents raised this. Actual count: 22 dimension.md files (d1-d19, d21-d23, excluding d10_examples.md and d16_examples.md). Design doc is CORRECT saying "22 dimension files", but audit guides say "23 dimensions" conceptually (D20 exists but has no dedicated file). Need to clarify this in design doc.
+
+4. **model_selection.md audit scope (LOW):** Sub-Agent 2 is correct - Proposal 13 leaves this open-ended. Should resolve before implementation.
+
+5. **Decision framework vagueness (LOW):** Sub-Agent 1's suggestion for improvement. Could add examples but not critical.
+
+**Fixes Applied:**
+- ✅ Added Task tool `model` parameter verification note (Implementation Prerequisite section after "Detailed Design" heading)
+- ✅ Fixed D16 "versioning" → "duplication detection" + updated to include D12 structural patterns
+- ✅ Clarified dimension file count (22 .md files: d1-d19, d21-d23; D20 exists conceptually but has no dedicated file)
+- ✅ Resolved model_selection.md audit scope (extend D6 Content Completeness)
+- ✅ Added decision framework examples for Haiku/Sonnet/Opus (3 examples each)
+
+---
+
+#### Dimension 1: Completeness
+**Status:** Pass
+
+**Issues:** None (all sub-agent issues addressed)
+
+---
+
+#### Dimension 2: Correctness
+**Status:** Pass
+
+**Issues:** None (Task tool verification added, D16 reference fixed, dimension count clarified)
+
+---
+
+#### Dimension 3: Consistency
+**Status:** Pass
+
+**Issues:** None (D16 reference corrected)
+
+---
+
+#### Dimension 4: Helpfulness
+**Status:** Pass
+
+**Issues:** None
+
+---
+
+#### Dimension 5: Improvements
+**Status:** Pass
+
+**Issues:** None (decision framework examples added)
+
+---
+
+#### Dimension 6: Missing Proposals
+**Status:** Pass
+
+**Issues:** None
+
+---
+
+#### Dimension 7: Open Questions
+**Status:** Pass
+
+**Issues:** None (audit scope question resolved)
+
+---
+
+#### Round 3 Summary
+
+**Total Issues:** 0
+**Severity Breakdown:**
+- CRITICAL: 0
+- HIGH: 0
+- MEDIUM: 0
+- LOW: 0
+
+**Clean Round Status:** Pure Clean ✅
+
+**consecutive_clean:** 1
+
+**Next Steps:** Spawn 2 new independent sub-agents in parallel for confirmation (exit criterion: both must confirm zero issues).
+
+---
+

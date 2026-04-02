@@ -39,6 +39,8 @@ Current .shamt workflows use a single model (typically Sonnet or Opus) for all t
 
 ## Detailed Design
 
+**Implementation Prerequisite:** This design assumes the Task tool supports a `model` parameter for specifying which model (haiku/sonnet/opus) a sub-agent should use. **VERIFIED:** The Task tool definition includes `model: {enum: ["sonnet", "opus", "haiku"]}` as an optional parameter. This capability exists and is ready to use.
+
 ### Proposal 1: Model Selection Decision Framework
 
 **Rationale:** Agents need clear rules for when to spawn sub-agents with specific models. Current guides don't mention model selection.
@@ -56,6 +58,11 @@ Current .shamt workflows use a single model (typically Sonnet or Opus) for all t
 - Cross-reference validation: mechanical link checking (file exists, line number valid)
 - Data extraction: extracting commit messages, file lists, timestamps
 
+**Examples:**
+- Reading file to count lines → Haiku
+- Running `grep` to find keyword → Haiku
+- Updating "Agent Status: Step 3 complete" → Haiku
+
 #### Use Sonnet (Balanced) For:
 - Issue classification: LOW/MEDIUM/HIGH/CRITICAL severity assignment
 - Separation decisions: generic vs project-specific (medium judgment)
@@ -65,6 +72,11 @@ Current .shamt workflows use a single model (typically Sonnet or Opus) for all t
 - Summarization: ELI5 sections, overview generation
 - Integration work: lessons learned integration, cross-feature alignment (medium complexity)
 - Pattern analysis: identifying existing architecture patterns, code conventions
+
+**Examples:**
+- Reading file to identify architectural patterns → Sonnet
+- Deciding if a guide change is generic or project-specific → Sonnet
+- Writing ELI5 summary of code changes → Sonnet
 
 #### Use Opus (Deep Reasoning) For:
 - Multi-dimensional validation: completeness, correctness, consistency analysis
@@ -76,6 +88,11 @@ Current .shamt workflows use a single model (typically Sonnet or Opus) for all t
 - Architectural assessment: impact analysis, system-wide implications
 - Code review: issue classification + actionable comment writing
 - Empirical verification: validating factual claims (≥3 per round)
+
+**Examples:**
+- Validating implementation plan completeness against spec → Opus
+- Analyzing why a bug occurs across multiple systems → Opus
+- Deciding between 3 architectural approaches with tradeoffs → Opus
 
 **Alternatives considered:**
 - **Always use Sonnet as default** — Rejected: misses 20x cost savings on mechanical tasks
@@ -94,7 +111,7 @@ Current .shamt workflows use a single model (typically Sonnet or Opus) for all t
 Primary Agent (Opus):
 ├─ Spawn Haiku → Pre-audit checks (D1-D12 automated script)
 ├─ Spawn Haiku → File counting, cross-reference grep (D13, D14, D15)
-├─ Spawn Sonnet → Structural dimensions (D11 file size, D16 versioning, D20 templates)
+├─ Spawn Sonnet → Structural dimensions (D11 file size, D12 structural patterns, D16 duplication detection)
 ├─ Primary handles → Content/correctness (D2-D5, D7-D9 accuracy, completeness, consistency)
 ├─ Primary handles → Adversarial self-check
 └─ Spawn 2x Haiku (parallel) → Sub-agent confirmations (zero-issue verification)
@@ -106,7 +123,7 @@ Primary Agent (Opus):
 1. Update `.shamt/guides/audit/README.md` to document sub-agent delegation pattern
 2. Update `audit_overview.md` with explicit Task tool calls showing `model` parameter usage
 3. Update `stages/stage_1_discovery.md` to indicate which dimensions use which model
-4. Add "Model Selection Notes" section to each dimension's detailed guide (22 dimension files)
+4. Add "Model Selection Notes" section to each dimension's detailed guide (22 dimension .md files: d1-d19, d21-d23; note: D20 "Script Integrity" exists conceptually but has no dedicated guide file, described in audit_overview.md instead)
 
 ---
 
@@ -414,7 +431,7 @@ Primary Agent (Opus):
 **Implementation:**
 1. Create new reference guide
 2. Link from all workflow guides that spawn sub-agents
-3. Add to audit scope (new dimension or extend existing)
+3. Add to audit scope by extending D6 (Content Completeness) to include model selection guidance verification
 
 ---
 
@@ -725,3 +742,4 @@ Run 5-dimension implementation validation loop:
 |------|--------|
 | 2026-04-01 | Initial draft created |
 | 2026-04-01 | Fixed file path issues (Round 1 validation): Updated all references to match actual repository structure |
+| 2026-04-01 | Fixed sub-agent findings (Round 2 confirmation): Added Task tool prerequisite verification, fixed D16 reference, clarified dimension count, resolved audit scope, added decision framework examples |
