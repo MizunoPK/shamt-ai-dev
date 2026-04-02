@@ -15,7 +15,7 @@
 
 You CANNOT:
 - Skip pairwise comparison for features that "seem independent" — every feature in the group must be checked against every other feature for spec conflicts and shared assumptions
-- Run S2.P2 immediately after one group completes S2.P1 without waiting for ALL groups to complete S2.P1 — S2.P2 runs once after ALL groups complete S2.P1
+- Run S2.P2 before all features in the current group complete S2.P1 — S2.P2 runs AFTER the entire current group completes S2.P1, not partway through the group
 
 If you are about to do any of the above: STOP and re-read the relevant section.
 

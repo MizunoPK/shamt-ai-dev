@@ -128,7 +128,7 @@ remove_from_master() {
 
 export_proposals() {
     local source_dir="$CHILD_SHAMT_DIR/unimplemented_design_proposals"
-    local dest_dir="$MASTER_DIR/design_docs/unimplemented"
+    local dest_dir="$MASTER_DIR/design_docs/incoming"
 
     [ -d "$source_dir" ] || return 0
 

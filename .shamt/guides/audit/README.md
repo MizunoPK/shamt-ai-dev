@@ -141,9 +141,11 @@ Round N complete → Round N+1 (fresh eyes) → EXIT when all criteria met
 
 **Loop Logic:**
 - Sub-round finds issues → Fix ALL → Re-run SAME sub-round → Repeat until 0 issues
-- Sub-round clean → Proceed to next sub-round
-- All 4 sub-rounds clean → Round complete → Next round (fresh eyes)
-- 3 CONSECUTIVE clean rounds required to exit (clean = ≤1 LOW; 2+ LOW or any MEDIUM/HIGH/CRITICAL resets counter to 0)
+- Sub-round clean (0 issues) → Proceed to next sub-round
+- All 4 sub-rounds clean → Round complete → Assess if round counts as "clean"
+- Round is clean if TOTAL issues discovered across all 4 sub-rounds (first pass) was 0 OR exactly 1 LOW (fixed)
+- 3 CONSECUTIVE clean rounds required to exit (2+ LOW or any MEDIUM/HIGH/CRITICAL in a round resets counter to 0)
+- Each sub-round must end with 0 issues; the ≤1 LOW allowance is for round-level assessment only
 
 ---
 

@@ -133,7 +133,7 @@ function Remove-FromMaster {
 
 function Export-Proposals {
     $SourceDir = Join-Path $ChildShamtDir "unimplemented_design_proposals"
-    $DestDir = Join-Path $MasterDir "design_docs\unimplemented"
+    $DestDir = Join-Path $MasterDir "design_docs\incoming"
 
     if (-not (Test-Path $SourceDir)) { return }
 

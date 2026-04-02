@@ -54,7 +54,7 @@
 │                                                                  │
 │  AUDIT LEVEL (After Round N complete):                          │
 │  • 3 CONSECUTIVE clean rounds (consecutive_clean >= 3)          │
-│    (Clean = ≤1 LOW-severity issue per round; see severity guide)│
+│    (Clean = total issues across all 4 sub-rounds was 0 OR 1 LOW)│
 │  • ALL 9 exit criteria met → Consider exit                      │
 │  • See: reference/severity_classification_universal.md          │
 └─────────────────────────────────────────────────────────────────┘
@@ -77,10 +77,11 @@
 - Reset mental model between rounds
 
 **"3 consecutive clean rounds" = at minimum 12 sub-rounds total:**
-- A round is clean if it has ≤1 LOW-severity issue (fixed); 2+ LOW or any MEDIUM/HIGH/CRITICAL resets counter
+- A round is clean if TOTAL issues discovered across all 4 sub-rounds (first pass) was 0 OR exactly 1 LOW (fixed)
+- Each sub-round must end with 0 issues before proceeding; the ≤1 LOW allowance applies to round-level assessment only
 - Each clean round = 4 sub-rounds, so 3 clean rounds = 12 minimum cycles
 - Exit trigger: 3 CONSECUTIVE clean rounds + all 9 criteria met
-- Rounds with multiple LOW or any MEDIUM+ severity issues reset the counter; you may need 5-8+ total rounds
+- Rounds with 2+ LOW or any MEDIUM/HIGH/CRITICAL reset the counter; you may need 5-8+ total rounds
 - See `reference/severity_classification_universal.md` for severity definitions
 
 ### Why This Stage Matters
@@ -153,12 +154,13 @@
 **If ANY N_new > 0 in any sub-round:** MUST loop same sub-round (mandatory)
 
 #### Criterion 4: 3 Consecutive Clean Rounds
-- [ ] Completed at least 3 CONSECUTIVE clean rounds (≤1 LOW per round)
+- [ ] Completed at least 3 CONSECUTIVE clean rounds (total ≤1 LOW per round)
   - Track explicitly: `consecutive_clean = [current count]`
-  - Rounds with 2+ LOW or any MEDIUM/HIGH/CRITICAL reset counter to 0
-  - [ ] Clean round (0 issues OR 1 LOW fixed) — consecutive_clean = 1
-  - [ ] Clean round (0 issues OR 1 LOW fixed) — consecutive_clean = 2
-  - [ ] Clean round (0 issues OR 1 LOW fixed) — consecutive_clean = 3 ✓
+  - **Assessment:** Count TOTAL issues discovered across all 4 sub-rounds during first pass
+  - Rounds with 2+ LOW (total) or any MEDIUM/HIGH/CRITICAL reset counter to 0
+  - [ ] Clean round (0 total issues OR 1 LOW total, fixed) — consecutive_clean = 1
+  - [ ] Clean round (0 total issues OR 1 LOW total, fixed) — consecutive_clean = 2
+  - [ ] Clean round (0 total issues OR 1 LOW total, fixed) — consecutive_clean = 3 ✓
 - [ ] Each round used different patterns than previous
 - [ ] Each sub-round focused on correct dimension set
 - [ ] Clear mental break between rounds (fresh perspective)
@@ -169,7 +171,15 @@
 **If 2+ LOW or any MEDIUM/HIGH/CRITICAL found:** Reset consecutive_clean to 0 and loop
 
 **Critical distinction:** "Minimum 3 rounds" means 3 CONSECUTIVE clean rounds.
-A round with 2+ LOW or any higher severity does not count. Rounds 1(issues), 2(issues), 3(clean) = consecutive_clean of 1, not 3.
+A round with 2+ LOW or any higher severity does not count. Rounds 1(5 issues), 2(3 issues), 3(0 issues) = consecutive_clean of 1, not 3.
+
+**Example Round Assessment:**
+- SR 1.1: Found 2 LOW → Fixed → Re-ran → 0 issues → Proceed to SR 1.2
+- SR 1.2: Found 1 HIGH → Fixed → Re-ran → 0 issues → Proceed to SR 1.3
+- SR 1.3: Found 0 issues → Proceed to SR 1.4
+- SR 1.4: Found 0 issues → Round 1 complete
+- **Round 1 Total:** 2 LOW + 1 HIGH = NOT CLEAN (HIGH resets counter)
+- **consecutive_clean = 0** → Continue to Round 2
 
 #### Criterion 5: All Remaining Documented
 - [ ] All remaining pattern matches are documented

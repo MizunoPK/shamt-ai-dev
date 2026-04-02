@@ -32,14 +32,18 @@
 
 ### Clean Round Quick Reference
 
-| Scenario | Clean Round? | Counter Action |
-|----------|--------------|----------------|
-| 0 issues found | Yes (Pure Clean) | Increment |
-| 1 LOW issue found & fixed | Yes (Clean with 1 Low Fix) | Increment |
-| 2+ LOW issues found | No | Reset to 0 |
-| Any MEDIUM issue found | No | Reset to 0 |
-| Any HIGH issue found | No | Reset to 0 |
-| Any CRITICAL issue found | No | Reset to 0 |
+**For Audit Rounds (aggregated across all 4 sub-rounds in a round):**
+
+| Total Issues Discovered in Round | Clean Round? | Counter Action |
+|-----------------------------------|--------------|----------------|
+| 0 issues found across all 4 sub-rounds | Yes (Pure Clean) | Increment |
+| Exactly 1 LOW issue found & fixed (any sub-round) | Yes (Clean with 1 Low Fix) | Increment |
+| 2+ LOW issues found (across all sub-rounds) | No | Reset to 0 |
+| Any MEDIUM issue found (any sub-round) | No | Reset to 0 |
+| Any HIGH issue found (any sub-round) | No | Reset to 0 |
+| Any CRITICAL issue found (any sub-round) | No | Reset to 0 |
+
+**Important:** Each sub-round must reach 0 issues before proceeding to the next sub-round. The "≤1 LOW allowance" applies to the TOTAL issues discovered during the entire round's first pass (all 4 sub-rounds combined), not to unfixed issues.
 
 ---
 

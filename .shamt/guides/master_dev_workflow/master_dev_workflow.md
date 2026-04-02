@@ -84,13 +84,23 @@ For master-internal improvements, commit directly to a branch and open a PR agai
 
 ## Larger Changes: Branch + Design Doc
 
-For multi-guide or cross-cutting changes, use a branch with an optional design doc:
+For multi-guide or cross-cutting changes, use a branch with a design doc:
 
-1. Create branch: `feat/SHAMT-[N]`
-2. For planning: create `SHAMT[N]_DESIGN.md` at the repo root (not in `.shamt/`) to capture scope, decisions, and open questions
-3. Make changes across the affected guides and scripts
-4. Run the full guide audit before merging (3 consecutive clean rounds required; ≤1 LOW per round is clean)
-5. Open a PR against `main` — child projects receive the changes on their next import run
+1. **Reserve SHAMT-N number:** Read `design_docs/NEXT_NUMBER.txt`, use that number, increment the file
+2. **Create branch:** `feat/SHAMT-[N]`
+3. **Create design doc:** Use the template at `.shamt/guides/templates/design_doc_template.md` to create `design_docs/active/SHAMT[N]_DESIGN.md`
+4. **Validate design doc:** Follow `.shamt/guides/design_doc_validation/validation_workflow.md` to validate the design (7-dimension validation loop with sub-agent confirmation)
+5. **Implement:** Make changes across the affected guides and scripts
+6. **Validate implementation:** Run implementation validation loop (see design doc Proposal 10 pattern)
+7. **Guide audit:** Run the full guide audit (3 consecutive clean rounds required; ≤1 LOW per round is clean)
+8. **Archive design doc:** Move `SHAMT[N]_DESIGN.md` and validation log to `design_docs/archive/`
+9. **Open PR:** PR against `main` — child projects receive the changes on their next import run
+
+**Design doc lifecycle states:**
+- **Draft** → Being written, not yet validated
+- **Validated** → Passed 7-dimension validation, ready for implementation
+- **In Progress** → Implementation underway on branch
+- **Implemented** → Implementation complete, moved to archive
 
 **What NOT to do for master work:**
 - Do not maintain `.shamt/epics/EPIC_TRACKER.md` — SHAMT-N numbers are sequence markers, not epic IDs

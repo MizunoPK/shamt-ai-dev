@@ -126,7 +126,7 @@ The script:
 3. Compares your `guides/` and `scripts/` against master by content comparison
 4. Copies all differing files to master, and deletes from master any files absent from your child
 5. Excludes `guides/audit/outputs/` (your audit history stays local)
-6. **Moves** any files in `.shamt/unimplemented_design_proposals/` to master's `design_docs/unimplemented/` directory (copy to master, then delete from child)
+6. **Moves** any files in `.shamt/unimplemented_design_proposals/` to master's `design_docs/incoming/` directory (copy to master, then delete from child)
 7. Prints a summary of what was copied, deleted, and moved
 
 Review the output. If files were exported that you didn't intend to change, investigate before opening a PR.

@@ -15,14 +15,22 @@ Your primary responsibilities here are:
 shamt-ai-dev/
 ├── README.md
 ├── CLAUDE.md                           (this file)
-├── SHAMT{N}_DESIGN.md                  # design docs live at repo root (excluded from git via .git/info/exclude)
+├── design_docs/                        # Design doc lifecycle management
+│   ├── active/                         # Design docs being worked on
+│   │   └── SHAMT{N}_DESIGN.md
+│   ├── incoming/                       # Child project proposals awaiting review
+│   ├── archive/                        # Implemented design docs
+│   │   └── rejected/                   # Rejected child proposals
+│   └── NEXT_NUMBER.txt                 # Next SHAMT-N number
 └── .shamt/
     ├── guides/                         (the canonical guide system)
     │   ├── stages/                     # s1–s10 workflow guides
     │   ├── reference/
     │   ├── audit/
     │   ├── sync/                       # README, separation rule, export workflow, import workflow
-    │   └── master_dev_workflow/        # guide for improving master guides
+    │   ├── master_dev_workflow/        # guide for improving master guides
+    │   ├── design_doc_validation/      # design doc validation guides
+    │   └── templates/                  # templates (design_doc_template.md)
     ├── scripts/
     │   ├── initialization/
     │   │   ├── RULES_FILE.template.md  # AI rules file template
@@ -56,7 +64,7 @@ Review steps:
 4. After merging, run the full guide audit on the entire `.shamt/guides/` tree — do not let changes propagate to other child projects on their next import until the audit passes
 5. Commit any audit fixes before the merge is considered complete
 
-**Proposal docs:** Child PRs may include proposal files (named `{project}-{epic}-SHAMT-UPDATE-PROPOSAL.md`). These are always acceptable — no generic/specific evaluation needed since they are explicitly project-originated proposals for guide changes, not shared guide files themselves. Review for obvious errors but do not apply the separation rule to them.
+**Proposal docs:** Child PRs may include proposal files (named `{project}-{epic}-SHAMT-UPDATE-PROPOSAL.md`) that were exported to `design_docs/incoming/`. These are always acceptable — no generic/specific evaluation needed since they are explicitly project-originated proposals for guide changes, not shared guide files themselves. Review for obvious errors but do not apply the separation rule to them. See "Child Proposal Handling" section for the promotion/rejection process.
 
 **Full workflow guides:** `.shamt/guides/sync/export_workflow.md` (child side) and `.shamt/guides/sync/import_workflow.md` (post-import validation)
 
@@ -71,15 +79,47 @@ For improving the guides directly:
 Master work does **not** follow the S1-S10 epic workflow and does **not** use EPIC_TRACKER.md. The operating model:
 
 - **Small changes:** Lightweight workflow — read, fix, audit, commit directly to a branch, open PR
-- **Large changes:** Create a design doc at the repo root as `SHAMT{N}_DESIGN.md` (excluded from git via `.git/info/exclude`) for planning, then work on a `feat/SHAMT-N` branch.
-- **SHAMT-N numbers:** Sequence markers for change sets, not epic identifiers
+- **Large changes:** Create a design doc in `design_docs/active/` (version-controlled), validate it, implement, then archive to `design_docs/archive/`
+- **SHAMT-N numbers:** Sequence markers for change sets, not epic identifiers. Reserved via `design_docs/NEXT_NUMBER.txt`
 - **No stage gates:** Master work proceeds at judgment, not through S1-S10 phase transitions
+
+See "Design Doc Lifecycle" below for the full design doc process.
+
+---
+
+## Design Doc Lifecycle
+
+**When to create a design doc:**
+- Large changes requiring planning (multi-guide, cross-cutting, architectural)
+- Changes affecting multiple system behaviors
+- When user requests "create a design doc"
+- Judgment call — lightweight workflow works for simple fixes
+
+**How to create a design doc:**
+
+1. **Reserve SHAMT-N number:** Read `design_docs/NEXT_NUMBER.txt` (e.g., contains "27"), use that number, increment the file to "28", commit
+2. **Create from template:** Use `.shamt/guides/templates/design_doc_template.md` to create `design_docs/active/SHAMT{N}_DESIGN.md`
+3. **Write design:** Capture problem statement, goals, proposals, implementation plan, validation strategy
+4. **Validate:** Run 7-dimension validation loop (see Design Doc Validation section below)
+5. **Implement:** Execute implementation plan on `feat/SHAMT-N` branch
+6. **Validate implementation:** Run implementation validation loop (see Implementation Validation section below)
+7. **Archive:** Move `SHAMT{N}_DESIGN.md` and validation log to `design_docs/archive/` when complete
+
+**Lifecycle states:**
+- **Draft** (`active/`) — Being written, not yet validated
+- **Validated** (`active/`) — Passed 7-dimension validation, ready for implementation
+- **In Progress** (`active/`) — Implementation underway on branch
+- **Implemented** (`archive/`) — Implementation complete, branch merged
+
+**Validation log:** Create `SHAMT{N}_VALIDATION_LOG.md` alongside design doc when starting validation. Moves to archive with design doc.
 
 ---
 
 ## Design Doc Validation
 
-When asked to validate a design doc (e.g., `SHAMT{N}_DESIGN.md` at repo root), run a validation loop. Each round checks all dimensions:
+When asked to validate a design doc, run a validation loop following `.shamt/guides/design_doc_validation/validation_workflow.md`.
+
+**The 7 dimensions:**
 
 1. **Completeness** — Are all necessary aspects covered? Is the problem fully stated? Are all affected files identified? Are edge cases and failure modes addressed?
 2. **Correctness** — Are factual claims accurate? Do proposed changes actually work the way described? Are references to existing guides/files accurate?
@@ -89,9 +129,44 @@ When asked to validate a design doc (e.g., `SHAMT{N}_DESIGN.md` at repo root), r
 6. **Missing proposals** — Is anything important left out of scope that should be addressed here?
 7. **Open questions** — Are there unresolved decisions that need to be surfaced before implementation?
 
-**Exit criterion:** Primary clean round (all 7 dimensions pass with no issues OR exactly one LOW-severity issue) + independent sub-agent confirmation. Same pattern as workflow validation loops: `consecutive_clean = 1`, then spawn 2 parallel sub-agents both confirming zero issues.
+**Exit criterion:** Primary clean round (all 7 dimensions pass with ≤1 LOW-severity issue) + 2 independent sub-agents both confirming zero issues. Same pattern as workflow validation loops: `consecutive_clean = 1`, then spawn 2 parallel sub-agents.
 
 A round is clean if it has ZERO issues OR exactly ONE LOW-severity issue (fixed). Multiple LOW-severity issues OR any MEDIUM/HIGH/CRITICAL severity issue resets `consecutive_clean` to 0. See `reference/severity_classification_universal.md` for severity definitions.
+
+**Detailed workflow:** See `.shamt/guides/design_doc_validation/` for complete validation process, validation log template, and guidance.
+
+---
+
+## Implementation Validation
+
+After implementing a design doc (Phases 1-4 complete), run an implementation validation loop to verify the design was fully and correctly implemented.
+
+**The 5 dimensions:**
+
+1. **Completeness** — Was every proposal implemented? Walk through all proposals and verify corresponding changes exist.
+2. **Correctness** — Does the implementation match what was proposed? Check folder structures, file contents, script changes.
+3. **Files Affected Accuracy** — Were all files in the "Files Affected" table actually created/modified/moved as specified?
+4. **No Regressions** — Did the implementation break anything that was working before?
+5. **Documentation Sync** — Do CLAUDE.md, master_dev_workflow.md, and other guides accurately reflect the new system?
+
+**Exit criterion:** Same as design doc validation — primary clean round (≤1 LOW-severity issue) + 2 independent sub-agent confirmations.
+
+**After implementation validation passes:** Run a full guide audit on the entire `.shamt/guides/` tree (not just files affected by the design doc) to ensure the repo is in a healthy state. The audit must achieve 3 consecutive clean rounds.
+
+---
+
+## Child Proposal Handling
+
+Child projects can export design proposals to master via the export script. Proposals land in `design_docs/incoming/`.
+
+**Review process:**
+1. Read the proposal file in `incoming/`
+2. Assess whether it warrants a full design doc or can be handled as a direct guide update
+3. **If promoting to design doc:** Reserve SHAMT-N, create design doc in `active/` incorporating the proposal, delete or archive the original proposal
+4. **If rejecting:** Move to `archive/rejected/` with a rejection note at the top of the file explaining why
+5. **If implementing directly:** Make the guide changes, reference the proposal in commit message, archive the proposal
+
+**Naming convention:** Child proposals use `{project}-{epic}-SHAMT-UPDATE-PROPOSAL.md` format for traceability.
 
 ---
 

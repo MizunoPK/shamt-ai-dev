@@ -301,9 +301,9 @@ follows the emoji (space → hyphen after stripping the emoji).
 **Purpose:** Documents stage guide files that exceed the 1250-line D11 baseline but cannot be split within the current SHAMT work scope. These require a dedicated file-splitting SHAMT-N.
 
 **Design Rationale:**
-- Both files are primary stage guides that consolidate what used to be multiple smaller files
-- They were already over the 1250-line threshold before SHAMT-7 (which added only 4–14 lines each)
-- Proper splitting requires creating router files + sub-files + updating all cross-references — a separate refactoring scope
+- These files are primary stage guides that consolidate comprehensive workflow content
+- Splitting requires creating router files + sub-files + updating all cross-references — a separate refactoring scope
+- Small overages (<10%) are acceptable when splitting would harm guide coherence
 
 **Files:**
 
@@ -328,6 +328,14 @@ follows the emoji (space → hyphen after stripping the emoji).
 - **Why deferred:** This is the central reference document for all validation loop scenarios; splitting requires updating all scenario files (`validation_loop_*.md`) that defer to it; out of SHAMT-7 scope
 - **Note:** `pre_audit_checks.sh` does not scan `reference/` for D11, so this exception is for manual audit rounds only
 - **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
+
+**F4. stages/s10/s10_epic_cleanup.md (1316 lines)**
+- **D11 Status:** Exceeds 1250-line baseline by 66 lines (5.3% over)
+- **Pre-existing:** Yes — grew to 1316 lines through SHAMT-25 (Step 3e: Architecture/Standards Review)
+- **Split candidates:** Could be split into P1 (guide updates), P2 (overview/archive), P3 (metrics), P4 (PR/commit)
+- **Why deferred:** Splitting would fragment the epic cleanup workflow. Content is non-duplicated and necessary. Overage is minimal (66 lines).
+- **Audit Action:** SKIP D11 violation — tracked as known exception, approved SHAMT-26 audit Round 1
+- **Review trigger:** If file exceeds 1500 lines, re-evaluate for splitting
 
 ---
 
