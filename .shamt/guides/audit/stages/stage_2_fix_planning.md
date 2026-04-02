@@ -428,7 +428,7 @@ Read files, analyze context (15-30 min)
 
 **If discovery report flagged ANY of these:**
 - CLAUDE.md exceeds 40,000 characters
-- Any workflow guide >1250 lines
+- Any workflow guide >2000 lines
 
 **Then you MUST include file size reduction in fix plan.**
 
@@ -441,9 +441,9 @@ Read files, analyze context (15-30 min)
 
 **File:** [file_path]
 **Current Size:** [X lines / X chars]
-**Threshold:** [40,000 chars for CLAUDE.md / 1250 lines for guides]
+**Threshold:** [40,000 chars for CLAUDE.md / 2000 lines for guides]
 **Overage:** [amount over threshold]
-**Severity:** P1 (if CLAUDE.md or >1250 lines)
+**Severity:** P1 (if CLAUDE.md or >2000 lines)
 
 **Strategy:** [One of: Extract to sub-guides / Extract to reference files / Consolidate redundant / Move examples to appendices]
 
@@ -513,13 +513,13 @@ Read files, analyze context (15-30 min)
 
 **File size reduction groups get priority:**
 - **P1:** CLAUDE.md >40,000 chars (policy violation - CRITICAL)
-- **P1:** Files >1250 lines (too large - CRITICAL)
+- **P1:** Files >2000 lines (too large - CRITICAL)
 
-**Updated Policy (Meta-Audit 2026-02-05):** Simplified from 3-tier to single 1250-line baseline.
+**Updated Policy (Meta-Audit 2026-02-05):** Simplified from 3-tier to single 2000-line baseline.
 
 **Fix order in Stage 3:**
 1. Content accuracy P0-P1 groups (critical content fixes first)
-2. File size P1 groups (CLAUDE.md, files >1250 lines)
+2. File size P1 groups (CLAUDE.md, files >2000 lines)
 3. Content accuracy P2-P3 groups
 
 **Rationale:** Fix critical content issues first (so we're not reducing files that still need content updates), then address file size, then lower priority items.

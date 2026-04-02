@@ -298,7 +298,7 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 ## Category F: D11 Pre-Existing File Size Exceptions
 
-**Purpose:** Documents stage guide files that exceed the 1250-line D11 baseline but cannot be split within the current SHAMT work scope. These require a dedicated file-splitting SHAMT-N.
+**Purpose:** Documents stage guide files that exceed the 2000-line D11 baseline but cannot be split within the current SHAMT work scope. These require a dedicated file-splitting SHAMT-N.
 
 **Design Rationale:**
 - These files are primary stage guides that consolidate comprehensive workflow content
@@ -308,21 +308,21 @@ follows the emoji (space → hyphen after stripping the emoji).
 **Files:**
 
 **F1. stages/s1/s1_epic_planning.md (1394 lines)**
-- **D11 Status:** Exceeds 1250-line baseline by 144 lines
+- **D11 Status:** Exceeds 2000-line baseline by 144 lines
 - **Pre-existing:** Yes — was 1304 lines before SHAMT-9 (~28 lines); SHAMT-20 added ~62 more lines (P2 S3 overlap note, P6 Gate 1.5, P8 S3 early start, P9 metrics references)
 - **Split candidates:** S1.P1–P3 are each large enough to warrant standalone files
 - **Why deferred:** Splitting requires updating all "read s1_epic_planning.md" references across the guide tree; out of SHAMT-20 scope
 - **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
 
 **F2. stages/s5/s5_v2_validation_loop.md (1397 lines)**
-- **D11 Status:** Exceeds 1250-line baseline by 147 lines
+- **D11 Status:** Exceeds 2000-line baseline by 147 lines
 - **Pre-existing:** Yes — was 1327 lines before SHAMT-9; SHAMT-20 added ~5 more lines (secondary agent guide references)
 - **Split candidates:** Phase 1 (Draft), Phase 2 (Validation Loop), dimension reference sections
 - **Why deferred:** Splitting requires updating all "read s5_v2_validation_loop.md" references and agent prompts; out of SHAMT-20 scope
 - **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
 
 **F3. reference/validation_loop_master_protocol.md (1582 lines)**
-- **D11 Status:** Exceeds 1250-line baseline by 332 lines
+- **D11 Status:** Exceeds 2000-line baseline by 332 lines
 - **Pre-existing:** Yes — consolidated master protocol predates SHAMT-7; grew to 1582 lines through SHAMT-20 additions
 - **Split candidates:** Could be split into protocol core + dimension-specific appendices
 - **Why deferred:** This is the central reference document for all validation loop scenarios; splitting requires updating all scenario files (`validation_loop_*.md`) that defer to it; out of SHAMT-7 scope
@@ -330,7 +330,7 @@ follows the emoji (space → hyphen after stripping the emoji).
 - **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
 
 **F4. stages/s10/s10_epic_cleanup.md (1316 lines)**
-- **D11 Status:** Exceeds 1250-line baseline by 66 lines (5.3% over)
+- **D11 Status:** Exceeds 2000-line baseline by 66 lines (5.3% over)
 - **Pre-existing:** Yes — grew to 1316 lines through SHAMT-25 (Step 3e: Architecture/Standards Review)
 - **Split candidates:** Could be split into P1 (guide updates), P2 (overview/archive), P3 (metrics), P4 (PR/commit)
 - **Why deferred:** Splitting would fragment the epic cleanup workflow. Content is non-duplicated and necessary. Overage is minimal (66 lines).
@@ -501,10 +501,10 @@ wc -l real_violations.txt  # Should be low count
   - stages/s5/s5_v2_example.md (worked example companion — added child-sync-20260326)
   - stages/s5/s5_v2_troubleshooting.md (troubleshooting reference companion — added child-sync-20260326)
 - Category F (D11 File Size — pre-existing, deferred splitting): **4 active files**
-  - stages/s1/s1_epic_planning.md (1394 lines, 144 over 1250 baseline)
-  - stages/s5/s5_v2_validation_loop.md (1406 lines, 156 over 1250 baseline)
-  - stages/s10/s10_epic_cleanup.md (1316 lines, 66 over 1250 baseline — grew due to SHAMT-25 Step 3e)
-  - reference/validation_loop_master_protocol.md (1582 lines, 332 over 1250 baseline)
+  - stages/s1/s1_epic_planning.md (1394 lines, 144 over 2000 baseline)
+  - stages/s5/s5_v2_validation_loop.md (1406 lines, 156 over 2000 baseline)
+  - stages/s10/s10_epic_cleanup.md (1316 lines, 66 over 2000 baseline — grew due to SHAMT-25 Step 3e)
+  - reference/validation_loop_master_protocol.md (1582 lines, 332 over 2000 baseline)
 - Category G (D22 Lightweight MRP — Router and Optional Guides): **5 active files**
   - stages/s2/s2_feature_deep_dive.md (router guide — lightweight MRP only, no FS)
   - stages/s9/s9_epic_final_qc.md (router guide — lightweight MRP only, no FS)

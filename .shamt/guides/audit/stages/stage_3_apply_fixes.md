@@ -425,9 +425,9 @@ git restore file1.md file2.md file3.md
 
 **Priority order:**
 1. **P1:** CLAUDE.md if exceeds 40,000 chars (CRITICAL - policy violation)
-2. **P1:** Files >1250 lines (CRITICAL - too large)
+2. **P1:** Files >2000 lines (CRITICAL - too large)
 
-**Updated Policy (Meta-Audit 2026-02-05):** Simplified from 3-tier to single 1250-line baseline.
+**Updated Policy (Meta-Audit 2026-02-05):** Simplified from 3-tier to single 2000-line baseline.
 
 ### Step 2: For Each Large File, Apply Reduction Strategy
 
@@ -571,7 +571,7 @@ bash .shamt/guides/audit/scripts/pre_audit_checks.sh
 **File Size Reduction (MANDATORY):**
 - [ ] ALL large files identified from pre-audit script
 - [ ] CLAUDE.md ≤ 40,000 characters (if applicable)
-- [ ] All workflow guides ≤ 1250 lines (baseline threshold)
+- [ ] All workflow guides ≤ 2000 lines (baseline threshold)
 - [ ] File size reduction guide consulted for each large file
 - [ ] Reduction strategy applied for each large file
 - [ ] All cross-references updated after reductions

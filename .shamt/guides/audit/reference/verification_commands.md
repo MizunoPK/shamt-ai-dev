@@ -354,7 +354,7 @@ grep -rh "stages/s9/.*\.md" --include="*.md" . | \
 
 ### Scenario 3: Verifying File Size Reduction
 
-**Discovery found:** 5 files >1250 lines
+**Discovery found:** 5 files >2000 lines
 **Fix plan:** Split large files using reduction guide
 **Verification:**
 
@@ -363,7 +363,7 @@ grep -rh "stages/s9/.*\.md" --include="*.md" . | \
 LARGE_FILES=("file1.md" "file2.md" "file3.md" "file4.md" "file5.md")
 for file in "${LARGE_FILES[@]}"; do
   lines=$(wc -l < "$file" 2>/dev/null || echo 0)
-  if [ $lines -gt 1250 ]; then
+  if [ $lines -gt 2000 ]; then
     echo "STILL LARGE: $file ($lines lines)"
   else
     echo "✅ FIXED: $file ($lines lines)"

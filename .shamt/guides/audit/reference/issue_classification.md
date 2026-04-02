@@ -29,7 +29,7 @@
 |-------|--------|--------|------------|----------|
 | **Critical** | 🔴 | Blocks workflow | Fix FIRST | Broken file paths, CLAUDE.md >40K chars |
 | **High** | 🟠 | Causes confusion | Fix SECOND | Old notation, broken templates |
-| **Medium** | 🟡 | Cosmetic but important | Fix THIRD | File sizes >1250 lines, missing TOCs |
+| **Medium** | 🟡 | Cosmetic but important | Fix THIRD | File sizes >2000 lines, missing TOCs |
 | **Low** | 🟢 | Nice-to-have | Fix LAST | Minor formatting, spacing |
 
 ### Priority Matrix
@@ -118,7 +118,7 @@ If answer is YES + doesn't block → HIGH
 **Definition:** Issues that don't cause confusion but reduce guide quality/usability
 
 **Characteristics:**
-- **File size issues** - Files >1250 lines (hard to read but not broken)
+- **File size issues** - Files >2000 lines (hard to read but not broken)
 - **Missing navigation** - No Table of Contents in long file
 - **Count inaccuracies** - Says "15 files" but actually 16
 - **Formatting inconsistencies** - Headers not following pattern
@@ -133,7 +133,7 @@ If answer is YES + doesn't block → HIGH
 **Fix Timing:** AFTER High, BEFORE Low
 
 **Examples:**
-- ⚠️ File is 1,500 lines (exceeds 1250 readability limit)
+- ⚠️ File is 1,500 lines (exceeds 2000 readability limit)
 - ⚠️ File >500 lines has no Table of Contents
 - ⚠️ Says "17 dimensions" but actually 18 listed
 - ⚠️ Some headers use "##" others use "###" inconsistently

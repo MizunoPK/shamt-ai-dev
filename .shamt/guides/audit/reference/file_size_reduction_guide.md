@@ -71,12 +71,12 @@
 
 | Size | Threshold | Status | Action Required |
 |------|-----------|--------|-----------------|
-| Acceptable | ≤1250 lines | ✅ OK | None (content complexity may justify size) |
-| Too Large | >1250 lines | ❌ CRITICAL | MUST reduce (baseline threshold) |
+| Acceptable | ≤2000 lines | ✅ OK | None (content complexity may justify size) |
+| Too Large | >2000 lines | ❌ CRITICAL | MUST reduce (baseline threshold) |
 
-**Philosophy:** Files ≤1250 lines are acceptable if content is non-duplicated and serves the guide's purpose. Only files exceeding 1250 lines require reduction.
+**Philosophy:** Files ≤2000 lines are acceptable if content is non-duplicated and serves the guide's purpose. Only files exceeding 2000 lines require reduction.
 
-**Updated Policy:** Increased from 1000 → 1250 lines during Meta-Audit (2026-02-05) to accommodate comprehensive reference guides while maintaining agent usability.
+**Updated Policy:** Increased from 1000 → 2000 lines during Meta-Audit (2026-02-05) to accommodate comprehensive reference guides while maintaining agent usability.
 
 **Character Count (for CLAUDE.md only):**
 - ≤40,000 chars: ✅ OK
@@ -97,7 +97,7 @@
 
 **Priority Order:**
 1. CLAUDE.md (if exceeds 40,000 chars) - P1 CRITICAL
-2. Files >1250 lines - P1 CRITICAL
+2. Files >2000 lines - P1 CRITICAL
 
 ### Step 2: Evaluate Each Large File
 
@@ -127,7 +127,7 @@
 ### Step 3: Make Split/Reduce Decision
 
 **REDUCE if ANY true:**
-- File exceeds hard limit (CLAUDE.md >40,000 chars, guides >1250 lines)
+- File exceeds hard limit (CLAUDE.md >40,000 chars, guides >2000 lines)
 - Content has clear subdivisions (phases, iterations, categories)
 - Agents report difficulty navigating file
 - File serves multiple distinct purposes

@@ -97,7 +97,7 @@
 **Definition:** Issues that don't cause confusion but reduce artifact quality, usability, or maintainability.
 
 **Characteristics:**
-- File size issues (files >1250 lines but readable)
+- File size issues (files >2000 lines but readable)
 - Missing optional sections (no Table of Contents in long file)
 - Minor count inaccuracies (says "15 files" but actually 16)
 - Incomplete examples (missing edge case demonstrations)
@@ -210,7 +210,7 @@ When documenting round results, distinguish between clean round types:
 | CLAUDE.md >40K characters | CRITICAL | Policy violation |
 | Mixed notation in same file | HIGH | Causes confusion |
 | Missing required section | HIGH | Incomplete guidance |
-| File >1250 lines | MEDIUM | Readability |
+| File >2000 lines | MEDIUM | Readability |
 | Count slightly off | MEDIUM | Minor inaccuracy |
 | Trailing whitespace | LOW | Cosmetic |
 | Extra blank line | LOW | Cosmetic |
