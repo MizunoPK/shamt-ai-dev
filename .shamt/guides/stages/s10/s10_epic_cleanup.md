@@ -1323,6 +1323,13 @@ You've successfully completed all 10 stages of the epic workflow:
 - Properly archived (`.shamt/epics/done/`)
 - Integrated into main branch (PR merged)
 
+**Next Steps:**
+1. Update EPIC_README.md Agent Status to "EPIC_COMPLETE" with timestamp
+2. Document final status: "Epic [name] is complete and archived in .shamt/epics/done/"
+3. Notify user: "Epic complete. All work committed and merged to main."
+
+**No further stages exist for this epic. S10 is the final stage.**
+
 **Well done!**
 
 ---

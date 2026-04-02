@@ -77,6 +77,8 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 **For each pair of features in scope:**
 - Current group features vs each other
 - Current group features vs ALL previous group features
+  - **Note:** If this is Group 1 (first group, no previous groups), skip inter-group comparisons. Only compare current group features with each other.
+  - If Group 2+: Compare with all completed groups from previous waves
 
 **Check for:**
 - Naming conflicts (same name, different meaning)

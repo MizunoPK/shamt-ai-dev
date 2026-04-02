@@ -310,19 +310,32 @@ Get user approval for complete epic plan before proceeding to S5 (Gate 4.5 — S
 
 ### If User Requests Changes
 
-**Option A: Update epic_smoke_test_plan.md or EPIC_README.md based on feedback**
-- LOOP BACK to appropriate phase:
+**ASSESS FEEDBACK SCOPE:**
+
+**(Option A) Minor Refinements** (Update plans and re-present)
+- Issues: Testing strategy needs tweaks, docs need clarity, examples need updates
+- Action: Update epic_smoke_test_plan.md or EPIC_README.md based on feedback
+- Loop back to appropriate phase:
   - If testing strategy issues → S3.P1
   - If documentation issues → S3.P2
-  - If fundamental approach wrong → S2 (cross-feature conflicts need re-resolution)
 - Re-run updated phase with Validation Loop
 - Re-present to user for approval (Gate 4.5 again)
 
+**(Option B) Partial Rejection** (Scope or structure issues)
+- User says: "Approach is good but scope is too big" OR "Features are right but missing technical constraint"
+- Action: Escalate to user for guidance:
+  - Split epic into smaller phases?
+  - Redefine feature boundaries (loop back to S1.P4)?
+  - Adjust discovery assumptions (loop back to S1.P3)?
+- Await user decision, then proceed with appropriate fixes
+- Do NOT treat as total rejection — some planning can be salvaged
+
+**(Option C) Total Rejection** (Fundamental approach wrong)
+- User says: "This epic scope/approach is fundamentally wrong"
+- Action: STOP — do NOT loop back to S3
+- Use 3-Tier Rejection Handling (see below)
+
 ### If User Rejects Entire Epic Approach
-
-**User says:** "This epic scope/approach is fundamentally wrong"
-
-**STOP - Do not loop back to S3**
 
 **3-Tier Rejection Handling:**
 

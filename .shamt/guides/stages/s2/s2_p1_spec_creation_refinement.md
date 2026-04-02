@@ -162,9 +162,14 @@ Run **after** the I1 Validation Loop exits. If ALL items below pass → skip I2 
 - [ ] No cross-feature interface assumptions that haven't been verified against other features' I1 specs
   - *Note: in parallel S2, only features whose I1 is already complete can be checked. If the relevant feature's I1 is not yet complete, this criterion fails → proceed to I2.*
 
-**If ALL items pass:** Note "I2 skipped (Gate 1.5 passed)" in spec.md Change Log. Proceed directly to I3.
+**If ALL items pass:** Note "I2 skipped (Gate 1.5 passed)" in spec.md Change Log. Proceed directly to I3 (using I1 research as foundation).
 
-**If ANY item fails:** Proceed to I2 normally.
+**If ANY item fails:**
+- Note which items failed in spec.md Change Log
+- Treat I1 research as foundation (don't restart I1)
+- Proceed to I2 normally at Step 1 (Present Checklist to User)
+- Resolve failed items with user
+- Continue I2 resolution cycle until all questions resolved or deferred
 
 **Important:** Gate 2 (Spec-to-Epic Alignment) and Gate 3 (User Approval) remain mandatory regardless of whether I2 was skipped. S2.P2 (Cross-Feature Alignment) also still runs after all I3s complete.
 
@@ -309,10 +314,13 @@ Primary agent reviews during coordination heartbeat (every 15 minutes).
 
 **3. If Gaps Found During Validation Loop - LOOP-BACK MECHANISM**
 - Add new questions to checklist.md
-- **LOOP BACK to S2.P1.I2** (Checklist Resolution)
-- Resolve new questions with user
-- **RESTART S2.P1.I3 from beginning** (fresh Validation Loop)
-- Continue until Validation Loop passes with NO gaps
+- **LOOP BACK to S2.P1.I2 - Step 1: Present Updated Checklist to User**
+  - Re-enter at the Checklist Resolution phase
+  - Do NOT restart research (I1) — only resolve new questions with user
+- Resolve new questions with user (continue I2 resolution cycle)
+- **RESTART S2.P1.I3 from the beginning** (fresh Validation Loop with updated plan)
+  - Run complete validation loop (don't skip rounds)
+  - Continue until Validation Loop passes with ≤1 LOW-severity issue (primary clean round)
 
 **4. Dynamic Scope Adjustment (5-10 min if needed)**
 - Count checklist.md items

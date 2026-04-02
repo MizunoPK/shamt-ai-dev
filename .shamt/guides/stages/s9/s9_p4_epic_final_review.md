@@ -53,7 +53,7 @@ Before proceeding, you must have:
 
 You CANNOT:
 - Skip Step 6 (Epic Final Review) or any of its 5 categories because "S9.P2 already covered them" — all 5 categories are MANDATORY; S9.P2 results provide supplementary context only, not a replacement for the epic-scope review
-- Fix issues found in Step 6 inline instead of creating bug fix folders — ALL high/medium priority issues require a bug fix folder and the full S2→S5→S6→S7 workflow
+- Fix issues found in Step 6 inline instead of creating bug fix folders — ALL high/medium priority issues require a bug fix folder and the **S5→S6→S7 workflow** (implementation + testing; do NOT repeat S2 spec work unless bug reveals a spec issue)
 - Proceed to Step 8 (Final Verification) after creating bug fixes without restarting S9 from S9.P1 — the S9 restart is MANDATORY after any bug fixes created in Step 7
 - Mark S9.P4 complete without updating both EPIC_README.md Epic Progress Tracker and epic_lessons_learned.md with S9.P4 results and insights
 
