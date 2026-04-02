@@ -153,9 +153,10 @@ All output files are saved in the feature folder (`feature_XX_name/`):
 | **Validation Log** | `VALIDATION_LOG.md` | Records validation loop rounds and outcomes (created in I3) | ✅ Created in I3.P2 |
 
 **Key Locations and Versioning:**
-- All feature-specific outputs go in `feature_XX_name/` folder
-- Interface contracts live in feature folder (not in codebase)
-- Research notes and spec are primary sources for implementation team
+- **Feature folder files:** All S2.P1 outputs (spec.md, checklist.md, RESEARCH_NOTES.md, VALIDATION_LOG.md, INTERFACE_CONTRACT.md) go in `feature_XX_name/` folder
+- **Cross-feature files:** S2.P2 generates cross-feature comparison matrix in `epic/research/S2_P2_COMPARISON_MATRIX_GROUP_{N}.md` (Primary agent only, created in S2.P2)
+- **Interface contracts:** Live in feature folder (not in codebase)
+- **Research notes and spec:** Primary sources for implementation team
 - **spec.md Versioning:** Start at v1.0 (I1 draft), increment to v1.1 after Round 1 fixes (I3), finalize at v1.x after user approval (Gate 3 passed)
 - **Versioning Rule:** Each validation loop round that finds issues → increment patch version (v1.0 → v1.1 → v1.2). User approval finalizes version as "approved"
 

@@ -1604,6 +1604,47 @@ When spawning sub-agents for confirmation, provide the following context:
 - **CONFIRMED: Zero issues found** — plain text confirmation with no details needed
 - **Issues Found: {N}** — brief list with severity and location (no detailed prose needed)
 
+**Complete Handoff Example:**
+
+When spawning sub-agents, provide:
+```
+You are a sub-agent tasked with confirming zero issues in a specification document.
+
+ARTIFACT TO VALIDATE:
+- Path: /path/to/feature_02_name/spec.md
+- Version: v1.3 (after Round 4 fixes)
+- Context: Round 4 of validation loop for spec refinement
+
+VALIDATION TASK:
+Re-read the entire artifact and validate against ALL dimensions listed below.
+Report CONFIRMED: Zero issues found OR list all issues with severity.
+
+NOTE: You do NOT get the "1 LOW issue allowance" - report ANY issue found (even LOW severity).
+
+MASTER DIMENSIONS TO CHECK (all 7, every time):
+1. Empirical Verification (all claims verified from source)
+2. Completeness (all required sections present)
+3. Internal Consistency (no contradictions)
+4. Traceability (all decisions sourced)
+5. Clarity & Specificity (no vague language)
+6. Upstream Alignment (matches parent artifacts)
+7. Standards Compliance (follows templates)
+
+SCENARIO-SPECIFIC DIMENSIONS:
+[List S2-specific or scenario-specific dimensions if applicable]
+
+SEVERITY REFERENCE:
+- CRITICAL: Blocks workflow or causes cascading failures
+- HIGH: Causes significant confusion or wrong decisions
+- MEDIUM: Reduces quality but doesn't block
+- LOW: Cosmetic issues with minimal impact
+
+OUTPUT FORMAT:
+"CONFIRMED: Zero issues found" OR "Issues Found: {N} total
+1. {severity} - {dimension} - {brief description}
+2. {severity} - {dimension} - {brief description}"
+```
+
 **Model Selection (SHAMT-27):**
 - **ALWAYS use Haiku for sub-agent confirmations** (70-80% token savings)
   - **Why Haiku?** Sub-agents only verify "zero issues found" or "report any issues" — a focused, deterministic task

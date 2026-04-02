@@ -198,7 +198,7 @@ For each conflict found:
   - If conflicts found and unresolvable: escalate to user (contact feature owners)
 - [ ] **Zero unresolved conflicts** remain
 - [ ] Validation Loop passed (primary clean round + sub-agent confirmation)
-- [ ] Comparison matrix created and saved to `s2_p2_cross_feature_alignment.md`
+- [ ] Comparison matrix created and saved to `epic/research/S2_P2_COMPARISON_MATRIX_GROUP_{N}.md` (where {N} is the current group number)
 - [ ] All spec.md files updated (if conflicts resolved)
 - [ ] Epic EPIC_README.md updated with S2.P2 completion
 

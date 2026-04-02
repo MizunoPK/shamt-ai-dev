@@ -264,6 +264,70 @@ If checklist.md has pending questions, list them here:
 - Must include all 6 required sections above
 - Secondary agents use this to understand context before starting their S2.P1
 
+#### Copy-Paste Template
+
+**Use this template to create HANDOFF_PACKAGE.md in each feature folder after S2.P1 validation:**
+
+```markdown
+## Handoff Package: Feature XX {feature_name}
+
+**Created By:** {Your Agent ID}
+**Date:** {YYYY-MM-DD HH:MM}
+**Feature:** feature_XX_{name}
+**Secondary Agent Assignment:** {agent_id}
+
+### Context From Discovery
+
+**Epic-Level Goals:**
+[1-2 sentences from DISCOVERY.md]
+
+**Feature-Specific Requirements:**
+- [Requirement 1]
+- [Requirement 2]
+
+**Feature Integration Points:**
+[List features this integrates with and touchpoints]
+
+### Research Findings (From S2.P1 Research)
+
+**Code Locations Relevant to This Feature:**
+- {file.py:line} - {description}
+- {file.py:line} - {description}
+
+**Existing Patterns to Follow:**
+- [Pattern name]: [example or location]
+
+**External Dependencies:**
+- {library/API}: {compatibility notes}
+
+### Specification Status
+
+**Spec.md Status:** DRAFT / VALIDATED / USER_APPROVED
+**Current Version:** {version}
+**Checklist Items:** {total}, {answered} answered, {pending} pending
+
+### Outstanding Questions
+
+| # | Question | Context | Due |
+|---|----------|---------|-----|
+| 1 | [question] | [context] | S2.P1.I2 |
+
+### Known Constraints
+
+- [constraint 1]
+- [constraint 2]
+
+### Next Steps for Secondary Agent
+
+1. **S2.P1.I2:** Resolve questions
+2. **S2.P1.I3:** Run validation loop
+3. **Gate 3:** Get user approval
+4. **Report:** READY_FOR_SYNC = true
+5. **Wait:** Primary runs S2.P2
+
+**Escalation:** {primary-agent-id} via agent_comms/
+```
+
 ### File Format Requirements
 
 **Checkpoint files:**

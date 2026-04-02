@@ -1103,7 +1103,10 @@ Update Agent Status:
 - Current Guide: "parallel_work/s2_primary_agent_guide.md"
 - Next Action: "Generate handoff packages for {N-1} secondary agents"
 
-**Note on Handoff Packages:** Each feature needs a handoff package (HANDOFF_PACKAGE.md in the feature folder) after S2.P1 validation passes. The format is defined in `parallel_work/s2_parallel_protocol.md` (see "Handoff Package Format (HANDOFF_PACKAGE.md)" section). Primary generates these for secondary agents to provide context for their independent S2 work.
+**Note on Handoff Packages:** Each feature needs a handoff package (HANDOFF_PACKAGE.md in the feature folder) after S2.P1 validation passes.
+- **Format & Template:** See `parallel_work/s2_parallel_protocol.md` — section "Handoff Package Format (HANDOFF_PACKAGE.md)" with copy-paste template
+- **When created:** Primary creates after own S2.P1 validation complete (before spawning secondary agents)
+- **Purpose:** Gives secondary agents context to work independently on their feature's S2.P1
 
 **For Scenario C (Sequential):**
 
