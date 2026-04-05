@@ -861,7 +861,7 @@ python tests/integration/test_{feature_name}_e2e.py
 
 3. **Phase completion:** All assertions that *should* pass at this stage must pass. Full script pass required by end of final phase.
 
-4. **If integration script doesn't exist yet:** Create the skeleton in Phase 1 (see Step 3.5 below). On first run, all assertions are expected to fail — this is normal.
+4. **If integration script doesn't exist yet:** Create the skeleton in Phase 1 (see Step 3.6 below). On first run, all assertions are expected to fail — this is normal.
 
 ---
 
@@ -1113,7 +1113,7 @@ python run_[module].py --mode draft
   - Option C: All unit tests for algorithmic functions pass (100%)
   - Option D: Both — unit tests 100% + integration script passes
 - [ ] All mini-QC checkpoints passed
-- [ ] For Options B/D: Integration test script created and committed (Step 3.5)
+- [ ] For Options B/D: Integration test script created and committed (Step 3.6)
 - [ ] Final verification complete (Step 4):
   - All required tests/scripts passing per Testing Approach
   - All requirements implemented
