@@ -136,8 +136,10 @@ Add only `templates/implementation_plan_lite.template.md` without Pattern 6 in t
 |------|--------|-------|
 | `.shamt/scripts/initialization/SHAMT_LITE.template.md` | MODIFY | Add Pattern 6 (Implementation Planning) to Part 1, update Part 3 templates section |
 | `.shamt/scripts/initialization/templates/implementation_plan_lite.template.md` | CREATE | New copy-paste template for implementation plans |
+| `.shamt/scripts/initialization/init_lite.sh` | MODIFY | Add copy command for new template |
+| `.shamt/scripts/initialization/init_lite.ps1` | MODIFY | Add copy command for new template (PowerShell) |
 
-**Shamt Lite deployment file count:** 10 → 11 files (within reasonable limits for user-facing Lite deployment)
+**Shamt Lite deployment file count:** 8 → 9 files (within reasonable limits: 1 main + 3 reference + 5 templates)
 
 ---
 
@@ -158,7 +160,7 @@ Add only `templates/implementation_plan_lite.template.md` without Pattern 6 in t
 
 ### Phase 3: Update SHAMT_LITE.template.md
 - [ ] Insert Pattern 6 in Part 1 after Pattern 5 (before Part 2)
-- [ ] Update "5 core patterns" references to "6 core patterns" throughout file (estimated 6 locations)
+- [ ] Update "5 core patterns" references to "6 core patterns" throughout file (verify exact count during implementation)
 - [ ] Add template reference in Part 3 (Templates section)
 - [ ] Update table of contents
 - [ ] Update "What you get" list (line 19-24)
