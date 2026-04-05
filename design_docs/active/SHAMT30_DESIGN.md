@@ -53,6 +53,7 @@ Introduce a new two-stage pattern:
 - Executes plan steps mechanically in order
 - Reports completion or errors back to architect
 - Does NOT make design decisions or deviate from plan
+- **Error recovery:** Reports immediately and stops, zero autonomous recovery attempts
 - Architect handles any errors or edge cases discovered during execution
 
 **Implementation Plan File Format:**
@@ -114,10 +115,16 @@ You are a builder agent. Your role is to execute the implementation plan exactly
 4. Report completion or halt on first error
 5. DO NOT make design decisions or deviate from plan
 
-**Error Handling:**
-- If a step fails, STOP immediately
-- Report the error and the step number back to me
-- Do not attempt to fix or work around errors
+**Error Handling Protocol:**
+- If a step fails, STOP immediately - do not proceed to next step
+- Report back to architect with:
+  - Step number where error occurred
+  - Exact error message received
+  - Which verification failed (if applicable)
+  - Current state (what was completed before error)
+- Do NOT attempt retries, fixes, or workarounds
+- Do NOT skip failed steps and continue
+- Wait for architect instructions
 
 **Start by reading the implementation plan, then execute it step by step.**
 ```
@@ -160,6 +167,24 @@ This approach:
 - Forces discipline in planning—can't hand off a vague plan
 - Validation happens at plan level, not execution level (cheaper)
 - Builder failures bubble up cleanly to architect for resolution
+
+**Error Recovery Protocol:**
+
+When builder encounters an error:
+
+1. **Builder:** Reports immediately with detailed error context (step number, exact error message, verification that failed, current state) and STOPS execution
+2. **Architect:** Receives error report and diagnoses root cause (plan error vs. transient issue vs. environment issue)
+3. **Architect:** Takes one of these actions:
+   - Fix the implementation plan and spawn new builder from failed step
+   - Determine it's transient and instruct builder to retry specific step
+   - Investigate environment/codebase issue before continuing
+4. **No autonomous recovery:** Builder never attempts retries, fixes, or workarounds
+
+**Rationale:**
+- Keeps builder role maximally simple (mechanical execution only)
+- Architect is already running (spawned the builder), so round-trip cost is minimal
+- Consistent "report everything" behavior vs. complex retry logic
+- Architect has full context to make correct recovery decision
 
 **Alternatives considered:**
 
@@ -392,8 +417,7 @@ Update master instructions to reflect new pattern
 
 1. ~~**Plan validation mechanics:**~~ **RESOLVED** - Implementation plans MUST go through 9-dimension validation loop before builder handoff. Exit criterion: primary clean round + 2 Haiku sub-agents confirm zero issues.
 
-2. **Error recovery protocol:** When builder hits an error, should they report back immediately or attempt simple retries?
-   - Leaning toward: Report immediately, no autonomous recovery
+2. ~~**Error recovery protocol:**~~ **RESOLVED** - Builder reports immediately and stops, zero autonomous recovery. Error report includes: step number, exact error message, verification that failed, current state. Architect diagnoses and decides: fix plan, retry step, or investigate environment.
 
 3. **Nested delegation:** Can a builder spawn its own sub-agents for parallel work, or must all parallelism be planned by architect?
    - Leaning toward: No nested delegation—keep builder role simple
@@ -434,3 +458,4 @@ Update master instructions to reflect new pattern
 | 2026-04-04 | Added Proposal 3: S2 spec validation enhancement for implementation-ready specs |
 | 2026-04-04 | Resolved Open Question 1: Validation loop required before builder handoff |
 | 2026-04-04 | Updated Files Affected and Implementation Plan phases to reflect S2 and S5 changes |
+| 2026-04-04 | Resolved Open Question 2: Error recovery protocol - report immediately, zero autonomous recovery |
