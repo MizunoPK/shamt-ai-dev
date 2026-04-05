@@ -6,6 +6,23 @@
 
 ---
 
+## Table of Contents
+
+1. [Overview](#overview)
+2. [When to Use This Pattern](#when-to-use-this-pattern)
+3. [Decision Tree](#decision-tree)
+4. [Pattern Mechanics](#pattern-mechanics)
+5. [Handoff Package Format](#handoff-package-format)
+6. [Error Recovery Protocol](#error-recovery-protocol)
+7. [Parallelism Strategy](#parallelism-strategy)
+8. [Token Savings Calculation](#token-savings-calculation)
+9. [Task Tool Invocation Examples](#task-tool-invocation-examples)
+10. [Common Mistakes and How to Avoid Them](#common-mistakes-and-how-to-avoid-them)
+11. [Related Documentation](#related-documentation)
+12. [Summary](#summary)
+
+---
+
 ## Overview
 
 The architect-builder pattern splits implementation into two distinct stages:

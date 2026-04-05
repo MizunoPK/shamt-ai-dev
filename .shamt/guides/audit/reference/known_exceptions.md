@@ -337,6 +337,14 @@ follows the emoji (space → hyphen after stripping the emoji).
 - **Audit Action:** SKIP D11 violation — tracked as known exception, approved SHAMT-26 audit Round 1
 - **Review trigger:** If file exceeds 1500 lines, re-evaluate for splitting
 
+**F5. stages/s6/s6_execution.md (1267 lines)**
+- **D11 Status:** Exceeds 1250-line baseline by 17 lines (1.4% over)
+- **Pre-existing:** No — restructured in SHAMT-30 (architect-builder pattern mandatory in S6)
+- **Split candidates:** Could be split into architect workflow + builder workflow + reference material (traditional implementation)
+- **Why deferred:** Splitting would fragment the architect-builder pattern documentation. Content is non-duplicated and necessary for S6 execution. Overage is minimal (17 lines, 1.4%). The restructure added comprehensive architect workflow steps (6 steps), handoff package template, error recovery guidance, and preserved existing content as reference.
+- **Audit Action:** SKIP D11 violation — tracked as known exception, approved SHAMT-30 implementation validation
+- **Review trigger:** If file exceeds 1400 lines, re-evaluate for splitting
+
 ---
 
 ## Category G: D22 Lightweight MRP Exceptions (Router and Optional Guides)
@@ -500,10 +508,11 @@ wc -l real_violations.txt  # Should be low count
 - Category E (D12 Companion/Reference Files in stages/): **2 active files**
   - stages/s5/s5_v2_example.md (worked example companion — added child-sync-20260326)
   - stages/s5/s5_v2_troubleshooting.md (troubleshooting reference companion — added child-sync-20260326)
-- Category F (D11 File Size — pre-existing, deferred splitting): **4 active files**
+- Category F (D11 File Size — pre-existing, deferred splitting): **5 active files**
   - stages/s1/s1_epic_planning.md (1394 lines, 144 over 2000 baseline)
   - stages/s5/s5_v2_validation_loop.md (1406 lines, 156 over 2000 baseline)
   - stages/s10/s10_epic_cleanup.md (1316 lines, 66 over 2000 baseline — grew due to SHAMT-25 Step 3e)
+  - stages/s6/s6_execution.md (1267 lines, 17 over 1250 baseline — restructured SHAMT-30)
   - reference/validation_loop_master_protocol.md (1582 lines, 332 over 2000 baseline)
 - Category G (D22 Lightweight MRP — Router and Optional Guides): **5 active files**
   - stages/s2/s2_feature_deep_dive.md (router guide — lightweight MRP only, no FS)
@@ -535,6 +544,6 @@ wc -l real_violations.txt  # Should be low count
 
 ---
 
-**Last Verified:** 2026-03-30 (updated three times: first pass — E1 baseline 25 → 27, F1/F2/F3 line counts, G5 added for s10_p2_overview_workflow.md; second pass — Category H added for parallel_work secondary agent guides; third pass — H3/H4 added for primary agent guides, Category H title broadened to cover all parallel_work/ guides)
+**Last Verified:** 2026-04-04 (SHAMT-30: F5 added for stages/s6/s6_execution.md architect-builder restructure, Category F count updated to 5 files; previous updates: 2026-03-30 - E1 baseline 25 → 27, F1/F2/F3 line counts, G5/H3/H4 added, Category H broadened)
 **Next Review:** When new stage/iteration guides added, or if D8/D10/D22 check patterns change
 
