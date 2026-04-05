@@ -297,3 +297,48 @@ Child projects maintain ARCHITECTURE.md and CODING_STANDARDS.md through the S1-S
 **When to Use:** Spawn sub-agents with the `model` parameter in the Task tool when delegation will save tokens without degrading quality. Always delegate sub-agent confirmations to Haiku.
 
 **When NOT to Use:** Parallel work coordination (use Sonnet for consistency), tasks requiring existing context (avoid context switching overhead).
+
+---
+
+## Architect-Builder Implementation Pattern (SHAMT-30)
+
+**Purpose:** Two-stage implementation pattern that separates planning (architect) from execution (builder) for 60-70% token savings on implementation execution.
+
+**Pattern Overview:**
+- **Architect** (Sonnet/Opus): Creates mechanical implementation plan, validates it (9 dimensions), spawns builder
+- **Builder** (Haiku): Executes plan mechanically, reports completion or errors
+- **Separation:** Planning uses expensive model, execution uses cheap model
+
+**Usage:**
+
+**MANDATORY** for S1-S10 epic workflow:
+- S6 implementation execution MUST use architect-builder pattern (no exceptions)
+- No traditional implementation option (architect executing own plan)
+- Rationale: S1-S10 workflow is exclusively for non-trivial changes
+
+**OPTIONAL** for master dev workflow and ad-hoc work:
+- Use when: >10 file operations, >100K tokens with traditional approach, complex dependencies, unfamiliar codebase
+- Skip when: 1-5 file changes, exploratory work, rapid iteration, prototypes
+- See decision tree in `reference/architect_builder_pattern.md`
+
+**Key Files:**
+- `reference/architect_builder_pattern.md` - Complete pattern documentation (when to use, mechanics, error recovery)
+- `reference/implementation_plan_format.md` - Mechanical plan specification (CREATE/EDIT/DELETE/MOVE operations, 9 validation dimensions)
+- `templates/implementation_plan_template.md` - Mechanical plan template (copy-paste starting point)
+- `templates/implementation_plan_validation_log_template.md` - Validation log template
+
+**Workflow:**
+1. Architect creates mechanical implementation plan (step-by-step file operations with exact details)
+2. Architect validates plan (9-dimension validation loop: step clarity, mechanical executability, file coverage, operation specificity, verification completeness, error handling, dependency ordering, checklist completeness, spec alignment)
+3. Architect creates handoff package (builder instructions, error handling protocol)
+4. Architect spawns Haiku builder (Task tool with `model="haiku"`)
+5. Builder executes plan sequentially (no design decisions, reports errors immediately)
+6. Architect monitors execution (handles success/errors, diagnoses, fixes plan if needed)
+
+**Token Savings:** 60-70% on implementation execution (Haiku builder vs. Sonnet/Opus architect)
+
+**Integration Points:**
+- S2: Added Dimension 10 (Design Completeness) to spec validation - ensures specs contain complete architectural/design detail (prerequisite for mechanical planning)
+- S5: Cross-references architect-builder pattern, explains two implementation approaches (task-based S5 plan vs. mechanical S6 plan)
+- S6: Restructured to use architect-builder pattern (replaces traditional implementation workflow)
+- Master dev: Optional integration at Step 3.5 with decision criteria
