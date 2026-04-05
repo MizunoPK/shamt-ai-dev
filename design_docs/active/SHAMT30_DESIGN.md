@@ -1,6 +1,6 @@
 # SHAMT-30: Architect-Builder Implementation Pattern
 
-**Status:** Draft
+**Status:** Validated
 **Created:** 2026-04-04
 **Branch:** `feat/SHAMT-30`
 **Validation Log:** [SHAMT30_VALIDATION_LOG.md](./SHAMT30_VALIDATION_LOG.md)
@@ -18,7 +18,7 @@ Currently, the same agent that performs planning (architecture, design decisions
 
 **Impact:** Higher costs, slower execution, and risk of implementation drift from validated plans.
 
-**Who is affected:** All Shamt workflows with implementation phases (S2-S6, S9, master dev workflow, code reviews with fixes).
+**Who is affected:** S6 implementation execution in the epic workflow, master dev workflow implementations, and ad-hoc implementations outside the epic workflow.
 
 ---
 
@@ -128,6 +128,11 @@ You are a builder agent. Your role is to execute the implementation plan exactly
 - Do NOT skip failed steps and continue
 - Wait for architect instructions
 
+**Resuming from Partial Execution:**
+- If architect fixes plan and wants to resume, they will specify:
+  - "Execute steps {N} through {M}" (e.g., "Execute steps 15 through 50")
+- Start from the specified step number, skip completed steps
+
 **Start by reading the implementation plan, then execute it step by step.**
 ```
 
@@ -233,6 +238,10 @@ Builders execute steps **sequentially only** - no nested delegation or sub-agent
 **Description:**
 
 Implementation plans MUST be validated before builder handoff. This ensures plans are mechanically executable without design decisions.
+
+**Relationship to S5 Validation:**
+
+S5 currently validates implementation plans using 11 dimensions focused on design quality (algorithm traceability, integration gaps, etc.). SHAMT-30 **replaces** those 11 dimensions with these 9 dimensions **focused on mechanical executability**. The new dimensions ensure the plan can be executed by a Haiku builder without design decisions, rather than validating design choices (which are validated in S2 spec creation).
 
 **The 9 Validation Dimensions:**
 
@@ -400,7 +409,7 @@ Update S5 to support mechanical implementation plan creation and validation
   - Emphasize mechanical step-by-step format
   - Reference implementation plan format guide
   - Show examples of ultra-specific steps (exact locate/replace strings)
-- [ ] Update S5 Phase 2 (Validation Loop) to use 9 dimensions from Proposal 2
+- [ ] Update S5 Phase 2 (Validation Loop) to REPLACE current 11 dimensions with 9 dimensions from Proposal 2
 - [ ] Document that output is a mechanically executable plan ready for builder handoff
 - [ ] Commit Phase 4: `feat/SHAMT-30: Update S5 for mechanical implementation plans with 9-dimension validation`
 
@@ -484,8 +493,8 @@ Update master instructions to reflect new pattern
 
 ## Risks & Mitigation
 
-**Risk 1: Overhead doesn't justify savings for small tasks**
-- Mitigation: Clear "when to use" guidance, always keep pattern optional
+**Risk 1: Mandatory usage adds overhead to all S6 implementations**
+- Mitigation: Pattern is mandatory only in S1-S10 epic workflow which is exclusively for non-trivial changes where overhead is justified. For master dev and ad-hoc work, pattern remains optional with clear "when to use" guidance (>10 file operations).
 
 **Risk 2: Plans become outdated if codebase changes between planning and execution**
 - Mitigation: Execute plans promptly after creation, architect re-validates plan if delays occur
@@ -514,3 +523,7 @@ Update master instructions to reflect new pattern
 | 2026-04-04 | Resolved Open Question 3: No nested delegation - builders execute sequentially, architect handles parallelism |
 | 2026-04-04 | Resolved Open Question 4: Plan file locations - live alongside implemented artifact, archive with parent |
 | 2026-04-04 | Resolved Open Question 5: Pattern is MANDATORY for S1-S10 epic workflow (S6), optional for master dev/ad-hoc |
+| 2026-04-04 | Validation Round 1: Fixed 5 issues (1 HIGH, 1 MEDIUM, 3 LOW) - clarified affected workflows, S5 dimension replacement, Risk 1, resume protocol |
+| 2026-04-04 | Validation Round 2: Fixed 1 issue (1 LOW) - removed redundant resume point from step format. PRIMARY CLEAN ROUND achieved |
+| 2026-04-04 | Sub-agent confirmations: Both Haiku sub-agents confirmed zero issues. Design doc validated successfully |
+| 2026-04-04 | Status updated from Draft to Validated |
