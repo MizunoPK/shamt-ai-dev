@@ -144,22 +144,24 @@ Task(
 
 **Workflow Integration Points:**
 
-This pattern can be used in any phase with significant implementation:
-- **S2.P2 (Spec Implementation):** Architect creates plan from spec, builder executes
-- **S4 (Code Development):** Architect plans feature implementation, builder writes code
-- **S6 (Bug Fixes):** Architect diagnoses + plans fix, builder applies it
-- **S9.P3 (Epic Implementation):** Same pattern at epic scale
-- **Master dev workflow:** Architect plans guide changes, builder edits files
+This pattern is used in:
+- **S6 (Implementation Execution):** MANDATORY for all epic workflow implementations
+- **Master dev workflow:** Optional for guide implementations (smaller scale, different context)
+- **Ad-hoc work:** Optional for work outside epic workflow
 
-**When to Use This Pattern:**
-- Implementation requires >5 file operations
-- Clear plan can be written without needing runtime decisions
-- Token savings justify the overhead (large implementations)
+**Mandatory Usage (S1-S10 Epic Workflow):**
 
-**When NOT to Use This Pattern:**
-- Exploratory work (debugging, discovery)
-- Simple 1-2 file changes
-- Implementation requires frequent design decisions based on code inspection
+The architect-builder pattern is **MANDATORY** for all implementations in the S1-S10 epic workflow:
+- S6 implementation execution MUST use this pattern (no traditional implementation option)
+- If implementation plan is created and validated, builder handoff is MANDATORY
+- NO EXCEPTIONS - no thresholds, no small change exemptions
+- Rationale: The S1-S10 epic workflow is exclusively for non-trivial changes
+
+**Optional Usage (Outside Epic Workflow):**
+
+For master dev workflow and ad-hoc work outside S1-S10:
+- Pattern is optional but recommended for >10 file operations
+- Allows flexibility for quick guide fixes, emergency hotfixes, exploratory work
 
 **Rationale:**
 
@@ -334,8 +336,7 @@ Complete S2 specs are a **prerequisite** for effective architect-builder delegat
 | `.shamt/guides/stages/s2/s2_p1_spec_creation_refinement.md` | MODIFY | Document requirement for complete design/architecture in specs |
 | `.shamt/guides/stages/s2/s2_p2_spec_implementation.md` | MODIFY | Add/enhance "Design Completeness" validation dimension |
 | `.shamt/guides/stages/s5/s5_v2_validation_loop.md` | MODIFY | Update to support mechanical implementation plan creation with 9-dimension validation |
-| `.shamt/guides/stages/s6/s6_p1_bug_fixing.md` | MODIFY | Add optional architect-builder delegation |
-| `.shamt/guides/stages/s9/s9_p3_epic_implementation.md` | MODIFY | Add optional architect-builder delegation |
+| `.shamt/guides/stages/s6/s6_implementation_execution.md` | MODIFY | Make architect-builder pattern MANDATORY for all S6 execution |
 | `.shamt/guides/master_dev_workflow/implementation_phase.md` | MODIFY | Add architect-builder pattern guidance |
 | `.shamt/guides/templates/implementation_plan_template.md` | CREATE | Copy-paste template for mechanical implementation plans |
 | `.shamt/guides/templates/implementation_plan_validation_log_template.md` | CREATE | Template for implementation plan validation logs |
@@ -400,31 +401,42 @@ Update S5 to support mechanical implementation plan creation and validation
   - Reference implementation plan format guide
   - Show examples of ultra-specific steps (exact locate/replace strings)
 - [ ] Update S5 Phase 2 (Validation Loop) to use 9 dimensions from Proposal 2
-- [ ] Add S5 Phase 3: Builder Handoff (optional delegation to Haiku)
+- [ ] Document that output is a mechanically executable plan ready for builder handoff
 - [ ] Commit Phase 4: `feat/SHAMT-30: Update S5 for mechanical implementation plans with 9-dimension validation`
 
-### Phase 5: Other Stage Guide Updates
-Integrate pattern into S6, S9, master dev workflow as optional delegation strategy
+### Phase 5: S6 Implementation Execution Update
+Update S6 to mandate architect-builder pattern for all epic workflow implementations
 
-For each affected stage guide:
-- [ ] S6.P1: Add optional architect-builder delegation after root cause analysis
-- [ ] S9.P3: Add optional architect-builder delegation for epic-scale implementations
-- [ ] Master dev workflow: Add architect-builder option to implementation phase
-- [ ] Each integration should:
-  - Link to `architect_builder_pattern.md` reference
-  - Include decision criteria (when to use this pattern)
-  - Show handoff package example specific to that stage
-  - Maintain "optional" framing—not mandatory for all implementations
-- [ ] Commit Phase 5: `feat/SHAMT-30: Add architect-builder delegation to S6, S9, master dev`
+- [ ] Read current S6 guide
+- [ ] Update S6 to reflect MANDATORY builder handoff:
+  - S5 produces validated implementation plan
+  - S6 receives plan and creates handoff package
+  - S6 spawns Haiku builder via Task tool
+  - Builder executes plan mechanically
+  - Architect handles any errors reported by builder
+- [ ] Document no exceptions: all epic workflow implementations use this pattern
+- [ ] Show handoff package format for S6 context
+- [ ] Commit Phase 5: `feat/SHAMT-30: Make architect-builder pattern mandatory in S6`
 
-### Phase 6: CLAUDE.md Update
+### Phase 6: Optional Integration (Master Dev, Ad-hoc)
+Add optional architect-builder delegation for non-epic workflow contexts
+
+- [ ] Master dev workflow: Add optional architect-builder pattern guidance
+- [ ] Document when to use (>10 file operations) vs. traditional implementation
+- [ ] Show handoff package example for master dev context
+- [ ] Note that pattern is mandatory in epic workflow, optional elsewhere
+- [ ] Commit Phase 6: `feat/SHAMT-30: Add optional architect-builder pattern to master dev workflow`
+
+### Phase 7: CLAUDE.md Update
 Update master instructions to reflect new pattern
 
 - [ ] Read current `CLAUDE.md`
 - [ ] Add architect-builder pattern to "Model Selection" section
+- [ ] Document mandatory usage in S1-S10 epic workflow (S6 execution)
+- [ ] Document optional usage in master dev workflow and ad-hoc work
 - [ ] Document 9-dimension validation requirement before builder handoff
-- [ ] Add to "Critical Rules" if appropriate
-- [ ] Commit Phase 6: `feat/SHAMT-30: Update CLAUDE.md with architect-builder pattern`
+- [ ] Add to "Critical Rules": "S6 implementation execution MUST use architect-builder pattern"
+- [ ] Commit Phase 7: `feat/SHAMT-30: Update CLAUDE.md with architect-builder pattern`
 
 ---
 
@@ -466,8 +478,7 @@ Update master instructions to reflect new pattern
 
 4. ~~**Plan file location:**~~ **RESOLVED** - Plans live alongside the artifact they implement. Master: `design_docs/active/SHAMT{N}_IMPLEMENTATION_PLAN.md` (with design doc). Child: `.shamt/epics/{epic}/features/{feature}/implementation_plan.md` (with spec.md). Plans move to archive/done with parent artifacts when complete.
 
-5. **Mandatory vs. optional:** Should this pattern be mandatory for implementations >N steps, or always optional with guidance?
-   - Leaning toward: Always optional, strong guidance for >10 file operations
+5. ~~**Mandatory vs. optional:**~~ **RESOLVED** - MANDATORY for S1-S10 epic workflow (all S6 implementations), no exceptions. Optional for master dev workflow and ad-hoc work. Rationale: Epic workflow is for non-trivial changes only; builder handoff is mandatory if pattern is used (no executing your own validated plan).
 
 ---
 
@@ -502,3 +513,4 @@ Update master instructions to reflect new pattern
 | 2026-04-04 | Resolved Open Question 2: Error recovery protocol - report immediately, zero autonomous recovery |
 | 2026-04-04 | Resolved Open Question 3: No nested delegation - builders execute sequentially, architect handles parallelism |
 | 2026-04-04 | Resolved Open Question 4: Plan file locations - live alongside implemented artifact, archive with parent |
+| 2026-04-04 | Resolved Open Question 5: Pattern is MANDATORY for S1-S10 epic workflow (S6), optional for master dev/ad-hoc |
