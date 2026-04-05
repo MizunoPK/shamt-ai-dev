@@ -184,7 +184,7 @@ Add only `templates/implementation_plan_lite.template.md` without Pattern 6 in t
 - [ ] Verify template does NOT use {{PROJECT_NAME}} variable (plans are feature-scoped, not project-scoped)
 - [ ] Optionally add {{DATE}} variable to template "Created" field (if desired)
 - [ ] Test init_lite scripts copy new template correctly
-- [ ] Confirm deployment file count is 11 files
+- [ ] Confirm deployment file count is 9 files
 - [ ] Run implementation validation (5 dimensions)
 
 ---
