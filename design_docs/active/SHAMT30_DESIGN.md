@@ -50,9 +50,10 @@ Introduce a new two-stage pattern:
 
 **Stage 2: Builder (Sub-Agent - Haiku)**
 - Receives implementation plan + handoff package via Task tool
-- Executes plan steps mechanically in order
+- Executes plan steps mechanically in **sequential order** (Step 1, 2, 3...)
 - Reports completion or errors back to architect
 - Does NOT make design decisions or deviate from plan
+- Does NOT spawn sub-agents (no nested delegation)
 - **Error recovery:** Reports immediately and stops, zero autonomous recovery attempts
 - Architect handles any errors or edge cases discovered during execution
 
@@ -110,10 +111,11 @@ You are a builder agent. Your role is to execute the implementation plan exactly
 
 **Your Responsibilities:**
 1. Read the implementation plan file
-2. Execute each step in order (Step 1, 2, 3...)
+2. Execute each step in sequential order (Step 1, 2, 3...)
 3. Verify each step as specified
 4. Report completion or halt on first error
 5. DO NOT make design decisions or deviate from plan
+6. DO NOT spawn sub-agents or parallelize work
 
 **Error Handling Protocol:**
 - If a step fails, STOP immediately - do not proceed to next step
@@ -185,6 +187,29 @@ When builder encounters an error:
 - Architect is already running (spawned the builder), so round-trip cost is minimal
 - Consistent "report everything" behavior vs. complex retry logic
 - Architect has full context to make correct recovery decision
+
+**Parallelism Strategy:**
+
+Builders execute steps **sequentially only** - no nested delegation or sub-agent spawning.
+
+**If parallelism is desired:**
+- Architect spawns multiple builders in parallel
+- Each builder receives a partitioned subset of the full plan
+- Architect coordinates dependencies between builders
+- All builders report back to architect independently
+- Same simple execution model for each builder
+
+**Example:** For a feature touching backend, frontend, and tests:
+- Builder A: backend file changes (steps 1-15)
+- Builder B: frontend file changes (steps 16-30)
+- Builder C: test file changes (steps 31-45)
+- All spawn in parallel via single architect message with 3 Task tool calls
+
+**Rationale:**
+- Keeps builder role maximally simple (no parallelization logic)
+- Architect has better information for dependency analysis
+- Same error handling model regardless of parallelism
+- Plan format stays simple (no parallel markers needed)
 
 **Alternatives considered:**
 
@@ -419,8 +444,7 @@ Update master instructions to reflect new pattern
 
 2. ~~**Error recovery protocol:**~~ **RESOLVED** - Builder reports immediately and stops, zero autonomous recovery. Error report includes: step number, exact error message, verification that failed, current state. Architect diagnoses and decides: fix plan, retry step, or investigate environment.
 
-3. **Nested delegation:** Can a builder spawn its own sub-agents for parallel work, or must all parallelism be planned by architect?
-   - Leaning toward: No nested delegation—keep builder role simple
+3. ~~**Nested delegation:**~~ **RESOLVED** - No nested delegation. Builders execute steps sequentially only, cannot spawn sub-agents. For parallelism: architect spawns multiple builders in parallel with partitioned plans. Keeps builder role maximally simple.
 
 4. **Plan file location:** Where should implementation plans live? Alongside design docs, in a temp directory, or stage-specific locations?
    - Leaning toward: `design_docs/active/SHAMT{N}_IMPLEMENTATION_PLAN.md` for master work, `.shamt/temp/{epic}/IMPLEMENTATION_PLAN.md` for child epic work
@@ -459,3 +483,4 @@ Update master instructions to reflect new pattern
 | 2026-04-04 | Resolved Open Question 1: Validation loop required before builder handoff |
 | 2026-04-04 | Updated Files Affected and Implementation Plan phases to reflect S2 and S5 changes |
 | 2026-04-04 | Resolved Open Question 2: Error recovery protocol - report immediately, zero autonomous recovery |
+| 2026-04-04 | Resolved Open Question 3: No nested delegation - builders execute sequentially, architect handles parallelism |
