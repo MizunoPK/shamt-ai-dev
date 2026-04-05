@@ -1261,7 +1261,3 @@ python run_[module].py --mode draft
 - Fix ALL issues immediately (no restart needed - validation loop approach)
 
 **Remember:** Use the phase transition prompt from `prompts_reference_v2.md` when starting S7 (Testing & Review).
-
----
-
-*End of stages/s6/s6_execution.md*

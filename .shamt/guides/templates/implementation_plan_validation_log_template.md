@@ -1,5 +1,16 @@
 # Implementation Plan Validation Log
 
+**Purpose:** Track validation rounds for an implementation plan's 9-dimension validation loop. Use this template to document issues found, fixes applied, and sub-agent confirmations.
+
+**How to Use This Template:**
+1. Copy this file to your feature directory as `implementation_plan_validation_log.md`
+2. Replace all `{...}` placeholders with actual values
+3. Document each validation round systematically (Round 1, Round 2, etc.)
+4. Track `consecutive_clean` rounds (≤1 LOW issue per round)
+5. Exit when: primary clean round + 2 independent sub-agent confirmations
+
+---
+
 **Plan:** [implementation_plan.md](./implementation_plan.md)
 **Validation Started:** {YYYY-MM-DD}
 **Validation Completed:** {YYYY-MM-DD or "In Progress"}
