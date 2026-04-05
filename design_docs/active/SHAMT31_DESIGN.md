@@ -40,7 +40,7 @@ The architect-builder pattern (SHAMT-30) proved highly valuable in full Shamt (6
    - No epic tracking requirements
    - Focus on core planning discipline
    - Optional builder handoff (not mandatory like full Shamt)
-5. **Keep total file count reasonable** — target ≤12 files total (currently 10 files)
+5. **Keep total file count reasonable** — target ≤12 files total (currently 8 files: 1 main + 3 reference + 4 templates)
 
 ---
 
@@ -68,6 +68,11 @@ Add Pattern 6 (Implementation Planning) to `SHAMT_LITE.template.md` Part 1 with 
    - Implementation Steps section with example steps
    - Post-Execution Checklist
    - Notes section
+
+**File Location Convention:**
+- Simple single-location approach: `implementation_plan.md` in project root or feature subdirectory
+- No master/child complexity (unlike full Shamt)
+- Users choose location based on project structure
 
 **Simplified 7 Validation Dimensions** (reduced from 9 for Lite):
 1. Step Clarity — Every step has clear action description
