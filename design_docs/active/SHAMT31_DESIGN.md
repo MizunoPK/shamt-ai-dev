@@ -58,7 +58,8 @@ Add Pattern 6 (Implementation Planning) to `SHAMT_LITE.template.md` Part 1 with 
    - 5-step process: Read spec → Create plan → Validate plan → Execute → Verify
    - Inline format specification (CREATE, EDIT, DELETE, MOVE operations)
    - Simplified 7-dimension validation (adapted from 9 dimensions in full Shamt)
-   - Exit criterion: 1 clean round (not 3 like full Shamt - lighter weight)
+   - Exit criterion: 1 clean round without sub-agent confirmations (simpler than full Shamt's "primary clean + 2 sub-agent confirmations" pattern)
+   - Rationale for lighter validation: Implementation plans are narrower scope than discovery docs; single clean round provides sufficient quality assurance
    - Optional builder handoff section (how to use with Task tool)
 
 2. **templates/implementation_plan_lite.template.md**:
@@ -75,7 +76,7 @@ Add Pattern 6 (Implementation Planning) to `SHAMT_LITE.template.md` Part 1 with 
 4. Operation Specificity — Exact locate/replace strings for EDITs
 5. Verification — Each step has verification method
 6. Dependency Ordering — Steps in correct sequence
-7. Spec Alignment — All spec requirements covered
+7. Requirements Alignment — All documented requirements (from discovery, user request, or feature brief) covered
 
 **Removed dimensions from full Shamt version:**
 - Error Handling Clarity (kept simple for Lite)
@@ -136,7 +137,7 @@ Add only `templates/implementation_plan_lite.template.md` without Pattern 6 in t
 | `.shamt/scripts/initialization/SHAMT_LITE.template.md` | MODIFY | Add Pattern 6 (Implementation Planning) to Part 1, update Part 3 templates section |
 | `.shamt/scripts/initialization/templates/implementation_plan_lite.template.md` | CREATE | New copy-paste template for implementation plans |
 
-**File count:** 10 → 11 files (within reasonable limits)
+**Shamt Lite deployment file count:** 10 → 11 files (within reasonable limits for user-facing Lite deployment)
 
 ---
 
@@ -157,10 +158,12 @@ Add only `templates/implementation_plan_lite.template.md` without Pattern 6 in t
 
 ### Phase 3: Update SHAMT_LITE.template.md
 - [ ] Insert Pattern 6 in Part 1 after Pattern 5 (before Part 2)
-- [ ] Update "5 core patterns" references to "6 core patterns" throughout file
+- [ ] Update "5 core patterns" references to "6 core patterns" throughout file (estimated 6 locations)
 - [ ] Add template reference in Part 3 (Templates section)
 - [ ] Update table of contents
 - [ ] Update "What you get" list (line 19-24)
+- [ ] Update Quick Reference section: Add Pattern 6 to "When to use which pattern?" table
+- [ ] Add "Implementation Planning Cheat Sheet" to Quick Reference section
 
 ### Phase 4: Validation
 - [ ] Run design doc validation loop (7 dimensions, primary clean round + 2 sub-agents)
@@ -169,9 +172,12 @@ Add only `templates/implementation_plan_lite.template.md` without Pattern 6 in t
 - [ ] Verify SHAMT_LITE.template.md Part 1 remains standalone (no external dependencies)
 
 ### Phase 5: Integration Verification
-- [ ] Verify init_lite.sh/init_lite.ps1 scripts copy new template correctly
-- [ ] Check template variable substitution ({{PROJECT_NAME}}, {{DATE}})
-- [ ] Confirm file count is still reasonable (11 files)
+- [ ] Update init_lite.sh: Add copy command for `templates/implementation_plan_lite.template.md` to deployment directory
+- [ ] Update init_lite.ps1: Add corresponding PowerShell copy command for the template
+- [ ] Verify template does NOT use {{PROJECT_NAME}} variable (plans are feature-scoped, not project-scoped)
+- [ ] Optionally add {{DATE}} variable to template "Created" field (if desired)
+- [ ] Test init_lite scripts copy new template correctly
+- [ ] Confirm deployment file count is 11 files
 - [ ] Run implementation validation (5 dimensions)
 
 ---
@@ -205,24 +211,14 @@ Add only `templates/implementation_plan_lite.template.md` without Pattern 6 in t
 
 ---
 
-## Open Questions
+## Open Questions (All Resolved)
 
-1. **Should builder handoff be encouraged or just documented as optional?**
-   - Current proposal: Documented as optional
-   - Full Shamt makes it mandatory for S1-S10 workflow
-   - Lite users may not have Haiku access or may prefer to execute their own plans
-   - **Decision:** Keep optional, show Task tool example but don't require it
+All design decisions have been made and documented in the main proposal:
 
-2. **Should validation require 1 clean round or 3 like full Shamt?**
-   - Current proposal: 1 clean round (lighter weight)
-   - Full Shamt uses 3 consecutive clean rounds for guides
-   - Implementation plans use "primary clean round + 2 sub-agent confirmations"
-   - **Decision:** 1 clean round for Lite (simpler, faster)
-
-3. **Include file location conventions (master vs child work)?**
-   - Full Shamt has complex location rules
-   - Lite is simpler (no child projects)
-   - **Decision:** Single location convention: `implementation_plan.md` in project root or feature directory
+1. **Builder handoff approach:** Optional (documented with Task tool example, but not required)
+2. **Validation exit criterion:** 1 clean round without sub-agent confirmations (lighter than full Shamt)
+3. **File location convention:** `implementation_plan.md` in project root or feature directory (no master/child complexity)
+4. **Builder handoff criteria:** Use when: (1) plan >20 steps, (2) Haiku access available, (3) implementation is mechanical (documented in Risks section line 251)
 
 ---
 
