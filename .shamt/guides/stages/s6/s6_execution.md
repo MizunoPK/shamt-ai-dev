@@ -917,7 +917,7 @@ Each phase:
 
 ---
 
-#### 3.5: Create Integration Test Script Skeleton (Options B/D — Phase 1 only)
+#### 3.6: Create Integration Test Script Skeleton (Options B/D — Phase 1 only)
 
 **When:** First phase of S6, if Testing Approach is B or D.
 
