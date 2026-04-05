@@ -1075,6 +1075,6 @@ This is a primary validation round.
 
 **References:**
 
-- Design Doc: `design_docs/active/SHAMT27_DESIGN.md`
+- Design Doc: `design_docs/archive/SHAMT27_DESIGN.md`
 - Severity Classification: `reference/severity_classification_universal.md`
 - Validation Loop Protocol: `reference/validation_loop_master_protocol.md`
