@@ -15,6 +15,7 @@ When workflow guides specify model delegation patterns (e.g., "Spawn Haiku → F
 
 **Example workflows with mandatory delegation:**
 - Validation loops (S1.P3, S2.P1, S5.V2, S7.P2, S9.P2, S9.P4, S10.P1) - Haiku for sub-agent confirmations (70-80% savings)
+- **Architect-Builder Pattern (S6 implementation execution)** - Haiku for mechanical implementation execution (60-70% savings)
 - Guide audits (audit/stages/stage_5_loop_decision.md) - Haiku for pre-checks and confirmations (40-50% savings)
 - Code reviews (code_review/code_review_workflow.md) - Haiku for git ops, Sonnet for ELI5, Haiku for confirmations (30-40% savings)
 - Import workflow (sync/import_workflow.md) - Haiku for diff reading, Haiku for confirmations (20-30% savings)
@@ -327,6 +328,19 @@ Is this medium-complexity analysis (patterns, drafting, classification)?
 | Sync point coordination | Opus | Complex coordination |
 | Stale agent detection | Opus | Decision-making |
 
+#### Architect-Builder Pattern (SHAMT-30)
+| Task | Model | Rationale |
+|------|-------|-----------|
+| Plan creation (Architect) | Sonnet/Opus | Design + spec translation |
+| Plan validation (9 dimensions) | Opus | Deep validation |
+| Implementation execution (Builder) | Haiku | Mechanical file operations (MANDATORY) |
+| Sub-agent confirmations | Haiku | Zero-issue verification |
+| Error diagnosis (Architect) | Sonnet/Opus | Root cause analysis |
+
+**Key Insight:** Builder execution is the highest token-saving opportunity (60-70% reduction). Always use Haiku for builder agents.
+
+**See:** `reference/architect_builder_pattern.md` for complete pattern documentation.
+
 ---
 
 ## Task Tool Examples
@@ -400,6 +414,49 @@ Report all issues found with severity classification. This is a primary validati
 ```
 
 **Why Opus:** Deep multi-dimensional validation requiring complex analysis.
+
+---
+
+### Example 3a: Haiku for Builder Execution (Architect-Builder Pattern)
+
+**Scenario:** S6 implementation execution using architect-builder pattern (SHAMT-30).
+
+**Task Tool Call:**
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="description">Execute implementation plan</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="prompt">You are a builder agent. Your role is to execute the implementation plan exactly as specified.
+
+**Plan Location:** `.shamt/epics/{epic}/features/{feature}/implementation_plan.md`
+
+**Your Responsibilities:**
+1. Read the implementation plan file
+2. Execute each step in sequential order (Step 1, 2, 3...)
+3. Verify each step as specified
+4. Report completion or halt on first error
+5. DO NOT make design decisions or deviate from plan
+6. DO NOT spawn sub-agents or parallelize work
+
+**Error Handling Protocol:**
+- If a step fails, STOP immediately - do not proceed to next step
+- Report back to architect with:
+  - Step number where error occurred
+  - Exact error message received
+  - Which verification failed (if applicable)
+  - Current state (what was completed before error)
+- Do NOT attempt retries, fixes, or workarounds
+- Do NOT skip failed steps and continue
+- Wait for architect instructions
+
+**Start by reading the implementation plan, then execute it step by step.**</parameter>
+</invoke>
+```
+
+**Why Haiku:** Builder execution is mechanical - following exact locate/replace instructions without design decisions. Haiku excels at this and provides 60-70% token savings compared to Sonnet/Opus executing the same steps.
+
+**See:** `reference/architect_builder_pattern.md` for complete handoff package format and error recovery protocol.
 
 ---
 
@@ -846,6 +903,11 @@ Each workflow guide includes inline Task tool examples with copy-paste-ready XML
 
 **Shamt Lite (Standalone):**
 - `scripts/initialization/SHAMT_LITE.template.md` — Pattern 1 sub-agent confirmation Task tool example
+
+**Architect-Builder Pattern (60-70% savings):**
+- `reference/architect_builder_pattern.md` — Pattern overview, handoff package format, Task tool invocation
+- `reference/implementation_plan_format.md` — Plan format specification
+- `stages/s6/s6_implementation_execution.md` — S6 builder handoff workflow (MANDATORY in epic workflow)
 
 **All inline examples follow the standard template:**
 ```xml
