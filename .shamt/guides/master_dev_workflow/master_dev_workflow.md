@@ -73,6 +73,61 @@ These files are the agent's first point of reference and are not kept current by
 
 ---
 
+## Step 3.5: Implementation Approach (Optional: Architect-Builder Pattern)
+
+**For implementation tasks** (as opposed to documentation-only changes), you can optionally use the architect-builder pattern for token optimization.
+
+### When to Use Architect-Builder Pattern
+
+**Use the pattern when:**
+- **>10 file operations** (CREATE, EDIT, DELETE, MOVE)
+- **Implementation will consume >100K tokens** with traditional approach (architect executing own plan)
+- **Complex dependencies** - changes span multiple subsystems
+- **First-time implementation** in unfamiliar codebase section
+
+**Skip the pattern when:**
+- **1-5 file changes** with straightforward implementation
+- **Exploratory work** (debugging, investigation, understanding codebase)
+- **Time-sensitive rapid iteration** needed
+- **Prototype/spike code** that will be rewritten
+
+### How to Use the Pattern
+
+If using architect-builder pattern for master dev work:
+
+1. **Create mechanical implementation plan:**
+   - Read: `reference/implementation_plan_format.md` (plan specification)
+   - Use template: `templates/implementation_plan_template.md`
+   - Create: `design_docs/active/SHAMT{N}_IMPLEMENTATION_PLAN.md`
+   - Format: Step-by-step file operations (CREATE/EDIT/DELETE/MOVE) with exact details
+
+2. **Validate mechanical plan (9 dimensions):**
+   - Create: `design_docs/active/SHAMT{N}_IMPL_PLAN_VALIDATION_LOG.md`
+   - Run validation loop (9 dimensions from `reference/implementation_plan_format.md`)
+   - Exit when: primary clean round + 2 Haiku sub-agents confirm zero issues
+   - Update plan status to "Validated"
+
+3. **Hand off to Haiku builder:**
+   - Create handoff package (see `reference/architect_builder_pattern.md`, "Handoff Package Format")
+   - Spawn Haiku builder using Task tool with `model="haiku"`
+   - Builder executes plan mechanically
+   - On success: proceed to Step 4 (audit)
+   - On error: diagnose, fix plan, resume from failed step
+
+4. **After builder completes:**
+   - Move plan and validation log to `design_docs/archive/` with design doc
+   - Proceed to Step 4 (guide audit)
+
+**Token savings:** 60-70% on implementation execution (Haiku builder vs. Sonnet/Opus architect)
+
+**See:**
+- `reference/architect_builder_pattern.md` - Complete pattern documentation and decision tree
+- `reference/implementation_plan_format.md` - Mechanical plan specification (9 validation dimensions)
+
+**Note:** Architect-builder pattern is **optional** for master dev workflow (use judgment based on thresholds above). It is **mandatory** for S1-S10 epic workflow S6 (no exceptions).
+
+---
+
 ## Step 4: Run the Guide Audit
 
 After making changes:
