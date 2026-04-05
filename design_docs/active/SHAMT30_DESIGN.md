@@ -42,10 +42,10 @@ Currently, the same agent that performs planning (architecture, design decisions
 Introduce a new two-stage pattern:
 
 **Stage 1: Architect (Main Agent - Sonnet/Opus)**
-- Reads codebase, designs solution, validates approach
+- Reads codebase, converts spec requirements to mechanical steps
 - Creates one or more `IMPLEMENTATION_PLAN.md` files with rigid step-by-step instructions
 - Each step is a direct file operation: "Edit file X, replace Y with Z" or "Create file A with content B"
-- Runs validation loops on the *plan itself* before execution begins
+- **MANDATORY:** Runs 9-dimension validation loop on the plan itself before execution begins
 - Creates a handoff package for the builder agent
 
 **Stage 2: Builder (Sub-Agent - Haiku)**
@@ -176,19 +176,102 @@ This approach:
 
 ---
 
+### Proposal 2: Implementation Plan Validation Loop (9 Dimensions)
+
+**Description:**
+
+Implementation plans MUST be validated before builder handoff. This ensures plans are mechanically executable without design decisions.
+
+**The 9 Validation Dimensions:**
+
+1. **Step Clarity** - Every step is unambiguous with no interpretation needed, exact file paths and operations specified
+2. **Mechanical Executability** - Builder can execute without making design choices, no "figure it out" gaps
+3. **File Coverage Completeness** - All files from spec are covered in plan steps, no missing files
+4. **Operation Specificity** - EDIT steps have exact locate/replace strings, CREATE steps have full content, DELETE/MOVE operations are precise
+5. **Verification Completeness** - Every step has a verification method, verifications are checkable by builder
+6. **Error Handling Clarity** - Success/failure criteria explicit for each step, edge cases documented
+7. **Dependency Ordering** - Steps are in correct execution order (e.g., create file before editing it), dependencies explicit
+8. **Pre/Post Checklist Completeness** - Pre-execution checklist covers all prerequisites, post-execution checklist confirms completion
+9. **Spec Alignment** - Implementation plan faithfully translates ALL spec requirements into mechanical steps, no spec requirements missing, no additions beyond spec scope
+
+**Validation Process:**
+
+Following the master validation loop protocol (`reference/validation_loop_master_protocol.md`):
+
+1. Create `IMPLEMENTATION_PLAN_VALIDATION_LOG.md` before Round 1
+2. Run validation rounds checking all 9 dimensions systematically
+3. Track `consecutive_clean` counter explicitly (starts at 0)
+4. A round is clean if: zero issues OR exactly one LOW-severity issue (fixed)
+5. A round is NOT clean if: 2+ LOW issues, or any MEDIUM/HIGH/CRITICAL issue (resets `consecutive_clean = 0`)
+6. When `consecutive_clean = 1`: spawn 2 Haiku sub-agents in parallel for confirmation
+7. Both sub-agents must confirm zero issues to complete validation
+8. Update implementation plan status to "Validated"
+
+**Exit Criterion:** Primary clean round (≤1 LOW severity issue) + 2 independent Haiku sub-agents confirm zero issues
+
+**Rationale:**
+
+- Prevents vague plans from reaching builder (saves wasted execution time)
+- Validation is cheaper than fixing builder failures (Opus validates once vs. multiple Haiku retries)
+- Maintains quality bar consistent with other Shamt validation loops
+- Forces architect to think through executability before handoff
+
+**File Location:**
+- Master work: `design_docs/active/SHAMT{N}_IMPL_PLAN_VALIDATION_LOG.md`
+- Child epic work: `.shamt/temp/{epic}/IMPL_PLAN_VALIDATION_LOG.md`
+
+---
+
+### Proposal 3: S2 Spec Validation Enhancement
+
+**Description:**
+
+The architect-builder pattern only works if S2 specs contain complete design/architecture documentation. If specs are incomplete, S5 architects must make design decisions, defeating the purpose of mechanical implementation plans.
+
+**Required Enhancement:**
+
+Add validation dimension to S2 spec creation ensuring specs are **implementation-ready**:
+
+**New/Enhanced S2 Validation Dimension: Design Completeness**
+- All architectural decisions documented with rationale
+- All algorithm selections made and justified
+- All data structures defined with types and schemas
+- All interface contracts specified (function signatures, API endpoints)
+- All error handling strategies defined
+- All edge cases and failure modes addressed
+- Spec contains enough detail that S5 implementation planning requires zero design decisions, only translation to file operations
+
+**Integration Points:**
+- S2.P2 spec validation workflow
+- `.shamt/guides/reference/spec_validation.md`
+
+**Rationale:**
+
+Without this enhancement, S5 architects will encounter design gaps and either:
+1. Make design decisions (violating the pattern's premise)
+2. Return to S2 for clarification (workflow disruption)
+3. Create incomplete implementation plans (builder failures)
+
+Complete S2 specs are a **prerequisite** for effective architect-builder delegation.
+
+---
+
 ## Files Affected
 
 | File | Status | Notes |
 |------|--------|-------|
-| `.shamt/guides/reference/implementation_plan_format.md` | CREATE | Reference guide for plan file format |
-| `.shamt/guides/reference/architect_builder_pattern.md` | CREATE | Overview of pattern, when to use, handoff mechanics |
+| `.shamt/guides/reference/implementation_plan_format.md` | CREATE | Reference guide for plan file format with 9-dimension validation |
+| `.shamt/guides/reference/architect_builder_pattern.md` | CREATE | Overview of pattern, when to use, handoff mechanics, validation requirements |
 | `.shamt/guides/reference/model_selection.md` | MODIFY | Add architect-builder pattern to task catalog |
-| `.shamt/guides/stages/s2/s2_p2_spec_implementation.md` | MODIFY | Add optional architect-builder delegation |
-| `.shamt/guides/stages/s4/s4_p1_code_development.md` | MODIFY | Add optional architect-builder delegation |
+| `.shamt/guides/reference/spec_validation.md` | MODIFY | Add "Design Completeness" dimension ensuring specs are implementation-ready |
+| `.shamt/guides/stages/s2/s2_p1_spec_creation_refinement.md` | MODIFY | Document requirement for complete design/architecture in specs |
+| `.shamt/guides/stages/s2/s2_p2_spec_implementation.md` | MODIFY | Add/enhance "Design Completeness" validation dimension |
+| `.shamt/guides/stages/s5/s5_v2_validation_loop.md` | MODIFY | Update to support mechanical implementation plan creation with 9-dimension validation |
 | `.shamt/guides/stages/s6/s6_p1_bug_fixing.md` | MODIFY | Add optional architect-builder delegation |
 | `.shamt/guides/stages/s9/s9_p3_epic_implementation.md` | MODIFY | Add optional architect-builder delegation |
 | `.shamt/guides/master_dev_workflow/implementation_phase.md` | MODIFY | Add architect-builder pattern guidance |
-| `.shamt/guides/templates/implementation_plan_template.md` | CREATE | Copy-paste template for implementation plans |
+| `.shamt/guides/templates/implementation_plan_template.md` | CREATE | Copy-paste template for mechanical implementation plans |
+| `.shamt/guides/templates/implementation_plan_validation_log_template.md` | CREATE | Template for implementation plan validation logs |
 
 ---
 
@@ -201,15 +284,19 @@ Create the foundational reference guides that define the pattern
   - Plan file structure (pre-checklist, steps, post-checklist)
   - Step format specification (file, operation, details, verification)
   - Examples for CREATE, EDIT, DELETE, MOVE operations
+  - 9-dimension validation requirements
+  - Validation log format and tracking
   - Verification best practices
 - [ ] Create `architect_builder_pattern.md` with:
   - Pattern overview and rationale
   - When to use vs. when not to use (decision tree)
+  - Validation loop requirement (9 dimensions, exit criteria)
   - Handoff package format and examples
   - Task tool invocation examples
   - Error handling protocol
   - Token savings calculations
 - [ ] Create `implementation_plan_template.md` for copy-paste convenience
+- [ ] Create `implementation_plan_validation_log_template.md` for validation tracking
 - [ ] Commit Phase 1: `feat/SHAMT-30: Add architect-builder pattern reference guides`
 
 ### Phase 2: Model Selection Integration
@@ -221,30 +308,55 @@ Update model selection guide to include this pattern
 - [ ] Add examples to "Task Tool Examples" section
 - [ ] Commit Phase 2: `feat/SHAMT-30: Integrate architect-builder pattern into model selection guide`
 
-### Phase 3: Stage Guide Updates
-Integrate pattern into workflow guides as an optional delegation strategy
+### Phase 3: S2 Spec Validation Enhancement
+Ensure S2 specs are implementation-ready (prerequisite for architect-builder pattern)
+
+- [ ] Read current S2 spec validation workflow (`.shamt/guides/stages/s2/s2_p2_spec_implementation.md`)
+- [ ] Read current spec validation reference (`.shamt/guides/reference/spec_validation.md`)
+- [ ] Add/enhance "Design Completeness" dimension to S2 validation:
+  - All architectural decisions documented
+  - All algorithm selections made and justified
+  - All data structures defined
+  - All interface contracts specified
+  - All error handling strategies defined
+  - Sufficient detail for mechanical implementation planning
+- [ ] Update S2.P1 to document requirement for complete design/architecture in specs
+- [ ] Commit Phase 3: `feat/SHAMT-30: Enhance S2 spec validation for implementation-ready specs`
+
+### Phase 4: S5 Implementation Planning Enhancement
+Update S5 to support mechanical implementation plan creation and validation
+
+- [ ] Read current S5 v2 validation loop guide (`.shamt/guides/stages/s5/s5_v2_validation_loop.md`)
+- [ ] Update S5 Phase 1 (Draft Creation) guidance:
+  - Emphasize mechanical step-by-step format
+  - Reference implementation plan format guide
+  - Show examples of ultra-specific steps (exact locate/replace strings)
+- [ ] Update S5 Phase 2 (Validation Loop) to use 9 dimensions from Proposal 2
+- [ ] Add S5 Phase 3: Builder Handoff (optional delegation to Haiku)
+- [ ] Commit Phase 4: `feat/SHAMT-30: Update S5 for mechanical implementation plans with 9-dimension validation`
+
+### Phase 5: Other Stage Guide Updates
+Integrate pattern into S6, S9, master dev workflow as optional delegation strategy
 
 For each affected stage guide:
-- [ ] S2.P2: Add "Optional: Architect-Builder Delegation" subsection after planning steps
-- [ ] S4.P1: Add delegation guidance for large feature implementations
-- [ ] S6.P1: Add delegation option after root cause analysis, before fix implementation
-- [ ] S9.P3: Add delegation guidance for epic-scale implementations
+- [ ] S6.P1: Add optional architect-builder delegation after root cause analysis
+- [ ] S9.P3: Add optional architect-builder delegation for epic-scale implementations
 - [ ] Master dev workflow: Add architect-builder option to implementation phase
 - [ ] Each integration should:
   - Link to `architect_builder_pattern.md` reference
   - Include decision criteria (when to use this pattern)
   - Show handoff package example specific to that stage
   - Maintain "optional" framing—not mandatory for all implementations
-- [ ] Commit Phase 3: `feat/SHAMT-30: Add architect-builder delegation to stage guides`
+- [ ] Commit Phase 5: `feat/SHAMT-30: Add architect-builder delegation to S6, S9, master dev`
 
-### Phase 4: CLAUDE.md Update
+### Phase 6: CLAUDE.md Update
 Update master instructions to reflect new pattern
 
 - [ ] Read current `CLAUDE.md`
 - [ ] Add architect-builder pattern to "Model Selection" section
-- [ ] Note that implementation plans should be validated before handoff
+- [ ] Document 9-dimension validation requirement before builder handoff
 - [ ] Add to "Critical Rules" if appropriate
-- [ ] Commit Phase 4: `feat/SHAMT-30: Update CLAUDE.md with architect-builder pattern`
+- [ ] Commit Phase 6: `feat/SHAMT-30: Update CLAUDE.md with architect-builder pattern`
 
 ---
 
@@ -278,8 +390,7 @@ Update master instructions to reflect new pattern
 
 ## Open Questions
 
-1. **Plan validation mechanics:** Should implementation plans go through their own mini validation loop before handoff? Or is architect judgment sufficient?
-   - Leaning toward: Optional validation for complex plans, architect judgment for simple ones
+1. ~~**Plan validation mechanics:**~~ **RESOLVED** - Implementation plans MUST go through 9-dimension validation loop before builder handoff. Exit criterion: primary clean round + 2 Haiku sub-agents confirm zero issues.
 
 2. **Error recovery protocol:** When builder hits an error, should they report back immediately or attempt simple retries?
    - Leaning toward: Report immediately, no autonomous recovery
@@ -288,7 +399,7 @@ Update master instructions to reflect new pattern
    - Leaning toward: No nested delegation—keep builder role simple
 
 4. **Plan file location:** Where should implementation plans live? Alongside design docs, in a temp directory, or stage-specific locations?
-   - Leaning toward: `design_docs/active/SHAMT{N}_IMPLEMENTATION_PLAN.md` for master work, `.shamt/temp/IMPL_PLAN_{epic}.md` for child epic work
+   - Leaning toward: `design_docs/active/SHAMT{N}_IMPLEMENTATION_PLAN.md` for master work, `.shamt/temp/{epic}/IMPLEMENTATION_PLAN.md` for child epic work
 
 5. **Mandatory vs. optional:** Should this pattern be mandatory for implementations >N steps, or always optional with guidance?
    - Leaning toward: Always optional, strong guidance for >10 file operations
@@ -319,3 +430,7 @@ Update master instructions to reflect new pattern
 | Date | Change |
 |------|--------|
 | 2026-04-04 | Initial draft created |
+| 2026-04-04 | Added Proposal 2: 9-dimension implementation plan validation loop (mandatory) |
+| 2026-04-04 | Added Proposal 3: S2 spec validation enhancement for implementation-ready specs |
+| 2026-04-04 | Resolved Open Question 1: Validation loop required before builder handoff |
+| 2026-04-04 | Updated Files Affected and Implementation Plan phases to reflect S2 and S5 changes |
