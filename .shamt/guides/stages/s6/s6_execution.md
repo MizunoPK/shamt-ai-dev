@@ -23,11 +23,11 @@
 ## 🚫 FORBIDDEN SHORTCUTS
 
 You CANNOT:
-- Start implementing feature code without completing Step 1 (Interface Verification Protocol) — interface verification is the MANDATORY FIRST STEP and prevents spec drift from incorrect interface assumptions
-- Skip mini-QC checkpoints during Step 3 (Phase-by-Phase Implementation) to save time — mini-QC checkpoints catch integration issues before they compound across phases
-- Commit code without completing Step 4 (Final Verification) — final verification confirms all spec requirements are met before proceeding to S7
+- Start implementing without creating and validating a mechanical implementation plan first — skipping plan validation (9 dimensions) leads to builder failures and wasted execution time
+- Skip the handoff package when spawning the builder — incomplete builder instructions cause execution errors that require architect intervention
+- Skip builder completion verification (Step 6) — proceeding to S7 without confirming all implementation steps completed successfully causes test failures and spec drift
 
-If you are about to do any of the above: STOP and re-read the relevant section.
+If you are about to do any of the above: STOP and re-read the architect-builder workflow (lines 75-137).
 
 ---
 
