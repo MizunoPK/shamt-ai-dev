@@ -7,8 +7,8 @@
 - S2.P1.I3: Feature Spec Refinement (embeds Gates 1, 2)
 - S3.P2: Epic Documentation Refinement
 
-**Version:** 2.1 (Updated with anti-shortcut enforcement)
-**Last Updated:** 2026-03-02
+**Version:** 2.2 (Added Dimension 10: Design Completeness for SHAMT-30)
+**Last Updated:** 2026-04-04
 
 ---
 
@@ -20,8 +20,8 @@
 
 1. [Overview](#overview)
 2. [Master Dimensions (7) - Always Checked](#master-dimensions-7---always-checked)
-3. [Spec Refinement Dimensions (2) - Context-Specific](#spec-refinement-dimensions-2---context-specific)
-4. [Total Dimensions: 9](#total-dimensions-9)
+3. [Spec Refinement Dimensions (3) - Context-Specific](#spec-refinement-dimensions-3---context-specific)
+4. [Total Dimensions: 10](#total-dimensions-10)
 5. [What's Being Validated](#whats-being-validated)
 6. [Embedded Gates](#embedded-gates)
 7. [Fresh Eyes Patterns Per Round](#fresh-eyes-patterns-per-round)
@@ -33,13 +33,13 @@
 
 ## Model Selection for Token Optimization (SHAMT-27)
 
-Spec refinement validation can save 25-35% tokens through delegation (9 dimensions):
+Spec refinement validation can save 25-35% tokens through delegation (10 dimensions):
 
 ```
 Primary Agent (Opus):
 ├─ Spawn Haiku → File tree exploration, keyword searches (grep)
 ├─ Spawn Sonnet → Read implementation code, identify patterns
-├─ Primary handles → 9-dimension validation, deep spec analysis, design decisions
+├─ Primary handles → 10-dimension validation, deep spec analysis, design decisions
 ├─ Primary writes → Spec.md updates, checklist resolution, validation log
 ├─ Spawn Haiku (2x in parallel) → Sub-agent confirmations
 └─ Primary completes → Exit after both confirm zero issues (embeds Gates 1, 2)
@@ -120,7 +120,7 @@ These universal dimensions apply to spec refinement validation:
 
 ---
 
-## Spec Refinement Dimensions (2) - Context-Specific
+## Spec Refinement Dimensions (3) - Context-Specific
 
 These 2 dimensions are specific to spec refinement validation:
 
@@ -290,11 +290,155 @@ spec.md Requirements:
 
 ---
 
-## Total Dimensions: 9
+### Dimension 10: Design Completeness
 
-**Every validation round checks ALL 9 dimensions:**
+**Question:** Does spec contain sufficient architectural and design detail for mechanical implementation planning?
+
+**Purpose:** Ensures spec has complete design/architecture documentation (prerequisite for architect-builder pattern, SHAMT-30)
+
+**Checklist:**
+
+**Architectural Decisions:**
+- [ ] All major architecture choices documented with rationale
+- [ ] Component structure defined (modules, classes, functions)
+- [ ] Integration points specified (how components interact)
+- [ ] Technology selections justified (libraries, frameworks, patterns)
+
+**Algorithm Selections:**
+- [ ] All algorithms chosen and named
+- [ ] Algorithm complexity documented (time/space where relevant)
+- [ ] Alternative algorithms considered and rejected (with rationale)
+- [ ] Edge cases for algorithms documented
+
+**Data Structures:**
+- [ ] All data structures defined with types
+- [ ] Schemas specified (JSON, database, API)
+- [ ] Validation rules documented
+- [ ] Data flow between components mapped
+
+**Interface Contracts:**
+- [ ] All function signatures specified (parameters, return types)
+- [ ] All API endpoints defined (routes, methods, request/response)
+- [ ] All class interfaces documented (public methods, properties)
+- [ ] Contract preconditions and postconditions stated
+
+**Error Handling Strategies:**
+- [ ] All error scenarios identified
+- [ ] Error handling approach defined for each scenario
+- [ ] Recovery strategies specified
+- [ ] Error propagation documented
+
+**Edge Cases and Failure Modes:**
+- [ ] All edge cases identified and documented
+- [ ] Failure modes analyzed
+- [ ] Boundary conditions specified
+- [ ] Degradation strategies defined
+
+**Implementation Readiness:**
+- [ ] Spec has enough detail that S5 implementation planning requires zero design decisions
+- [ ] All "how" questions answered (not just "what")
+- [ ] No placeholders or "TBD" in critical sections
+- [ ] Builder agent could execute from this spec (via architect's plan)
+
+**Common Violations:**
+
+❌ **WRONG - Vague architecture:**
+```markdown
+Requirement 5: Implement data processing module
+
+**Design:** Use appropriate data structures and algorithms
+```
+
+✅ **CORRECT - Specific architecture:**
+```markdown
+Requirement 5: Implement data processing module
+
+**Architecture:**
+- Module: `src/processing/data_processor.py`
+- Class: `DataProcessor` (singleton pattern)
+- Algorithm: Two-pass processing (first validate, then transform)
+
+**Data Structures:**
+- Input: `List[RawRecord]` (from CSV parser)
+- Working: `Dict[str, ProcessedRecord]` (key = record ID)
+- Output: `List[ProcessedRecord]` (sorted by priority)
+
+**Interface Contract:**
+```python
+class DataProcessor:
+    def process(self, records: List[RawRecord]) -> List[ProcessedRecord]:
+        """
+        Processes raw records into validated, transformed output.
+
+        Preconditions:
+        - records is not None
+        - All records have valid ID field
+
+        Postconditions:
+        - Output sorted by priority (high to low)
+        - All invalid records filtered out
+        - Returns empty list if no valid records
+
+        Raises:
+        - ValueError: If records list is malformed
+        """
+```
+
+**Error Handling:**
+- Malformed record: Skip, log at WARNING level, continue processing
+- Missing ID: Skip, log at ERROR level, continue processing
+- Empty input: Return empty list (not an error)
+```
+
+❌ **WRONG - Missing interface details:**
+```markdown
+Requirement 3: Create API endpoint for data retrieval
+```
+
+✅ **CORRECT - Complete interface:**
+```markdown
+Requirement 3: Create API endpoint for data retrieval
+
+**Interface Contract:**
+- Route: `GET /api/v1/data/:id`
+- Parameters:
+  - `id` (path): string, required, record identifier
+  - `include_metadata` (query): boolean, optional, default false
+- Response (200 OK):
+  ```json
+  {
+    "id": "string",
+    "data": { ... },
+    "metadata": { ... }  // Only if include_metadata=true
+  }
+  ```
+- Response (404 Not Found):
+  ```json
+  {
+    "error": "Record not found",
+    "id": "string"
+  }
+  ```
+- Response (500 Internal Server Error):
+  ```json
+  {
+    "error": "Database connection failed"
+  }
+  ```
+
+**Error Handling:**
+- Record not found: Return 404 with error message
+- Database error: Return 500 with generic error (log details server-side)
+- Invalid ID format: Return 400 with validation error
+```
+
+---
+
+## Total Dimensions: 10
+
+**Every validation round checks ALL 10 dimensions:**
 - 7 Master dimensions (universal)
-- 2 Spec Refinement dimensions (context-specific, embed Gates 1 & 2)
+- 3 Spec Refinement dimensions (context-specific, embed Gates 1 & 2, ensure design completeness)
 
 **Process:** See master protocol for sub-agent confirmation exit requirement
 
@@ -310,17 +454,20 @@ spec.md Requirements:
 - Feature requirements complete and traceable
 - All research complete (no gaps in checklist)
 - Scope matches epic (no creep, no missing)
+- Design/architecture complete (ready for mechanical implementation planning)
 - Acceptance criteria measurable
 - Ready for user approval (Gate 3)
 
 **Embeds:**
 - Gate 1 (Research Completeness Audit) - Dimension 8
 - Gate 2 (Spec-to-Epic Alignment) - Dimension 9
+- Design Completeness Check - Dimension 10
 
 **Success Criteria:**
 - Zero research gaps
 - Zero scope creep
 - Zero missing requirements
+- Complete architectural/design detail (prerequisite for architect-builder pattern)
 - Ready for Gate 3 (User Checklist Approval)
 
 ---
@@ -357,7 +504,7 @@ spec.md Requirements:
 - All data formats verified
 - No research gaps in checklist
 
-**When checked:** Every validation round (part of 9 dimensions)
+**When checked:** Every validation round (part of 10 dimensions)
 
 **Cannot exit validation loop if:** Any research gaps remain
 
@@ -373,7 +520,7 @@ spec.md Requirements:
 - All requirements trace to epic/user answer/derived
 - Epic intent preserved
 
-**When checked:** Every validation round (part of 9 dimensions)
+**When checked:** Every validation round (part of 10 dimensions)
 
 **Cannot exit validation loop if:** Any scope misalignment exists
 
@@ -394,7 +541,7 @@ Spec refinement-specific reading patterns:
 4. Check acceptance criteria measurable
 
 **Checklist:**
-- [ ] All 9 dimensions checked (7 master + 2 spec refinement)
+- [ ] All 10 dimensions checked (7 master + 3 spec refinement)
 - [ ] Gate 1 passed (Dimension 8): Research complete, no gaps in checklist
 - [ ] Gate 2 passed (Dimension 9): Scope matches epic exactly
 - [ ] Every requirement has source (Epic/User Answer/Derived)
@@ -418,7 +565,7 @@ Spec refinement-specific reading patterns:
 - Dimension 9 (Scope Boundary) - verify complete coverage
 
 **Checklist:**
-- [ ] All 9 dimensions checked
+- [ ] All 10 dimensions checked
 - [ ] No gaps between requirements
 - [ ] All implicit requirements made explicit
 - [ ] Acceptance criteria for each requirement
@@ -440,7 +587,7 @@ Spec refinement-specific reading patterns:
 - Dimension 6 (Upstream Alignment) - matches DISCOVERY.md
 
 **Checklist:**
-- [ ] All 9 dimensions checked
+- [ ] All 10 dimensions checked
 - [ ] Spot-checked requirements align with DISCOVERY.md
 - [ ] Epic intent preserved
 - [ ] No contradictions
@@ -610,12 +757,13 @@ Requirement 1: Use synchronous file I/O
 - [ ] Sub-agent confirmations use **Haiku model** for token efficiency (70-80% savings) - see `reference/model_selection.md`
 - [ ] Counter logic: 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL resets counter; see `reference/severity_classification_universal.md`
 - [ ] All 7 master dimensions checked every primary round
-- [ ] All 2 spec refinement dimensions checked every primary round
+- [ ] All 3 spec refinement dimensions checked every primary round
 - [ ] Validation log complete with all rounds documented
 
 **Spec Refinement Specific:**
 - [ ] Gate 1 passed (Dimension 8): Research complete, zero research gaps
 - [ ] Gate 2 passed (Dimension 9): Scope matches epic exactly
+- [ ] Design Completeness passed (Dimension 10): Complete architectural/design detail for mechanical implementation
 - [ ] All requirements have sources (Epic/User Answer/Derived)
 - [ ] Zero scope creep
 - [ ] Zero missing requirements
@@ -628,6 +776,7 @@ Requirement 1: Use synchronous file I/O
 - ❌ Any missing epic requirements
 - ❌ Any requirements without sources
 - ❌ Any vague acceptance criteria
+- ❌ Any missing architectural/design detail (algorithms, data structures, interfaces, error handling)
 
 ---
 
@@ -642,13 +791,15 @@ Requirement 1: Use synchronous file I/O
 **Embeds:**
 - Gate 1 (Research Completeness) in Dimension 8
 - Gate 2 (Spec-to-Epic Alignment) in Dimension 9
+- Design Completeness Check in Dimension 10
 
 **Process:**
 1. Use this validation loop protocol
-2. Check all 9 dimensions (7 master + 2 spec refinement)
+2. Check all 10 dimensions (7 master + 3 spec refinement)
 3. Verify Gates 1 & 2 pass (embedded in dimensions)
-4. Exit when primary clean round + sub-agent confirmation
-5. Proceed to Gate 3 (User Checklist Approval)
+4. Verify Design Completeness (Dimension 10) passes
+5. Exit when primary clean round + sub-agent confirmation
+6. Proceed to Gate 3 (User Checklist Approval)
 
 **User Approval:** Gate 3 (separate from validation loop)
 
@@ -662,7 +813,7 @@ Requirement 1: Use synchronous file I/O
 
 **Process:**
 1. Use this validation loop protocol
-2. Check all 9 dimensions (7 master + 2 spec refinement)
+2. Check all 10 dimensions (7 master + 3 spec refinement)
 3. Exit when primary clean round + sub-agent confirmation
 4. Proceed to S3.P3 (Gate 4.5 - Epic Plan Approval)
 
@@ -675,31 +826,34 @@ Requirement 1: Use synchronous file I/O
 ```text
 Round 1: Sequential Read + Traceability
 - Read spec.md top to bottom
-- Check all 9 dimensions
-- Issues found: 7
+- Check all 10 dimensions
+- Issues found: 8
   - D1 (Empirical Verification): ConfigManager signature assumed, not verified
   - D4 (Traceability): Requirements R5, R7 have no source
   - D5 (Clarity): "Handle errors appropriately" is vague
   - D8 (Research Completeness): Checklist Q3 is research gap ("What file?")
   - D9 (Scope Boundary): Requirement R12 is scope creep (not requested)
-- Fix all 7 issues
+  - D10 (Design Completeness): No interface contract specified for API endpoint
+- Fix all 8 issues
 - Clean counter: 0
 
 Round 2: Reverse Read + Gap Detection
 - Read spec.md bottom to top
-- Check all 9 dimensions
-- Issues found: 3
+- Check all 10 dimensions
+- Issues found: 4
   - D2 (Completeness): Missing edge case for null input
   - D6 (Upstream Alignment): Epic requirement E3 not in spec
   - D9 (Scope Boundary): Missing epic requirement (missing scope)
-- Fix all 3 issues
+  - D10 (Design Completeness): Algorithm selection not justified
+- Fix all 4 issues
 - Clean counter: 0
 
 Round 3: Random Spot-Checks + Alignment
 - Spot-check 5 requirements
-- Check all 9 dimensions
+- Check all 10 dimensions
 - Issues found: 0 ✅
 - Gates 1 & 2 passed (embedded in D8, D9)
+- Design Completeness passed (D10)
 - Clean counter: 1 (primary clean round) → trigger sub-agent confirmation
 
 Sub-agent A: 0 issues ✅
@@ -715,11 +869,11 @@ Next: Proceed to Gate 3 (User Checklist Approval)
 
 **Spec Refinement Validation Loop:**
 - **Extends:** Master Validation Loop Protocol (7 universal dimensions)
-- **Adds:** 2 spec refinement-specific dimensions
-- **Total:** 9 dimensions checked every primary round
+- **Adds:** 3 spec refinement-specific dimensions (Research, Scope, Design Completeness)
+- **Total:** 10 dimensions checked every primary round
 - **Embeds:** Gates 1 (Research) & 2 (Alignment) in validation loop
 - **Process:** Primary clean round + 2 independent sub-agents confirming zero issues
-- **Quality:** Zero research gaps, zero scope creep, all requirements sourced
+- **Quality:** Zero research gaps, zero scope creep, all requirements sourced, complete design detail
 
 **Key Principle:**
 > "Every requirement must be traceable to an authoritative source (Epic/User Answer/Derived), with zero assumptions and zero scope creep."
