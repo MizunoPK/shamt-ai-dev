@@ -4,9 +4,9 @@
 **See:** `reference/validation_loop_master_protocol.md`
 
 **Stage:** S5 (Implementation Planning)
-**Version:** 2.1 (Updated to extend master protocol)
+**Version:** 2.2 (Added architect-builder pattern integration - SHAMT-30)
 **Created:** 2026-02-09
-**Last Updated:** 2026-02-10
+**Last Updated:** 2026-04-04
 **Status:** Active (replaces S5 v1 22-iteration workflow)
 
 ---
@@ -181,6 +181,45 @@ S5 v2 is a **validation loop-based approach** to implementation planning that sy
 - **LOW:** Cosmetic (typos, formatting)
 
 **Core Validation Process:** Same as master protocol - primary clean round + sub-agent confirmation required, fresh eyes every round. A round is clean if it has ZERO issues OR exactly ONE LOW-severity issue (fixed). Multiple LOW-severity issues OR any MEDIUM/HIGH/CRITICAL issue resets `consecutive_clean` to 0.
+
+---
+
+### Architect-Builder Pattern Integration (SHAMT-30)
+
+**S5 creates task-based implementation plans** validated using the 18-dimension process described in this guide.
+
+**For S6 execution, there are two approaches:**
+
+**Approach 1: Traditional (Architect executes own plan)**
+- Architect proceeds directly to S6 and implements the S5 plan
+- Used for: Master dev workflow, ad-hoc work, small changes (<5 file operations)
+
+**Approach 2: Architect-Builder Pattern (SHAMT-30)**
+- **MANDATORY** for all S6 execution in S1-S10 epic workflow (no exceptions)
+- Architect creates a mechanical implementation plan from the S5 task-based plan
+- Mechanical plan uses step-by-step file operations (CREATE, EDIT, DELETE, MOVE)
+- Mechanical plan validated using 9-dimension validation loop
+- Haiku builder agent executes mechanical plan (60-70% token savings)
+
+**When using Architect-Builder Pattern:**
+1. Complete S5 (task-based plan) as normal using this guide
+2. After Gate 5 user approval, before starting S6:
+   - Read: `reference/architect_builder_pattern.md` (pattern overview)
+   - Read: `reference/implementation_plan_format.md` (mechanical plan specification)
+   - Create mechanical implementation plan from S5 task-based plan
+   - Validate mechanical plan using 9-dimension loop (separate from S5's 18 dimensions)
+   - Hand off to Haiku builder for execution
+
+**See:**
+- `reference/architect_builder_pattern.md` - Full pattern documentation
+- `reference/implementation_plan_format.md` - Mechanical plan format specification
+- `templates/implementation_plan_template.md` - Mechanical plan template
+
+**Note:** S5's task-based plan and the mechanical plan serve different purposes:
+- **S5 task-based plan (this guide):** High-level planning with algorithm analysis, data flow, integration points, testing strategy
+- **Mechanical plan (architect-builder):** Low-level file operations with exact locate/replace strings, complete code blocks for creation, mechanical verification steps
+
+Both are called "implementation_plan.md" but use different formats and validation criteria. In S1-S10 epic workflow, both plans are created sequentially (S5 task-based, then mechanical before S6).
 
 ---
 
