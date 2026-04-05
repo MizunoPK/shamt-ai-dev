@@ -64,7 +64,7 @@ Primary Agent (Opus):
 - Zero assumptions (all uncertainties → checklist questions)
 - Ready for user approval (Gate 3 or Gate 4.5)
 
-**Uses:** All 7 master dimensions + 2 spec refinement-specific dimensions = 9 total
+**Uses:** All 7 master dimensions + 3 spec refinement-specific dimensions = 10 total
 
 ---
 
@@ -122,7 +122,7 @@ These universal dimensions apply to spec refinement validation:
 
 ## Spec Refinement Dimensions (3) - Context-Specific
 
-These 2 dimensions are specific to spec refinement validation:
+These 3 dimensions are specific to spec refinement validation:
 
 ### Dimension 8: Research Completeness (Gate 1)
 
