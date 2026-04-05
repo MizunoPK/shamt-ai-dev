@@ -266,9 +266,26 @@ Following the master validation loop protocol (`reference/validation_loop_master
 - Maintains quality bar consistent with other Shamt validation loops
 - Forces architect to think through executability before handoff
 
-**File Location:**
-- Master work: `design_docs/active/SHAMT{N}_IMPL_PLAN_VALIDATION_LOG.md`
-- Child epic work: `.shamt/temp/{epic}/IMPL_PLAN_VALIDATION_LOG.md`
+**File Locations:**
+
+Implementation plans live alongside the artifact they implement:
+
+**Master work:**
+- Implementation plan: `design_docs/active/SHAMT{N}_IMPLEMENTATION_PLAN.md`
+- Validation log: `design_docs/active/SHAMT{N}_IMPL_PLAN_VALIDATION_LOG.md`
+- Lives alongside design doc during implementation
+- Moves to `design_docs/archive/` with design doc when complete
+
+**Child epic work:**
+- Implementation plan: `.shamt/epics/{epic}/features/{feature}/implementation_plan.md`
+- Validation log: `.shamt/epics/{epic}/features/{feature}/implementation_plan_validation_log.md`
+- Lives alongside spec.md, checklist.md, README.md
+- Referenced in S10 lessons learned
+- Moves to `epics/done/{epic}/` with rest of epic when complete
+
+**Naming convention:**
+- Master: `SHAMT{N}_IMPLEMENTATION_PLAN.md` (uppercase, with SHAMT number)
+- Child: `implementation_plan.md` (lowercase, standard feature artifact name)
 
 ---
 
@@ -336,6 +353,7 @@ Create the foundational reference guides that define the pattern
   - Examples for CREATE, EDIT, DELETE, MOVE operations
   - 9-dimension validation requirements
   - Validation log format and tracking
+  - File location conventions (master vs. child)
   - Verification best practices
 - [ ] Create `architect_builder_pattern.md` with:
   - Pattern overview and rationale
@@ -446,8 +464,7 @@ Update master instructions to reflect new pattern
 
 3. ~~**Nested delegation:**~~ **RESOLVED** - No nested delegation. Builders execute steps sequentially only, cannot spawn sub-agents. For parallelism: architect spawns multiple builders in parallel with partitioned plans. Keeps builder role maximally simple.
 
-4. **Plan file location:** Where should implementation plans live? Alongside design docs, in a temp directory, or stage-specific locations?
-   - Leaning toward: `design_docs/active/SHAMT{N}_IMPLEMENTATION_PLAN.md` for master work, `.shamt/temp/{epic}/IMPLEMENTATION_PLAN.md` for child epic work
+4. ~~**Plan file location:**~~ **RESOLVED** - Plans live alongside the artifact they implement. Master: `design_docs/active/SHAMT{N}_IMPLEMENTATION_PLAN.md` (with design doc). Child: `.shamt/epics/{epic}/features/{feature}/implementation_plan.md` (with spec.md). Plans move to archive/done with parent artifacts when complete.
 
 5. **Mandatory vs. optional:** Should this pattern be mandatory for implementations >N steps, or always optional with guidance?
    - Leaning toward: Always optional, strong guidance for >10 file operations
@@ -484,3 +501,4 @@ Update master instructions to reflect new pattern
 | 2026-04-04 | Updated Files Affected and Implementation Plan phases to reflect S2 and S5 changes |
 | 2026-04-04 | Resolved Open Question 2: Error recovery protocol - report immediately, zero autonomous recovery |
 | 2026-04-04 | Resolved Open Question 3: No nested delegation - builders execute sequentially, architect handles parallelism |
+| 2026-04-04 | Resolved Open Question 4: Plan file locations - live alongside implemented artifact, archive with parent |
