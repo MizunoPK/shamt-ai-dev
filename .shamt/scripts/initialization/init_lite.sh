@@ -94,6 +94,11 @@ sed -e "s/{{PROJECT_NAME}}/$PROJECT_NAME/g" \
 cp "$SHAMT_SOURCE_DIR/templates/code_review_lite.template.md" \
    "$LITE_DIR/templates/code_review.template.md"
 
+# Implementation plan template (DATE variable only, no PROJECT_NAME)
+sed -e "s/{{DATE}}/$CURRENT_DATE/g" \
+    "$SHAMT_SOURCE_DIR/templates/implementation_plan_lite.template.md" \
+    > "$LITE_DIR/templates/implementation_plan.template.md"
+
 # --- Success message ---------------------------------------------------------
 
 echo ""
@@ -111,6 +116,7 @@ echo "  │   └── question_brainstorm_categories_lite.md"
 echo "  └── templates/"
 echo "      ├── discovery.template.md"
 echo "      ├── code_review.template.md"
+echo "      ├── implementation_plan.template.md"
 echo "      ├── architecture.template.md"
 echo "      └── coding_standards.template.md"
 echo ""

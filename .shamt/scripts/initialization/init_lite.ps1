@@ -114,6 +114,12 @@ Copy-Item `
     -Path (Join-Path $ShamtSourceDir "templates\code_review_lite.template.md") `
     -Destination (Join-Path $LiteDir "templates\code_review.template.md")
 
+# Implementation plan template (DATE variable only, no PROJECT_NAME)
+Copy-WithSubstitutions `
+    -SourcePath (Join-Path $ShamtSourceDir "templates\implementation_plan_lite.template.md") `
+    -DestPath (Join-Path $LiteDir "templates\implementation_plan.template.md") `
+    -Replacements @{ "{{DATE}}" = $CurrentDate }
+
 # --- Success message ---------------------------------------------------------
 
 Write-Host ""
@@ -131,6 +137,7 @@ Write-Host "  │   └── question_brainstorm_categories_lite.md"
 Write-Host "  └── templates\"
 Write-Host "      ├── discovery.template.md"
 Write-Host "      ├── code_review.template.md"
+Write-Host "      ├── implementation_plan.template.md"
 Write-Host "      ├── architecture.template.md"
 Write-Host "      └── coding_standards.template.md"
 Write-Host ""

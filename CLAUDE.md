@@ -220,14 +220,14 @@ When a new AI service is discovered (reported by a child project or user):
 **Target users:** Developers who want quality patterns and systematic validation but don't need epic tracking or the full workflow.
 
 **Master repo storage:** All Shamt Lite files are stored in `.shamt/scripts/initialization/`:
-- `SHAMT_LITE.template.md` — Standalone rules file with 5 core patterns
+- `SHAMT_LITE.template.md` — Standalone rules file with 6 core patterns
 - `init_lite.sh` / `init_lite.ps1` — Initialization scripts
 - `reference/` — 3 reference files (severity, validation, question brainstorming)
-- `templates/` — 4 templates (discovery, code review, architecture, coding standards)
+- `templates/` — 5 templates (discovery, code review, implementation plan, architecture, coding standards)
 
 **Deployment:** When users run `init_lite.sh` or `init_lite.ps1`, these files are copied to `shamt-lite/` in their project with template variables replaced ({{PROJECT_NAME}}, {{DATE}}).
 
-**Key principle:** `SHAMT_LITE.md` is standalone and executable. An agent can run all 5 patterns using only Part 1 of that file without reading any supporting files. Supporting files in `reference/` and `templates/` provide optional depth and copy-paste convenience.
+**Key principle:** `SHAMT_LITE.md` is standalone and executable. An agent can run all 6 patterns using only Part 1 of that file without reading any supporting files. Supporting files in `reference/` and `templates/` provide optional depth and copy-paste convenience.
 
 **When to update Shamt Lite:**
 - When validation loop mechanics change in the canonical guides

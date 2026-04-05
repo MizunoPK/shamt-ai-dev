@@ -8,7 +8,7 @@
 
 ## What is Shamt Lite?
 
-Shamt Lite is a lightweight quality framework for AI-assisted development. It provides **5 core patterns** that help agents produce better work through systematic validation, thorough discovery, and structured code review.
+Shamt Lite is a lightweight quality framework for AI-assisted development. It provides **6 core patterns** that help agents produce better work through systematic validation, thorough discovery, structured code review, and implementation planning.
 
 **Use Shamt Lite when:**
 - You want validation loops without a full epic workflow
@@ -22,12 +22,13 @@ Shamt Lite is a lightweight quality framework for AI-assisted development. It pr
 3. **Discovery Protocol** — Question brainstorming and solution design
 4. **Code Review Process** — Structured branch/PR review workflow
 5. **Question Brainstorming** — 6-category framework for uncovering hidden assumptions
+6. **Implementation Planning** — Mechanical step-by-step plans with optional builder handoff
 
 ---
 
 ## How to Use This File
 
-**This file is standalone and complete.** You can execute all 5 patterns using only the instructions in Part 1 below.
+**This file is standalone and complete.** You can execute all 6 patterns using only the instructions in Part 1 below.
 
 **3-Tier Structure:**
 - **Part 1: Core Patterns** — Standalone, executable instructions for all workflows
@@ -982,9 +983,356 @@ Incorporate answers into your discovery document, spec, or plan.
 
 ---
 
+## Pattern 6: Implementation Planning
+
+**Purpose:** Create mechanical, step-by-step implementation plans that separate planning from execution
+
+**When to use:**
+- Before implementing any non-trivial feature or change
+- When a task involves more than 5 file operations
+- After discovery is complete and you're ready to implement
+- When you want to validate your implementation approach before coding
+- When implementation will be delegated to another agent or developer
+
+**Key benefit:** By creating a validated plan first, you catch design issues early and can optionally delegate execution to a cheaper model (60-70% token savings when using builder handoff).
+
+### The 5-Step Implementation Planning Process
+
+**Step 1: Read the specification completely**
+
+Before creating a plan, understand what you're implementing:
+
+- Read the discovery document, user request, or feature brief completely
+- Identify all requirements (explicit and implied)
+- Note any constraints or design decisions already made
+- List all files that will be affected
+
+**Step 2: Create a mechanical implementation plan**
+
+Write a step-by-step plan using the standard format below. Each step must be **mechanical** — meaning anyone (or any agent) can execute it without making design decisions.
+
+**Implementation Plan Format:**
+
+```markdown
+# Implementation Plan
+
+**Created:** [Date]
+**Feature/Task:** [Brief description]
+**Related Requirements:** [Reference to discovery doc or request]
+
+---
+
+## Pre-Execution Checklist
+
+- [ ] Requirements clearly documented
+- [ ] All affected files identified
+- [ ] Dependencies understood
+- [ ] Backup/version control current
+- [ ] Plan validated (see validation step below)
+
+---
+
+## Implementation Steps
+
+### Step N: [Clear action description]
+**Operation:** CREATE | EDIT | DELETE | MOVE
+**File:** `path/to/file.ext`
+**Details:**
+- [Operation-specific details — see format spec below]
+
+**Verification:** [How to verify this step completed correctly]
+
+---
+
+## Post-Execution Checklist
+
+- [ ] All steps executed in order
+- [ ] Each verification passed
+- [ ] No unintended side effects
+- [ ] Tests pass (if applicable)
+- [ ] Feature works per requirements
+```
+
+**Operation Format Specification:**
+
+**CREATE operations:**
+- Specify file purpose
+- Provide complete initial content OR reference template
+- Example: "Create `src/utils/export.ts` — CSV export utility with `generateCSV(data, headers)` function"
+
+**EDIT operations:**
+- Provide exact locate string (5-10 lines of context)
+- Provide exact replacement string
+- Example:
+  ```
+  Locate:
+  ```
+  function handleExport() {
+    console.log('TODO: implement');
+  }
+  ```
+
+  Replace with:
+  ```
+  function handleExport() {
+    const data = getUserData();
+    const csv = generateCSV(data, CSV_HEADERS);
+    downloadFile(csv, 'export.csv');
+  }
+  ```
+  ```
+
+**DELETE operations:**
+- State file/function/section to delete
+- Provide justification
+- Example: "Delete `src/legacy/oldExport.ts` — replaced by new export utility"
+
+**MOVE operations:**
+- Specify source → destination paths
+- State reason for move
+- Example: "Move `utils/export.ts` → `services/export.ts` — aligns with service layer convention"
+
+**Step 3: Validate the implementation plan**
+
+Run a validation loop on your plan using these **7 dimensions**:
+
+1. **Step Clarity** — Does every step have a clear action description? Can someone execute it without guessing?
+
+2. **Mechanical Executability** — Are all design decisions already made? Or does the executor need to make choices?
+   - ❌ BAD: "Add error handling" (what kind? where?)
+   - ✅ GOOD: "Wrap API call in try-catch, log error to console, show user toast message"
+
+3. **File Coverage** — Are all affected files listed in steps? Any missing from the plan?
+
+4. **Operation Specificity** — For EDIT operations, are locate/replace strings exact? For CREATE, is content specified?
+
+5. **Verification Completeness** — Does each step have a verification method? Can executor confirm success?
+
+6. **Dependency Ordering** — Are steps in correct sequence? Does step N depend on step N-1 completing first?
+
+7. **Requirements Alignment** — Does the plan cover all documented requirements? Any requirements missing from steps?
+
+**Exit criterion:** **1 clean round** (simplified for implementation plans)
+
+Unlike general validation loops (primary clean + 2 sub-agents), implementation plan validation uses a lighter exit criterion:
+
+- Run validation rounds until you achieve 1 clean round (0 issues OR 1 LOW issue fixed)
+- No sub-agent confirmations required
+- **Rationale:** Implementation plans are narrower scope than discovery docs; single clean round provides sufficient quality assurance
+
+Track `consecutive_clean`:
+- Clean round (0 issues OR 1 LOW issue) → `consecutive_clean = 1` → Exit ✅
+- Not clean (2+ LOW OR any M/H/C issues) → `consecutive_clean = 0` → Continue
+
+**Step 4: Execute the plan (or hand off to builder)**
+
+Two execution options:
+
+**Option A: Execute yourself**
+- Work through steps sequentially
+- Follow each step exactly as written
+- Run verification after each step
+- Mark off pre-execution and post-execution checklist items
+
+**Option B: Hand off to builder agent (optional)**
+
+If your plan is large (>20 steps) and execution is purely mechanical, you can delegate to a cheaper model:
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Execute implementation plan</parameter>
+  <parameter name="prompt">You are a builder agent executing a validated implementation plan.
+
+**Your task:** Execute the implementation plan at `implementation_plan.md` step by step.
+
+**Critical rules:**
+1. Follow steps exactly as written — make ZERO design decisions
+2. Execute steps sequentially (Step 1, then 2, then 3...)
+3. Run verification after each step
+4. If verification fails: STOP and report to architect immediately
+5. If any step is unclear: STOP and report to architect immediately
+6. Mark off checklist items as you complete them
+
+**What to report:**
+- Success: "All steps completed. Post-execution checklist passed."
+- Error: "Step N failed verification: [describe what failed]"
+- Unclear: "Step N is unclear: [describe ambiguity]"
+
+Do not proceed if you encounter errors or ambiguity. Report immediately.
+  </parameter>
+</invoke>
+```
+
+**When to use builder handoff:**
+- Plan has >20 steps
+- You have access to Haiku model
+- Implementation is truly mechanical (no design decisions needed)
+- **Token savings:** 60-70% by using Haiku for execution
+
+**When NOT to use builder handoff:**
+- Plan requires judgment calls during execution
+- Steps need context from prior conversation
+- Rapid iteration/prototyping work
+- Plan is small (<10 steps)
+
+**Step 5: Verify implementation completeness**
+
+After all steps executed (by you or builder):
+
+- Review post-execution checklist
+- Test the implemented feature against original requirements
+- Verify no unintended side effects in related files
+- Confirm all verifications from individual steps passed
+
+If builder reports errors:
+- Read the error report
+- Fix the plan if step was unclear
+- Re-run builder with updated plan
+- OR take over execution yourself if builder approach isn't working
+
+### Implementation Planning Example
+
+```markdown
+# Implementation Plan
+
+**Created:** 2026-04-02
+**Feature/Task:** Add CSV export to user dashboard
+**Related Requirements:** See discovery_export_feature.md
+
+---
+
+## Pre-Execution Checklist
+
+- [x] Requirements documented in discovery_export_feature.md
+- [x] Affected files: ExportService.java, ExportController.java, Dashboard.tsx, exportUtils.ts (4 files)
+- [x] Dependencies: None (self-contained feature)
+- [x] Version control: Clean branch `feat/csv-export` created
+- [x] Plan validated (1 clean round on 2026-04-02)
+
+---
+
+## Implementation Steps
+
+### Step 1: Create CSV generation utility
+**Operation:** CREATE
+**File:** `src/services/ExportService.java`
+**Details:**
+- Create new service class with method `generateCSV(Date startDate, Date endDate)`
+- Method queries UserDataRepository.findByDateRange(startDate, endDate)
+- Formats results as CSV string with headers: Date, User, Action, Status
+- Returns CSV string
+
+**Verification:** Compile succeeds, class exists at correct path
+
+---
+
+### Step 2: Add export API endpoint
+**Operation:** CREATE
+**File:** `src/controllers/ExportController.java`
+**Details:**
+- Create REST controller with POST endpoint `/api/export`
+- Accepts JSON body: {startDate: string, endDate: string}
+- Validates dates (endDate must be after startDate)
+- Calls ExportService.generateCSV()
+- Returns CSV with headers: Content-Type: text/csv, Content-Disposition: attachment
+
+**Verification:** Server starts without errors, endpoint appears in route list
+
+---
+
+### Step 3: Add export UI controls
+**Operation:** EDIT
+**File:** `src/components/Dashboard.tsx`
+**Details:**
+
+Locate (line 45):
+```typescript
+return (
+  <div className="dashboard">
+    <h1>User Dashboard</h1>
+    <DataTable data={userData} />
+  </div>
+);
+```
+
+Replace with:
+```typescript
+return (
+  <div className="dashboard">
+    <h1>User Dashboard</h1>
+    <div className="export-controls">
+      <DateRangePicker
+        onStartChange={setStartDate}
+        onEndChange={setEndDate}
+      />
+      <button onClick={handleExport}>Export CSV</button>
+    </div>
+    <DataTable data={userData} />
+  </div>
+);
+```
+
+**Verification:** UI renders without errors, export button visible
+
+---
+
+### Step 4: Implement export handler
+**Operation:** EDIT
+**File:** `src/components/Dashboard.tsx`
+**Details:**
+
+Locate (line 12):
+```typescript
+function Dashboard() {
+  const [userData, setUserData] = useState([]);
+```
+
+Replace with:
+```typescript
+function Dashboard() {
+  const [userData, setUserData] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
+  const handleExport = async () => {
+    const response = await fetch('/api/export', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({startDate, endDate})
+    });
+    const csv = await response.text();
+    downloadFile(csv, 'export.csv');
+  };
+```
+
+**Verification:** TypeScript compiles without errors, no undefined variables
+
+---
+
+## Post-Execution Checklist
+
+- [ ] All 4 steps executed in order
+- [ ] Each step's verification passed
+- [ ] Feature tested manually (select dates, click export, CSV downloads)
+- [ ] No console errors
+- [ ] Tests pass (run `npm test`)
+```
+
+### Key Rules
+
+1. **Plans must be mechanical** — No design decisions left to executor
+2. **Validate before executing** — Run 7-dimension validation (1 clean round exit)
+3. **One step at a time** — Execute sequentially, verify after each
+4. **Builder handoff is optional** — Use when plan >20 steps and execution is mechanical
+5. **Stop on errors** — Don't continue if verification fails
+
+---
+
 # Part 2: Reference Files (Optional Depth)
 
-The files below provide deeper details on concepts introduced in Part 1. **You don't need to read them to execute the 5 core patterns**, but they're available if you want more context.
+The files below provide deeper details on concepts introduced in Part 1. **You don't need to read them to execute the 6 core patterns**, but they're available if you want more context.
 
 ## reference/severity_classification_lite.md
 
@@ -1048,6 +1396,19 @@ Template structure for code review output. Includes:
 
 ---
 
+## templates/implementation_plan_lite.template.md
+
+Template structure for implementation plans. Includes sections for:
+- Metadata (Created date, Feature/Task, Related Requirements)
+- Pre-Execution Checklist (requirements documented, files identified, plan validated)
+- Implementation Steps (step-by-step CREATE/EDIT/DELETE/MOVE operations with verifications)
+- Post-Execution Checklist (all steps complete, verifications passed, tests pass)
+- Notes section
+
+**When to use:** Before implementing any non-trivial feature or change. Use after discovery is complete.
+
+---
+
 ## templates/architecture_lite.template.md
 
 Template for documenting project architecture. Includes sections for:
@@ -1092,10 +1453,12 @@ Template for documenting team coding standards. Includes sections for:
 |-----------|---------------|
 | Just wrote a discovery doc | Pattern 1: Validation Loops |
 | Just completed a code review | Pattern 1: Validation Loops |
+| Just created an implementation plan | Pattern 1: Validation Loops |
 | Unsure if issue is HIGH or MEDIUM | Pattern 2: Severity Classification |
 | User request is vague | Pattern 3: Discovery Protocol |
 | User asks "review branch X" | Pattern 4: Code Review Process |
 | Can't think of questions to ask | Pattern 5: Question Brainstorming |
+| Ready to implement after discovery | Pattern 6: Implementation Planning |
 | Starting any unclear work | Pattern 3 + Pattern 5 together |
 
 ### Validation Loop Cheat Sheet
@@ -1154,6 +1517,25 @@ Quick questions:
 7. Document validation summary
 ```
 
+### Implementation Planning Cheat Sheet
+
+```
+1. Read specification completely
+2. Create mechanical plan (CREATE/EDIT/DELETE/MOVE steps)
+3. Validate plan (7 dimensions, 1 clean round exit)
+4. Execute plan yourself OR hand off to builder
+5. Verify completeness (post-execution checklist)
+
+Operation formats:
+- CREATE: Specify purpose + initial content
+- EDIT: Exact locate string + replacement
+- DELETE: File/section + justification
+- MOVE: Source → destination + reason
+
+Builder handoff: Use when >20 steps + mechanical execution
+Token savings: 60-70% with Haiku builder
+```
+
 ---
 
-*Shamt Lite v1.0 — Standalone rules for validation, discovery, and code review*
+*Shamt Lite v1.0 — Standalone rules for validation, discovery, code review, and implementation planning*
