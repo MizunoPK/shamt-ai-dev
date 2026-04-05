@@ -57,26 +57,83 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 ## Overview
 
 **What is this guide?**
-Implementation Execution is where you write the feature code following the implementation_plan.md, keeping spec.md visible at all times, verifying interfaces before coding, and running tests after each step with mini-QC checkpoints.
+S6 Implementation Execution is where feature code is implemented using the **architect-builder pattern** (SHAMT-30). The architect creates a mechanical implementation plan, validates it, and hands it off to a Haiku builder agent for execution.
+
+**🚨 CRITICAL: Architect-Builder Pattern is MANDATORY for S1-S10 Epic Workflow**
+
+S6 in the S1-S10 workflow now ALWAYS uses the architect-builder pattern:
+- **Architect** (you, Sonnet/Opus): Creates mechanical implementation plan, validates it (9 dimensions), spawns builder
+- **Builder** (Haiku sub-agent): Executes plan mechanically, reports completion or errors
+- **Token Savings:** 60-70% reduction on implementation execution
+
+**There is NO traditional implementation option in S6 for epic workflow.** The pattern is mandatory regardless of feature size or complexity.
+
+**See:** `reference/architect_builder_pattern.md` for complete pattern documentation.
+
+---
+
+### S6 Workflow Overview (Architect-Builder Pattern)
+
+```text
+┌──────────────────────────────────────────────────────────────┐
+│              S6: IMPLEMENTATION EXECUTION (SHAMT-30)         │
+│             Architect-Builder Pattern (MANDATORY)             │
+└──────────────────────────────────────────────────────────────┘
+
+ARCHITECT RESPONSIBILITIES:
+
+Step 1: Create Mechanical Implementation Plan
+   ├─ Read S5 task-based implementation_plan.md
+   ├─ Translate to mechanical steps (CREATE, EDIT, DELETE, MOVE)
+   ├─ Use format from reference/implementation_plan_format.md
+   └─ Save as implementation_plan.md (replaces S5 task-based plan)
+
+Step 2: Validate Mechanical Plan (9 Dimensions)
+   ├─ Create implementation_plan_validation_log.md
+   ├─ Run 9-dimension validation loop
+   ├─ Exit when: primary clean round + 2 Haiku sub-agents confirm zero issues
+   └─ Update plan status to "Validated"
+
+Step 3: Create Handoff Package
+   ├─ Builder instructions
+   ├─ Plan location
+   ├─ Error handling protocol
+   └─ Resume instructions (if applicable)
+
+Step 4: Spawn Haiku Builder
+   ├─ Use Task tool with model="haiku"
+   ├─ Provide handoff package as prompt
+   └─ Builder executes plan sequentially (Step 1, 2, 3...)
+
+Step 5: Monitor Builder Execution
+   ├─ Wait for builder completion or error report
+   ├─ On success: proceed to Step 6
+   └─ On error: diagnose, fix plan, resume from failed step
+
+Step 6: Verify Implementation Complete
+   ├─ Review builder's completion report
+   ├─ Verify all steps executed successfully
+   └─ Proceed to S7
+```
 
 **When do you use this guide?**
-- S5 complete (Validation Loop passed - primary clean round + sub-agent confirmation achieved)
-- implementation_plan.md is validated and ready
-- Ready to write feature code
+- S5 complete (task-based implementation_plan.md validated and user-approved at Gate 5)
+- Ready to create mechanical implementation plan and hand off to builder
 
 **Key Outputs:**
-- ✅ Feature code implemented phase by phase
-- ✅ Tests executed per Testing Approach (unit tests if C/D, integration script if B/D, mini-QC only if A)
-- ✅ integration_test_script created (if Options B/D) — skeletal on first pass, filled as feature builds
-- ✅ implementation_checklist.md updated in real-time
-- ✅ Mini-QC checkpoints passed after major components
-- ✅ Ready for S7 (Testing & Review) (Post-Implementation)
+- ✅ Mechanical implementation plan created and validated (9 dimensions)
+- ✅ Builder successfully executed all implementation steps
+- ✅ Feature code implemented per mechanical plan
+- ✅ All verification checks passed
+- ✅ Ready for S7 (Testing & Review)
 
 **Time Estimate:**
-Varies by feature complexity (1-4 hours typical)
+- Architect planning & validation: 2-4 hours
+- Builder execution: 20-40 minutes (Haiku, cost-optimized)
+- Total: 2.5-4.5 hours (vs. 4-7 hours with traditional approach)
 
 **Exit Condition:**
-S6 is complete when all implementation tasks from implementation_plan.md are implemented, required tests/scripts pass per Testing Approach (A/B/C/D from EPIC_README), and spec requirements are verified complete via dual verification
+S6 is complete when builder reports successful execution of all steps in the mechanical implementation plan and architect has verified completion
 
 ---
 
@@ -84,25 +141,33 @@ S6 is complete when all implementation tasks from implementation_plan.md are imp
 
 **Understanding which file serves which purpose:**
 
-**implementation_plan.md = PRIMARY REFERENCE** (~400 lines)
-- **What:** Detailed implementation build guide created and user-approved in S5
-- **Contains:** Implementation tasks, acceptance criteria, test strategy, phasing plan, dependencies
-- **Use during S6:** Follow this file task-by-task for WHAT to implement and HOW to implement it
-- **Authority:** User-approved plan - this is your implementation roadmap
+**implementation_plan.md = MECHANICAL EXECUTION PLAN**
+- **What:** Step-by-step file operations plan created by architect in S6 Step 1
+- **Contains:** Exact file operations (CREATE/EDIT/DELETE/MOVE), locate/replace strings, verification steps
+- **Format:** Uses `reference/implementation_plan_format.md` specification
+- **Validation:** 9-dimension validation loop before builder handoff
+- **Created:** S6 Step 1 (architect translates from S5 task-based plan)
+- **Used by:** Haiku builder agent (executes mechanically in S6 Step 4)
 
-**spec.md = CONTEXT REFERENCE** (requirements specification)
-- **What:** Feature requirements specification created and user-approved in S2
-- **Contains:** Objectives, scope, algorithms, edge cases, acceptance criteria
-- **Use during S6:** Keep visible for context, verify code matches requirements, understand WHY
-- **Authority:** User-approved requirements - verify against this but implement from implementation_plan.md
+**implementation_plan_validation_log.md = PLAN VALIDATION TRACKER**
+- **What:** Validation loop log for mechanical implementation plan
+- **Contains:** Rounds, issues found, fixes applied, sub-agent confirmations
+- **Created:** S6 Step 2 (during plan validation)
+- **Exit criteria:** Primary clean round + 2 Haiku sub-agents confirm zero issues
 
-**implementation_checklist.md = PROGRESS TRACKER** (~50 lines)
-- **What:** Lightweight checklist extracted from implementation_plan.md tasks
-- **Contains:** Checkbox list linking spec requirements → implementation tasks
-- **Use during S6:** Check off items in real-time as you complete them
-- **Authority:** Your progress tracker - update continuously
+**S5 task-based plan = ARCHIVED REFERENCE** (optional)
+- **What:** High-level task-based plan from S5 (algorithms, data flow, testing strategy)
+- **Location:** Can be moved to `implementation_plan_s5_tasks.md` after mechanical plan created (optional)
+- **Use:** Reference for understanding high-level approach (not used by builder)
 
-**Key Principle:** implementation_plan.md tells you HOW to build (primary reference), spec.md tells you WHAT to build (verification), implementation_checklist.md tracks progress.
+**spec.md = REQUIREMENTS REFERENCE**
+- **What:** Feature requirements specification (created in S2, user-approved at Gate 3)
+- **Use during S6:** Architect reads to create mechanical plan, verify completeness
+
+**Key Principle (Architect-Builder):**
+- **Architect** creates mechanical plan from S5 task-based plan and spec.md
+- **Builder** executes mechanical plan without making design decisions
+- **Separation** ensures planning (Sonnet/Opus) and execution (Haiku) are optimized for their roles
 
 ---
 
@@ -166,11 +231,10 @@ S6 is complete when all implementation tasks from implementation_plan.md are imp
 - [ ] Parallel Epic Coordination: If other epics are active, confirm with the user that no other agent is currently in S6–S9 before proceeding. If unsure — **STOP and ask.**
 - [ ] S5 complete:
   - Validation Loop passed (primary clean round + sub-agent confirmation achieved)
-  - implementation_plan.md validated and complete
-  - Gate 5 approval obtained from user
-- [ ] All unit test files created (from implementation_plan.md test tasks)
-- [ ] spec.md is accessible and will be kept open
-- [ ] implementation_checklist.md created from implementation_plan.md
+  - S5 task-based implementation_plan.md validated and user-approved (Gate 5)
+- [ ] spec.md is accessible
+- [ ] Read `reference/architect_builder_pattern.md` (MANDATORY)
+- [ ] Read `reference/implementation_plan_format.md` (MANDATORY)
 - [ ] No blockers in feature README.md Agent Status
 
 **If any prerequisite fails:**
@@ -180,7 +244,196 @@ S6 is complete when all implementation tasks from implementation_plan.md are imp
 
 ---
 
-## Workflow Overview
+## S6 Architect Workflow (Architect-Builder Pattern)
+
+**🚨 THIS IS THE PRIMARY S6 WORKFLOW for S1-S10 epic work 🚨**
+
+S6 implementation execution uses the architect-builder pattern. Follow these steps:
+
+### Step 1: Create Mechanical Implementation Plan
+
+**Read complete documentation:** `reference/implementation_plan_format.md`
+
+**Process:**
+1. Read S5 task-based `implementation_plan.md` (high-level tasks, algorithms, data flow)
+2. Read `spec.md` (requirements, edge cases, acceptance criteria)
+3. Read `reference/implementation_plan_format.md` (mechanical plan specification)
+4. Copy template: `templates/implementation_plan_template.md` → `implementation_plan.md`
+5. Translate S5 tasks into mechanical steps:
+   - **CREATE operations:** Full file content with all imports, exports, exact code
+   - **EDIT operations:** Exact locate/replace strings (including whitespace, quotes, semicolons)
+   - **DELETE operations:** File path to delete
+   - **MOVE operations:** Source and destination paths
+6. Every step must have **exact** details (no "add authentication", use "locate X, replace with Y")
+7. Every step must have **mechanical verification** (read file, confirm text present)
+
+**Example step format:**
+```markdown
+### Step 15: Add authentication middleware import
+**File:** `src/server.ts`
+**Operation:** EDIT
+**Details:**
+- Locate: `import { cors } from 'cors';`
+- Replace with: `import { cors } from 'cors';\nimport { authenticate } from './middleware/auth';`
+**Verification:** Read src/server.ts, confirm authenticate import present after cors import
+```
+
+**Output:** `implementation_plan.md` (mechanical format, replaces S5 task-based plan)
+
+---
+
+### Step 2: Validate Mechanical Plan (9 Dimensions)
+
+**Read complete documentation:** `reference/validation_loop_master_protocol.md`, section on implementation plan validation
+
+**Process:**
+1. Create `implementation_plan_validation_log.md` (use template: `templates/implementation_plan_validation_log_template.md`)
+2. Run validation rounds checking all 9 dimensions:
+   - D1: Step Clarity - Every step unambiguous, no interpretation needed
+   - D2: Mechanical Executability - Builder can execute without design decisions
+   - D3: File Coverage Completeness - All files from spec covered
+   - D4: Operation Specificity - EDIT steps have exact locate/replace, CREATE steps have full content
+   - D5: Verification Completeness - Every step has mechanical verification method
+   - D6: Error Handling Clarity - Success/failure criteria explicit
+   - D7: Dependency Ordering - Steps in correct execution order
+   - D8: Pre/Post Checklist Completeness - Checklists cover prerequisites and completion
+   - D9: Spec Alignment - Plan implements ALL spec requirements
+3. Fix issues found in each round
+4. Exit when: primary clean round (≤1 LOW issue) + 2 Haiku sub-agents confirm zero issues
+5. Update `implementation_plan.md` status to "Validated"
+
+**Exit criteria:** `consecutive_clean = 1`, spawn 2 Haiku sub-agents in parallel, both confirm zero issues
+
+**Output:** Validated `implementation_plan.md`, complete `implementation_plan_validation_log.md`
+
+---
+
+### Step 3: Create Handoff Package
+
+**Read complete documentation:** `reference/architect_builder_pattern.md`, "Handoff Package Format" section
+
+**Handoff package template:**
+```markdown
+You are a builder agent. Your role is to execute the implementation plan exactly as specified.
+
+**Plan Location:** `{path/to/implementation_plan.md}`
+
+**Your Responsibilities:**
+1. Read the implementation plan file
+2. Execute each step in sequential order (Step 1, 2, 3...)
+3. Verify each step as specified
+4. Report completion or halt on first error
+5. DO NOT make design decisions or deviate from plan
+6. DO NOT spawn sub-agents or parallelize work
+
+**Error Handling Protocol:**
+- If a step fails, STOP immediately - do not proceed to next step
+- Report back to architect with:
+  - Step number where error occurred
+  - Exact error message received
+  - Which verification failed (if applicable)
+  - Current state (what was completed before error)
+- Do NOT attempt retries, fixes, or workarounds
+- Do NOT skip failed steps and continue
+- Wait for architect instructions
+
+**Start by reading the implementation plan, then execute it step by step.**
+```
+
+**Output:** Handoff package text (ready to provide to Task tool)
+
+---
+
+### Step 4: Spawn Haiku Builder
+
+**Task tool invocation:**
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="description">Execute implementation plan</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="prompt">{handoff package text from Step 3}</parameter>
+</invoke>
+```
+
+**CRITICAL:** Use `model="haiku"` for token savings (60-70% reduction)
+
+**Builder execution:**
+- Builder reads `implementation_plan.md`
+- Builder executes steps sequentially (1, 2, 3...)
+- Builder verifies each step
+- Builder reports completion OR halts on first error
+
+---
+
+### Step 5: Monitor Builder Execution
+
+**Wait for builder completion or error report.**
+
+**On Success:**
+- Builder reports: "All steps completed successfully. Post-execution checklist complete."
+- Proceed to Step 6
+
+**On Error:**
+- Builder STOPS immediately
+- Builder reports:
+  - Step number where error occurred (e.g., "Error at Step 23")
+  - Exact error message
+  - Verification status
+  - Current state (Steps 1-22 completed, Step 23 failed)
+- Architect diagnoses root cause (plan error, transient issue, environment issue)
+- Architect takes action:
+  - **Fix plan:** Update `implementation_plan.md`, spawn new builder from Step 23
+  - **Retry:** Determine transient, instruct builder to retry Step 23
+  - **Investigate:** Pause, investigate environment/codebase issue
+
+**Error recovery protocol:** See `reference/architect_builder_pattern.md`, "Error Recovery Protocol" section
+
+---
+
+### Step 6: Verify Implementation Complete
+
+**After builder reports success:**
+1. Review builder's completion report
+2. Verify all steps from `implementation_plan.md` were executed
+3. Verify post-execution checklist items:
+   - [ ] All steps completed without error
+   - [ ] Verification checks passed
+   - [ ] Tests run (if applicable)
+   - [ ] Ready for handoff to S7
+4. Update feature README.md Agent Status: "S6 complete, S7 ready"
+
+**Proceed to S7 (Testing & Review)**
+
+---
+
+## Reference Documentation
+
+**Primary guides for S6 architect workflow:**
+- **`reference/architect_builder_pattern.md`** - Complete pattern documentation (MANDATORY reading)
+- **`reference/implementation_plan_format.md`** - Mechanical plan specification (MANDATORY reading)
+- **`templates/implementation_plan_template.md`** - Mechanical plan template (copy-paste starting point)
+- **`templates/implementation_plan_validation_log_template.md`** - Validation log template
+
+**Supporting guides:**
+- `reference/validation_loop_master_protocol.md` - Validation loop mechanics
+- `reference/model_selection.md` - Task tool with model parameter examples
+- `reference/severity_classification_universal.md` - Severity levels for validation
+
+---
+
+## Background: Traditional Implementation Details (Reference Only)
+
+**Note:** The sections below describe traditional implementation mechanics. In S1-S10 epic workflow, you will NOT implement code directly - the Haiku builder executes the mechanical plan. These sections are preserved as reference material for understanding implementation details when creating mechanical plans.
+
+**When to read these sections:**
+- Creating mechanical plans (understand what the builder will do)
+- Diagnosing builder errors (understand implementation mechanics)
+- Background context for mechanical step creation
+
+---
+
+## Workflow Overview (Traditional - Reference Only)
 
 ```text
 ┌──────────────────────────────────────────────────────────────┐
