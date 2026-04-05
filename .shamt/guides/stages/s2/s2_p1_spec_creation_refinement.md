@@ -320,7 +320,7 @@ Primary agent reviews during coordination heartbeat (every 15 minutes).
 
 **Reference:** `reference/validation_loop_spec_refinement.md`
 
-🚨 **MANDATORY:** Create `{feature_folder}/VALIDATION_LOG.md` BEFORE starting Round 1. If this file does not exist, the validation loop has not started. Track `consecutive_clean` in the log (starts at 0, resets on any issue found, exit at 1 then trigger sub-agent confirmation).
+🚨 **MANDATORY:** Create `{feature_folder}/VALIDATION_LOG.md` BEFORE starting Round 1. If this file does not exist, the validation loop has not started. Track `consecutive_clean` in the log (starts at 0, increments to 1 when ZERO issues OR exactly ONE LOW-severity issue fixed, resets to 0 on multiple LOW issues OR any MEDIUM/HIGH/CRITICAL issue, exit at 1 then trigger sub-agent confirmation).
 
 - **Round 1:** Sequential read, requirement traceability check
   - **Gate 2 Check (Spec-to-Epic Alignment):**
@@ -333,6 +333,50 @@ Primary agent reviews during coordination heartbeat (every 15 minutes).
 - **Round 2:** Read in reverse order, gap detection
 - **Round 3:** Random requirement spot-checks, alignment with DISCOVERY.md
 - **Exit:** primary clean round + sub-agent confirmation (Gate 2 passed as part of validation)
+
+**Sub-Agent Confirmation (MANDATORY when consecutive_clean = 1):**
+
+EXECUTE THE FOLLOWING TASK TOOL CALLS IN A SINGLE MESSAGE:
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in spec.md (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero issues in spec.md after primary validation.
+
+**Artifact to validate:** .shamt/epics/requests/{epic_name}/features/{feature_NN}/spec.md
+**Validation dimensions:** All master dimensions + Spec refinement dimensions from reference/validation_loop_spec_refinement.md
+**Your task:** Re-read the entire spec.md from top to bottom and verify ALL dimensions including Gate 2 criteria.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+Check: Requirement traceability, no scope creep, no missing requirements, no assumptions, completeness, correctness, alignment with DISCOVERY.md.
+</parameter>
+</invoke>
+
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in spec.md (sub-agent B)</parameter>
+  <parameter name="prompt">You are sub-agent B confirming zero issues in spec.md after primary validation.
+
+**Artifact to validate:** .shamt/epics/requests/{epic_name}/features/{feature_NN}/spec.md
+**Validation dimensions:** All master dimensions + Spec refinement dimensions from reference/validation_loop_spec_refinement.md
+**Your task:** Re-read the entire spec.md from BOTTOM TO TOP (reverse order) and verify ALL dimensions including Gate 2 criteria.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+Check: Requirement traceability, no scope creep, no missing requirements, no assumptions, completeness, correctness, alignment with DISCOVERY.md.
+</parameter>
+</invoke>
+```
+
+**Why Haiku?** Sub-agent confirmations are focused verification (70-80% token savings per SHAMT-27). See `reference/model_selection.md`.
+
+**What happens next:**
+- Both confirm zero issues → Gate 2 passed, proceed to step 3 (Dynamic Scope Adjustment) ✅
+- Either finds issues → Reset consecutive_clean = 0, fix issues, continue validation loop
 
 **3. If Gaps Found During Validation Loop - LOOP-BACK MECHANISM**
 - Add new questions to checklist.md

@@ -61,7 +61,7 @@ bash scripts/pre_audit_checks.sh
 
 ## Model Selection for Token Optimization (SHAMT-27)
 
-**Guide audits can save 40-50% tokens** through strategic model delegation. Use the following pattern:
+**Guide audits MUST use strategic model delegation** for token optimization (40-50% savings). This is mandatory, not optional.
 
 ### Sub-Agent Delegation Pattern
 
@@ -102,6 +102,37 @@ Command: ls .shamt/guides/audit/dimensions/ | grep "^d[0-9]" | grep -v example |
 Report the count.</parameter>
 </invoke>
 ```
+
+**Example Task Tool Call for Sub-Agent Confirmation (Haiku):**
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero issues after Round N.
+
+**Round to verify:** Round {N}
+**Sub-rounds completed:** N.1 (Core), N.2 (Content), N.3 (Structural), N.4 (Advanced)
+**Primary agent claims:** Zero issues found across all 4 sub-rounds
+
+**Your task:** Re-verify the audit by checking for any missed issues:
+1. Re-run 3-5 key patterns from each sub-round category
+2. Spot-check 5-10 files across different dimensions
+3. Look for issues the primary agent might have missed
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found in Round {N}".
+
+**Context:**
+- Previous rounds: {summary}
+- Dimensions checked: All 23
+- Files modified this round: {N}
+  </parameter>
+</invoke>
+
+<!-- Spawn sub-agent B with identical prompt, changing only "sub-agent A" → "sub-agent B" -->
+```
+
+**Why Haiku for sub-agent confirmations?** Verification tasks are focused re-checks (70-80% token savings). Haiku excels at pattern matching and spot-checking without requiring deep reasoning.
 
 **See:** `reference/model_selection.md` for complete guidance on when to use each model.
 
@@ -166,7 +197,7 @@ Round N complete → Round N+1 (fresh eyes) → EXIT when all criteria met
 **Critical Rules:**
 - Complete stages sequentially. Never skip stages.
 - **NO DEFERRALS ALLOWED** - Investigate or ask user, never defer to later rounds
-- File size reduction is first-class work (not deferred). See `reference/file_size_reduction_guide.md`
+- File size reduction is first-class work (not deferred). See `audit/reference/file_size_reduction_guide.md`
 - Duration estimates include investigation time - deep dives are EXPECTED
 
 ---
@@ -398,7 +429,7 @@ bash scripts/pre_audit_checks.sh
 ## Reference Materials
 
 ### File Size Reduction Guide ✅ COMPLETE
-`reference/file_size_reduction_guide.md` - Systematic approach to reducing large files
+`audit/reference/file_size_reduction_guide.md` - Systematic approach to reducing large files
 - File size thresholds (CLAUDE.md: 40,000 chars, guides: 2000 lines)
 - Evaluation framework (when to split vs keep)
 - Reduction strategies (extract sub-guides, reference files, consolidate, examples)

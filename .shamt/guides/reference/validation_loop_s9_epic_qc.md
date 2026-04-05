@@ -17,15 +17,16 @@
 
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [Master Dimensions (7) - Always Checked](#master-dimensions-7---always-checked)
-3. [S9 Epic QC Dimensions (6) - Context-Specific](#s9-epic-qc-dimensions-6---context-specific)
-4. [Total Dimensions: 13 (+1 Optional)](#total-dimensions-13-1-optional)
-5. [What's Being Validated](#whats-being-validated)
-6. [Fresh Eyes Patterns Per Round](#fresh-eyes-patterns-per-round)
-7. [Common Issues in S9 QC Context](#common-issues-in-s9-qc-context)
-8. [Exit Criteria](#exit-criteria)
-9. [Integration with S9](#integration-with-s9)
+1. [Model Selection for Token Optimization (SHAMT-27)](#model-selection-for-token-optimization-shamt-27)
+2. [Overview](#overview)
+3. [Master Dimensions (7) - Always Checked](#master-dimensions-7---always-checked)
+4. [S9 Epic QC Dimensions (6) - Context-Specific](#s9-epic-qc-dimensions-6---context-specific)
+5. [Total Dimensions: 13 (+1 Optional)](#total-dimensions-13-1-optional)
+6. [What's Being Validated](#whats-being-validated)
+7. [Fresh Eyes Patterns Per Round](#fresh-eyes-patterns-per-round)
+8. [Common Issues in S9 QC Context](#common-issues-in-s9-qc-context)
+9. [Exit Criteria](#exit-criteria)
+10. [Integration with S9](#integration-with-s9)
 
 ---
 

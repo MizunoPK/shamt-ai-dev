@@ -4,18 +4,20 @@ This guide provides the step-by-step process for validating a design doc using t
 
 **Model Selection for Token Optimization (SHAMT-27):**
 
-Design doc validation can save 20-30% tokens through delegation:
+Design doc validation MUST use strategic model delegation (20-30% token savings). This is mandatory, not optional.
 
 ```
 Primary Agent (Opus):
 ├─ Spawn Haiku → Verify file paths exist, count files in proposals
 ├─ Spawn Sonnet → Read referenced guide files for context validation
 ├─ Primary handles → 7-dimension validation, design analysis, issue classification
-├─ Spawn Haiku (2x in parallel) → Sub-agent confirmations (exit criteria)
+├─ Spawn 2x Haiku (parallel) → Sub-agent confirmations (exit criteria)
 └─ Primary writes → Validation log, design doc fixes
 ```
 
-**See:** `reference/model_selection.md` for Task tool examples.
+**Mandatory enforcement:** Use Task tool with Haiku model for sub-agent confirmations (Step 7). See inline example below.
+
+**See:** `reference/model_selection.md` for additional Task tool examples.
 
 ---
 
@@ -145,13 +147,71 @@ Document the round summary in the validation log:
 
 ## Step 7: Sub-Agent Confirmation
 
-Spawn 2 independent sub-agents in parallel to confirm zero issues.
+When `consecutive_clean = 1` (primary clean round achieved), EXECUTE THE FOLLOWING TASK TOOL CALLS IN A SINGLE MESSAGE:
 
-Each sub-agent:
-1. Reads the design doc
-2. Runs full 7-dimension validation
-3. Reports total issues found with severities
-4. States "CONFIRMED: Zero issues found" if no issues, or lists all issues if any found
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in design doc (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero issues in design doc SHAMT{N}_DESIGN.md.
+
+**Design doc path:** design_docs/active/SHAMT{N}_DESIGN.md
+**Primary agent claims:** Primary clean round achieved (zero issues OR 1 LOW fixed)
+
+**Your task:** Re-read the entire design doc and run full 7-dimension validation:
+
+1. **Completeness:** All necessary aspects covered? Problem fully stated? All affected files identified? Edge cases addressed?
+2. **Correctness:** Factual claims accurate? Proposed changes work as described? File path references correct?
+3. **Consistency:** Internally consistent? No conflicting proposals? Aligns with existing guide conventions?
+4. **Helpfulness:** Proposals solve stated problem? Benefit worth complexity? Solutions practical?
+5. **Improvements:** Simpler/better alternatives? Alternatives considered and rejected with rationale?
+6. **Missing Proposals:** Important items left out of scope? Related concerns that should be addressed together?
+7. **Open Questions:** Unresolved decisions documented? Clear paths to resolution?
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found - all 7 dimensions validated".
+
+**Context:**
+- SHAMT number: {N}
+- Validation rounds completed: {count}
+- Issues fixed so far: {count}
+  </parameter>
+</invoke>
+
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in design doc (sub-agent B)</parameter>
+  <parameter name="prompt">You are sub-agent B confirming zero issues in design doc SHAMT{N}_DESIGN.md.
+
+**Design doc path:** design_docs/active/SHAMT{N}_DESIGN.md
+**Primary agent claims:** Primary clean round achieved (zero issues OR 1 LOW fixed)
+
+**Your task:** Re-read the entire design doc and run full 7-dimension validation:
+
+1. **Completeness:** All necessary aspects covered? Problem fully stated? All affected files identified? Edge cases addressed?
+2. **Correctness:** Factual claims accurate? Proposed changes work as described? File path references correct?
+3. **Consistency:** Internally consistent? No conflicting proposals? Aligns with existing guide conventions?
+4. **Helpfulness:** Proposals solve stated problem? Benefit worth complexity? Solutions practical?
+5. **Improvements:** Simpler/better alternatives? Alternatives considered and rejected with rationale?
+6. **Missing Proposals:** Important items left out of scope? Related concerns that should be addressed together?
+7. **Open Questions:** Unresolved decisions documented? Clear paths to resolution?
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found - all 7 dimensions validated".
+
+**Context:**
+- SHAMT number: {N}
+- Validation rounds completed: {count}
+- Issues fixed so far: {count}
+  </parameter>
+</invoke>
+```
+
+**Why Haiku?** Sub-agent confirmations are focused verification tasks (70-80% token savings). Haiku excels at dimensional checking without requiring deep design analysis.
+
+**What happens next:**
+- Both confirm zero issues → Proceed to Step 9 (finalize validation)
+- Either sub-agent finds issues → Fix them, reset `consecutive_clean = 0`, return to Step 2
 
 **IMPORTANT**: Sub-agents do NOT get the 1 LOW allowance. Any issue found (even LOW) must be reported.
 

@@ -28,7 +28,7 @@ Step 7: Run review file validation loop (12 dimensions)
 
 **Model Selection for Token Optimization (SHAMT-27):**
 
-Code reviews can save 30-40% tokens through delegation:
+Code reviews MUST use strategic model delegation (30-40% token savings). This is mandatory, not optional.
 
 ```
 Primary Agent (Opus):
@@ -36,10 +36,13 @@ Primary Agent (Opus):
 ├─ Spawn Sonnet → Overview.md ELI5 section (summarization)
 ├─ Primary handles → Issue classification, actionable comments, adversarial self-check
 ├─ Primary writes → review_vN.md
-└─ Spawn Sonnet → Final formatting
+├─ Spawn 2x Haiku (parallel) → Overview validation sub-agent confirmation
+└─ Spawn 2x Haiku (parallel) → Review validation sub-agent confirmation
 ```
 
-**See:** `reference/model_selection.md` for Task tool examples.
+**Mandatory enforcement:** Use Task tool with appropriate model parameter for all delegatable tasks. See inline examples below.
+
+**See:** `reference/model_selection.md` for additional Task tool examples.
 
 ---
 
@@ -68,6 +71,33 @@ git log main..<branch> --oneline
 
 **Edge case — large diffs:** If `git diff` output is too large to process at once, read changed files individually via `git show <branch>:<file>` rather than processing the full diff.
 
+**Task Tool Example for Git Operations (Haiku):**
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Fetch branch and get file list</parameter>
+  <parameter name="prompt">Fetch the branch and get the list of changed files for code review.
+
+**Branch:** {branch_name}
+**Base branch:** main
+
+**Commands to run:**
+1. git fetch origin {branch_name}
+2. git diff --name-only $(git merge-base main {branch_name}) {branch_name}
+3. git log main..{branch_name} --oneline
+
+Report:
+- Fetch success/failure
+- List of changed files (one per line)
+- List of commits with messages
+  </parameter>
+</invoke>
+```
+
+**Why Haiku?** Git operations are mechanical tasks with no deep reasoning required (70-80% token savings).
+
 ---
 
 ## Step 2 — Create Output Directory
@@ -95,6 +125,34 @@ Use the template from `output_format.md`. Populate each section:
 - Written for someone with no context on this codebase
 - Avoid jargon; focus on observable behaviour, not implementation
 - Do not mention file names or function names
+
+**Task Tool Example for ELI5 Generation (Sonnet):**
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">sonnet</parameter>
+  <parameter name="description">Generate ELI5 summary for overview</parameter>
+  <parameter name="prompt">Generate an ELI5 (Explain Like I'm 5) summary of the branch changes.
+
+**Branch:** {branch_name}
+**Changed files:** {file_list}
+**Commit messages:** {commit_messages}
+**Diff summary:** {brief_diff_context}
+
+**Requirements:**
+- 2-4 sentences in plain English
+- Understandable to someone with NO context on this codebase
+- Focus on observable behavior, not implementation details
+- Avoid jargon, file names, function names
+- Describe what the user/system can now do that it couldn't before (or what changed in behavior)
+
+Write the ELI5 section only.
+  </parameter>
+</invoke>
+```
+
+**Why Sonnet?** ELI5 generation requires summarization and clear communication but not deep technical reasoning (40-50% token savings vs Opus).
 
 **What Does This Branch Do?**
 - Clear statement of purpose and outcomes
@@ -144,12 +202,67 @@ Each round:
 
 ### Exit Criteria
 
-After `consecutive_clean = 1` (primary clean round):
-1. Spawn 2 independent sub-agents in parallel
-2. Each sub-agent reads the full `overview.md` and checks all 5 dimensions
-3. Both must independently confirm zero issues
-4. If either sub-agent finds an issue: fix it, reset `consecutive_clean = 0`, continue primary rounds
-5. Exit only when both sub-agents confirm clean
+After `consecutive_clean = 1` (primary clean round), EXECUTE THE FOLLOWING TASK TOOL CALLS IN A SINGLE MESSAGE:
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in overview.md (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero issues in code review overview.md.
+
+**Overview file:** .shamt/code_reviews/{sanitized_branch}/overview.md
+**Branch:** {branch_name}
+**Primary agent claims:** Primary clean round achieved (zero issues OR 1 LOW fixed)
+
+**Your task:** Re-read overview.md and verify ALL 5 dimensions:
+1. **Correctness:** Every factual claim verified against diff/git show (not inferred)
+2. **Completeness:** All files and hunks in diff accounted for
+3. **Consistency:** ELI5, What, Why, How sections agree with each other
+4. **Clarity:** ELI5 understandable to non-technical reader; How section specific enough
+5. **Scope:** Overview describes only what's in the diff (no speculation)
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found in overview.md - all 5 dimensions verified".
+
+**Context:**
+- Files changed: {count}
+- Commits: {count}
+- Validation rounds completed: {N}
+  </parameter>
+</invoke>
+
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in overview.md (sub-agent B)</parameter>
+  <parameter name="prompt">You are sub-agent B confirming zero issues in code review overview.md.
+
+**Overview file:** .shamt/code_reviews/{sanitized_branch}/overview.md
+**Branch:** {branch_name}
+**Primary agent claims:** Primary clean round achieved (zero issues OR 1 LOW fixed)
+
+**Your task:** Re-read overview.md and verify ALL 5 dimensions:
+1. **Correctness:** Every factual claim verified against diff/git show (not inferred)
+2. **Completeness:** All files and hunks in diff accounted for
+3. **Consistency:** ELI5, What, Why, How sections agree with each other
+4. **Clarity:** ELI5 understandable to non-technical reader; How section specific enough
+5. **Scope:** Overview describes only what's in the diff (no speculation)
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found in overview.md - all 5 dimensions verified".
+
+**Context:**
+- Files changed: {count}
+- Commits: {count}
+- Validation rounds completed: {N}
+  </parameter>
+</invoke>
+```
+
+**Why Haiku?** Sub-agent confirmations are focused verification tasks (70-80% token savings). Haiku excels at dimensional checking without requiring deep reasoning.
+
+**What happens next:**
+- Both confirm zero issues → Exit overview loop, proceed to Step 5
+- Either sub-agent finds issues → Fix, reset `consecutive_clean = 0`, continue primary rounds
 
 After the overview loop exits, proceed to Step 5.
 
@@ -295,7 +408,91 @@ After each round:
 
 ### Exit Criteria
 
-Same as overview loop: primary clean round + 2 independent sub-agents both confirm zero issues across all 12 dimensions.
+After `consecutive_clean = 1` (primary clean round), EXECUTE THE FOLLOWING TASK TOOL CALLS IN A SINGLE MESSAGE:
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in review_vN.md (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero issues in code review review_vN.md.
+
+**Review file:** .shamt/code_reviews/{sanitized_branch}/review_v{N}.md
+**Branch:** {branch_name}
+**Primary agent claims:** Primary clean round achieved (zero issues OR 1 LOW fixed), passed adversarial self-check
+
+**Your task:** Re-read review_vN.md and verify ALL 12 dimensions:
+
+**Master Dimensions (7):**
+1. **Empirical Verification:** Every comment cites specific file + line verified with git show
+2. **Completeness:** Every file in diff examined, no hunks skipped
+3. **Internal Consistency:** No contradictory comments, similar issues rated consistently
+4. **Traceability:** Each comment traces to specific diff hunk
+5. **Clarity & Specificity:** BLOCKING/CONCERN have exact problem + concrete fix
+6. **Codebase Alignment:** Comments don't flag existing codebase patterns
+7. **Format Compliance:** Follows output_format.md spec
+
+**Code Review-Specific Dimensions (5):**
+8. **Coverage Balance:** Comment distribution reflects actual risk
+9. **False Positive Audit:** BLOCKING/CONCERN re-verified against current diff
+10. **Actionability:** Every comment gives author concrete change path
+11. **Severity Calibration:** BLOCKING reserved for genuine merge blockers
+12. **Scope Coherence:** Comments within PR scope, no scope creep
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found in review_v{N}.md - all 12 dimensions verified".
+
+**Context:**
+- Review categories present: {count}
+- BLOCKING issues: {count}
+- CONCERN issues: {count}
+- Validation rounds completed: {N}
+  </parameter>
+</invoke>
+
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in review_vN.md (sub-agent B)</parameter>
+  <parameter name="prompt">You are sub-agent B confirming zero issues in code review review_vN.md.
+
+**Review file:** .shamt/code_reviews/{sanitized_branch}/review_v{N}.md
+**Branch:** {branch_name}
+**Primary agent claims:** Primary clean round achieved (zero issues OR 1 LOW fixed), passed adversarial self-check
+
+**Your task:** Re-read review_vN.md and verify ALL 12 dimensions:
+
+**Master Dimensions (7):**
+1. **Empirical Verification:** Every comment cites specific file + line verified with git show
+2. **Completeness:** Every file in diff examined, no hunks skipped
+3. **Internal Consistency:** No contradictory comments, similar issues rated consistently
+4. **Traceability:** Each comment traces to specific diff hunk
+5. **Clarity & Specificity:** BLOCKING/CONCERN have exact problem + concrete fix
+6. **Codebase Alignment:** Comments don't flag existing codebase patterns
+7. **Format Compliance:** Follows output_format.md spec
+
+**Code Review-Specific Dimensions (5):**
+8. **Coverage Balance:** Comment distribution reflects actual risk
+9. **False Positive Audit:** BLOCKING/CONCERN re-verified against current diff
+10. **Actionability:** Every comment gives author concrete change path
+11. **Severity Calibration:** BLOCKING reserved for genuine merge blockers
+12. **Scope Coherence:** Comments within PR scope, no scope creep
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found in review_v{N}.md - all 12 dimensions verified".
+
+**Context:**
+- Review categories present: {count}
+- BLOCKING issues: {count}
+- CONCERN issues: {count}
+- Validation rounds completed: {N}
+  </parameter>
+</invoke>
+```
+
+**Why Haiku?** Sub-agent confirmations are focused verification tasks (70-80% token savings). Haiku excels at dimensional checking.
+
+**What happens next:**
+- Both confirm zero issues → Exit review loop, code review complete
+- Either sub-agent finds issues → Fix, reset `consecutive_clean = 0`, continue primary rounds
 
 ---
 

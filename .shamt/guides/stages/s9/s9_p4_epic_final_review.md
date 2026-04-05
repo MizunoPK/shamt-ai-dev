@@ -619,8 +619,52 @@ Mark S9.P4 complete and prepare for S10:
   - [ ] 4. Emergent Quality Patterns: ✅ PASS
   - [ ] 5. Epic Documentation Completeness: ✅ PASS
 - [ ] Primary clean round achieved (zero issues across all 5 categories)
-- [ ] Sub-agent confirmation: both sub-agents reported zero issues ✅
+- [ ] Sub-agent confirmation: both sub-agents reported zero issues ✅ (see protocol below)
 - [ ] Review results documented in epic_lessons_learned.md
+
+**Sub-Agent Confirmation Protocol (when consecutive_clean = 1):**
+
+EXECUTE THE FOLLOWING TASK TOOL CALLS IN A SINGLE MESSAGE:
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in epic final review (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero issues in S9.P4 epic final review.
+
+**Artifact to validate:** Epic {epic_name} pr_review_issues.md and epic implementation
+**Validation categories:** All 5 epic final review categories
+**Your task:** Review the epic and verify ALL 5 categories have zero issues.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+Check: Cross-feature integration, architecture coherence, epic requirements coverage against original request, emergent quality patterns, epic documentation completeness.
+</parameter>
+</invoke>
+
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in epic final review (sub-agent B)</parameter>
+  <parameter name="prompt">You are sub-agent B confirming zero issues in S9.P4 epic final review.
+
+**Artifact to validate:** Epic {epic_name} pr_review_issues.md and epic implementation
+**Validation categories:** All 5 epic final review categories
+**Your task:** Review the epic in reverse order and verify ALL 5 categories have zero issues.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+Check: Cross-feature integration, architecture coherence, epic requirements coverage against original request, emergent quality patterns, epic documentation completeness.
+</parameter>
+</invoke>
+```
+
+**Why Haiku?** Sub-agent confirmations are focused verification (70-80% token savings per SHAMT-27). See `reference/model_selection.md`.
+
+**What happens next:**
+- Both confirm zero issues → S9.P4 complete, proceed to Step 7 or Step 8 ✅
+- Either finds issues → Reset consecutive_clean = 0, fix issues, continue validation
 
 ### Handle Issues (Step 7 - if applicable)
 - [ ] All issues documented (if any found)

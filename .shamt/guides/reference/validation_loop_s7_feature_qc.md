@@ -17,15 +17,16 @@
 
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [Master Dimensions (7) - Always Checked](#master-dimensions-7---always-checked)
-3. [S7 Feature QC Dimensions (11) - Context-Specific](#s7-feature-qc-dimensions-11---context-specific)
-4. [Total Dimensions: 17 (+1 Optional)](#total-dimensions-17-1-optional)
-5. [What's Being Validated](#whats-being-validated)
-6. [Fresh Eyes Patterns Per Round](#fresh-eyes-patterns-per-round)
-7. [Common Issues in S7 QC Context](#common-issues-in-s7-qc-context)
-8. [Exit Criteria](#exit-criteria)
-9. [Integration with S7](#integration-with-s7)
+1. [Model Selection for Token Optimization (SHAMT-27)](#model-selection-for-token-optimization-shamt-27)
+2. [Overview](#overview)
+3. [Master Dimensions (7) - Always Checked](#master-dimensions-7---always-checked)
+4. [S7 Feature QC Dimensions (10) - Context-Specific](#s7-feature-qc-dimensions-10---context-specific)
+5. [Total Dimensions: 17 (+1 Optional)](#total-dimensions-17-1-optional)
+6. [What's Being Validated](#whats-being-validated)
+7. [Fresh Eyes Patterns Per Round](#fresh-eyes-patterns-per-round)
+8. [Common Issues in S7 QC Context](#common-issues-in-s7-qc-context)
+9. [Exit Criteria](#exit-criteria)
+10. [Integration with S7](#integration-with-s7)
 
 ---
 

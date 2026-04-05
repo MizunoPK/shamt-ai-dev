@@ -7,6 +7,22 @@
 
 ---
 
+## 🚨 MANDATORY ENFORCEMENT
+
+**Model selection is not optional — it is mandatory for all workflows.**
+
+When workflow guides specify model delegation patterns (e.g., "Spawn Haiku → File operations"), you **MUST** use the Task tool with the specified model parameter. This is enforced for token optimization and cost efficiency.
+
+**Example workflows with mandatory delegation:**
+- Validation loops (S1.P3, S2.P1, S5.V2, S7.P2, S9.P2, S9.P4, S10.P1) - Haiku for sub-agent confirmations (70-80% savings)
+- Guide audits (audit/stages/stage_5_loop_decision.md) - Haiku for pre-checks and confirmations (40-50% savings)
+- Code reviews (code_review/code_review_workflow.md) - Haiku for git ops, Sonnet for ELI5, Haiku for confirmations (30-40% savings)
+- Import workflow (sync/import_workflow.md) - Haiku for diff reading, Haiku for confirmations (20-30% savings)
+
+**See inline Task tool examples in each workflow guide** for copy-paste-ready templates.
+
+---
+
 ## Table of Contents
 
 1. [Quick Reference](#quick-reference)
@@ -787,6 +803,184 @@ No context switch, faster completion
 ```
 
 **Note:** Sub-agent confirmations (after primary) use Haiku, but primary always uses Opus.
+
+---
+
+## Workflow Guide Cross-References
+
+Each workflow guide includes inline Task tool examples with copy-paste-ready XML. Refer to these guides for context-specific delegation patterns:
+
+### Core Validation Loops (Haiku Sub-Agent Confirmations)
+
+**Stage Guides (S1-S10):**
+- `stages/s1/s1_p3_discovery_phase.md` — Discovery validation sub-agent confirmation
+- `stages/s2/s2_p1_spec_creation_refinement.md` — Spec validation sub-agent confirmation
+- `stages/s5/s5_v2_validation_loop.md` — Implementation plan validation (18 dimensions) + Model Selection section
+- `stages/s7/s7_p2_qc_rounds.md` — Feature QC validation (17 dimensions)
+- `stages/s8/s8_p1_cross_feature_alignment.md` — Alignment validation
+- `stages/s9/s9_p2_epic_qc_rounds.md` — Epic QC validation (13 dimensions)
+- `stages/s9/s9_p4_epic_final_review.md` — Epic final review (5 categories)
+- `stages/s10/s10_p1_guide_update_workflow.md` — Proposal doc verification
+
+**Master Protocol:**
+- `reference/validation_loop_master_protocol.md` — Sub-Agent Confirmation Protocol with Task tool XML
+
+### Specialized Workflows
+
+**Audit (40-50% savings):**
+- `audit/README.md` — Model selection overview + inline examples (file counting, sub-agent confirmation)
+- `audit/stages/stage_5_loop_decision.md` — Exit criteria sub-agent confirmation (2x Haiku)
+
+**Code Review (30-40% savings):**
+- `code_review/code_review_workflow.md` — 4 Task tool examples:
+  - Git operations (Haiku)
+  - ELI5 generation (Sonnet)
+  - Overview validation sub-agent confirmation (Haiku)
+  - Review validation sub-agent confirmation (Haiku)
+
+**Design Doc Validation (20-30% savings):**
+- `design_doc_validation/validation_workflow.md` — 7-dimension validation sub-agent confirmation (Haiku)
+
+**Import Workflow (20-30% savings):**
+- `sync/import_workflow.md` — Post-import validation sub-agent confirmation (Haiku)
+
+**Shamt Lite (Standalone):**
+- `scripts/initialization/SHAMT_LITE.template.md` — Pattern 1 sub-agent confirmation Task tool example
+
+**All inline examples follow the standard template:**
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>  <!-- or sonnet/opus -->
+  <parameter name="description">Brief task description</parameter>
+  <parameter name="prompt">Detailed prompt with context...</parameter>
+</invoke>
+```
+
+---
+
+## Standard Templates
+
+The following templates are used across all workflow guides. Copy-paste and adapt for your context.
+
+### Template 1: Sub-Agent Confirmation (Haiku)
+
+**Use:** After primary clean round in validation loops (S1-S10, audit, code review, design doc, import)
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero issues after primary validation.
+
+**Artifact to validate:** {path_or_description}
+**Validation dimensions:** {list all dimensions being checked}
+**Your task:** Re-read the entire artifact and verify ALL dimensions.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+**Context:**
+- {relevant context about what was validated}
+  </parameter>
+</invoke>
+
+<!-- Spawn sub-agent B with identical prompt, changing only "sub-agent A" → "sub-agent B" -->
+```
+
+**Why Haiku?** Sub-agent confirmations are focused verification (70-80% token savings). Always use Haiku for confirmations.
+
+### Template 2: Git Operations (Haiku)
+
+**Use:** Branch fetching, file listing, commit history
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Fetch branch and get file list</parameter>
+  <parameter name="prompt">Fetch the branch and list changed files.
+
+**Branch:** {branch_name}
+**Base branch:** main
+
+Commands to run:
+1. git fetch origin {branch_name}
+2. git diff --name-only $(git merge-base main {branch_name}) {branch_name}
+3. git log main..{branch_name} --oneline
+
+Report: Fetch status, file list, commit messages
+  </parameter>
+</invoke>
+```
+
+**Why Haiku?** Git operations are mechanical (70-80% token savings).
+
+### Template 3: File Counting/Mechanical Operations (Haiku)
+
+**Use:** Counting files, checking existence, simple grep patterns
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Count {what you're counting}</parameter>
+  <parameter name="prompt">Count {description of task}.
+
+Command: {specific command or pattern}
+
+Report: {what to report back}
+  </parameter>
+</invoke>
+```
+
+**Why Haiku?** Counting and mechanical operations don't require deep reasoning (70-80% token savings).
+
+### Template 4: Medium Complexity Analysis (Sonnet)
+
+**Use:** ELI5 generation, pattern identification, classification
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">sonnet</parameter>
+  <parameter name="description">Generate {artifact} or classify {thing}</parameter>
+  <parameter name="prompt">{Description of analytical task requiring medium complexity reasoning}
+
+**Input:** {what you're analyzing}
+**Requirements:** {specific requirements}
+**Output:** {what format to produce}
+  </parameter>
+</invoke>
+```
+
+**Why Sonnet?** Medium-complexity analysis requires more than mechanical operations but not deep multi-dimensional validation (40-50% token savings vs Opus).
+
+### Template 5: Deep Validation (Opus)
+
+**Use:** Primary validation rounds, multi-dimensional checks, complex decisions
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">opus</parameter>
+  <parameter name="description">Validate {artifact} (primary round)</parameter>
+  <parameter name="prompt">Run full {N}-dimension validation on {artifact}.
+
+**Dimensions to check:**
+1. {Dimension 1}
+2. {Dimension 2}
+...
+{N}. {Dimension N}
+
+**Your task:** Read the artifact, check ALL dimensions, classify issues by severity, fix issues immediately.
+
+This is a primary validation round.
+  </parameter>
+</invoke>
+```
+
+**Why Opus?** Deep multi-dimensional validation requires complex reasoning and pattern recognition. Use Opus for primary rounds, Haiku for sub-agent confirmations.
 
 ---
 

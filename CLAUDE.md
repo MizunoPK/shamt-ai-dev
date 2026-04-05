@@ -275,7 +275,11 @@ Child projects maintain ARCHITECTURE.md and CODING_STANDARDS.md through the S1-S
 
 ## Model Selection for Token Optimization (SHAMT-27)
 
-**Purpose:** Save 30-50% tokens across workflows through strategic model delegation
+**Purpose:** MANDATORY token optimization through strategic model delegation (30-50% savings)
+
+**CRITICAL:** Model selection is not optional. When workflow guides specify delegation patterns (e.g., "Spawn Haiku → File operations"), you MUST use the Task tool with the specified model parameter.
+
+**Note:** As of SHAMT-29, model selection is mandatory at all execution points. See workflow guides for inline Task tool examples.
 
 **Quick Reference:**
 - **Haiku** (cheap, fast): File operations, git operations, grep/glob searches, tests, sub-agent confirmations

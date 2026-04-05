@@ -295,11 +295,95 @@ criteria_met=0
 
 # Decision
 if [ $criteria_met -eq 9 ]; then
-  echo "✅ ALL criteria met - Present to user for final approval"
+  echo "✅ ALL criteria met - Trigger sub-agent confirmation"
 else
   echo "❌ $((9-criteria_met)) criteria failed - LOOP to Round $((round_number+1))"
 fi
 ```
+
+---
+
+## Sub-Agent Confirmation (After All 9 Criteria Met)
+
+**Trigger:** ALL 9 exit criteria met for Round N
+
+**Purpose:** Independent verification that Round N truly found zero issues before proceeding to exit decision
+
+### Execution
+
+When all 9 criteria pass, EXECUTE THE FOLLOWING TASK TOOL CALLS IN A SINGLE MESSAGE:
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in Round N (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero issues after audit Round {N}.
+
+**Round to verify:** Round {N}
+**Sub-rounds completed:** {N}.1 (Core), {N}.2 (Content), {N}.3 (Structural), {N}.4 (Advanced)
+**Primary agent claims:** ALL 9 exit criteria met, Round {N} found ZERO total issues across all 4 sub-rounds
+
+**Your task:** Re-verify the audit by independently checking for any missed issues:
+1. Re-run 3-5 key patterns from each sub-round category (Core, Content, Structural, Advanced)
+2. Spot-check 5-10 files across different dimension categories
+3. Look for common audit blind spots (terminology, cross-references, file paths)
+4. Check exit criteria accuracy (did primary correctly count issues? Was anything deferred?)
+
+**Critical dimensions to verify:**
+- D1: Cross-Reference Accuracy (grep for stage references, file paths)
+- D2: Terminology Consistency (notation patterns)
+- D5: Count Accuracy (file counts, iteration counts)
+- D11: File Size Assessment (over-limit files)
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found after your checks, state "CONFIRMED: Zero issues found in Round {N} - all 9 exit criteria verified".
+
+**Context:**
+- Previous rounds: {summary of Rounds 1 through N-1}
+- Consecutive clean rounds before this: {consecutive_clean count}
+- Total files modified in Round {N}: {count}
+- Dimensions checked in Round {N}: All 23
+  </parameter>
+</invoke>
+
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in Round N (sub-agent B)</parameter>
+  <parameter name="prompt">You are sub-agent B confirming zero issues after audit Round {N}.
+
+**Round to verify:** Round {N}
+**Sub-rounds completed:** {N}.1 (Core), {N}.2 (Content), {N}.3 (Structural), {N}.4 (Advanced)
+**Primary agent claims:** ALL 9 exit criteria met, Round {N} found ZERO total issues across all 4 sub-rounds
+
+**Your task:** Re-verify the audit by independently checking for any missed issues:
+1. Re-run 3-5 key patterns from each sub-round category (Core, Content, Structural, Advanced)
+2. Spot-check 5-10 files across different dimension categories
+3. Look for common audit blind spots (terminology, cross-references, file paths)
+4. Check exit criteria accuracy (did primary correctly count issues? Was anything deferred?)
+
+**Critical dimensions to verify:**
+- D1: Cross-Reference Accuracy (grep for stage references, file paths)
+- D2: Terminology Consistency (notation patterns)
+- D5: Count Accuracy (file counts, iteration counts)
+- D11: File Size Assessment (over-limit files)
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found after your checks, state "CONFIRMED: Zero issues found in Round {N} - all 9 exit criteria verified".
+
+**Context:**
+- Previous rounds: {summary of Rounds 1 through N-1}
+- Consecutive clean rounds before this: {consecutive_clean count}
+- Total files modified in Round {N}: {count}
+- Dimensions checked in Round {N}: All 23
+  </parameter>
+</invoke>
+```
+
+**Why Haiku?** Sub-agent confirmations are focused re-verification tasks (70-80% token savings per SHAMT-27). Haiku excels at pattern matching and spot-checking.
+
+**What happens next:**
+- Both confirm zero issues → Proceed to End-of-Round Improvements Review
+- Either sub-agent finds issues → LOOP back to Round {N}, Sub-Round {N}.1 with fresh patterns (sub-agent found gap in primary checks)
 
 ---
 

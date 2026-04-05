@@ -32,7 +32,7 @@
 4. **Walk through ALL dimensions** (master + scenario-specific) and document each as PASS or ISSUE
 5. **Verify ≥3 technical claims** against source code every round using tools (read_file, grep_search)
 6. **Never delegate rounds to subagents** — you must do the reads and checks yourself
-7. **When `consecutive_clean = 1` (primary clean round): spawn 2 independent sub-agents (using Haiku model) in parallel** — both must confirm zero issues to complete the exit sequence (see Exit Criteria for the required sub-agent confirmation protocol)
+7. **When `consecutive_clean = 1` (primary clean round): MUST spawn 2 independent sub-agents using Haiku model in parallel** — both must confirm zero issues to complete the exit sequence (MANDATORY per SHAMT-29: DO NOT spawn sub-agents without specifying `model=haiku` parameter — see Sub-Agent Confirmation Protocol section for required Task tool syntax)
 8. **Complete the Adversarial Self-Check** after checking all dimensions in each round — a round may not be scored clean if this step is skipped
 
 **A round where you found multiple issues OR any MEDIUM/HIGH/CRITICAL issue is NOT a clean round — the counter resets to 0. Exception: Exactly 1 LOW-severity issue (fixed) still counts as a clean round.**
@@ -43,22 +43,23 @@
 
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [When to Use This Protocol](#when-to-use-this-protocol)
-3. [Core Validation Process](#core-validation-process)
-4. [Universal Dimensions (Master - Always Checked)](#universal-dimensions-master---always-checked)
-5. [Round-by-Round Execution](#round-by-round-execution)
+1. [Model Selection for Token Optimization (SHAMT-27)](#model-selection-for-token-optimization-shamt-27)
+2. [Overview](#overview)
+3. [When to Use This Protocol](#when-to-use-this-protocol)
+4. [Core Validation Process](#core-validation-process)
+5. [Universal Dimensions (Master - Always Checked)](#universal-dimensions-master---always-checked)
+6. [Round-by-Round Execution](#round-by-round-execution)
    - [Round Structure](#round-structure-every-round)
    - [Adversarial Self-Check](#adversarial-self-check-run-after-all-dimensions-before-post-round-gate)
-6. [Open Questions Protocol](#open-questions-protocol)
-7. [Documentation Requirements](#documentation-requirements)
-8. [Quality Standards](#quality-standards)
-9. [Anti-Shortcut Enforcement](#anti-shortcut-enforcement)
-10. [Exit Criteria](#exit-criteria)
-11. [Real-World Examples](#real-world-examples)
-12. [Common Mistakes](#common-mistakes)
-13. [How Scenario-Specific Loops Extend This Master](#how-scenario-specific-loops-extend-this-master)
-14. [Templates](#templates)
+7. [Open Questions Protocol](#open-questions-protocol)
+8. [Documentation Requirements](#documentation-requirements)
+9. [Quality Standards](#quality-standards)
+10. [Anti-Shortcut Enforcement](#anti-shortcut-enforcement)
+11. [Exit Criteria](#exit-criteria)
+12. [Real-World Examples](#real-world-examples)
+13. [Common Mistakes](#common-mistakes)
+14. [How Scenario-Specific Loops Extend This Master](#how-scenario-specific-loops-extend-this-master)
+15. [Templates](#templates)
 
 
 ---
@@ -1574,13 +1575,53 @@ count.
 
 When `consecutive_clean = 1` (primary clean round achieved):
 
-1. **Spawn 2 independent sub-agents in parallel**
-2. **Sub-agent A**: Re-reads artifact top-to-bottom, checks all master + scenario dimensions
-3. **Sub-agent B**: Re-reads artifact bottom-to-top (or in different order), checks all dimensions
-4. **Both must report zero issues** to complete the exit sequence
-5. **If either sub-agent finds an issue**: Fix immediately, reset `consecutive_clean = 0`, continue validation
+**EXECUTE THE FOLLOWING TASK TOOL CALLS IN A SINGLE MESSAGE:**
 
-**See Also:** Sub-agent handoff package format is specified in "Sub-Agent Handoff Package" section above. Each scenario-specific validation loop (S2 specs, S5 plans, S7 QC, S9 epic validation) uses this same master handoff format.
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero issues after primary validation.
+
+**Artifact to validate:** {artifact_path}
+**Validation dimensions:** {list all master + scenario dimensions}
+**Your task:** Re-read the entire artifact from top to bottom and verify ALL dimensions.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+See the handoff package below for complete context.
+
+{paste sub-agent handoff package with all required context from Sub-Agent Handoff Package section}
+</parameter>
+</invoke>
+
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues (sub-agent B)</parameter>
+  <parameter name="prompt">You are sub-agent B confirming zero issues after primary validation.
+
+**Artifact to validate:** {artifact_path}
+**Validation dimensions:** {list all master + scenario dimensions}
+**Your task:** Re-read the entire artifact from BOTTOM TO TOP (reverse order) and verify ALL dimensions.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+See the handoff package below for complete context.
+
+{paste sub-agent handoff package with all required context from Sub-Agent Handoff Package section}
+</parameter>
+</invoke>
+```
+
+**Why Haiku?** Sub-agent confirmations are focused verification tasks (70-80% token savings with no quality loss per SHAMT-27). See `reference/model_selection.md` for complete rationale.
+
+**What happens next:**
+- If BOTH sub-agents confirm zero issues → EXIT validation loop ✅
+- If EITHER sub-agent finds an issue → Fix immediately, reset `consecutive_clean = 0`, continue to next round
+
+**See Also:** Sub-agent handoff package format is specified in "Sub-Agent Handoff Package" section below. Each scenario-specific validation loop (S2 specs, S5 plans, S7 QC, S9 epic validation) uses this same master handoff format.
 
 #### Sub-Agent Handoff Package (Context Passed to Each Sub-Agent)
 

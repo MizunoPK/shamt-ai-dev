@@ -768,7 +768,51 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 
 ## Exit Criteria
 
-S7.P2 is complete when the Validation Loop exits: primary agent declares one clean round (zero issues, all 17 dimensions) AND both independent sub-agents confirm zero issues. Agent Status is updated.
+S7.P2 is complete when the Validation Loop exits: primary agent declares one clean round (ZERO issues OR exactly ONE LOW-severity issue fixed, all 17 dimensions) AND both independent sub-agents confirm zero issues. Agent Status is updated.
+
+### Sub-Agent Confirmation Protocol
+
+When `consecutive_clean = 1` (primary clean round achieved), EXECUTE THE FOLLOWING TASK TOOL CALLS IN A SINGLE MESSAGE:
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in feature QC (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero issues in feature QC validation.
+
+**Artifact to validate:** Feature {feature_NN} implemented code
+**Validation dimensions:** All 17 dimensions (7 master + 10 S7 QC) from reference/validation_loop_s7_feature_qc.md
+**Your task:** Review the entire feature implementation and verify ALL dimensions.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+Check: Empirical verification, completeness, consistency, traceability, clarity, upstream alignment, standards, cross-feature integration, error handling, end-to-end functionality, test coverage (100% passing), requirements completion, imports, types, input validation, test stubs.
+</parameter>
+</invoke>
+
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in feature QC (sub-agent B)</parameter>
+  <parameter name="prompt">You are sub-agent B confirming zero issues in feature QC validation.
+
+**Artifact to validate:** Feature {feature_NN} implemented code
+**Validation dimensions:** All 17 dimensions (7 master + 10 S7 QC) from reference/validation_loop_s7_feature_qc.md
+**Your task:** Review the feature implementation in reverse order and verify ALL dimensions.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+Check: Empirical verification, completeness, consistency, traceability, clarity, upstream alignment, standards, cross-feature integration, error handling, end-to-end functionality, test coverage (100% passing), requirements completion, imports, types, input validation, test stubs.
+</parameter>
+</invoke>
+```
+
+**Why Haiku?** Sub-agent confirmations are focused verification (70-80% token savings per SHAMT-27). See `reference/model_selection.md`.
+
+**What happens next:**
+- Both confirm zero issues → S7.P2 complete, proceed to S7.P3 (Final Review) ✅
+- Either finds issues → Reset consecutive_clean = 0, fix issues, continue validation loop
 
 ---
 

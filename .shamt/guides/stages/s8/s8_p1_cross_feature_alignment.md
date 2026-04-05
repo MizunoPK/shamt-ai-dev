@@ -449,6 +449,50 @@ Record the misclassification guard result in `S8_ALIGNMENT_VALIDATION_{feature_N
 4. Resolve ALL issues (zero tolerance standard)
 5. **Exit condition:** primary clean round + sub-agent confirmation (ZERO issues found)
 
+**Sub-Agent Confirmation (when consecutive_clean = 1):**
+
+EXECUTE THE FOLLOWING TASK TOOL CALLS IN A SINGLE MESSAGE:
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero alignment issues (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero alignment issues in S8.P1 validation.
+
+**Artifacts to validate:** Updated feature specs in .shamt/epics/requests/{epic_name}/features/
+**Validation focus:** Alignment with implemented feature {feature_NN} patterns, consistency across remaining specs
+**Your task:** Review all updated specs and verify zero misalignments or contradictions.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+Check: Pattern alignment, error handling consistency, logging approach consistency, no contradictions with implementation, no missing updates.
+</parameter>
+</invoke>
+
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero alignment issues (sub-agent B)</parameter>
+  <parameter name="prompt">You are sub-agent B confirming zero alignment issues in S8.P1 validation.
+
+**Artifacts to validate:** Updated feature specs in .shamt/epics/requests/{epic_name}/features/
+**Validation focus:** Alignment with implemented feature {feature_NN} patterns, consistency across remaining specs
+**Your task:** Review updated specs in reverse order and verify zero misalignments or contradictions.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+Check: Pattern alignment, error handling consistency, logging approach consistency, no contradictions with implementation, no missing updates.
+</parameter>
+</invoke>
+```
+
+**Why Haiku?** Sub-agent confirmations are focused verification (70-80% token savings per SHAMT-27). See `reference/model_selection.md`.
+
+**What happens next:**
+- Both confirm zero issues → Alignment validated, proceed to S8.P2 ✅
+- Either finds issues → Reset consecutive_clean = 0, fix issues, continue validation loop
+
 **Differences from S3 Validation Loop:**
 - **S3:** 3 loops, ALL specs, BEFORE implementation (comprehensive)
 - **S8.P1:** 2 loops, UPDATED specs, AFTER each feature (incremental)

@@ -6,18 +6,20 @@ The import script prints a ready-to-use agent prompt at the end of its run. This
 
 **Model Selection for Token Optimization (SHAMT-27):**
 
-Import workflow can save 20-30% tokens through delegation:
+Import workflow MUST use strategic model delegation (20-30% token savings). This is mandatory, not optional.
 
 ```
 Primary Agent (Opus):
 ├─ Spawn Haiku → Read import diff files, count changed files
 ├─ Spawn Sonnet → Read supplement files, read pointer files for consistency
 ├─ Primary handles → Assess impact, update supplements, validation loop
-├─ Spawn Haiku (2x in parallel) → Sub-agent confirmations (exit criteria)
+├─ Spawn 2x Haiku (parallel) → Sub-agent confirmations (Step 5 exit criteria)
 └─ Primary executes → Git operations, diff file deletion, commit
 ```
 
-**See:** `reference/model_selection.md` for Task tool examples.
+**Mandatory enforcement:** Use Task tool with Haiku model for sub-agent confirmations (Step 5). See inline example below.
+
+**See:** `reference/model_selection.md` for additional Task tool examples.
 
 ---
 
@@ -158,6 +160,74 @@ Check for:
 - `SHAMT-{N}` placeholder intact throughout `.shamt/guides/` — you must not replace it with your epic tag
 
 **On the last point:** `SHAMT-{N}` appears throughout the shared guides as a generic placeholder for "epic number N." It is not a reference to the master Shamt project — it applies equally to every child project. Never substitute it with your project's epic tag (e.g., do not change `SHAMT-{N}` to `KAI-{N}` or `BAR-{N}`). If you find any such substitutions, revert them immediately before the validation loop can pass.
+
+**Sub-Agent Confirmation (After Primary Clean Round):**
+
+When `consecutive_clean = 1` (primary clean round achieved), EXECUTE THE FOLLOWING TASK TOOL CALLS IN A SINGLE MESSAGE:
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues post-import (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero issues after Shamt import.
+
+**Import diff files processed:** {list}
+**Files changed:** {count}
+**Primary agent claims:** Primary clean round achieved (zero issues OR 1 LOW fixed)
+
+**Your task:** Re-verify the import validation by checking:
+
+1. **Supplements accuracy:** Re-read 3-5 changed guide files + their supplements in project-specific-configs/ — do supplements still match guide content?
+2. **Pointer correctness:** Check 3-5 pointer notes in updated guides — do they reference correct locations?
+3. **No shared guide contamination:** Spot-check 3-5 shared guide files — any project-specific content accidentally added?
+4. **Cross-reference integrity:** Grep for broken file paths or references introduced by import
+5. **SHAMT-{N} placeholder intact:** Verify SHAMT-{N} not replaced with project epic tag
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found post-import - all validation checks passed".
+
+**Context:**
+- Import date: {date}
+- Changed files: {count}
+- New files: {count}
+- Deleted files: {count}
+  </parameter>
+</invoke>
+
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues post-import (sub-agent B)</parameter>
+  <parameter name="prompt">You are sub-agent B confirming zero issues after Shamt import.
+
+**Import diff files processed:** {list}
+**Files changed:** {count}
+**Primary agent claims:** Primary clean round achieved (zero issues OR 1 LOW fixed)
+
+**Your task:** Re-verify the import validation by checking:
+
+1. **Supplements accuracy:** Re-read 3-5 changed guide files + their supplements in project-specific-configs/ — do supplements still match guide content?
+2. **Pointer correctness:** Check 3-5 pointer notes in updated guides — do they reference correct locations?
+3. **No shared guide contamination:** Spot-check 3-5 shared guide files — any project-specific content accidentally added?
+4. **Cross-reference integrity:** Grep for broken file paths or references introduced by import
+5. **SHAMT-{N} placeholder intact:** Verify SHAMT-{N} not replaced with project epic tag
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found post-import - all validation checks passed".
+
+**Context:**
+- Import date: {date}
+- Changed files: {count}
+- New files: {count}
+- Deleted files: {count}
+  </parameter>
+</invoke>
+```
+
+**Why Haiku?** Sub-agent confirmations are focused verification tasks (70-80% token savings). Haiku excels at spot-checking and pattern matching.
+
+**What happens next:**
+- Both confirm zero issues → Proceed to Step 6 (delete diff files)
+- Either sub-agent finds issues → Fix them, reset `consecutive_clean = 0`, continue validation loop
 
 ---
 

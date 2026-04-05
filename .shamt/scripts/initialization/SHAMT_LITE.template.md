@@ -139,6 +139,46 @@ If any sub-agent finds issues:
 - Reset `consecutive_clean = 0`
 - Return to Step 1 for another primary round
 
+**Task Tool Example for Sub-Agent Confirmation:**
+
+When `consecutive_clean = 1`, spawn 2 sub-agents using the Task tool:
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero issues after primary validation.
+
+**Artifact to validate:** {artifact_path_or_description}
+**Validation dimensions:** {list the dimensions from Step 2 for this artifact type}
+**Your task:** Re-read the entire artifact and verify ALL dimensions.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+{Provide relevant context about what was validated}
+  </parameter>
+</invoke>
+
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues (sub-agent B)</parameter>
+  <parameter name="prompt">You are sub-agent B confirming zero issues after primary validation.
+
+**Artifact to validate:** {artifact_path_or_description}
+**Validation dimensions:** {list the dimensions from Step 2 for this artifact type}
+**Your task:** Re-read the entire artifact and verify ALL dimensions.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+{Provide relevant context about what was validated}
+  </parameter>
+</invoke>
+```
+
+**Why use Task tool?** Spawning sub-agents allows for independent verification, reducing blind spots and ensuring quality.
+
 **Step 8: Document validation completion**
 
 At the end of validation, document:

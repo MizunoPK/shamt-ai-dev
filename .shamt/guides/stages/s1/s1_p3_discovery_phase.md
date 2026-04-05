@@ -97,7 +97,7 @@ The Discovery Phase is a mandatory research and validation process where the age
 - Example: SMALL epic 1.5 hours ÷ 20 min/round = 4.5 rounds ≈ 3-5 rounds (matches table)
 
 **Exit Condition:**
-Discovery Phase is complete when Validation Loop validation achieves a primary clean round + sub-agent confirmation (zero issues/gaps), DISCOVERY.md is complete, and user has approved the recommended approach and feature breakdown.
+Discovery Phase is complete when Validation Loop validation achieves a primary clean round (ZERO issues OR exactly ONE LOW-severity issue fixed) + sub-agent confirmation (both sub-agents confirm zero issues), DISCOVERY.md is complete, and user has approved the recommended approach and feature breakdown.
 
 **Validation Loop Reference:** `reference/validation_loop_discovery.md`
 
@@ -404,12 +404,12 @@ Document in Discovery Log:
 
 **Reference:** `reference/validation_loop_discovery.md`
 
-The Validation Loop repeats until primary clean round + sub-agent confirmation: primary agent achieves one clean round (zero issues/gaps), then 2 independent sub-agents both confirm zero issues in DISCOVERY.md.
+The Validation Loop repeats until primary clean round + sub-agent confirmation: primary agent achieves one clean round (ZERO issues OR exactly ONE LOW-severity issue fixed), then 2 independent sub-agents both confirm zero issues in DISCOVERY.md.
 
-**Clean Round Counter:** Track rounds with zero issues/gaps
+**Clean Round Counter:** Track rounds with clean status
 - Counter starts at 0
-- Increments to 1 when round finds NO issues/gaps (primary clean round achieved)
-- Resets to 0 when round finds ANY issues/gaps
+- Increments to 1 when round is clean: ZERO issues OR exactly ONE LOW-severity issue (fixed)
+- Resets to 0 when round finds multiple LOW issues OR any MEDIUM/HIGH/CRITICAL issue
 - Loop exits when counter = 1 AND both sub-agents confirm zero issues
 
 **Issues/Gaps Include:**
@@ -575,12 +575,52 @@ For EACH issue identified in Step B, you MUST fix it BEFORE continuing to Step D
 
 **Update Clean Round Counter:**
 
-1. **Check this round:** Were ANY issues/gaps found in Step B?
-   - **YES (issues found):** Counter = 0 (reset after fixing all), continue loop
-   - **NO (zero issues):** Counter = 1 (primary clean round achieved) → trigger sub-agent confirmation
+1. **Check this round:** Assess issue severity from Step B:
+   - **Multiple LOW issues OR any MEDIUM/HIGH/CRITICAL:** Counter = 0 (reset after fixing all), continue loop
+   - **ZERO issues OR exactly ONE LOW issue (fixed):** Counter = 1 (primary clean round achieved) → trigger sub-agent confirmation
 
-2. **Trigger sub-agent confirmation:** Spawn 2 independent sub-agents in parallel; both must confirm zero issues to exit.
-   - Both confirm zero issues → verify exit readiness checklist below
+2. **Trigger sub-agent confirmation:** MUST spawn 2 independent Haiku sub-agents in parallel (MANDATORY per SHAMT-29).
+
+**EXECUTE THE FOLLOWING TASK TOOL CALLS IN A SINGLE MESSAGE:**
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in DISCOVERY.md (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero issues/gaps in DISCOVERY.md after primary validation.
+
+**Artifact to validate:** .shamt/epics/requests/{epic_name}/DISCOVERY.md
+**Validation dimensions:** All master dimensions + Discovery-specific dimensions from reference/validation_loop_discovery.md
+**Your task:** Re-read the entire DISCOVERY.md from top to bottom and verify ALL dimensions.
+
+CRITICAL: Report ANY issue or gap found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+Check: Completeness, correctness, assumptions verified, questions resolved, scope defined, solution options documented, feature breakdown present with Discovery basis.
+</parameter>
+</invoke>
+
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in DISCOVERY.md (sub-agent B)</parameter>
+  <parameter name="prompt">You are sub-agent B confirming zero issues/gaps in DISCOVERY.md after primary validation.
+
+**Artifact to validate:** .shamt/epics/requests/{epic_name}/DISCOVERY.md
+**Validation dimensions:** All master dimensions + Discovery-specific dimensions from reference/validation_loop_discovery.md
+**Your task:** Re-read the entire DISCOVERY.md from BOTTOM TO TOP (reverse order) and verify ALL dimensions.
+
+CRITICAL: Report ANY issue or gap found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+Check: Completeness, correctness, assumptions verified, questions resolved, scope defined, solution options documented, feature breakdown present with Discovery basis.
+</parameter>
+</invoke>
+```
+
+**Why Haiku?** Sub-agent confirmations are focused verification tasks (70-80% token savings per SHAMT-27). See `reference/model_selection.md` for rationale.
+
+**What happens next:**
+   - Both confirm zero issues → verify exit readiness checklist below ✅
    - Either sub-agent finds issues → Counter resets to 0, continue loop
 
 3. **Exit verification checklist (after sub-agent confirmation):**
@@ -612,17 +652,17 @@ For EACH issue identified in Step B, you MUST fix it BEFORE continuing to Step D
 ```
 
 **Why primary clean round + sub-agent confirmation:**
-- Primary clean round: main agent declares complete with zero issues
+- Primary clean round: main agent achieves clean round (ZERO issues OR exactly ONE LOW-severity issue fixed)
 - Sub-agent A confirms: independent fresh-eyes check confirms zero issues
 - Sub-agent B confirms: second independent check confirms zero issues
 
 **Continue loop (counter = 0 OR sub-agents found issues) if:**
-- ANY issues/gaps found (reset counter after fixing)
+- Multiple LOW issues OR any MEDIUM/HIGH/CRITICAL issue found (reset counter after fixing)
 - Either sub-agent found issues in confirmation step
 - Exit verification checklist has unchecked items
 
 **Exit loop (primary clean round + sub-agent confirmation) when:**
-- Primary agent found ZERO issues/gaps this round
+- Primary agent achieved clean round (ZERO issues OR exactly ONE LOW-severity issue fixed)
 - Both sub-agents independently confirmed zero issues
 - Exit verification checklist all checked
 

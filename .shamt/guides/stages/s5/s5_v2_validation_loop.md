@@ -531,7 +531,7 @@ Historical evidence from SHAMT-8 Feature 04 shows test creation tasks missing fr
 
 **Model Selection for Token Optimization (SHAMT-27):**
 
-Use strategic model delegation to save 35-45% tokens per validation:
+MUST use strategic model delegation (mandatory per SHAMT-29) to save 35-45% tokens per validation:
 
 ```
 Primary Agent (Opus):
@@ -539,10 +539,10 @@ Primary Agent (Opus):
 ├─ Spawn Sonnet → Testability, clarity, breakdown quality (structural dimensions)
 ├─ Primary handles → Completeness vs spec, correctness, edge cases, conflicts (deep analysis)
 ├─ Primary handles → Empirical verification (≥3 claims) + adversarial self-check
-└─ Spawn 2x Haiku (parallel) → Sub-agent confirmations
+└─ Spawn 2x Haiku (parallel) → Sub-agent confirmations (see Exit Criteria below for Task tool syntax)
 ```
 
-**See:** `reference/model_selection.md` for complete Task tool examples.
+**See:** `reference/model_selection.md` for complete rationale and additional Task tool examples.
 
 ---
 
@@ -1260,7 +1260,7 @@ Next: Present implementation_plan.md to user (Gate 5)
 
 **Can ONLY exit when ALL true:**
 
-1. ✅ Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see `reference/validation_loop_master_protocol.md` Exit Criteria for the full sub-agent confirmation protocol)
+1. ✅ Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see sub-agent confirmation protocol below)
 2. ✅ The sub-agent confirmation step was completed and both returned zero issues
 3. ✅ All 18 dimensions validated in final clean rounds (7 master + 11 implementation planning)
 4. ✅ All evidence artifacts present in implementation_plan.md
@@ -1268,6 +1268,52 @@ Next: Present implementation_plan.md to user (Gate 5)
 6. ✅ implementation_plan.md version incremented (v0.1 draft → v1.0 validated)
 
 **If ANY criterion fails:** Continue validation loop
+
+---
+
+### Sub-Agent Confirmation Protocol
+
+When `consecutive_clean = 1` (primary clean round achieved), EXECUTE THE FOLLOWING TASK TOOL CALLS IN A SINGLE MESSAGE:
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in implementation_plan.md (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero issues in implementation_plan.md after primary validation.
+
+**Artifact to validate:** .shamt/epics/requests/{epic_name}/features/{feature_NN}/implementation_plan.md
+**Validation dimensions:** All 18 dimensions (7 master + 11 implementation planning) from s5_v2_validation_loop.md
+**Your task:** Re-read the entire implementation_plan.md from top to bottom and verify ALL dimensions.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+Check: Completeness vs spec, correctness, testability, error handling, edge cases, security, performance, spec alignment, breakdown quality, empirical claims, conflicts.
+</parameter>
+</invoke>
+
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in implementation_plan.md (sub-agent B)</parameter>
+  <parameter name="prompt">You are sub-agent B confirming zero issues in implementation_plan.md after primary validation.
+
+**Artifact to validate:** .shamt/epics/requests/{epic_name}/features/{feature_NN}/implementation_plan.md
+**Validation dimensions:** All 18 dimensions (7 master + 11 implementation planning) from s5_v2_validation_loop.md
+**Your task:** Re-read the entire implementation_plan.md from BOTTOM TO TOP (reverse order) and verify ALL dimensions.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+Check: Completeness vs spec, correctness, testability, error handling, edge cases, security, performance, spec alignment, breakdown quality, empirical claims, conflicts.
+</parameter>
+</invoke>
+```
+
+**Why Haiku?** Sub-agent confirmations are focused verification (70-80% token savings per SHAMT-27). See `reference/model_selection.md`.
+
+**What happens next:**
+- Both confirm zero issues → Validation loop complete, proceed to Gate 5 (User Approval) ✅
+- Either finds issues → Reset consecutive_clean = 0, fix issues, continue validation loop
 
 ---
 

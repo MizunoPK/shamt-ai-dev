@@ -1005,7 +1005,7 @@ STOP - DO NOT PROCEED TO S9.P3 YET
 
 **Epic QC Validation Loop (S9.P2) is complete when ALL of these are true:**
 
-- [ ] Primary agent declared a clean round (ZERO issues across all 13 dimensions) AND both sub-agents independently confirmed zero issues (see master protocol Exit Criteria for full sub-agent confirmation protocol)
+- [ ] Primary agent declared a clean round (ZERO issues OR exactly ONE LOW-severity issue fixed across all 13 dimensions) AND both sub-agents independently confirmed zero issues (see sub-agent confirmation protocol below)
 - [ ] All 13 dimensions checked every primary round (7 master + 6 epic)
 - [ ] **Option A:** No automated test requirement (smoke only — no check needed)
 - [ ] **Option B:** All integration scripts passing (exit code 0, verified every round)
@@ -1016,6 +1016,52 @@ STOP - DO NOT PROCEED TO S9.P3 YET
 - [ ] Ready to proceed to S9.P3 (User Testing)
 
 **If any criterion unchecked:** Continue validation loop until complete
+
+---
+
+### Sub-Agent Confirmation Protocol
+
+When `consecutive_clean = 1` (primary clean round achieved), EXECUTE THE FOLLOWING TASK TOOL CALLS IN A SINGLE MESSAGE:
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in epic QC (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A confirming zero issues in epic QC validation.
+
+**Artifact to validate:** Epic {epic_name} complete implementation
+**Validation dimensions:** All 13 dimensions (7 master + 6 epic) from reference/validation_loop_master_protocol.md
+**Your task:** Review the entire epic implementation and verify ALL dimensions.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+Check: Empirical verification, completeness, consistency, traceability, clarity, upstream alignment, standards, cross-feature integration, end-to-end functionality, error handling consistency, architectural alignment, success criteria completion.
+</parameter>
+</invoke>
+
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Confirm zero issues in epic QC (sub-agent B)</parameter>
+  <parameter name="prompt">You are sub-agent B confirming zero issues in epic QC validation.
+
+**Artifact to validate:** Epic {epic_name} complete implementation
+**Validation dimensions:** All 13 dimensions (7 master + 6 epic) from reference/validation_loop_master_protocol.md
+**Your task:** Review the epic implementation in reverse order and verify ALL dimensions.
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
+
+Check: Empirical verification, completeness, consistency, traceability, clarity, upstream alignment, standards, cross-feature integration, end-to-end functionality, error handling consistency, architectural alignment, success criteria completion.
+</parameter>
+</invoke>
+```
+
+**Why Haiku?** Sub-agent confirmations are focused verification (70-80% token savings per SHAMT-27). See `reference/model_selection.md`.
+
+**What happens next:**
+- Both confirm zero issues → S9.P2 complete, proceed to S9.P3 (User Testing) ✅
+- Either finds issues → Reset consecutive_clean = 0, fix issues, continue validation loop
 
 ---
 

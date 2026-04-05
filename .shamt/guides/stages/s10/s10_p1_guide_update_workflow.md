@@ -71,17 +71,20 @@ S10.P1 is complete when all proposals have been reviewed by user, proposal doc c
 
 **Model Selection for Token Optimization (SHAMT-27):**
 
-S10.P1 guide updates can save 15-25% tokens through delegation:
+S10.P1 guide updates MUST use delegation for token efficiency (15-25% savings):
 
 ```
 Primary Agent (Opus):
 ├─ Spawn Haiku → Read lessons_learned.md files
 ├─ Spawn Sonnet → Read guide files to identify improvement opportunities
 ├─ Primary handles → Analyze patterns, write proposals, prioritize (P0-P3)
-└─ Primary writes → GUIDE_UPDATE_PROPOSAL.md, tracking updates
+├─ Primary writes → GUIDE_UPDATE_PROPOSAL.md, tracking updates
+└─ Spawn 2x Haiku → Verify proposal doc accuracy (sub-agent confirmation)
 ```
 
-**See:** `reference/model_selection.md` for Task tool examples.
+**Mandatory enforcement:** Use Haiku sub-agents for proposal doc verification (Step 5.7). See inline example below.
+
+**See:** `reference/model_selection.md` for additional Task tool examples.
 
 ---
 
@@ -507,7 +510,56 @@ and why these proposals were generated}
 
 5.6. **For rejected proposals:** add to the "Rejected Proposals" table only (do not create a full proposal block).
 
-5.7. **Verify the proposal doc:** re-read it to confirm all accepted/modified proposals are captured with exact current text quoted from the source guide.
+5.7. **Verify the proposal doc:** After writing the proposal doc, spawn 2 independent Haiku sub-agents to verify that all accepted/modified proposals are correctly captured with exact current text quoted from the source guides.
+
+**Sub-Agent Confirmation Protocol:**
+
+Spawn 2 parallel Haiku sub-agents (A and B) to verify the proposal doc. Each must confirm that:
+- All approved proposals from Step 4 are present
+- All modified proposals use the user's version
+- Current state quotes match the actual guide files
+- Proposed changes are captured exactly as approved/modified
+- Rejected proposals are in the table only
+
+**Why Haiku?** Proposal doc verification is mechanical checking (70-80% token savings vs Opus). Haiku excels at focused verification tasks.
+
+**Example Task tool invocation:**
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">haiku</parameter>
+  <parameter name="description">Verify proposal doc (sub-agent A)</parameter>
+  <parameter name="prompt">You are sub-agent A verifying the proposal doc after Step 5 creation.
+
+**Proposal doc path:** `.shamt/unimplemented_design_proposals/{filename}`
+**User decisions:** {N} approved, {N} modified, {N} rejected
+
+**Your task:** Verify the proposal doc is accurate:
+1. Read the proposal doc
+2. Read GUIDE_UPDATE_PROPOSAL.md to see all user decisions from Step 4
+3. For each approved proposal: verify it appears in proposal doc with original proposed text
+4. For each modified proposal: verify it appears with user's modified version
+5. For each rejected proposal: verify it appears ONLY in rejected table
+6. Verify "Current State" quotes match actual guide files (spot-check 3-5 proposals)
+
+**Report format:**
+- If ALL checks pass: "CONFIRMED: Proposal doc accurate - all {N} approved/modified proposals correctly captured"
+- If ANY issue found: Report the specific discrepancy (missing proposal, wrong version, misquoted current state, etc.)
+
+**Context:**
+- Proposal decisions from Step 4: {paste summary of approved/modified/rejected with IDs}
+- Total lessons analyzed: {N}
+- Epic: {epic_name}
+  </parameter>
+</invoke>
+
+<!-- Spawn sub-agent B with identical prompt, changing only "sub-agent A" → "sub-agent B" -->
+```
+
+**What happens next:**
+- Both sub-agents confirm zero issues → proceed to checkpoint
+- Either sub-agent finds issue → fix the proposal doc, re-verify, repeat until both confirm zero issues
 
 **Checkpoint:**
 - [ ] Proposal doc created at `.shamt/unimplemented_design_proposals/{filename}` (or skipped if zero accepted)
