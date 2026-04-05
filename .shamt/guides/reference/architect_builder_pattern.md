@@ -575,7 +575,7 @@ Task(
 - **Validation Loop:** `reference/validation_loop_master_protocol.md` - Validation mechanics
 - **Model Selection:** `reference/model_selection.md` - SHAMT-27 token optimization
 - **S5 Guide:** `stages/s5/s5_v2_validation_loop.md` - Implementation planning phase
-- **S6 Guide:** `stages/s6/s6_implementation_execution.md` - Execution phase with builder handoff
+- **S6 Guide:** `stages/s6/s6_execution.md` - Execution phase with builder handoff
 - **Templates:**
   - `templates/implementation_plan_template.md` - Copy-paste plan template
   - `templates/implementation_plan_validation_log_template.md` - Validation tracking template

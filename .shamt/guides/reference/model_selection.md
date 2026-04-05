@@ -907,7 +907,7 @@ Each workflow guide includes inline Task tool examples with copy-paste-ready XML
 **Architect-Builder Pattern (60-70% savings):**
 - `reference/architect_builder_pattern.md` — Pattern overview, handoff package format, Task tool invocation
 - `reference/implementation_plan_format.md` — Plan format specification
-- `stages/s6/s6_implementation_execution.md` — S6 builder handoff workflow (MANDATORY in epic workflow)
+- `stages/s6/s6_execution.md` — S6 builder handoff workflow (MANDATORY in epic workflow)
 
 **All inline examples follow the standard template:**
 ```xml
