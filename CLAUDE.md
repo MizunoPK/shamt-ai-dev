@@ -305,9 +305,22 @@ Child projects maintain ARCHITECTURE.md and CODING_STANDARDS.md through the S1-S
 **Purpose:** Two-stage implementation pattern that separates planning (architect) from execution (builder) for 60-70% token savings on implementation execution.
 
 **Pattern Overview:**
-- **Architect** (Sonnet/Opus): Creates mechanical implementation plan, validates it (9 dimensions), spawns builder
-- **Builder** (Haiku): Executes plan mechanically, reports completion or errors
-- **Separation:** Planning uses expensive model, execution uses cheap model
+
+**S5 Phase 1-2 - Architect (Sonnet/Opus):**
+- Reads codebase and spec
+- Creates mechanical, step-by-step implementation plan (Phase 1)
+- Validates plan using 9-dimension validation loop (Phase 2)
+- User approves validated plan (Gate 5)
+
+**S6 - Handoff and Execution:**
+- S6 Architect receives validated plan from S5
+- Creates handoff package
+- Spawns Haiku builder agent
+
+**S6 Builder (Haiku):**
+- Executes plan mechanically, reports completion or errors
+
+**Separation:** Planning (S5) uses expensive model, execution (S6) uses cheap model
 
 **Usage:**
 
@@ -328,17 +341,18 @@ Child projects maintain ARCHITECTURE.md and CODING_STANDARDS.md through the S1-S
 - `templates/implementation_plan_validation_log_template.md` - Validation log template
 
 **Workflow:**
-1. Architect creates mechanical implementation plan (step-by-step file operations with exact details)
-2. Architect validates plan (9-dimension validation loop: step clarity, mechanical executability, file coverage, operation specificity, verification completeness, error handling, dependency ordering, checklist completeness, spec alignment)
-3. Architect creates handoff package (builder instructions, error handling protocol)
-4. Architect spawns Haiku builder (Task tool with `model="haiku"`)
-5. Builder executes plan sequentially (no design decisions, reports errors immediately)
-6. Architect monitors execution (handles success/errors, diagnoses, fixes plan if needed)
+1. **S5 Phase 1:** Architect creates mechanical implementation plan (step-by-step file operations with exact details)
+2. **S5 Phase 2:** Architect validates plan (9-dimension validation loop: step clarity, mechanical executability, file coverage, operation specificity, verification completeness, error handling, dependency ordering, checklist completeness, spec alignment)
+3. **Gate 5:** User approves validated plan
+4. **S6:** Architect receives validated plan from S5, creates handoff package (builder instructions, error handling protocol)
+5. **S6:** Architect spawns Haiku builder (Task tool with `model="haiku"`)
+6. **S6:** Builder executes plan sequentially (no design decisions, reports errors immediately)
+7. **S6:** Architect monitors execution (handles success/errors, diagnoses, fixes plan if needed)
 
 **Token Savings:** 60-70% on implementation execution (Haiku builder vs. Sonnet/Opus architect)
 
 **Integration Points:**
 - S2: Added Dimension 10 (Design Completeness) to spec validation - ensures specs contain complete architectural/design detail (prerequisite for mechanical planning)
-- S5: Cross-references architect-builder pattern, explains two implementation approaches (task-based S5 plan vs. mechanical S6 plan)
-- S6: Restructured to use architect-builder pattern (replaces traditional implementation workflow)
+- S5: Creates and validates mechanical implementation plans using 9-dimension validation loop (Step Clarity, Mechanical Executability, File Coverage, Operation Specificity, Verification Completeness, Error Handling, Dependency Ordering, Checklist Completeness, Spec Alignment)
+- S6: Receives validated mechanical plan from S5, creates handoff package, spawns Haiku builder for execution
 - Master dev: Optional integration at Step 3.5 with decision criteria
