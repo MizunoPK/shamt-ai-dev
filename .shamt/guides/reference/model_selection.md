@@ -540,7 +540,7 @@ Based on typical Anthropic pricing (relative to Opus as baseline):
 - **Savings:** 40-50% per round
 - **Impact:** 3 rounds = 13.5-19.5 hrs → save ~6-10 hours of Opus tokens
 
-**S5 Implementation Plan Validation (11 dimensions, 3.5-6 hrs):**
+**S5 Implementation Plan Validation (9 dimensions, 3.5-6 hrs):**
 - **Before:** All Opus = 100% cost
 - **After:** Mixed delegation = ~55-65% cost
 - **Savings:** 35-45% per validation
@@ -872,7 +872,7 @@ Each workflow guide includes inline Task tool examples with copy-paste-ready XML
 **Stage Guides (S1-S10):**
 - `stages/s1/s1_p3_discovery_phase.md` — Discovery validation sub-agent confirmation
 - `stages/s2/s2_p1_spec_creation_refinement.md` — Spec validation sub-agent confirmation
-- `stages/s5/s5_v2_validation_loop.md` — Implementation plan validation (18 dimensions) + Model Selection section
+- `stages/s5/s5_v2_validation_loop.md` — Implementation plan validation (9 mechanical dimensions) + Model Selection section
 - `stages/s7/s7_p2_qc_rounds.md` — Feature QC validation (17 dimensions)
 - `stages/s8/s8_p1_cross_feature_alignment.md` — Alignment validation
 - `stages/s9/s9_p2_epic_qc_rounds.md` — Epic QC validation (13 dimensions)
