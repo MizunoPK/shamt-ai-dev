@@ -15,17 +15,15 @@
 **Output:** implementation_plan.md v0.1 (draft)
 
 **Sections Created:**
-- [ ] Dimension 1: Requirements Completeness
-- [ ] Dimension 2: Interface & Dependency Verification
-- [ ] Dimension 3: Algorithm Traceability
-- [ ] Dimension 4: Task Specification Quality
-- [ ] Dimension 5: Data Flow & Consumption
-- [ ] Dimension 6: Error Handling & Edge Cases
-- [ ] Dimension 7: Integration & Compatibility
-- [ ] Dimension 8: Test Coverage Quality
-- [ ] Dimension 9: Performance & Dependencies
-- [ ] Dimension 10: Implementation Readiness
-- [ ] Dimension 11: Spec Alignment & Cross-Validation
+- [ ] Dimension 1: Step Clarity
+- [ ] Dimension 2: Mechanical Executability
+- [ ] Dimension 3: File Coverage Completeness
+- [ ] Dimension 4: Operation Specificity
+- [ ] Dimension 5: Verification Completeness
+- [ ] Dimension 6: Error Handling Clarity
+- [ ] Dimension 7: Dependency Ordering
+- [ ] Dimension 8: Pre/Post Checklist Completeness
+- [ ] Dimension 9: Spec Alignment
 
 **Draft Quality Estimate:** ~{XX}% completeness
 
@@ -40,7 +38,7 @@
 ### Round 1: {YYYY-MM-DD HH:MM}
 
 **Reading Pattern:** Sequential (top-to-bottom)
-**Focus:** Dimensions 1-4 (Requirements, Interfaces, Algorithms, Task Quality)
+**Focus:** Dimensions 1-4 (Step Clarity, Mechanical Executability, File Coverage, Operation Specificity)
 **Started:** {HH:MM}
 **Ended:** {HH:MM}
 **Duration:** {X minutes}
@@ -65,7 +63,7 @@
 ### Round 2: {YYYY-MM-DD HH:MM}
 
 **Reading Pattern:** Reverse (bottom-to-top)
-**Focus:** Dimensions 5-8 (Data Flow, Errors, Integration, Tests)
+**Focus:** Dimensions 5-8 (Verification Completeness, Error Handling, Dependency Ordering, Pre/Post Checklists)
 **Started:** {HH:MM}
 **Ended:** {HH:MM}
 **Duration:** {X minutes}
@@ -89,7 +87,7 @@
 ### Round 3: {YYYY-MM-DD HH:MM}
 
 **Reading Pattern:** Random Spot-Checks
-**Focus:** Dimensions 9-11 (Performance, Implementation Prep, Spec Alignment)
+**Focus:** Dimension 9 (Spec Alignment - all requirements translated to steps)
 **Started:** {HH:MM}
 **Ended:** {HH:MM}
 **Duration:** {X minutes}
@@ -305,17 +303,15 @@
 **Total Issues Fixed:** {should equal total found}
 
 **Issues by Dimension:**
-- Dimension 1 (Requirements): {count}
-- Dimension 2 (Interfaces): {count}
-- Dimension 3 (Algorithms): {count}
-- Dimension 4 (Task Quality): {count}
-- Dimension 5 (Data Flow): {count}
-- Dimension 6 (Error/Edge Cases): {count}
-- Dimension 7 (Integration): {count}
-- Dimension 8 (Test Coverage): {count}
-- Dimension 9 (Performance): {count}
-- Dimension 10 (Implementation Prep): {count}
-- Dimension 11 (Spec Alignment): {count}
+- Dimension 1 (Step Clarity): {count}
+- Dimension 2 (Mechanical Executability): {count}
+- Dimension 3 (File Coverage Completeness): {count}
+- Dimension 4 (Operation Specificity): {count}
+- Dimension 5 (Verification Completeness): {count}
+- Dimension 6 (Error Handling Clarity): {count}
+- Dimension 7 (Dependency Ordering): {count}
+- Dimension 8 (Pre/Post Checklist Completeness): {count}
+- Dimension 9 (Spec Alignment): {count}
 
 **Most Common Issue Types:**
 1. {Issue type} - {count} occurrences

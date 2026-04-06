@@ -1,3 +1,9 @@
+<!--
+This is the S5 implementation plan template (mechanical format).
+S5 produces mechanical plans with step-by-step file operations (CREATE, EDIT, DELETE, MOVE).
+This plan is validated using 9 dimensions and handed off to a Haiku builder in S6.
+-->
+
 # Implementation Plan: {Feature Name}
 
 **Architect:** {architect context - e.g., "Primary agent for EPIC-001" or "Sonnet for SHAMT-30"}
