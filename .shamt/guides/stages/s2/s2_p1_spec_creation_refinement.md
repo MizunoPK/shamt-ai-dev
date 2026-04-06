@@ -118,6 +118,11 @@ Research feature, draft spec.md and checklist.md, validate with Validation Loop 
 - Create `feature_XX_name/spec.md` (initial draft with Discovery Context)
 - Create `feature_XX_name/checklist.md` (QUESTIONS ONLY - agents NEVER mark [x])
 - Include requirement traceability (link to epic requirements)
+- **NEW (SHAMT-32):** Include Implementation Locations and File Operations sections:
+  - **Implementation Locations:** Map each requirement to file, class/function, approximate line number
+  - **File Operations:** List all files to create/modify/delete with purpose
+  - **Example:** "R1: Add get_rank_multiplier() to RecordManager class in src/util/RecordManager.py ~line 450"
+  - **Why:** Enables zero-design-decision mechanical implementation planning in S5
 
 **5. Document Research Findings (5-10 min)** - **MANDATORY**
 - Create `feature_XX_name/RESEARCH_NOTES.md` (REQUIRED for all features)

@@ -334,11 +334,18 @@ spec.md Requirements:
 - [ ] Boundary conditions specified
 - [ ] Degradation strategies defined
 
+**File Operations and Implementation Locations (SHAMT-32):**
+- [ ] All file operations identified (which files will be created, modified, deleted, moved)
+- [ ] All affected modules specified
+- [ ] All implementation locations specified (file, class/function, approximate line number)
+- [ ] Example: "Add get_rank_multiplier() method to RecordManager class in src/util/RecordManager.py ~line 450"
+- [ ] Locations precise enough for direct translation to mechanical implementation steps
+
 **Implementation Readiness:**
-- [ ] Spec has enough detail that S5 implementation planning requires zero design decisions
+- [ ] Spec has enough detail that S5 mechanical planning requires zero design decisions (only translation to file operations)
 - [ ] All "how" questions answered (not just "what")
 - [ ] No placeholders or "TBD" in critical sections
-- [ ] Builder agent could execute from this spec (via architect's plan)
+- [ ] Builder agent could execute from this spec (via architect's mechanical plan)
 
 **Common Violations:**
 

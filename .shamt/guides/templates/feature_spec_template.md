@@ -201,6 +201,43 @@ result = provider.method_name("value1", 123)
 
 ---
 
+## Implementation Locations
+
+**Purpose:** Maps requirements to specific file locations for mechanical implementation planning (SHAMT-32)
+
+| Requirement | File | Class/Function | Approx Line | Notes |
+|-------------|------|----------------|-------------|-------|
+| R1: {Requirement Name} | `src/module/file.py` | `ClassName.method_name()` | ~line 450 | {Additional context} |
+| R2: {Requirement Name} | `src/module/file.py` | `function_name()` | ~line 120 | {Additional context} |
+| R3: {Requirement Name} | `src/other/file.py` | New file | N/A | {Create new file for this functionality} |
+
+**Guidelines:**
+- List all requirements with their implementation locations
+- Use approximate line numbers (~line 450)
+- For new files, specify "New file" in Class/Function column
+- Include context for complex implementations
+
+---
+
+## File Operations
+
+**Purpose:** Lists all file create/modify/delete/move operations (SHAMT-32)
+
+| File | Operation | Purpose |
+|------|-----------|---------|
+| `src/module/existing_file.py` | MODIFY | Add new method `get_rank_multiplier()` to `RecordManager` class |
+| `src/util/new_helper.py` | CREATE | New utility file for rank calculation helpers |
+| `tests/test_rank_priority.py` | CREATE | Unit tests for rank priority feature |
+| `src/deprecated/old_file.py` | DELETE | Removed as part of refactoring |
+
+**Guidelines:**
+- List every file affected by this feature
+- Operation types: CREATE, MODIFY, DELETE, MOVE
+- Be specific about what's being added/changed/removed
+- Include test files
+
+---
+
 ## Integration Points
 
 ### Integration with {Other Feature/System}
