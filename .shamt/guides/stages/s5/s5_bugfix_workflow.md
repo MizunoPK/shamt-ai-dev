@@ -470,7 +470,7 @@ Integration test:
 2. Phase 2: Validation Loop (2-4 hours, typically 4-6 rounds)
 
 **Same rigor as features:**
-- Complete validation across all 11 dimensions
+- Complete validation across all 9 mechanical dimensions
 - Algorithm Traceability (Dimension 3)
 - Spec Alignment & Cross-Validation (Dimension 11, includes Gates 23a, 25)
 - Exit with primary clean round + sub-agent confirmation
@@ -754,7 +754,7 @@ Action:
 - [ ] bugfix_{priority}_{name}/ folder created with complete structure
 - [ ] notes.txt created and user-verified
 - [ ] Bug fix workflow followed (S2 → S5 → S6 → S7 with full rigor)
-- [ ] Complete Validation Loop in S5 v2 (all 11 dimensions, primary clean round + sub-agent confirmation, no shortcuts)
+- [ ] Complete Validation Loop in S5 v2 (all 9 mechanical dimensions, primary clean round + sub-agent confirmation, no shortcuts)
 - [ ] QC rounds passed (S7)
 - [ ] Bug fix tested and verified
 - [ ] Epic documentation updated for resumability
@@ -772,7 +772,7 @@ Action:
 1. **Get approval** - User decides priority and timing
 2. **Document thoroughly** - notes.txt user-verified
 3. **Follow simplified workflow** - S2 → S5 → S6 → S7
-4. **Same rigor** - S5 v2 Validation Loop (11 dimensions, primary clean round + sub-agent confirmation), QC rounds, no shortcuts
+4. **Same rigor** - S5 v2 Validation Loop (9 mechanical dimensions, primary clean round + sub-agent confirmation), QC rounds, no shortcuts
 5. **Resume cleanly** - Return to paused work, verify compatibility
 
 **Critical:**

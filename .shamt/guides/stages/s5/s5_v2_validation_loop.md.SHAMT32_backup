@@ -4,9 +4,9 @@
 **See:** `reference/validation_loop_master_protocol.md`
 
 **Stage:** S5 (Implementation Planning)
-**Version:** 2.3 (Consolidated to mechanical-only planning - SHAMT-32)
+**Version:** 2.2 (Added architect-builder pattern integration - SHAMT-30)
 **Created:** 2026-02-09
-**Last Updated:** 2026-04-06
+**Last Updated:** 2026-04-04
 **Status:** Active (replaces S5 v1 22-iteration workflow)
 
 ---
@@ -21,20 +21,27 @@
 1. [📐 THE TWO-PHASE APPROACH](#📐-the-two-phase-approach)
 1. [🚀 PHASE 1: DRAFT CREATION](#🚀-phase-1-draft-creation)
    - [Step-by-Step Process](#step-by-step-process)
+1. [Task 1: Load Rank Data](#task-1-load-rank-data)
+1. [Task 6: Create CLI Flag Tests (R1)](#task-6-create-cli-flag-tests-r1)
+1. [Component Dependencies](#component-dependencies)
+1. [Algorithm Traceability Matrix](#algorithm-traceability-matrix)
+1. [Data Flow](#data-flow)
+1. [Error Handling](#error-handling)
+1. [Edge Cases](#edge-cases)
    - [Draft Creation Exit Criteria](#draft-creation-exit-criteria)
 1. [🔄 PHASE 2: VALIDATION LOOP](#🔄-phase-2-validation-loop)
    - [Validation Loop Protocol](#validation-loop-protocol)
    - [Round Structure](#round-structure)
-   - [The 9 Mechanical Validation Dimensions](#the-9-mechanical-validation-dimensions)
+   - [The 11 Implementation Planning Dimensions](#the-11-implementation-planning-dimensions)
    - [Round-by-Round Reading Patterns](#round-by-round-reading-patterns)
    - [Example Validation Loop Execution](#example-validation-loop-execution)
 1. [🛑 SPECIAL CASES & PROTOCOLS](#🛑-special-cases--protocols)
    - [If Validation Loop Exceeds 10 Rounds](#if-validation-loop-exceeds-10-rounds)
-   - [If spec.md Discrepancies Found (Dimension 9: Spec Alignment)](#if-specmd-discrepancies-found-dimension-9-spec-alignment)
+   - [If spec.md Discrepancies Found (Dimension 11)](#if-specmd-discrepancies-found-dimension-11)
    - [If Draft Quality <70% After 90 Minutes](#if-draft-quality-70-after-90-minutes)
 1. [⚠️ COMMON ISSUES & FIXES](#⚠️-common-issues--fixes)
-   - [Issue 1: "Can't find all spec requirements in steps"](#issue-1-cant-find-all-spec-requirements-in-steps)
-   - [Issue 2: "Locate strings taking too long to find"](#issue-2-locate-strings-taking-too-long-to-find)
+   - [Issue 1: "Can't find all algorithms in spec"](#issue-1-cant-find-all-algorithms-in-spec)
+   - [Issue 2: "Interface verification taking too long"](#issue-2-interface-verification-taking-too-long)
    - [Issue 3: "Fixes introducing new issues"](#issue-3-fixes-introducing-new-issues)
    - [Issue 4: "Validation loop stuck at 8-9 rounds"](#issue-4-validation-loop-stuck-at-8-9-rounds)
    - [Issue 5: "Unsure if something is an issue"](#issue-5-unsure-if-something-is-an-issue)
@@ -125,9 +132,9 @@ S5 v2 is a **validation loop-based approach** to implementation planning that sy
 
 | Aspect | S5 v1 (Old) | S5 v2 (New) |
 |--------|-------------|-------------|
-| **Structure** | 22 iterations, 3 rounds | 9 dimensions, 1 validation loop |
+| **Structure** | 22 iterations, 3 rounds | 11 dimensions, 1 validation loop |
 | **Time** | 9-11 hours | 4.5-7 hours (35-50% savings) |
-| **Format** | Task-based planning | Mechanical step-by-step planning |
+| **Redundancy** | 3x Algorithm Traceability, 3x Integration Gap | Zero (consolidated into dimensions) |
 | **Quality** | Subjective (agent self-reports) | Objective (primary clean round + sub-agent confirmation) |
 | **Verification** | Single pass per iteration | Multiple passes until clean |
 | **Issue Deferral** | Possible to defer | Impossible (must fix before next round) |
@@ -146,64 +153,73 @@ S5 v2 is a **validation loop-based approach** to implementation planning that sy
 
 ### Relationship to Master Validation Loop Protocol
 
-**S5 v2 uses mechanical validation dimensions** for validating step-by-step implementation plans.
+**S5 v2 extends the Master Validation Loop Protocol** with implementation planning-specific dimensions.
 
 **Validation Structure:**
-- **9 Mechanical Validation Dimensions** (S5-specific, detailed below)
-- Dimensions focus on: step clarity, mechanical executability, file coverage, operation specificity, verification, error handling, dependency ordering, checklists, spec alignment
+- **7 Master Dimensions** (universal, always checked) - from `reference/validation_loop_master_protocol.md`
+- **11 Implementation Planning Dimensions** (S5-specific, detailed below)
+- **Total:** 18 dimensions checked every validation round
 
-**How Validation Works:**
+**How Master Dimensions Apply in S5 Context:**
 
-Each validation round checks all 9 dimensions systematically:
-1. **Step Clarity** - Every step unambiguous, exact paths specified
-2. **Mechanical Executability** - Builder can execute without design choices
-3. **File Coverage Completeness** - All files from spec covered, test files included
-4. **Operation Specificity** - EDIT/CREATE/DELETE/MOVE operations are precise
-5. **Verification Completeness** - Every step has mechanical verification method
-6. **Error Handling Clarity** - Success/failure criteria explicit, edge cases documented
-7. **Dependency Ordering** - Steps in correct execution order
-8. **Pre/Post Checklist Completeness** - Both checklists complete
-9. **Spec Alignment** - Plan translates ALL spec requirements, no additions
+| Master Dimension | How It Applies to implementation_plan.md |
+|------------------|------------------------------------------|
+| **D1: Empirical Verification** | All interfaces verified from actual source code (file:line), no assumed method signatures |
+| **D2: Completeness** | All spec.md requirements have tasks; for Options C/D: all test_strategy.md tests have creation tasks; all 11 sections present |
+| **D3: Internal Consistency** | No contradictions between tasks, algorithms, data flow, or test coverage |
+| **D4: Traceability** | Every task traces to spec requirement or test category, every algorithm traces to spec section |
+| **D5: Clarity & Specificity** | Task acceptance criteria are specific and measurable (no vague "handle X properly") |
+| **D6: Upstream Alignment** | Plan matches spec.md requirements exactly (no scope creep, no missing requirements) |
+| **D7: Standards Compliance** | Follows implementation_plan_template.md structure and project coding standards |
+
+**The 11 S5 Dimensions (below) provide the detailed implementation planning checklists** that operationalize these master dimensions in the context of creating implementation_plan.md.
 
 **Severity Classification:** Uses universal 4-level system from `reference/severity_classification_universal.md`:
-- **CRITICAL:** Blocks execution (missing files, broken operations, undefined steps)
-- **HIGH:** Causes wrong implementation (incorrect locate strings, missing requirements)
-- **MEDIUM:** Reduces quality (vague verifications, incomplete checklists)
+- **CRITICAL:** Blocks implementation (missing required sections, broken references)
+- **HIGH:** Causes wrong implementation (incorrect signatures, missing requirements)
+- **MEDIUM:** Reduces quality (incomplete examples, vague acceptance criteria)
 - **LOW:** Cosmetic (typos, formatting)
 
 **Core Validation Process:** Same as master protocol - primary clean round + sub-agent confirmation required, fresh eyes every round. A round is clean if it has ZERO issues OR exactly ONE LOW-severity issue (fixed). Multiple LOW-severity issues OR any MEDIUM/HIGH/CRITICAL issue resets `consecutive_clean` to 0.
 
 ---
 
-### Architect-Builder Pattern Integration (SHAMT-30, SHAMT-32)
+### Architect-Builder Pattern Integration (SHAMT-30)
 
-**S5 creates mechanical implementation plans** validated using the 9-dimension process described in this guide.
+**S5 creates task-based implementation plans** validated using the 18-dimension process described in this guide.
 
-**For S6 execution:**
+**For S6 execution, there are two approaches:**
+
+**Approach 1: Traditional (Architect executes own plan)**
+- Architect proceeds directly to S6 and implements the S5 plan
+- Used for: Master dev workflow, ad-hoc work, small changes (<5 file operations)
+
+**Approach 2: Architect-Builder Pattern (SHAMT-30)**
 - **MANDATORY** for all S6 execution in S1-S10 epic workflow (no exceptions)
-- S5 produces mechanical implementation plan directly (no intermediate task-based plan)
-- Plan uses step-by-step file operations (CREATE, EDIT, DELETE, MOVE)
-- Plan validated using 9-dimension validation loop
-- After Gate 5 user approval: Haiku builder agent executes mechanical plan (60-70% token savings)
+- Architect creates a mechanical implementation plan from the S5 task-based plan
+- Mechanical plan uses step-by-step file operations (CREATE, EDIT, DELETE, MOVE)
+- Mechanical plan validated using 9-dimension validation loop
+- Haiku builder agent executes mechanical plan (60-70% token savings)
 
-**S5 Workflow:**
-1. Complete S5 Phase 1 (Draft Creation): Create mechanical implementation plan
-2. Complete S5 Phase 2 (Validation Loop): Validate using 9 dimensions
-3. Gate 5: Present validated plan to user for approval
-4. After approval: Proceed to S6 (architect-builder execution)
-
-**S6 Handoff:**
-- Read: `reference/architect_builder_pattern.md` (pattern overview)
-- Read: `stages/s6/s6_execution.md` (S6 execution workflow)
-- Create handoff package for builder
-- Spawn Haiku builder agent
-- Monitor execution and handle errors
+**When using Architect-Builder Pattern:**
+1. Complete S5 (task-based plan) as normal using this guide
+2. After Gate 5 user approval, before starting S6:
+   - Read: `reference/architect_builder_pattern.md` (pattern overview)
+   - Read: `reference/implementation_plan_format.md` (mechanical plan specification)
+   - Create mechanical implementation plan from S5 task-based plan
+   - Validate mechanical plan using 9-dimension loop (separate from S5's 18 dimensions)
+   - Hand off to Haiku builder for execution
 
 **See:**
 - `reference/architect_builder_pattern.md` - Full pattern documentation
 - `reference/implementation_plan_format.md` - Mechanical plan format specification
 - `templates/implementation_plan_template.md` - Mechanical plan template
-- `stages/s6/s6_execution.md` - S6 execution workflow
+
+**Note:** S5's task-based plan and the mechanical plan serve different purposes:
+- **S5 task-based plan (this guide):** High-level planning with algorithm analysis, data flow, integration points, testing strategy
+- **Mechanical plan (architect-builder):** Low-level file operations with exact locate/replace strings, complete code blocks for creation, mechanical verification steps
+
+Both are called "implementation_plan.md" but use different formats and validation criteria. In S1-S10 epic workflow, both plans are created sequentially (S5 task-based, then mechanical before S6).
 
 ---
 
@@ -254,11 +270,11 @@ If you navigated here via the Table of Contents: go back to the beginning and re
 
 ---
 
-**Goal:** Create implementation_plan.md with mechanical implementation steps
+**Goal:** Create implementation_plan.md with all 11 dimension sections present
 
 **Time:** 60-90 minutes
 
-**Quality Target:** ~70% complete (steps present, approximate details OK, known gaps OK)
+**Quality Target:** ~70% complete (structure exists, major content present, known gaps OK)
 
 ---
 
@@ -319,7 +335,7 @@ Write 3-5 lines in the implementation plan draft's "Test Strategy" section:
 
 #### **Step 1: Setup (5 minutes)**
 
-1. **Copy mechanical implementation plan template:**
+1. **Copy template:**
    ```bash
    cp templates/implementation_plan_template.md feature_XX_{name}/implementation_plan.md
    ```
@@ -334,166 +350,182 @@ Write 3-5 lines in the implementation plan draft's "Test Strategy" section:
    cp templates/VALIDATION_LOOP_LOG_S5_template.md feature_XX_{name}/VALIDATION_LOOP_LOG.md
    ```
 
-#### **Step 2: Spec Analysis & File Identification (15-20 minutes)**
+#### **Step 2: Requirements → Tasks (15-20 minutes)**
 
-**Goal:** Analyze spec.md and identify ALL files to be created/modified/deleted, verify external dependencies
+**Goal:** Create implementation tasks for all spec.md requirements AND test tasks from Step 0
+
+**🚨 CRITICAL: Test Creation Tasks are MANDATORY (where applicable)**
+
+Historical evidence from SHAMT-8 Feature 04 shows test creation tasks missing from implementation plan caused 56 tests to be missing until S7.P3 PR review (2-4 hour rework). **Test creation is implementation work**, not verification work.
 
 **Process:**
-1. **Read spec.md completely** - understand all requirements
-2. **Identify all files to be created/modified/deleted:**
-   - List every file that will be touched by this feature
-   - Note operation type for each (CREATE, EDIT, DELETE, MOVE)
-   - Use spec.md "Implementation Locations" and "File Operations" sections if present
-3. **Identify external dependencies:**
-   - List methods/classes this feature will call
-   - Verify interfaces from actual source code (file:line references)
-   - No assumptions - read actual code
-4. **Note algorithmic functions for test creation** (from Step 0):
-   - If unit tests in scope (Options C/D): which functions need unit tests
-   - If integration script in scope (Options B/D): which files/endpoints the script will test
+1. **Read spec.md completely**
+2. **Review Step 0 Test Scope Decision output**
+3. For EACH requirement in spec.md:
+   - Create a FEATURE TASK in implementation_plan.md
+   - Add requirement reference (which spec section)
+   - Add basic acceptance criteria (2-3 items minimum)
+   - Note file/method location (approximate is OK for draft)
+4. For test tasks (based on Testing Approach from Step 0):
+   - **If unit tests in scope (Options C/D):** Create a UNIT TEST CREATION TASK for the algorithmic functions identified in Step 0. Reference each function and specify the test file path.
+   - **If integration script in scope (Options B/D):** Create an INTEGRATION TEST SCRIPT TASK: "Create integration test script for {feature_name}" with the assertion list from Step 0. Reference `Integration Test Convention:` from EPIC_README for file location and naming.
+   - **If smoke only (Option A):** No test creation tasks in implementation plan.
 
-**Example File List (Draft Quality):**
+**Example Feature Task (Draft Quality):**
 ```markdown
-Files to be created:
-- [module]/util/rank_loader.py - Load rank data from CSV
+## Task 1: Load Rank Data
 
-Files to be modified:
-- [module]/util/RecordManager.py (~line 450) - Add get_rank_multiplier() method
-- [module]/scoring/score_calculator.py (~line 200) - Apply rank multiplier to scores
-- tests/unit/test_rank_loader.py - Unit tests for rank_loader (Option C/D only)
+**Requirement:** spec.md "Objective" - Load rank values from CSV
 
-External dependencies verified:
-- ConfigManager.get_config() (file: [module]/util/ConfigManager.py:234) - Returns dict
-- csv_utils.read_csv_with_validation() (file: utils/csv_utils.py:45) - Params: filepath, required_columns
+**Acceptance Criteria:**
+- [ ] Load data from data/rankings/priority.csv
+- [ ] Return list of item rankings
+- [ ] Handle file not found gracefully
+
+**Location:** [module]/util/RecordManager.py (~line 450)
+```
+
+**Example Test Task (Draft Quality):**
+```markdown
+## Task 6: Create CLI Flag Tests (R1)
+
+**Requirement:** test_strategy.md Category 1 - CLI Flag Integration (8 tests)
+
+**Acceptance Criteria:**
+- [ ] All 8 tests from test_strategy.md implemented (tests 1.1-1.8)
+- [ ] Tests in tests/root_scripts/test_run_<feature>.py
+- [ ] All tests passing (100% pass rate)
+
+**Test Names:** test_argparse_has_flag, test_flag_default_false, test_flag_with_value_true, test_flag_action_store_true, test_existing_flags_unchanged, test_combined_flags_work, test_help_text_describes_flag, test_constant_changed_to_false
 ```
 
 **Draft Quality Bar:**
-- All major files identified (70%+ coverage acceptable)
-- External dependencies listed (exact verification comes in validation loop)
-- Test files noted based on Testing Approach
+- At least 70% of spec requirements have feature tasks
+- At least 70% of test_strategy.md tests have test creation tasks
+- Acceptance criteria exist (even if incomplete)
+- Approximate locations OK
 
-#### **Step 3: Pre-Execution Checklist (5-10 minutes)**
+#### **Step 3: Dependencies Quick Pass (10-15 minutes)**
 
-**Goal:** Create checklist of prerequisites before implementation begins
+**Goal:** List external dependencies (defer detailed verification to validation loop)
 
 **Process:**
-1. List all affected files (from Step 2)
-2. Document edge cases from spec.md
-3. Define rollback strategy
+1. Scan tasks for external method calls
+2. List dependencies in "Component Dependencies" section
+3. Quick note: file and approximate method name
+4. **Do NOT verify interfaces yet** (validation loop will do this)
 
 **Example (Draft Quality):**
 ```markdown
-## Pre-Execution Checklist
+## Component Dependencies
 
-- [ ] All affected files identified (see Step 2 file list)
-- [ ] Design validated via validation loop
-- [ ] Edge cases documented:
-  - Empty rank file: use default multiplier
-  - Duplicate items: use first occurrence
-  - Invalid rank values: clamp to range 1-500
-- [ ] Rollback strategy: Git branch can be reset if implementation fails
+1. **ConfigManager.get_rank_multiplier()**
+   - Used in: Task 3
+   - File: [module]/util/ConfigManager.py
+   - Purpose: Get rank score multiplier
+
+2. **csv_utils.read_csv_with_validation()**
+   - Used in: Task 1
+   - File: utils/csv_utils.py
+   - Purpose: Read CSV with column validation
 ```
 
-#### **Step 4: Draft Mechanical Steps (45-60 minutes)**
+#### **Step 4: Algorithm Traceability (Initial) (15-20 minutes)**
 
-**Goal:** Translate spec requirements into mechanical file operation steps
-
-**🚨 CRITICAL: Test Creation Steps are MANDATORY (where applicable)**
-
-Historical evidence from SHAMT-8 Feature 04 shows test creation steps missing from implementation plan caused 56 tests to be missing until S7.P3 PR review (2-4 hour rework). **Test creation is implementation work**, not verification work.
+**Goal:** Map spec algorithms to tasks (aim for 70% coverage minimum)
 
 **Process:**
-1. For EACH spec requirement: create mechanical steps (CREATE, EDIT, DELETE, MOVE)
-2. Include exact file paths and operation types
-3. For EDIT operations: approximate locate strings (exact strings come in validation)
-4. For CREATE operations: function signatures and structure (full content comes in validation)
-5. Embed algorithm traceability in step details (e.g., "Step 15: Implement rank multiplier calculation (spec.md Algorithms section, step 3)")
-6. Include test creation steps based on Testing Approach:
-   - **If unit tests in scope (Options C/D):** Create steps for test files covering algorithmic functions from Step 0
-   - **If integration script in scope (Options B/D):** Create step for integration test script with assertion list from Step 0
-   - **If smoke only (Option A):** No test creation steps
+1. Extract algorithms from spec.md "Algorithms" section
+2. Create table mapping algorithm → task
+3. Include main algorithms and obvious helpers
+4. **Defer edge case algorithms to validation loop**
 
-**Example Mechanical Steps (Draft Quality):**
+**Example (Draft Quality):**
 ```markdown
-## Implementation Steps
+## Algorithm Traceability Matrix
 
-### Step 1: Create rank loader module
-**File:** `[module]/util/rank_loader.py`
-**Operation:** CREATE
-**Details:**
-- Create function: load_rank_data(csv_path: str) -> List[RankItem]
-- Implements spec.md Algorithms step 1 (Load rank from CSV)
-- Read CSV using csv_utils.read_csv_with_validation()
-- Return list of rank items with fields: item_name, rank_value
-- Handle errors: file not found → return [], malformed CSV → skip invalid rows
-**Verification:** File exists, contains load_rank_data() function with correct signature
-
-### Step 2: Add rank multiplier method to RecordManager
-**File:** `[module]/util/RecordManager.py`
-**Operation:** EDIT
-**Details:**
-- Locate: `class RecordManager:` (approximate - will refine in validation)
-- Add method: get_rank_multiplier(item_name: str) -> float
-- Implements spec.md Algorithms step 3 (Calculate multiplier)
-- Call rank_loader.load_rank_data() to get rankings
-- Match item_name to ranking, return multiplier value
-- If no match: return default multiplier 1.0
-**Verification:** Read RecordManager.py, confirm get_rank_multiplier() method exists
-
-### Step 3: Create unit tests for rank loader (Option C/D)
-**File:** `tests/unit/test_rank_loader.py`
-**Operation:** CREATE
-**Details:**
-- Test functions identified in Step 0: load_rank_data()
-- Tests: test_load_valid_csv, test_load_missing_file, test_load_malformed_csv
-- Implements Testing Approach from EPIC_README (Option C or D)
-**Verification:** Test file exists with 3+ test functions
+| Algorithm (from spec) | Spec Section | Implementation Task |
+|----------------------|--------------|---------------------|
+| Load rank from CSV | Algorithms step 1 | Task 1 |
+| Match item to rank | Algorithms step 2 | Task 2 |
+| Calculate multiplier | Algorithms step 3 | Task 3 |
+| Apply to score | Algorithms step 4 | Task 4 |
 ```
 
 **Draft Quality Bar:**
-- 70%+ of spec requirements have mechanical steps
-- File paths and operation types specified
-- Approximate details OK (validation loop will refine)
-- Test steps present where applicable
+- 70% of spec algorithms mapped (major ones covered)
+- Helper algorithms can be added in validation loop
 
-#### **Step 5: Order Steps by Dependency (10-15 minutes)**
+#### **Step 5: Data Flow (Initial) (10-15 minutes)**
 
-**Goal:** Ensure steps execute in correct order
+**Goal:** High-level flow diagram showing data movement
 
 **Process:**
-1. Review all steps from Step 4
-2. Ensure files are created before they are edited
-3. Ensure dependencies are satisfied (e.g., import added before it's used)
-4. Add dependency notes in step details where needed
-5. Reorder steps if necessary
+1. Identify entry point (where data enters)
+2. List major transformations
+3. Identify output point
+4. **Defer detailed consumption verification to validation loop**
 
-**Example:**
-- Step 1: Create rank_loader.py (must happen before Step 2 imports it)
-- Step 2: Add import to RecordManager.py
-- Step 3: Add get_rank_multiplier() method to RecordManager
-- Step 4: Create unit tests (depends on Steps 1-3 being complete)
+**Example (Draft Quality):**
+```markdown
+## Data Flow
+
+**Entry:** data/rankings/priority.csv
+  ↓
+**Load:** Task 1 reads CSV → List of rankings
+  ↓
+**Match:** Task 2 matches items → Sets item.rank_value
+  ↓
+**Calculate:** Task 3 calculates multiplier → Sets item.rank_multiplier
+  ↓
+**Apply:** Task 4 applies to score → Updated total_score
+  ↓
+**Output:** Modified item scores used in scoring recommendations
+```
+
+#### **Step 6: Error Cases & Edge Cases (Initial) (10-15 minutes)**
+
+**Goal:** Enumerate obvious errors and edge cases
+
+**Process:**
+1. List obvious errors (file not found, malformed data)
+2. List obvious edge cases (empty file, duplicate entries)
+3. **Defer comprehensive enumeration to validation loop**
+
+**Example (Draft Quality):**
+```markdown
+## Error Handling
+
+1. File not found: Return empty list, log warning
+2. Malformed CSV: Skip invalid rows, log warning
+3. Item not in rank priority: Set rank_value = None
+
+## Edge Cases
+
+1. Empty rank file: All items get default multiplier
+2. Duplicate items: Use first occurrence
+3. Invalid rank values: Clamp to valid range (1-500)
+```
 
 **Draft Quality Bar:**
-- No obvious dependency violations
-- Create operations before edit operations for same file
+- 5-10 error scenarios identified
+- 5-10 edge cases identified
+- Handling strategies present (even if brief)
 
-#### **Step 6: Post-Execution Checklist (5 minutes)**
+#### **Step 7: Create Remaining Sections (10-15 minutes)**
 
-**Goal:** Define completion verification checklist
+**Goal:** Create placeholder sections for remaining dimensions
 
 **Process:**
-Create standard checklist for builder to verify after execution
+1. **Test Strategy:** For Options C/D: Reference test scope decision from S5 Step 0 (test_strategy.md); For Options A/B: Note Testing Approach (no unit test file)
+2. **Integration:** Note major integration points (defer verification)
+3. **Performance:** Note if any O(n²) algorithms present
+4. **Implementation Phases:** Rough 4-6 phase breakdown
+5. **Spec Alignment:** Note validated sources exist
 
-**Example:**
-```markdown
-## Post-Execution Checklist
-
-- [ ] All steps completed without error
-- [ ] Verification checks passed for each step
-- [ ] Tests run (if applicable - Option C/D)
-- [ ] No syntax errors (file can be imported/compiled)
-- [ ] Ready for handoff back to architect
-```
+**Draft Quality Bar:**
+- All 11 dimension sections exist in implementation_plan.md
+- Placeholder content present (will be refined in validation loop)
 
 ---
 
@@ -542,10 +574,10 @@ MUST use strategic model delegation (mandatory per SHAMT-29) to save 35-45% toke
 
 ```
 Primary Agent (Opus):
-├─ Spawn Haiku → File path checks, step numbering, checklist format (D1, D8)
-├─ Spawn Sonnet → Operation specificity, verification clarity (D4, D5)
-├─ Primary handles → Mechanical executability, spec alignment, dependency ordering (D2, D7, D9)
-├─ Primary handles → Adversarial self-check
+├─ Spawn Haiku → File existence checks, step numbering, checklist format
+├─ Spawn Sonnet → Testability, clarity, breakdown quality (structural dimensions)
+├─ Primary handles → Completeness vs spec, correctness, edge cases, conflicts (deep analysis)
+├─ Primary handles → Empirical verification (≥3 claims) + adversarial self-check
 └─ Spawn 2x Haiku (parallel) → Sub-agent confirmations (see Exit Criteria below for Task tool syntax)
 ```
 
@@ -592,224 +624,311 @@ Each round follows this pattern:
 
 ---
 
-### The 9 Mechanical Validation Dimensions
+### The 11 Implementation Planning Dimensions
 
-**These are the core validation dimensions for mechanical implementation plans.**
+**These dimensions extend the 7 master dimensions** with implementation planning-specific checks.
 
-**Every validation round checks all 9 dimensions:**
-1. Step Clarity
-2. Mechanical Executability
-3. File Coverage Completeness
-4. Operation Specificity
-5. Verification Completeness
-6. Error Handling Clarity
-7. Dependency Ordering
-8. Pre/Post Checklist Completeness
-9. Spec Alignment
+**Every validation round checks:**
+- ✅ All 7 master dimensions (Empirical Verification, Completeness, Internal Consistency, Traceability, Clarity & Specificity, Upstream Alignment, Standards Compliance)
+- ✅ All 11 implementation planning dimensions (detailed below)
+- **Total:** 18 dimensions per round
 
 **📍 WHERE EVIDENCE GOES:**
-- All mechanical steps and checklists go IN implementation_plan.md
-- Validation Loop Log tracks rounds/issues, NOT the plan content itself
+- All evidence artifacts go IN implementation_plan.md
+- Each dimension = section in implementation_plan.md
+- Validation Loop Log tracks rounds/issues, NOT evidence
 
 ---
 
-#### **Dimension 1: Step Clarity**
+#### **Dimension 1: Requirements Completeness**
 
 **What to Check:**
-- [ ] Every step is unambiguous with no interpretation needed
-- [ ] Exact file paths specified for all operations
-- [ ] No "TODO" or "TBD" in steps
-- [ ] Step numbering sequential with no gaps
-- [ ] Each step has clear action description
+- [ ] Every spec.md requirement has implementation task(s)
+- [ ] **🚨 CRITICAL (Options C/D): Every test_strategy.md test category has test creation task(s)**
+- [ ] No orphan tasks (all tasks trace to spec requirements; for Options C/D: also test_strategy.md)
+- [ ] No scope creep (no tasks for unrequested features)
+- [ ] Task numbering sequential with no gaps
+- [ ] Every task cites which spec section OR test category it implements
+- [ ] **Options C/D only: Test task count matches test_strategy.md test count** (e.g., if test_strategy.md has 58 tests across 7 categories, implementation_plan.md should have ≥7 test creation tasks covering all 58 tests)
 
 **Evidence Required:**
-- All steps have explicit file paths
-- All steps have specific operation types (CREATE, EDIT, DELETE, MOVE)
+- Requirement-to-task mapping table showing 100% coverage (spec.md)
+- **Options C/D only: Test-to-task mapping table showing 100% coverage (test_strategy.md)**
 
-**Example Issue:**
-- "Step 5 file path is vague: 'somewhere in util folder' → Must specify exact path like [module]/util/rank_loader.py"
+**Example Issue (Feature Requirements):**
+- "Missing requirement: spec.md line 67 'Handle item name matching' has no task"
 
-**How to Fix:**
-- Rewrite Step 5 with exact file path
-- Ensure operation type is explicit
-
----
-
-#### **Dimension 2: Mechanical Executability**
-
-**What to Check:**
-- [ ] Builder can execute without making design choices
-- [ ] No "figure it out" gaps (e.g., "implement the logic")
-- [ ] No steps requiring external knowledge beyond the plan
-- [ ] No decisions left to builder (all choices made by architect)
-
-**Evidence Required:**
-- Every step contains complete execution details
-- No vague instructions
-
-**Example Issue:**
-- "Step 8 says 'add appropriate error handling' → Builder can't determine 'appropriate'. Must specify exact error types and handling strategy"
+**Example Issue (Test Requirements - NEW):**
+- "Missing test creation: test_strategy.md Category 1 (8 CLI flag tests) has no implementation task"
+- "Test count mismatch: test_strategy.md specifies 58 tests, but implementation_plan.md tasks only cover 42 tests (16 missing)"
 
 **How to Fix:**
-- Rewrite Step 8: "Wrap in try-except, catch FileNotFoundError, log warning, return []"
-- Remove all subjective language from steps
-
----
-
-#### **Dimension 3: File Coverage Completeness**
-
-**What to Check:**
-- [ ] All files from spec are covered in plan steps
-- [ ] No missing files mentioned in spec but absent from plan
-- [ ] Files created before they are edited (dependency order)
-- [ ] **🚨 CRITICAL: Test creation steps present (where applicable based on Testing Approach)**
-
-**Evidence Required:**
-- File list matches spec.md requirements
-- Test files included based on Testing Approach (Options C/D)
-
-**Example Issue:**
-- "spec.md mentions modifying score_calculator.py but no step exists for that file"
-- "Testing Approach is Option C (unit tests) but no test file creation step for algorithmic functions"
-
-**How to Fix:**
-- Add step for score_calculator.py modification
-- Add test creation step for identified algorithmic functions (from Step 0)
+- Add Task X implementing the missing requirement
+- **Add Test Creation Task Y for missing test category**
+- Update requirement mapping table
+- **Update test mapping table to show all test_strategy.md tests covered**
 
 **Historical Evidence:**
-- SHAMT-8 Feature 04: 56 tests missing because test creation steps were omitted
-- Fix: Dimension 3 now validates test file coverage based on Testing Approach
+- SHAMT-8 Feature 04: 56 tests missing from implementation plan caused 2-4 hour rework in S7.P3
+- Root cause: S5 didn't create test creation tasks (only feature implementation tasks)
+- Fix: Dimension 1 now validates BOTH feature tasks AND test creation tasks
 
 ---
 
-#### **Dimension 4: Operation Specificity**
+#### **Dimension 2: Interface & Dependency Verification**
 
 **What to Check:**
-- [ ] EDIT steps have exact locate/replace strings
-- [ ] CREATE steps have full content (or detailed structure in draft, full content in validation)
-- [ ] DELETE operations specify exact file paths
-- [ ] MOVE operations specify both source and destination
-- [ ] All external dependencies verified from actual source code (file:line references)
+- [ ] All external dependencies identified
+- [ ] Every dependency interface verified from ACTUAL source code
+- [ ] Method signatures documented with file:line references
+- [ ] No assumed interfaces (all copy-pasted from source)
+- [ ] Data structure modifications verified as feasible
+- [ ] No naming conflicts with existing code
 
 **Evidence Required:**
-- EDIT operations have unique locate strings
-- CREATE operations have complete content or detailed structure
-- No vague operation descriptions
+- Dependency verification table with file:line references
 
 **Example Issue:**
-- "Step 3 EDIT operation has vague locate string: 'find the imports section' → Must use exact line like 'import { cors } from \"cors\";'"
+- "ConfigManager.get_rank_multiplier() assumed to return float, but actual signature (line 234) returns Tuple[float, int]"
 
 **How to Fix:**
-- Read actual file to find exact locate string
-- Update Step 3 with unique, exact locate text
-- For CREATE: ensure function signatures, imports, structure are complete
+- Read actual source code: `[module]/util/ConfigManager.py:234`
+- Copy exact method signature to implementation_plan.md
+- Update Task 3 to handle tuple return value
 
 ---
 
-#### **Dimension 5: Verification Completeness**
+#### **Dimension 3: Algorithm Traceability**
 
 **What to Check:**
-- [ ] Every step has a verification method
-- [ ] Verifications are mechanically checkable (read file, run command, check output)
-- [ ] No subjective verifications ("looks good", "works correctly")
-- [ ] Verification specifies what to check and where
+- [ ] EVERY spec algorithm mapped to implementation task
+- [ ] Typical: 40+ mappings (main + helper + edge case + error)
+- [ ] Each algorithm includes exact spec quote
+- [ ] Implementation location specified (file, method, ~line)
+- [ ] Matrix completeness verified (count spec algorithms = count matrix rows)
 
 **Evidence Required:**
-- All steps have explicit verification methods
-- Verifications are actionable by builder
+- Algorithm Traceability Matrix with 40+ mappings
 
 **Example Issue:**
-- "Step 7 verification: 'Verify imports are correct' → Builder can't determine 'correct'. Must specify: 'Read server.ts line 3, confirm authenticate import present'"
+- "Algorithm matrix has 28 mappings, but spec.md has 42 algorithms (missing 14)"
 
 **How to Fix:**
-- Rewrite verifications to be mechanical: read specific file, check specific content
-- Remove subjective language
+- Re-read spec.md "Algorithms" section completely
+- Add missing mappings to matrix
+- Include helper algorithms and error handling algorithms
 
 ---
 
-#### **Dimension 6: Error Handling Clarity**
+#### **Dimension 4: Task Specification Quality** (EMBEDS Gate 4a)
 
 **What to Check:**
-- [ ] Success/failure criteria explicit for each step
-- [ ] Edge cases documented in pre-execution checklist
-- [ ] What to do if verification fails is clear (report to architect)
-- [ ] Error scenarios from spec.md are covered in steps
+- [ ] Every task has requirement reference (which spec section)
+- [ ] Every task has acceptance criteria checklist (3+ items)
+- [ ] Every task has implementation location (file, method, line)
+- [ ] Every task has dependencies documented (what it needs)
+- [ ] No vague tasks ("handle", "process", "update" without details)
+- [ ] Test tasks match the epic's Testing Approach (from EPIC_README):
+  - If unit tests in scope (Options C/D): test tasks specify which algorithmic functions are covered
+  - If integration script in scope (Options B/D): one task exists for creating the integration test script with the assertion list from Step 0
+  - If smoke only (Option A): no test creation tasks required
 
 **Evidence Required:**
-- Pre-execution checklist includes edge cases
-- Steps specify error handling where applicable
+- 100% of tasks pass specification audit
 
 **Example Issue:**
-- "Step 4 doesn't specify what happens if file not found → Must add: If file doesn't exist, report to architect and halt"
+- "Task 5 acceptance criteria vague: 'Handle errors well' → Should specify error codes, logging, recovery"
 
 **How to Fix:**
-- Update step to include failure handling
-- Document edge cases in pre-execution checklist
+- Rewrite Task 5 acceptance criteria:
+  - [ ] Catch FileNotFoundError, log warning, return empty list
+  - [ ] Catch ValueError on invalid rank priority, log warning, use default
+  - [ ] All errors logged to feature logger
 
 ---
 
-#### **Dimension 7: Dependency Ordering**
+#### **Dimension 5: Data Flow & Consumption**
 
 **What to Check:**
-- [ ] Steps are in correct execution order
-- [ ] Create file before editing it
-- [ ] Dependencies explicit (e.g., "Step 5 must complete before Step 6")
-- [ ] Import added before code uses it
+- [ ] Entry points identified (where data enters system)
+- [ ] Complete data flow traced step-by-step
+- [ ] **CRITICAL:** Every data load operation has downstream CONSUMPTION verified
+- [ ] Data transformations at each step documented
+- [ ] No gaps in data flow
+- [ ] Output points verified (where data exits system)
 
 **Evidence Required:**
-- Step sequence makes logical sense
-- No backward dependencies
+- Data flow diagram: entry → transformations → consumption → output
 
 **Example Issue:**
-- "Step 2 edits rank_loader.py but Step 5 creates it → Wrong order, must create before edit"
+- "Task 1 loads rank data, but no task shows HOW this data is consumed in calculations"
 
 **How to Fix:**
-- Reorder steps: move Step 5 (CREATE) before Step 2 (EDIT)
-- Add dependency note if needed
+- Add consumption verification to data flow section
+- Document: "Task 2 consumes rank data by calling get_rank_value() for each item"
+- Verify consumption in Task 2 acceptance criteria
 
 ---
 
-#### **Dimension 8: Pre/Post Checklist Completeness**
+#### **Dimension 6: Error Handling & Edge Cases**
 
 **What to Check:**
-- [ ] Pre-execution checklist covers all prerequisites
-- [ ] Pre-execution checklist includes edge cases
-- [ ] Pre-execution checklist defines rollback strategy
-- [ ] Post-execution checklist confirms completion
-- [ ] Post-execution checklist includes test verification (if applicable)
+- [ ] ALL error scenarios enumerated (data quality, state, external)
+- [ ] Error handling strategy for each (graceful degradation)
+- [ ] ALL edge cases enumerated (boundary, null, empty, duplicate)
+- [ ] Every edge case has handling strategy
+- [ ] Every error/edge case has test coverage planned
 
 **Evidence Required:**
-- Both checklists present and complete
+- Error handling table (10+ scenarios typical)
+- Edge case table (15+ cases typical)
 
 **Example Issue:**
-- "Pre-execution checklist missing rollback strategy → Add: 'Rollback: git reset --hard if implementation fails'"
+- "Missing error case: What if ConfigManager.get_rank_multiplier() raises exception?"
 
 **How to Fix:**
-- Add missing items to pre-execution checklist
-- Ensure post-execution checklist covers all completion criteria
+- Add error case: "ConfigManager.get_rank_multiplier() raises KeyError if config missing"
+- Add handling: "Catch KeyError, log error, use default multiplier 1.0"
+- Add test: test_calculate_rank_multiplier_missing_config()
 
 ---
 
-#### **Dimension 9: Spec Alignment**
+#### **Dimension 7: Integration & Compatibility** (EMBEDS Gate 7a)
 
 **What to Check:**
-- [ ] Implementation plan faithfully translates ALL spec requirements into steps
-- [ ] No spec requirements missing from plan
-- [ ] No additions beyond spec scope
-- [ ] Algorithms from spec.md traced to specific steps (embedded in step details)
-- [ ] Data flow from spec.md reflected in step ordering
+- [ ] **Integration Gap Check:** Every new method has identified caller
+- [ ] No orphan code (code written but never called)
+- [ ] Call chains traced end-to-end (entry point → exit point)
+- [ ] **Backward Compatibility:** Works with old data formats
+- [ ] Migration path documented if breaking changes
+- [ ] Configuration compatibility verified (old configs work)
 
 **Evidence Required:**
-- Every spec requirement has corresponding step(s)
-- No steps that implement unrequested features
+- Integration verification table (method → caller → call site)
+- Backward compatibility analysis
 
 **Example Issue:**
-- "spec.md requirement 'Handle item name matching' (line 67) has no corresponding step"
+- "New method _calculate_rank_multiplier() has no identified caller"
 
 **How to Fix:**
-- Add step implementing item name matching
-- Reference spec.md line 67 in step details
-- Verify all spec requirements covered
+- Identify caller: Task 2 (_match_item_to_rank) will call this
+- Update integration table showing call chain
+- OR remove method if truly not needed
+
+---
+
+#### **Dimension 8: Test Coverage Quality**
+
+**Read Testing Approach from EPIC_README first. This dimension's checks are conditional.**
+
+**If Option A (smoke only):**
+- [ ] No test creation tasks in implementation plan (correct per approach)
+- This dimension passes automatically for Option A
+
+**If Option B (integration scripts only):**
+- [ ] One integration test script task exists in the implementation plan
+- [ ] Script assertion list covers: feature execution, output structure, output values, integration points
+- [ ] Script location and naming follows `Integration Test Convention:` from EPIC_README
+- [ ] No unit test tasks (correct per approach)
+
+**If Option C (unit tests only):**
+- [ ] Algorithmic functions identified in Step 0 each have unit test tasks
+- [ ] Unit tests cover: success paths, failure paths, boundary conditions
+- [ ] No integration script task (correct per approach)
+
+**If Option D (both):**
+- [ ] All checks from Options B AND C above
+
+**Evidence Required:**
+- Test tasks in implementation plan match Testing Approach (A/B/C/D)
+
+**Example Issue (B/D):**
+- "Integration test script task exists but assertion list is missing — add 3-5 specific assertions"
+
+**Example Issue (C/D):**
+- "Unit test task for calculate_rank_multiplier() exists but no test for boundary condition (rank=0)"
+
+---
+
+#### **Dimension 9: Performance & Dependencies**
+
+**What to Check:**
+- [ ] Performance impact estimated (baseline vs with feature)
+- [ ] Bottlenecks identified (O(n²) algorithms flagged)
+- [ ] If regression >20%: optimization tasks added
+- [ ] Python package dependencies listed
+- [ ] Version compatibility checked (requirements.txt)
+- [ ] Configuration changes documented (backward compatible)
+
+**Evidence Required:**
+- Performance analysis (baseline → estimated → optimized if needed)
+- Dependency version table
+
+**Example Issue:**
+- "O(n²) item matching will cause 5.0s regression (>20% threshold)"
+
+**How to Fix:**
+- Add optimization task: Use dict for O(1) lookup instead of nested loops
+- Document optimized performance: <0.1s (acceptable)
+
+---
+
+#### **Dimension 10: Implementation Readiness** (EMBEDS Gate 24)
+
+**What to Check:**
+- [ ] Implementation phased into 4-6 logical phases
+- [ ] Each phase has checkpoint and test validation
+- [ ] Rollback strategy documented for each phase
+- [ ] ALL mocks verified against real interfaces (read source code)
+- [ ] Output consumers validated (format, structure, units match)
+- [ ] Documentation tasks added (docstrings, ARCHITECTURE.md, etc.)
+- [ ] **Test scope matches epic's Testing Approach (from EPIC_README):**
+  - If unit tests included (Options C/D): algorithmic functions identified in Step 0 are in the plan
+  - If integration script included (Options B/D): script design documented (assertion list present)
+  - If smoke only (Option A): no test creation tasks in plan
+
+**Evidence Required:**
+- Implementation phasing plan (4-6 phases with checkpoints)
+- Mock audit report (all mocks verified)
+- Confirmation that test tasks match Testing Approach
+
+**Example Issue:**
+- "No implementation phasing - 'big bang' approach risks failure"
+
+**How to Fix:**
+- Break into phases:
+  - Phase 1: Data loading + tests
+  - Phase 2: Matching logic + tests
+  - Phase 3: Calculation + tests
+  - Phase 4: Integration + tests
+
+---
+
+#### **Dimension 11: Spec Alignment & Cross-Validation** (EMBEDS Gates 23a, 25)
+
+**What to Check:**
+- [ ] spec.md validated against epic notes (no contradictions)
+- [ ] spec.md validated against EPIC_TICKET.md (all epic requirements reflected)
+- [ ] spec.md validated against SPEC_SUMMARY.md (summary matches detail)
+- [ ] Zero discrepancies found
+- [ ] **Cross-Dimension Validation (see Gate 24 in D10):**
+  - All dimensions 1-10 have passed (no outstanding issues)
+  - All evidence artifacts present in implementation_plan.md
+  - Plan is implementation-ready (confidence >= MEDIUM)
+
+**Evidence Required:**
+- Spec validation report documenting zero discrepancies
+- Cross-dimension checklist showing all D1-D10 pass
+
+**Example Issue:**
+- "spec.md says 'use default multiplier 1.0' but epic notes say 'use neutral multiplier 0.0'"
+
+**How to Fix:**
+- STOP validation loop immediately
+- Report discrepancy to user
+- Question: "Should spec.md or epic notes be correct?"
+- After user clarifies: Update spec.md OR implementation_plan.md
+- **RESTART validation loop from Round 1** (spec change invalidates prior validation)
 
 ---
 
@@ -817,30 +936,30 @@ Each round follows this pattern:
 
 **Vary patterns each round to catch different issue types**
 
-**Every round checks all 9 mechanical dimensions, but with varying focus areas:**
+**Every round checks all 18 dimensions (7 master + 11 implementation planning), but with varying focus areas:**
 
-#### **Round 1: Sequential + Step Clarity Focus**
+#### **Round 1: Sequential + Requirements/Interfaces Focus**
 - Read implementation_plan.md top to bottom
-- Primary focus: D1-D3 (Step Clarity, Mechanical Executability, File Coverage)
-- Check: All steps present, paths specified, operations clear, files complete
+- Primary focus: Master D1-D4 + Implementation D1-D4 (Requirements, Interfaces, Algorithms, Task Quality)
+- Check: Sections exist and structured correctly, all requirements mapped, interfaces verified
 - Pattern: Line-by-line completeness check
 
-#### **Round 2: Reverse + Operation Specificity Focus**
+#### **Round 2: Reverse + Data Flow/Testing Focus**
 - Read implementation_plan.md bottom to top
-- Primary focus: D4-D6 (Operation Specificity, Verification, Error Handling)
-- Check: EDIT locate strings exact, CREATE content complete, verifications mechanical
+- Primary focus: Master D5-D7 + Implementation D5-D8 (Data Flow, Errors, Integration, Tests)
+- Check: Gaps and inconsistencies in data handling and test coverage
 - Pattern: Reverse reading catches issues missed in forward read
 
-#### **Round 3: Spot-Checks + Alignment Focus**
-- Random spot-check 5-10 steps
-- Primary focus: D7-D9 (Dependency Ordering, Checklists, Spec Alignment)
-- Check: Steps in correct order, checklists complete, all spec requirements covered
+#### **Round 3: Spot-Checks + Quality/Alignment Focus**
+- Random spot-check 5-10 tasks
+- Primary focus: Implementation D9-D11 + Master D6 (Performance, Implementation Prep, Spec Alignment)
+- Check: Consistency across plan, upstream alignment
 - Pattern: Sample validation (not exhaustive)
 
 #### **Round 4+: Alternate Patterns**
-- **Round 4:** Sequential again (fresh eyes on whole document, all 9 dimensions)
+- **Round 4:** Sequential again (fresh eyes on whole document, all 18 dimensions)
 - **Round 5:** Focus on recent changes (did fixes introduce issues?)
-- **Round 6:** Cross-dimension validation (do all dimensions pass?)
+- **Round 6:** Cross-section validation (do all sections align? master dimensions + implementation dimensions)
 - **Round 7+:** Deep dive into previously clean dimensions
 
 ---
@@ -849,82 +968,105 @@ Each round follows this pattern:
 
 ```text
 DRAFT CREATION: 90 minutes
-- Created implementation_plan.md with mechanical steps
+- Created implementation_plan.md with all 11 dimensions
 - Quality estimate: ~70%
 
 ─────────────────────────────────────────────────────────
-ROUND 1: Sequential read, D1-3 focus (30 min)
+ROUND 1: Sequential read, D1-4 focus (30 min)
 ─────────────────────────────────────────────────────────
-Issues found: 10
+Issues found: 12
 
-Dimension 1 (Step Clarity):
-- Step 5 file path vague: "in util folder" → Must specify exact path
-- Step 8 has "TODO" in details section
+Dimension 1:
+- Missing requirement: spec.md line 45 (item name normalization)
+- Missing requirement: spec.md line 67 (case-insensitive matching)
 
-Dimension 2 (Mechanical Executability):
-- Step 3 says "add appropriate error handling" → Must specify exact errors
-- Step 12 requires design choice: "choose best data structure"
+Dimension 2:
+- ConfigManager.get_rank_multiplier() interface not verified
+- csv_utils.read_csv_with_validation() parameters assumed
 
-Dimension 3 (File Coverage):
-- spec.md mentions score_calculator.py but no step for it
-- Missing test file creation step (Testing Approach is Option C)
+Dimension 3:
+- Algorithm matrix only 28 mappings, need 40+
+- Missing error handling algorithms
 
-Action: Fix all 10 issues → implementation_plan.md updated
+Dimension 4:
+- Task 3 acceptance criteria vague ("handle multiplier")
+- Task 7 has no test names specified
+- Task 9 implementation location not specified
+
+Action: Fix all 12 issues → implementation_plan.md updated
 Clean count: RESET to 0
 Next: Round 2
 
 ─────────────────────────────────────────────────────────
-ROUND 2: Reverse read, D4-6 focus (35 min)
+ROUND 2: Reverse read, D5-8 focus (35 min)
 ─────────────────────────────────────────────────────────
-Issues found: 7
+Issues found: 8
 
-Dimension 4 (Operation Specificity):
-- Step 2 EDIT locate string not exact: "find imports" → Must use exact line
-- Step 7 CREATE missing function signature details
+Dimension 5:
+- Task 1 loads data, but consumption not verified
+- Data flow missing transformation step (normalization)
 
-Dimension 5 (Verification):
-- Step 9 verification vague: "check it works" → Must specify what to check
-- Step 15 verification subjective: "looks correct"
+Dimension 6:
+- Missing error: What if rank priority CSV has wrong columns?
+- Edge case not handled: Empty string item names
 
-Dimension 6 (Error Handling):
-- Pre-execution checklist missing edge cases
-- Step 4 doesn't specify what to do if file not found
+Dimension 8:
+- Resume/persistence tests not planned
+- Test coverage 85% (need >90%)
 
-Action: Fix all 7 issues → implementation_plan.md updated
+Dimension 9:
+- O(n²) matching algorithm identified, no optimization plan
+
+Action: Fix all 8 issues → implementation_plan.md updated
 Clean count: RESET to 0
 Next: Round 3
 
 ─────────────────────────────────────────────────────────
-ROUND 3: Spot-checks, D7-9 focus (25 min)
+ROUND 3: Spot-checks, D9-11 focus (25 min)
 ─────────────────────────────────────────────────────────
-Issues found: 2
+Issues found: 3
 
-Dimension 7 (Dependency Ordering):
-- Step 2 edits rank_loader.py but Step 10 creates it → Wrong order
+Dimension 11:
+- spec.md contradicts epic notes on error handling approach
 
-Dimension 9 (Spec Alignment):
-- spec.md requirement "Handle item name matching" has no step
+Dimension 4:
+- Task 15 acceptance criteria still not measurable
 
-Action: Fix all 2 issues → implementation_plan.md updated
+Dimension 7:
+- Backward compatibility analysis missing migration path
+
+Action: Fix all 3 issues → implementation_plan.md updated
 Clean count: RESET to 0
 Next: Round 4
 
 ─────────────────────────────────────────────────────────
-ROUND 4: Sequential read, all 9 dimensions (30 min)
+ROUND 4: Sequential read, all dimensions (30 min)
 ─────────────────────────────────────────────────────────
 Issues found: 0 ✅
 
-All 9 mechanical dimensions validated:
+All 18 dimensions validated:
 
-✅ D1: Step Clarity - All steps unambiguous, exact paths specified
-✅ D2: Mechanical Executability - Builder can execute without design choices
-✅ D3: File Coverage Completeness - All spec files covered, test files present
-✅ D4: Operation Specificity - EDIT locate strings exact, CREATE content complete
-✅ D5: Verification Completeness - All verifications mechanical and checkable
-✅ D6: Error Handling Clarity - Edge cases documented, failure criteria explicit
-✅ D7: Dependency Ordering - Steps in correct execution order
-✅ D8: Pre/Post Checklist Completeness - Both checklists complete
-✅ D9: Spec Alignment - All spec requirements translated to steps
+**Master Dimensions (7):**
+✅ Master D1: Empirical Verification - All interfaces verified from source code
+✅ Master D2: Completeness - All sections present, all requirements mapped
+✅ Master D3: Internal Consistency - No contradictions found
+✅ Master D4: Traceability - All tasks trace to requirements/tests
+✅ Master D5: Clarity & Specificity - All acceptance criteria measurable
+✅ Master D6: Upstream Alignment - Matches spec.md exactly
+✅ Master D7: Standards Compliance - Follows template structure
+
+**Implementation Planning Dimensions (11):**
+✅ D1: All requirements mapped (spec + tests)
+✅ D2: All interfaces verified from source
+✅ D3: 42 algorithm mappings complete
+✅ D4: All tasks specific with acceptance criteria
+✅ D5: Data consumption verified
+✅ D6: 12 errors, 18 edge cases documented
+✅ D7: All methods have callers, backward compat verified
+✅ D8: Test coverage 92%
+✅ D9: Performance optimized, <1% regression
+✅ D10: 5 implementation phases, mocks audited
+✅ D11: Spec aligned with epic notes
 
 Clean count: 1 → Triggering sub-agent confirmation
 Next: Sub-agent parallel confirmation
@@ -937,11 +1079,11 @@ Spawning 2 independent sub-agents in parallel.
 
 Sub-agent A (top-to-bottom read):
 Issues found: 0 ✅
-All 9 dimensions checked. Confirmed zero issues.
+All 18 dimensions checked. Confirmed zero issues.
 
 Sub-agent B (bottom-to-top read):
 Issues found: 0 ✅
-All 9 dimensions checked. Confirmed zero issues.
+All 18 dimensions checked. Confirmed zero issues.
 
 Both sub-agents confirmed → ✅ PASSED
 
@@ -949,9 +1091,9 @@ Both sub-agents confirmed → ✅ PASSED
 VALIDATION LOOP COMPLETE
 ─────────────────────────────────────────────────────────
 
-Total time: 90 min draft + 120 min validation = 3h 30min
+Total time: 90 min draft + 130 min validation = 3h 40min
 Total rounds: 4 primary + sub-agent confirmation
-Total issues fixed: 19
+Total issues fixed: 23
 Final quality: 99%+ (validated by sub-agent parallel confirmation)
 
 Next: Present implementation_plan.md to user (Gate 5)
@@ -983,7 +1125,7 @@ Next: Present implementation_plan.md to user (Gate 5)
 
 ---
 
-### If spec.md Discrepancies Found (Dimension 9: Spec Alignment)
+### If spec.md Discrepancies Found (Dimension 11)
 
 **Problem:** spec.md contradicts epic notes, EPIC_TICKET.md, or SPEC_SUMMARY.md
 
@@ -999,7 +1141,7 @@ Next: Present implementation_plan.md to user (Gate 5)
 5. After user clarifies: Update spec.md OR implementation_plan.md
 6. **RESTART validation loop from Round 1** (spec changes invalidate prior validation)
 
-**Why restart is required:** Spec changes ripple through all implementation steps. Must re-validate everything.
+**Why restart is required:** Spec changes ripple through requirements, algorithms, tasks. Must re-validate everything.
 
 ---
 
@@ -1019,31 +1161,31 @@ Next: Present implementation_plan.md to user (Gate 5)
 
 ## ⚠️ COMMON ISSUES & FIXES
 
-### Issue 1: "Can't find all spec requirements in steps"
+### Issue 1: "Can't find all algorithms in spec"
 
-**Symptom:** Some spec.md requirements have no corresponding implementation steps
+**Symptom:** Algorithm matrix only 20-30 mappings, but need 40+
 
-**Cause:** Missed requirements during Step 4 (Draft Mechanical Steps)
+**Cause:** Only mapped main algorithms, missed helpers, edge cases, error handling
 
 **Fix:**
-- Re-read spec.md completely
-- Create implementation steps for missing requirements
-- Embed algorithm traceability in step details (reference spec.md sections)
-- Verify all requirements covered in Dimension 9 (Spec Alignment)
+- Re-read spec.md "Algorithms" section completely
+- Look for implicit algorithms (error handling, validation, normalization)
+- Check "Edge Cases" section for algorithm variations
+- Check "Error Handling" section for recovery algorithms
 
 ---
 
-### Issue 2: "Locate strings taking too long to find"
+### Issue 2: "Interface verification taking too long"
 
-**Symptom:** Spending >30 minutes finding exact locate strings for EDIT operations
+**Symptom:** Spending >30 minutes verifying interfaces in validation round
 
-**Cause:** Trying to make all locate strings exact in single round
+**Cause:** Trying to verify too thoroughly in single round
 
 **Fix:**
-- In Round 1: Use approximate locate strings (draft quality)
-- In Round 2: Make 3-5 most critical locate strings exact
-- In Round 3: Make remaining locate strings exact
-- Don't block on exactness - spread across rounds
+- In Round 1: Verify 3-5 most critical interfaces
+- In Round 2: Verify next 3-5 interfaces
+- In Round 3: Verify remaining interfaces
+- Don't block on interface verification - spread across rounds
 
 ---
 
@@ -1159,8 +1301,8 @@ Next: Present implementation_plan.md to user (Gate 5)
 
 1. ✅ Primary agent declared a clean round AND both sub-agents independently confirmed zero issues (see sub-agent confirmation protocol below)
 2. ✅ The sub-agent confirmation step was completed and both returned zero issues
-3. ✅ All 9 dimensions validated in final clean rounds (mechanical validation dimensions)
-4. ✅ All mechanical steps and checklists present in implementation_plan.md
+3. ✅ All 18 dimensions validated in final clean rounds (7 master + 11 implementation planning)
+4. ✅ All evidence artifacts present in implementation_plan.md
 5. ✅ Confidence level >= MEDIUM
 6. ✅ implementation_plan.md version incremented (v0.1 draft → v1.0 validated)
 
@@ -1180,12 +1322,12 @@ When `consecutive_clean = 1` (primary clean round achieved), EXECUTE THE FOLLOWI
   <parameter name="prompt">You are sub-agent A confirming zero issues in implementation_plan.md after primary validation.
 
 **Artifact to validate:** .shamt/epics/requests/{epic_name}/features/{feature_NN}/implementation_plan.md
-**Validation dimensions:** All 9 mechanical dimensions from s5_v2_validation_loop.md
+**Validation dimensions:** All 18 dimensions (7 master + 11 implementation planning) from s5_v2_validation_loop.md
 **Your task:** Re-read the entire implementation_plan.md from top to bottom and verify ALL dimensions.
 
 CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
 
-Check: Step clarity, mechanical executability, file coverage, operation specificity, verification completeness, error handling, dependency ordering, checklists, spec alignment.
+Check: Completeness vs spec, correctness, testability, error handling, edge cases, security, performance, spec alignment, breakdown quality, empirical claims, conflicts.
 </parameter>
 </invoke>
 
@@ -1196,12 +1338,12 @@ Check: Step clarity, mechanical executability, file coverage, operation specific
   <parameter name="prompt">You are sub-agent B confirming zero issues in implementation_plan.md after primary validation.
 
 **Artifact to validate:** .shamt/epics/requests/{epic_name}/features/{feature_NN}/implementation_plan.md
-**Validation dimensions:** All 9 mechanical dimensions from s5_v2_validation_loop.md
+**Validation dimensions:** All 18 dimensions (7 master + 11 implementation planning) from s5_v2_validation_loop.md
 **Your task:** Re-read the entire implementation_plan.md from BOTTOM TO TOP (reverse order) and verify ALL dimensions.
 
 CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
 
-Check: Step clarity, mechanical executability, file coverage, operation specificity, verification completeness, error handling, dependency ordering, checklists, spec alignment.
+Check: Completeness vs spec, correctness, testability, error handling, edge cases, security, performance, spec alignment, breakdown quality, empirical claims, conflicts.
 </parameter>
 </invoke>
 ```

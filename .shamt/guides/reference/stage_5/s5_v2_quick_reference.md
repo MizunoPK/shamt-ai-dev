@@ -14,28 +14,26 @@
 - Output: `implementation_plan.md` (ready for validation)
 
 **Phase 2: Validation Loop (3.5-6 hours, typically 6-8 rounds)**
-- Systematic validation across 11 dimensions
+- Systematic validation across 9 mechanical dimensions
 - Fix ALL issues immediately (zero deferred issues)
 - Exit criteria: primary clean round + sub-agent confirmation (all dimensions passing)
 - Maximum: 10 rounds (escalate to user if exceeded)
 
 ---
 
-## The 11 Validation Dimensions
+## The 9 Mechanical Validation Dimensions
 
 | # | Dimension | Focus Area | Key Checks |
 |---|-----------|------------|------------|
-| **D1** | Requirements Completeness | All spec items covered | Every requirement has implementation tasks |
-| **D2** | Interface & Dependency Verification | Integration points correct | Verify all imports, method signatures, data contracts |
-| **D3** | Algorithm Traceability | Logic implementation | Map each algorithm step to implementation tasks |
-| **D4** | Task Specification Quality | Implementation clarity | Each task has clear what/how/output (Gate 4a) |
-| **D5** | Data Flow & Consumption | Data transformation path | Track data from input → processing → output |
-| **D6** | Error Handling & Edge Cases | Robustness coverage | Identify failure modes, validation, boundary cases |
-| **D7** | Integration & Compatibility | Cross-feature coherence | Check for conflicts with existing features |
-| **D8** | Test Coverage Quality | Testing comprehensiveness | Tests per Testing Approach (A: none; B: integration script assertions; C: algorithmic unit tests; D: both) |
-| **D9** | Performance & Dependencies | Resource efficiency | Identify bottlenecks, unnecessary dependencies |
-| **D10** | Implementation Readiness | Execution preparedness | Phasing, rollback plan, go/no-go checklist (Gate 24) |
-| **D11** | Spec Alignment & Cross-Validation | Completeness verification | Final spec audit, no gaps (Gates 23a, 25) |
+| **D1** | Step Clarity | Unambiguous steps | Exact file paths, operations specified, no interpretation needed |
+| **D2** | Mechanical Executability | Builder can execute | No design choices required, all decisions made in plan |
+| **D3** | File Coverage Completeness | All files covered | All spec files in plan, test files present, no missing files |
+| **D4** | Operation Specificity | Precise operations | EDIT: exact locate/replace strings; CREATE: full content; DELETE/MOVE: precise |
+| **D5** | Verification Completeness | Checkable verification | Every step has mechanical verification method, builder can verify |
+| **D6** | Error Handling Clarity | Explicit criteria | Success/failure criteria for each step, edge cases documented |
+| **D7** | Dependency Ordering | Correct execution order | Steps in right order (create before edit), dependencies explicit |
+| **D8** | Pre/Post Checklist Completeness | Both checklists complete | Pre-execution prerequisites covered, post-execution confirms completion |
+| **D9** | Spec Alignment | All requirements → steps | All spec requirements translated to mechanical steps, no scope creep |
 
 ---
 
@@ -77,7 +75,7 @@
 
 ### Structure
 - **V1:** Linear 22 iterations (I1 → I2 → ... → I25)
-- **V2:** Iterative validation loop (Draft → Validate 11 dimensions → Fix → Repeat until primary clean round + sub-agent confirmation)
+- **V2:** Iterative validation loop (Draft → Validate 9 mechanical dimensions → Fix → Repeat until primary clean round + sub-agent confirmation)
 
 ### Time
 - **V1:** 9-11 hours (fixed iterations)

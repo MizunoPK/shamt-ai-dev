@@ -15,26 +15,25 @@ STAGE 5: Implementation Planning (4.5-7 hours typical, 6-8 validation rounds)
     ├─ Phase 1: Draft Creation (stages/s5/s5_v2_validation_loop.md)
     │   Duration: 60-90 minutes
     │   ├─ Step 0: Test Scope Decision (Testing Approach A/B/C/D from EPIC_README)
-    │   ├─ Cover all 11 validation dimensions
-    │   ├─ Create implementation_plan.md draft (~400 lines)
-    │   └─ Output: Ready-for-validation draft
+    │   ├─ Step 1-6: Create mechanical implementation plan (file operations: CREATE/EDIT/DELETE/MOVE)
+    │   ├─ Cover all 9 mechanical validation dimensions
+    │   ├─ Create implementation_plan.md draft (mechanical format)
+    │   └─ Output: Ready-for-validation mechanical plan draft
     │
     └─ Phase 2: Validation Loop (stages/s5/s5_v2_validation_loop.md)
         Duration: 3.5-6 hours (typically 6-8 rounds, max 10)
         Exit Criteria: primary clean round + sub-agent confirmation ← MANDATORY
         │
-        ├─ Round N: Validate ALL 11 Dimensions
-        │   ├─ D1: Requirements Completeness
-        │   ├─ D2: Interface & Dependency Verification
-        │   ├─ D3: Algorithm Traceability
-        │   ├─ D4: Task Specification Quality ← EMBEDS Gate 4a
-        │   ├─ D5: Data Flow & Consumption
-        │   ├─ D6: Error Handling & Edge Cases
-        │   ├─ D7: Integration & Compatibility ← EMBEDS Gate 7a
-        │   ├─ D8: Test Coverage Quality
-        │   ├─ D9: Performance & Dependencies
-        │   ├─ D10: Implementation Readiness ← EMBEDS Gate 24
-        │   └─ D11: Spec Alignment & Cross-Validation ← EMBEDS Gates 23a, 25
+        ├─ Round N: Validate ALL 9 Mechanical Dimensions
+        │   ├─ D1: Step Clarity (unambiguous steps, exact file paths)
+        │   ├─ D2: Mechanical Executability (no design choices required)
+        │   ├─ D3: File Coverage Completeness (all spec files covered)
+        │   ├─ D4: Operation Specificity (EDIT/CREATE/DELETE precise)
+        │   ├─ D5: Verification Completeness (mechanical verification methods)
+        │   ├─ D6: Error Handling Clarity (success/failure criteria explicit)
+        │   ├─ D7: Dependency Ordering (steps in correct order)
+        │   ├─ D8: Pre/Post Checklist Completeness (both complete)
+        │   └─ D9: Spec Alignment (all requirements → steps)
         │
         ├─ Fix ALL Issues Immediately (ZERO deferred issues)
         ├─ Track clean round counter (1 = primary clean → trigger sub-agents)
@@ -42,10 +41,10 @@ STAGE 5: Implementation Planning (4.5-7 hours typical, 6-8 validation rounds)
         ↓
 S6: Implementation Execution (stages/s6/s6_execution.md)
     1-4 hours (varies by complexity)
-    ├─ Create implementation_checklist.md from implementation_plan.md tasks
-    ├─ Execute implementation_plan.md tasks (PRIMARY reference)
+    ├─ Hand off validated mechanical plan to Haiku builder agent
+    ├─ Builder executes steps sequentially (CREATE/EDIT/DELETE operations)
+    ├─ Architect monitors and handles errors
     ├─ Keep spec.md visible (continuous verification)
-    ├─ Mini-QC checkpoints every 5-7 tasks
     └─ Test execution per Testing Approach (conditional — see S6 guide)
         ↓
 S7: Post-Implementation (1.5-2.5 hours, 3 phases)
