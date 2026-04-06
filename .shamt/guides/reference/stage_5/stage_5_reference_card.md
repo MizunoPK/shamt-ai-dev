@@ -82,7 +82,7 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 | Stage | Guide | Time | Key Activities | Mandatory Gates |
 |-------|-------|------|----------------|-----------------|
 | S5.P1 | stages/s5/s5_v2_validation_loop.md | 60-90 min | Step 0: Test Scope Decision, draft creation | Draft ready |
-| S5.P2 | stages/s5/s5_v2_validation_loop.md | 3.5-6 hrs | Validation Loop (11 dimensions × 6-8 rounds) | primary clean round + sub-agent confirmation, Gates 4a/7a/23a/24/25 embedded |
+| S5.P2 | stages/s5/s5_v2_validation_loop.md | 3.5-6 hrs | Validation Loop (9 mechanical dimensions × 6-8 rounds) | primary clean round + sub-agent confirmation, Gates 4a/7a/23a/24/25 embedded |
 | S6 | stages/s6/s6_execution.md | 1-4 hrs | Execute implementation_plan.md tasks | Tests per approach (conditional) |
 | S7.P1 | stages/s7/s7_p1_smoke_testing.md | 30-45 min | Import, entry point, E2E tests | Part 3 data values |
 | S7.P2 | stages/s7/s7_p2_qc_rounds.md | 45-75 min | Validation Loop, 17 dimensions (7 master + 10 S7 QC) | primary clean round + sub-agent confirmation |
@@ -200,12 +200,12 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 ## Critical Rules Summary
 
 ### S5 (Implementation Planning)
-- ✅ Complete Validation Loop: all 11 dimensions, primary clean round + sub-agent confirmation (no skipping)
+- ✅ Complete Validation Loop: all 9 mechanical dimensions, primary clean round + sub-agent confirmation (no skipping)
 - ✅ Execute iterations IN ORDER (not parallel)
 - ✅ Pass ALL 5 mandatory gates (4a, 7a, 23a, 24, 25)
 - ✅ Achieve >90% test coverage (Round 2)
 - ✅ Evidence-based verification (cite specific numbers)
-- ✅ Close spec.md before Dimension 11 validation (avoid confirmation bias)
+- ✅ Close spec.md before Dimension 9 validation (avoid confirmation bias)
 
 ### S6 (Implementation)
 - ✅ Keep spec.md VISIBLE at all times
@@ -231,7 +231,7 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 ### ❌ Pitfall 1: Skipping Iterations
 **Problem:** "Iteration 19 looks similar to 4, I'll skip it"
 **Impact:** Missing algorithm mappings, bugs escape to QC
-**Solution:** ALL 11 dimensions are mandatory (each catches different issue types), and primary clean round + sub-agent confirmation required
+**Solution:** ALL 9 mechanical dimensions are mandatory (each catches different issue types), and primary clean round + sub-agent confirmation required
 
 ### ❌ Pitfall 2: Just Checking Boxes (No Evidence)
 **Problem:** Saying "Coverage = 100%" without citing N requirements, M tasks
@@ -280,7 +280,7 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 
 **S5 is complete for a feature when (v2):**
 - [ ] Draft creation complete (implementation_plan.md created)
-- [ ] Validation Loop complete (primary clean round + sub-agent confirmation, all 11 dimensions passing)
+- [ ] Validation Loop complete (primary clean round + sub-agent confirmation, all 9 mechanical dimensions passing)
 - [ ] All embedded gates passed (Gates 4a, 7a, 23a, 24, 25)
 - [ ] User approval received (Gate 5)
 - [ ] Implementation ready to execute in S6

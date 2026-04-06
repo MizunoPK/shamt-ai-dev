@@ -532,7 +532,7 @@ Create standard checklist for builder to verify after execution
 
 **Master Protocol:** See `reference/validation_loop_master_protocol.md`
 
-**S5 Context:** Validating implementation_plan.md against 18 dimensions (7 master + 11 implementation planning)
+**S5 Context:** Validating implementation_plan.md against 9 mechanical dimensions
 
 **Exit Criteria:** Primary clean round + independent sub-agent confirmation
 
@@ -566,9 +566,10 @@ Each round follows this pattern:
    - Use Read tool (no working from memory)
    - Assume everything is wrong (fresh skepticism)
 
-3. CHECK ALL 18 DIMENSIONS
-   - 7 master dimensions (always checked)
-   - 11 implementation planning dimensions (context-specific)
+3. CHECK ALL 9 MECHANICAL DIMENSIONS
+   - Step Clarity, Mechanical Executability, File Coverage Completeness
+   - Operation Specificity, Verification Completeness, Error Handling Clarity
+   - Dependency Ordering, Pre/Post Checklist Completeness, Spec Alignment
    - Systematically validate against each dimension
    - Use reading pattern for this round
    - Document EVERY issue found (no matter how minor)

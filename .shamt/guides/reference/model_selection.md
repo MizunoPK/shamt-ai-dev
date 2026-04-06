@@ -399,17 +399,17 @@ Provide classification with rationale.</parameter>
   <parameter name="subagent_type">general-purpose</parameter>
   <parameter name="description">Validate implementation plan</parameter>
   <parameter name="model">opus</parameter>
-  <parameter name="prompt">Read the implementation plan at epics/requests/{epic}/features/{feature}/implementation_plan.md and validate it against all 11 dimensions from stages/s5/s5_v2_validation_loop.md.
+  <parameter name="prompt">Read the implementation plan at epics/requests/{epic}/features/{feature}/implementation_plan.md and validate it against all 9 mechanical dimensions from stages/s5/s5_v2_validation_loop.md.
 
 Check:
-1. Completeness vs spec
-2. Correctness
-3. Testability
-4. Edge cases
-5. Dependencies
-... (all 11 dimensions)
+1. Step Clarity
+2. Mechanical Executability
+3. File Coverage Completeness
+4. Operation Specificity
+5. Verification Completeness
+... (all 9 mechanical dimensions)
 
-Report all issues found with severity classification. This is a primary validation round.</parameter>
+Report all issues found with severity classification. This is a primary validation round.</parameter></invoke>
 </invoke>
 ```
 
@@ -472,7 +472,7 @@ Report all issues found with severity classification. This is a primary validati
   <parameter name="model">haiku</parameter>
   <parameter name="prompt">You are a sub-agent tasked with confirming zero issues in the implementation plan.
 
-Read epics/requests/{epic}/features/{feature}/implementation_plan.md and verify against all 11 dimensions.
+Read epics/requests/{epic}/features/{feature}/implementation_plan.md and verify against all 9 mechanical dimensions.
 
 IMPORTANT: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".</parameter>
 </invoke>
