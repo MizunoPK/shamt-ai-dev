@@ -1,6 +1,6 @@
 # SHAMT-32: Consolidate S5 to Architect-Builder Pattern Only
 
-**Status:** Draft
+**Status:** Validated
 **Created:** 2026-04-06
 **Branch:** `feat/SHAMT-32`
 **Validation Log:** [SHAMT32_VALIDATION_LOG.md](./SHAMT32_VALIDATION_LOG.md)
@@ -204,7 +204,7 @@ Strengthening S2 ensures mechanical plans can be created purely from spec conten
 |------|--------|-------|
 | `.shamt/guides/stages/s5/s5_v2_validation_loop.md` | MODIFY | Major rewrite: Replace Phase 1 steps, replace 18 dimensions with 9 dimensions, update examples |
 | `.shamt/guides/stages/s5/README.md` | MODIFY | Update overview to reflect mechanical-only approach |
-| `.shamt/guides/stages/s6/s6_implementation_execution.md` | MODIFY | Remove "Approach 1: Traditional", architect-builder is only approach |
+| `.shamt/guides/stages/s6/s6_execution.md` | MODIFY | Remove "Approach 1: Traditional", architect-builder is only approach |
 | `.shamt/guides/reference/implementation_plan_format.md` | MODIFY | Clarify this is THE implementation plan format (not "mechanical" vs "task-based") |
 | `.shamt/guides/reference/architect_builder_pattern.md` | MODIFY | Update "When to Use" section - mandatory in S1-S10, remove optional language for epic workflow |
 | `.shamt/guides/reference/spec_validation.md` | MODIFY | Strengthen "Design Completeness" dimension per Proposal 2 |
@@ -215,6 +215,11 @@ Strengthening S2 ensures mechanical plans can be created purely from spec conten
 | `.shamt/guides/reference/model_selection.md` | MODIFY | Update S5 delegation examples to reflect 9 dimensions instead of 18 |
 | `CLAUDE.md` | MODIFY | Update "Architect-Builder Pattern" section to clarify S5 produces mechanical plans directly |
 | `.shamt/guides/templates/feature_spec_template.md` | MODIFY | Add sections for file operations and implementation locations (supports Proposal 2) |
+| `.shamt/guides/reference/stage_5/stage_5_reference_card.md` | MODIFY | Update from 11 dimensions to 9 dimensions, change dimension names to mechanical dimensions |
+| `.shamt/guides/stages/s5/s5_v2_example.md` | MODIFY | Rewrite examples to show mechanical validation instead of task-based validation |
+| `.shamt/guides/reference/stage_5/s5_v2_quick_reference.md` | MODIFY | Update any references to task-based format or dimension counts |
+| `.shamt/guides/stages/s5/s5_bugfix_workflow.md` | MODIFY | Update any references to implementation plan format details |
+| `.shamt/guides/master_dev_workflow/master_dev_workflow.md` | MODIFY | Clarify mechanical planning optional for master dev, add decision criteria |
 
 ---
 
@@ -266,12 +271,21 @@ Convert S5 from task-based to mechanical-only planning
 - [ ] Update Sub-Agent Confirmation Protocol: change dimension count from 18 to 9
 - [ ] Read current `.shamt/guides/stages/s5/README.md`
 - [ ] Update overview to clarify S5 produces mechanical implementation plans (not task-based)
+- [ ] Read current `.shamt/guides/reference/stage_5/stage_5_reference_card.md`
+- [ ] Update from "11 validation dimensions" to "9 mechanical dimensions"
+- [ ] Update dimension list from D1-D11 (task-based names) to D1-D9 (mechanical names)
+- [ ] Read current `.shamt/guides/stages/s5/s5_v2_example.md`
+- [ ] Rewrite examples to show mechanical validation (steps, file operations) instead of task-based validation (algorithm matrices, data flow)
+- [ ] Read current `.shamt/guides/reference/stage_5/s5_v2_quick_reference.md`
+- [ ] Update any references to task-based format or 11/18 dimension counts
+- [ ] Read current `.shamt/guides/stages/s5/s5_bugfix_workflow.md`
+- [ ] Update any references to implementation plan format details (task-based → mechanical)
 - [ ] Commit Phase 2: `feat/SHAMT-32: Rewrite S5 for mechanical-only planning`
 
 ### Phase 3: S6 Guide Simplification
 Remove "traditional implementation" option, architect-builder is only approach
 
-- [ ] Read current `.shamt/guides/stages/s6/s6_implementation_execution.md`
+- [ ] Read current `.shamt/guides/stages/s6/s6_execution.md`
 - [ ] Remove "Approach 1: Traditional (Architect executes own plan)" section entirely
 - [ ] Remove "Approach 2: Architect-Builder Pattern" heading (it's no longer an alternative, it's THE approach)
 - [ ] Rewrite guide opening to state: "S6 receives a validated mechanical implementation plan from S5 and hands it off to a Haiku builder agent for execution"
@@ -318,7 +332,7 @@ This plan is validated using 9 dimensions and handed off to a Haiku builder in S
 ### Phase 6: Master Dev Workflow Integration
 Clarify how mechanical planning applies to master dev work
 
-- [ ] Read current `.shamt/guides/master_dev_workflow/implementation_phase.md`
+- [ ] Read current `.shamt/guides/master_dev_workflow/master_dev_workflow.md`
 - [ ] Review "architect-builder pattern guidance" section added in SHAMT-30
 - [ ] Clarify that mechanical planning is **optional** for master dev workflow (not mandatory like S1-S10)
 - [ ] Add decision criteria: use mechanical planning for >10 file operations, unfamiliar codebases, complex dependencies
@@ -337,13 +351,13 @@ Update master instructions to reflect consolidated approach
 - [ ] Update S5/S6 workflow descriptions if referenced elsewhere in CLAUDE.md
 - [ ] Commit Phase 7: `feat/SHAMT-32: Update CLAUDE.md for mechanical-only S5`
 
-### Phase 8: Documentation & Validation Log Template Creation
-Create validation log template for this design doc and ensure documentation is complete
+### Phase 8: Documentation Review
+Review and finalize documentation for completeness
 
-- [ ] Create `design_docs/active/SHAMT32_VALIDATION_LOG.md` using design doc validation log template
+- [ ] Validation log already created and in use: `design_docs/active/SHAMT32_VALIDATION_LOG.md`
 - [ ] Review all phases above and ensure no files are missing from "Files Affected" table
 - [ ] Verify all commit messages use `feat/SHAMT-32:` prefix
-- [ ] Commit Phase 8: `feat/SHAMT-32: Add validation log template`
+- [ ] Commit Phase 8: `feat/SHAMT-32: Complete documentation review`
 
 ---
 
@@ -432,3 +446,8 @@ None at this time. All decisions required for implementation are documented in t
 | Date | Change |
 |------|--------|
 | 2026-04-06 | Initial draft created |
+| 2026-04-06 | Validation Round 1: Fixed 7 issues (2 CRITICAL, 2 HIGH, 2 MEDIUM, 1 LOW) - corrected filenames (s6_execution.md, master_dev_workflow.md), added 4 missing files to Files Affected table, updated Phase 8 wording |
+| 2026-04-06 | Validation Round 2: Fixed 2 issues (1 MEDIUM, 1 LOW) - added master_dev_workflow.md to Files Affected table, corrected Phase 8 commit message |
+| 2026-04-06 | Validation Round 3: 0 issues found (primary clean round) - triggered sub-agent confirmations |
+| 2026-04-06 | Sub-agent confirmations: Both Haiku sub-agents confirmed zero issues - VALIDATION PASSED |
+| 2026-04-06 | Status updated from Draft to Validated |
