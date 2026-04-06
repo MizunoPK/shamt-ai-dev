@@ -2,13 +2,13 @@
 
 **Purpose:** Specification for creating mechanical, executable implementation plans for the architect-builder pattern
 
-**Last Updated:** 2026-04-04 (SHAMT-30)
+**Last Updated:** 2026-04-06 (SHAMT-32)
 
 ---
 
 ## Overview
 
-Implementation plans are **mechanically executable** documents that translate spec requirements into exact file operations. They are validated before execution and handed off to Haiku builder agents for mechanical execution.
+This is **THE** implementation plan format produced by S5 and executed in S6. Implementation plans are **mechanically executable** documents that translate spec requirements into exact file operations (CREATE, EDIT, DELETE, MOVE). They are validated before execution (S5 Phase 2, 9 dimensions) and handed off to Haiku builder agents for mechanical execution (S6).
 
 **Key Principle:** Every step must be executable without design decisions. If a builder agent needs to make a choice, the plan is incomplete.
 

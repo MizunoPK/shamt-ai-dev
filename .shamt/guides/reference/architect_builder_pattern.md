@@ -1,8 +1,8 @@
 # Architect-Builder Implementation Pattern
 
-**Purpose:** Overview of the two-stage implementation pattern that separates planning (architect) from execution (builder)
+**Purpose:** Overview of the architect-builder implementation pattern that separates planning (S5 architect) from execution (S6 builder)
 
-**Last Updated:** 2026-04-04 (SHAMT-30)
+**Last Updated:** 2026-04-06 (SHAMT-32)
 
 ---
 
@@ -25,17 +25,21 @@
 
 ## Overview
 
-The architect-builder pattern splits implementation into two distinct stages:
+The architect-builder pattern splits implementation into two distinct stages across S5 and S6:
 
-**Stage 1 - Architect (Sonnet/Opus):**
+**S5 Phase 1-2 - Architect (Sonnet/Opus):**
 - Reads codebase and spec
-- Creates mechanical, step-by-step implementation plan
-- Validates plan (9 dimensions)
-- Creates handoff package
-- Spawns builder agent
+- Creates mechanical, step-by-step implementation plan (Phase 1)
+- Validates plan using 9-dimension validation loop (Phase 2)
+- User approves validated plan (Gate 5)
 
-**Stage 2 - Builder (Haiku):**
-- Reads implementation plan
+**S6 - Handoff and Execution:**
+- S6 Architect receives validated plan from S5
+- Creates handoff package
+- Spawns Haiku builder agent
+
+**S6 Builder (Haiku):**
+- Reads implementation plan from S5
 - Executes steps mechanically in sequential order
 - Reports completion or errors
 - Does NOT make design decisions
@@ -50,15 +54,16 @@ The architect-builder pattern splits implementation into two distinct stages:
 
 The architect-builder pattern is **MANDATORY** for all implementations in the S1-S10 epic workflow:
 
-- **S6 implementation execution** MUST use this pattern
+- **S5/S6 implementation** MUST use this pattern
 - No traditional implementation option (architect executing own plan)
-- NO EXCEPTIONS - no thresholds, no small change exemptions
 - Rationale: The S1-S10 epic workflow is exclusively for non-trivial changes
 
 **Workflow:**
 ```
-S5: Create mechanical implementation plan → validate (9 dimensions)
-S6: Architect creates handoff package → spawns Haiku builder → builder executes
+S5 Phase 1: Create mechanical implementation plan (direct from spec)
+S5 Phase 2: Validate plan (9 dimensions, primary clean + 2 sub-agents)
+Gate 5: User approves validated plan
+S6: Architect receives validated plan → creates handoff package → spawns Haiku builder → builder executes
 ```
 
 ### Optional Usage (Outside Epic Workflow)
