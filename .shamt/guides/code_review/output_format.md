@@ -21,6 +21,8 @@ All output lives under `.shamt/code_reviews/<sanitized-branch>/`.
 
 ## Sub-folder Contents
 
+**Standard (formal code reviews):**
+
 ```
 .shamt/code_reviews/<sanitized-branch>/
 ├── overview.md                  — branch overview (created/updated first)
@@ -29,6 +31,17 @@ All output lives under `.shamt/code_reviews/<sanitized-branch>/`.
 ├── review_validation_log.md     — review validation log (overwritten on re-review)
 └── review_v2.md                 — re-review (if requested)
 ```
+
+**S7/S9 Variant (S7.P3 or S9.P4 reviews):**
+
+```
+.shamt/code_reviews/<sanitized-branch>/
+├── review_v1.md                 — first code review (NO overview.md created)
+├── review_validation_log.md     — review validation log (overwritten on re-review)
+└── review_v2.md                 — re-review (if requested)
+```
+
+**Note:** S7/S9 reviews skip overview.md creation (Steps 3-4) because primary agent already has full implementation context. This saves ~20-30% of review tokens while maintaining review quality. The review_vN.md file is the actionable artifact.
 
 ---
 

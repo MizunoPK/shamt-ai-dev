@@ -46,6 +46,61 @@ Primary Agent (Opus):
 
 ---
 
+## S7/S9 Variant Usage
+
+**When invoked from S7.P3 (Feature PR Review) or S9.P4 (Epic PR Review):**
+
+This code review workflow is used with the following modifications:
+
+### Modified Step Sequence
+
+**Standard workflow:** Step 1 → Step 2 → Step 3 → Step 4 → Step 5 → Step 6 → Step 7
+
+**S7/S9 variant:** Step 1 → Step 2 → **[Skip 3-4]** → Step 5 → Step 6 → Step 7
+
+**Skipped steps:**
+- **Step 3:** Write overview.md (NOT needed for internal S7/S9 reviews)
+- **Step 4:** Run overview validation loop (NOT needed for internal S7/S9 reviews)
+
+**Why skip overview.md?**
+- Primary agent already has full implementation context (they implemented the code)
+- Saves ~20-30% of review tokens
+- review_vN.md is the actionable artifact — overview is supplementary for external reviews
+
+### Additional Dimension for S7/S9
+
+**Step 7 validation includes Dimension 13 (Implementation Fidelity):**
+
+When reviewing S7.P3 or S9.P4 branches, Step 7 validates **13 dimensions** (not 12):
+- **7 Master Dimensions** (standard)
+- **6 Code Review-Specific Dimensions** (standard 5 + Implementation Fidelity)
+
+**Dimension 13 — Implementation Fidelity:**
+- **S7.P3 context:** Verify every proposal in validated implementation plan has corresponding code; all spec requirements addressed; no scope creep; no missing features
+- **S9.P4 context:** Verify all feature implementation plans collectively satisfy epic goals; verify no epic-level requirements missed; verify no scope creep at epic level
+
+**Context requirements:**
+- S7.P3: Feature implementation plan + feature spec must be accessible
+- S9.P4: All feature implementation plans + all feature specs + epic request file must be accessible
+
+### Scope Differences
+
+**S7.P3 (Feature PR Review):**
+- **Scope:** Feature-level code quality
+- **12 review categories:** Standard interpretation (per-feature concerns)
+- **Dimension 13:** Feature-level implementation fidelity
+
+**S9.P4 (Epic PR Review):**
+- **Scope:** Epic-level concerns (cross-feature integration, architectural coherence)
+- **12 review categories:** Epic-scope interpretation (cross-feature concerns, NOT per-feature quality — S7.P3 already did that)
+- **Dimension 13:** Epic-level implementation fidelity (all features collectively satisfy epic goals)
+
+### Complete S7/S9 Variant Documentation
+
+**See:** `code_review/s7_s9_code_review_variant.md` for complete S7/S9 variant workflow, Task tool examples, and comment addressing protocol.
+
+---
+
 ## Step 1 — Access the Branch
 
 **Goal:** Read all diff and file content using read-only git commands. Never check out the branch.
@@ -333,7 +388,9 @@ Group findings by severity (BLOCKING first, then CONCERN, SUGGESTION, NITPICK). 
 
 "Fixing issues" means updating the review file: removing false positives, adding missed issues, making vague comments specific, correcting file/line references, reclassifying severity.
 
-### 12 Dimensions — Checked Every Round
+### Validation Dimensions — Checked Every Round
+
+**Note:** Code reviews have **12 dimensions** (7 master + 5 code-review-specific) for formal external reviews, or **13 dimensions** (7 master + 6 code-review-specific) when invoked from **S7.P3 or S9.P4** (adds Implementation Fidelity dimension).
 
 **Master Dimensions (7) — apply to all validation loops:**
 
@@ -347,7 +404,7 @@ Group findings by severity (BLOCKING first, then CONCERN, SUGGESTION, NITPICK). 
 | 6 | **Codebase Alignment** | Comments do not flag patterns already established and consistent in the existing codebase |
 | 7 | **Format Compliance** | Review follows `output_format.md` spec — severity tags, file references, section structure are correct |
 
-**Code Review-Specific Dimensions (5):**
+**Code Review-Specific Dimensions (5 standard, +1 for S7/S9):**
 
 | # | Dimension | What to Check |
 |---|-----------|---------------|
@@ -356,6 +413,14 @@ Group findings by severity (BLOCKING first, then CONCERN, SUGGESTION, NITPICK). 
 | 10 | **Actionability** | Every comment gives the author enough context to make a concrete change; no comment identifies a problem without a path forward |
 | 11 | **Severity Calibration** | BLOCKING is reserved for issues that genuinely cannot be merged safely; CONCERN/SUGGESTION/NITPICK distinctions are sound and consistently applied |
 | 12 | **Scope Coherence** | Comments stay within what the PR is attempting; no scope creep into "while you're here, refactor X" unless it directly affects correctness or safety |
+
+**S7/S9-Specific Dimension (only when invoked from S7.P3 or S9.P4):**
+
+| # | Dimension | What to Check |
+|---|-----------|---------------|
+| 13 | **Implementation Fidelity** | Every proposal in the validated implementation plan has corresponding code changes; all spec requirements are addressed in implementation; no scope creep (no features not in spec); no missing features (all spec requirements fully implemented) |
+
+**Context:** Dimension 13 applies only to S7.P3 (Feature PR Review) and S9.P4 (Epic PR Review) contexts where validated implementation plans and specs exist. Formal code reviews of external PRs check only dimensions 1-12.
 
 ### Adversarial Self-Check (Required Before Declaring Any Round Clean)
 
@@ -387,7 +452,7 @@ A round may NOT be scored clean if this check is skipped.
 Each round:
 1. Re-read the entire `review_vN.md` from line 1 to end (use read_file — partial reads do not count)
 2. Re-verify ≥3 specific technical claims against `git show` or diff (document the tool calls)
-3. Check all 12 dimensions and document PASS or ISSUE for each
+3. Check all dimensions (12 for formal reviews, 13 for S7/S9) and document PASS or ISSUE for each
 4. Run the Adversarial Self-Check
 5. Fix any issues found immediately in the review file
 6. State `consecutive_clean = N` at the end of the round
@@ -421,7 +486,7 @@ After `consecutive_clean = 1` (primary clean round), EXECUTE THE FOLLOWING TASK 
 **Branch:** {branch_name}
 **Primary agent claims:** Primary clean round achieved (zero issues OR 1 LOW fixed), passed adversarial self-check
 
-**Your task:** Re-read review_vN.md and verify ALL 12 dimensions:
+**Your task:** Re-read review_vN.md and verify ALL dimensions (12 for formal reviews, 13 for S7/S9):
 
 **Master Dimensions (7):**
 1. **Empirical Verification:** Every comment cites specific file + line verified with git show
@@ -439,7 +504,10 @@ After `consecutive_clean = 1` (primary clean round), EXECUTE THE FOLLOWING TASK 
 11. **Severity Calibration:** BLOCKING reserved for genuine merge blockers
 12. **Scope Coherence:** Comments within PR scope, no scope creep
 
-CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found in review_v{N}.md - all 12 dimensions verified".
+**S7/S9-Specific Dimension (only if invoked from S7.P3 or S9.P4):**
+13. **Implementation Fidelity:** Every proposal in implementation plan has corresponding code; all spec requirements addressed; no scope creep; no missing features
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found in review_v{N}.md - all dimensions verified".
 
 **Context:**
 - Review categories present: {count}
@@ -459,7 +527,7 @@ CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state
 **Branch:** {branch_name}
 **Primary agent claims:** Primary clean round achieved (zero issues OR 1 LOW fixed), passed adversarial self-check
 
-**Your task:** Re-read review_vN.md and verify ALL 12 dimensions:
+**Your task:** Re-read review_vN.md and verify ALL dimensions (12 for formal reviews, 13 for S7/S9):
 
 **Master Dimensions (7):**
 1. **Empirical Verification:** Every comment cites specific file + line verified with git show
@@ -477,7 +545,10 @@ CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state
 11. **Severity Calibration:** BLOCKING reserved for genuine merge blockers
 12. **Scope Coherence:** Comments within PR scope, no scope creep
 
-CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found in review_v{N}.md - all 12 dimensions verified".
+**S7/S9-Specific Dimension (only if invoked from S7.P3 or S9.P4):**
+13. **Implementation Fidelity:** Every proposal in implementation plan has corresponding code; all spec requirements addressed; no scope creep; no missing features
+
+CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found in review_v{N}.md - all dimensions verified".
 
 **Context:**
 - Review categories present: {count}

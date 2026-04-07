@@ -187,13 +187,19 @@ Child projects can export design proposals to master via the export script. Prop
 
 ## Code Review Workflow
 
-To review someone else's branch or PR (not your own epic work):
+The code review framework is used in three contexts:
+
+1. **Formal code reviews** (external PRs, teammate branches)
+2. **S7.P3** (Feature PR Review - part of S1-S10 epic workflow)
+3. **S9.P4** (Epic PR Review - part of S1-S10 epic workflow)
 
 **Trigger phrases:** "review branch", "do a code review of", "review the changes on", "re-review"
 
 **Guide:** `.shamt/guides/code_review/` (README → code_review_workflow.md)
 
-**What it does:** Produces `.shamt/code_reviews/<sanitized-branch>/` with a validated `overview.md` (ELI5 + What/Why/How) and a versioned `review_vN.md` with copy-paste-ready PR comments.
+**Formal reviews:** Produces `.shamt/code_reviews/<sanitized-branch>/` with a validated `overview.md` (ELI5 + What/Why/How) and a versioned `review_vN.md` with copy-paste-ready PR comments.
+
+**S7/S9 reviews:** Fresh sub-agent code review pattern (integrated into S7.P3 and S9.P4 guides). Skips overview.md creation, adds Dimension 13 (Implementation Fidelity), validates implementation matches plans and specs. See `code_review/s7_s9_code_review_variant.md`.
 
 **Key rules:**
 - Never checks out the branch — read-only git commands only

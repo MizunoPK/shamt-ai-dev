@@ -52,7 +52,7 @@ Before proceeding, you must have:
 ## 🚫 FORBIDDEN SHORTCUTS
 
 You CANNOT:
-- Skip Step 6 (Epic Final Review) or any of its 5 categories because "S9.P2 already covered them" — all 5 categories are MANDATORY; S9.P2 results provide supplementary context only, not a replacement for the epic-scope review
+- Skip Step 6 (Epic Final Review) or any of its 5 categories because "S9.P2 already covered them" — fresh sub-agent epic code review (12 categories + 13 dimensions, epic-scope) are MANDATORY; S9.P2 results provide supplementary context only, not a replacement for the epic-scope review
 - Fix issues found in Step 6 inline instead of creating bug fix folders — ALL high/medium priority issues require a bug fix folder and the **S5→S6→S7 workflow** (implementation + testing; do NOT repeat S2 spec work unless bug reveals a spec issue)
 - Proceed to Step 8 (Final Verification) after creating bug fixes without restarting S9 from S9.P1 — the S9 restart is MANDATORY after any bug fixes created in Step 7
 - Mark S9.P4 complete without updating both EPIC_README.md Epic Progress Tracker and epic_lessons_learned.md with S9.P4 results and insights
@@ -90,7 +90,7 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 ### What are the key outputs?
 
 1. **Epic Final Review Results** (documented in epic_lessons_learned.md)
-   - 5 categories reviewed at epic level (cross-feature and epic-scope concerns only)
+   - Epic code review complete at epic level (cross-feature and epic-scope concerns only)
    - All categories must pass (no failures)
 
 2. **Bug Fixes (if issues found)**
@@ -134,7 +134,7 @@ Prerequisites Met?
          ▼
 ┌─────────────────────────────────────┐
 │ STEP 6: Epic Final Review           │
-│ (5 Categories - Epic Scope)         │
+│ (Fresh Sub-Agent - Epic Scope)       │
 └─────────────────────────────────────┘
          │
          ├─ 1. Cross-Feature Integration
@@ -179,10 +179,11 @@ Prerequisites Met?
    - Focus: Architectural consistency, cross-feature impacts
    - Don't repeat feature-level checks
 
-2. ⚠️ ALL 5 categories are MANDATORY
-   - Cannot skip categories
-   - All categories must PASS (no exceptions)
-   - If ANY category fails → create bug fix
+2. ⚠️ FRESH SUB-AGENT CODE REVIEW REQUIRED (Epic-Scope)
+   - Fresh Opus sub-agent performs epic-scoped code review (ZERO implementation bias)
+   - Sub-agent checks ALL 12 review categories + 13 validation dimensions (interpreted at epic scope)
+   - Dimension 13 (Implementation Fidelity) validates epic requirements coverage
+   - See `code_review/s7_s9_code_review_variant.md` for complete workflow
 
 3. If issues found, you MUST RESTART S9
    - After bug fixes complete
@@ -222,6 +223,18 @@ Prerequisites Met?
 ## Prerequisites
 
 **Before starting S9.P4, verify ALL of these are true:**
+
+### From S5 (Implementation Planning - All Features)
+- [ ] All feature implementation plans exist and are accessible
+- [ ] Implementation plan locations documented (needed for Dimension 13 - Implementation Fidelity check at epic scope)
+
+### From S2 (Specification - All Features)
+- [ ] All feature spec files exist and are accessible
+- [ ] Spec file locations documented (needed for Dimension 13 - Implementation Fidelity check at epic scope)
+
+### From Epic Request
+- [ ] Original epic request file exists at `.shamt/epics/requests/{epic_name}.txt`
+- [ ] Epic request accessible (needed for epic requirements coverage validation)
 
 ### From S9.P2 (Epic QC Validation Loop)
 - [ ] primary clean round + sub-agent confirmation achieved
@@ -279,128 +292,213 @@ S9.P2's 12-dimension validation provides strong coverage that overlaps with seve
 - **Category 5 (Epic Documentation Completeness):** Not fully covered in S9.P2
 
 **Approach:**
-- **Review ALL 5 categories** (no skipping)
+- **Review fresh sub-agent epic code review** (no skipping)
 - **For high-overlap categories:** Quick verification against S9.P2 findings, confirm still holds
 - **For lower-overlap categories:** Thorough fresh review
 
-**Note:** This guidance applies ONLY when S9.P2 achieved primary clean round + sub-agent confirmation. If S9.P2 had issues or was shortened, review all 5 categories thoroughly without relying on S9.P2 results.
+**Note:** This guidance applies ONLY when S9.P2 achieved primary clean round + sub-agent confirmation. If S9.P2 had issues or was shortened, review fresh sub-agent epic code review (12 categories + 13 dimensions, epic-scope) thoroughly without relying on S9.P2 results.
 
 ---
 
-## STEP 6: Epic Final Review (5 Categories)
+## STEP 6: Epic Final Review (Fresh Sub-Agent Code Review)
 
-**Purpose:** Systematic review of 5 epic-level categories using the standard primary-agent + sub-agent confirmation protocol. S7.P3 already validated per-feature code quality; this step covers only cross-feature and epic-scope concerns.
+**🚨 MANDATORY: READ CODE REVIEW VARIANT GUIDE**
 
-**Note:** Per-feature code quality was confirmed in S7.P3. Categories here cover only cross-feature and epic-scope concerns that are invisible until all features are complete together.
+**Before proceeding, you MUST:**
+1. **READ:** `code_review/s7_s9_code_review_variant.md` (S7/S9 Code Review Variant)
+2. **READ:** `code_review/code_review_workflow.md` (Full code review workflow)
+3. **Understand the fresh sub-agent pattern for epic scope:**
+   - Fresh Opus sub-agent reviews code with ZERO implementation bias
+   - Skip overview.md creation (saves ~20-30% tokens)
+   - Check 13 dimensions (7 master + 6 code-review-specific including Implementation Fidelity)
+   - **Epic-scope focus:** Cross-feature integration, architectural coherence, NOT per-feature code quality
 
----
+**Purpose:** Unbiased epic-level PR review using proven code review framework (12 review categories + 13 validation dimensions) with epic-scope interpretation.
 
-### Overview
+**Why Fresh Sub-Agent?**
+- **Zero implementation bias:** Sub-agent has no memory of design decisions, shortcuts, or assumptions made during epic implementation
+- **True code review perspective:** Reviews code as written, not as intended
+- **Catches epic-level drift:** Validates actual implementation matches validated plans at epic scope (Dimension 13: Implementation Fidelity)
 
-**Objective:** Review 5 epic-level categories. Each category focuses on concerns that are only meaningful at epic scope — not individual feature behavior.
-
-**This is NOT feature-level review:**
-- S7.P3 (Final Review) already reviewed each feature's correctness, code quality, documentation, security, performance, and test coverage
-- S9.P4 reviews EPIC-SCOPE concerns only:
+**Key Distinction - Epic Scope:**
+- **S7.P3 already validated per-feature code quality** (correctness, testing, security, performance at feature level)
+- **S9.P4 focuses on epic-scope concerns only:**
   - Cross-feature integration correctness
   - Architectural coherence across features
   - Epic requirements coverage against original request
   - Emergent patterns only visible at full-epic scale
   - Epic documentation completeness
-
-**5 Review Categories:**
-
-1. **Cross-Feature Integration** — Do all features work together correctly? Are integration points verified? Does data flow correctly between features? Are there interface mismatches?
-
-2. **Architecture Coherence** — Does the overall implementation match the intended architecture? Is there unplanned coupling between features? Has the design drifted from the epic's intended structure?
-
-3. **Epic Requirements Coverage** — Are ALL original epic requirements satisfied? Verify against the epic request file (`.shamt/epics/requests/{epic_name}.txt`) line-by-line. Are any user-stated goals unaddressed?
-
-4. **Emergent Quality Patterns** — Cross-feature inconsistencies only visible at epic scope: inconsistent error handling styles across features, naming inconsistencies between features (same concept named differently), logic duplicated across features that should be shared.
-
-5. **Epic Documentation Completeness** — Does `EPIC_README.md` accurately reflect the actual implementation? Does `epic_lessons_learned.md` cover all stages? Does `epic_smoke_test_plan.md` reflect the actual implementation? Are feature summaries accurate?
-
-**Exit Criteria:** Primary clean round + sub-agent confirmation (standard master protocol)
+  - NOT individual feature code quality (already done)
 
 ---
 
-### Step-by-Step Workflow
+### Step 6a: Spawn Fresh Sub-Agent (Epic-Scope Review)
 
-**Step 6.1: Create pr_review_issues.md**
+**Primary agent action:** Spawn fresh Opus sub-agent to run epic-scoped code review.
 
-```text
-Location: SHAMT-{N}-{epic_name}/pr_review_issues.md
-Purpose: Track issues discovered during epic review
+Use Task tool with the prompt template from `code_review/s7_s9_code_review_variant.md` (Step 1: S9.P4 Epic Review example).
+
+**Key parameters for sub-agent:**
+- **Branch:** Epic branch name (e.g., `feat/EPIC-123`)
+- **Review Type:** S9.P4 Epic PR Review
+- **Scope:** **EPIC-LEVEL concerns only** (cross-feature integration, architectural coherence, NOT per-feature quality)
+- **Epic Implementation Plans:** Path to all feature implementation plans in epic folder
+- **Epic Spec Files:** Path to all feature specs in epic folder
+- **Epic Request File:** Path to `.shamt/epics/requests/{epic_name}.txt` (original user request)
+- **Model:** `opus` (for deep reasoning and thorough epic-level review)
+
+**Sub-agent will:**
+1. Access epic branch (read-only git commands)
+2. Skip overview.md creation (Steps 3-4)
+3. Write `review_v1.md` with severity-tagged epic-scope comments
+4. Run validation loop (13 dimensions) until primary clean round + sub-agent confirmation
+5. **Focus on epic-scope concerns** (not per-feature code quality)
+
+**Epic-Scope Interpretation of 12 Review Categories:**
+
+The sub-agent checks all 12 review categories but **interprets them at epic scope**:
+1. **Correctness** — Cross-feature integration correctness (not per-feature correctness)
+2. **Code Quality** — Architectural coherence across features (not per-feature code style)
+3. **Comments & Documentation** — Epic documentation (EPIC_README.md, epic_lessons_learned.md)
+4. **Code Organization** — Cross-feature structure consistency (not per-feature organization)
+5. **Testing** — Epic smoke test coverage (not per-feature unit tests)
+6. **Security** — Cross-feature security patterns (not per-feature validation)
+7. **Performance** — Epic-level performance concerns (cross-feature bottlenecks)
+8. **Error Handling** — Cross-feature error propagation (not per-feature error handling)
+9. **Architecture & Design** — Overall epic architecture coherence (not per-feature design)
+10. **Backwards Compatibility** — Cross-feature API consistency (not per-feature compatibility)
+11. **Scope & Changes** — Epic requirements coverage against original request
+12. **Context & Intent** — Epic-level intent (not per-feature context)
+
+**Dimension 13 (Implementation Fidelity) at Epic Scope:**
+- Verify all feature implementation plans collectively satisfy epic goals
+- Verify no epic-level requirements missed
+- Verify no scope creep at epic level
+- Check against `.shamt/epics/requests/{epic_name}.txt` line-by-line
+
+---
+
+### Step 6b: Wait for Sub-Agent Review Completion
+
+**Sub-agent output location:**
+```
+.shamt/code_reviews/{sanitized_epic_branch}/review_v1.md
 ```
 
-**Step 6.2: Primary Agent Review (5 Categories)**
+**Wait for sub-agent to complete:**
+- Sub-agent runs full code review workflow with epic-scope focus
+- Validation loop with 13 dimensions
+- Exit criteria: Primary clean round + 2 Haiku sub-agent confirmations
 
-Review each category sequentially. For each category:
-- Read relevant code/docs directly (do not rely on memory of earlier stages)
-- Check the S9.P2 validation log for prior findings relevant to this category (trust but verify the most critical claims)
-- Document any issues found in `pr_review_issues.md`
+**Time estimate:** 45-90 minutes depending on epic size and feature count
 
-**Focus by category:**
+---
 
-**Category 1 — Cross-Feature Integration:**
-- Read each feature's actual integration points (not just specs)
-- Verify data handoffs between features work correctly
-- Check that error propagation across feature boundaries is handled
+### Step 6c: Read Review Results
 
-**Category 2 — Architecture Coherence:**
-- Compare actual code structure to intended architecture (from DISCOVERY.md and epic ticket)
-- Identify any features that coupled to others in unplanned ways
-- Check for consistent design patterns across features
+**Primary agent action:** Read the completed review file.
 
-**Category 3 — Epic Requirements Coverage:**
-- Read `.shamt/epics/requests/{epic_name}.txt` (original request)
-- Compare each stated requirement against the actual implementation
-- Flag any goal that appears unaddressed or only partially addressed
+```bash
+Read .shamt/code_reviews/{sanitized_epic_branch}/review_v1.md
+```
 
-**Category 4 — Emergent Quality Patterns:**
-- Scan all features for inconsistent error handling styles
-- Check that the same concept isn't named differently across features
-- Identify logic that is duplicated across features and should be shared (not just noted in one feature)
+**Review structure:**
+- **Header:** Branch, date, file count, commit range
+- **Comments by Category:** 12 review categories (epic-scope interpretation)
+- **Comments by Severity:** BLOCKING → CONCERN → SUGGESTION → NITPICK
+- **Format:** Each comment has file path, line number, issue description, suggested fix
 
-**Category 5 — Epic Documentation Completeness:**
-- Read `EPIC_README.md` and verify it accurately describes the implementation
-- Verify `epic_smoke_test_plan.md` reflects actual test scenarios (not assumptions from S1/S3)
-- Check that `epic_lessons_learned.md` covers insights from all stages
+**Focus:** Comments should be epic-scope concerns (cross-feature integration, architectural coherence), NOT per-feature code quality.
 
-**Step 6.3: Assess Primary Round Results**
+---
 
-**If primary review found ZERO issues across all 5 categories:**
-- Mark primary round as clean
-- Proceed to Step 6.4 (sub-agent confirmation)
+### Step 6d: Address All Comments
 
-**If primary review found issues:**
-- Fix all issues found
-- Re-run the primary review (Step 6.2) from the beginning
-- Repeat until a primary round finds zero issues
+**Comment Addressing Protocol (per Design Decision 3):**
 
-**Step 6.4: Sub-Agent Confirmation**
+**BLOCKING comments (Must Fix Immediately):**
+- **What:** Cross-feature integration bugs, epic requirements gaps, architectural showstoppers
+- **Action:** Fix all BLOCKING comments before proceeding
+- **Cannot continue until:** All BLOCKING resolved
 
-After the first clean primary round, spawn 2 independent sub-agents to confirm. Each sub-agent:
-- Reviews all 5 categories independently
-- Has access to the same code and documentation
-- Reports zero issues OR identifies any remaining concerns
+**CONCERN comments (Must Fix Immediately):**
+- **What:** Real cross-feature quality, architectural inconsistency, or epic documentation problems
+- **Action:** Fix all CONCERN comments before proceeding
+- **Cannot continue until:** All CONCERN resolved
 
-**Pass criteria:** Both sub-agents report zero issues → S9.P4 Step 6 PASSED.
+**SUGGESTION comments (User Review):**
+- **What:** Optional epic-level improvements
+- **Action:** Walk through with user one-by-one
+- **For each SUGGESTION:**
+  1. Present to user with context + comment + suggested fix
+  2. User decides: Fix now / Document as "acknowledged, won't fix" / Escalate
+  3. Record decision in comment response log
 
-If either sub-agent finds issues: fix them, re-run primary review, then spawn 2 new sub-agents.
+**NITPICK comments (User Review):**
+- **What:** Minor epic-level style or preference issues
+- **Action:** Walk through with user one-by-one
+- **For each NITPICK:**
+  1. Present to user with context + comment + suggested fix
+  2. User decides: Fix now / Document as "acknowledged, won't fix" / Escalate
+  3. Record decision in comment response log
 
-**Step 6.5: Document Results**
+**Create Epic Comment Response Log:**
 
-**Update epic_lessons_learned.md with results:**
+```markdown
+## S9.P4 Epic Comment Response Log
 
-**See:** `reference/stage_9/epic_final_review_templates.md` Template 1 for review results template
+**Epic:** {epic_name}
+**Review File:** .shamt/code_reviews/{sanitized_branch}/review_v1.md
+**Date:** {date}
 
-**Include:**
-- Date, epic name, total rounds (primary + sub-agent confirmation)
-- Final status (PASSED)
-- Summary of what was found in each category
-- Total issues found and fixed
-- Epic-level concerns addressed
+### BLOCKING Comments (0 found)
+{If none found, state: "No BLOCKING comments found ✅"}
+
+### CONCERN Comments (0 found)
+{If none found, state: "No CONCERN comments found ✅"}
+
+### SUGGESTION Comments ({count} found)
+1. **[File:Line]** {Issue description}
+   - **User Decision:** {Fix / Document / Escalate}
+   - **Action Taken:** {What was done}
+   - **Status:** ✅ Addressed
+
+### NITPICK Comments ({count} found)
+1. **[File:Line]** {Issue description}
+   - **User Decision:** {Fix / Document / Escalate}
+   - **Action Taken:** {What was done}
+   - **Status:** ✅ Addressed
+```
+
+**Checkpoint Before Continuing:**
+- [ ] All BLOCKING comments resolved (code fixed)
+- [ ] All CONCERN comments resolved (code fixed)
+- [ ] All SUGGESTION comments addressed (fixed OR documented with user approval)
+- [ ] All NITPICK comments addressed (fixed OR documented with user approval)
+- [ ] Epic Comment Response Log complete
+- [ ] All code changes committed
+
+**If ANY checkbox unchecked:** Return to comment addressing and complete.
+
+---
+
+### Step 6 Completion
+
+**S9.P4 Step 6 (Epic Final Review) is complete when:**
+- ✅ Fresh sub-agent code review complete (review_v1.md validated with epic-scope focus)
+- ✅ All BLOCKING/CONCERN comments fixed
+- ✅ All SUGGESTION/NITPICK comments addressed (with user approval)
+- ✅ Epic Comment Response Log complete
+- ✅ All changes committed
+- ✅ Epic is production-ready from cross-feature and architectural perspective
+
+**Output artifacts:**
+- `.shamt/code_reviews/{sanitized_epic_branch}/review_v1.md` (validated epic review)
+- `.shamt/code_reviews/{sanitized_epic_branch}/review_validation_log.md` (validation history)
+- Epic Comment Response Log (in EPIC_README.md or separate file)
+
+**Proceed to STEP 7 (Handle Issues) if ANY issues were found that require bug fixes**
+**OR proceed to STEP 8 (Final Verification) if review was clean**
 
 ---
 
@@ -473,14 +571,14 @@ For EACH issue:
 1. Mark all S9 steps as "incomplete" in EPIC_README.md
 2. Re-run S9.P1 (Epic Smoke Testing - all 4 parts)
 3. Re-run S9.P2 (Epic QC Validation Loop - until primary clean round + sub-agent confirmation)
-4. Re-run S9.P4 (Epic Final Review - all 11 categories)
+4. Re-run S9.P4 (Epic Final Review - fresh sub-agent epic code review)
 5. Document restart in epic_lessons_learned.md
 
 ---
 
 ## STEP 8: Final Verification & README Update
 
-**When to use:** Step 6 passed (all 11 categories) AND Step 7 complete OR skipped (no issues)
+**When to use:** Step 6 passed (fresh sub-agent epic code review) AND Step 7 complete OR skipped (no issues)
 
 ---
 
@@ -503,7 +601,7 @@ For EACH issue:
 - [ ] S9.P2 Epic QC Validation Loop passed (primary clean round + sub-agent confirmation)
 - [ ] All 13 dimensions validated (7 master + 6 epic)
 - [ ] S9.P3 User testing passed (no bugs found)
-- [ ] Epic final review passed (all 5 categories, primary clean round + sub-agent confirmation)
+- [ ] Epic final review passed (fresh sub-agent epic code review (12 categories + 13 dimensions, epic-scope), primary clean round + sub-agent confirmation)
 - [ ] NO pending issues or bug fixes
 - [ ] ALL tests passing (100% pass rate)
 
@@ -554,7 +652,7 @@ Mark S9.P4 complete and prepare for S10:
 
 **S9.P4 is COMPLETE when ALL of these are true:**
 - ✅ All 3 steps finished (6, 7, 8)
-- ✅ Epic PR review passed (all 11 categories)
+- ✅ Epic PR review passed (fresh sub-agent epic code review)
 - ✅ All issues resolved (bug fixes complete OR no issues found)
 - ✅ No pending issues or bug fixes
 - ✅ EPIC_README.md Epic Progress Tracker updated
@@ -612,13 +710,13 @@ Mark S9.P4 complete and prepare for S10:
 **S9.P4 is COMPLETE when ALL of the following are true:**
 
 ### Epic Final Review (Step 6)
-- [ ] All 5 categories reviewed: ✅ PASSED
+- [ ] All Epic code review complete: ✅ PASSED
   - [ ] 1. Cross-Feature Integration: ✅ PASS
   - [ ] 2. Architecture Coherence: ✅ PASS
   - [ ] 3. Epic Requirements Coverage: ✅ PASS
   - [ ] 4. Emergent Quality Patterns: ✅ PASS
   - [ ] 5. Epic Documentation Completeness: ✅ PASS
-- [ ] Primary clean round achieved (zero issues across all 5 categories)
+- [ ] Primary clean round achieved (zero issues across fresh sub-agent epic code review (12 categories + 13 dimensions, epic-scope))
 - [ ] Sub-agent confirmation: both sub-agents reported zero issues ✅ (see protocol below)
 - [ ] Review results documented in epic_lessons_learned.md
 
@@ -635,7 +733,7 @@ EXECUTE THE FOLLOWING TASK TOOL CALLS IN A SINGLE MESSAGE:
 
 **Artifact to validate:** Epic {epic_name} pr_review_issues.md and epic implementation
 **Validation categories:** All 5 epic final review categories
-**Your task:** Review the epic and verify ALL 5 categories have zero issues.
+**Your task:** Review the epic and verify fresh sub-agent epic code review have zero issues.
 
 CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
 
@@ -651,7 +749,7 @@ Check: Cross-feature integration, architecture coherence, epic requirements cove
 
 **Artifact to validate:** Epic {epic_name} pr_review_issues.md and epic implementation
 **Validation categories:** All 5 epic final review categories
-**Your task:** Review the epic in reverse order and verify ALL 5 categories have zero issues.
+**Your task:** Review the epic in reverse order and verify fresh sub-agent epic code review have zero issues.
 
 CRITICAL: Report ANY issue found, even LOW severity. If zero issues found, state "CONFIRMED: Zero issues found".
 
@@ -775,7 +873,7 @@ Check: Cross-feature integration, architecture coherence, epic requirements cove
 - **Epic-level PR review (S9.P4):** Reviews cross-feature consistency, architectural cohesion, epic scope
 
 **Success Criteria:**
-- Epic PR review passed (all 11 categories)
+- Epic PR review passed (fresh sub-agent epic code review)
 - All issues resolved (bug fixes complete OR no issues)
 - No pending issues or bug fixes
 - All tests passing (100%)

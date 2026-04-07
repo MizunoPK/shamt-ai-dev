@@ -71,3 +71,4 @@ Both validation loops exit on: **primary clean round + 2 independent sub-agents 
 |------|---------|
 | `code_review_workflow.md` | Step-by-step executable workflow |
 | `output_format.md` | Templates, sanitization rules, severity definitions, comment format |
+| `s7_s9_code_review_variant.md` | S7/S9 variant workflow (skips overview.md, adds Dimension 13) |

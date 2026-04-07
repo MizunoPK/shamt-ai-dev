@@ -133,22 +133,44 @@ reduce the requirement to follow the guide's specific steps.
 
 ## Code Review Workflow
 
-To review a teammate's branch or any external PR (not your own epic work):
+The code review framework is used in three contexts:
+
+1. **Formal code reviews** (external PRs, teammate branches)
+2. **S7.P3** (Feature PR Review - part of normal epic flow)
+3. **S9.P4** (Epic PR Review - part of normal epic flow)
 
 **Trigger phrases:** "review branch", "do a code review of", "review the changes on", "re-review"
 
 **Decision tree:**
-- Reviewing someone else's branch/PR → **Code Review Workflow** (this section)
-- Reviewing your own epic's PR → S9.P4 (part of the normal epic flow)
+- Reviewing someone else's branch/PR → **Formal Code Review** (external PRs)
+- Reviewing your own feature → **S7.P3** (part of S7 Testing & Review)
+- Reviewing your own epic → **S9.P4** (part of S9 Epic Validation)
 
 **How to invoke:**
+
+**Formal reviews (external PRs):**
 ```
 Read `.shamt/guides/code_review/README.md` and then
 `.shamt/guides/code_review/code_review_workflow.md` and follow
-the workflow to produce a review in `.shamt/code_reviews/{sanitized_branch}/`.
+the full workflow (Steps 1-7 including overview.md creation).
 ```
 
-**Key rules:**
+**S7.P3 and S9.P4 (internal epic reviews):**
+```
+S7.P3 and S9.P4 use the code review framework with fresh sub-agent pattern.
+Guides spawn sub-agent automatically. See:
+- `.shamt/guides/stages/s7/s7_p3_final_review.md` (Feature PR Review)
+- `.shamt/guides/stages/s9/s9_p4_epic_final_review.md` (Epic PR Review)
+- `.shamt/guides/code_review/s7_s9_code_review_variant.md` (S7/S9 variant)
+```
+
+**S7/S9 variant differences:**
+- Fresh Opus sub-agent performs review (ZERO implementation bias)
+- Skips overview.md creation (saves ~20-30% tokens)
+- Adds Dimension 13 (Implementation Fidelity) - validates implementation matches validated plans and specs
+- 12 review categories + 13 validation dimensions (7 master + 6 code-review-specific including Implementation Fidelity)
+
+**Key rules (all contexts):**
 - Never checks out the branch — read-only git commands only (`git fetch`, `git diff`, `git show`, `git log`)
 - If branch cannot be fetched: halt immediately and report to user
 - First review → `review_v1.md`; re-review → `review_v2.md`, etc. (never overwrite)

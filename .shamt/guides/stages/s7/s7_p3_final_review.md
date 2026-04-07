@@ -117,17 +117,19 @@ Even if S7.P2 found and fixed many issues, S7.P3 requires FULL rigor:
 │ CRITICAL RULES - These MUST be copied to README Agent Status │
 └─────────────────────────────────────────────────────────────┘
 
-1. ⚠️ ALL 11 PR CATEGORIES CHECKED EVERY ROUND
-   - Cannot skip any category
-   - Each category catches different issues
-   - Check all categories every validation round (not just once)
-   - Must document findings for ALL categories with evidence (tool calls, calculations)
+1. ⚠️ FRESH SUB-AGENT CODE REVIEW REQUIRED
+   - Fresh Opus sub-agent performs code review (ZERO implementation bias)
+   - Sub-agent checks ALL 12 review categories + 13 validation dimensions
+   - 12 review categories: Correctness, Code Quality, Comments & Documentation, Code Organization, Testing, Security, Performance, Error Handling, Architecture & Design, Backwards Compatibility, Scope & Changes, Context & Intent
+   - 13 dimensions: 7 master + 6 code-review-specific (including Implementation Fidelity)
+   - See `code_review/s7_s9_code_review_variant.md` for complete workflow
 
 2. ⚠️ PRIMARY CLEAN ROUND + SUB-AGENT CONFIRMATION REQUIRED
+   - Code review sub-agent runs validation loop internally
    - Clean round = ZERO issues OR exactly 1 LOW-severity issue (fixed)
    - Counter resets if: 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL issue
    - See `reference/severity_classification_universal.md` for severity definitions
-   - After primary clean round (counter = 1): spawn 2 independent sub-agents in parallel; both must confirm zero issues to exit
+   - After primary clean round (counter = 1): spawn 2 independent Haiku sub-agents in parallel; both must confirm zero issues to exit
    - Typical: 3-5 primary rounds total to achieve primary clean round
 
 3. ⚠️ FIX ISSUES IMMEDIATELY (NO RESTART)
@@ -175,6 +177,14 @@ Even if S7.P2 found and fixed many issues, S7.P3 requires FULL rigor:
 - [ ] Zero issues deferred (fix-and-continue approach used)
 - [ ] All re-reading checkpoints completed
 
+**From S5 (Implementation Planning):**
+- [ ] Validated implementation plan exists and is accessible
+- [ ] Implementation plan location documented (needed for Dimension 13 - Implementation Fidelity check)
+
+**From S2 (Specification):**
+- [ ] Feature spec file exists and is accessible
+- [ ] Spec file location documented (needed for Dimension 13 - Implementation Fidelity check)
+
 **From S7.P1:**
 - [ ] All 3 smoke test parts passed
 - [ ] Part 3 verified OUTPUT DATA VALUES
@@ -198,21 +208,26 @@ Even if S7.P2 found and fixed many issues, S7.P3 requires FULL rigor:
 │                FINAL REVIEW WORKFLOW                        │
 └─────────────────────────────────────────────────────────────┘
 
-PR Review Checklist (11 Categories)
-   ├─ 1. Correctness and Logic
-   ├─ 2. Code Quality and Readability
-   ├─ 3. Comments and Documentation
-   ├─ 4. Refactoring Concerns
-   ├─ 5. Testing
-   ├─ 6. Security
-   ├─ 7. Performance
-   ├─ 8. Error Handling
-   ├─ 9. Architecture and Design
-   ├─ 10. Compatibility and Integration
-   ├─ 11. Scope and Focus
+Fresh Sub-Agent Code Review (12 Categories + 13 Dimensions)
+   ├─ Spawn fresh Opus sub-agent (zero implementation bias)
+   ├─ Sub-agent checks 12 review categories:
+   │  1. Correctness
+   │  2. Code Quality
+   │  3. Comments & Documentation
+   │  4. Code Organization
+   │  5. Testing
+   │  6. Security
+   │  7. Performance
+   │  8. Error Handling
+   │  9. Architecture & Design
+   │  10. Backwards Compatibility
+   │  11. Scope & Changes
+   │  12. Context & Intent
+   ├─ Sub-agent validates 13 dimensions (7 master + 6 code-review-specific)
+   ├─ Dimension 13: Implementation Fidelity (validates plan adherence)
+   ├─ Primary agent addresses ALL comments (BLOCKING/CONCERN must fix, SUGGESTION/NITPICK user review)
    ↓
-   Evaluate: Critical issues? → If YES: QC Restart
-             Minor issues only? → Document and proceed
+   Output: review_v1.md with severity-tagged comments
 
 Lessons Learned Capture
    ├─ Review what went well / what didn't
@@ -237,380 +252,179 @@ Re-Reading Checkpoint
 
 ---
 
-## Step 1: PR Review (Validation Loop)
+## Step 1: PR Review (Fresh Sub-Agent Code Review)
 
-**🚨 MANDATORY: READ PR VALIDATION LOOP GUIDE**
+**🚨 MANDATORY: READ CODE REVIEW VARIANT GUIDE**
 
 **Before proceeding, you MUST:**
-1. **READ:** `reference/validation_loop_qc_pr.md` (PR Validation Loop - v2.0)
-2. **READ:** `reference/validation_loop_master_protocol.md` (Master protocol with 7 universal dimensions)
-3. **Follow the complete validation loop approach:**
-   - Check all 11 PR categories EVERY round
-   - Use fresh eyes patterns (re-read code, different reading orders)
-   - primary clean round + sub-agent confirmation required (standard)
-   - Fix issues immediately, continue validation
+1. **READ:** `code_review/s7_s9_code_review_variant.md` (S7/S9 Code Review Variant)
+2. **READ:** `code_review/code_review_workflow.md` (Full code review workflow)
+3. **Understand the fresh sub-agent pattern:**
+   - Fresh Opus sub-agent reviews code with ZERO implementation bias
+   - Skip overview.md creation (saves ~20-30% tokens)
+   - Check 13 dimensions (7 master + 6 code-review-specific including Implementation Fidelity)
+   - Primary agent addresses all comments systematically
 
-**Purpose:** Systematic PR validation through comprehensive multi-round review.
+**Purpose:** Unbiased PR-level review using proven code review framework (12 review categories + 13 validation dimensions).
 
-**Validation Loop Principles:**
-- **Assume everything is wrong:** Skeptically verify all code
-- **Fresh eyes:** 2-5 min break + re-read entire codebase each round
-- **No deferred issues:** Fix ALL issues before next round
-- **Exit criteria:** primary clean round + sub-agent confirmation (zero issues)
-
----
-
-### PR Validation Loop Summary
-
-**Follow validation_loop_qc_pr.md for complete protocol. Key points:**
-
-**Every Round Checks:**
-- **7 Master Dimensions:** Empirical Verification, Completeness, Internal Consistency, Traceability, Clarity & Specificity, Upstream Alignment, Standards Compliance
-- **QC/PR Criteria:** Code correctness, quality, performance, security, documentation
-
-**11 PR Categories Checked:**
-1. **Correctness and Logic** - Code logically sound?
-2. **Code Quality and Readability** - Clean, understandable?
-3. **Comments and Documentation** - Well-documented?
-4. **Refactoring Concerns** - Needs cleanup?
-5. **Testing** - Comprehensive tests?
-6. **Security** - No vulnerabilities?
-7. **Performance** - Performs well?
-8. **Error Handling** - Robust?
-9. **Architecture and Design** - Good patterns?
-10. **Compatibility and Integration** - Backward compatible?
-11. **Scope and Focus** - Within scope, no bloat?
-
-**Process:**
-- **Round 1:** Sequential code review, check all categories
-- **Round 2:** Reverse order review, check all categories
-- **Round 3+:** Continue with different reading patterns
-   - **Exit:** Primary clean round achieved → spawn 2 sub-agents for parallel confirmation
-
-**Completion:**
-- primary clean round + sub-agent confirmation = PASSED ✅
-- Create `pr_review_issues.md` tracking all findings
+**Why Fresh Sub-Agent?**
+- **Zero implementation bias:** Sub-agent has no memory of design decisions, shortcuts, or assumptions made during implementation
+- **True code review perspective:** Reviews code as written, not as intended
+- **Catches implementation drift:** Validates actual implementation matches validated plans (Dimension 13: Implementation Fidelity)
 
 ---
 
-### Quick Reference: 11-Category Checklist (checked every round)
+### Step 1a: Spawn Fresh Sub-Agent
 
-**For detailed examples and guidance, see `reference/validation_loop_qc_pr.md`**
+**Primary agent action:** Spawn fresh Opus sub-agent to run code review.
 
-### Category 1: Correctness and Logic
+Use Task tool with the prompt template from `code_review/s7_s9_code_review_variant.md` (Step 1: S7.P3 Feature Review example).
 
-- [ ] Does the code accomplish what it claims to do?
-- [ ] Any logic errors? (off-by-one, incorrect conditionals, wrong operators)
-- [ ] Edge cases and boundary conditions handled?
-- [ ] Null/undefined handling appropriate?
-- [ ] Calculations are mathematically correct?
-- [ ] Loops terminate correctly?
+**Key parameters for sub-agent:**
+- **Branch:** Feature branch name (e.g., `feat/EPIC-123/feature-01`)
+- **Review Type:** S7.P3 Feature PR Review
+- **Scope:** Feature-level code quality (not epic-level concerns)
+- **Implementation Plan:** Path to validated implementation plan
+- **Spec File:** Path to feature spec file
+- **Model:** `opus` (for deep reasoning and thorough review)
 
-**Common issues:**
-- Off-by-one errors in loops (`range(n)` vs `range(n+1)`)
-- Wrong comparison operators (`<` vs `<=`)
-- Integer division when float needed (`5/2 = 2` in Python 2)
+**Sub-agent will:**
+1. Access branch (read-only git commands)
+2. Skip overview.md creation (Steps 3-4)
+3. Write `review_v1.md` with severity-tagged comments
+4. Run validation loop (13 dimensions) until primary clean round + sub-agent confirmation
 
-**Example:**
-```python
-## ❌ Off-by-one error
-for i in range(len(items)):  # Correct
-    item = items[i]
+---
 
-for i in range(len(items) + 1):  # ❌ Will crash on last iteration
-    item = items[i]
+### Step 1b: Wait for Sub-Agent Review Completion
 
-## ✅ Correct comparison
-if item.priority_rank < 50:  # Top 50 items
-    apply_bonus()
-
-if item.priority_rank <= 50:  # Depends on requirement (inclusive vs exclusive)
+**Sub-agent output location:**
+```
+.shamt/code_reviews/{sanitized_feature_branch}/review_v1.md
 ```
 
-**Document findings:**
+**Wait for sub-agent to complete:**
+- Sub-agent runs full code review workflow
+- Validation loop with 13 dimensions
+- Exit criteria: Primary clean round + 2 Haiku sub-agent confirmations
+
+**Time estimate:** 30-60 minutes depending on feature size
+
+---
+
+### Step 1c: Read Review Results
+
+**Primary agent action:** Read the completed review file.
+
+```bash
+Read .shamt/code_reviews/{sanitized_feature_branch}/review_v1.md
+```
+
+**Review structure:**
+- **Header:** Branch, date, file count, commit range
+- **Comments by Category:** 12 review categories
+  1. Correctness
+  2. Code Quality
+  3. Comments & Documentation
+  4. Code Organization
+  5. Testing
+  6. Security
+  7. Performance
+  8. Error Handling
+  9. Architecture & Design
+  10. Backwards Compatibility
+  11. Scope & Changes
+  12. Context & Intent (if applicable)
+- **Comments by Severity:** BLOCKING → CONCERN → SUGGESTION → NITPICK
+- **Format:** Each comment has file path, line number, issue description, suggested fix
+
+---
+
+### Step 1d: Address All Comments
+
+**Comment Addressing Protocol (per Design Decision 3):**
+
+**BLOCKING comments (Must Fix Immediately):**
+- **What:** Correctness bugs, security issues, data-loss risks
+- **Action:** Fix all BLOCKING comments before proceeding
+- **Cannot continue until:** All BLOCKING resolved
+
+**CONCERN comments (Must Fix Immediately):**
+- **What:** Real quality, performance, or maintainability problems
+- **Action:** Fix all CONCERN comments before proceeding
+- **Cannot continue until:** All CONCERN resolved
+
+**SUGGESTION comments (User Review):**
+- **What:** Optional improvements where code works but could be better
+- **Action:** Walk through with user one-by-one
+- **For each SUGGESTION:**
+  1. Present to user with context + comment + suggested fix
+  2. User decides: Fix now / Document as "acknowledged, won't fix" / Escalate
+  3. Record decision in comment response log
+
+**NITPICK comments (User Review):**
+- **What:** Minor style or preference issues
+- **Action:** Walk through with user one-by-one
+- **For each NITPICK:**
+  1. Present to user with context + comment + suggested fix
+  2. User decides: Fix now / Document as "acknowledged, won't fix" / Escalate
+  3. Record decision in comment response log
+
+**Create Comment Response Log:**
+
 ```markdown
-### Category 1: Correctness and Logic
-✅ No issues found
-- All loops verified for correct range
-- All comparisons checked against spec
-- Edge cases tested (empty list, single item, max size)
+## S7.P3 Comment Response Log
+
+**Feature:** {feature_name}
+**Review File:** .shamt/code_reviews/{sanitized_branch}/review_v1.md
+**Date:** {date}
+
+### BLOCKING Comments (0 found)
+{If none found, state: "No BLOCKING comments found ✅"}
+
+### CONCERN Comments (0 found)
+{If none found, state: "No CONCERN comments found ✅"}
+
+### SUGGESTION Comments ({count} found)
+1. **[File:Line]** {Issue description}
+   - **User Decision:** {Fix / Document / Escalate}
+   - **Action Taken:** {What was done}
+   - **Status:** ✅ Addressed
+
+### NITPICK Comments ({count} found)
+1. **[File:Line]** {Issue description}
+   - **User Decision:** {Fix / Document / Escalate}
+   - **Action Taken:** {What was done}
+   - **Status:** ✅ Addressed
 ```
 
----
+**Checkpoint Before Continuing:**
+- [ ] All BLOCKING comments resolved (code fixed)
+- [ ] All CONCERN comments resolved (code fixed)
+- [ ] All SUGGESTION comments addressed (fixed OR documented with user approval)
+- [ ] All NITPICK comments addressed (fixed OR documented with user approval)
+- [ ] Comment Response Log complete
+- [ ] All code changes committed
 
-### Category 2: Code Quality and Readability
-
-- [ ] Code is easy to understand without excessive mental overhead?
-- [ ] Variable/function/class names are descriptive and consistent?
-- [ ] Functions are appropriately sized (not doing too much)?
-- [ ] Unnecessary complexity that could be simplified?
-- [ ] Code follows project conventions (see CLAUDE.md)?
-- [ ] No "clever" code that's hard to understand?
-
-**Example - Bad vs Good:**
-```python
-## ❌ BAD - Unclear, does too much
-def proc(d):
-    r = []
-    for x in d:
-        if x['s'] > 10:
-            r.append({'n': x['n'], 'v': x['s'] * 1.5})
-    return sorted(r, key=lambda y: y['v'], reverse=True)
-
-## ✅ GOOD - Clear, focused functions
-def filter_high_scorers(items, threshold=10):
-    """Return items with score above threshold."""
-    return [p for p in items if p['score'] > threshold]
-
-def apply_multiplier(items, multiplier=1.5):
-    """Apply multiplier to item scores."""
-    return [{'name': p['name'], 'value': p['score'] * multiplier}
-            for p in items]
-
-def sort_by_value(items, descending=True):
-    """Sort items by value."""
-    return sorted(items, key=lambda p: p['value'], reverse=descending)
-```
+**If ANY checkbox unchecked:** Return to comment addressing and complete.
 
 ---
 
-### Category 3: Comments and Documentation
+### Step 1 Completion
 
-- [ ] Comments explain "why" rather than restating "what"?
-- [ ] Public APIs adequately documented (docstrings)?
-- [ ] Complex logic has explanatory comments?
-- [ ] No stale or misleading comments?
-- [ ] Type hints present (per CLAUDE.md standards)?
-- [ ] **Code quality issues fixed immediately (NOT deferred)?**
-  - Check: No "TODO" comments for code quality issues
-  - Check: No "will fix later" notes
-  - Check: All type hints present and complete (not deferred)
-  - Check: All docstrings complete (not marked as "add later")
-  - **If ANY issues found: Fix NOW before proceeding**
-  - **Remember: "Later" often never comes - zero tech debt tolerance**
+**S7.P3 Step 1 (PR Review) is complete when:**
+- ✅ Fresh sub-agent code review complete (review_v1.md validated)
+- ✅ All BLOCKING/CONCERN comments fixed
+- ✅ All SUGGESTION/NITPICK comments addressed (with user approval)
+- ✅ Comment Response Log complete
+- ✅ All changes committed
 
-**Example:**
-```python
-## ❌ BAD - Restates code
-## Loop through items
-for item in items:
-    # Add to list
-    results.append(item)
+**Output artifacts:**
+- `.shamt/code_reviews/{sanitized_branch}/review_v1.md` (validated review)
+- `.shamt/code_reviews/{sanitized_branch}/review_validation_log.md` (validation history)
+- Comment Response Log (in feature README or separate file)
 
-## ✅ GOOD - Explains why
-## Filter to only rostered items for trade analysis
-## (Free agents handled separately in draft mode)
-for item in items:
-    if item.is_active:
-        results.append(item)
-```
-
----
-
-### Category 4: Refactoring Concerns
-
-- [ ] Does change introduce duplication that should be abstracted?
-- [ ] Opportunities to improve existing code touched by this change?
-- [ ] Change consistent with existing patterns in codebase?
-- [ ] Could similar logic be unified?
-
-**Example:**
-```python
-## ❌ DUPLICATION - Same logic in 3 places
-## In DraftHelper:
-if item.attribute_status == "Out":
-    penalty = -10
-elif item.attribute_status == "Questionable":
-    penalty = -5
-
-## In TradeSimulator:
-if item.attribute_status == "Out":
-    penalty = -10
-elif item.attribute_status == "Questionable":
-    penalty = -5
-
-## ✅ REFACTORED - Unified in ConfigManager
-## In ConfigManager:
-def get_injury_penalty(self, attribute_status):
-    return self.config['injury_penalties'].get(attribute_status, 0)
-
-## In DraftHelper & TradeSimulator:
-penalty = config.get_injury_penalty(item.attribute_status)
-```
-
----
-
-### Category 5: Testing
-
-- [ ] Sufficient unit/integration tests for new functionality?
-- [ ] Tests cover edge cases and failure modes?
-- [ ] Existing tests still valid, or need updates?
-- [ ] Tests are meaningful (not just coverage theater)?
-- [ ] Mock usage is appropriate (not excessive)?
-
-**Red flags:**
-- New feature with zero tests
-- Tests that always pass (testing mocks, not real code)
-- Tests with no assertions
-- Tests that don't actually test the feature
-
----
-
-### Category 6: Security
-
-- [ ] Input validation and sanitization present?
-- [ ] Authentication/authorization checks (if applicable)?
-- [ ] No sensitive data exposure (logs, errors, responses)?
-- [ ] No injection vulnerabilities (SQL, XSS, command injection)?
-- [ ] File path handling safe (no path traversal)?
-- [ ] API keys/secrets not hardcoded?
-
-**Common issues:**
-- User input used in file paths without validation
-- Sensitive data (passwords, API keys) logged
-- SQL queries built with string concatenation (SQL injection)
-
----
-
-### Category 7: Performance
-
-- [ ] No inefficient algorithms or data structures?
-- [ ] No unnecessary loops or redundant calculations?
-- [ ] Large data handled efficiently (not loading everything in memory)?
-- [ ] No N+1 query patterns?
-- [ ] Caching used appropriately?
-
-**Example - Performance Issue:**
-```python
-## ❌ BAD - O(n²) when O(n) possible
-for item in all_items:
-    for team_item in team_roster:  # Inner loop runs for EACH item
-        if item.name == team_item.name:
-            item.is_active = True
-
-## ✅ GOOD - O(n) with set lookup
-rostered_names = {p.name for p in team_roster}
-for item in all_items:
-    item.is_active = item.name in rostered_names  # O(1) lookup
-```
-
----
-
-### Category 8: Error Handling
-
-- [ ] Errors caught and handled appropriately?
-- [ ] Error messages helpful for debugging?
-- [ ] Logging sufficient but not excessive?
-- [ ] No bare `except:` clauses (too broad)?
-- [ ] Resources cleaned up in error cases (files, connections)?
-- [ ] Errors don't expose sensitive info?
-
-**Example:**
-```python
-## ❌ BAD - Swallows all errors, no info
-try:
-    load_data()
-except:
-    pass
-
-## ✅ GOOD - Specific exception, helpful error
-try:
-    load_data()
-except FileNotFoundError as e:
-    logger.error(f"Failed to load record data: {e}")
-    raise DataProcessingError("Record data file not found", context=ctx)
-```
-
----
-
-### Category 9: Architecture and Design
-
-- [ ] Change fits overall system architecture?
-- [ ] Dependencies flow in right direction (no circular)?
-- [ ] Appropriate separation of concerns?
-- [ ] Not creating architectural debt?
-- [ ] Follows existing patterns in codebase?
-
-**Red flags:**
-- Business logic in UI layer
-- Tight coupling between unrelated modules
-- Circular dependencies
-- God objects (classes doing too much)
-
----
-
-### Category 10: Compatibility and Integration
-
-- [ ] Backwards compatibility maintained (if required)?
-- [ ] No breaking changes to existing APIs?
-- [ ] Configuration changes handled gracefully?
-- [ ] Dependencies appropriate and justified?
-- [ ] Works with existing features (not just in isolation)?
-
-**Example:**
-```python
-## ❌ BREAKING CHANGE - Changed method signature
-## Before:
-def calculate_score(item):
-    ...
-
-## After (BREAKS all existing callers):
-def calculate_score(item, config):
-    ...
-
-## ✅ BACKWARDS COMPATIBLE - Added optional parameter
-def calculate_score(item, config=None):
-    if config is None:
-        config = ConfigManager()
-    ...
-```
-
----
-
-### Category 11: Scope and Focus
-
-- [ ] Change addresses stated requirements (not scope creep)?
-- [ ] No unnecessary "improvements" beyond spec?
-- [ ] Not over-engineered for current needs?
-- [ ] Each change has clear justification?
-
-**Example:**
-```markdown
-Spec requirement: "Add rank multiplier to scoring recommendations"
-
-✅ In scope:
-- Calculate rank multiplier
-- Apply to draft scores
-- Display in recommendations
-
-❌ Out of scope (unless explicitly discussed):
-- Redesign entire [domain algorithm]
-- Add caching layer for performance
-- Create configuration UI for rank weights
-- Implement machine learning model for rank prediction
-```
-
----
-
-### PR Review Execution
-
-**Follow the PR Validation Loop Protocol:**
-
-1. **READ:** `reference/validation_loop_qc_pr.md` (complete protocol)
-
-2. **Follow validation loop approach:**
-   - Check ALL 11 categories + 7 master dimensions EVERY round
-   - Fresh eyes through breaks + re-reading (NOT agent spawning)
-   - Track all findings in `VALIDATION_LOOP_LOG.md`
-   - Continue until primary clean round + sub-agent confirmation
-
-3. **After PR validation PASSED:**
-   - Verify VALIDATION_LOOP_LOG.md shows primary clean round + sub-agent confirmation
-   - Proceed to Step 2 (Lessons Learned)
-
-**The 11 categories above are checked every round** - you run the validation loop following the protocol in validation_loop_qc_pr.md.
-
-**See reference/validation_loop_qc_pr.md for complete execution instructions.**
+**Proceed to Step 1b (Documentation Impact Assessment)**
 
 ---
 
