@@ -584,11 +584,11 @@ For EACH feature folder, read README.md and verify:
 
 ### STEP 4: Final Commit (Epic Implementation)
 
-**Objective:** Commit all epic implementation work (code changes, tests, documentation) with clear, descriptive message. This is the main epic commit - epic folder move and .shamt/epics/EPIC_TRACKER.md update will be separate commits in Steps 6-7.
+**Objective:** Commit all epic implementation work (code changes, tests, documentation) with clear, descriptive message. This is the main epic commit - epic folder move and .shamt/epics/EPIC_TRACKER.md update will be separate commits in Steps 5-6.
 
 **Actions:**
 
-**5a. Review All Changes**
+**4a. Review All Changes**
 
 Check git status and diff:
 ```bash
@@ -604,7 +604,7 @@ Verify:
 - ✅ No sensitive data (API keys, passwords, etc.)
 - ✅ EPIC_METRICS.md exists and is updated through S9 (Stage Timing table filled in, Validation Loop Summary reflects actual loop data)
 
-**5b. Stage All Epic Changes**
+**4b. Stage All Epic Changes**
 
 Add all epic-related changes:
 ```bash
@@ -615,7 +615,7 @@ git add {file1} {file2} {file3}
 git add .shamt/epics/{epic_name}/
 ```
 
-**5c. Create Commit with Clear Message**
+**4c. Create Commit with Clear Message**
 
 **Commit Message Format:**
 ```text
@@ -652,7 +652,7 @@ EOF
 )"
 ```
 
-**5d. Verify Commit Successful**
+**4d. Verify Commit Successful**
 
 Check git log:
 ```bash
@@ -661,7 +661,7 @@ git log -1 --stat
 
 Verify commit message clear, all epic files included, file change counts reasonable.
 
-**Note:** Do NOT push yet - Steps 6-7 will create additional commits (epic folder move, .shamt/epics/EPIC_TRACKER.md update) that should all be part of the same PR.
+**Note:** Do NOT push yet - Steps 5-6 will create additional commits (epic folder move, .shamt/epics/EPIC_TRACKER.md update) that should all be part of the same PR.
 
 ---
 
@@ -671,7 +671,7 @@ Verify commit message clear, all epic files included, file change counts reasona
 
 **Actions:**
 
-**6a. Create done/ Folder (If Doesn't Exist)**
+**5a. Create done/ Folder (If Doesn't Exist)**
 
 Check if done/ folder exists:
 ```bash
@@ -683,7 +683,7 @@ If done/ doesn't exist:
 mkdir .shamt/epics/done
 ```
 
-**6b. Clean Up done/ Folder (Max 10 Epics)**
+**5b. Clean Up done/ Folder (Max 10 Epics)**
 
 **Purpose:** Maintain a maximum of 10 archived epics in done/ folder by deleting oldest epics when needed.
 
@@ -739,7 +739,7 @@ ls -d .shamt/epics/done/*/ | wc -l
 - This keeps the repository size manageable
 - Older epics are preserved in git history if needed
 
-**6c. Move Entire Epic Folder to done/**
+**5c. Move Entire Epic Folder to done/**
 
 Move the complete epic folder (with SHAMT number) using **`git mv`** (not shell `mv`):
 
@@ -754,7 +754,7 @@ Shell `mv` moves the files on disk but leaves the old paths as unstaged deletion
 
 Using shell `mv` + `git add done/{epic}/` only stages the new files — the old files remain as uncommitted deletions, polluting `git status` and requiring a separate cleanup commit.
 
-**6d. Verify Move Successful**
+**5d. Verify Move Successful**
 
 Check folder structure:
 ```bash
@@ -780,7 +780,7 @@ Verify:
 - ✅ All bug fix folders present (if any)
 - ✅ No files left behind in original location
 
-**6e. Verify done/ Folder Count**
+**5e. Verify done/ Folder Count**
 
 Check total epics in done/:
 ```bash
@@ -794,13 +794,13 @@ ls -d .shamt/epics/done/*/ | wc -l
 - Verify correct epics were removed
 - Ensure only most recent 10 epics remain
 
-**6f. Leave Original Epic Request in Requests Folder**
+**5f. Leave Original Epic Request in Requests Folder**
 
 **IMPORTANT:** Do NOT move the request file from `.shamt/epics/requests/`.
 
 **Why:** The request file lives in `.shamt/epics/requests/` (in its subfolder) and is not part of the epic folder. When the epic folder moves to `done/`, the request file stays in `.shamt/epics/requests/` permanently for reference.
 
-**6g. Commit the Epic Folder Move**
+**5g. Commit the Epic Folder Move**
 
 Commit the folder move (`git mv` already staged everything in Step 6c):
 ```bash
@@ -829,14 +829,14 @@ git log -1 --oneline
 
 **Actions:**
 
-**7a. Move Epic from Active to Completed Table**
+**6a. Move Epic from Active to Completed Table**
 
 Edit `.shamt/epics/EPIC_TRACKER.md`:
 
 1. Remove the epic's row from the "Active Epics" table
 2. Add the epic's row to the "Completed Epics" table with completion date and done/ location
 
-**7b. Add Epic Detail Section**
+**6b. Add Epic Detail Section**
 
 Add a detailed section below "## Epic Details" with complete epic information (see Epic Detail Template in .shamt/epics/EPIC_TRACKER.md or SHAMT-6/SHAMT-8 examples for format):
 
@@ -850,11 +850,11 @@ Required information:
 - Lessons learned (summary + link to epic_lessons_learned.md)
 - Related documentation (links)
 
-**7c. Increment Next Available Number**
+**6c. Increment Next Available Number**
 
 Update "Next Available Number" field to SHAMT-{N+1}
 
-**7d. Commit the .shamt/epics/EPIC_TRACKER.md Update**
+**6d. Commit the .shamt/epics/EPIC_TRACKER.md Update**
 
 Stage and commit:
 ```bash
@@ -876,7 +876,7 @@ Verify commit successful:
 git log -1 --oneline
 ```
 
-**7e. Append to .shamt/epics/PROCESS_METRICS.md**
+**6e. Append to .shamt/epics/PROCESS_METRICS.md**
 
 Read EPIC_METRICS.md from the archived epic folder to compute the summary row.
 
