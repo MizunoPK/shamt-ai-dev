@@ -16,9 +16,10 @@ STEP 1: Pre-Cleanup Verification (5 min)
     ├─ Verify no pending work
     └─ Read epic_lessons_learned.md
     ↓
-STEP 2: Run Unit Tests (5-10 min) ← MANDATORY GATE
-    ├─ Execute: {TEST_COMMAND}
-    ├─ Verify exit code 0 (all tests passing - 100%)
+STEP 2: Run Tests Per Testing Approach (5-10 min) ← MANDATORY GATE
+    ├─ Option A (no automated tests): verify, document, proceed
+    ├─ Option B (integration only): run integration scripts, verify pass
+    ├─ Option C/D (unit tests): Execute {TEST_COMMAND}, verify exit 0
     └─ If ANY tests fail → Fix and re-run
     ↓
 STEP 3: Documentation Verification (5-10 min)
@@ -90,7 +91,7 @@ STEP 10: Final Verification & Completion (5 min)
 | Step | Duration | Key Activities | Mandatory Gate? |
 |------|----------|----------------|-----------------|
 | 1 | 5 min | Pre-cleanup verification | No |
-| 2 | 5-10 min | Run unit tests (100% pass) | ✅ YES |
+| 2 | 5-10 min | Run tests per Testing Approach (A/B/C/D) | ✅ YES |
 | 3 | 5-10 min | Documentation verification | No |
 | 4 | 5-10 min | Final commit (epic implementation) | No |
 | 5 | 5 min | Move epic to done/ folder (git mv + commit) | No |
@@ -109,18 +110,18 @@ STEP 10: Final Verification & Completion (5 min)
 
 **Note:** This is an S10-local gate (labeled S10-Gate-A to avoid conflict with global Gate 1 defined in reference/mandatory_gates.md).
 
-### S10-Gate-A: Unit Tests - 100% Pass (Step 2)
+### S10-Gate-A: Run Tests Per Testing Approach (Step 2)
 **Location:** stages/s10/s10_epic_cleanup.md Step 2
-**What it checks:**
-- All unit tests passing
-- Exit code = 0
-- No test failures
-- No skipped tests
+**What it checks (by Testing Approach):**
+- **Option A (no automated tests):** Verify no test requirement exists, document rationale
+- **Option B (integration only):** Run integration scripts, verify exit code 0
+- **Option C (unit tests only):** Run unit tests, verify exit code 0, 100% pass
+- **Option D (unit + integration):** Run both, verify exit code 0 for each
 
-**Pass Criteria:** 100% test pass rate
-**If FAIL:** Fix failing tests, re-run until 100% pass
+**Pass Criteria:** Testing approach requirement fully satisfied (see Step 2 of main guide)
+**If FAIL:** Fix failing tests, re-run until all tests pass
 
-**Command:**
+**Command (Options C/D):**
 ```bash
 {TEST_COMMAND}
 ```

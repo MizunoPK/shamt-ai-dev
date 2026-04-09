@@ -78,6 +78,7 @@
 | Template | Filename | Use When |
 |----------|----------|----------|
 | [Guide Update Proposal](#guide-update-proposal) | `guide_update_proposal_template.md` | Proposing guide improvements discovered during epic work (SHAMT-{N} format) |
+| [PR Comment Resolution](#pr-comment-resolution) | `comment_resolution_template.md` | Creating pr_comment_resolution.md in epic folder (Step 8.5, user-triggered) |
 | [PR Review Issues](#pr-review-issues) | `pr_review_issues_template.md` | Tracking issues found during PR review (also used in S7) |
 
 ### Parallel Work
@@ -271,6 +272,13 @@
 - **Purpose:** Proposing guide improvements discovered during epic work, using SHAMT-{N} numbering format
 - **Size:** ~257 lines
 - **When to use:** S10.P1 when creating guide update proposals
+
+#### PR Comment Resolution
+- **File:** `comment_resolution_template.md`
+- **Created:** S10 Step 8.5 (user-triggered, after PR receives review comments)
+- **Purpose:** Structured tracking of PR review comments, resolutions, and commit references
+- **Size:** ~75 lines
+- **When to use:** User directs agent to process PR review comments after PR is created
 
 #### Debugging Guide Update Recommendations
 - **File:** `debugging_guide_update_recommendations_template.md`

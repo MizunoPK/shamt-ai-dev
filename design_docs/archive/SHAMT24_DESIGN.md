@@ -1,6 +1,6 @@
 # SHAMT-24: Single Low-Severity Fix Allowance for Clean Rounds
 
-**Status:** Draft (awaiting validation)
+**Status:** Implemented
 **Created:** 2026-04-01
 **Last Updated:** 2026-04-01
 **Type:** Large change (affects 25-30 files across validation loop system)
