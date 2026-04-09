@@ -54,6 +54,7 @@ LARGE=0
 declare -a size_exceptions=(
   "stages/s1/s1_epic_planning.md"
   "stages/s5/s5_v2_validation_loop.md"
+  "stages/s10/s10_epic_cleanup.md"  # grew to 1369 lines after SHAMT-34 additions (Steps 8.5 + 9)
 )
 
 for file in $(find stages sync -name "*.md" 2>/dev/null); do
@@ -135,11 +136,9 @@ required_sections=("Prerequisites" "Exit Criteria" "Overview")
 
 # Known exceptions (documented in audit/reference/known_exceptions.md)
 declare -a known_exceptions=(
-  # Category C: Optional/auxiliary files (2 active files)
-  # (s4_feature_testing_card.md and s4_test_strategy_development.md archived in SHAMT-7)
-  "stages/s3/s3_parallel_work_sync.md"
+  # Category C: Optional/auxiliary files
   "stages/s4/s4_feature_testing_strategy.md"  # deprecation redirect stub, not a workflow guide
-  # Category E: D12 companion/reference files in stages/ (2 active files — added child-sync-20260326)
+  # Category E: D12 companion/reference files in stages/
   "stages/s5/s5_v2_example.md"           # worked example companion, not a workflow guide
   "stages/s5/s5_v2_troubleshooting.md"   # troubleshooting reference companion, not a workflow guide
 )
