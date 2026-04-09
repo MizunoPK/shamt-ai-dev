@@ -184,15 +184,28 @@ Note:
 - Feature-specific vs generalizable lessons?
 - Any repeated mistakes?
 
-1.3. **Tally total lessons:**
+1.3. **Read PR comment resolution file (if it exists):**
+```bash
+## Check for PR comment resolution file
+ls {epic_folder}/pr_comment_resolution.md 2>/dev/null && cat {epic_folder}/pr_comment_resolution.md
+```
+
+Note:
+- Were any comments fixed or marked Won't Fix?
+- Do any comments reveal a gap that S7/S9 QC should have caught?
+- Are there patterns across multiple comments (e.g., 3 of 5 comments about error handling)?
+
+1.4. **Tally total inputs:**
 - Epic lessons: {N}
 - Feature lessons: {N} across {N} features
-- Total: {N} lessons to analyze
+- PR comments with guide improvement potential: {N} (0 if no resolution file)
+- Total: {N} lessons/comments to analyze
 
 **Checkpoint:**
 - [ ] All epic_lessons_learned.md read
 - [ ] All feature lessons_learned.md read
-- [ ] Total lesson count documented
+- [ ] pr_comment_resolution.md read (or confirmed absent)
+- [ ] Total input count documented
 
 ---
 
@@ -255,7 +268,16 @@ Note:
 - Adds optional convenience
 - Reduces minor friction
 
-2.4. **Filter out non-actionable lessons:**
+2.4. **Analyze PR comments for guide improvement potential (if resolution file exists):**
+
+For each PR comment in `pr_comment_resolution.md`, ask:
+- Did this reviewer comment reveal a gap that S7/S9 QC should have caught?
+- Could a guide change prevent this class of comment in the future?
+- Is there a pattern across multiple comments suggesting a systemic gap?
+
+If yes to any of the above → treat as a guide gap, assign priority, create a proposal.
+
+2.5. **Filter out non-actionable lessons:**
 
 **Skip if lesson is:**
 - Domain-specific (only applies to this epic's subject matter)
@@ -265,6 +287,7 @@ Note:
 
 **Checkpoint:**
 - [ ] Each lesson analyzed for guide impact
+- [ ] PR comments analyzed for guide improvement potential (if file exists)
 - [ ] Guide gaps identified and documented
 - [ ] Priorities assigned (P0/P1/P2/P3)
 - [ ] Non-actionable lessons filtered out
@@ -493,6 +516,26 @@ and why these proposals were generated}
 | ID | Title | Priority | Reason Rejected |
 |----|-------|----------|-----------------|
 | P1-2 | {title} | P1 | {user's reason} |
+
+---
+
+## PR Review Comment Analysis
+
+*(Include this section only if `pr_comment_resolution.md` exists in the epic folder)*
+
+**PR:** #{PR_NUMBER}
+**Total Comments:** {N}
+**Comments with Guide Improvement Potential:** {N}
+
+### Comment-Derived Insights
+
+| # | Comment Summary | Category | Why QC Missed It | Proposed Guide Change |
+|---|----------------|----------|-------------------|----------------------|
+| 1 | {summary} | {category} | {analysis} | {specific proposal or "N/A"} |
+
+### Patterns Observed
+
+{Any patterns across multiple comments — e.g., "3 of 5 comments were about error handling, suggesting S7 Dimension X needs strengthening"}
 
 ---
 
@@ -743,7 +786,7 @@ If zero proposals were accepted:
 **Guide Last Read:** NOT YET (will read when starting Step 7)
 
 **Progress:** S10.P1 complete (proposal doc created)
-**Next Action:** Proceed to S10 Step 7 (Final Commit & Pull Request)
+**Next Action:** Proceed to S10 Step 10 (Final Verification & Completion)
 **Blockers:** None
 
 **S10.P1 Summary:**
@@ -768,7 +811,9 @@ Use prompt from prompts/guide_update_prompts.md "After Creating Proposal Documen
 
 **S10.P1 is complete when:**
 - [ ] All lessons_learned.md files analyzed
+- [ ] pr_comment_resolution.md analyzed (or confirmed absent)
 - [ ] GUIDE_UPDATE_PROPOSAL.md created with all proposals
+- [ ] If pr_comment_resolution.md exists: PR Review Comment Analysis section included in proposal doc
 - [ ] User reviewed all proposals individually
 - [ ] Proposal doc created in `.shamt/unimplemented_design_proposals/` (if any proposals accepted)
 - [ ] Proposal doc committed (or skipped — gitignored / no accepted proposals)
@@ -776,7 +821,7 @@ Use prompt from prompts/guide_update_prompts.md "After Creating Proposal Documen
 - [ ] Rules file compared against template; template updated if generic additions found
 - [ ] User informed about proposal doc export (or "no proposals accepted" noted)
 - [ ] EPIC_README.md shows S10.P1 complete
-- [ ] Ready to proceed to S10 Step 7
+- [ ] Ready to proceed to S10 Step 10
 
 ---
 
@@ -889,11 +934,7 @@ Adding historical context shows future agents WHY this dimension exists and what
 **This is a sub-workflow of S10 (Epic Cleanup).**
 
 **After completing S10.P1 (Guide Updates):** Return to `stages/s10/s10_epic_cleanup.md` to continue with:
-- Step 5: Final Commit (Epic Implementation)
-- Step 6: Move Epic to done/ Folder
-- Step 7: Update .shamt/epics/EPIC_TRACKER.md
-- Step 8: S10.P2 — Epic Overview Document (optional)
-- Step 9: Push Branch and Create Pull Request
+- Step 10: Final Verification & Completion
 
 **📖 RETURN TO:** `stages/s10/s10_epic_cleanup.md`
 

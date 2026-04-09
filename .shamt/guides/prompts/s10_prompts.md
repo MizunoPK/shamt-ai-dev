@@ -84,11 +84,37 @@ Running unit tests...
 
 ---
 
-## S10.P1: Guide Update from Lessons Learned (MANDATORY)
+## STEP 8.5: PR Comment Resolution (User-Triggered)
 
-**Trigger:** After S10 STEP 3 complete (documentation verified), before final commit
+**Trigger:** User directs agent to process PR comments (e.g., "get the PR comments and resolve them")
 
-**Prerequisite:** All lessons_learned.md files complete
+**Prerequisite:** PR created in Step 8; reviewers have left feedback
+
+**Agent MUST respond:**
+
+```markdown
+I'm processing PR comments for Step 8.5 (PR Comment Resolution).
+
+**Actions:**
+1. Fetching all review comments via gh API
+2. Creating `.shamt/epics/{epic_name}/pr_comment_resolution.md` from template
+3. Working through each comment (fix code / discuss / mark Won't Fix)
+4. Pushing any new commits after resolving
+
+**Template:** `.shamt/guides/templates/comment_resolution_template.md`
+
+Fetching PR comments now...
+```
+
+**Full workflow:** See `stages/s10/s10_epic_cleanup.md` Step 8.5 for complete instructions.
+
+---
+
+## S10.P1: Guide Update from Lessons Learned + PR Comment Analysis (MANDATORY)
+
+**Trigger:** After S10 STEP 8.5 complete (or skipped — no PR comments); the last step before final verification
+
+**Prerequisite:** All lessons_learned.md files complete; PR comment resolution complete (or absent)
 
 **Agent MUST transition to S10.P1:**
 
@@ -99,6 +125,7 @@ I'm reading `stages/s10/s10_p1_guide_update_workflow.md` to create a guide updat
 - **Analyze ALL lessons_learned.md files** from this epic:
   - epic_lessons_learned.md (epic-level lessons)
   - feature_XX_{name}/lessons_learned.md (all feature-level lessons)
+  - pr_comment_resolution.md (if it exists — PR reviewer feedback)
 - **Identify guide gaps:** For each lesson, determine which guide(s) could have prevented the issue
 - **Create prioritized proposals** in GUIDE_UPDATE_PROPOSAL.md:
   - P0 (Critical): Prevents catastrophic bugs, mandatory gate gaps
@@ -121,7 +148,8 @@ I'm reading `stages/s10/s10_p1_guide_update_workflow.md` to create a guide updat
 - User has full control over guide evolution
 
 **Prerequisites I'm verifying:**
-✅ S10 STEP 3 complete (documentation verified)
+✅ S10 STEP 8 complete (PR created and merged)
+✅ S10 STEP 8.5 complete or skipped (PR comment resolution)
 ✅ All lessons_learned.md files complete
 ✅ Ready to analyze lessons and create proposal
 
