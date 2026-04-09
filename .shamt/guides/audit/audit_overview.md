@@ -118,7 +118,7 @@ This audit ensures **consistency, accuracy, and completeness** across all .shamt
 
 **Why:** Workflow changes affect prerequisites, exit criteria, and cross-references throughout guides.
 
-**4. After S10.P1 Guide Updates**
+**4. After S11.P1 Guide Updates**
 - After completing lessons learned integration
 - When guide changes were made based on epic retrospectives
 

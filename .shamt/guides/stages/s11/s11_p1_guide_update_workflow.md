@@ -1,13 +1,13 @@
-# S10.P1: Guide Update from Lessons Learned
+# S11.P1: Guide Update from Lessons Learned
 
-**File:** `s10_p1_guide_update_workflow.md`
+**File:** `s11_p1_guide_update_workflow.md`
 
 ---
 
 
 ## Table of Contents
 
-1. [S10.P1: Guide Update from Lessons Learned](#s10p1-guide-update-from-lessons-learned)
+1. [S11.P1: Guide Update from Lessons Learned](#s10p1-guide-update-from-lessons-learned)
 2. [Overview](#overview)
 3. [Critical Rules](#critical-rules)
 4. [Prerequisites Checklist](#prerequisites-checklist)
@@ -49,12 +49,12 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 ## Overview
 
 **What is this phase?**
-S10.P1 is the mandatory guide improvement workflow where you analyze lessons learned from the epic and propose specific guide updates to help future agents, with user approval for each change individually.
+S11.P1 is the mandatory guide improvement workflow where you analyze lessons learned from the epic and propose specific guide updates to help future agents, with user approval for each change individually.
 
 **When do you use this guide?**
-- S9 user testing passed (S9 Step 6 - zero bugs found)
+- S10 complete (PR merged, main/master verified up to date)
 - All lessons_learned.md files are complete
-- Before creating final epic commit
+- Beginning S11 (Shamt Finalization)
 
 **Key Outputs:**
 - ✅ GUIDE_UPDATE_PROPOSAL.md created with prioritized proposals (P0-P3)
@@ -67,11 +67,11 @@ S10.P1 is the mandatory guide improvement workflow where you analyze lessons lea
 20-45 minutes (depends on number of lessons and proposals)
 
 **Exit Condition:**
-S10.P1 is complete when all proposals have been reviewed by user, proposal doc created and committed (if any proposals accepted), and tracking updated
+S11.P1 is complete when all proposals have been reviewed by user, proposal doc created and committed (if any proposals accepted), and tracking updated
 
 **Model Selection for Token Optimization (SHAMT-27):**
 
-S10.P1 guide updates MUST use delegation for token efficiency (15-25% savings):
+S11.P1 guide updates MUST use delegation for token efficiency (15-25% savings):
 
 ```
 Primary Agent (Opus):
@@ -138,16 +138,16 @@ Primary Agent (Opus):
 
 ## Prerequisites Checklist
 
-**Verify BEFORE starting S10.P1:**
+**Verify BEFORE starting S11.P1:**
 
-- [ ] S9 user testing passed (S9 Step 6) — user reported ZERO bugs
-- [ ] S9 complete (EPIC_README.md shows S9 ✅ COMPLETE)
+- [ ] S10 complete — PR merged, main/master verified up to date
 - [ ] epic_lessons_learned.md exists and is complete
 - [ ] All feature lessons_learned.md files exist and are complete
+- [ ] pr_comment_resolution.md checked (present or absent noted)
 - [ ] Ready to analyze lessons and create proposals
 
 **If any prerequisite fails:**
-- ❌ STOP - Do NOT proceed with S10.P1
+- ❌ STOP - Do NOT proceed with S11.P1
 - Return to previous step to complete prerequisites
 
 ---
@@ -768,7 +768,7 @@ If zero proposals were accepted:
 
 ---
 
-### Step 9: Mark S10.P1 Complete
+### Step 9: Mark S11.P1 Complete
 
 **Purpose:** Update EPIC_README.md and announce completion
 
@@ -782,14 +782,14 @@ If zero proposals were accepted:
 **Last Updated:** {YYYY-MM-DD HH:MM}
 **Current Phase:** EPIC_FINALIZATION
 **Current Step:** Ready for final commit and PR
-**Current Guide:** stages/s10/s10_epic_cleanup.md
+**Current Guide:** stages/s11/s11_shamt_finalization.md
 **Guide Last Read:** NOT YET (will read when starting Step 7)
 
-**Progress:** S10.P1 complete (proposal doc created)
-**Next Action:** Proceed to S10 Step 10 (Final Verification & Completion)
+**Progress:** S11.P1 complete (proposal doc created)
+**Next Action:** Proceed to S11 Step 2 (Move Epic to done/ Folder)
 **Blockers:** None
 
-**S10.P1 Summary:**
+**S11.P1 Summary:**
 - Proposals: {N} ({approved} approved, {modified} modified, {rejected} rejected)
 - Proposals deferred: {N} (in {project_name}-SHAMT-{N}-{epic_name}-SHAMT-UPDATE-PROPOSAL.md)
 - Commits: {N} (proposal doc + tracking)
@@ -801,15 +801,15 @@ Use prompt from prompts/guide_update_prompts.md "After Creating Proposal Documen
 
 **Checkpoint:**
 - [ ] EPIC_README.md updated
-- [ ] Agent Status shows S10.P1 complete
-- [ ] Next action is S10 Step 7
+- [ ] Agent Status shows S11.P1 complete
+- [ ] Next action is S11 Step 2 (Move Epic to done/ Folder)
 - [ ] Completion announced to user
 
 ---
 
 ## Exit Criteria
 
-**S10.P1 is complete when:**
+**S11.P1 is complete when:**
 - [ ] All lessons_learned.md files analyzed
 - [ ] pr_comment_resolution.md analyzed (or confirmed absent)
 - [ ] GUIDE_UPDATE_PROPOSAL.md created with all proposals
@@ -820,8 +820,8 @@ Use prompt from prompts/guide_update_prompts.md "After Creating Proposal Documen
 - [ ] reference/guide_update_tracking.md updated
 - [ ] Rules file compared against template; template updated if generic additions found
 - [ ] User informed about proposal doc export (or "no proposals accepted" noted)
-- [ ] EPIC_README.md shows S10.P1 complete
-- [ ] Ready to proceed to S10 Step 10
+- [ ] EPIC_README.md shows S11.P1 complete
+- [ ] Ready to proceed to S11 Step 2 (Move Epic to done/ Folder)
 
 ---
 
@@ -931,15 +931,15 @@ Adding historical context shows future agents WHY this dimension exists and what
 
 ## Next Phase
 
-**This is a sub-workflow of S10 (Epic Cleanup).**
+**This is a sub-workflow of S11 (Shamt Finalization).**
 
-**After completing S10.P1 (Guide Updates):** Return to `stages/s10/s10_epic_cleanup.md` to continue with:
-- Step 10: Final Verification & Completion
+**After completing S11.P1 (Guide Updates):** Return to `stages/s11/s11_shamt_finalization.md` to continue with:
+- Step 2: Move Epic to done/ Folder
 
-**📖 RETURN TO:** `stages/s10/s10_epic_cleanup.md`
+**📖 RETURN TO:** `stages/s11/s11_shamt_finalization.md`
 
 ---
 
-*End of s10_p1_guide_update_workflow.md*
+*End of s11_p1_guide_update_workflow.md*
 
 **Last Updated:** 2026-01-11

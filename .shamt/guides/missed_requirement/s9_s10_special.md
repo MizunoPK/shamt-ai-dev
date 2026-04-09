@@ -1,8 +1,8 @@
-# SPECIAL CASE: Discovery During Epic Testing (S9/S10)
+# SPECIAL CASE: Discovery During Epic Testing (S9/S10/S11)
 
-**Purpose:** Handle missed requirements discovered during epic testing with special restart protocol
+**Purpose:** Handle missed requirements discovered during epic testing or post-merge stages with special restart protocol
 
-**When to Use:** Missed requirement discovered during S9 (Epic Testing) or S10 (User Testing)
+**When to Use:** Missed requirement discovered during S9 (Epic Testing), S10 (Final Changes & Merge), or S11 (Shamt Finalization)
 
 **Previous Phase:** PHASE 3 & 4 (Realignment) - See `missed_requirement/realignment.md`
 
@@ -18,7 +18,7 @@
 - Implement features in sequence
 - Continue to next stage when turn comes
 
-**Special case (discovered during S9/S10):**
+**Special case (discovered during S9/S10/S11):**
 - Plan new/updated feature (Stages 2/3) ← SAME
 - Resume any paused work
 - **Complete ALL remaining features first** ← DIFFERENT
@@ -203,10 +203,10 @@ Actions needed:
    - Documentation review
    - Epic readiness check
 
-4. **S10:** Epic Cleanup
-   - User testing ← **User tests with new feature**
-   - Commit and merge
-   - Archive
+4. **S10:** Final Changes & Merge
+   - Commit, create PR, merge
+5. **S11:** Shamt Finalization
+   - Guide updates, archive
 
 ---
 
@@ -246,12 +246,12 @@ Actions needed:
    - S9.P2 (Validation Loop - primary clean round + sub-agent confirmation)
    - S9.P3 (User Testing)
    - S9.P4 (Final Review)
-   - S10 (Cleanup & User Testing)
+   - S10 (Final Changes & Merge) → S11 (Shamt Finalization)
 ```
 
 ---
 
-### Example 2: Discovery During S10 (User Testing)
+### Example 2: Discovery During S10 (Final Changes & Merge)
 
 ```markdown
 **Context:**
@@ -281,7 +281,7 @@ Actions needed:
    - S9.P2 (Epic QC Validation Loop - primary clean round + sub-agent confirmation)
    - S9.P3 (User Testing)
    - S9.P4 (Epic Final Review)
-   - S10 (User Testing) - user tests again with PDF export
+   - S10 (Final Changes & Merge) - user tests again with PDF export
 
 **Note:** Even though discovered in S10, loop back to S9.P1 (not S10)
 ```
@@ -363,13 +363,13 @@ Actions needed:
 - [x] S9.P1 complete (Epic Smoke Testing with new feature)
 - [x] S9.P2 complete (Epic QC Validation Loop - primary clean round + sub-agent confirmation)
 - [x] S9.P3 complete (Epic Final Review)
-- [x] Ready for S10 (User Testing with new feature)
+- [x] Ready for S10 (Final Changes & Merge) → S11 (Shamt Finalization)
 
 ---
 
 ## Summary
 
-**Special case for S9/S10 discovery:**
+**Special case for S9/S10/S11 discovery:**
 
 1. Follow normal PHASE 1-4 (discovery, planning, realignment)
 2. **Different:** Complete ALL remaining features first

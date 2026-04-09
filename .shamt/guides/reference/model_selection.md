@@ -877,7 +877,7 @@ Each workflow guide includes inline Task tool examples with copy-paste-ready XML
 - `stages/s8/s8_p1_cross_feature_alignment.md` — Alignment validation
 - `stages/s9/s9_p2_epic_qc_rounds.md` — Epic QC validation (13 dimensions)
 - `stages/s9/s9_p4_epic_final_review.md` — Epic final review (5 categories)
-- `stages/s10/s10_p1_guide_update_workflow.md` — Proposal doc verification
+- `stages/s11/s11_p1_guide_update_workflow.md` — Proposal doc verification
 
 **Master Protocol:**
 - `reference/validation_loop_master_protocol.md` — Sub-Agent Confirmation Protocol with Task tool XML

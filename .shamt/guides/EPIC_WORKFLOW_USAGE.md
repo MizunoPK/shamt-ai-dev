@@ -44,7 +44,7 @@ This file provides a complete overview of the Shamt S1-S10 epic-driven developme
 
 ```text
 S1: Epic Planning → S2: Feature Deep Dives → S3: Epic-Level Docs, Tests, and Approval →
-S5-S8: Feature Loop (S4 deprecated — Test Scope Decision in S5 Step 0) → S9: Epic Final QC → S10: Epic Cleanup
+S5-S8: Feature Loop (S4 deprecated — Test Scope Decision in S5 Step 0) → S9: Epic Final QC → S10: Final Changes & Merge → S11: Shamt Finalization
 
 Per-feature loop: S5 (Plan) → S6 (Execute) → S7 (Test) → S8 (Align) → repeat or S9
 ```
@@ -179,18 +179,25 @@ Key activities:
 
 ---
 
-### S10: Epic Cleanup
+### S10: Final Changes & Merge
 
 **Guide:** `stages/s10/s10_epic_cleanup.md`
 
 Key activities:
-- Run unit tests (100% pass required)
-- Verify all documentation
-- S10.P1 Guide Updates (MANDATORY — analyze lessons, propose changes, get user approval, create proposal doc in `.shamt/unimplemented_design_proposals/`, commit it)
-- Commit epic work
-- Move epic to `done/` folder
-- Update `EPIC_TRACKER.md`
-- Create PR for user review
+- Verify all documentation (EPIC_README, lessons learned, feature READMEs)
+- Commit epic implementation work
+- Optional: Create epic overview document (`SHAMT-{N}-OVERVIEW.md`) for PR reviewers
+- Push branch, create PR, wait for merge signal, verify merge
+
+### S11: Shamt Finalization
+
+**Guide:** `stages/s11/s11_shamt_finalization.md`
+
+Key activities:
+- S11.P1 Guide Updates (MANDATORY — analyze lessons + PR comments, propose changes, get user approval, create proposal doc in `.shamt/unimplemented_design_proposals/`, commit it)
+- Move epic to `done/` folder (max 10 epics)
+- Update `EPIC_TRACKER.md` and `PROCESS_METRICS.md`
+- Final verification
 
 ---
 

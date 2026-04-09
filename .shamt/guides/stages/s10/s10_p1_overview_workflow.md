@@ -1,13 +1,13 @@
-# S10.P2: Epic Overview Document
+# S10.P1: Epic Overview Document
 
-**File:** `s10_p2_overview_workflow.md`
+**File:** `s10_p1_overview_workflow.md`
 
 ---
 
 
 ## Table of Contents
 
-1. [S10.P2: Epic Overview Document](#s10p2-epic-overview-document)
+1. [S10.P1: Epic Overview Document](#s10p2-epic-overview-document)
 2. [Overview](#overview)
 3. [Critical Rules](#critical-rules)
 4. [Prerequisites Checklist](#prerequisites-checklist)
@@ -501,6 +501,6 @@ Use this skeleton as a template when writing the document. Replace each `[...]` 
 
 ---
 
-*End of s10_p2_overview_workflow.md*
+*End of s10_p1_overview_workflow.md*
 
 **Last Updated:** 2026-03-28

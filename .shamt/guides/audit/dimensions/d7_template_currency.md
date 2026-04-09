@@ -756,7 +756,7 @@ File: templates/feature_readme_template.md
 - `../stages/stage_4_verification.md` - Verify templates after fixes
 
 **Workflow Integration:**
-- `../stages/s10/s10_p1_guide_update_workflow.md` - Template review in S10.P1
+- `../stages/s11/s11_p1_guide_update_workflow.md` - Template review in S11.P1
 
 ---
 

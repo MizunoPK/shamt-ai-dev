@@ -23,7 +23,8 @@ This file is the index for all phase transition prompts. Prompts are organized b
 | S7 | `prompts/s5_s8_prompts.md` | Smoke Testing, QC Rounds, Final Review |
 | S8 | `prompts/s5_s8_prompts.md` | Cross-Feature Alignment, Testing Plan Update |
 | S9 | `prompts/s9_prompts.md` | Epic Final QC prompts |
-| S10 | `prompts/s10_prompts.md` | Starting Epic Cleanup, Guide Updates |
+| S10 | `prompts/s10_prompts.md` | Starting Final Changes & Merge, PR Comment Resolution |
+| S11 | `prompts/s11_prompts.md` | Starting Shamt Finalization, Guide Updates |
 | Guide Updates | `prompts/guide_update_prompts.md` | Presenting proposals, after creating proposal doc |
 | Problem Situations | `prompts/problem_situations_prompts.md` | Debugging, missed requirements, resuming after compaction |
 | Special Workflows | `prompts/special_workflows_prompts.md` | Parallel work, conflict handling |
@@ -47,7 +48,7 @@ This file is the index for all phase transition prompts. Prompts are organized b
 ### S5 Complete — Implementation Plan Approval
 → See `prompts/s5_s8_prompts.md` → "S5 Complete - Implementation Plan Approval"
 
-### Starting S10.P1 Guide Updates
+### Starting S11.P1 Guide Updates
 → See `prompts/guide_update_prompts.md` → "Starting Guide Update Workflow"
 
 ---

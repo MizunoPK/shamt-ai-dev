@@ -314,9 +314,9 @@ Only needed for specific scenarios:
 
 ## Common Scenarios
 
-### Scenario 1: After S10.P1 Guide Updates
+### Scenario 1: After S11.P1 Guide Updates
 
-**Trigger:** Just completed lessons learned integration (S10.P1)
+**Trigger:** Just completed lessons learned integration (S11.P1)
 
 **High-Risk Dimensions:**
 1. D1: Cross-Reference Accuracy (guide changes may break links)

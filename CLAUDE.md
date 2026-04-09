@@ -24,7 +24,7 @@ shamt-ai-dev/
 │   └── NEXT_NUMBER.txt                 # Next SHAMT-N number
 └── .shamt/
     ├── guides/                         (the canonical guide system)
-    │   ├── stages/                     # s1–s10 workflow guides
+    │   ├── stages/                     # s1–s11 workflow guides
     │   ├── reference/
     │   ├── audit/
     │   ├── code_review/                # code review workflow guides
@@ -91,12 +91,12 @@ For improving the guides directly:
 
 **Guide:** `.shamt/guides/master_dev_workflow/`
 
-Master work does **not** follow the S1-S10 epic workflow and does **not** use EPIC_TRACKER.md. The operating model:
+Master work does **not** follow the S1-S11 epic workflow and does **not** use EPIC_TRACKER.md. The operating model:
 
 - **Small changes:** Lightweight workflow — read, fix, audit, commit directly to a branch, open PR
 - **Large changes:** Create a design doc in `design_docs/active/` (version-controlled), validate it, implement, then archive to `design_docs/archive/`
 - **SHAMT-N numbers:** Sequence markers for change sets, not epic identifiers. Reserved via `design_docs/NEXT_NUMBER.txt`
-- **No stage gates:** Master work proceeds at judgment, not through S1-S10 phase transitions
+- **No stage gates:** Master work proceeds at judgment, not through S1-S11 phase transitions
 
 See "Design Doc Lifecycle" below for the full design doc process.
 
@@ -190,8 +190,8 @@ Child projects can export design proposals to master via the export script. Prop
 The code review framework is used in three contexts:
 
 1. **Formal code reviews** (external PRs, teammate branches)
-2. **S7.P3** (Feature PR Review - part of S1-S10 epic workflow)
-3. **S9.P4** (Epic PR Review - part of S1-S10 epic workflow)
+2. **S7.P3** (Feature PR Review - part of S1-S11 epic workflow)
+3. **S9.P4** (Epic PR Review - part of S1-S11 epic workflow)
 
 **Trigger phrases:** "review branch", "do a code review of", "review the changes on", "re-review"
 
@@ -221,7 +221,7 @@ When a new AI service is discovered (reported by a child project or user):
 
 ## Shamt Lite
 
-**What it is:** A standalone lightweight version of Shamt (10 files total) that provides validation loops, discovery protocol, and code review workflows without the full S1-S10 epic framework.
+**What it is:** A standalone lightweight version of Shamt (10 files total) that provides validation loops, discovery protocol, and code review workflows without the full S1-S11 epic framework.
 
 **Target users:** Developers who want quality patterns and systematic validation but don't need epic tracking or the full workflow.
 
@@ -248,11 +248,11 @@ When a new AI service is discovered (reported by a child project or user):
 
 ## Architecture & Coding Standards Maintenance
 
-Child projects maintain ARCHITECTURE.md and CODING_STANDARDS.md through the S1-S10 workflow:
+Child projects maintain ARCHITECTURE.md and CODING_STANDARDS.md through the S1-S11 workflow:
 
 - **S1.P3 Discovery:** Review existing docs, check for undocumented additions (Step 3b)
 - **S7.P3 Final Review:** Complete Documentation Impact Assessment (Step 1b)
-- **S10 Cleanup:** Final Architecture/Standards Review (Step 3e)
+- **S10 Final Changes & Merge:** Final Architecture/Standards Review (Step 1e)
 
 **Audit:** D23 (Architecture/Standards Currency) validates document freshness and accuracy during audits. Threshold: 60 days.
 
@@ -330,10 +330,10 @@ Child projects maintain ARCHITECTURE.md and CODING_STANDARDS.md through the S1-S
 
 **Usage:**
 
-**MANDATORY** for S1-S10 epic workflow:
+**MANDATORY** for S1-S11 epic workflow:
 - S6 implementation execution MUST use architect-builder pattern (no exceptions)
 - No traditional implementation option (architect executing own plan)
-- Rationale: S1-S10 workflow is exclusively for non-trivial changes
+- Rationale: S1-S11 workflow is exclusively for non-trivial changes
 
 **OPTIONAL** for master dev workflow and ad-hoc work:
 - Use when: >10 file operations, >100K tokens with traditional approach, complex dependencies, unfamiliar codebase

@@ -380,11 +380,11 @@ follows the emoji (space → hyphen after stripping the emoji).
 - **Design Rationale:** Redirect stubs exist only to point agents to the replacement (stages/s5/s5_v2_validation_loop.md). Requiring MRP/FS would add confusing structure to a one-purpose document.
 - **Audit Action:** SKIP D22 — deprecation redirect stub, not a workflow guide
 
-**G5. stages/s10/s10_p2_overview_workflow.md** *(Added SHAMT-20 audit)*
+**G5. stages/s10/s10_p1_overview_workflow.md** *(Added SHAMT-20 audit; renamed from s10_p2_overview_workflow.md in SHAMT-35)*
 - **Type:** Optional workflow guide (user opt-in phase)
 - **MRP:** Present as `🔔 OPTIONAL READING PROTOCOL` (not MANDATORY) — includes Read tool instruction and resumption clause; "OPTIONAL" signals the opt-in nature of the phase
 - **FORBIDDEN SHORTCUTS:** Present with guide-specific items (Step 1 and Step 3)
-- **Design Rationale:** S10.P2 is intentionally opt-in — users must be asked before the agent proceeds. Using MANDATORY READING PROTOCOL would be misleading for a guide the agent should only read if the user opts in. The OPTIONAL READING PROTOCOL preserves the same content requirements (Read tool, resumption) while signaling the phase is conditional.
+- **Design Rationale:** S10.P1 (overview doc) is intentionally opt-in — users must be asked before the agent proceeds. Using MANDATORY READING PROTOCOL would be misleading for a guide the agent should only read if the user opts in. The OPTIONAL READING PROTOCOL preserves the same content requirements (Read tool, resumption) while signaling the phase is conditional.
 - **Audit Action:** PASS D22 — ORP with resumption clause + guide-specific FORBIDDEN SHORTCUTS provides adequate bypass resistance for an optional guide
 
 ---
@@ -511,7 +511,7 @@ wc -l real_violations.txt  # Should be low count
 - Category F (D11 File Size — pre-existing, deferred splitting): **5 active files**
   - stages/s1/s1_epic_planning.md (1394 lines, 144 over 2000 baseline)
   - stages/s5/s5_v2_validation_loop.md (1406 lines, 156 over 2000 baseline)
-  - stages/s10/s10_epic_cleanup.md (1316 lines, 66 over 2000 baseline — grew due to SHAMT-25 Step 3e)
+  - stages/s10/s10_epic_cleanup.md (rewritten SHAMT-35 — now ~350 lines, no longer an exception; remove from this list on next audit)
   - stages/s6/s6_execution.md (1267 lines, 17 over 1250 baseline — restructured SHAMT-30)
   - reference/validation_loop_master_protocol.md (1582 lines, 332 over 2000 baseline)
 - Category G (D22 Lightweight MRP — Router and Optional Guides): **5 active files**
@@ -519,7 +519,7 @@ wc -l real_violations.txt  # Should be low count
   - stages/s9/s9_epic_final_qc.md (router guide — lightweight MRP only, no FS)
   - stages/s3/s3_parallel_work_sync.md (optional conditional — lightweight MRP only, no FS)
   - stages/s4/s4_feature_testing_strategy.md (redirect stub — no MRP or FS)
-  - stages/s10/s10_p2_overview_workflow.md (optional workflow — ORP instead of MRP, FORBIDDEN SHORTCUTS present)
+  - stages/s10/s10_p1_overview_workflow.md (optional workflow — ORP instead of MRP, FORBIDDEN SHORTCUTS present)
 - Category H (D12 MRP Exceptions — parallel_work/ Guides): **4 active files**
   - parallel_work/s2_secondary_agent_guide.md (task-spawned guide — no MRP needed)
   - parallel_work/s5_secondary_agent_guide.md (task-spawned guide — no MRP needed)

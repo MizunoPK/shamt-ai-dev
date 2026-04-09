@@ -421,7 +421,7 @@ Pattern 2.2  # Notation punctuation
 Pattern 2.5  # Mixed notation
 ```
 
-### After S10.P1 Guide Updates
+### After S11.P1 Guide Updates
 ```bash
 # Run these 6 patterns in sequence
 Pattern 1.0  # Root files

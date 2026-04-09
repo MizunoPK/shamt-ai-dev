@@ -268,10 +268,10 @@
 
 #### Guide Update Proposal
 - **File:** `guide_update_proposal_template.md`
-- **Created:** S10 (S10.P1 Guide Updates)
+- **Created:** S11 (S11.P1 Guide Updates)
 - **Purpose:** Proposing guide improvements discovered during epic work, using SHAMT-{N} numbering format
 - **Size:** ~257 lines
-- **When to use:** S10.P1 when creating guide update proposals
+- **When to use:** S11.P1 when creating guide update proposals
 
 #### PR Comment Resolution
 - **File:** `comment_resolution_template.md`

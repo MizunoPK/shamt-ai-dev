@@ -743,8 +743,8 @@ CLAUDE.md contradicts guide ❌
 
 ### High Priority Scenarios
 
-**Trigger 1: After S10.P1 Guide Updates**
-- S10.P1 is when guides are updated based on lessons learned
+**Trigger 1: After S11.P1 Guide Updates**
+- S11.P1 is when guides are updated based on lessons learned
 - CLAUDE.md should be updated in parallel
 - D4 validates synchronization
 
@@ -836,7 +836,7 @@ CLAUDE.md contradicts guide ❌
 - `d7_template_currency.md` - Template synchronization
 
 **Stage Guides:**
-- `../stages/s10/s10_p1_guide_update_workflow.md` - When CLAUDE.md should be updated
+- `../stages/s11/s11_p1_guide_update_workflow.md` - When CLAUDE.md should be updated
 
 **Reference:**
 - `../reference/glossary.md` - Terminology source of truth

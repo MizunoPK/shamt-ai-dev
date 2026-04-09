@@ -178,13 +178,13 @@ feature_XX_{name}/debugging/
 
 ## Where Debugging Lessons Are Captured for Guide Updates
 
-### S10.P1: Guide Update from Lessons Learned (MANDATORY)
+### S11.P1: Guide Update from Lessons Learned (MANDATORY)
 
 **This is where ALL debugging lessons are systematically captured in a guide update proposal doc**
 
-**Note:** Previously S10 Step 4, now a dedicated S10.P1 workflow with user approval for each proposal.
+**Note:** Previously S10 Step 4, moved to a dedicated S11.P1 workflow (SHAMT-35) with user approval for each proposal.
 
-**Complete Workflow Guide:** `stages/s10/s10_p1_guide_update_workflow.md`
+**Complete Workflow Guide:** `stages/s11/s11_p1_guide_update_workflow.md`
 
 **Process Summary:**
 
@@ -220,7 +220,7 @@ feature_XX_{name}/debugging/
 
 **Why this matters:** Debugging lessons are the MOST ACTIONABLE because they come from actual bugs that reached testing. S10.P1 ensures these lessons get prioritized (P0/P1) and user-approved before being captured in the proposal doc for master to implement.
 
-**See:** `stages/s10/s10_p1_guide_update_workflow.md` for complete 9-step workflow
+**See:** `stages/s11/s11_p1_guide_update_workflow.md` for complete 9-step workflow
 
 ---
 

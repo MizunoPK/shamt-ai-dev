@@ -157,9 +157,12 @@ The Epic-Driven Development Workflow v2 uses a **3-level hierarchical S#.P#.I# n
 │   │   ├── s9_p2_epic_qc_rounds.md                 (Level 2: Phase)
 │   │   ├── s9_p3_user_testing.md                   (Level 2: Phase)
 │   │   └── s9_p4_epic_final_review.md              (Level 2: Phase)
-│   └── s10/
-│       ├── s10_epic_cleanup.md                     (Level 1: Stage)
-│       └── s10_p1_guide_update_workflow.md         (Level 2: Phase)
+│   ├── s10/
+│   │   ├── s10_epic_cleanup.md                     (Level 1: Stage)
+│   │   └── s10_p1_overview_workflow.md             (Level 2: Phase)
+│   └── s11/
+│       ├── s11_shamt_finalization.md               (Level 1: Stage)
+│       └── s11_p1_guide_update_workflow.md         (Level 2: Phase)
 ```
 
 ### Directory Naming Rules

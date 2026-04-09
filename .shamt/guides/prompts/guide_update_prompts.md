@@ -1,20 +1,20 @@
 # Guide Update Prompts: Lessons Learned to Guide Improvements
 
-**Stage:** 7.5 (Between user testing and final commit)
+**Stage:** 11.P1 (First step of S11 Shamt Finalization, after PR merged)
 **Purpose:** Create guide update proposal doc from epic lessons learned (deferred to master for implementation)
 
 ---
 
-## Starting S10.P1: Guide Update from Lessons Learned (MANDATORY)
+## Starting S11.P1: Guide Update from Lessons Learned (MANDATORY)
 
-**User says:** Agent detects S9 user testing passed (S9 Step 6), OR user says "apply lessons to guides"
+**User says:** Agent detects S10 complete (PR merged, on main), OR user says "apply lessons to guides"
 
-**Prerequisite:** S9 user testing passed (zero bugs), all lessons_learned.md files complete
+**Prerequisite:** S10 complete — PR merged, on main/master branch
 
 **Agent MUST respond:**
 
 ```markdown
-I'm reading `stages/s10/s10_p1_guide_update_workflow.md` to create a guide update proposal doc from lessons learned...
+I'm reading `stages/s11/s11_p1_guide_update_workflow.md` to create a guide update proposal doc from lessons learned...
 
 **The guide requires:**
 - **Analyze ALL lessons_learned.md files** from this epic:
@@ -42,16 +42,16 @@ I'm reading `stages/s10/s10_p1_guide_update_workflow.md` to create a guide updat
 - User has full control over guide evolution
 
 **Prerequisites I'm verifying:**
-✅ S9 user testing passed (S9 Step 6)
-✅ All lessons_learned.md files complete
+✅ S10 complete (PR merged, on main/master)
+✅ All lessons_learned.md files accessible
 ✅ Ready to analyze lessons and create proposal
 
 **I'll now analyze the lessons learned from this epic and create GUIDE_UPDATE_PROPOSAL.md...**
 
 **Updating EPIC_README.md Agent Status:**
-- Current Stage: S10.P1 - Guide Update from Lessons Learned
+- Current Stage: S11.P1 - Guide Update from Lessons Learned
 - Current Phase: GUIDE_ANALYSIS
-- Current Guide: stages/s10/s10_p1_guide_update_workflow.md
+- Current Guide: stages/s11/s11_p1_guide_update_workflow.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
 - Critical Rules: "Analyze ALL lessons", "Prioritize P0-P3", "Individual approval", "No guide edits — proposal doc only", "Commit proposal doc"
 - Next Action: Read all lessons_learned.md files and identify guide gaps
@@ -68,7 +68,7 @@ Analyzing lessons learned...
 **Agent MUST present:**
 
 ```bash
-🚨 **S10.P1: Guide Update Proposals Ready for Review**
+🚨 **S11.P1: Guide Update Proposals Ready for Review**
 
 I've analyzed all lessons learned from this epic and created prioritized guide update proposals.
 
