@@ -14,6 +14,10 @@
 # Deleted after agent review per import_workflow.md Step 6.
 .shamt/import_diff*.md
 
+# Design doc validation logs — local working files, not version controlled
+# All validation logs live in design_docs/validation_logs/ for easy access.
+design_docs/validation_logs/
+
 # Child-project operational files — not used in master, gitignored defensively
 # shamt_master_path.conf would exist in a child project pointing to this repo
 # last_sync.conf would exist in a child project tracking import history
