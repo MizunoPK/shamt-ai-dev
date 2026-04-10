@@ -303,7 +303,7 @@ When user reports bugs during S9.P3:
 1. **Document bugs** using debugging protocol
 2. **Fix ALL user-reported bugs**
 3. **RESTART from S9.P1** (user bugs require full re-validation)
-4. **Re-run S9.P1, S9.P2, return to S9.P3** for re-testing
+4. **Re-run S9.P1, S9.P2, return to S9.P3** for re-testing, then **S9.P4** before proceeding to S10
 
 **Why restart for user bugs?**
 - User-reported bugs indicate real-world issues
@@ -425,7 +425,7 @@ Ready to begin Step 1: Pre-QC Verification.
 **After completing S9.P4:**
 - S9 is COMPLETE
 - Update EPIC_README.md Epic Progress Tracker
-- Proceed to S10 (Epic Cleanup)
+- Proceed to S10 (Final Changes & Merge)
 
 ---
 
@@ -482,7 +482,7 @@ Ready to begin Step 1: Pre-QC Verification.
 ## Next Stage
 
 **When S9 complete:**
-- Transition to S10 (Epic Cleanup)
+- Transition to S10 (Final Changes & Merge)
 
 📖 **READ:** `stages/s10/s10_epic_cleanup.md`
 
@@ -538,7 +538,7 @@ A: Check EPIC_README.md Agent Status for current step, then read the guide for t
 A: Fix issues immediately, reset `consecutive_clean` to 0, and continue validation. No restart needed for S9.P2. Continue until primary clean round + sub-agent confirmation.
 
 **Q: What if user finds bugs during S9.P3 (User Testing)?**
-A: User-reported bugs require restart from S9.P1. Fix bugs using debugging protocol, then restart from S9.P1 (smoke testing) through S9.P2 (validation loop) and return to S9.P3.
+A: User-reported bugs require restart from S9.P1. Fix bugs using debugging protocol, then restart from S9.P1 (smoke testing) through S9.P2 (validation loop), return to S9.P3 (user re-testing), and then run S9.P4 (Epic Final Review) before proceeding to S10.
 
 **Q: What's the difference between feature-level testing (S7) and epic-level testing (S9)?**
 A: Feature-level testing (S7) validates features in ISOLATION. Epic-level testing (S9) validates features working TOGETHER as a cohesive system.

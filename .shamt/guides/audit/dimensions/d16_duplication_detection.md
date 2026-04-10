@@ -449,7 +449,7 @@ See `reference/standard_prerequisites.md` for standard workflow prerequisites.
 **Stage-Specific Prerequisites:**
 - [ ] Completed S4
 - [ ] test_strategy.md exists
-- [ ] User approved epic plan (Gate 4.5)
+- [ ] User approved epic plan (Gate 4)
 ```
 
 **Detection:**

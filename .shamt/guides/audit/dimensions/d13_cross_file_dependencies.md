@@ -87,7 +87,7 @@
 ### Historical Evidence:
 
 **SHAMT-7 Issues:**
-- S5 guide said "merge test_strategy.md" but file sometimes missing (S4 deprecated; test_strategy.md is optional, Options C/D only)
+- S5 guide said "merge test_strategy.md" but file sometimes missing (test_strategy.md is optional, Options C/D only)
 - spec.md template referenced DISCOVERY.md sections that didn't exist in actual DISCOVERY.md structure
 - Templates had "see X.md" references where X.md was never created in workflow
 
@@ -184,7 +184,9 @@ S8 → Updated specs (remaining features)
      ↓
 S9 → Epic testing report
      ↓
-S10 → PR, updated .shamt/epics/EPIC_TRACKER.md
+S10 → PR, merge to main
+     ↓
+S11 → updated .shamt/epics/EPIC_TRACKER.md, epic moved to done/
 ```bash
 
 **Validation Commands:**
@@ -206,12 +208,12 @@ for feature_dir in $epic_dir/feature_*; do
   fi
 done
 
-# Check S3 → S5 handoff (S4 deprecated)
+# Check S3 → S4 → S5 handoff
 if [ ! -f "$epic_dir/epic_smoke_test_plan.md" ]; then
   echo "ERROR: S3 did not create epic_smoke_test_plan.md"
 fi
 
-# S4 deprecated — test_strategy.md no longer required (Options C/D only, created at S5 Step 0)
+# test_strategy.md is optional (Options C/D only, created at S5 Step 0b)
 # Check S5 → S6 handoff
 if [ ! -f "$feature_dir/implementation_plan.md" ]; then
   echo "ERROR: S5 did not create implementation_plan.md"
@@ -493,9 +495,9 @@ cat /tmp/orphaned_files.txt
 
 **lessons_learned.md:**
 - Created in S7.P3
-- Intended for S10.P1 guide updates
-- Often not explicitly listed in S10 prerequisites
-- **Status:** NOT orphaned (used in S10.P1)
+- Intended for S11.P1 guide updates
+- Often not explicitly listed in S11 prerequisites
+- **Status:** NOT orphaned (used in S11.P1)
 
 **RESEARCH_NOTES.md:**
 - Created in S2.P1.I1
@@ -704,7 +706,7 @@ Create spreadsheet or text file:
 
 ```bash
 # Extract inputs and outputs for matrix
-for stage_dir in stages/s{1..10}/; do
+for stage_dir in stages/s{1..11}/; do
   echo "=== $(basename $stage_dir) ==="
   echo "INPUTS:"
   grep -A 5 "^## Prerequisites" $stage_dir/*.md | grep "\.md"

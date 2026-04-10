@@ -6,7 +6,7 @@
 🚨 **MANDATORY READING PROTOCOL**
 
 **Before starting this stage — including when resuming a prior session:**
-1. **Quick entry point:** `reference/stage_3/stage_3_reference_card.md` — covers the happy path including Gate 4.5; S3 runs once per epic
+1. **Quick entry point:** `reference/stage_3/stage_3_reference_card.md` — covers the happy path including Gate 4; S3 runs once per epic
 2. **Full guide (this file):** Read entirely for detailed examples or when encountering edge cases
 3. Verify prerequisites (S2 complete for ALL features)
 4. Update epic EPIC_README.md Agent Status with guide name + timestamp
@@ -71,12 +71,12 @@ This allows S3.P1 and S3.P2 work to overlap with the last feature's I3, reducing
 
 ## Overview
 
-**Purpose:** Create epic-level testing strategy, refine epic documentation, get user approval (Gate 4.5)
+**Purpose:** Create epic-level testing strategy, refine epic documentation, get user approval (Gate 4)
 
 **Structure:** 3 phases
 - S3.P1: Epic Testing Strategy Development (45-60 min)
 - S3.P2: Epic Documentation Refinement (20-30 min)
-- S3.P3: Epic Plan Approval (10-15 min) - Gate 4.5 with 3-tier rejection handling
+- S3.P3: Epic Plan Approval (10-15 min) - Gate 4 with 3-tier rejection handling
 
 **Time:** 75-105 minutes total
 **Prerequisites:** S2 complete for ALL features (S2.P2 alignment done)
@@ -88,7 +88,7 @@ This allows S3.P1 and S3.P2 work to overlap with the last feature's I3, reducing
 ⚠️ **Before starting P1, confirm:**
 - [ ] S3.P2 (Epic Documentation Refinement) is mandatory after P1 — I will not skip it
 - [ ] S3.P3 (Epic Plan Approval) is mandatory after P2 — I will not present for approval mid-phase
-- [ ] I will complete all three phases before Gate 4.5
+- [ ] I will complete all three phases before Gate 4
 
 P1 produces the testing strategy. P2 refines documentation. P3 is the gate. All three are required.
 
@@ -290,7 +290,7 @@ Refine epic ticket with details from all developed feature specs
 ## S3.P3: Epic Plan Approval (10-15 min)
 
 ### Purpose
-Get user approval for complete epic plan before proceeding to S5 (Gate 4.5 — S4 is deprecated)
+Get user approval for complete epic plan before proceeding to S4 (Gate 4)
 
 ### Steps
 
@@ -300,13 +300,13 @@ Get user approval for complete epic plan before proceeding to S5 (Gate 4.5 — S
 - Summarize epic test plan approach
 - Estimate total timeline (feature count × ~6-8 hours)
 
-**2. Gate 4.5: User Approval of Epic Plan (5 min)**
+**2. Gate 4: User Approval of Epic Plan (5 min)**
 - Present epic summary to user
 - Present epic_smoke_test_plan.md
 - Ask: "Approve this epic plan and testing approach confirmed?"
 - **MANDATORY GATE:** Cannot proceed without approval
-- **Note:** Single Gate 4.5 (not split into 4.5a/4.5b per user direction)
-- Gate 4.5 checklist includes: testing approach confirmed (A/B/C/D set in EPIC_README) + epic plan approved
+- **Note:** Single Gate 4 (not split per user direction)
+- Gate 4 checklist includes: testing approach confirmed (A/B/C/D set in EPIC_README) + epic plan approved
 
 ### If User Requests Changes
 
@@ -319,7 +319,7 @@ Get user approval for complete epic plan before proceeding to S5 (Gate 4.5 — S
   - If testing strategy issues → S3.P1
   - If documentation issues → S3.P2
 - Re-run updated phase with Validation Loop
-- Re-present to user for approval (Gate 4.5 again)
+- Re-present to user for approval (Gate 4 again)
 
 **(Option B) Partial Rejection** (Scope or structure issues)
 - User says: "Approach is good but scope is too big" OR "Features are right but missing technical constraint"
@@ -354,8 +354,8 @@ Await user decision before proceeding.
 
 **Exit Condition:**
 - User explicitly approves epic plan
-- Gate 4.5 passed
-- Ready to proceed to S5 (first feature)
+- Gate 4 passed
+- Ready to proceed to S4 (Interface Contract Definition)
 
 ---
 
@@ -365,10 +365,10 @@ Await user decision before proceeding.
 
 - [ ] S3.P1 complete (epic_smoke_test_plan.md created/updated per testing approach)
 - [ ] S3.P2 complete (EPIC_README.md refined and validated)
-- [ ] S3.P3 complete (Gate 4.5 passed - user approved epic plan + testing approach confirmed)
+- [ ] S3.P3 complete (Gate 4 passed - user approved epic plan + testing approach confirmed)
 - [ ] Epic EPIC_README.md updated with:
   - Epic Completion Checklist: S3 items checked
-  - Agent Status: Phase = S5_READY
+  - Agent Status: Phase = S4_READY
 - [ ] epic_smoke_test_plan.md shows "S3 version" (not "INITIAL")
 - [ ] For Options A/C: epic_smoke_test_plan.md has specific test scenarios (not TBD) and validation loop passed
 - [ ] For Options B/D: epic_smoke_test_plan.md has epic success criteria section; scripts are the strategy
@@ -379,20 +379,15 @@ Await user decision before proceeding.
 
 **After S3 complete:**
 
-📖 **READ:** `stages/s5/s5_v2_validation_loop.md` (first feature — test scope decision at S5 Step 0)
-🎯 **GOAL:** Begin feature implementation planning
-⏱️ **ESTIMATE:** 4.5-7 hours per feature (Phase 1 draft + Phase 2 validation)
-
-**Note:** S4 is deprecated. Test scope decisions (Testing Approach A/B/C/D) are made at the start of S5 (Step 0 of Phase 1).
+📖 **READ:** `stages/s4/s4_interface_contracts.md`
+🎯 **GOAL:** Define cross-feature interface contracts before implementation planning begins
+⏱️ **ESTIMATE:** 30-45 min (full path) or 5-10 min (fast-skip if zero integration points)
 
 ---
 
-**Parallel mode (S5): If `Parallel Mode (S5): enabled` in EPIC_README.md:**
+**Parallel mode: If `Parallel Mode (S5): enabled` in EPIC_README.md:**
 
-Before reading `s5_v2_validation_loop.md`, generate S5 handoff packages for all secondary agents and send activation messages (Sync Point 2 action). This allows all features to plan their implementation simultaneously.
-
-📖 **READ FIRST:** `parallel_work/s5_parallel_protocol.md` → Sync Point 2 section
-Then proceed with your own S5 as described in `stages/s5/s5_v2_validation_loop.md`.
+S4 runs solo (primary agent only). Secondary agents are activated via SP2 **after S4 is complete**, not at Gate 4 approval. S4 handles this sequencing — read `stages/s4/s4_interface_contracts.md` for the parallel mode note.
 
 ---
 

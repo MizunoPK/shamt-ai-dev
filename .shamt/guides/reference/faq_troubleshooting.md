@@ -34,7 +34,7 @@
 **A:** NO. All stages have dependencies and must be completed in order:
 - S1 creates the structure needed for S2
 - S2 specs are validated in S3
-- S3 epic plan (Gate 4.5 approved) enables S5 implementation planning (S4 is deprecated)
+- S3 epic plan (Gate 4 approved) enables S5 implementation planning (S4 = Interface Contract Definition)
 - Test scope decision (S5 Step 0) and implementation_plan.md evolve through S5 validation loop → S9
 - Skipping stages leads to incomplete planning and rework
 
@@ -44,7 +44,7 @@
 - **Round:** Validation Loop cycle (check all dimensions, fix issues, repeat until primary clean round + sub-agent confirmation)
 - **Iteration:** Historical term from S5 v1 (not used in S5 v2)
 - **Phase:** Distinct workflow section (S5 has 2 phases: Draft Creation + Validation Loop; S7 has 3 phases: Smoke Testing, QC Rounds, Final Review)
-- **Stage:** Top-level workflow division (10 stages total: S1-S10)
+- **Stage:** Top-level workflow division (11 stages total: S1-S11, all active)
 
 **Note:** S5 v2 uses "dimensions" (11 dimensions validated each round), not "iterations" (which were used in S5 v1).
 
@@ -54,8 +54,8 @@
 - **EPIC_README.md:** Epic-level status, Epic Progress Tracker, epic-level decisions
 - **Feature README.md:** Feature-level status, current guide being followed, implementation progress
 
-Update EPIC_README.md after completing each major stage (S1, S2, S3, S9, S10). S4 is deprecated — no update needed.
-Update feature README.md during feature loop stages (S5, S6, S7, S8).
+Update EPIC_README.md after completing each major stage (S1, S2, S3, S4, S9, S10, S11).
+Update feature README.md during feature loop stages (S4, S5, S6, S7, S8).
 
 ### Q: What happens if I find a bug during implementation?
 
@@ -63,7 +63,7 @@ Update feature README.md during feature loop stages (S5, S6, S7, S8).
 - **During S6 (Implementation):** Fix immediately, run tests, continue
 - **During S7 (Smoke/QC):** Enter Debugging Protocol, restart from smoke testing
 - **During S9 (Epic QC):** Enter Debugging Protocol, restart entire S9
-- **During S10 (User Testing):** Document in ISSUES_CHECKLIST.md, fix ALL bugs, restart S9
+- **During S9.P3 (User Testing):** Document in ISSUES_CHECKLIST.md, fix ALL bugs, restart S9
 
 ### Q: How many features should an epic have?
 
@@ -190,7 +190,7 @@ A: NO - Always do complete pairwise comparison:
 
 ---
 
-### S4: Feature Testing Strategy (Deprecated — see S5 Step 0)
+### S4: Interface Contract Definition
 
 **Q: How is epic_smoke_test_plan.md different from feature smoke testing?**
 
@@ -206,7 +206,7 @@ A: Make best predictions at S5 Step 0 (Test Scope Decision):
 - S8.P2 will update plan with ACTUAL integration points discovered
 - Plan evolves as implementation reveals reality
 
-*Note: S4 is deprecated since SHAMT-6. Test scope decisions (unit tests, integration scripts) are now decided at the start of S5 per the Testing Approach (A/B/C/D) set in S1.*
+*Note: S4 (Interface Contract Definition) runs after S3 to define cross-feature contracts. Test scope decisions (unit tests, integration scripts) are decided at the start of S5 Step 0b per the Testing Approach (A/B/C/D) set in S1.*
 
 ---
 
@@ -367,17 +367,17 @@ A: NO - Epic QC is mandatory:
 
 ---
 
-### S10: Epic Cleanup
+### S10: Final Changes & Merge
 
 **Q: User found bugs during testing - what do I do?**
 
-A: User testing occurs in S9 (Step 6), not S10. Follow the S9 bug fix protocol:
+A: User testing occurs in S9 (S9.P3), not S10. Follow the S9 bug fix protocol:
 1. Document ALL bugs in epic debugging/ISSUES_CHECKLIST.md
 2. Create bugfix folders for each bug
 3. Fix ALL bugs (each follows S2 → S5 → S6 → S7)
 4. After ALL bugs fixed → RESTART S9 from S9.P1 (Epic Smoke Testing)
-5. Complete ALL S9 steps again (S9.P1 → S9.P2 → S9.P3)
-6. User re-tests in S9 Step 6 — ZERO bugs required
+5. Complete ALL S9 steps again (S9.P1 → S9.P2 → S9.P3 → S9.P4)
+6. User re-tests in S9.P3 — ZERO bugs required
 7. Only then proceed to S10
 
 **Q: Can I commit if "only minor bugs" remain?**
@@ -455,9 +455,9 @@ Need to fix something
     │    → Fix issues
     │    → RESTART from S9.P1 Part 1
     │
-    └─ S10 (User Testing)
+    └─ S9.P3 (User Testing)
          ↓
-    [Use S10 Bug Fix Protocol]
+    [Use S9.P3 Bug Fix Protocol]
          → Fix ALL bugs
          → RESTART S9
 ```
@@ -543,7 +543,7 @@ Context window limit reached → Session compacted
 - Issues found during Smoke Testing (S7 Part 3)
 - Issues found during Validation Loop (S7 Phase 2)
 - Issues found during Epic Testing (S9)
-- Issues found during User Testing (S10)
+- Issues found during User Testing (S9.P3)
 - Root cause is UNKNOWN (requires investigation)
 
 **DO NOT use for:**
@@ -588,12 +588,12 @@ Context window limit reached → Session compacted
 ### When to Use: Bug Fix Workflow
 
 **Use for:**
-- Bugs found during S10 (User Testing)
+- Bugs found during S9.P3 (User Testing)
 - Each bug gets its own bugfix folder
 - Bugs go through: S2 → S5 → S6 → S7 (no S1, 3, 4, 6, 7)
 
 **DO NOT use for:**
-- Bugs found earlier than S10 (use Debugging)
+- Bugs found earlier than S9.P3 (use Debugging)
 - Quick fixes during implementation
 
 **Indicators:**
@@ -883,11 +883,11 @@ Note: It's acceptable to fix pre-existing test failures from other epics during 
 
 ---
 
-### Error: "User found bugs during S10 testing"
+### Error: "User found bugs during S9.P3 testing"
 
 **Meaning:** Must restart S9 after fixing bugs
 
-**Fix:** See S10 FAQ above - follow bug fix protocol, restart S9
+**Fix:** See S9 FAQ above - follow bug fix protocol, restart S9 from S9.P1
 
 ---
 

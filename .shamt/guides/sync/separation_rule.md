@@ -20,7 +20,7 @@ Project-specific content belongs **exclusively** in `.shamt/project-specific-con
 
 ### Shared (`guides/` and `scripts/`)
 
-- Workflow stages and protocols (S1–S10)
+- Workflow stages and protocols (S1–S11)
 - Reference materials, gates, decision trees
 - Templates (generic, with placeholders)
 - Debugging, missed requirement, parallel work protocols
@@ -130,7 +130,7 @@ When you modify any file in `.shamt/guides/` or `.shamt/scripts/`, record it in 
 ```
 
 **When to write CHANGES.md entries:**
-- During S10.P1 when back-propagating generic rules file content to `RULES_FILE.template.md` (Step 8.0) — shared guide improvements are now deferred via the proposal doc mechanism and do not require CHANGES.md entries
+- During S11.P1 when back-propagating generic rules file content to `RULES_FILE.template.md` — shared guide improvements are now deferred via the proposal doc mechanism and do not require CHANGES.md entries
 - During audit when fixing guide issues
 - Any time you deliberately improve a shared guide or script
 
@@ -141,13 +141,13 @@ When you modify any file in `.shamt/guides/` or `.shamt/scripts/`, record it in 
 
 ---
 
-## Enforcement During S10.P1
+## Enforcement During S11.P1
 
-S10.P1 no longer applies shared guide improvements directly. Instead:
+S11.P1 no longer applies shared guide improvements directly. Instead:
 
 - Approved/modified proposals for shared guides are written to the proposal doc in `.shamt/unimplemented_design_proposals/` — not to the guide files themselves
-- Project-specific improvements (to `project-specific-configs/`) are still applied directly during S10.P1
-- Only rules file template updates (Step 8.0) go to `RULES_FILE.template.md` and require a `CHANGES.md` entry
+- Project-specific improvements (to `project-specific-configs/`) are still applied directly during S11.P1
+- Only rules file template updates go to `RULES_FILE.template.md` and require a `CHANGES.md` entry
 
 **To determine where a change belongs:**
 1. If it's an improvement to a shared guide file → write it to the proposal doc only

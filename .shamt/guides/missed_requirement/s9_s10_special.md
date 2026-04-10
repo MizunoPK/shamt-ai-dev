@@ -69,7 +69,7 @@ SPECIAL: Implement New/Updated Feature (full S5)
     ↓
 SPECIAL: RESTART Epic Testing from S9.P1 Step 1
     ↓
-S9.P1 → S9.P2 → S9.P3 → S10 (entire epic flow)
+S9.P1 → S9.P2 → S9.P3 → S9.P4 → S10 (entire epic flow)
 ```
 
 ---
@@ -94,9 +94,10 @@ S9.P1 → S9.P2 → S9.P3 → S10 (entire epic flow)
 3. **PHASE 3 & 4:** Realignment (S3 & 4)
    - Use `missed_requirement/realignment.md`
    - S2.P2: cross-feature pairwise alignment for new/updated feature
-   - S3: epic smoke test update (S3.P1) + Gate 4.5 re-approval (S3.P3)
-   - S4: deprecated — Test Scope Decision now in S5 Step 0 (check Testing Approach in EPIC_README)
-   - **Note:** Epic testing is paused, not a specific feature
+   - S3: epic smoke test update (S3.P1) + Gate 4 re-approval (S3.P3)
+   - S4: contract validation (validate feature contracts)
+   - S4: Interface Contract Definition stage (validate feature contracts)
+   - **Note:** Epic testing is paused, not a specific feature; S4 still runs after S3
 
 ---
 
@@ -198,14 +199,18 @@ Actions needed:
    - Continue until primary clean round + sub-agent confirmation
    - Fix issues immediately, reset counter, continue
 
-3. **S9.P3:** Epic Final Review
+3. **S9.P3:** User Testing
+   - User tests complete epic with real data
+   - ZERO bugs required before proceeding
+
+4. **S9.P4:** Epic Final Review
    - Code review
    - Documentation review
    - Epic readiness check
 
-4. **S10:** Final Changes & Merge
+6. **S10:** Final Changes & Merge
    - Commit, create PR, merge
-5. **S11:** Shamt Finalization
+7. **S11:** Shamt Finalization
    - Guide updates, archive
 
 ---
@@ -279,11 +284,11 @@ Actions needed:
 4. **Restart epic testing:**
    - S9.P1 (Epic Smoke Testing) - feature_03 now includes PDF export
    - S9.P2 (Epic QC Validation Loop - primary clean round + sub-agent confirmation)
-   - S9.P3 (User Testing)
+   - S9.P3 (User Testing) - user tests again with PDF export
    - S9.P4 (Epic Final Review)
-   - S10 (Final Changes & Merge) - user tests again with PDF export
+   - S10 (Final Changes & Merge)
 
-**Note:** Even though discovered in S10, loop back to S9.P1 (not S10)
+**Note:** Even though discovered in S9, loop back to S9.P1 (not S9.P3)
 ```
 
 ---
@@ -333,13 +338,13 @@ Actions needed:
 
 ---
 
-### ❌ Anti-Pattern 4: Returning to S10 After Fixes
+### ❌ Anti-Pattern 4: Skipping Epic Restart After Bug Fixes
 
-**Mistake:** User finds bug in S10 → Fix → Resume S10
+**Mistake:** User finds bug in S9.P3 → Fix → Resume S9.P3 (user testing)
 
-**Why wrong:** Fixes might affect epic integration, need epic-level validation
+**Why wrong:** Fixes might affect epic integration, need epic-level validation from S9.P1
 
-**Correct:** User finds bug → Fix → Restart S9.P1 → S10
+**Correct:** User finds bug → Fix → Restart S9.P1 → S9.P3 → S9.P4 → S10
 
 ---
 
@@ -362,7 +367,8 @@ Actions needed:
 **Epic Testing Restart:**
 - [x] S9.P1 complete (Epic Smoke Testing with new feature)
 - [x] S9.P2 complete (Epic QC Validation Loop - primary clean round + sub-agent confirmation)
-- [x] S9.P3 complete (Epic Final Review)
+- [x] S9.P3 complete (User Testing - ZERO bugs)
+- [x] S9.P4 complete (Epic Final Review)
 - [x] Ready for S10 (Final Changes & Merge) → S11 (Shamt Finalization)
 
 ---

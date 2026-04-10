@@ -90,11 +90,21 @@ Verify all agents are genuinely complete before beginning.
 - ❌ STOP — the feature's S5 is not actually complete
 - Contact the relevant secondary (or user) to complete S5 before proceeding
 
+**0.5 — Verify interface_contracts.md exists:**
+- Confirm `interface_contracts.md` exists in the epic folder root (created by S4)
+- This file is created by both the full S4 path and the fast-skip path — absence means S4 was skipped entirely
+- If missing: ❌ STOP — run S4 before proceeding to S5-CA
+
 ---
 
 ### Step 1: Prioritized Pairwise Plan Comparison (20–40 min)
 
 **Scope:** All pairs of features.
+
+**Before starting pairwise checks — read interface_contracts.md:**
+- Read `interface_contracts.md` in the epic folder root
+- If it contains actual contracts (not the fast-skip "no contracts" stub): D2 and D5 checks below become **verification checks** against those contracts, not open-ended discovery. Flag any plan that defines a covered interface differently from `interface_contracts.md` as a conflict, even if the two plans agree with each other.
+- If it contains the fast-skip stub: proceed with standard discovery checks below.
 
 **Priority order for first pass:**
 

@@ -162,7 +162,7 @@ grep -n "shamt_master_path" "$RULES_PATH"
 Check three stage-critical sections in the template:
 
 1. Stage overview in `## Workflow System`
-2. Missed Requirement Protocol stage list ("during S2/S3...", "S2/S3 → S5-S8")
+2. Missed Requirement Protocol stage list ("during S2/S3/S4...", "S2/S3/S4 → S5-S8")
 3. Validation Loop Enforcement header (stage list in the 🚨 line)
 
 ```bash

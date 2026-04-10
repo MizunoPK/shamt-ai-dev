@@ -7,7 +7,7 @@
 - S7.P2: Feature Validation Loop (primary clean round + sub-agent confirmation, post-smoke testing)
 - S7.P3: Feature PR Review (final review before commit)
 - S9.P2: Epic Validation Loop (primary clean round + sub-agent confirmation, post-epic smoke testing)
-- S10 Step 9: Push Branch and Create PR (pre-push verification — see s10_epic_cleanup.md)
+- S10 Step 4: Push Branch and Create PR (pre-push verification — see s10_epic_cleanup.md)
 
 **Version:** 2.0 (Updated to extend master protocol)
 **Last Updated:** 2026-02-10

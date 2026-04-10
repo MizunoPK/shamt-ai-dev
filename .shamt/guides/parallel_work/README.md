@@ -71,11 +71,11 @@ Primary Agent (Sonnet - balanced for coordination):
 | SP | Transition | Trigger | Actor | Action |
 |----|-----------|---------|-------|--------|
 | SP1 | S1 → S2 | S1 complete, user accepts parallel offer | Primary | Generate S2 handoffs, primary spawns secondary agents automatically via Task tool |
-| SP2 (extended) | S2 → S3; S3 → S5 | All S2 complete; then Gate 4.5 approval | Primary | Verify S2 complete, run S3 solo; then generate S5 handoffs and activate secondaries |
+| SP2 (extended) | S2 → S3; S3 → S5 | All S2 complete; then Gate 4 approval | Primary | Verify S2 complete, run S3 solo; then generate S5 handoffs and activate secondaries |
 | SP3 (new) | S5 → S5-CA → Gate 5 | All S5 complete (all STATUS: WAITING_FOR_SYNC) | Primary | Run S5-CA (cross-plan alignment) + present combined Gate 5 |
 | SP4 (new) | Gate 5 → S6 chain | Combined Gate 5 approved | Primary | Activate Feature 01 for S6; after each S8, activate next feature |
 
-**Note:** SP2 is extended in S5 parallel mode. The original SP2 action (S2→S3) is unchanged. The new SP2 action (S3→S5) runs after Gate 4.5 approval: Primary generates S5 handoff packages and activates secondary agents.
+**Note:** SP2 is extended in S5 parallel mode. The original SP2 action (S2→S3) is unchanged. The new SP2 action (S3→S5) runs after Gate 4 approval: Primary generates S5 handoff packages and activates secondary agents.
 
 ---
 
@@ -101,7 +101,7 @@ Primary Agent (Sonnet - balanced for coordination):
 | S1 Final Step | Generate S2 handoffs | If parallel enabled |
 | S2 | Detect Primary vs Secondary role | S2 Router |
 | S3 Start | Sync verification (S2 complete) | See `s3_parallel_work_sync.md` |
-| S3 Gate 4.5 (SP2) | Generate S5 handoffs, activate secondaries | If S2 parallel was used and S5 parallel enabled |
+| S3 Gate 4 (SP2) | Generate S5 handoffs, activate secondaries | If S2 parallel was used and S5 parallel enabled |
 | S5 | All features implement planning in parallel | Requires S2 parallel as prerequisite; see `s5_parallel_protocol.md` |
 | After all S5 (SP3) | S5-CA + combined Gate 5 | Primary runs `s5_ca_cross_plan_alignment.md` |
 | After Gate 5 (SP4) | Sequential S6 chain | Primary activates features one at a time |

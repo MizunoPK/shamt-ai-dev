@@ -53,7 +53,7 @@
 - ✅ `.shamt/guides/stages/s7/s7_p2_qc_rounds.md`
 - ✅ `.shamt/guides/stages/s9/s9_p2_epic_qc_rounds.md`
 - ✅ `.shamt/guides/stages/s10/s10_epic_cleanup.md`
-- ✅ `.shamt/guides/stages/s10/s10_p1_guide_update_workflow.md`
+- ✅ `.shamt/guides/stages/s11/s11_p1_guide_update_workflow.md`
 
 ### Phase 6: Supporting Workflows
 - ✅ `.shamt/guides/design_doc_validation/validation_workflow.md`
@@ -156,7 +156,7 @@ Primary Agent ({Model}):
 - ✅ s7_p2_qc_rounds.md
 - ✅ s9_p2_epic_qc_rounds.md
 - ✅ s10_epic_cleanup.md
-- ✅ s10_p1_guide_update_workflow.md
+- ✅ s11_p1_guide_update_workflow.md
 
 **Phase 6 (Supporting - 8 files):**
 - ✅ design_doc_validation/validation_workflow.md

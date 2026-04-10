@@ -1,7 +1,8 @@
-# S4: Feature Testing Strategy — DEPRECATED
+# S4: Feature Testing Strategy — SUPERSEDED
 
-> ⚠️ **S4 is deprecated as of SHAMT-6.** Test scope decisions now live in S5.
-> See: `stages/s5/s5_v2_validation_loop.md` — Phase 1, Test Scope Decision step.
+> ⚠️ **This file describes the original S4 (Feature Testing Strategy), deprecated in SHAMT-6.**
+> S4 has been reinstated as a new stage in SHAMT-36.
+> See: `stages/s4/s4_interface_contracts.md` — the current S4 guide.
 
 ---
 
@@ -46,8 +47,8 @@ loop on the test strategy (S4.I4) does not need to be re-run.
 
 ## Proceed To
 
-📖 **READ:** `stages/s5/s5_v2_validation_loop.md`
-🎯 **GOAL:** Create implementation plan; Test Scope Decision is the first step of Phase 1
+📖 **READ:** `stages/s4/s4_interface_contracts.md`
+🎯 **GOAL:** Define cross-feature interface contracts before per-feature implementation planning
 
 ---
 

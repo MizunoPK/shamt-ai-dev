@@ -74,7 +74,7 @@ Organize features into **dependency groups** based on spec-level dependencies. E
 - Both can research/specify in parallel during S2
 - Dependency enforced later during implementation (S5-S8)
 
-**After S2 complete:** Groups no longer matter (S3 is epic-level, S5+ is sequential — S4 deprecated)
+**After S2 complete:** Groups no longer matter (S3 is epic-level, S4 is per-feature, S5+ is sequential per feature)
 
 ---
 
@@ -792,14 +792,14 @@ grep "ISSUES:" feature_*/STATUS | grep -v "ISSUES: 0"
 
 **You can now:**
 1. ✅ Close your session (your work is complete for S2)
-2. 🔄 Wait for S3 if you'd like to observe (I'll run solo; S4 deprecated)
+2. 🔄 Wait for S3 if you'd like to observe (I'll run solo)
 3. 💬 Ask questions if needed
 
 **What happens next:**
 - I'll run S3 (Epic-Level Docs, Tests, and Approval) - Epic-level, all features together
-- S4 deprecated — Test Scope Decision now at S5 Step 0 (per-feature sequential)
+- S4: Interface Contract Definition (validate contracts before S5)
 - S5-S8: Implementation (per-feature sequential, no parallelization)
-- S9-S10: Epic QC and cleanup
+- S9-S11: Epic QC, cleanup, and Shamt finalization
 
 **Groups no longer matter after S2.** All features are now equal participants in remaining stages.
 
@@ -857,7 +857,8 @@ grep "ISSUES:" feature_*/STATUS | grep -v "ISSUES: 0"
 **What I'll do:**
 1. S3.P1: Create epic smoke test plan (integration tests across all features)
 2. S3.P2: Refine EPIC_README.md with feature summaries and architecture decisions
-3. S3.P3: Gate 4.5 — get user approval of epic plan before S5 (S4 deprecated)
+3. S3.P3: Gate 4 — get user approval of epic plan before S4
+4. S4: Validate feature contracts across all waves
 
 **Estimated time:** 1-2 hours
 

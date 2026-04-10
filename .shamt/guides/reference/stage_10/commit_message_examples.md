@@ -1,7 +1,7 @@
 # Commit Message Examples - S10
 
 **Purpose:** Reference examples for epic completion commits
-**When to use:** Step 6 of S10 (Creating Commit Message)
+**When to use:** Step 2 of S10 (Final Commit)
 **Main Guide:** `stages/s10/s10_epic_cleanup.md`
 
 ---

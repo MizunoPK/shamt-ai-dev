@@ -10,7 +10,7 @@
 - **DO NOT** include code snippets, detailed schemas, or implementation details
 - **DO** mention files/modules that may be relevant (not specific code changes)
 - **DO** capture your preferred direction if you have one — don't leave it for Discovery to guess
-- The S1-S10 epic flow determines detailed design and implementation
+- The S1-S11 epic flow determines detailed design and implementation
 
 ---
 

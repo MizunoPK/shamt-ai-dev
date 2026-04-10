@@ -52,7 +52,7 @@
 
 ✅ **Root-Level File Completeness:**
 - README.md has all announced sections
-- EPIC_WORKFLOW_USAGE.md has S1-S10 details
+- EPIC_WORKFLOW_USAGE.md has S1-S11 details
 - prompts_reference_v2.md has all stage prompts
 - No sections announced in TOC but missing in body
 
@@ -116,12 +116,12 @@ audit/README.md
 
 **README.md:**
 - [ ] Quick Start section has actual quick start steps (not just "See guides")
-- [ ] 10 Stages overview describes all 10 stages (not placeholder for S8-S10)
+- [ ] 10 Stages overview describes all 11 stages (not placeholder for S8-S10)
 - [ ] Guide Index lists all guide categories
 - [ ] Last Updated is recent
 
 **EPIC_WORKFLOW_USAGE.md:**
-- [ ] Stage-by-Stage section has details for ALL stages (S1-S10)
+- [ ] Stage-by-Stage section has details for ALL stages (S1-S11)
 - [ ] Each stage has: phases, iterations, duration, gates
 - [ ] No "Coming Soon" for any stage
 
@@ -522,7 +522,7 @@ fi
 
 echo "=== Root File Completeness Check ==="
 
-# Check EPIC_WORKFLOW_USAGE.md has all 10 stages
+# Check EPIC_WORKFLOW_USAGE.md has all 11 stages
 for stage in {1..10}; do
   if ! grep -q "### S$stage:" EPIC_WORKFLOW_USAGE.md; then
     echo "⚠️  EPIC_WORKFLOW_USAGE.md missing S$stage section"
@@ -562,7 +562,7 @@ For README.md:
 - [ ] No "Coming Soon" or "⏳" in any section
 
 For EPIC_WORKFLOW_USAGE.md:
-- [ ] Stage-by-Stage has complete details for S1-S10
+- [ ] Stage-by-Stage has complete details for S1-S11
 - [ ] Each stage section has: overview, phases, iterations, duration, gates
 - [ ] No placeholders or incomplete stage sections
 
@@ -895,7 +895,7 @@ $ grep "### S10:" EPIC_WORKFLOW_USAGE.md
 
 [Complete detailed breakdown]
 
-### S10: Epic Cleanup (Detailed)
+### S10: Final Changes & Merge (Detailed)
 
 [Complete detailed breakdown]
 ```

@@ -61,7 +61,7 @@ If you are about to do any of the above: STOP and re-read the architect-builder 
 **What is this guide?**
 S6 Implementation Execution receives a validated mechanical implementation plan from S5 and hands it off to a Haiku builder agent for execution using the **architect-builder pattern** (SHAMT-30).
 
-**🚨 CRITICAL: Architect-Builder Pattern is MANDATORY for S1-S10 Epic Workflow**
+**🚨 CRITICAL: Architect-Builder Pattern is MANDATORY for S1-S11 Epic Workflow**
 
 S6 workflow:
 - **S5** produces mechanical implementation plan, validates it (9 dimensions, Phase 2 validation loop)
@@ -242,7 +242,7 @@ S6 is complete when builder reports successful execution of all steps in the mec
 
 ## S6 Architect Workflow (Architect-Builder Pattern)
 
-**🚨 THIS IS THE PRIMARY S6 WORKFLOW for S1-S10 epic work 🚨**
+**🚨 THIS IS THE PRIMARY S6 WORKFLOW for S1-S11 epic work 🚨**
 
 S6 receives a validated mechanical implementation plan from S5 and hands it off to a Haiku builder for execution. Follow these steps:
 
@@ -382,7 +382,7 @@ You are a builder agent. Your role is to execute the implementation plan exactly
 
 ## Background: Traditional Implementation Details (Reference Only)
 
-**Note:** The sections below describe traditional implementation mechanics. In S1-S10 epic workflow, you will NOT implement code directly - the Haiku builder executes the mechanical plan. These sections are preserved as reference material for understanding implementation details when creating mechanical plans.
+**Note:** The sections below describe traditional implementation mechanics. In S1-S11 epic workflow, you will NOT implement code directly - the Haiku builder executes the mechanical plan. These sections are preserved as reference material for understanding implementation details when creating mechanical plans.
 
 **When to read these sections:**
 - Creating mechanical plans (understand what the builder will do)

@@ -583,7 +583,7 @@ Learn from actual audit rounds:
 ### Improvements Working File
 
 `round_N_improvements_working.md` captures improvement opportunities for the audit guides
-themselves — not epic workflow guides (those go through S10 lessons learned).
+themselves — not epic workflow guides (those go through S11.P1 guide updates).
 
 - **Created:** At start of each round using `templates/improvements_working_template.md`
 - **Updated:** Add entries throughout the round as improvements are noticed

@@ -1,7 +1,7 @@
 # S3 Prompts: Epic-Level Documentation, Testing Plans, and Approval
 
 **Stage:** 3
-**Purpose:** Epic-level testing strategy, documentation refinement, and user approval (Gate 4.5)
+**Purpose:** Epic-level testing strategy, documentation refinement, and user approval (Gate 4)
 
 ---
 
@@ -27,7 +27,7 @@ I'm beginning S3 (Epic-Level Documentation, Testing Plans, and Approval).
 **The guide requires:**
 - S3.P1: Create epic-level smoke test plan (integration tests across ALL features, NOT per-feature tests)
 - S3.P2: Refine EPIC_README.md with feature summaries and architecture decisions
-- S3.P3: Gate 4.5 — present epic plan to user, MANDATORY user approval before S5 (S4 is deprecated)
+- S3.P3: Gate 4 — present epic plan to user, MANDATORY user approval before S4 (Interface Contract Definition)
 - Each phase uses a primary clean round + sub-agent confirmation Validation Loop
 - SCOPE: This is epic-level work, not feature-level. Tests defined here span multiple features.
 
@@ -43,7 +43,7 @@ I'm beginning S3 (Epic-Level Documentation, Testing Plans, and Approval).
 - Current Stage: S3 — Epic-Level Documentation, Testing Plans, and Approval
 - Current Guide: stages/s3/s3_epic_planning_approval.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
-- Critical Rules: "Epic-level tests only (not per-feature)", "Gate 4.5 user approval mandatory"
+- Critical Rules: "Epic-level tests only (not per-feature)", "Gate 4 user approval mandatory"
 - Next Action: S3.P1 — Review all feature test requirements, identify integration points
 
 Starting S3.P1: Epic Testing Strategy Development...

@@ -46,8 +46,8 @@ SAVINGS: 4 hours (67% reduction in S2 time)
 
 **Epic-level impact:**
 ```text
-Sequential Epic: S1(2h) + S2(6h) + S3(1h) + S5-S8(15h) + S9(2h) + S10(1h) = 27h  [S4 deprecated]
-Parallel S2 Epic: S1(2h) + S2(2h) + S3(1h) + S5-S8(15h) + S9(2h) + S10(1h) = 23h  [S4 deprecated]
+Sequential Epic: S1(2h) + S2(6h) + S3(1h) + S4(0.5h) + S5-S8(15h) + S9(2h) + S10(1h) + S11(1h) = 28.5h
+Parallel S2 Epic: S1(2h) + S2(2h) + S3(1h) + S4(0.5h) + S5-S8(15h) + S9(2h) + S10(1h) + S11(1h) = 24.5h
 
 SAVINGS: 4 hours (14% epic-level reduction)
 ```
@@ -80,9 +80,9 @@ SAVINGS: 4 hours (14% epic-level reduction)
 **Sequential (Unchanged):**
 - ❌ S1: Epic Planning (Primary only)
 - ❌ S3: Epic-Level Docs, Tests, and Approval (Primary only)
-- ❌ S4: (Deprecated — Test Scope Decision now in S5 Step 0)
+- ✅ S4: Interface Contract Definition (Primary only)
 - ❌ S5-S8: Feature Implementation (sequential in this plan)
-- ❌ S9-S10: Epic completion (Primary only)
+- ❌ S9-S11: Epic completion (Primary only)
 
 ---
 
@@ -98,7 +98,7 @@ SAVINGS: 4 hours (14% epic-level reduction)
 │  - Generates handoff packages                           │
 │  - Monitors secondary agents                            │
 │  - Handles escalations                                  │
-│  - Runs S1, S3, S5–S10 (S4 deprecated)                 │
+│  - Runs S1, S3, S4, S5–S11                            │
 └─────────────────────────────────────────────────────────┘
           │                                   │
           │ handoff package                   │ handoff package
@@ -116,7 +116,7 @@ All agents work simultaneously on S2:
 - Secondary-A: S2 for Feature 02
 - Secondary-B: S2 for Feature 03
 
-After S2 complete → Sync → Primary runs S3 alone
+After S2 complete → Sync → Primary runs S3 → Primary runs S4 (Interface Contract Definition)
 ```
 
 ### Directory Structure
@@ -713,20 +713,23 @@ All features complete! Proceeding to S3.
 1. Follow guide: `stages/s3/s3_epic_planning_approval.md`
 2. S3.P1: Create epic smoke test plan (integration tests across all features)
 3. S3.P2: Refine EPIC_README.md with feature summaries and arch decisions
-4. S3.P3: Gate 4.5 — get user approval of epic plan (mandatory)
+4. S3.P3: Gate 4 — get user approval of epic plan (mandatory before S4)
+5. S4: Validate feature contracts
 5. Complete S3
 
 **No parallel work in S3** (requires holistic view)
 
 ---
 
-### Phase 8: S4 Deprecated — Proceed to S5
+### Phase 8: S4 — Interface Contract Definition
 
-> **⚠️ S4 has been deprecated (SHAMT-6).** Skip this phase entirely. Proceed to S5.
+**S4: Interface Contract Definition (Primary only)**
+Run S4 to define cross-feature interface contracts before S5 begins.
+See `stages/s4/s4_interface_contracts.md`.
 
-**Test Scope Decision is now Step 0 of S5:**
+**Test Scope Decision is Step 0b of S5 (per feature):**
 - Read Testing Approach (A/B/C/D) from EPIC_README
-- Follow `stages/s5/s5_v2_validation_loop.md` Step 0 for each feature
+- Follow `stages/s5/s5_v2_validation_loop.md` Step 0b for each feature
 
 ---
 
@@ -736,10 +739,10 @@ All features complete! Proceeding to S3.
 
 ```markdown
 ## Message (TIMESTAMP) ⏳ UNREAD
-**Subject:** S3 Complete (S4 deprecated)
-**Status:** All planning complete
+**Subject:** S3 Complete - Running S4
+**Status:** All planning complete; S4 (Interface Contract Definition) starting
 **Findings:** No conflicts found
-**Next:** Implementation (S5-S8) will be sequential
+**Next:** S4 contract validation, then implementation (S5-S8)
 **Your Action:** Can close sessions or idle
 
 Thank you for parallel work during S2!
@@ -881,7 +884,8 @@ READY_FOR_SYNC: false
    - Generate handoff packages
    - Monitor secondary agents (STATUS, checkpoints)
    - Handle escalations (respond within 15 min)
-   - Run S3 solo (S4 deprecated)
+   - Run S3 solo
+   - Run S4 (Interface Contract Definition) solo
    - Manage sync points
 
 3. **User Liaison:**
@@ -968,7 +972,7 @@ READY_FOR_SYNC: true
 
 ### Sync Point 3: After S3 → Before S5
 
-**Trigger:** Primary completes S3 (S4 deprecated)
+**Trigger:** Primary completes S3 and S4
 
 **Actions:**
 1. Primary notifies secondaries (S3 done)
@@ -991,11 +995,11 @@ READY_FOR_SYNC: true
 - Contains: Agent Assignment, Sync Status, Progress sections
 
 **epic_smoke_test_plan.md:**
-- Updated in S3.P1 (Primary only; S4 deprecated)
+- Updated in S3.P1 (Primary only; S4 validates contracts)
 - Requires lock (though only Primary uses in S2 plan)
 
 **epic_lessons_learned.md:**
-- Updated in S10 (not affected by S2 parallelization)
+- Updated in S9.P4 (not affected by S2 parallelization)
 
 ### Coordination Files
 

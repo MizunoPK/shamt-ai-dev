@@ -4,7 +4,7 @@
 
 **Role:** Coordinator + Feature 01 owner
 
-**Stages:** S3 Gate 4.5 approval → SP2 (S5 handoff) → S5 (parallel) → S5-CA → Gate 5 → SP4 (S6 chain)
+**Stages:** Gate 4 approval → S4 (solo) → SP2 (S5 handoff) → S5 (parallel) → S5-CA → Gate 5 → SP4 (S6 chain)
 
 ---
 
@@ -12,7 +12,7 @@
 
 - [Overview](#overview)
 - [Workflow Overview](#workflow-overview)
-- [Phase 1: S3 Gate 4.5 Approval (SP2 Trigger)](#phase-1-s3-gate-45-approval-sp2-trigger)
+- [Phase 1: Gate 4 Approval + S4 Execution (SP2 Trigger)](#phase-1-gate-4-approval--s4-execution-sp2-trigger)
 - [Phase 2: SP2 Action — Generate and Send S5 Handoff Packages](#phase-2-sp2-action--generate-and-send-s5-handoff-packages)
 - [Phase 3: Parallel S5 Execution](#phase-3-parallel-s5-execution)
 - [Phase 4: SP3 — Run S5-CA (Cross-Plan Alignment)](#phase-4-sp3--run-s5-ca-cross-plan-alignment)
@@ -43,7 +43,9 @@ When S5 parallelization is enabled, the Primary agent has **dual responsibilitie
 ## Workflow Overview
 
 ```text
-S3 Gate 4.5 Approval
+Gate 4 Approval (end of S3)
+       ↓
+S4: Primary runs Interface Contract Definition solo (secondaries not yet activated)
        ↓
 SP2 Action: Check secondary status → Generate S5 handoffs → Activate secondaries
        ↓
@@ -58,18 +60,23 @@ SP4: Activate S6 chain sequentially (Feature 01 → 02 → 03 ...)
 
 ---
 
-## Phase 1: S3 Gate 4.5 Approval (SP2 Trigger)
+## Phase 1: Gate 4 Approval + S4 Execution (SP2 Trigger)
 
-**When S3 Gate 4.5 is approved by user:**
+**When Gate 4 is approved by user (end of S3):**
 
 1. **Confirm S5 parallel mode is enabled:**
    - Read EPIC_README.md
    - Look for: `Parallel Mode (S5): enabled`
    - If not present or set to disabled: run S5 sequentially (this guide does not apply)
 
-2. **Proceed to Phase 2 (SP2 Action) immediately:**
-   - Do NOT begin S5 for your feature yet
-   - Generate handoff packages for secondaries first
+2. **Run S4 solo before activating secondaries:**
+   - Read `stages/s4/s4_interface_contracts.md`
+   - Complete S4 (full path or fast-skip) — secondary agents are NOT activated yet
+   - S4 exits with `interface_contracts.md` created in the epic folder root
+   - **Only after S4 is complete:** proceed to Phase 2 (SP2 Action)
+
+3. **Proceed to Phase 2 (SP2 Action):**
+   - Include `interface_contracts.md` path in each S5 handoff package
    - Activate secondaries before starting your own S5
 
 ---
@@ -492,7 +499,8 @@ Please review all plans. Approve to begin implementation (S6), or request change
 ## Summary Checklist
 
 **Before Starting S5 (SP2 Action):**
-- [ ] S3 Gate 4.5 approved
+- [ ] Gate 4 approved (end of S3)
+- [ ] S4 complete (`interface_contracts.md` exists in epic folder root)
 - [ ] EPIC_README confirms `Parallel Mode (S5): enabled`
 - [ ] Checked all secondary checkpoints
 - [ ] Generated S5 handoff packages for all secondaries

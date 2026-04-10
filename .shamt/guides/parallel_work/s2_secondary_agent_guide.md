@@ -671,13 +671,13 @@ NEXT_ACTION: Waiting for Primary to run S2.P2 (Cross-Feature Alignment) and S3
 - Complete their Feature 01 S2
 - Wait for other secondaries to complete
 - Run S3 (Epic-Level Docs, Tests, and Approval)
-- S4 deprecated — Test Scope Decision now at S5 Step 0 (per feature)
+- Run S4 (Interface Contract Definition)
 
 ### Step 2: Monitor Inbox
 
 **Check inbox every 15 minutes:**
 - Primary may send updates
-- Primary will signal when S3 complete (S4 deprecated)
+- Primary will signal when S3 and S4 complete
 
 ### Step 3: When Primary Signals S3 Complete
 

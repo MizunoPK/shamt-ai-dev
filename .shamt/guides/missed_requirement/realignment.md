@@ -1,6 +1,6 @@
 # PHASE 3 & 4: Realignment (S3) and Resume
 
-**Purpose:** Re-align ALL features (S2.P2 + S3), then resume paused work (S4 deprecated — Test Scope Decision in S5 Step 0)
+**Purpose:** Re-align ALL features (S2.P2 + S3 + S4), then resume paused work
 
 **When to Use:** After PHASE 2 complete, feature spec created/updated
 
@@ -23,8 +23,8 @@
    - [Step 5: S3.P1 — Update epic_smoke_test_plan.md](#step-5-s3p1--update-epic_smoke_test_planmd)
    - [Step 6: Update Existing Scenarios](#step-6-update-existing-scenarios)
    - [Step 7: Identify Integration Points](#step-7-identify-integration-points)
-   - [Step 8: S3.P3 — Gate 4.5 Re-Approval](#step-8-s3p3--gate-45-re-approval)
-1. [PHASE 4: Test Scope Decision (Replaces S4 — Deprecated)](#phase-4-test-scope-decision-replaces-s4--deprecated)
+   - [Step 8: S3.P3 — Gate 4 Re-Approval](#step-8-s3p3--gate-45-re-approval)
+1. [PHASE 4: Interface Contract Definition (S4)](#phase-4-interface-contract-definition-s4)
 1. [PHASE 5: Resume Previous Work](#phase-5-resume-previous-work)
    - [Step 1: Mark Planning Complete](#step-1-mark-planning-complete)
 1. [Missed Requirement Tracking](#missed-requirement-tracking)
@@ -53,8 +53,8 @@
 
 **PHASE 3 & 4 ensures epic coherence after adding/updating a feature:**
 
-- **S3:** Epic-Level Docs, Tests, and Approval (epic smoke test update + Gate 4.5 re-approval)
-- **S4:** (Deprecated) Test Scope Decision now in S5 Step 0
+- **S3:** Epic-Level Docs, Tests, and Approval (epic smoke test update + Gate 4 re-approval)
+- **S4:** Interface Contract Definition (validate feature contracts)
 - **Resume:** Return to paused work
 - **Later:** Implement new/updated feature in sequence
 
@@ -271,37 +271,39 @@ S2.P2 alignment complete (all cross-feature conflicts resolved).
 
 ---
 
-### Step 8: S3.P3 — Gate 4.5 Re-Approval
+### Step 8: S3.P3 — Gate 4 Re-Approval
 
 **After S3.P1 (smoke test update) and S3.P2 (EPIC_README refinement) complete:**
 
 ```markdown
-S3 re-alignment complete (cross-feature conflicts resolved + epic plan updated + Gate 4.5 re-approved).
+S3 re-alignment complete (cross-feature conflicts resolved + epic plan updated + Gate 4 re-approved).
 
 **S2.P2 summary:** {count} features checked, {count} conflicts resolved
 **S3.P1:** epic_smoke_test_plan.md updated with new/updated feature scenarios
 **S3.P2:** EPIC_README.md updated
-**Gate 4.5:** Epic plan re-approved
+**Gate 4:** Epic plan re-approved
 
 **All features are now aligned and epic plan is current.**
 
-Proceed to S5 (Test Scope Decision + Implementation Planning for new/updated feature)? {User confirms}
+Proceed to S4 (Interface Contract Definition) and then S5? {User confirms}
 ```
 
 ---
 
-## PHASE 4: Test Scope Decision (Replaces S4 — Deprecated)
+## PHASE 4: Interface Contract Definition (S4)
 
-> **⚠️ S4 is deprecated (SHAMT-6).** Do NOT run S4. Proceed directly to S5.
+**After S3 Gate 4 re-approval, run S4:**
 
-**At the start of S5 Step 0, do:**
+1. Read `stages/s4/s4_interface_contracts.md`
+2. Validate feature contracts for new/updated feature:
+   - Check interfaces against other features
+   - Verify API consistency
+   - Validate data contracts
+3. Document any interface clarifications needed
+4. Update feature specs if contract issues found
+5. Gate 4 re-approval already obtained (S3.P3)
 
-1. Check Testing Approach (A/B/C/D) in EPIC_README
-2. If Options C/D: identify algorithmic functions in the new/updated feature to unit test
-3. If Options B/D: confirm Integration Test Convention in EPIC_README (set on a prior feature, or discover now)
-4. Follow `stages/s5/s5_v2_validation_loop.md` Step 0 for the new/updated feature
-
-**Note:** The epic_smoke_test_plan.md was already updated in PHASE 3 Part B (S3.P1). No separate test strategy document is needed.
+**After S4 complete, proceed to S5 for new/updated feature.**
 
 ---
 
@@ -325,7 +327,7 @@ Proceed to S5 (Test Scope Decision + Implementation Planning for new/updated fea
 **Planning Complete:**
 - feature_05_injury_tracking spec created (S2 ✅)
 - All features re-aligned (S3 ✅)
-- Test Scope Decision done in S5 Step 0 (S4 deprecated) ✅
+- Contracts validated (S4 ✅)
 
 **Resuming Work:**
 - feature_02_projection_system: Resuming S6
@@ -487,10 +489,11 @@ After feature_05: Resume and complete feature_02
 - [x] Existing scenarios updated if needed
 - [x] Integration points documented
 - [x] EPIC_README.md refined (S3.P2)
-- [x] Gate 4.5 re-approval obtained (S3.P3)
+- [x] Gate 4 re-approval obtained (S3.P3)
 
-**S4 (deprecated — test scope decision now at S5 Step 0 for Options C/D):**
-- [x] Test scope confirmed per Testing Approach (A/B/C/D from EPIC_README)
+**S4 (Interface Contract Definition):**
+- [x] Contracts validated for new/updated feature
+- [x] Interfaces verified against other features
 
 **Resume:**
 - [x] EPIC_README.md updated (planning complete)
@@ -509,7 +512,7 @@ After feature_05: Resume and complete feature_02
 1. Run cross-feature re-alignment (S2.P2 pairwise comparison, then S3 approval)
 2. No conflicts found
 3. User signs off
-4. Update epic smoke test plan in S3.P1, then proceed to S5 (test scope decision at S5 Step 0 — S4 deprecated)
+4. Update epic smoke test plan in S3.P1, then S4 contract validation, then proceed to S5
 5. Resume paused work
 6. New feature implemented later in sequence
 
@@ -522,7 +525,7 @@ After feature_05: Resume and complete feature_02
 2. Find minor conflicts (e.g., naming inconsistency)
 3. Resolve conflicts (update specs)
 4. User approves resolutions
-5. Update epic smoke test plan in S3.P1, then proceed to S5 (test scope decision at S5 Step 0 — S4 deprecated)
+5. Update epic smoke test plan in S3.P1, then S4 contract validation, then proceed to S5
 6. Resume paused work (spec unchanged)
 7. New feature implemented later
 
@@ -536,7 +539,7 @@ After feature_05: Resume and complete feature_02
 3. Resolve conflicts (extract to shared utility)
 4. Update multiple feature specs
 5. User approves resolutions
-6. Update epic smoke test plan in S3.P1, then proceed to S5 (test scope decision at S5 Step 0 — S4 deprecated)
+6. Update epic smoke test plan in S3.P1, then S4 contract validation, then proceed to S5
 7. Resume paused work (spec WAS changed)
 8. User decides: Update implementation_plan.md or handle during implementation
 9. New feature implemented later
@@ -549,7 +552,7 @@ After feature_05: Resume and complete feature_02
 1. Run cross-feature re-alignment (S2.P2 pairwise comparison, then S3 approval)
 2. Check updated feature vs all others
 3. Resolve any conflicts
-4. Update epic smoke test plan in S3.P1, then proceed to S5 (test scope decision at S5 Step 0 — S4 deprecated)
+4. Update epic smoke test plan in S3.P1, then S4 contract validation, then proceed to S5
 5. Resume paused work (if any)
 6. Updated feature implemented later (in its original sequence position)
 
@@ -573,7 +576,7 @@ After feature_05: Resume and complete feature_02
 
 **Why wrong:** Even small features need epic-level test coverage (S3.P1); for Options C/D, test scope is decided at S5 Step 0
 
-**Correct:** Always update epic_smoke_test_plan.md in S3.P1; for Options C/D, define test scope at S5 Step 0 (S4 deprecated)
+**Correct:** Always update epic_smoke_test_plan.md in S3.P1, run S4 contract validation, then proceed to S5
 
 ---
 
@@ -602,8 +605,8 @@ After feature_05: Resume and complete feature_02
 **After completing PHASE 3 & 4 (Realignment and Resume):**
 
 ✅ S2.P2 complete (cross-feature conflicts resolved)
-✅ S3 complete (epic test plan updated + Gate 4.5 re-approved)
-✅ S4 (deprecated — test scope decision now at S5 Step 0)
+✅ S3 complete (epic test plan updated + Gate 4 re-approved)
+✅ S4 complete (Interface Contract Definition — fast-skip or full path)
 ✅ Paused feature spec verified
 ✅ Work resumed OR ready to resume
 

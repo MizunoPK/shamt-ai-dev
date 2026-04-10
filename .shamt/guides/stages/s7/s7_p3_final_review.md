@@ -63,7 +63,7 @@ S7.P1 (Smoke Testing) → S7.P2 (Validation Loop) →
 
 You CANNOT:
 - Skip Step 1 (PR Review Validation Loop) because "the code was already reviewed during S7.P2" — S7.P3 uses fresh-eyes PR review (reference/validation_loop_qc_pr.md), distinct from S7.P2's code quality validation loop; primary clean round + sub-agent confirmation is required
-- Skip Step 2 (Lessons Learned Capture) to save time — lessons learned documentation is mandatory and feeds into S10.P1 guide improvement; it cannot be deferred
+- Skip Step 2 (Lessons Learned Capture) to save time — lessons learned documentation is mandatory and feeds into S11.P1 guide improvement; it cannot be deferred
 
 If you are about to do any of the above: STOP and re-read the relevant section.
 
@@ -470,7 +470,7 @@ Document in the feature README.md:
 - [ ] Reviewed CODING_STANDARDS.md - no updates needed
 - [ ] Updated ARCHITECTURE.md: {describe changes}
 - [ ] Updated CODING_STANDARDS.md: {describe changes}
-- [ ] Noted issues for S10 guide update process: {describe}
+- [ ] Noted issues for S11 guide update process: {describe}
 ```
 
 **1b-3. Make Updates (If Needed)**

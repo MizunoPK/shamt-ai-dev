@@ -4,7 +4,7 @@
 **Version:** 1.0
 **Status:** Current
 
-This file provides a complete overview of the Shamt S1-S10 epic-driven development workflow.
+This file provides a complete overview of the Shamt S1-S11 epic-driven development workflow.
 
 **For stage-specific detail:** Read the full guide for each stage (listed below).
 **For phase transition prompts:** See `prompts_reference_v2.md` or `prompts/`
@@ -27,7 +27,7 @@ This file provides a complete overview of the Shamt S1-S10 epic-driven developme
    - **DO NOT** include code snippets or detailed implementation
 4. File remains in `requests/` folder
 
-**DO NOT create SHAMT-{N} folders at this stage. The S1-S10 flow will determine detailed design.**
+**DO NOT create SHAMT-{N} folders at this stage. The S1-S11 flow will determine detailed design.**
 
 ### Starting S1
 
@@ -44,7 +44,7 @@ This file provides a complete overview of the Shamt S1-S10 epic-driven developme
 
 ```text
 S1: Epic Planning → S2: Feature Deep Dives → S3: Epic-Level Docs, Tests, and Approval →
-S5-S8: Feature Loop (S4 deprecated — Test Scope Decision in S5 Step 0) → S9: Epic Final QC → S10: Final Changes & Merge → S11: Shamt Finalization
+S4: Interface Contract Definition → S5-S8: Feature Loop → S9: Epic Final QC → S10: Final Changes & Merge → S11: Shamt Finalization
 
 Per-feature loop: S5 (Plan) → S6 (Execute) → S7 (Test) → S8 (Align) → repeat or S9
 ```
@@ -97,19 +97,24 @@ Key activities:
 Key activities:
 - S3.P1: Create epic smoke test plan (integration tests spanning ALL features)
 - S3.P2: Refine EPIC_README.md with feature summaries and architecture decisions
-- S3.P3: Gate 4.5 — present epic plan to user, mandatory approval before S5 (S4 deprecated)
+- S3.P3: Gate 4 — present epic plan to user, mandatory approval before S4
 
-**Outputs:** `epic_smoke_test_plan.md`, refined `EPIC_README.md`, Gate 4.5 approval
+**Outputs:** `epic_smoke_test_plan.md`, refined `EPIC_README.md`, Gate 4 approval
 
 ---
 
-### S4: (Deprecated)
+### S4: Interface Contract Definition
 
-**Guide:** `stages/s4/s4_feature_testing_strategy.md` (redirect stub)
+**Guide:** `stages/s4/s4_interface_contracts.md`
 
-S4 has been deprecated. Test Scope Decision (what to test per feature) is now Step 0 of S5. The Testing Approach (A/B/C/D) is set at S1 Step 4.6.5.
+Runs **once per epic**, after Gate 4 approval. Defines all cross-feature interface contracts before per-feature implementation planning begins, so features plan against agreed contracts rather than assumptions.
 
-**Next stage after S3:** S5 (skip S4 entirely)
+- **Full path** (~30-45 min): For epics with ≥1 integration point from S2.P2 — review integration points, define contracts, validation loop
+- **Fast-skip** (~5-10 min): For single-feature epics or epics with zero integration points — create minimal stub
+
+**Output:** `interface_contracts.md` in epic folder root (required prerequisite for S5)
+
+**Parallel mode:** Primary runs S4 solo; secondary agents activated via SP2 *after* S4 completes.
 
 ---
 

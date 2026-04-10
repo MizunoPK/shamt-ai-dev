@@ -1,9 +1,9 @@
 # Mandatory Gates Across Epic Workflow - Quick Reference
 
-**Purpose:** Comprehensive list of ALL mandatory gates from S1-S10
+**Purpose:** Comprehensive list of ALL mandatory gates from S1-S11
 **Use Case:** Quick lookup for gate requirements, criteria, and failure consequences
 **Total Gates:** 11 formal gates (including 1 optional) + additional stage checkpoints
-**Formal Gates:** 1, 1.5 (optional - can skip I2), 2, 3, 4.5, 5, 4a, 7a, 23a, 24, 25 (see CLAUDE.md for authoritative list)
+**Formal Gates:** 1, 1.5 (optional - can skip I2), 2, 3, 3a, 4, 5, 4a, 7a, 23a, 24, 25 (see CLAUDE.md for authoritative list)
 
 ---
 
@@ -14,13 +14,13 @@
 3. [S1: Epic Planning](#s1-epic-planning)
 4. [S2: Feature Deep Dive (3 formal gates per feature - NEW: Checklist Approval added)](#s2-feature-deep-dive-3-formal-gates-per-feature---new-checklist-approval-added)
 5. [S3: Epic-Level Docs, Tests, and Approval (1 gate per epic)](#s3-epic-level-docs-tests-and-approval-1-gate-per-epic)
-6. [S4: (Deprecated)](#s4-deprecated)
+6. [S4: Interface Contract Definition (0 formal gates)](#s4-interface-contract-definition-0-formal-gates)
 7. [S5: Implementation Planning](#s5-implementation-planning)
 8. [S6: Implementation Execution](#s6-implementation-execution)
 9. [S7: Post-Implementation (2 checkpoints per feature)](#s7-post-implementation-2-checkpoints-per-feature)
 10. [S8: Post-Feature Updates](#s8-post-feature-updates)
 11. [S9: Epic-Level Final QC](#s9-epic-level-final-qc)
-12. [S10: Epic Cleanup (3 critical checkpoints per epic — Gate 7.1, 7.1b, 7.2)](#s10-epic-cleanup-3-critical-checkpoints-per-epic)
+12. [S10: Final Changes & Merge](#s10-final-changes--merge)
 13. [Summary Statistics](#summary-statistics)
 14. [When to Use This Reference](#when-to-use-this-reference)
 
@@ -31,7 +31,7 @@
 **The workflow uses two gate numbering systems:**
 
 ### Type 1: Stage-Level Gates (whole/decimal numbers)
-- **Examples:** Gate 3, Gate 4.5, Gate 5
+- **Examples:** Gate 3, Gate 4, Gate 5
 - **Naming:** Based on stage number or position between stages
 - **Approver:** Usually requires user approval
 - **Purpose:** Major workflow checkpoints
@@ -39,7 +39,7 @@
 
 **Logic:**
 - Gate 3 = S2 gate (named after target stage)
-- Gate 4.5 = S3.P3 (interstitial; approves epic plan before S5 begins; S4 deprecated)
+- Gate 4 = S3.P3 (approves epic plan before S4 begins)
 - Gate 5 = S5 gate
 
 ### Type 2: Iteration-Level Gates (iteration numbers)
@@ -65,9 +65,9 @@
 ### Quick Identification
 
 **How to tell which type:**
-- **User gates:** 3, 4.5, 5, Phase X.X gates → User approval required
+- **User gates:** 3, 3a, 4, 5, Phase X.X gates → User approval required
 - **Agent gates:** 4a, 7a, 23a, 24, 25 → Agent validates using checklist
-- **Stage gates:** Named after stages (3, 4.5, 5)
+- **Stage gates:** Named after stages (3, 4, 5)
 - **Iteration gates:** Named after iterations (4a, 7a, 23a, 24, 25)
 
 ---
@@ -81,7 +81,7 @@
 | S2 | Gate 1.5: I1 Completeness | S2.P1 (optional) | All 6 criteria pass = skip I2 | No (fail = proceed to I2) |
 | S2 | Gate 2: Spec Alignment | S2.P1.I3 | Zero scope creep + zero missing | Yes (Revise spec) |
 | S2 | Gate 3: Checklist Approval | S2.P1.I3 | User answers ALL questions (100%) | Yes (Revise/Re-present) |
-| S3 | Gate 4.5: Epic Plan Approval | S3.P3 | User approves complete plan | Yes (S3) |
+| S3 | Gate 4: Epic Plan Approval | S3.P3 | User approves complete plan | Yes (S3) |
 | S5 | Gate 4a: Dimension 4 Validation | S5 v2 Validation Loop | All tasks have acceptance criteria | Yes (Fix + redo) |
 | S5 | Gate 7a: Backward Compatibility | S5 v2 Validation Loop | Compatibility strategy documented | Yes (Fix + redo) |
 | S5 | Gate 23a: Pre-Impl Spec Audit (5 parts) | S5 v2 Validation Loop | ALL 5 PARTS pass with 100% | Yes (Fix + redo) |
@@ -90,9 +90,9 @@
 | S5 | Gate 5: Implementation Plan Approval | After S5 v2 | User approves implementation_plan.md | Yes (Revise plan) |
 | S7 | Smoke Part 3 | S7.P1 | Data values verified | Yes (Restart S7.P1) |
 | S7 | Validation Loop | S7.P2 | primary clean round + sub-agent confirmation | No (Fix + continue) |
-| S10 | Gate 7.1: Unit Tests (Options C/D only) | S10 | 100% test pass (exit code 0) — skipped for A/B | Yes (Fix tests) |
-| S10 | Gate 7.1b: Integration Scripts (Options B/D only) | S10 | All scripts exit code 0 — skipped for A/C | Yes (Fix scripts) |
-| S10 | User Testing | S10 | ZERO bugs found by user | Yes (S9) |
+| S9 | User Testing | S9.P3 | ZERO bugs found by user | Yes (restart S9) |
+| S9 | Gate 7.1: Unit Tests (Options C/D only) | S9.P1 Part 4 | 100% test pass (exit code 0) — skipped for A/B | Yes (Fix tests) |
+| S9 | Gate 7.1b: Integration Scripts (Options B/D only) | S9.P1 Part 4 | All scripts exit code 0 — skipped for A/C | Yes (Fix scripts) |
 
 ---
 
@@ -253,7 +253,7 @@
 
 ---
 
-### Gate 4: User Approval (Acceptance Criteria)
+### Gate 3a: User Approval (Acceptance Criteria)
 
 **Location:** stages/s2/s2_p1_spec_creation_refinement.md (S2.P1.I3 — embedded in Gate 3)
 **When:** During S2.P1.I3, as part of Gate 3 (User Checklist Approval includes acceptance criteria review)
@@ -276,7 +276,7 @@
 
 ## S3: Epic-Level Docs, Tests, and Approval (1 gate per epic)
 
-### Gate 4.5: Epic Plan Approval
+### Gate 4: Epic Plan Approval
 
 **Location:** stages/s3/s3_epic_planning_approval.md
 **When:** After all features planned and conflicts resolved
@@ -286,21 +286,25 @@
 
 **Pass Criteria:**
 - User reviews epic plan
-- User explicitly approves proceeding to implementation
+- User explicitly approves proceeding to S4
 
 **If FAIL:**
 - Address user concerns
 - Revise affected feature specs
 - Re-run S3 (Epic-Level Docs, Tests, and Approval)
-- Cannot proceed to S5 without sign-off (S4 deprecated)
+- Cannot proceed to S4 without sign-off
 
-**Why it matters:** Last checkpoint before significant implementation work begins
+**Why it matters:** Last checkpoint before interface contract definition and implementation planning begin
 
 ---
 
-## S4: (Deprecated)
+## S4: Interface Contract Definition (0 formal gates)
 
-S4 has been deprecated. Test Scope Decision (what to test per feature) is now Step 0 of S5. The epic testing approach (A/B/C/D) is set at S1 Step 4.6.5. See `stages/s4/s4_feature_testing_strategy.md` for the redirect stub.
+S4 has no formal user gates. Interface contracts are technical derivations of user-approved specs; they surface implicitly at Gate 5 when implementation plans are reviewed.
+
+**Agent-validated only:** S4 uses a 5-dimension validation loop (primary clean round + sub-agent confirmation). No user approval is required to exit S4.
+
+**See:** `stages/s4/s4_interface_contracts.md`
 
 ---
 
@@ -656,7 +660,7 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 
 ## S9: Epic-Level Final QC
 
-### No Mandatory Gates (but similar to S7 protocol)
+### No Mandatory Gates for S9.P1/P2 (but restart protocol applies)
 
 **Requirements:**
 - Epic smoke testing passes
@@ -665,16 +669,14 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 
 ---
 
-## S10: Epic Cleanup (3 critical checkpoints per epic)
-
 ### Gate 7.1: Unit Tests — Options C/D Only
 
-**Location:** stages/s10/s10_epic_cleanup.md
-**When:** Before committing (Options C/D only); skipped for Options A/B
+**Location:** stages/s9/s9_p1_epic_smoke_testing.md (Part 4)
+**When:** After S9.P1 Parts 1-3 complete, before declaring S9 smoke testing done (Options C/D only); skipped for Options A/B
 **Conditional on Testing Approach** (set at S1, recorded in EPIC_README)
 
 **What it checks (Options C/D):**
-- All unit tests pass
+- All unit tests pass across all features in the epic
 - Exit code = 0 from test runner
 
 **Pass Criteria:**
@@ -688,14 +690,14 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 - Re-run tests
 - Only proceed when exit code = 0
 
-**Why it matters:** Ensures no regressions for epics that use unit tests
+**Why it matters:** Ensures no cross-feature regressions for epics that use unit tests
 
 ---
 
 ### Gate 7.1b: Integration Scripts — Options B/D Only
 
-**Location:** stages/s10/s10_epic_cleanup.md (Step 2c)
-**When:** Before committing (Options B/D only); skipped for Options A/C
+**Location:** stages/s9/s9_p1_epic_smoke_testing.md (Part 4)
+**When:** As part of S9.P1 Part 4 (Options B/D only); skipped for Options A/C
 **Conditional on Testing Approach** (set at S1, recorded in EPIC_README)
 
 **What it checks (Options B/D):**
@@ -706,23 +708,23 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 - Every integration script exits with code 0
 - Read Integration Test Convention from EPIC_README for run command
 
-**If Testing Approach is A or C:** Skip this gate. Proceed to Gate 7.2.
+**If Testing Approach is A or C:** Skip this gate. Proceed through S9.
 
 **If FAIL (Options B/D):**
 - Review script output for failures
 - Fix failing assertions or implementation issues
 - Rerun the script — if fix is a behavior change, notify user
 - Only proceed when all scripts exit code 0
-- Note: If fix is a behavior change, return to S9 before continuing
+- Note: If fix is a behavior change, return to earlier S9 steps
 
-**Why it matters:** Ensures integration scripts are all passing before epic is committed
+**Why it matters:** Ensures integration scripts are all passing before S9 sign-off
 
 ---
 
 ### Gate 7.2: User Testing (ZERO Bugs)
 
-**Location:** stages/s10/s10_epic_cleanup.md
-**When:** After unit tests pass (final gate before commit)
+**Location:** stages/s9/s9_p3_user_testing.md
+**When:** After S9.P2 Validation Loop passes (final gate before S10)
 
 **What it checks:**
 - User tests the complete epic
@@ -736,10 +738,16 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 - Create bug fix following stages/s5/s5_bugfix_workflow.md
 - Bug fix goes through: S2 → S5 → S6 → S7
 - After bug fix complete: **Restart S9** (Epic-Level Final QC)
-- Re-run S9 → S10 → User testing
-- Cannot commit without user approval
+- Re-run S9 (including S9.P3 User Testing) → S10 when zero bugs
+- Cannot proceed to S10 without user approval
 
 **Why it matters:** Final validation that epic meets user requirements before merging to main
+
+---
+
+## S10: Final Changes & Merge
+
+**Note:** All test runs (unit tests and integration scripts) are completed during S9. S10 does not re-run tests — no new code has been written since S9 passed.
 
 ---
 
@@ -750,7 +758,8 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 - Gate 1.5 (S2.P1): I1 Completeness Gate (optional - can skip I2 if passes)
 - Gate 2 (S2.P1.I3): Spec-to-Epic Alignment
 - Gate 3 (S2.P1.I3): User Checklist Approval
-- Gate 4.5 (S3.P3): Epic Plan Approval
+- Gate 3a (S2.P1.I3): User Approval of Acceptance Criteria (embedded in Gate 3)
+- Gate 4 (S3.P3): Epic Plan Approval
 - Gate 5 (S5 v2): Implementation Plan Approval (after validation loop)
 - Gate 4a (S5 v2): Embedded in Dimension 4 - Task Specification Quality
 - Gate 7a (S5 v2): Embedded in Dimension 7 - Integration & Compatibility
@@ -759,22 +768,22 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 - Gate 25 (S5 v2): Embedded in Dimension 11 - Spec Alignment & Cross-Validation
 
 **Additional Stage Checkpoints (documented in this file but not formally numbered gates):**
-- S2.P1.I3: User Approval of Acceptance Criteria (referenced as "Gate 4" in this file for completeness — embedded in Gate 3)
+- S2.P1.I3: User Approval of Acceptance Criteria (Gate 3a — embedded in Gate 3)
 - S7.P1: Smoke Part 3 - E2E Data Validation (labeled "Checkpoint: S7.P1 Part 3" in this file)
 - S7.P2: Validation Loop - Primary Clean Round + Sub-Agent Confirmation (labeled "Checkpoint: S7.P2 Validation Loop" in this file)
-- S10: Unit Tests 100% Pass — Options C/D only (referenced as "Gate 7.1" in this file)
-- S10: Integration Scripts all exit 0 — Options B/D only (referenced as "Gate 7.1b" in this file)
-- S10: User Testing Zero Bugs (referenced as "Gate 7.2" in this file)
+- S9.P1 Part 4: Unit Tests 100% Pass — Options C/D only (referenced as "Gate 7.1" in this file)
+- S9.P1 Part 4: Integration Scripts all exit 0 — Options B/D only (referenced as "Gate 7.1b" in this file)
+- S9.P3: User Testing Zero Bugs (referenced as "Gate 7.2" in this file)
 
 **Gate Distribution by Stage:**
 - S1: 0 formal gates
 - S2: 4 formal gates per feature (Gates 1, 1.5 optional, 2, 3) - Gate 1.5 can skip I2
-- S3: 1 formal gate (Gate 4.5)
-- S4: (Deprecated — 0 formal gates; Test Scope Decision moved to S5 Step 0)
+- S3: 1 formal gate (Gate 4)
+- S4: 0 formal gates (Interface Contract Definition — agent-validated only)
 - S5 v2: 1 formal user gate (Gate 5 - User Approval), 5 embedded validation gates (4a, 7a, 23a, 24, 25 now embedded in 11 validation dimensions)
 - S6-S8: 0 formal gates
-- S9: 0 formal gates (but restart protocol applies)
-- S10: 0 formal gates (but checkpoints 7.1 and 7.2 are critical)
+- S9: 0 formal gates (but restart protocol applies; Gates 7.1/7.1b test checkpoints and Gate 7.2 User Testing are critical)
+- S10: 0 formal gates
 
 **Gates with Evidence Requirements:** 7
 - Gate 1 (S2.P1.I1 Research Audit): File paths, line numbers
@@ -794,13 +803,13 @@ S4 has been deprecated. Test Scope Decision (what to test per feature) is now St
 
 **Formal Gates Requiring User Input:** 3 (always required) + 1 conditional
 - Gate 3: User Checklist Approval (S2.P1.I3)
-- Gate 4.5: Epic Plan Approval (S3.P3) - includes test plan approval
+- Gate 4: Epic Plan Approval (S3.P3) - includes test plan approval
 - Gate 5: Implementation Plan Approval (S5 v2 — after Validation Loop, before S6)
 - Gate 25 (Dimension 11 validation): User decision **only if discrepancies found** (conditional)
 
 **Stage Checkpoints Requiring User Input:** 2
 - S2.P1.I3 Checkpoint: User approval of acceptance criteria (embedded in Gate 3)
-- S10 Checkpoint 7.2: User testing approval (zero bugs)
+- S9.P3 Checkpoint 7.2: User testing approval (zero bugs)
 
 ---
 

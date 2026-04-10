@@ -52,7 +52,7 @@ grep -rn "reference/.*\.md" --include="*.md"
 grep -rn "\[.*\](.*\.md)" --include="*.md" | grep -o "(.*\.md)" | \
   sed 's/[()]//g' | while read path; do [ ! -f "$path" ] && echo "BROKEN: $path"; done
 
-# Find stage references (S1-S10)
+# Find stage references (S1-S11)
 grep -rn "\bS[0-9][0-9]*\b" --include="*.md"
 ```bash
 
@@ -195,7 +195,7 @@ grep -n "S[0-9]" CLAUDE.md | grep -o "S[0-9][0-9]*\(\.P[0-9][0-9]*\)\?\(\.I[0-9]
 | **D6: Completeness** | Missing sections, TODOs | 85% | After major updates |
 | **D7: Template Currency** | Template synchronization | 70% | After template changes |
 | **D15: Context-Sensitive** | Intentional exceptions | 20% | Advanced: distinguishing errors |
-| **D4: CLAUDE.md Sync** | Root file synchronization | 60% | After S10.P1 guide updates |
+| **D4: CLAUDE.md Sync** | Root file synchronization | 60% | After S11.P1 guide updates |
 | **D10: Intra-File** | Within-file consistency | 80% | File seems internally inconsistent |
 | **D11: File Size** | Readability limits | 100% | Files seem too large |
 | **D12: Structural** | Template compliance | 60% | After structural changes |
@@ -387,7 +387,7 @@ wc -l file.md  # Count lines
 
 ## Scenario Quick Lookup
 
-**"I just completed S10.P1 guide updates"**
+**"I just completed S11.P1 guide updates"**
 → Run full audit focusing on D1, D2, D7, D4 (3-4 hours, 5-8 rounds typical)
 
 **"I just did stage renumbering"**

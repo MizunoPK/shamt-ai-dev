@@ -19,7 +19,7 @@ I'm beginning S10 (Final Changes & Merge).
 **Guide I'm following:** stages/s10/s10_epic_cleanup.md
 **Prerequisites verified:**
 - [x] S9 fully complete in EPIC_README.md — all phases complete
-- [x] User testing passed with ZERO bugs (S9 Step 6)
+- [x] User testing passed with ZERO bugs (S9.P3)
 - [x] Read ENTIRE guide using Read tool
 
 **The guide requires:**

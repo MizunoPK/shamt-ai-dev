@@ -248,7 +248,7 @@
 - [ ] Agent creates proposal doc in `.shamt/unimplemented_design_proposals/`
 - [ ] Agent commits proposal doc
 - [ ] Agent updates `reference/guide_update_tracking.md` with proposal doc path
-- [ ] Agent proceeds with epic commit (S10 Step 5)
+- [ ] Agent proceeds with archival (S11 Step 2)
 
 ---
 

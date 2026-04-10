@@ -54,7 +54,7 @@ LARGE=0
 declare -a size_exceptions=(
   "stages/s1/s1_epic_planning.md"
   "stages/s5/s5_v2_validation_loop.md"
-  "stages/s10/s10_epic_cleanup.md"  # grew to 1369 lines after SHAMT-34 additions (Steps 8.5 + 9)
+  # stages/s10/s10_epic_cleanup.md removed — rewritten in SHAMT-35, now 655 lines (well under threshold)
 )
 
 for file in $(find stages sync -name "*.md" 2>/dev/null); do

@@ -117,7 +117,7 @@ Result: Cannot validate planning completeness, workflow stuck
 - [ ] Last Updated (current)
 
 **EPIC_WORKFLOW_USAGE.md:**
-- [ ] Complete S1-S10 workflow details
+- [ ] Complete S1-S11 workflow details
 - [ ] Stage-by-stage breakdowns
 - [ ] Phase/iteration structures
 - [ ] Duration estimates

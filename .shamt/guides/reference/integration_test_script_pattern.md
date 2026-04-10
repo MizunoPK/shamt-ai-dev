@@ -198,7 +198,7 @@ Use relative paths or project config conventions. Scripts should run on any mach
 - `stages/s7/s7_p1_smoke_testing.md` — Part 3: Run integration script instead of manual process (Options B/D)
 - `stages/s8/s8_p2_epic_testing_update.md` — Step 3b: Maintain/update integration script
 - `stages/s9/s9_p1_epic_smoke_testing.md` — Part 4: Run all integration scripts at epic level (Options B/D)
-- `stages/s10/s10_epic_cleanup.md` — Step 2c / Gate 7.1b: Run all integration scripts before commit
+- `stages/s10/s10_epic_cleanup.md` — Step 2c: Integration scripts run during S9; commit includes test results
 
 ---
 

@@ -198,7 +198,7 @@ S1 is complete when you have Discovery approved, a validated epic ticket, comple
 - **B. Automated E2E integration scripts only** (Recommended) — runnable scripts that assert on real-data outputs; no unit tests
 - **C. Unit tests for algorithmic functions only** — pure function tests; no integration scripts
 - **D. Both** — algorithmic unit tests + automated E2E integration scripts
-- **Impact:** Controls S3.P1 scope, S5 test scope decision, S6 test gates, S7.P1 Part 3, S9 Part 4, S10 Gate 7.1/7.1b
+- **Impact:** Controls S3.P1 scope, S5 test scope decision, S6 test gates, S7.P1 Part 3, S9 Part 4
 - **Rule:** Set once at S1. If user wants to change mid-epic, agent records the update in EPIC_README with a note.
 - **CRITICAL:** Agent must ask the user — this is not an autonomous decision.
 
@@ -711,7 +711,7 @@ Use template from `templates/` folder (see `templates/TEMPLATES_INDEX.md`) → "
 
 Create `EPIC_METRICS.md` in the epic root folder alongside `EPIC_README.md`.
 
-**Purpose:** Tracks timing and validation loop statistics throughout the epic for process improvement. Used by S10 Step 7e to populate the master `PROCESS_METRICS.md` aggregate.
+**Purpose:** Tracks timing and validation loop statistics throughout the epic for process improvement. Used by S11 Step 3e to populate the master `PROCESS_METRICS.md` aggregate.
 
 **Template:**
 
@@ -754,7 +754,7 @@ Parallel Agents Used: {e.g., "S2 parallel (3 agents), S5 sequential" or "No"}
 
 **Fill in as validation loops exit:** Count rounds from the loop log (VALIDATION_LOG.md for most loops; S8_ALIGNMENT_VALIDATION_{feature_NN}.md for S8.P1 loops — verify filename per loop type). Identify the top reset-causing dimensions and record in the table.
 
-**At S10 Step 5:** Include EPIC_METRICS.md in the commit. The file moves to `done/` with the epic folder at S10 Step 6.
+**At S10 Step 2:** Include EPIC_METRICS.md in the final commit. The file moves to `done/` with the epic folder at S11 Step 2 (Archival).
 
 ---
 
@@ -762,7 +762,7 @@ Parallel Agents Used: {e.g., "S2 parallel (3 agents), S5 sequential" or "No"}
 
 Add **Feature Tracking** table listing all features with S2 Complete and S8.P2 Complete checkboxes (all unchecked initially).
 
-Add **Epic Completion Checklist** with all 10 stages (S1 items checked, all others unchecked).
+Add **Epic Completion Checklist** with all 11 stages (S1 items checked, all others unchecked).
 
 ### Step 5.7: Update Agent Status
 

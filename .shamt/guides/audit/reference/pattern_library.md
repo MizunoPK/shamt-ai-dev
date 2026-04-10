@@ -226,11 +226,11 @@ grep -rn "19 dimensions\|all 19\|19 critical\|18 dimensions\|all 18\|18 critical
 ### Pattern 4.3: Stage Count Claims
 
 ```bash
-# Should be 10 stages (S1-S10)
-grep -rn "10 stages\|S1-S10\|stages 1-10" --include="*.md" .
+# Should be 11 stages (S1-S11, all active)
+grep -rn "11 stages\|S1-S11\|stages 1-11" --include="*.md" .
 
 # Check for old counts (if previously different)
-grep -rn "7 stages\|8 stages\|9 stages" --include="*.md" .
+grep -rn "7 stages\|8 stages\|9 stages\|10 stages" --include="*.md" .
 ```
 
 ### Pattern 4.4: Iteration Count Claims

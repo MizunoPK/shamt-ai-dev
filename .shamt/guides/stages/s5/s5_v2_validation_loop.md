@@ -91,8 +91,7 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 - [ ] S5 v2 template available: `templates/implementation_plan_template.md`
 - [ ] Feature README.md exists with Agent Status section
 
-**Note:** S4 is deprecated. The `test_strategy.md` prerequisite has been removed. Test scope
-decisions are now made during Phase 1 of S5 (Test Scope Decision step).
+- [ ] S4 complete (`interface_contracts.md` exists in the epic folder root — both full-path and fast-skip paths create this file)
 
 **Parallel mode (S5): If running as a secondary agent in parallel S5:**
 - You must have received an S5 handoff package from Primary (Sync Point 2 activation)
@@ -137,7 +136,7 @@ S5 v2 is a **validation loop-based approach** to implementation planning that sy
 ### When to Use This Guide
 
 **Use S5 v2 when:**
-- Starting implementation planning (S4 is deprecated; proceed to S5 directly after S3)
+- Starting implementation planning (after S4 Interface Contract Definition is complete)
 - Creating implementation_plan.md for a new feature
 - All spec.md requirements finalized and user-approved (Gate 3 passed)
 - Re-entering from S8 alignment loop to plan the next feature in the epic
@@ -180,7 +179,7 @@ Each validation round checks all 9 dimensions systematically:
 **S5 creates mechanical implementation plans** validated using the 9-dimension process described in this guide.
 
 **For S6 execution:**
-- **MANDATORY** for all S6 execution in S1-S10 epic workflow (no exceptions)
+- **MANDATORY** for all S6 execution in S1-S11 epic workflow (no exceptions)
 - S5 produces mechanical implementation plan directly (no intermediate task-based plan)
 - Plan uses step-by-step file operations (CREATE, EDIT, DELETE, MOVE)
 - Plan validated using 9-dimension validation loop
@@ -264,9 +263,15 @@ If you navigated here via the Table of Contents: go back to the beginning and re
 
 ### Step-by-Step Process
 
-#### **Step 0: Test Scope Decision (10-15 minutes — replaces S4)**
+#### **Step 0a: Read Interface Contracts (5 minutes)**
 
-This step replaces the entire S4 stage. Complete it before creating the draft.
+Read `interface_contracts.md` in the epic folder root (created by S4). Verify that any contracts where your feature is listed as a producer or consumer are reflected in your planning notes. You will reference these contracts when defining implementation steps rather than re-defining the interfaces locally.
+
+If `interface_contracts.md` contains the fast-skip stub ("No cross-feature contracts"), proceed directly to Step 0b.
+
+#### **Step 0b: Test Scope Decision (10-15 minutes)**
+
+Complete this step before creating the draft.
 
 **0.1: Read the epic's Testing Approach from EPIC_README**
 
@@ -1345,7 +1350,7 @@ Use `VALIDATION_LOOP_LOG_S5_template.md` to track each round: timestamp, reading
 ---
 
 
-**This guide is complete and ready for use. Begin with Phase 1: Draft Creation when S3 is complete (Gate 4.5 passed) and spec.md is finalized. (S4 is deprecated — Test Scope Decision is now Step 0 of S5.)**
+**This guide is complete and ready for use. Begin with Phase 1: Draft Creation when S4 is complete (`interface_contracts.md` exists) and spec.md is finalized.**
 
 ---
 

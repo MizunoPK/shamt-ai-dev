@@ -29,7 +29,7 @@
 
 **D5: Count Accuracy** validates that numeric claims in documentation match reality:
 
-1. **Stage Counts** - "10 stages" actually shows S1-S10
+1. **Stage Counts** - "11 stages" actually shows S1-S11
 2. **Phase Counts** - "S5 has 2 phases" matches S5 v2 Phase 1 (Draft Creation) and Phase 2 (Validation Loop)
 3. **Iteration Counts** - "22 iterations in S5" matches actual iteration count
 4. **Gate Counts** - "8 mandatory gates" matches reference/mandatory_gates.md
@@ -57,7 +57,7 @@
 
 **Stage Count Mismatch:**
 - Documentation says "9 stages"
-- Actual workflow has 10 stages (S1-S10)
+- Actual workflow has 11 stages (S1-S11)
 - User thinks workflow incomplete or documentation wrong
 - Example: After S4 added, several places still said "9 stages"
 
@@ -120,14 +120,14 @@ CLAUDE.md (project root)
 **S1: Epic Planning**
 **S2: Feature Planning**
 ...
-**S10: Epic Cleanup**
+**S10: Final Changes & Merge**
 ```
 
 **Search Commands:**
 ```bash
 # Count stage sections in CLAUDE.md
 grep -c "^\*\*S[0-9]" CLAUDE.md
-# Expected: 10 (S1-S10)
+# Expected: 10 (S1-S11)
 
 # Verify no missing stages
 for i in {1..10}; do
@@ -185,16 +185,16 @@ fi
 ### Type 1: Stage Count Validation
 
 **What to Check:**
-All references to total stage count should say "10 stages" (S1-S10).
+All references to total stage count should say "11 stages" (S1-S11).
 
 **Common Locations:**
 ```markdown
 ## Workflow Overview
 
-The epic workflow consists of **10 stages** from planning to cleanup.
+The epic workflow consists of **11 stages** from planning to cleanup.
 
 **Stages:**
-S1 → S2 → S3 → S4 → S5 → S6 → S7 → S8 → S9 → S10
+S1 → S2 → S3 → S4 → S5 → S6 → S7 → S8 → S9 → S10 → S11
 ```
 
 **Search Commands:**
@@ -205,20 +205,20 @@ grep -rn "[0-9]+ stages\|[0-9]+-stage" .shamt/guides/
 # Extract just the numbers
 grep -roh "[0-9]+ stages" .shamt/guides/ | sort | uniq -c
 
-# Should show: "10 stages" (not 9, not 11)
+# Should show: "11 stages" (not 9, not 10)
 ```markdown
 
 **Validation Checklist:**
-- [ ] CLAUDE.md mentions correct total (10 stages)
-- [ ] README.md workflow section shows 10 stages
-- [ ] EPIC_WORKFLOW_USAGE.md stage list has 10 entries
+- [ ] CLAUDE.md mentions correct total (11 stages)
+- [ ] README.md workflow section shows 11 stages
+- [ ] EPIC_WORKFLOW_USAGE.md stage list has 11 entries
 - [ ] No files claim "9 stages" (outdated after S4 added)
-- [ ] Stage progression diagrams show all 10 stages
+- [ ] Stage progression diagrams show all 11 stages
 
 **Common Errors:**
 - "9 stages" (before S4 was added between old S3 and S4)
 - "7 stages" (very old workflow before S8, S9, S10 added)
-- Diagram shows S1 → S2 → ... → S9 (missing S10)
+- Diagram shows S1 → S2 → ... → S10 (missing S11)
 
 **Automated:** ✅ Yes (grep for stage count claims, verify against actual count)
 
@@ -243,11 +243,12 @@ Each stage's phase count claims match actual phase structure.
 | S8 | 2 | P1-P2 |
 | S9 | 4 | P1-P4 |
 | S10 | No phases (with S10.P1 sub-section) | - |
+| S11 | 1 | P1 |
 
 **Search Commands:**
 ```bash
 # For each stage, extract phase count claim
-for stage in s{1..10}; do
+for stage in s{1..11}; do
   echo "=== $stage ==="
   # Find claims like "S1 has 6 phases" or "(6 phases)"
   grep -rn "$stage.*[0-9]+ phase\|[0-9]+ phases.*$stage" \
@@ -370,7 +371,7 @@ Gate count claims match reference/mandatory_gates.md official count.
 
 **Official Gate Count: 10 gates**
 - Gate 1, Gate 2, Gate 3 (stage-level)
-- Gate 4.5, Gate 5 (stage-level)
+- Gate 4, Gate 5 (stage-level)
 - Gate 4a, Gate 7a, Gate 23a, Gate 24, Gate 25 (iteration-level)
 
 **Search Commands:**
@@ -450,7 +451,7 @@ grep -c "^\| \*\*D[0-9]" .shamt/guides/audit/README.md
 
 **Stage Count:**
 ```markdown
-The workflow consists of **10 stages** with guides in stages/ directory.
+The workflow consists of **11 stages** with guides in stages/ directory.
 ```markdown
 
 **Validation:**
@@ -629,7 +630,7 @@ audit/README.md: typically 5-8 total rounds
 
 **Result:**
 - CLAUDE.md still says "9 stages"
-- README.md workflow section shows 10 stages
+- README.md workflow section shows 11 stages
 - Inconsistent counts across documentation
 
 **Example from History:**
@@ -867,7 +868,7 @@ echo "TOTAL: $total iterations (expected 22)"
 
 ```bash
 # For each stage, verify phase count
-for stage in s{1..10}; do
+for stage in s{1..11}; do
   echo "=== $stage ==="
 
   # Find phase count claim in documentation
@@ -974,7 +975,7 @@ The v2 workflow is a **9-stage epic-driven development process**...
 
 **Problem:**
 - Claimed 9 stages
-- Actual workflow: S1-S10 (10 stages)
+- Actual workflow: S1-S11 (11 stages)
 - S4 added between old S3 and S4, all subsequent stages renumbered
 
 **Fix:**
@@ -1055,7 +1056,7 @@ The workflow uses two types of gates:
 | Gate 1 | Stage | S2.P1.I1 |
 | Gate 2 | Stage | S2.P1.I3 |
 | Gate 3 | Stage | S2.P1.I3 |
-| Gate 4.5 | Stage | S3.P3 |
+| Gate 4 | Stage | S3.P3 |
 | Gate 5 | Stage | S5.P3 |
 | Gate 4a | Iteration | S5.P1.I2 |
 | Gate 7a | Iteration | S5.P1.I3 |
@@ -1077,7 +1078,7 @@ TOTAL: 10 gates
 The workflow uses two types of gates:
 
 -**Stage-Level Gates:** 5 gates (Gates 1, 2, 3, 4.5, 5)
-+**Stage-Level Gates:** 5 gates (Gate 1, Gate 2, Gate 3, Gate 4.5, Gate 5)
++**Stage-Level Gates:** 5 gates (Gate 1, Gate 2, Gate 3, Gate 4, Gate 5)
 -**Iteration-Level Gates:** 3 gates (Gates 4a, 7a, 23a)
 +**Iteration-Level Gates:** 5 gates (Gate 4a, Gate 7a, Gate 23a, Gate 24, Gate 25)
 -**TOTAL: 8 gates**
@@ -1181,7 +1182,7 @@ If 9-10 are actually sub-criteria, move them as sub-bullets under criteria 8.
 | **D9: Content Accuracy** | D9 = semantic correctness ("is claim true?"), D5 = numeric correctness ("is number correct?") |
 | **D6: Content Completeness** | D6 = presence (content exists), D5 = quantity (counts match headers) |
 | **D8: Documentation Quality** | D8 = format (headers consistent), D5 = numbers ("## 8 Steps" has 8 steps) |
-| **D3: Workflow Integration** | D3 = logic (sequence correct), D5 = counts ("10 stages" matches S1-S10) |
+| **D3: Workflow Integration** | D3 = logic (sequence correct), D5 = counts ("11 stages" matches S1-S11) |
 
 **Example workflow:**
 1. D6 checks: Guide has "Prerequisites" section ✅
@@ -1198,7 +1199,7 @@ If 9-10 are actually sub-criteria, move them as sub-bullets under criteria 8.
 **D5: Count Accuracy validates that numeric claims match reality.**
 
 **Key Validations:**
-1. ✅ Stage counts (10 stages S1-S10)
+1. ✅ Stage counts (11 stages S1-S11)
 2. ✅ Phase counts (per-stage verification)
 3. ✅ Iteration counts (especially S5's 22 iterations)
 4. ✅ Gate counts (10 mandatory gates)

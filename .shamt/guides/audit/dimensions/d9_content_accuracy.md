@@ -30,7 +30,7 @@
 
 ✅ **File Counts:**
 - "19 templates" matches actual template count
-- "10 stages" matches actual number of stages
+- "11 stages" matches actual number of stages
 - "22 iterations" matches actual S5 iteration count
 
 ✅ **Iteration/Phase Counts:**
@@ -146,7 +146,7 @@ git log --since="2025-12-30" --oneline stages/ reference/ | wc -l
 **Common Claims:**
 ```text
 "19 templates"
-"10 stages"
+"11 stages"
 "23 dimensions"
 "22 iterations in S5"
 ```bash
@@ -272,7 +272,7 @@ Different guides may make incompatible claims about the same workflow:
 |-------|-------------------|-----------------|
 | Group workflow | S1, S2, S3, S4 | When do groups matter? |
 | Parallel work | S1, S2, parallel_work/ | How does parallelization work? |
-| Stage sequence | All stage guides | S1->S2->...->S10 |
+| Stage sequence | All stage guides | S1->S2->...->S10->S11 |
 | Gate requirements | Stage guides, mandatory_gates.md | Gate numbers and locations |
 
 **Search Commands:**

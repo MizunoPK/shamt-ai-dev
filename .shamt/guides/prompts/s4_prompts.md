@@ -1,74 +1,69 @@
-# S4 Prompts: Feature Testing Strategy
+# S4 Prompts: Interface Contract Definition
 
-> **⚠️ DEPRECATED (SHAMT-6):** S4 has been deprecated. Test Scope Decision is now Step 0 of S5.
-> Do NOT follow these prompts for new epics. See `stages/s4/archive/s4_feature_testing_strategy.md` for the redirect stub (archived).
+> **Purpose:** Validate feature interface contracts before implementation planning
 
-**Stage:** 4 (DEPRECATED)
-**Purpose:** (Deprecated) Feature-level test strategy creation based on feature specs
+**Stage:** 4
+**Purpose:** Feature-level interface contract definition and validation
 
 ---
 
-## Starting S4: Feature Testing Strategy
+## Starting S4: Interface Contract Definition
 
-**User says:** "Plan tests for {feature_name}" or "Start feature testing strategy" or Agent detects S3 complete
+**User says:** "Define feature contracts for {feature_name}" or "Start interface validation" or Agent detects S3 complete
 
-**Prerequisite:** S3 complete (Gate 4.5 passed — user approved epic plan in S3.P3)
+**Prerequisite:** S3 complete (Gate 4 passed — user approved epic plan in S3.P3)
 
 **Agent MUST respond:**
 
 ```markdown
-I'm reading `stages/s4/s4_feature_testing_strategy.md` to ensure I create a comprehensive feature testing strategy...
+I'm beginning S4 (Interface Contract Definition) for {feature_name}.
+
+**Guide I'm following:** stages/s4/s4_interface_contract_definition.md
 
 **The guide requires:**
-- Create feature-level test_strategy.md (NOT updating epic_smoke_test_plan.md — that was done in S3.P1)
-- 4 iterations:
-  - I1: Test Strategy Development — test coverage matrix (unit, integration, edge)
-  - I2: Edge Case Enumeration — boundary conditions, error paths
-  - I3: Configuration Change Impact — config test matrix
-  - I4: Validation Loop — primary clean round + sub-agent confirmation required
-- >90% coverage goal (feature-level, not epic-level)
-- Traceability required: each test links to a spec.md requirement
-- Output: test_strategy.md (agent-validated only, NO user approval gate)
-
-**Note:** S4 has ZERO formal gates. Gate 4.5 was passed in S3.P3. test_strategy.md is
-validated by Validation Loop (I4), not by user approval.
+- Validate feature interface contracts with all dependencies
+- Identify upstream and downstream dependencies
+- Verify API/interface contracts match usage in dependent features
+- Document interface change impact on dependent features
+- Create contract validation document
+- Validation Loop: primary clean round + sub-agent confirmation required
+- Output: interface_contracts.md (agent-validated only, NO user approval gate)
 
 **Prerequisites I'm verifying:**
-✅ S3 complete (Gate 4.5 passed — user approved epic plan in S3.P3)
+✅ S3 complete (Gate 4 passed — user approved epic plan in S3.P3)
 ✅ Feature spec.md finalized and user-approved (Gate 3 passed from S2)
 ✅ Feature README.md has Agent Status section
 
 **Updating feature README.md Agent Status:**
-- Current Stage: S4 - Feature Testing Strategy
-- Current Guide: stages/s4/s4_feature_testing_strategy.md
+- Current Stage: S4 - Interface Contract Definition
+- Current Guide: stages/s4/s4_interface_contract_definition.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
-- Critical Rules: "plan tests BEFORE implementation", ">90% coverage goal", "4 iterations mandatory", "Validation Loop (I4) = primary clean round + sub-agent confirmation", "NO user approval gate in S4"
-- Next Action: Begin I1 (Test Strategy Development) for {feature_name}
+- Critical Rules: "Validate interface contracts", "Identify all dependencies", "Validation Loop required", "NO user approval gate in S4"
+- Next Action: Begin interface contract validation for {feature_name}
 
-Starting feature test strategy...
+Starting interface contract validation...
 ```
 
 ---
 
 ## S4 Complete: Transition to S5
 
-**Trigger:** Agent completes S4.I4 Validation Loop (primary clean round + sub-agent confirmation), creates test_strategy.md
+**Trigger:** Agent completes S4 Validation Loop (primary clean round + sub-agent confirmation), validates all contracts
 
 **Agent MUST confirm:**
 
 ```markdown
-✅ **S4 Complete — Feature Testing Strategy Done**
+✅ **S4 Complete — Interface Contract Definition Done**
 
-**test_strategy.md created for {feature_name}:**
-- **Unit tests:** {N} test cases defined
-- **Integration tests:** {N} test cases defined
-- **Edge cases:** {N} edge cases catalogued
-- **Config tests:** {N} configuration scenarios defined
-- **Coverage:** {N}% (goal: >90%)
-- **Traceability:** All {N} requirements have test coverage
+**interface_contracts.md created for {feature_name}:**
+- **Upstream dependencies:** {N} features identified
+- **Downstream dependents:** {N} features identified
+- **API contracts:** {N} interfaces validated
+- **Integration points:** {N} points documented
+- **Impact analysis:** Completed
 
-**Validation Loop (I4) passed:** primary clean round + sub-agent confirmation
-**No user approval needed:** S4 is agent-validated only (Gate 4.5 was in S3.P3)
+**Validation Loop passed:** primary clean round + sub-agent confirmation
+**No user approval needed:** S4 is agent-validated only (Gate 4 was in S3.P3)
 
 **Updating feature README.md Agent Status:**
 - Agent Status: S4_COMPLETE
@@ -77,7 +72,7 @@ Starting feature test strategy...
 **Next: S5 (Implementation Planning)**
 
 Reading `stages/s5/s5_v2_validation_loop.md` to create comprehensive implementation plan.
-S5.P1.I1 will verify test_strategy.md exists and merge it into implementation_plan.md.
+S5.P1 will reference interface_contracts.md for dependency validation.
 ```
 
 ---

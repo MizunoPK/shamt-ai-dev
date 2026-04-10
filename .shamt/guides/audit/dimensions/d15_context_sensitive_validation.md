@@ -112,9 +112,9 @@ CLAUDE.md (project root)
 ```markdown
 ## Stage Workflows Quick Reference
 
-**Current Workflow:** S1 → S2 → S3 → S5 → S6 → S7 → S8 → S9 → S10 (S4 deprecated in SHAMT-6)
+**Current Workflow:** S1 → S2 → S3 → S4 → S5 → S6 → S7 → S8 → S9 → S10 → S11 (S4 = Interface Contract Definition, reinstated SHAMT-36)
 
-**Historical Note:** The old workflow (pre-2025) had 9 stages (S1-S9). S4 was added in January 2025 and deprecated in SHAMT-6 (March 2026); Test Scope Decision moved to S5 Step 0.
+**Historical Note:** The old workflow (pre-2025) had 9 stages (S1-S9). S4 (Feature Testing Strategy) was added in January 2025, deprecated in SHAMT-6 (March 2026), and reinstated in SHAMT-36 (April 2026) as Interface Contract Definition.
 ```
 
 **Validation:**
@@ -369,7 +369,7 @@ Valid workflow variations should be documented as intentional exceptions.
 ```markdown
 ## Standard Workflow
 
-S1 → S2 → S3 → S5 → S6 → S7 → S8 → S9 → S10 (S4 deprecated)
+S1 → S2 → S3 → S4 → S5 → S6 → S7 → S8 → S9 → S10 → S11
 
 ## Workflow Variations
 
@@ -990,40 +990,25 @@ See `stages/s4/s4_testing.md` for testing approach.
 **Audit Finding:**
 ```text
 D3: Workflow Integration
-FOUND: Workflow skips S4 in debugging/debugging_protocol.md:120
-STATUS: Expected — S4 is deprecated (SHAMT-6); proceeding to S5 is correct
-```markdown
-
-**Context Review:**
-```markdown
-## Line 115-125 of debugging/debugging_protocol.md:
-
-## Bug Fix Workflow Exception
-
-**[APPROVED EXCEPTION]**
-
-S4 (Feature Testing Strategy) has been deprecated (SHAMT-6). All epics proceed directly from S3 to S5. No exception is needed — this is the standard workflow.
-
-**Note:** Test Scope Decision (formerly S4's function) is now Step 0 of S5.
-
-This is the ONLY approved deviation from standard workflow.
+FOUND: debugging/debugging_protocol.md mentions "S3 → S5" without S4 reference
+STATUS: May be a stale reference — S4 was reinstated in SHAMT-36
 ```
 
-**Context Validation:**
-- ✅ Marked "[APPROVED EXCEPTION]"
-- ✅ Clear conditions specified
-- ✅ Limited scope ("ONLY approved deviation")
-- ✅ User approval required
+**Context Review:**
+Check whether the debugging protocol guide has been updated to reflect S4 (Interface Contract Definition). Debugging protocol bug fixes are usually single-feature and may use the S4 fast-skip path.
 
-**Decision:** VALID workflow variation, NOT an error.
+**Context Validation:**
+- If debugging_protocol.md says "fast-skip S4 (single-feature debug fix)" → VALID
+- If debugging_protocol.md omits S4 entirely → STALE REFERENCE, needs update
+
+**Decision:** Verify against current S4 guide's fast-skip criteria.
 
 **Action:** Document in audit findings:
 ```text
 D3: Workflow Integration
-FOUND: Workflow skips S4 in debugging/debugging_protocol.md:120
-STATUS: Expected — S4 is deprecated (SHAMT-6)
-ACTION: No fix needed — skipping S4 is now the standard flow
-```yaml
+FOUND: debugging_protocol.md S4 reference
+STATUS: Verify fast-skip applies; update if stale
+```
 
 ---
 

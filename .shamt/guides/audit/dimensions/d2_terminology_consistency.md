@@ -35,7 +35,7 @@
 - Consistent formatting: "S5.P1" not "S5P1" or "S5-P1"
 
 ✅ **Reserved Terms:**
-- "Stage" used only for top-level (S1-S10)
+- "Stage" used only for top-level (S1-S11)
 - "Phase" used only for second level (P1, P2, P3)
 - "Iteration" used only for third level (I1, I2, I3)
 - "Step" used for implementation tasks (not hierarchy)
@@ -238,7 +238,7 @@ An agent loading the stage folder sees two files with different titles and no ro
 
 ```bash
 # Extract H1 titles from all files in each stage folder
-for dir in stages/s{1..10}/; do
+for dir in stages/s{1..11}/; do
   echo "=== $dir ==="
   grep -h "^# " "$dir"*.md 2>/dev/null
 done
@@ -570,7 +570,7 @@ Content: "Stage 2.P1 - Research Phase"
 **Analysis:**
 - Used "Stage" with phase notation
 - Should be "S2.P1" (no "Stage" prefix for phases)
-- "Stage" is reserved for top-level only (S1-S10)
+- "Stage" is reserved for top-level only (S1-S11)
 
 **Fix:**
 ```bash

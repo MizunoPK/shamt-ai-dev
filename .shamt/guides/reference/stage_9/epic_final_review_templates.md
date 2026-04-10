@@ -1,6 +1,6 @@
-# Epic Final Review Templates - S9.P3
+# Epic Final Review Templates - S9.P4
 
-**Purpose:** Templates for documenting S9.P3 results and lessons learned
+**Purpose:** Templates for documenting S9.P4 results and lessons learned
 **When to Use:** Steps 6-8 of epic_final_review.md workflow
 **Main Guide:** `stages/s9/s9_p4_epic_final_review.md`
 
@@ -17,7 +17,7 @@
 7. [Template 6: S9 Restart Documentation (Step 7.5)](#template-6-s9-restart-documentation-step-75)
 8. [Template 7: Final Verification Checklist (Step 8.1)](#template-7-final-verification-checklist-step-81)
 9. [Template 8: Epic Progress Tracker Update (Step 8.2)](#template-8-epic-progress-tracker-update-step-82)
-10. [Template 9: S9.P3 Lessons Learned (Step 8.3)](#template-9-s9p3-lessons-learned-step-83)
+10. [Template 9: S9.P4 Lessons Learned (Step 8.3)](#template-9-s9p4-lessons-learned-step-83)
 11. [Template 10: Agent Status Update (Step 8.4)](#template-10-agent-status-update-step-84)
 12. [Template Selection Guide](#template-selection-guide)
 
@@ -25,7 +25,7 @@
 
 ## Overview
 
-This reference provides all templates needed during S9.P3 (Epic Final Review):
+This reference provides all templates needed during S9.P4 (Epic Final Review):
 
 **Step 6 Templates:**
 - Epic PR Review Results (documenting review outcome)
@@ -40,7 +40,7 @@ This reference provides all templates needed during S9.P3 (Epic Final Review):
 **Step 8 Templates:**
 - Final Verification Checklist (verifying completion)
 - Epic Progress Tracker Update (EPIC_README.md)
-- S9.P3 Lessons Learned (insights and improvements)
+- S9.P4 Lessons Learned (insights and improvements)
 - Agent Status Update (EPIC_README.md)
 
 ---
@@ -54,7 +54,7 @@ This reference provides all templates needed during S9.P3 (Epic Final Review):
 ### Basic Template
 
 ```markdown
-## S9.P3 - Epic PR Review Results
+## S9.P4 - Epic PR Review Results
 
 **Date:** {YYYY-MM-DD}
 **Epic:** {epic_name}
@@ -75,7 +75,7 @@ This reference provides all templates needed during S9.P3 (Epic Final Review):
 ### Example (Completed Review)
 
 ```markdown
-## S9.P3 - Epic PR Review Results
+## S9.P4 - Epic PR Review Results
 
 **Date:** 2025-01-02
 **Epic:** add_json_export_format
@@ -109,7 +109,7 @@ This reference provides all templates needed during S9.P3 (Epic Final Review):
 ### Template
 
 ```markdown
-## S9.P3 Issues Found
+## S9.P4 Issues Found
 
 **Date:** {YYYY-MM-DD}
 
@@ -135,7 +135,7 @@ This reference provides all templates needed during S9.P3 (Epic Final Review):
 ### Example (Multiple Issues)
 
 ```markdown
-## S9.P3 Issues Found
+## S9.P4 Issues Found
 
 **Date:** 2025-01-02
 
@@ -237,7 +237,7 @@ This reference provides all templates needed during S9.P3 (Epic Final Review):
 ### Template
 
 ```markdown
-I found {number} issues during S9.P3 Epic PR Review that require bug fixes:
+I found {number} issues during S9.P4 Epic PR Review that require bug fixes:
 
 **ISSUE 1: {Issue Name} ({PRIORITY} priority)**
 - **Problem:** {Brief description of the issue}
@@ -261,7 +261,7 @@ Should I proceed with creating these bug fixes?
 ### Example
 
 ```markdown
-I found 2 issues during S9.P3 Epic PR Review that require bug fixes:
+I found 2 issues during S9.P4 Epic PR Review that require bug fixes:
 
 **ISSUE 1: Architectural Inconsistency (HIGH priority)**
 - **Problem:** Feature 01 uses Manager class pattern, Feature 02 uses standalone functions
@@ -367,7 +367,7 @@ bugfix_{priority}_{name}/
 **Restart Actions:**
 - Re-ran S9.P1: Epic Smoke Testing (all 4 parts) - {PASSED/issues found}
 - Re-ran S9.P2: Validation Loop (primary clean round + sub-agent confirmation) - {PASSED/issues found}
-- Re-ran S9.P3: Epic PR Review (all 11 categories) - {PASSED/issues found}
+- Re-ran S9.P4: Epic PR Review (all 11 categories) - {PASSED/issues found}
 - ✅ All unit tests passing ({pass_rate}% - {N} tests)
 
 **Result:** S9 {complete/incomplete} after restart ({no new issues found / N new issues found})
@@ -388,7 +388,7 @@ bugfix_{priority}_{name}/
 **Restart Actions:**
 - Re-ran S9.P1: Epic Smoke Testing (all 4 parts) - PASSED
 - Re-ran S9.P2: Validation Loop (primary clean round + sub-agent confirmation) - PASSED
-- Re-ran S9.P3: Epic PR Review (all 11 categories) - PASSED
+- Re-ran S9.P4: Epic PR Review (all 11 categories) - PASSED
 - ✅ All unit tests passing (100% - 2247 tests)
 
 **Result:** S9 complete after restart (no new issues found)
@@ -405,7 +405,7 @@ bugfix_{priority}_{name}/
 ### Template
 
 ```markdown
-## S9.P3 Final Verification
+## S9.P4 Final Verification
 
 **Date:** {YYYY-MM-DD HH:MM}
 
@@ -444,7 +444,7 @@ bugfix_{priority}_{name}/
 ### Example
 
 ```markdown
-## S9.P3 Final Verification
+## S9.P4 Final Verification
 
 **Date:** 2025-01-02 16:00
 
@@ -476,7 +476,7 @@ bugfix_{priority}_{name}/
 **S1 - Epic Planning:** ✅ COMPLETE
 **S2 - Feature Deep Dives:** ✅ COMPLETE
 **S3 - Epic-Level Docs, Tests, and Approval:** ✅ COMPLETE
-**S4 - (Deprecated — Test Scope Decision in S5 Step 0):** N/A
+**S4 - Interface Contract Definition:** ✅ COMPLETE
 **S5 - Feature Implementation:** ✅ COMPLETE
   - Feature 01: ✅ COMPLETE
   - Feature 02: ✅ COMPLETE
@@ -485,7 +485,7 @@ bugfix_{priority}_{name}/
 **S9 - Epic Final QC:** ✅ COMPLETE
 - S9.P1 (Epic Smoke Testing): ✅ COMPLETE
 - S9.P2 (Epic Validation Loop): COMPLETE
-- S9.P3 (Epic Final Review): COMPLETE
+- S9.P4 (Epic Final Review): COMPLETE
 - Epic smoke testing passed: Yes
 - Validation Loop passed: Yes (primary clean round + sub-agent confirmation)
 - Epic PR review passed: ✅ ({N} categories)
@@ -494,7 +494,7 @@ bugfix_{priority}_{name}/
 - S9 restarts: {N} ({reason if applicable})
 - Date completed: {YYYY-MM-DD}
 
-**S10 - Epic Cleanup:** [ ] PENDING
+**S10 - Final Changes & Merge:** [ ] PENDING
 ```
 
 ### Example
@@ -505,7 +505,7 @@ bugfix_{priority}_{name}/
 **S1 - Epic Planning:** ✅ COMPLETE
 **S2 - Feature Deep Dives:** ✅ COMPLETE
 **S3 - Epic-Level Docs, Tests, and Approval:** ✅ COMPLETE
-**S4 - (Deprecated — Test Scope Decision in S5 Step 0):** N/A
+**S4 - Interface Contract Definition:** ✅ COMPLETE
 **S5 - Feature Implementation:** ✅ COMPLETE
   - Feature 01: ✅ COMPLETE
   - Feature 02: ✅ COMPLETE
@@ -513,7 +513,7 @@ bugfix_{priority}_{name}/
 **S9 - Epic Final QC:** ✅ COMPLETE
 - S9.P1 (Epic Smoke Testing): ✅ COMPLETE
 - S9.P2 (Epic Validation Loop): COMPLETE
-- S9.P3 (Epic Final Review): COMPLETE
+- S9.P4 (Epic Final Review): COMPLETE
 - Epic smoke testing passed: Yes
 - Validation Loop passed: Yes (primary clean round + sub-agent confirmation)
 - Epic PR review passed: ✅ (11 categories)
@@ -522,21 +522,21 @@ bugfix_{priority}_{name}/
 - S9 restarts: 1 (after bug fixes)
 - Date completed: 2025-01-02
 
-**S10 - Epic Cleanup:** [ ] PENDING
+**S10 - Final Changes & Merge:** [ ] PENDING
 ```
 
 ---
 
-## Template 9: S9.P3 Lessons Learned (Step 8.3)
+## Template 9: S9.P4 Lessons Learned (Step 8.3)
 
-**Purpose:** Document insights from S9.P3 for future improvement
+**Purpose:** Document insights from S9.P4 for future improvement
 **When to Use:** Step 8.3 after S9 complete
 **Location:** Add to `SHAMT-{N}-{epic_name}/epic_lessons_learned.md`
 
 ### Template
 
 ```markdown
-## S9.P3 Lessons Learned (Epic Final Review)
+## S9.P4 Lessons Learned (Epic Final Review)
 
 **Date:** {YYYY-MM-DD}
 
@@ -567,7 +567,7 @@ bugfix_{priority}_{name}/
 - {Guide name}: {Specific improvement needed}
 - {Guide name}: {Specific improvement needed}
 
-**S9.P3 Statistics:**
+**S9.P4 Statistics:**
 - Epic PR Review time: {X minutes}
 - Issues found: {N} ({breakdown by priority})
 - Bug fixes created: {N}
@@ -581,7 +581,7 @@ bugfix_{priority}_{name}/
 ### Example
 
 ```markdown
-## S9.P3 Lessons Learned (Epic Final Review)
+## S9.P4 Lessons Learned (Epic Final Review)
 
 **Date:** 2025-01-02
 
@@ -617,7 +617,7 @@ bugfix_{priority}_{name}/
 - S7.P1 guide: Add performance baseline comparison to smoke testing
 - S9 guide: Add architectural pattern consistency check
 
-**S9.P3 Statistics:**
+**S9.P4 Statistics:**
 - Epic PR Review time: 45 minutes
 - Issues found: 2 (both high priority)
 - Bug fixes created: 2
@@ -642,13 +642,13 @@ bugfix_{priority}_{name}/
 ## Agent Status
 
 **Last Updated:** {YYYY-MM-DD HH:MM}
-**Current Stage:** S9.P3 - Epic Final Review
+**Current Stage:** S9.P4 - Epic Final Review
 **Status:** ✅ COMPLETE
 
 **S9 Summary:**
 - S9.P1 (Epic Smoke Testing): ✅ {PASSED/issues found}
 - S9.P2 (Epic Validation Loop): {PASSED/issues found} (primary clean round + sub-agent confirmation)
-- S9.P3 (Epic Final Review): ✅ {PASSED/issues found}
+- S9.P4 (Epic Final Review): ✅ {PASSED/issues found}
 - Epic PR review: ✅ {PASSED/issues found} ({N} categories)
 - Issues found: {N} ({resolution status})
 - Bug fixes completed: {N}
@@ -666,13 +666,13 @@ bugfix_{priority}_{name}/
 ## Agent Status
 
 **Last Updated:** 2025-01-02 16:15
-**Current Stage:** S9.P3 - Epic Final Review
+**Current Stage:** S9.P4 - Epic Final Review
 **Status:** ✅ COMPLETE
 
 **S9 Summary:**
 - S9.P1 (Epic Smoke Testing): ✅ PASSED
 - S9.P2 (Epic Validation Loop): PASSED (primary clean round + sub-agent confirmation)
-- S9.P3 (Epic Final Review): ✅ PASSED
+- S9.P4 (Epic Final Review): ✅ PASSED
 - Epic PR review: ✅ PASSED (11 categories)
 - Issues found: 2 (both fixed via bug fixes)
 - Bug fixes completed: 2
@@ -700,7 +700,7 @@ bugfix_{priority}_{name}/
 **Use Templates 7-10** during final verification (Step 8):
 - Template 7: Verify all work complete
 - Template 8: Update Epic Progress Tracker
-- Template 9: Document S9.P3 lessons learned
+- Template 9: Document S9.P4 lessons learned
 - Template 10: Update Agent Status to S9 complete
 
 ---

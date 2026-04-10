@@ -26,7 +26,7 @@ S3.P2: Epic Documentation Refinement (20-30 min)
     ↓
 S3.P3: Epic Plan Approval (10-15 min) ← MANDATORY GATE
     ├─ Step 1: Create epic summary
-    ├─ Step 2: Gate 4.5 — present to user, wait for explicit approval
+    ├─ Step 2: Gate 4 — present to user, wait for explicit approval
     └─ If rejected: 3-tier rejection handling (S1.P3 / S1.P4 / exit)
 ```
 
@@ -38,7 +38,7 @@ S3.P3: Epic Plan Approval (10-15 min) ← MANDATORY GATE
 |-------|----------|----------------|---------|-------|
 | S3.P1 | 45-60 min | Integration point mapping, epic success criteria, smoke test scenarios | epic_smoke_test_plan.md | No |
 | S3.P2 | 20-30 min | Feature detail consolidation, EPIC_README.md update | EPIC_README.md | No |
-| S3.P3 | 10-15 min | Epic summary, user approval | User sign-off (Gate 4.5) | ✅ YES |
+| S3.P3 | 10-15 min | Epic summary, user approval | User sign-off (Gate 4) | ✅ YES |
 
 ---
 
@@ -49,7 +49,7 @@ S3.P3: Epic Plan Approval (10-15 min) ← MANDATORY GATE
 | **Epic-Level (S3)** | `epic_smoke_test_plan.md` | End-to-end workflows across ALL features; integration points; epic success criteria |
 | **Feature-Level (S5 Step 0)** | Per-feature test scope (Options C/D only) | Unit tests; component integration; edge cases within feature boundary |
 
-> **Key Rule:** If you find yourself writing tests for a single feature's internal behavior — stop. That belongs in S5 Step 0 (Test Scope Decision). S4 is deprecated since SHAMT-6.
+> **Key Rule:** If you find yourself writing tests for a single feature's internal behavior — stop. That belongs in S5 Step 0b (Test Scope Decision). S4 (Interface Contract Definition) runs after Gate 4 approval and before S5 — it defines cross-feature contracts, not test plans.
 
 ---
 
@@ -83,7 +83,7 @@ S3.P3: Epic Plan Approval (10-15 min) ← MANDATORY GATE
 
 ---
 
-## Mandatory Gate: Gate 4.5 (S3.P3 Step 2)
+## Mandatory Gate: Gate 4 (S3.P3 Step 2)
 
 **Location:** `stages/s3/s3_epic_planning_approval.md` — S3.P3
 **What to present:**
@@ -118,7 +118,7 @@ S3.P3: Epic Plan Approval (10-15 min) ← MANDATORY GATE
 - ✅ ALL features must complete S2 (including S2.P2) before S3
 - ✅ S3 tests span MULTIPLE features — single-feature test scope is decided at S5 Step 0
 - ✅ Each phase (S3.P1, S3.P2) uses a Validation Loop (primary clean round + sub-agent confirmation)
-- ✅ Gate 4.5 user approval is MANDATORY — cannot skip
+- ✅ Gate 4 user approval is MANDATORY — cannot skip
 - ✅ Total rejection → 3-tier handling, NOT a simple loop-back to S3
 - ✅ Update epic EPIC_README.md Agent Status when starting
 
@@ -142,9 +142,9 @@ S3.P3: Epic Plan Approval (10-15 min) ← MANDATORY GATE
 **Solution:** Measurable criteria with specific commands/observations
 
 ### ❌ Pitfall 4: Assuming User Approval
-**Problem:** "The plan looks good, I'll skip Gate 4.5"
+**Problem:** "The plan looks good, I'll skip Gate 4"
 **Impact:** Implement wrong scope, rework in S7+ or user testing
-**Solution:** ALWAYS get explicit user approval (Gate 4.5 is mandatory)
+**Solution:** ALWAYS get explicit user approval (Gate 4 is mandatory)
 
 ---
 
@@ -175,11 +175,11 @@ S3.P3: Epic Plan Approval (10-15 min) ← MANDATORY GATE
 - [ ] epic_smoke_test_plan.md has concrete integration scenarios (validation loop passed)
 - [ ] EPIC_README.md updated with feature details (validation loop passed)
 - [ ] Epic summary created
-- [ ] User explicitly approved epic plan (Gate 4.5)
+- [ ] User explicitly approved epic plan (Gate 4)
 - [ ] EPIC_README.md shows S3 complete
-- [ ] Ready to start S5 (first feature's Implementation Planning — S4 deprecated)
+- [ ] Ready to start S4 (Interface Contract Definition)
 
-**Next Stage:** S5 (Implementation Planning) — S4 deprecated; test scope decision at S5 Step 0
+**Next Stage:** S4 (Interface Contract Definition) — `stages/s4/s4_interface_contracts.md`
 
 ---
 

@@ -25,7 +25,7 @@
 
 **User says:** "Prepare for updates based on {feature_name}" or "Start implementation of feature_01" or "Create implementation plan"
 
-**Prerequisite:** S3 complete (Gate 4.5 passed) AND feature spec.md complete AND checklist.md resolved AND Testing Approach (A/B/C/D) set in EPIC_README (S4 is deprecated)
+**Prerequisite:** S3 complete (Gate 4 passed) AND S4 complete (Interface Contract Definition) AND feature spec.md complete AND checklist.md resolved AND Testing Approach (A/B/C/D) set in EPIC_README
 
 **Note:** S5 v2 uses Validation Loop approach (replaces 22-iteration v1 structure)
 
@@ -36,7 +36,8 @@ I'm beginning S5 (Implementation Planning) for {feature_name}.
 
 **Guide I'm following:** stages/s5/s5_v2_validation_loop.md (from CLAUDE.md Stage Workflow table)
 **Prerequisites verified:**
-- [x] S3 complete (Gate 4.5 passed — Testing Approach A/B/C/D set in EPIC_README; S4 is deprecated)
+- [x] S3 complete (Gate 4 passed — Testing Approach A/B/C/D set in EPIC_README)
+- [x] S4 complete (Interface Contract Definition validated, contracts aligned)
 - [x] Guide path matches CLAUDE.md Stage Workflow table
 - [x] Read ENTIRE guide using Read tool
 
@@ -86,14 +87,14 @@ I'm beginning S5 (Implementation Planning) for {feature_name}.
 **Prerequisites I'm verifying:**
 ✅ spec.md exists and is complete
 ✅ checklist.md all items resolved (all [x])
-✅ S3 complete (Gate 4.5 passed; S4 deprecated — Testing Approach confirmed in EPIC_README)
+✅ S3 complete (Gate 4 passed) and S4 complete (contracts validated) — Testing Approach confirmed in EPIC_README
 ✅ No pending questions from S2
 
 **Updating feature README Agent Status:**
 - Current Phase: S5_V2_DRAFT_CREATION
 - Current Guide: stages/s5/s5_v2_validation_loop.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
-- Critical Rules: "Implementation tasks MUST trace to spec requirements", "Draft = 70% in 90 min", "Validation Loop: primary clean round + sub-agent confirmation", "18 dimensions ALL rounds (7 master + 11 S5)", "Zero deferred issues", "Interface verification: READ actual code"
+- Critical Rules: "Implementation tasks MUST trace to spec requirements", "Draft = 70% in 90 min", "Validation Loop: primary clean round + sub-agent confirmation", "11 S5-specific dimensions ALL rounds", "Zero deferred issues", "Interface verification: READ actual code"
 - Progress: Phase 1 - Draft Creation
 - Next Action: Begin draft creation (target 90 minutes)
 
@@ -598,7 +599,7 @@ I'm reading `stages/s8/s8_p2_epic_testing_update.md` to ensure I update the epic
   - What was ACTUALLY built
 - Test plan evolves incrementally:
   - S1: Placeholder
-  - S5 Step 0: Test Scope Decision (S4 deprecated)
+  - S5 Step 0: Test Scope Decision (after S4)
   - S8.P2: Based on actual implementation (THIS stage)
   - S9: Execute evolved plan
 

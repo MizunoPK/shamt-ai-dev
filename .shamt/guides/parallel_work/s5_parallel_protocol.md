@@ -46,8 +46,8 @@ SAVINGS: 4.5–7 hours (50% reduction in S5 time)
 
 **Epic-level impact:**
 ```text
-Sequential Epic: S1(2h) + S2(2h) + S3(1h) + S5(14h) + S6-S8(20h) + S9(2h) + S10(1h) = 42h
-Parallel S5 Epic: S1(2h) + S2(2h) + S3(1h) + S5(7h) + S5-CA(1h) + S6-S8(20h) + S9(2h) + S10(1h) = 36h
+Sequential Epic: S1(2h) + S2(2h) + S3(1h) + S4(0.5h) + S5(14h) + S6-S8(20h) + S9(2h) + S10(1h) + S11(1h) = 43.5h
+Parallel S5 Epic: S1(2h) + S2(2h) + S3(1h) + S4(0.5h) + S5(7h) + S5-CA(1h) + S6-S8(20h) + S9(2h) + S10(1h) + S11(1h) = 37.5h
 
 SAVINGS: ~6 hours (14% epic-level reduction)
 ```
@@ -85,7 +85,7 @@ SAVINGS: ~6 hours (14% epic-level reduction)
 - ❌ S3: Epic-Level Docs, Tests, and Approval (Primary only)
 - ❌ S5-CA: Cross-Plan Alignment (Primary only, runs after all S5 complete)
 - ❌ S6-S8: Feature Implementation (sequential chain — Primary coordinates, one feature at a time)
-- ❌ S9-S10: Epic completion (Primary only)
+- ❌ S9-S11: Epic completion (Primary only)
 
 ---
 
@@ -132,14 +132,15 @@ Unlike S2, secondary agents in S5 do not update EPIC_README.md sections during a
 
 ## Complete Workflow
 
-### Phase 1: SP2 Trigger — S3 Gate 4.5 Approval
+### Phase 1: SP2 Trigger — Gate 4 Approval + S4 Execution
 
-**Trigger:** Primary receives Gate 4.5 approval from user (end of S3).
+**Trigger:** Primary receives Gate 4 approval from user (end of S3), then completes S4.
 
 **Primary action:**
 1. Read EPIC_README.md — confirm `Parallel Mode (S5): enabled`
-2. Proceed to Phase 2 (handoff package generation)
-3. Do NOT begin S5 for your own feature until secondaries are activated
+2. **Run S4 solo** (read `stages/s4/s4_interface_contracts.md`) — secondary agents are NOT activated yet during S4
+3. After S4 exits with `interface_contracts.md` created: proceed to Phase 2 (handoff package generation)
+4. Do NOT begin S5 for your own feature until secondaries are activated
 
 **See:** `s5_primary_agent_guide.md` → Phase 2 (SP2 Action)
 
@@ -451,14 +452,14 @@ READY_FOR_SYNC: true
 
 ## Sync Points
 
-### Sync Point 2 (SP2): After S3 → Before S5
+### Sync Point 2 (SP2): After S4 → Before S5
 
-**Trigger:** S3 Gate 4.5 approval complete; Primary confirms `Parallel Mode (S5): enabled` in EPIC_README.
+**Trigger:** S4 complete (Gate 4 approved + `interface_contracts.md` created); Primary confirms `Parallel Mode (S5): enabled` in EPIC_README.
 
 **Primary actions:**
 1. Check EPIC_README for `Parallel Mode (S5): enabled`
 2. For each secondary: check checkpoint file for status
-3. If WAITING + not stale: send activation message pointing to `{feature_folder}/HANDOFF_PACKAGE_S5.md`
+3. If WAITING + not stale: send activation message pointing to `{feature_folder}/HANDOFF_PACKAGE_S5.md` (include `interface_contracts.md` path)
 4. If terminated/stale: save handoff package, present fresh-spawn startup command to user
 5. Wait for secondary acknowledgment messages
 6. Begin S5 for Feature 01
@@ -469,7 +470,7 @@ READY_FOR_SYNC: true
 
 **Status:** "S5 parallel work starting for all features"
 
-**Note:** SP2 is extended from S2 parallel protocol. In S2 mode, SP2 covered S2→S3. In S5 mode, the additional SP2 action (S5 handoff generation and secondary activation) runs immediately after S3 Gate 4.5 approval.
+**Note:** SP2 is extended from S2 parallel protocol. In S2 mode, SP2 covered S2→S3. In S5 mode, the additional SP2 action (S5 handoff generation and secondary activation) runs after S4 completes (not immediately after Gate 4 approval — S4 runs first).
 
 ---
 
@@ -540,9 +541,9 @@ READY_FOR_SYNC: true
 
 ## User Experience
 
-### Step 1: S3 Gate 4.5 Approved
+### Step 1: Gate 4 Approved + S4 Complete
 
-User completes S3 review and approves (Gate 4.5). Primary begins SP2 action.
+User approves epic plan (Gate 4, end of S3). Primary runs S4 solo (Interface Contract Definition). After S4 exits, Primary begins SP2 action.
 
 ### Step 2: Secondary Activation
 

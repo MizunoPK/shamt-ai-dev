@@ -56,7 +56,7 @@ I'm reading `stages/s5/s5_bugfix_workflow.md` to ensure I follow the bug fix wor
   - S5 v2: Implementation Planning (Validation Loop with 11 dimensions)
   - S6: Implementation
   - S7: Post-Implementation
-  - SKIP: S1, S3, S8, S9, S10 (epic-level stages; S4 deprecated)
+  - SKIP: S1, S3, S8, S9, S10, S11 (epic-level stages; S4)
 - PHASE 3: Resume Previous Work
   - Mark bug fix complete
   - Verify bug fix doesn't affect paused work
@@ -106,11 +106,11 @@ I'm reading `missed_requirement/missed_requirement_protocol.md` to ensure I foll
   - Resume from saved state
   - New/updated feature implemented LATER when its turn comes
 - Two options: Create new feature_{XX}_{name}/ OR update unstarted feature
-- ALWAYS return to S2/3 for planning (S4 deprecated — Test Scope Decision at S5 Step 0)
+- ALWAYS return to S2/3 for planning (S4 is Interface Contract Definition stage; Test Scope Decision at S5 Step 0)
 - Full S5 (S5 → S6 → S7 → S8) when feature gets implemented
 - Priority determines sequence: high = before current, medium = after current, low = at end
-- SPECIAL CASE: If discovered during S9/S10 → Complete all features → Restart epic testing from S9.P1
-- Can be discovered during: Implementation (S5-S6), Debugging, Epic Testing (S9), User Testing (S10)
+- SPECIAL CASE: If discovered during S9 → Complete all features → Restart epic testing from S9.P1
+- Can be discovered during: Implementation (S5-S6), Debugging, Epic Testing (S9), User Testing (S9.P3)
 
 **Prerequisites I'm verifying:**
 ✅ At least one feature has entered S5 (can only use after first S5 starts)
@@ -126,7 +126,7 @@ I'm reading `missed_requirement/missed_requirement_protocol.md` to ensure I foll
 - Current Phase: MISSED_REQUIREMENT_HANDLING
 - Current Guide: missed_requirement/missed_requirement_protocol.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
-- Critical Rules: "Get user approval first", "Return to S2/3 (S4 deprecated)", "Update epic docs", "Implement in sequence"
+- Critical Rules: "Get user approval first", "Return to S2/3 (S4)", "Update epic docs", "Implement in sequence"
 - Next Action: Present options (new feature vs update unstarted feature)
 
 Presenting to user...

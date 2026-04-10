@@ -68,7 +68,7 @@
 ## 🚨 CRITICAL: Why This Phase Is Mandatory
 
 **Historical Problem:**
-- Bugs were fixed but lessons learned only at S10.P1 (weeks later)
+- Bugs were fixed but lessons learned only at S11.P1 (weeks later)
 - Root cause analysis happened in aggregate (Phase 5), losing individual context
 - Guide improvements were generic, not tied to specific bugs
 
@@ -76,7 +76,7 @@
 - **IMMEDIATE** root cause analysis while context is fresh
 - **USER CONFIRMS** root cause before documenting
 - **INCREMENTAL** guide improvements captured per bug
-- **PRIORITIZED** lessons (debugging bugs → P0/P1 priority in S10.P1)
+- **PRIORITIZED** lessons (debugging bugs → P0/P1 priority in S11.P1)
 
 **Result:** Higher quality guide improvements that prevent same bugs in future epics
 
@@ -425,7 +425,7 @@ If you choose MODIFY or DISAGREE, please explain:
 
 ## Step 5: Document in guide_update_recommendations.md
 
-**Goal:** Add user-confirmed guide improvement to recommendations file for S10.P1
+**Goal:** Add user-confirmed guide improvement to recommendations file for S11.P1
 
 ### 5.1: Create or Update File
 
@@ -446,7 +446,7 @@ If you choose MODIFY or DISAGREE, please explain:
 
 **Source:** Per-issue root cause analysis (Phase 4b of debugging protocol)
 
-**Usage:** These recommendations will be presented to user in S10.P1 for approval
+**Usage:** These recommendations will be presented to user in S11.P1 for approval
 
 **Priority Levels:**
 - **P0 (Critical):** Prevents catastrophic bugs, user testing failures
@@ -562,7 +562,7 @@ If you choose MODIFY or DISAGREE, please explain:
 
 **Added to:** `debugging/guide_update_recommendations.md` - Recommendation #{number}
 **Priority:** {P0/P1/P2/P3}
-**Will be presented to user in S10.P1 for final approval**
+**Will be presented to user in S11.P1 for final approval**
 
 ### User Feedback
 
@@ -669,7 +669,7 @@ Are there more issues in ISSUES_CHECKLIST.md with status NOT 🟢 FIXED?
 ## Why This Matters
 
 **Before Phase 4b:**
-- Root cause analysis happened weeks later (Phase 5, S10.P1)
+- Root cause analysis happened weeks later (Phase 5, S11.P1)
 - Context was lost ("Why did we make that decision?")
 - Guide improvements were generic and vague
 - User wasn't involved in root cause validation
@@ -678,7 +678,7 @@ Are there more issues in ISSUES_CHECKLIST.md with status NOT 🟢 FIXED?
 - Root cause analyzed IMMEDIATELY (while context is fresh)
 - User confirms REAL reason (not agent assumptions)
 - Guide improvements are SPECIFIC and ACTIONABLE
-- S10.P1 presents high-quality, pre-validated proposals
+- S11.P1 presents high-quality, pre-validated proposals
 - Future epics benefit from concrete, tested improvements
 
 **Historical evidence:** Bugs analyzed immediately have 3x higher quality guide improvements vs. bugs analyzed weeks later.

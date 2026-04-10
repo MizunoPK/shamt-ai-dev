@@ -117,9 +117,9 @@ This document captures:
 
 ---
 
-## S4 (Deprecated — Test Scope Decision in S5 Step 0)
+## S4 Lessons Learned (Interface Contract Definition)
 
-> **⚠️ S4 has been deprecated (SHAMT-6).** If this epic ran before SHAMT-6, document S4 lessons here. For new epics, document Testing Approach insights in the S5 Lessons Learned section instead.
+**Note:** S4 was reinstated in SHAMT-36 for interface contract validation.
 
 **epic_smoke_test_plan.md Evolution:**
 - Changes from S1 → S3.P1 → S8.P2: {Summary of how test plan evolved}
@@ -153,7 +153,7 @@ This document captures:
 
 **Debugging (If Occurred):**
 - Issues discovered: {Count and brief summary}
-- Testing stage where found: {S10.P1 / S10.P2 / other}
+- Testing stage where found: {S7.P1 / S9.P1 / other}
 - Total debugging time: {Hours}
 - Key insights: {Brief insights from debugging/lessons_learned.md}
 - Process improvements identified: {Brief summary of process gaps from debugging/process_failure_analysis.md}
@@ -274,7 +274,7 @@ This document captures:
 
 ---
 
-## S10 Lessons Learned (Epic Cleanup)
+## S10 Lessons Learned (Final Changes & Merge)
 
 **What Went Well:**
 - {Positive observation}
@@ -353,7 +353,7 @@ This document captures:
 - S1: {N} days
 - S2: {N} days (all features)
 - S3: {N} days
-- S4: N/A (deprecated)
+- S4: {N} days (Interface Contract Definition)
 - S5: {N} days (all features)
 - S9: {N} days
 - S10: {N} days

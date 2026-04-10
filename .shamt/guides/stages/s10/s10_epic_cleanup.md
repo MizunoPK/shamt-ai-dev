@@ -60,7 +60,7 @@ S10 finalizes the feature branch: it verifies documentation, creates the final c
 **When do you use this guide?**
 - After S9 (Epic Final QC) is complete
 - All features implemented and validated
-- User testing passed (S9 Step 6 — zero bugs)
+- User testing passed (S9.P3 — zero bugs)
 
 **Key Outputs:**
 - ✅ Documentation verified complete (README, lessons learned, etc.)
@@ -138,7 +138,7 @@ Primary Agent (Opus):
 - [ ] EPIC_README.md shows "S9 - Epic Final QC: ✅ COMPLETE"
 - [ ] Epic smoke testing passed (S9.P1)
 - [ ] Epic QC Validation Loop passed (primary clean round + sub-agent confirmation in S9.P2)
-- [ ] User testing passed (S9 Step 6 — ZERO bugs reported by user)
+- [ ] User testing passed (S9.P3 — ZERO bugs reported by user)
 - [ ] Epic PR review passed (all 11 categories)
 - [ ] No pending issues from S9
 

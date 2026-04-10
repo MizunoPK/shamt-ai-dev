@@ -38,7 +38,7 @@
 5. **Scope Alignment** - Epic/feature/group scope is consistent across transitions
 
 **Coverage:**
-- All 9 stage transitions (S1->S2, S2->S3, ..., S9->S10)
+- All 10 stage transitions (S1->S2, S2->S3, ..., S9->S10, S10->S11)
 - Branching transitions (S8->S5 loop, S8->S9 exit)
 - Parallel work transitions (Primary->Secondary handoffs)
 
@@ -147,14 +147,15 @@ How Stage N describes workflow mechanics must match how Stage N+1 operates.
 |------------|------------------------|
 | S1->S2 | Does S1's parallelization description match S2's handling? |
 | S2->S3 | Does S2's "proceed to S3" condition match S3's prerequisites? |
-| S3->S5 | Does S3's exit (Gate 4.5) correctly transition to S5? (S4 deprecated) |
-| S4->S5 | S4 deprecated — verify no guide still requires S4 completion as S5 prerequisite |
+| S3->S4 | Does S3's exit (Gate 4) correctly transition to S4? Check S3 "Next Stage" points to S4 |
+| S4->S5 | Does S4's exit condition (interface_contracts.md created) match S5's prerequisite? |
 | S5->S6 | Does S5's plan format match S6's execution expectations? |
 | S6->S7 | Does S6's completion state match S7's entry assumptions? |
 | S7->S8 | Does S7's commit status match S8's alignment assumptions? |
 | S8->S5 | Does S8's loop-back condition match S5's re-entry handling? |
 | S8->S9 | Does S8's exit condition match S9's prerequisites? |
 | S9->S10 | Does S9's QC completion match S10's entry requirements? |
+| S10->S11 | Does S10's PR/merge completion match S11's entry requirements? |
 
 **Search Commands:**
 ```bash
@@ -264,11 +265,12 @@ Scope transitions (epic->feature->group->epic) must be explicit and consistent.
 |-------|--------------|------------|
 | S1 | Epic (planning whole epic) | -> S2 (feature-level) |
 | S2 | Feature (within groups?) | -> S3 (epic-level) |
-| S3 | Epic (smoke tests, docs, Gate 4.5) | -> S4 (feature-level) |
+| S3 | Epic (smoke tests, docs, Gate 4) | -> S4 (interface contracts) |
 | S4 | Feature (test strategy) | -> S5 (feature-level) |
 | S5-S8 | Feature (implementation loop) | -> S5 or S9 |
 | S9 | Epic (final QC) | -> S10 (epic-level) |
-| S10 | Epic (cleanup, PR) | -> Done |
+| S10 | Epic (cleanup, PR) | -> S11 (finalization) |
+| S11 | Epic (guide updates, archival) | -> Done |
 
 **Validation:**
 
@@ -347,7 +349,7 @@ After any stage restructuring, check whether the Overview or Purpose section con
 
 ### Scope
 - [ ] S2 exits with all features having completed S2 (epic-level aggregation)
-- [ ] S3 enters at epic level (epic smoke test plan, documentation refinement, Gate 4.5 approval)
+- [ ] S3 enters at epic level (epic smoke test plan, documentation refinement, Gate 4 approval)
 - [ ] No group-level language in S3 that contradicts epic-level entry
 
 ### Agent Comprehension (S3 specific)
@@ -362,8 +364,8 @@ After any stage restructuring, check whether the Overview or Purpose section con
 ## S3 -> S4 Flow Validation
 
 ### Handoff Promises
-- [ ] S3 outputs (epic_smoke_test_plan.md, refined EPIC_README.md, Gate 4.5 approval) listed in S4 prerequisites
-- [ ] S3's "after Gate 4.5 approval" condition matches S4's prerequisite "Gate 4.5 passed"
+- [ ] S3 outputs (epic_smoke_test_plan.md, refined EPIC_README.md, Gate 4 approval) listed in S4 prerequisites
+- [ ] S3's "after Gate 4 approval" condition matches S4's prerequisite "Gate 4 passed"
 
 ### Workflow Behavior
 - [ ] S3 exits at epic scope; S4 re-enters feature scope (scope transition is explicit)
@@ -534,7 +536,7 @@ echo "Manual review required for semantic validation"
 transitions=(
   "S1->S2" "S2->S3" "S3->S4" "S4->S5"
   "S5->S6" "S6->S7" "S7->S8"
-  "S8->S5" "S8->S9" "S9->S10"
+  "S8->S5" "S8->S9" "S9->S10" "S10->S11"
 )
 
 # For each, extract exit and entry content
@@ -666,7 +668,7 @@ After S2.P2:
 
 **Analysis:**
 - S1 promises: Groups cycle through S2, S3, AND S5
-- S2 implements: Groups only matter for S2, then S3 is epic-level (S4 deprecated)
+- S2 implements: Groups only matter for S2, then S3 is epic-level (S4 = interface contracts)
 - **FLOW INCONSISTENCY**
 
 **Impact:**

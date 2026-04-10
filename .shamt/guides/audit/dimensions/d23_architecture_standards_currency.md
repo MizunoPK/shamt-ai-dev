@@ -423,4 +423,4 @@ $ grep -i "cache" ARCHITECTURE.md
 - **D9: Content Accuracy** - Related content validation patterns
 - **S1.P3 Discovery** - Where architecture context is first gathered
 - **S7.P3 Final Review** - Where documentation impact is assessed
-- **S10 Epic Cleanup** - Where final review occurs
+- **S10 Final Changes & Merge** - Where final review occurs

@@ -7,7 +7,7 @@
 
 ## Table of Contents
 
-1. [S10.P1: Epic Overview Document](#s10p2-epic-overview-document)
+1. [S10.P1: Epic Overview Document](#s10p1-epic-overview-document)
 2. [Overview](#overview)
 3. [Critical Rules](#critical-rules)
 4. [Prerequisites Checklist](#prerequisites-checklist)
@@ -24,7 +24,7 @@
 2. Acknowledge critical requirements (see "Critical Rules" section below)
 3. Verify prerequisites (see "Prerequisites Checklist" section below)
 
-**This phase is opt-in.** If the user declines when asked in Step 1, skip this guide entirely and proceed to Step 9 (Push and Create PR) in `stages/s10/s10_epic_cleanup.md`.
+**This phase is opt-in.** If the user declines when asked in Step 1, skip this guide entirely and proceed to Step 4 (Push and Create PR) in `stages/s10/s10_epic_cleanup.md`.
 
 **After session compaction:**
 - Re-read this guide before continuing
@@ -45,23 +45,23 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 ## Overview
 
 **What is this phase?**
-S10.P2 is the optional epic overview document phase where you create `SHAMT-{N}-OVERVIEW.md` — a narrative document that explains the full story of the epic to PR reviewers and developers onboarding onto the work.
+S10.P1 is the optional epic overview document phase where you create `SHAMT-{N}-OVERVIEW.md` — a narrative document that explains the full story of the epic to PR reviewers and developers onboarding onto the work.
 
 **When do you use this guide?**
-- Step 7 (EPIC_TRACKER update) is complete
-- You are about to proceed to Step 9 (Push and Create PR)
+- Step 2 (Final Commit) is complete
+- You are about to proceed to Step 4 (Push and Create PR)
 - The user has said "yes" to creating the overview document
 
 **Key Outputs (if opted in):**
 - ✅ `SHAMT-{N}-OVERVIEW.md` created at repository root
-- ✅ Validation loop passed (2 consecutive clean rounds)
+- ✅ Validation loop passed (primary clean round + sub-agent confirmation)
 - ✅ Overview document committed as standalone commit
 
 **Time Estimate:**
 20-40 minutes depending on epic size and number of features
 
 **Exit Condition:**
-S10.P2 is complete when the overview document is committed (if opted in) or the user has declined (if not). Either outcome is a valid completion.
+S10.P1 is complete when the overview document is committed (if opted in) or the user has declined (if not). Either outcome is a valid completion.
 
 ---
 
@@ -74,7 +74,7 @@ S10.P2 is complete when the overview document is committed (if opted in) or the 
 
 1. ⚠️ ALWAYS ask the user before starting
    - Ask using the exact prompt in Step 1
-   - If user declines: skip this entire guide, proceed to Step 9
+   - If user declines: skip this entire guide, proceed to Step 4
    - If user accepts: continue through all 6 steps
 
 2. ⚠️ Plan the narrative BEFORE writing a single section
@@ -107,15 +107,15 @@ S10.P2 is complete when the overview document is committed (if opted in) or the 
 
 ## Prerequisites Checklist
 
-**Verify BEFORE starting S10.P2:**
+**Verify BEFORE starting S10.P1:**
 
-- [ ] Step 7 (EPIC_TRACKER update) is complete and committed
+- [ ] Step 2 (Final Commit) is complete and committed
 - [ ] User has said "yes" to creating the overview document (Step 1 completed)
 - [ ] No uncommitted changes in working tree (run `git status`)
 - [ ] Ready to gather context and write the overview
 
 **If any prerequisite fails:**
-- ❌ STOP - Do NOT proceed with S10.P2
+- ❌ STOP - Do NOT proceed with S10.P1
 - Return to the prerequisite step to resolve
 
 ---
@@ -130,7 +130,7 @@ S10.P2 is complete when the overview document is committed (if opted in) or the 
 
 > "Would you like to create an epic overview document (`SHAMT-{N}-OVERVIEW.md`) for PR reviewers and future contributors? This document will narrate the epic's goals, decisions, and code changes in detail. It will be committed to the branch and visible in the PR diff. (yes / no)"
 
-**If user says no:** Note the decision, skip to Step 9 (Push and Create PR) in `stages/s10/s10_epic_cleanup.md`. Do not create any files.
+**If user says no:** Note the decision, skip to Step 4 (Push and Create PR) in `stages/s10/s10_epic_cleanup.md`. Do not create any files.
 
 **If user says yes:** Continue to Step 2.
 
@@ -315,7 +315,7 @@ git add SHAMT-{N}-OVERVIEW.md
 git commit -m "docs/SHAMT-{N}: Add epic overview document"
 ```
 
-The `docs/SHAMT-{N}:` format uses the slash convention consistent with other S10 sub-commits (e.g., `chore/SHAMT-{N}: Move completed epic to done/`, `chore/SHAMT-{N}: Update EPIC_TRACKER`). The `docs` type is used (rather than `chore`) because this commit produces a substantive documentation artifact visible to PR reviewers.
+The `docs/SHAMT-{N}:` format uses the slash convention consistent with other S10/S11 sub-commits (e.g., `chore/SHAMT-{N}: Move completed epic to done/` in S11, `chore/SHAMT-{N}: Update EPIC_TRACKER` in S11). The `docs` type is used (rather than `chore`) because this commit produces a substantive documentation artifact visible to PR reviewers.
 
 **6c. Verify the commit:**
 ```bash
@@ -331,13 +331,13 @@ Verify:
 - [ ] Only the overview document staged
 - [ ] Commit created with correct message format
 - [ ] Commit verified with `git log -1 --stat`
-- [ ] S10.P2 complete — proceed to Step 9 (Push and Create PR)
+- [ ] S10.P1 complete — proceed to Step 4 (Push and Create PR)
 
 ---
 
 ## Exit Criteria
 
-**S10.P2 is complete when ONE of the following is true:**
+**S10.P1 is complete when ONE of the following is true:**
 
 **Option A — Opted in:**
 - [ ] User said "yes" in Step 1
@@ -347,12 +347,12 @@ Verify:
 - [ ] Validation loop passed (primary clean round + sub-agent confirmation)
 - [ ] Overview document committed as standalone commit (`docs/SHAMT-{N}: Add epic overview document`)
 - [ ] Commit verified with `git log -1 --stat`
-- [ ] Ready to proceed to Step 9 (Push and Create PR)
+- [ ] Ready to proceed to Step 4 (Push and Create PR)
 
 **Option B — Declined:**
 - [ ] User said "no" in Step 1
 - [ ] No files created
-- [ ] Ready to proceed to Step 9 (Push and Create PR)
+- [ ] Ready to proceed to Step 4 (Push and Create PR)
 
 ---
 
@@ -492,10 +492,10 @@ Use this skeleton as a template when writing the document. Replace each `[...]` 
 
 ## Next Phase
 
-**This is a sub-workflow of S10 (Epic Cleanup).**
+**This is a sub-workflow of S10 (Final Changes & Merge).**
 
-**After completing S10.P2 (or if user declined):** Return to `stages/s10/s10_epic_cleanup.md` to continue with:
-- Step 9: Push Branch and Create Pull Request
+**After completing S10.P1 (or if user declined):** Return to `stages/s10/s10_epic_cleanup.md` to continue with:
+- Step 4: Push Branch and Create Pull Request
 
 **📖 RETURN TO:** `stages/s10/s10_epic_cleanup.md`
 
@@ -503,4 +503,4 @@ Use this skeleton as a template when writing the document. Replace each `[...]` 
 
 *End of s10_p1_overview_workflow.md*
 
-**Last Updated:** 2026-03-28
+**Last Updated:** 2026-04-09

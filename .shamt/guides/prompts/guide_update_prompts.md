@@ -152,7 +152,7 @@ I've analyzed all lessons learned from this epic and created prioritized guide u
 1. Create proposal doc in `.shamt/unimplemented_design_proposals/`
 2. Commit proposal doc
 3. Update reference/guide_update_tracking.md
-4. Proceed to S10 Step 5 (Final Commit)
+4. Proceed to S11 Step 2 (Archival)
 
 Creating proposal doc...
 ```
@@ -187,11 +187,11 @@ Creating proposal doc...
 
 **Next step:** When ready to send proposals to master, run `bash .shamt/scripts/export/export.sh` — this automatically moves the proposal doc to the master repo's `design_docs/unimplemented/`.
 
-**Next: S10 Step 5 - Final Commit**
+**Next: S11 Step 2 - Archival**
 
-I'll now proceed with creating the epic commit.
+I'll now proceed with archiving the epic.
 
-Following `stages/s10/s10_epic_cleanup.md` Step 5...
+Following `stages/s11/s11_shamt_finalization.md` Step 2...
 ```
 
 ---
@@ -292,11 +292,11 @@ All lessons were either:
 
 **No guide update proposals to present.**
 
-**Next: S10 Step 5 - Final Commit**
+**Next: S11 Step 2 - Archival**
 
-I'll proceed directly to creating the epic commit.
+I'll proceed directly to archiving the epic.
 
-Following `stages/s10/s10_epic_cleanup.md` Step 5...
+Following `stages/s11/s11_shamt_finalization.md` Step 2...
 ```
 
 ---

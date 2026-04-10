@@ -82,11 +82,12 @@
 ### S3: Epic-Level Docs, Tests, and Approval
 - ❌ Only checking new features (must check ALL pairwise)
 - ❌ Resolving conflicts without user input
-- ❌ Not getting user approval (Gate 4.5 — epic plan + test strategy approval occurs in S3.P3)
+- ❌ Not getting user approval (Gate 4 — epic plan + test strategy approval occurs in S3.P3)
 
-### S4: (Deprecated — redirects to S5)
-- ❌ Trying to follow S4 as an active stage — S4 is deprecated; test scope decision is now S5 Step 0
-- ❌ Creating a separate test_strategy.md file — this file is no longer required (Options A/B only); use S5 Step 0 instead
+### S4: Interface Contract Definition
+- ❌ Skipping S4 feature interface definition work
+- ❌ Not validating feature contracts with downstream features
+- ❌ Assuming interface compatibility without explicit verification
 
 ### S5: Implementation Planning
 - ❌ Skipping dimensions or gates in the Validation Loop
@@ -115,7 +116,7 @@
 - ❌ Skipping user testing (MANDATORY in Step 6)
 - ❌ Not looping back to S9.P1 after bug fixes
 
-### S10: Epic Cleanup
+### S10: Final Changes & Merge
 - ❌ Not running tests before committing
 - ❌ Only checking epic lessons_learned.md (must check ALL sources)
 - ❌ Moving features individually (move ENTIRE epic folder)

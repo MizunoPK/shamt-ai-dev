@@ -14,7 +14,7 @@
 When workflow guides specify model delegation patterns (e.g., "Spawn Haiku → File operations"), you **MUST** use the Task tool with the specified model parameter. This is enforced for token optimization and cost efficiency.
 
 **Example workflows with mandatory delegation:**
-- Validation loops (S1.P3, S2.P1, S5.V2, S7.P2, S9.P2, S9.P4, S10.P1) - Haiku for sub-agent confirmations (70-80% savings)
+- Validation loops (S1.P3, S2.P1, S5.V2, S7.P2, S9.P2, S9.P4, S10.P1, S11.P1) - Haiku for sub-agent confirmations (70-80% savings)
 - **Architect-Builder Pattern (S6 implementation execution)** - Haiku for mechanical implementation execution (60-70% savings)
 - Guide audits (audit/stages/stage_5_loop_decision.md) - Haiku for pre-checks and confirmations (40-50% savings)
 - Code reviews (code_review/code_review_workflow.md) - Haiku for git ops, Sonnet for ELI5, Haiku for confirmations (30-40% savings)
@@ -869,7 +869,7 @@ Each workflow guide includes inline Task tool examples with copy-paste-ready XML
 
 ### Core Validation Loops (Haiku Sub-Agent Confirmations)
 
-**Stage Guides (S1-S10):**
+**Stage Guides (S1-S11):**
 - `stages/s1/s1_p3_discovery_phase.md` — Discovery validation sub-agent confirmation
 - `stages/s2/s2_p1_spec_creation_refinement.md` — Spec validation sub-agent confirmation
 - `stages/s5/s5_v2_validation_loop.md` — Implementation plan validation (9 mechanical dimensions) + Model Selection section
@@ -927,7 +927,7 @@ The following templates are used across all workflow guides. Copy-paste and adap
 
 ### Template 1: Sub-Agent Confirmation (Haiku)
 
-**Use:** After primary clean round in validation loops (S1-S10, audit, code review, design doc, import)
+**Use:** After primary clean round in validation loops (S1-S11, audit, code review, design doc, import)
 
 ```xml
 <invoke name="Task">

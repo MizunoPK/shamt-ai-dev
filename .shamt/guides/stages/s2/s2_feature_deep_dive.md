@@ -93,7 +93,7 @@
 - Work on Feature 01 using S2.P1 guide (3 iterations)
 - Coordinate secondary agents (monitor, escalations, sync)
 - After all features complete S2.P1 → run S2.P2 alone
-- After S2 complete → run S3 alone (S4 deprecated)
+- After S2 complete → run S3 alone, then S4 (Interface Contract Definition)
 - **Use this router guide ONLY for phase navigation**
 
 ### Are You in Sequential Mode?

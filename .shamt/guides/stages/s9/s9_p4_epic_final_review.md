@@ -103,7 +103,7 @@ If you are about to do any of the above: STOP and re-read the relevant section.
    - EPIC_README.md marked complete
 
 4. **S9 Completion**
-   - Ready to proceed to S10 (Epic Cleanup)
+   - Ready to proceed to S10 (Final Changes & Merge)
 
 ### Time estimate
 
@@ -814,7 +814,7 @@ Check: Cross-feature integration, architecture coherence, epic requirements cove
 
 ## Prerequisites for Next Stage
 
-**Before proceeding to S10 (Epic Cleanup), verify:**
+**Before proceeding to S10 (Final Changes & Merge), verify:**
 
 ### S9.P4 Completion
 - [ ] STEP 6 (Epic PR Review) complete: All 11 categories PASSED
@@ -903,7 +903,7 @@ Check: Cross-feature integration, architecture coherence, epic requirements cove
 - [ ] ZERO bugs remaining (100% test pass, user approved)
 - [ ] Epic documentation verified and complete
 
-**📖 READ NEXT:** `stages/s10/s10_epic_cleanup.md` - Guide updates, PR creation, archival
+**📖 READ NEXT:** `stages/s10/s10_epic_cleanup.md` - Final docs, commit, PR creation, merge verification
 
 ---
 

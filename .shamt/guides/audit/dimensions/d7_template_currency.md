@@ -35,7 +35,7 @@
 - Consistent with current naming conventions
 
 ✅ **Stage Numbers Correct:**
-- Templates reference correct current stage numbers (S1-S10)
+- Templates reference correct current stage numbers (S1-S11)
 - No references to old stage numbers (pre-renumbering)
 - Workflow diagrams show current structure
 
@@ -149,7 +149,7 @@ File: templates/epic_readme_template.md
 S1 → S2 → S3 → S4 → S5 → S6 → S7
 ```text
 
-[Workflow actually has S1-S10]
+[Workflow actually has S1-S11]
 ```diff
 
 **Why This is Wrong:**
@@ -243,9 +243,7 @@ This file is distinct from `templates/` — it is the source template used by `i
 ```text
 ## Workflow System
 
-S1 → ... → S4: Feature Testing Strategy → S5-S8 → ...
-
-[S4 was deprecated — Test Scope Decision moved to S5 Step 0]
+S1 → ... → S4: Interface Contract Definition → S5-S8 → ...
 ```
 
 **Search Commands:**
@@ -287,7 +285,7 @@ grep -n "S2/S3\|S3/S4\|S2/S3/S4" .shamt/scripts/initialization/RULES_FILE.templa
 - No systematic template validation after changes
 
 **Prevention:**
-- S10.P1 includes template review
+- S11.P1 includes template review
 - Audit D7 validates template currency
 - Templates listed in "affected files" for workflow changes
 
@@ -471,12 +469,12 @@ STEP 1: Check notation consistency
 - [ ] Consistent with current naming conventions
 
 STEP 2: Verify stage numbers
-- [ ] Stage numbers match current workflow (S1-S10)
+- [ ] Stage numbers match current workflow (S1-S11)
 - [ ] Stage names match current guide titles
 - [ ] No references to old renumbered stages
 
 STEP 3: Review workflow diagrams
-- [ ] Diagrams show complete current workflow (S1-S10)
+- [ ] Diagrams show complete current workflow (S1-S11)
 - [ ] Stage flow matches current workflow
 - [ ] No outdated workflow structures
 
@@ -542,7 +540,7 @@ File: templates/epic_readme_template.md
 **Workflow:**
 S1 → S2 → S3 → S4 → S5 → S6 → S7
 ```
-**Verdict:** ❌ ERROR (workflow has S1-S10, shows only S1-S7)
+**Verdict:** ❌ ERROR (workflow has S1-S11, shows only S1-S7)
 
 **3. Example File Paths:**
 ```markdown
@@ -610,12 +608,12 @@ S4 (Testing Strategy) → S5 (Implementation Planning) → S6 (Execution) →
 S7 (Testing & Review)
 ```text
 
-[Actual workflow has S1-S10]
+[Actual workflow has S1-S11]
 ```
 
 **Analysis:**
 - Template shows 7-stage workflow
-- Current workflow has 10 stages (S5-S8 is feature loop, S9-S10 added)
+- Current workflow has 11 stages (S5-S8 is feature loop, S9-S11 added)
 - Diagram incomplete
 
 **Impact:** ⚠️ MEDIUM - Confusing, but not blocking

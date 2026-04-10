@@ -361,7 +361,7 @@ Example: "Add to s5_v2_validation_loop.md Iteration 9 checklist: '[ ] Entity sta
 ## Debugging Lessons Learned - {Feature/Epic Name}
 
 **Feature/Epic:** {name}
-**Testing Stage:** {S7.P1 Smoke Testing / S7.P2 QC / S9 Epic Testing / S10 User Testing}
+**Testing Stage:** {S7.P1 Smoke Testing / S7.P2 QC / S9 Epic Testing / S9.P3 User Testing}
 **Date Range:** {start date} - {end date}
 **Total Issues:** {count}
 **Total Investigation Time:** {hours}
@@ -842,14 +842,14 @@ Loop back to: **S9.P1 Step 1** (Epic Smoke Testing)
 
 ---
 
-**If issues discovered during S10 (User Testing):**
+**If issues discovered during S9.P3 (User Testing):**
 
 Loop back to: **S9.P1 Step 1** (Epic Smoke Testing)
 
-**Why S9.P1, not S10?**
+**Why S9.P1, not S9.P3?**
 - User-reported bugs might affect epic-level integration
 - Must re-validate entire epic before returning to user
-- S10 is user-driven, can't "loop back" to it
+- S9.P3 is user-driven, can't "loop back" to it
 - User will test again after S9 passes
 
 **Actions:**
@@ -956,7 +956,7 @@ Re-running epic testing now...
 
    **✅ primary clean round + sub-agent confirmation achieved:**
    - Epic Validation Loop complete
-   - Proceed to S9.P3 (Epic Final Review)
+   - Proceed to S9.P3 (User Testing)
 
    **❌ Issues found:**
    - Add to epic_name/debugging/ISSUES_CHECKLIST.md
@@ -1055,7 +1055,7 @@ Re-running epic testing now...
    - Separate from feature-level debugging/
 
 3. **User Testing Integration:**
-   - User reports bugs during S10 testing
+   - User reports bugs during S9.P3 testing
    - Add to epic_name/debugging/ISSUES_CHECKLIST.md
    - Enter debugging protocol
    - Loop back to S9.P1 (epic smoke testing)
@@ -1131,7 +1131,7 @@ Re-running epic testing now...
 - **Feature Validation Loop (S7.P2)** → Loop back to S7.P1 Step 1
 - **Epic Smoke Testing (S9.P1)** → Loop back to Step 1
 - **Epic Validation Loop (S9.P2)** → Loop back to S9.P1 Step 1
-- **User Testing (S10)** → Loop back to S9.P1 Step 1
+- **User Testing (S9.P3)** → Loop back to S9.P1 Step 1
 
 **Key Principle:** Always loop back to START of testing stage (not to where issues were found)
 

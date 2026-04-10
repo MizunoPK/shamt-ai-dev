@@ -405,7 +405,7 @@ before implementing.
 
 **Scope — Audit Guides ONLY:**
 - ✅ Files in `audit/` (`stages/`, `dimensions/`, `reference/`, `templates/`, `README.md`, `audit_overview.md`)
-- ❌ Epic workflow guides (`stages/s1/` through `stages/s10/`, etc.) — those improvements go through S10 lessons learned
+- ❌ Epic workflow guides (`stages/s1/` through `stages/s11/`, etc.) — those improvements go through S11 lessons learned
 
 ---
 

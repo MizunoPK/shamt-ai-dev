@@ -27,7 +27,7 @@ Export when you have made improvements to files in `.shamt/guides/` or `.shamt/s
 - **Deliberate** — an intentional improvement, not an accidental modification
 - **Recorded** — documented in `.shamt/CHANGES.md`
 
-Export typically happens after S10.P1 guide updates or after an audit that improved shared guides.
+Export typically happens after S11.P1 guide updates or after an audit that improved shared guides.
 
 Do not export if all your changes are in `.shamt/project-specific-configs/` — those are project-specific by definition and never exported.
 
@@ -228,6 +228,6 @@ echo "/path/to/shamt-ai-dev" > .shamt/shamt_master_path.conf
 
 ## Relationship to CHANGES.md
 
-`CHANGES.md` is written during S10 and audit work, at the time you make the change. The export workflow uses it at export time. Think of it as the PR description written incrementally as you work.
+`CHANGES.md` is written during S11.P1 guide updates and audit work, at the time you make the change. The export workflow uses it at export time. Think of it as the PR description written incrementally as you work.
 
 If you export without a complete `CHANGES.md`, reviewers have no context for the diff. Keep it current.

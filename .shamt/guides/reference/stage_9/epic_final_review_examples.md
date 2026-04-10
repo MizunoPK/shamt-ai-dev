@@ -1,6 +1,6 @@
-# Epic Final Review Examples - S9.P3
+# Epic Final Review Examples - S9.P4
 
-**Purpose:** Common mistakes, real-world examples, and best practices for S9.P3
+**Purpose:** Common mistakes, real-world examples, and best practices for S9.P4
 **When to Use:** Reference while completing epic_final_review.md workflow
 **Main Guide:** `stages/s9/s9_p4_epic_final_review.md`
 
@@ -12,13 +12,13 @@
 2. [Common Mistakes to Avoid](#common-mistakes-to-avoid)
 3. [Real-World Example](#real-world-example)
 4. [Best Practices Summary](#best-practices-summary)
-5. [Quick Reference: S9.P3 Steps](#quick-reference-s9p3-steps)
+5. [Quick Reference: S9.P4 Steps](#quick-reference-s9p4-steps)
 
 ---
 
 ## Overview
 
-This reference provides practical examples for S9.P3 (Epic Final Review):
+This reference provides practical examples for S9.P4 (Epic Final Review):
 
 **Common Mistakes (7 anti-patterns to avoid)**
 **Real-World Example (complete epic final review walkthrough)**
@@ -34,7 +34,7 @@ Use these examples to avoid common pitfalls and ensure thorough epic-level valid
 
 **Why this is wrong:**
 - S7 already did feature-level PR review for each feature
-- S9.P3 focuses on EPIC-WIDE concerns (cross-feature impacts)
+- S9.P4 focuses on EPIC-WIDE concerns (cross-feature impacts)
 - Repeating feature-level checks wastes time
 
 **What to do instead:**
@@ -80,7 +80,7 @@ GOOD:
 - Create bugfix_high_architecture_inconsistency/
 - Run bug fix through S2 → S5 → S6 → S7
 - RESTART S9 from S9.P1 (smoke testing)
-- Re-run S9.P1, 6b, S9.P3 (all steps)
+- Re-run S9.P1, 6b, S9.P4 (all steps)
 - Only then proceed to S10
 ```
 
@@ -202,7 +202,7 @@ BAD:
 GOOD:
 - Complete PR review (all 11 categories)
 - Document results in epic_lessons_learned.md:
-  ## S9.P3 - Epic PR Review (11 Categories)
+  ## S9.P4 - Epic PR Review (11 Categories)
   **Date:** 2025-01-02
   **Overall Status:** ✅ APPROVED
   **Issues Found:** 0
@@ -215,7 +215,7 @@ GOOD:
 ### ❌ MISTAKE 7: "Proceeding to S10 with pending issues"
 
 **Why this is wrong:**
-- S10 is final cleanup (commits, merge to main, move to done/)
+- S10 is final cleanup (commits, PR creation, merge to main); S11 handles archival (move to done/)
 - Cannot commit epic with known issues
 - User will find issues after "completion"
 
@@ -261,7 +261,7 @@ Step 8.1: Verification Checklist
 - Features: 3 (rank priority Integration, Matchup System, Performance Tracking)
 - S9.P1 complete: Epic smoke testing passed
 - S9.P2 complete: Validation Loop passed (primary clean round + sub-agent confirmation)
-- Now starting S9.P3: Epic Final Review
+- Now starting S9.P4: Epic Final Review
 
 ---
 
@@ -320,7 +320,7 @@ class PerformanceTracker:  # ✅ Manager pattern
 **Step 6.12: Document PR Review Results**
 
 ```markdown
-## S9.P3 - Epic PR Review (11 Categories)
+## S9.P4 - Epic PR Review (11 Categories)
 
 **Date:** 2025-01-02
 **Reviewer:** Claude Agent
@@ -361,7 +361,7 @@ class PerformanceTracker:  # ✅ Manager pattern
 **Step 7.1: Document Issues**
 
 ```markdown
-## S9.P3 Issues Found
+## S9.P4 Issues Found
 
 **Date:** 2025-01-02
 
@@ -386,7 +386,7 @@ class PerformanceTracker:  # ✅ Manager pattern
 **Step 7.3: Present to User**
 
 ```markdown
-I found 1 issue during S9.P3 Epic PR Review that requires a bug fix:
+I found 1 issue during S9.P4 Epic PR Review that requires a bug fix:
 
 **ISSUE 1: Architectural Inconsistency (HIGH priority)**
 - **Problem:** Feature 02 uses standalone functions instead of Manager pattern
@@ -424,7 +424,7 @@ bugfix_high_architecture_inconsistency/
 **Restart Actions:**
 - Re-ran S9.P1: Epic Smoke Testing (all 4 parts) - PASSED
 - Re-ran S9.P2: Validation Loop (primary clean round + sub-agent confirmation) - PASSED
-- Re-ran S9.P3: Epic PR Review (all 11 categories) - PASSED
+- Re-ran S9.P4: Epic PR Review (all 11 categories) - PASSED
   - Architecture category now PASSED (all features use Manager pattern)
 
 **Result:** S9 complete after restart (no new issues)
@@ -437,7 +437,7 @@ bugfix_high_architecture_inconsistency/
 **Step 8.1: Verify All Issues Resolved**
 
 ```markdown
-## S9.P3 Final Verification
+## S9.P4 Final Verification
 
 **Date:** 2025-01-02 16:00
 
@@ -469,7 +469,7 @@ bugfix_high_architecture_inconsistency/
 **Step 8.3: Update epic_lessons_learned.md**
 
 ```markdown
-## S9.P3 Lessons Learned (Epic Final Review)
+## S9.P4 Lessons Learned (Epic Final Review)
 
 **What Went Well:**
 - Architectural consistency check caught Manager pattern inconsistency
@@ -492,7 +492,7 @@ bugfix_high_architecture_inconsistency/
 ```markdown
 ## Agent Status
 
-**Current Stage:** S9.P3 - Epic Final Review
+**Current Stage:** S9.P4 - Epic Final Review
 **Status:** ✅ COMPLETE
 **Completed:** 2025-01-02 16:15
 
@@ -551,7 +551,7 @@ bugfix_high_architecture_inconsistency/
 
 ---
 
-## Quick Reference: S9.P3 Steps
+## Quick Reference: S9.P4 Steps
 
 **STEP 6: Epic PR Review**
 - Apply 11-category checklist to epic-wide changes

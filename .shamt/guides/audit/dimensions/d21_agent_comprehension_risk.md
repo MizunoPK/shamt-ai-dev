@@ -296,7 +296,7 @@ echo "=== D21: Agent Comprehension Risk Checks ==="
 echo ""
 echo "--- Scope Statements in First 30 Lines ---"
 echo "(Manual verification needed: confirm these are prominent scope callouts)"
-for file in stages/s{1..10}/*.md; do
+for file in stages/s{1..11}/*.md; do
   scope=$(head -30 "$file" 2>/dev/null | grep -i "once per\|runs once\|per epic\|per feature\|ALL features")
   if [ -n "$scope" ]; then
     echo "FOUND in $file:"
@@ -437,7 +437,7 @@ Added blockquote immediately after H1:
 - **Pairwise comparison removed** (moved to S2.P2)
 - **Epic testing strategy from old S4 moved here** (S3.P1)
 - **Two Validation Loops** (testing strategy + documentation)
-- **Gate 4.5 explicit with 3-tier rejection handling**
+- **Gate 4 explicit with 3-tier rejection handling**
 ```
 
 **Impact:**
@@ -462,10 +462,10 @@ S3.P1 (epic smoke test plan) and the former S4 (per-feature test strategy) used 
 Agents who completed S3.P1 and then reached S4 treated them as the same workflow, reusing S3.P1-level thinking (cross-feature scenarios) for per-feature test planning, or skipping S4 on the assumption that "test planning was already done in S3."
 
 **Resolution:**
-S4 was deprecated in SHAMT-6. The Test Scope Decision now happens at S5 Step 0 (not a separate stage), and only applies to Options C/D (unit tests). S3.P1 has a callout: `> **This is NOT per-feature test planning.** Tests defined here span multiple features and verify end-to-end workflows across the whole epic.`
+S4 was deprecated in SHAMT-6 (feature testing strategy) and reinstated in SHAMT-36 as Interface Contract Definition. The Test Scope Decision now happens at S5 Step 0b (not a separate stage), and only applies to Options C/D (unit tests). S3.P1 has a callout: `> **This is NOT per-feature test planning.** Tests defined here span multiple features and verify end-to-end workflows across the whole epic.`
 
 **Current D21 applicability:**
-Watch for agents confusing S3.P1 (epic-level integration testing) with S5 Step 0 (per-feature test scope decision). These serve different purposes and should not be treated as equivalent.
+Watch for agents confusing S3.P1 (epic-level integration testing) with S4 (interface contracts) or S5 Step 0b (per-feature test scope decision). These serve different purposes and should not be treated as equivalent.
 
 **D21 Detection:**
 - Type 3: Structural Similarity check — manual read of both guides side by side reveals identical template without scope differentiation

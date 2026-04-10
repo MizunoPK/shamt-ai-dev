@@ -1,7 +1,7 @@
-# Lessons Learned Examples - S10.P1
+# Lessons Learned Examples - S11.P1
 
 **Purpose:** Examples and guidance for reading and applying lessons learned
-**When to use:** S10.P1 (Guide Update from Lessons Learned)
+**When to use:** S11.P1 (Guide Update from Lessons Learned)
 **Main Guide:** `stages/s11/s11_p1_guide_update_workflow.md`
 
 ---
@@ -21,7 +21,7 @@
 
 ## Overview
 
-S10.P1 (Guide Update from Lessons Learned) requires finding ALL lessons learned files and creating user-approved guide update proposals. This reference provides:
+S11.P1 (Guide Update from Lessons Learned) requires finding ALL lessons learned files and creating user-approved guide update proposals. This reference provides:
 - Examples of what lessons learned files look like
 - How to extract guide improvements from lessons
 - How lessons map to priority levels (P0-P3)

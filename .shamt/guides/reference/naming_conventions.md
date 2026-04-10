@@ -238,7 +238,7 @@ The Epic-Driven Development Workflow v2 uses a **3-level hierarchical S#.P#.I# n
 **File:** `s5_v2_validation_loop.md`
 
 **Purpose:** Execute iterations 1-7 with requirement reviews and algorithm design
-**Prerequisites:** S2-S3 complete (spec, alignment, Gate 4.5 approved; S4 deprecated)
+**Prerequisites:** S2-S4 complete (spec, alignment, Gate 4 approved, interface_contracts.md created)
 **Next Guide:** `stages/s5/s5_v2_validation_loop.md`
 
 ---
@@ -391,7 +391,7 @@ S1 is the initial planning section where you:
 **File:** `s5_v2_validation_loop.md`
 
 **Purpose:** Execute iterations 1-7 with requirement reviews and algorithm design
-**Prerequisites:** S2-S3 complete (spec, alignment, Gate 4.5 approved; S4 deprecated)
+**Prerequisites:** S2-S4 complete (spec, alignment, Gate 4 approved, interface_contracts.md created)
 **Next Guide:** `stages/s5/s5_v2_validation_loop.md`
 
 ---

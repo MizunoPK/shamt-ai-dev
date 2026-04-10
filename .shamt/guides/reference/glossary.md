@@ -84,7 +84,7 @@ Table mapping algorithm requirements from spec.md to implementation_plan.md task
 ---
 
 ### Alignment
-Process of ensuring consistency across features (S2.P2: cross-feature alignment) or updating specs after implementation (S8.P1). S3 does epic-level test planning and approval (Gate 4.5) after S2.P2 alignment is complete.
+Process of ensuring consistency across features (S2.P2: cross-feature alignment) or updating specs after implementation (S8.P1). S3 does epic-level test planning and approval (Gate 4) after S2.P2 alignment is complete.
 
 **See:** Cross-Feature Sanity Check, Post-Feature Alignment
 
@@ -166,7 +166,7 @@ Testing how multiple features interact together.
 ---
 
 ### Cross-Feature Sanity Check
-S3 process of validating epic-level consistency across all feature specs. Note: Pairwise comparison of feature specs is performed in S2.P2 (moved from old S3). S3 focuses on epic-level testing strategy, documentation, and user approval (Gate 4.5).
+S3 process of validating epic-level consistency across all feature specs. Note: Pairwise comparison of feature specs is performed in S2.P2 (moved from old S3). S3 focuses on epic-level testing strategy, documentation, and user approval (Gate 4).
 
 **See:** S3, Alignment
 
@@ -492,7 +492,7 @@ S5 v2 Validation Loop not converging - indicates NOT ready to proceed to S6. Occ
 
 **[Multiple contexts - OVERLOADED TERM]** Term for distinct sections within a stage/round.
 
-- ✅ CORRECT: "S2.P1", "S10.P2", "Debugging Phase 3"
+- ✅ CORRECT: "S2.P1", "S10.P1", "Debugging Phase 3"
 
 **See:** Stage, Part, Round, Iteration
 
@@ -674,7 +674,7 @@ Specification document in each feature folder containing all requirements.
 ---
 
 ### Stage
-Top-level workflow division. 10 stages total:
+Top-level workflow division. 11 stages total (S1-S11):
 
 **See:** Epic, Feature
 
@@ -719,11 +719,11 @@ Implementation plan (~400 lines) in each feature folder containing comprehensive
 ---
 
 ### User Testing
-S10 mandatory testing by the user before commit.
+S9.P3 mandatory testing by the user before proceeding to S10. The user tests the complete epic with real data; zero bugs required to pass.
 
-**See:** S10, Mandatory Gates
+**See:** S9, Mandatory Gates
 
-**Guide:** stages/s10/s10_epic_cleanup.md
+**Guide:** stages/s9/s9_p3_user_testing.md
 
 ---
 

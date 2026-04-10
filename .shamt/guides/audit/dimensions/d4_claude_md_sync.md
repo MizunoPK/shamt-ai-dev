@@ -77,12 +77,12 @@ Result: Agent expects 28 iterations, looks for I23-I28 which don't exist
 
 ### Why CLAUDE.md Drifts
 
-**Root Cause:** CLAUDE.md is read by agents on EVERY task, but only updated during S10.P1 (Epic Cleanup)
+**Root Cause:** CLAUDE.md is read by agents on EVERY task, but only updated during S11.P1 (Shamt Finalization)
 
 **Drift Pattern:**
 1. Guide change happens mid-epic (e.g., S5 expanded from 15→22 iterations)
 2. Current epic uses updated guides
-3. CLAUDE.md not updated until S10.P1
+3. CLAUDE.md not updated until S11.P1
 4. Next epic starts, reads outdated CLAUDE.md
 5. Confusion or incorrect workflow followed
 
@@ -123,7 +123,7 @@ done < /tmp/claude_paths.txt
 ### Type 2: Stage Quick Reference Table
 
 **What to Check:**
-- Stage numbers (S1-S10)
+- Stage numbers (S1-S11)
 - Stage names match guide titles
 - Guide file paths are correct
 - "Next" stage is correct
@@ -369,7 +369,7 @@ fi
 
 echo "Checking stage references in CLAUDE.md..."
 
-# Extract stage references (S1-S10, S#.P#, S#.P#.I#)
+# Extract stage references (S1-S11, S#.P#, S#.P#.I#)
 grep -oh "S[0-9][0-9]*\(\.P[0-9][0-9]*\)\?\(\.I[0-9][0-9]*\)\?" CLAUDE.md | \
   sort -u > /tmp/claude_stages.txt
 
@@ -433,7 +433,7 @@ echo "  - Key concepts aligned (Fresh Eyes, exit criteria, etc.)"
 
 #### Section 2: Stage Workflows Quick Reference
 
-**For EACH stage (S1-S10):**
+**For EACH stage (S1-S11):**
 
 - [ ] Stage name in CLAUDE.md matches guide file title
 - [ ] Guide path exists and is correct
@@ -482,7 +482,7 @@ echo "  - Key concepts aligned (Fresh Eyes, exit criteria, etc.)"
 
 **For Epic-Driven Workflow:**
 
-- [ ] CLAUDE.md describes 10-stage workflow (S1-S10)
+- [ ] CLAUDE.md describes 11-stage workflow (S1-S11)
 - [ ] Stage purposes match guide purposes
 - [ ] Feature loop (S5-S8) described correctly
 - [ ] Parallel work mention (if applicable) matches parallel_work/ guides

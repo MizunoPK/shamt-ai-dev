@@ -4,7 +4,7 @@
 
 **Role:** Coordinator + Feature 01 owner
 
-**Stages:** S1 (solo) → S2 (parallel) → S3 (solo) → S5 (solo, per feature) — S4 deprecated
+**Stages:** S1 (solo) → S2 (parallel) → S3 (solo) → S4 (solo - Interface Contract Definition) → S5 (solo, per feature)
 
 ---
 
@@ -19,7 +19,7 @@
 - [Phase 5: Parallel S2 Work](#phase-5-parallel-s2-work)
 - [Phase 6: Sync Point — All Features Complete S2](#phase-6-sync-point--all-features-complete-s2)
 - [Phase 7: S3 Epic-Level Docs, Tests, and Approval (Solo)](#phase-7-s3-epic-level-docs-tests-and-approval-solo)
-- [Phase 8: S4 (Deprecated — Skip to S5)](#phase-8-s4-deprecated--skip-to-s5)
+- [Phase 8: S4 Interface Contract Definition (Solo)](#phase-8-s4-interface-contract-definition-solo)
 - [Phase 9: Notify Secondary Agents of S3 Completion](#phase-9-notify-secondary-agents-of-s3-completion)
 - [Common Scenarios](#common-scenarios)
 - [Tools and References](#tools-and-references)
@@ -45,7 +45,7 @@ When S2 parallelization is enabled, the Primary agent has **dual responsibilitie
 ## Workflow Overview
 
 ```text
-S1 (Solo) → Offer Parallel Work → Generate Handoffs → S2 (Parallel) → S3 (Solo) → S5 (Solo, per feature)
+S1 (Solo) → Offer Parallel Work → Generate Handoffs → S2 (Parallel) → S3 (Solo) → S4 (Solo) → S5 (Solo, per feature)
     ↓                                                       ↓
 Feature Analysis                                    Monitor + Coordinate
 Dependency Detection                                Handle Escalations
@@ -591,7 +591,7 @@ I'll create the epic smoke test plan, refine epic documentation, and get user ap
 **Status:** All features completed S2
 **Next:** I'm running S3 (Epic-Level Docs, Tests, and Approval) alone
 **Your Action:** WAIT - No action needed from you right now
-**ETA:** S3 will take ~1 hour, then I'll proceed to S5 (S4 deprecated)
+**ETA:** S3 will take ~1 hour, then S4 will take ~30 min, then I'll proceed to S5
 **Note:** Implementation (S5-S8) will be sequential in this plan
 **Acknowledge:** No action needed
 ```
@@ -623,16 +623,17 @@ I'll create the epic smoke test plan, refine epic documentation, and get user ap
 
 ---
 
-## Phase 8: S4 (Deprecated — Skip to S5)
+## Phase 8: S4 Interface Contract Definition (Solo)
 
-> **⚠️ S4 has been deprecated (SHAMT-6).** Do NOT run S4. Proceed directly to S5.
+**After S3 complete, run S4 alone:**
 
-**Instead of S4, do at the start of S5 (Step 0):**
-
-1. **Check Testing Approach** in EPIC_README (set at S1 Step 4.6.5)
-2. **Step 0: Test Scope Decision** — follow `stages/s5/s5_v2_validation_loop.md` Step 0
-   - If Options C/D: identify algorithmic functions to unit test
-   - If Options B/D: confirm Integration Test Convention in EPIC_README
+1. **Follow guide:** `stages/s4/s4_interface_contracts.md`
+2. **Validate feature contracts:**
+   - Check interface consistency across all features
+   - Verify data contracts align
+   - Document any API clarifications needed
+3. **Update specs if issues found**
+4. **Proceed to S5** (Test Scope Decision at S5 Step 0)
 
 ---
 
@@ -642,10 +643,11 @@ I'll create the epic smoke test plan, refine epic documentation, and get user ap
 
 ```markdown
 ## Message X (2026-01-15 15:30) ⏳ UNREAD
-**Subject:** S3 Complete - Implementation Sequential (S4 deprecated)
-**Status:** S3 (Epic-Level Docs, Tests, and Approval) complete — S4 deprecated, Test Scope Decision now in S5 Step 0
+**Subject:** S3 Complete - Running S4 (Interface Contract Definition)
+**Status:** S3 (Epic-Level Docs, Tests, and Approval) complete — Now running S4 for contract validation
 **Findings:** No conflicts found with any feature specs
 **Next Steps:**
+- S4: Validate feature contracts across all features
 - Implementation (S5-S8) will be SEQUENTIAL in this plan
 - I (Primary) will implement Feature 01 first
 - After Feature 01 → I'll implement Feature 02
@@ -747,7 +749,7 @@ I'll now proceed with S5 (Implementation Planning) for Feature 01...
 - [ ] Notified secondary agents
 - [ ] Proceeding to S3 (solo)
 - [ ] S3 complete
-- [ ] S4 (deprecated — skipped)
+- [ ] S4 complete (Interface Contract Definition — fast-skip or full path)
 - [ ] Notified secondary agents of S3 completion
 
 **Next:** Proceed to sequential implementation (S5-S8) for all features

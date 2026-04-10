@@ -48,7 +48,7 @@
 |----------|----------|----------|
 | [Cross-Feature Alignment](#cross-feature-alignment) | `cross_feature_sanity_check_template.md` | Comparing features for conflicts or duplications during S2.P2 (Cross-Feature Alignment) |
 
-### S4: (Deprecated — Test Scope Decision in S5 Step 0)
+### S4: Interface Contract Definition
 
 | Template | Filename | Use When |
 |----------|----------|----------|
@@ -73,12 +73,12 @@
 |----------|----------|----------|
 | [PR Review Issues](#pr-review-issues) | `pr_review_issues_template.md` | Tracking issues found during PR review |
 
-### S10: Epic Cleanup
+### S10: Final Changes & Merge
 
 | Template | Filename | Use When |
 |----------|----------|----------|
 | [Guide Update Proposal](#guide-update-proposal) | `guide_update_proposal_template.md` | Proposing guide improvements discovered during epic work (SHAMT-{N} format) |
-| [PR Comment Resolution](#pr-comment-resolution) | `comment_resolution_template.md` | Creating pr_comment_resolution.md in epic folder (Step 8.5, user-triggered) |
+| [PR Comment Resolution](#pr-comment-resolution) | `comment_resolution_template.md` | Creating pr_comment_resolution.md in epic folder (S10 Step 5, user-triggered) |
 | [PR Review Issues](#pr-review-issues) | `pr_review_issues_template.md` | Tracking issues found during PR review (also used in S7) |
 
 ### Parallel Work
@@ -142,7 +142,7 @@
 - **Updated:** S3.P1, S8.P2 (after each feature)
 - **Purpose:** Epic end-to-end testing scenarios
 - **Size:** ~280 lines
-- **When to use:** S1 initial creation, S3.P1 refinement (S4 deprecated)
+- **When to use:** S1 initial creation, S3.P1 refinement
 
 #### Epic Lessons Learned
 - **File:** `epic_lessons_learned_template.md`
@@ -233,7 +233,7 @@
 
 #### Feature Test Strategy
 - **File:** `feature_test_strategy_template.md`
-- **Created:** S5 Step 0 (formerly S4 — deprecated)
+- **Created:** S5 Step 0 (Test Scope Decision)
 - **Purpose:** Options C/D only — planning unit tests for algorithmic functions before implementation
 - **Size:** ~259 lines
 - **When to use:** S5 Step 0 if Testing Approach is C or D
@@ -275,7 +275,7 @@
 
 #### PR Comment Resolution
 - **File:** `comment_resolution_template.md`
-- **Created:** S10 Step 8.5 (user-triggered, after PR receives review comments)
+- **Created:** S10 Step 5 (user-triggered, after PR receives review comments)
 - **Purpose:** Structured tracking of PR review comments, resolutions, and commit references
 - **Size:** ~75 lines
 - **When to use:** User directs agent to process PR review comments after PR is created
@@ -299,7 +299,7 @@
 - **Created:** S5 parallel work setup (Primary Agent, SP2 action)
 - **Purpose:** Handoff package for secondary agents in parallel S5 work; contains context, sync point instructions, and milestone checkpoint requirements
 - **Size:** ~198 lines
-- **When to use:** Parallel S5 work — Primary Agent creates one per secondary agent after S3 Gate 4.5 approval
+- **When to use:** Parallel S5 work — Primary Agent creates one per secondary agent after S3 Gate 4 approval (post-S4)
 
 #### Feature Status
 - **File:** `feature_status_template.txt`

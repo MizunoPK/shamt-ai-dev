@@ -34,7 +34,7 @@ mkdir -p epic_name/debugging/diagnostic_logs
 
 **Decision: Feature vs Epic?**
 - **Feature-level:** Issues discovered during S7.P1 or S7.P2 for a specific feature
-- **Epic-level:** Issues discovered during S9 (Epic Testing) or S10 (User Testing)
+- **Epic-level:** Issues discovered during S9 (Epic Testing) or S9.P3 (User Testing)
 
 ---
 
@@ -112,7 +112,7 @@ mkdir -p epic_name/debugging/diagnostic_logs
 **Current Guide:** debugging/discovery.md
 **Guide Last Read:** {YYYY-MM-DD HH:MM}
 
-**Testing Stage Paused:** {S9.P1 Epic Smoke Step 2 / S9.P2 Epic Validation Round 1 / S10 User Testing}
+**Testing Stage Paused:** {S9.P1 Epic Smoke Step 2 / S9.P2 Epic Validation Round 1 / S9.P3 User Testing}
 
 **Debugging Status:**
 - Issues in Checklist: {count}
@@ -287,7 +287,7 @@ feature_01_player_integration/
 **When to use:**
 - Issues discovered during S9.P1 (Epic Smoke Testing)
 - Issues discovered during S9.P2 (Epic Validation Loop)
-- Issues discovered during S10 (User Testing)
+- Issues discovered during S9.P3 (User Testing)
 - Cross-feature integration issues
 - Epic-level coordination issues
 
@@ -346,16 +346,16 @@ epic_name/
 
 ---
 
-### Scenario 4: User Reports Bugs During S10 Testing
+### Scenario 4: User Reports Bugs During S9.P3 Testing
 
 **Actions:**
 1. Create `epic_name/debugging/` folder (if doesn't exist)
 2. Create/update `epic_name/debugging/ISSUES_CHECKLIST.md`
 3. Add ALL user-reported bugs to checklist
-4. Set "Discovered During" to "User Testing (S10)"
+4. Set "Discovered During" to "User Testing (S9.P3)"
 5. Update EPIC_README Agent Status
 6. Inform user you're entering debugging protocol
-7. After all bugs fixed: Loop back to S9.P1 (NOT S10)
+7. After all bugs fixed: Loop back to S9.P1 (NOT S9.P3)
    - **Why?** Fixes might affect epic-level integration
    - Must re-validate epic smoke and QC before user tests again
 

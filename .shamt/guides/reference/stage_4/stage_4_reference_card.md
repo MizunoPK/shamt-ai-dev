@@ -1,146 +1,146 @@
-# STAGE 4: Feature Testing Strategy - Quick Reference Card
+# S4: Interface Contract Definition — Quick Reference Card
 
-> **⚠️ DEPRECATED (SHAMT-6):** S4 has been deprecated. Test Scope Decision is now Step 0 of S5.
-> See `stages/s4/s4_feature_testing_strategy.md` for the redirect stub.
-> This file is preserved for reference only — do NOT follow for new epics.
+**Purpose:** One-page summary for defining cross-feature interface contracts before S5 planning begins
+**Use Case:** Quick lookup when starting S4 after Gate 4 approval
+**Total Time:** Full path ~30-45 min / Fast-skip ~5-10 min
 
-**Purpose:** (Deprecated) One-page summary for creating feature-level test strategy before implementation
-**Status:** DEPRECATED — Test Scope Decision moved to S5 Step 0
-**Total Time:** N/A (deprecated)
+> **SCOPE:** Runs **once per epic**, after S3 complete and Gate 4 passed.
+
+---
+
+## Path Decision
+
+```text
+Did S2.P2 identify any integration points?
+  ├─ YES → Full Path (~30-45 min + validation loop)
+  └─ NO  → Fast-Skip (~5-10 min, no validation loop)
+```
 
 ---
 
 ## Workflow Overview
 
 ```text
-STEP 1: Test Strategy Development (S4.I1 — 15-20 min)
-    ├─ Read spec.md requirements
-    ├─ For each requirement: identify testable behaviors, inputs/outputs, error conditions
-    ├─ Create test coverage matrix (requirement → test mapping)
-    ├─ Enumerate test cases (unit, integration, edge)
-    └─ Link each test to requirement (traceability)
+FULL PATH
+─────────────────────────────────────────────────────────
+STEP 1: Review S2.P2 output (5-10 min)
+    └─ Read cross-feature alignment notes; list every integration point
     ↓
-STEP 2: Edge Case Enumeration (S4.I2 — 10-15 min)
-    ├─ For each input: min/max, null/empty/zero, invalid types, special characters
-    ├─ Enumerate error paths (invalid input, dependency failures, race conditions)
-    ├─ Create edge case catalog
-    └─ Update test coverage matrix
+STEP 2: Classify contracts by type (5 min)
+    └─ function sig / data schema / file format / constant / config key / API
     ↓
-STEP 3: Configuration Change Impact (S4.I3 — 10-15 min)
-    ├─ Identify config files used by feature
-    ├─ For each config value: default, custom, invalid, missing behavior
-    ├─ Create configuration test matrix
-    └─ Verify >90% coverage goal met
+STEP 3: Define each contract (15-20 min)
+    ├─ Existing code: verify from source (file:line), status = confirmed
+    └─ New code: derive from all consuming features' specs, status = proposed
     ↓
-STEP 4: Validation Loop (S4.I4 — 15-20 min)
-    ├─ Reference: validation_loop_test_strategy.md
-    ├─ Round 1: Sequential read + requirement coverage check
-    ├─ Round 2: Edge case enumeration + gap detection
-    ├─ Round 3: Random spot-checks + integration verification
-    └─ Exit: primary clean round + sub-agent confirmation
+STEP 4: Map producer/consumer relationships (5 min)
+    └─ Escalate to user if multiple producers for same contract
+    ↓
+STEP 5: Create interface_contracts.md in epic folder root (5-10 min)
+    ↓
+STEP 6: Validation loop → primary clean round + sub-agent confirmation
+    └─ 5 dimensions (see below)
+    ↓
+DONE → proceed to S5 (or SP2 in parallel mode)
+
+FAST-SKIP PATH
+─────────────────────────────────────────────────────────
+Create minimal interface_contracts.md stating "no contracts"
+No validation loop needed → proceed to S5
 ```
 
 ---
 
-## Step Summary Table
+## S4 Validation Dimensions (Full Path Only)
 
-| Step | Duration | Key Activities | Outputs | Gate? |
-|------|----------|----------------|---------|-------|
-| I1 | 15-20 min | Requirement analysis, test enumeration | Test coverage matrix, test case list | No |
-| I2 | 10-15 min | Edge cases, error paths | Edge case catalog, updated matrix | No |
-| I3 | 10-15 min | Config dependency analysis | Config test matrix, final coverage matrix | No |
-| I4 | 15-20 min | Validation Loop (primary clean round + sub-agent confirmation) | test_strategy.md (validated) | No gates |
+| # | Dimension | What to Check |
+|---|-----------|---------------|
+| 1 | Contract Completeness | Every S2.P2 integration point has a contract entry |
+| 2 | Contract Specificity | All definitions fully specified — zero TBD fields |
+| 3 | Contract Correctness | confirmed = source verified; proposed = consistent with all specs |
+| 4 | Producer/Consumer Accuracy | All producers and consumers correctly identified |
+| 5 | No Conflicting Definitions | No two entries define the same interface differently |
 
-**Note:** S4 has ZERO formal gates. test_strategy.md is agent-validated only (via Validation Loop in I4). User approval is NOT required for test_strategy.md.
+---
+
+## interface_contracts.md Required Fields (per contract)
+
+| Field | Notes |
+|-------|-------|
+| `name` | Short identifier |
+| `type` | function sig / data schema / file format / constant / config key / API endpoint |
+| `definition` | Full signature or schema — NO TBD |
+| `producing feature(s)` | Feature that creates/modifies this interface |
+| `consuming feature(s)` | Features that call/read this interface |
+| `source` | `existing: path/file.py:line_N` or `new` |
+| `status` | `confirmed` (verified) or `proposed` (new) |
+
+---
+
+## Phase Summary Table
+
+| Step | Duration | Key Output | Gate? |
+|------|----------|------------|-------|
+| 1-5 (full) | 30-45 min | interface_contracts.md | No |
+| Validation loop | 15-20 min | All 5 dimensions clean | No (agent-validated only) |
+| Fast-skip | 5-10 min | interface_contracts.md (stub) | No |
+
+**S4 has ZERO formal user gates.** Contracts are technical derivations of user-approved specs; they surface at Gate 5 when implementation plans are reviewed.
 
 ---
 
 ## Key Rules
 
-- ✅ test-driven development (plan tests BEFORE coding)
-- ✅ >90% coverage goal (feature-level, not epic-level)
-- ✅ All 4 iterations MANDATORY (I1, I2, I3, I4)
-- ✅ Validation Loop (I4) requires primary clean round + sub-agent confirmation
-- ✅ test_strategy.md created in S4, merged into implementation_plan.md in S5.P1.I1
-- ✅ Update README Agent Status after EACH iteration
-- ✅ Zero deferred issues (fix ALL issues immediately in I4 Validation Loop)
-- ✅ 🚨 **Gate 4.5 was passed in S3.P3 (NOT in S4)** — S4 has no user approval gates
+- ✅ `interface_contracts.md` must exist before ANY feature begins S5
+- ✅ Full path validation loop: primary clean round + sub-agent confirmation required
+- ✅ Fast-skip: no validation loop needed
+- ✅ No TBD fields in any contract definition
+- ✅ Multiple producers for same contract → escalate to user before S5
+- ✅ Parallel mode: SP2 fires AFTER S4 exits (not at Gate 4 approval)
+- ✅ `interface_contracts.md` is a living document through S5-CA; frozen after S5-CA exits
 
 ---
 
 ## Common Pitfalls
 
-### ❌ Pitfall 1: Updating epic_smoke_test_plan.md in S4 (Wrong Stage)
-**Problem:** Trying to update epic_smoke_test_plan.md in S4
-**Impact:** Doing the wrong work; epic test plan was finalized in S3.P1
-**Solution:** S4 creates FEATURE-level test_strategy.md (one per feature). Epic testing was done in S3.P1.
+### ❌ Pitfall 1: Skipping S4 for "simple" multi-feature epics
+**Problem:** "The features seem independent so I'll just go to S5"
+**Solution:** Check S2.P2 output. If zero integration points confirmed → fast-skip. If any integration points exist → full path. Never skip S4 entirely.
 
-### ❌ Pitfall 2: Expecting Gate 4.5 to happen in S4
-**Problem:** Waiting for user approval of test_strategy.md
-**Impact:** Unnecessary delay; S4 is agent-validated only
-**Solution:** Gate 4.5 was in S3.P3 (epic plan approval). Proceed to S5 after I4 Validation Loop passes.
+### ❌ Pitfall 2: TBD fields in contract definitions
+**Problem:** "I'll figure out the signature in S5"
+**Solution:** Define the contract now. If you can't, the spec has a gap — escalate to user.
 
-### ❌ Pitfall 3: Vague Test Coverage
-**Problem:** "I'll test requirement X" with no specifics
-**Impact:** Can't verify coverage in S7 (testing)
-**Solution:** Define SPECIFIC test scenarios (input → expected output → assertion)
+### ❌ Pitfall 3: Defining contracts from memory
+**Problem:** "I know what this function looks like"
+**Solution:** Use Read tool to verify existing signatures from source. Mark confirmed only after reading the actual file.
 
-### ❌ Pitfall 4: Skipping Config Tests
-**Problem:** "This feature doesn't use config much"
-**Impact:** Config bugs slip through to S7
-**Solution:** I3 is MANDATORY - identify ALL config dependencies
-
-### ❌ Pitfall 5: Merging test_strategy.md into implementation_plan.md in S4
-**Problem:** Trying to merge test strategy early
-**Impact:** S5.P1.I1 explicitly merges them; doing it in S4 causes confusion
-**Solution:** Create test_strategy.md in S4. Let S5.P1.I1 perform the merge.
+### ❌ Pitfall 4: Activating secondary agents before S4 is done (parallel mode)
+**Problem:** "I'll start S4 while secondaries begin S5"
+**Solution:** Secondaries haven't been activated yet at this point. SP2 fires after S4 exits.
 
 ---
 
-## Transition Checklist
+## Prerequisites Checklist
 
-**Prerequisites (before S4):**
-- [ ] S3 complete (Gate 4.5 passed — epic plan user-approved in S3.P3)
-- [ ] spec.md finalized and user-approved (Gate 3 passed from S2)
-- [ ] Feature README.md has Agent Status section
-
-**Iterations completion:**
-- [ ] I1 → I2: Test coverage matrix created
-- [ ] I2 → I3: Edge case catalog created
-- [ ] I3 → I4: Config test matrix created, coverage >90%
-- [ ] I4 → Create test_strategy.md: Validation Loop PASSED (primary clean round + sub-agent confirmation)
-
-**Step 4 → S5:**
-- [ ] test_strategy.md exists in feature folder
-- [ ] test_strategy.md shows >90% coverage (not placeholder)
-- [ ] All sections populated (unit, integration, edge, config tests)
-- [ ] Traceability matrix complete (requirement → test mapping)
-- [ ] README Agent Status shows S4_COMPLETE
-- [ ] **NO Gate 4.5 here** — Gate 4.5 was passed in S3.P3 (proceed directly to S5)
+**Before starting S4:**
+- [ ] S3 complete (P1, P2, P3 all done)
+- [ ] Gate 4 passed (user explicitly approved epic plan)
+- [ ] S2.P2 Cross-Feature Alignment completed
+- [ ] Working directory: Epic folder root
 
 ---
 
-## File Outputs
+## Exit Conditions
 
-**I1 (Test Strategy Development):**
-- Test coverage matrix (draft): unit, integration, edge test cases
-- Traceability matrix: requirement → test mapping
+**S4 is complete when:**
+- [ ] `interface_contracts.md` exists in epic folder root
+- [ ] Full path: validation loop passed (primary clean round + sub-agent confirmation)
+- [ ] Fast-skip: minimal stub created with reason documented
+- [ ] No TBD fields anywhere
+- [ ] EPIC_README.md Agent Status: S4_COMPLETE
 
-**I2 (Edge Case Enumeration):**
-- Edge case catalog: boundary conditions, error paths
-
-**I3 (Configuration Change Impact):**
-- Configuration test matrix: default, custom, invalid, missing scenarios
-- Final test coverage matrix (>90%)
-
-**I4 (Validation Loop):**
-- test_strategy.md in `feature_{N}_{name}/` folder:
-  - All test categories
-  - Representative test cases
-  - Coverage goal >90%
-  - Traceability matrix
-  - Edge case catalog
-  - Configuration test matrix
+**Next Stage:** S5 (sequential) or SP2 handoff (parallel)
 
 ---
 
@@ -148,27 +148,10 @@ STEP 4: Validation Loop (S4.I4 — 15-20 min)
 
 | Current Activity | Guide to Read |
 |------------------|---------------|
-| Starting S4 | stages/s4/archive/s4_feature_testing_strategy.md |
-| Executing iterations (I1-I3) | stages/s4/archive/s4_test_strategy_development.md |
-| Executing Validation Loop (I4) | stages/s4/archive/s4_validation_loop.md |
-| Need test strategy validation dimensions | reference/archive/validation_loop_test_strategy.md |
+| Starting S4 | `stages/s4/s4_interface_contracts.md` |
+| Validation loop (full path) | `reference/validation_loop_master_protocol.md` |
+| Parallel mode handoff | `parallel_work/s5_primary_agent_guide.md` → Phase 2 |
 
 ---
 
-## Exit Conditions
-
-**S4 is complete when:**
-- [ ] All 4 iterations complete (I1, I2, I3, I4)
-- [ ] Validation Loop (I4) passed with primary clean round + sub-agent confirmation
-- [ ] test_strategy.md created in `feature_{N}_{name}/` folder
-- [ ] test_strategy.md has all required sections
-- [ ] Coverage goal >90% documented
-- [ ] Traceability matrix complete
-- [ ] README Agent Status shows S4_COMPLETE
-- [ ] Ready to start S5 (NO user approval needed — S4 has zero formal gates)
-
-**Next Stage:** S5 (Implementation Planning) — start by reading `stages/s5/s5_v2_validation_loop.md`
-
----
-
-**Last Updated:** 2026-02-21
+**Last Updated:** 2026-04-09

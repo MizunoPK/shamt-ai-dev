@@ -1,7 +1,7 @@
 # Epic Completion Summary Template - S10
 
 **Purpose:** Template for completing EPIC_README.md Epic Completion Summary section
-**When to use:** Step 10 of S10 (Final Verification & Completion)
+**When to use:** S11 Step 4 (Final Verification & Completion) — after epic folder moved to done/
 **Main Guide:** `stages/s10/s10_epic_cleanup.md`
 
 ---
@@ -18,7 +18,7 @@ After epic is complete and moved to done/, update the EPIC_README.md file in its
 ## Agent Status
 
 **Last Updated:** {YYYY-MM-DD HH:MM}
-**Current Stage:** S10 - Epic Cleanup
+**Current Stage:** S11 - Shamt Finalization
 **Status:** ✅ COMPLETE
 
 **Epic Completion Summary:**
@@ -45,7 +45,7 @@ After epic is complete and moved to done/, update the EPIC_README.md file in its
 ## Agent Status
 
 **Last Updated:** 2025-12-30 16:00
-**Current Stage:** S10 - Epic Cleanup
+**Current Stage:** S11 - Shamt Finalization
 **Status:** ✅ COMPLETE
 
 **Epic Completion Summary:**
@@ -68,7 +68,7 @@ After epic is complete and moved to done/, update the EPIC_README.md file in its
 
 ### When to Update
 
-Update EPIC_README.md **after** the epic folder is moved to done/ (Step 7 of S10).
+Update EPIC_README.md **after** the epic folder is moved to done/ (S11 Step 2 — Move Epic to done/).
 
 ### Steps
 
@@ -100,7 +100,7 @@ Update EPIC_README.md **after** the epic folder is moved to done/ (Step 7 of S10
 The date when S1 (Epic Planning) began. Check git history or EPIC_README.md early Agent Status entries.
 
 ### End Date
-The date when S10 (Epic Cleanup) was completed. Use today's date if completing now.
+The date when S11 (Shamt Finalization) was completed. Use today's date if completing now.
 
 ### Duration
 Calculate: End Date - Start Date in calendar days. Shows how long epic took.
@@ -122,12 +122,12 @@ Location of the original .txt file with user's request. Always: `.shamt/epics/re
 
 ---
 
-## Additional Section: S10 - User Testing Results (Optional)
+## Additional Section: S9.P3 - User Testing Results (Optional)
 
 If bugs were found and fixed during user testing, add this section to EPIC_README.md:
 
 ```markdown
-## S10 - User Testing Results
+## S9.P3 - User Testing Results
 
 **User Testing Conducted:** {YYYY-MM-DD}
 **Bugs Found:** {N}
@@ -142,14 +142,14 @@ If bugs were found and fixed during user testing, add this section to EPIC_READM
 ```
 
 **When to include this:**
-- Only if user found bugs during S10 Step 5 (User Testing)
+- Only if user found bugs during S9 (User Testing)
 - Documents the bug fix cycle during final testing
 - Shows transparency of quality process
 
 **Example:**
 
 ```markdown
-## S10 - User Testing Results
+## S9.P3 - User Testing Results
 
 **User Testing Conducted:** 2025-12-30
 **Bugs Found:** 2
@@ -177,7 +177,7 @@ Before considering epic completion summary complete:
 - [ ] Test pass rate is 100% (verified with recent test run)
 - [ ] Epic location shows done/ folder path
 - [ ] Original request location is correct (still in root)
-- [ ] User testing completed in S9 (Step 6) — ZERO bugs reported (prerequisite for S10)
+- [ ] User testing completed in S9 (S9.P3) — ZERO bugs reported (prerequisite for S10)
 - [ ] EPIC_README.md saved in done/ folder (not root)
 
 ---
@@ -260,10 +260,11 @@ In addition to Agent Status, update the "Epic Progress Tracker" section:
 | S1: Epic Planning | ✅ COMPLETE | {YYYY-MM-DD} |
 | S2: Feature Deep Dives (All Features) | ✅ COMPLETE | {YYYY-MM-DD} |
 | S3: Epic-Level Docs, Tests, and Approval | ✅ COMPLETE | {YYYY-MM-DD} |
-| S4: (Deprecated — Test Scope Decision in S5 Step 0) | N/A | N/A |
+| S4: Interface Contract Definition | ✅ COMPLETE | {YYYY-MM-DD} |
 | S5: Feature Implementation (All Features) | ✅ COMPLETE | {YYYY-MM-DD} |
 | S9: Epic Final QC | ✅ COMPLETE | {YYYY-MM-DD} |
-| S10: Epic Cleanup | ✅ COMPLETE | {YYYY-MM-DD} |
+| S10: Final Changes & Merge | ✅ COMPLETE | {YYYY-MM-DD} |
+| S11: Shamt Finalization | ✅ COMPLETE | {YYYY-MM-DD} |
 
 **Epic Completion Date:** {YYYY-MM-DD}
 ```

@@ -394,7 +394,7 @@ DONE (return to previous work)
 - ❌ S8.P1 - bug fix doesn't affect other specs
 - ❌ S8.P2 (Epic Testing Update) (Epic Testing Plan Update) - handled in S7 (Testing & Review)
 - ❌ S9 (Epic Final QC) - bug fix has own QC in S7 (Testing & Review)
-- ❌ S10 (Epic Cleanup) - bug stays with epic
+- ❌ S10 (Final Changes & Merge) - bug stays with epic
 
 ---
 

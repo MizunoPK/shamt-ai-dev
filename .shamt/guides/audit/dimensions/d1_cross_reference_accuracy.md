@@ -294,7 +294,7 @@ Workflow: S1 → S2 → S3 → S4 → S5 → S6 → S7
 
 **Should Show:**
 ```text
-Workflow: S1 → S2 → S3 → S4 → S5 → S6 → S7 → S8 → S9 → S10
+Workflow: S1 → S2 → S3 → S4 → S5 → S6 → S7 → S8 → S9 → S10 → S11
 ```
 
 **Result:** All new epics created use outdated workflow diagram
@@ -404,13 +404,12 @@ done
 ```bash
 #!/bin/bash
 # validate_stage_numbers.sh
-# Checks stage references are within valid range (S1-S10)
+# Checks stage references are within valid range (S1-S11)
 
 echo "=== Validating Stage Numbers ==="
 
-# Find references to stage numbers > 10
-grep -rn "S\(1[1-9]\|[2-9][0-9]\)" --include="*.md" .shamt/guides/ | \
-  grep -v "S10" | \
+# Find references to stage numbers > 11
+grep -rn "S\(1[2-9]\|[2-9][0-9]\)" --include="*.md" .shamt/guides/ | \
   while read line; do
     echo "❌ INVALID STAGE: $line"
   done
@@ -582,7 +581,7 @@ ls stages/s9/s9_p1_epic_smoke_testing.md
 
 **Issue Found:**
 ```markdown
-File: stages/s10/s10_p1_guide_update_workflow.md
+File: stages/s11/s11_p1_guide_update_workflow.md
 Line: 45
 Content: "stages/s10/s10_epic_cleanup.md"
 ```markdown
@@ -594,7 +593,7 @@ Content: "stages/s10/s10_epic_cleanup.md"
 **Fix:**
 ```bash
 sed -i 's|stages/s10/epic_cleanup\.md|stages/s10/s10_epic_cleanup.md|g' \
-  stages/s10/s10_p1_guide_update_workflow.md
+  stages/s11/s11_p1_guide_update_workflow.md
 ```
 
 ### Example 3: Old Round Path Structure

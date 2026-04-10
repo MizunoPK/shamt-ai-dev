@@ -220,7 +220,7 @@ Issue discovered → Can I fix with confidence?
   implement approved changes, then meta-audit the changed files
 - Keeps the audit system itself accurate and improving without interrupting audit flow
 - **Scope:** Improvements target audit guides ONLY (`audit/` folder) — epic workflow guide
-  improvements go through S10 lessons learned (separate ownership)
+  improvements go through S11.P1 guide updates (separate ownership)
 - **Working file:** `audit/outputs/round_N_improvements_working.md` (temporary, not committed)
 - **Full process:** `stages/stage_5_loop_decision.md` → "End-of-Round: Improvements Review"
 

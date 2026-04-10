@@ -7,7 +7,7 @@ Use this when:
 - You're making structural changes to the guide system
 - You're adding new guides or sections
 
-This process is intentionally lighter than the full S1-S10 epic workflow. It's aligned with S10's lessons-learned update approach.
+This process is intentionally lighter than the full S1-S11 epic workflow. It's aligned with S11's lessons-learned update approach.
 
 **Model Selection for Token Optimization (SHAMT-27):**
 
@@ -31,7 +31,7 @@ Primary Agent (Opus):
 |-------|-----|
 | Single guide fix, clarification, or small addition | This workflow |
 | New guide section (< 1 guide file) | This workflow |
-| New guide files or significant restructuring | Full epic workflow (S1-S10) with SHAMT epic tracking |
+| New guide files or significant restructuring | Full epic workflow (S1-S11) with SHAMT epic tracking |
 | Multi-guide cross-cutting changes | Full epic workflow |
 
 ---
@@ -124,7 +124,7 @@ If using architect-builder pattern for master dev work:
 - `reference/architect_builder_pattern.md` - Complete pattern documentation and decision tree
 - `reference/implementation_plan_format.md` - Mechanical plan specification (9 validation dimensions)
 
-**Note:** Architect-builder pattern is **optional** for master dev workflow (use judgment based on thresholds above). It is **mandatory** for S1-S10 epic workflow S6 (no exceptions).
+**Note:** Architect-builder pattern is **optional** for master dev workflow (use judgment based on thresholds above). It is **mandatory** for S1-S11 epic workflow S6 (no exceptions).
 
 ---
 
@@ -173,7 +173,7 @@ For multi-guide or cross-cutting changes, use a branch with a design doc:
 
 **What NOT to do for master work:**
 - Do not maintain `.shamt/epics/EPIC_TRACKER.md` — SHAMT-N numbers are sequence markers, not epic IDs
-- Do not follow S1-S10 stage gates or phase transitions
+- Do not follow S1-S11 stage gates or phase transitions
 - Do not create epic folders in `.shamt/epics/`
 
 **Scope threshold:** Judgment call. Single-guide fix → lightweight workflow (Steps 1-5 above). Multi-guide or requires planning → branch + design doc. There is no formal gate between the two.

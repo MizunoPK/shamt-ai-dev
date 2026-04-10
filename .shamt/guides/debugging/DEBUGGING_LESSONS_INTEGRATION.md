@@ -69,7 +69,7 @@ feature_XX_{name}/debugging/
 
 **Location:** `{epic_name}/debugging/`
 
-**Created During:** S9.P1 (Epic Smoke Testing) or S9.P2 (Epic Validation Loop) or S10 (User Testing)
+**Created During:** S9.P1 (Epic Smoke Testing) or S9.P2 (Epic Validation Loop) or S9.P3 (User Testing)
 
 **Workflow:** Same as feature-level but for epic integration issues
 
@@ -92,7 +92,7 @@ feature_XX_{name}/debugging/
 
 ## Where Debugging Lessons Are Aggregated
 
-### S10.P3: Final Review (Per Feature)
+### S7.P3: Final Review (Per Feature)
 
 **File Updated:** `feature_XX_{name}/lessons_learned.md`
 
@@ -124,7 +124,7 @@ feature_XX_{name}/debugging/
 
 ---
 
-### S9.P3: Epic Final Review (Epic Level)
+### S9.P4: Epic Final Review (Epic Level)
 
 **File Updated:** `epic_lessons_learned.md`
 
@@ -218,7 +218,7 @@ feature_XX_{name}/debugging/
 - debugging/process_failure_analysis.md → P1 (High) or P2 (Medium)
 - lessons_learned.md "Guide Improvements Needed" → P2 (Medium) or P3 (Low)
 
-**Why this matters:** Debugging lessons are the MOST ACTIONABLE because they come from actual bugs that reached testing. S10.P1 ensures these lessons get prioritized (P0/P1) and user-approved before being captured in the proposal doc for master to implement.
+**Why this matters:** Debugging lessons are the MOST ACTIONABLE because they come from actual bugs that reached testing. S11.P1 ensures these lessons get prioritized (P0/P1) and user-approved before being captured in the proposal doc for master to implement.
 
 **See:** `stages/s11/s11_p1_guide_update_workflow.md` for complete 9-step workflow
 
@@ -250,7 +250,7 @@ feature_XX_{name}/debugging/
 - **Output:** Specific process gaps identified
 
 **2. guide_update_recommendations.md**
-- **Audience:** Guide maintainers (S10.P1 agents)
+- **Audience:** Guide maintainers (S11.P1 agents)
 - **Purpose:** ACTIONABLE guide improvements
 - **Content:** Exact text proposals with priority (per-issue from Phase 4b + patterns from Phase 5)
 - **Created:** Incrementally (Phase 4b adds per-issue, Phase 5 appends patterns)
@@ -266,7 +266,7 @@ feature_XX_{name}/debugging/
 
 ## Verification That Lessons Are Applied
 
-### During S10.P1 (Guide Update Workflow)
+### During S11.P1 (Guide Update Workflow)
 
 Agents MUST verify (as part of guide_update_tracking.md):
 ```markdown
@@ -290,7 +290,7 @@ Agents MUST verify (as part of guide_update_tracking.md):
 
 ### Scenario: Feature 02 has 2 bugs during smoke testing
 
-**S10.P1 Part 3:**
+**S11.P1 Part 3:**
 - Bugs discovered → Add to ISSUES_CHECKLIST.md
 - Enter debugging protocol
 
@@ -315,12 +315,12 @@ Agents MUST verify (as part of guide_update_tracking.md):
 - Update feature_02_{name}/lessons_learned.md
 - Add brief debugging summary
 
-**S9.P3 (Epic Final Review):**
+**S9.P4 (Epic Final Review):**
 - Update epic_lessons_learned.md
 - Aggregate Feature 02 debugging insights
 - Include in cross-feature patterns
 
-**S10.P1 (Guide Update from Lessons Learned):**
+**S11.P1 (Guide Update from Lessons Learned):**
 - Find debugging/guide_update_recommendations.md
 - Extract 5 critical updates (map to P0/P1 priority)
 - Create GUIDE_UPDATE_PROPOSAL.md with proposals
@@ -339,11 +339,11 @@ Agents MUST verify (as part of guide_update_tracking.md):
 - S9 (epic debugging)
 
 **Debugging lessons are aggregated at:**
-- S10.P3 (feature lessons_learned.md)
-- S9.P3 (epic_lessons_learned.md)
+- S7.P3 (feature lessons_learned.md)
+- S9.P4 (epic_lessons_learned.md)
 
 **Debugging lessons are captured at:**
-- **S10.P1 (Guide Update from Lessons Learned)** ← ONLY place where guide update proposal docs are created
+- **S11.P1 (Guide Update from Lessons Learned)** ← ONLY place where guide update proposal docs are created
 
 **Critical Requirements:**
 1. Must find ALL debugging files (3 types × N features + epic)

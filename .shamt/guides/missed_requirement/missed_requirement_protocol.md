@@ -77,7 +77,7 @@ Missed Requirement Protocol treats missing scope as real features - either creat
   - During S7 (QA - smoke testing, QC rounds)
   - During debugging protocol (while investigating issues)
   - During S9 (Epic-level testing)
-  - During S10 (User testing)
+  - During S9.P3 (User testing)
 - You KNOW what needs to be built (solution is clear, just wasn't in original spec)
 - Need to add missing functionality as a proper feature
 - Example: "We forgot to add item attribute status tracking"
@@ -105,7 +105,7 @@ Primary Agent (Opus - design decisions for feature integration):
 - ✅ New feature created OR unstarted feature updated
 - ✅ Feature spec fleshed out (S2)
 - ✅ All features re-aligned (S3)
-- ✅ Epic smoke test plan updated (S3.P1) + Test Scope Decision done at S5 Step 0 (S4 deprecated)
+- ✅ Epic smoke test plan updated (S3.P1) + Test Scope Decision done at S5 Step 0 (S4 = Interface Contract Definition)
 - ✅ Epic documentation updated for resumability
 - ✅ Ready to resume previous work
 - ✅ New/updated feature implemented when its turn comes in sequence
@@ -133,10 +133,10 @@ Missed requirement handling is complete when the new/updated feature has been pl
    - If new feature: Decide sequence position
    - If update unstarted: Which feature to update
 
-3. ⚠️ ALWAYS RETURN TO STAGE 2/3 (S4 deprecated)
+3. ⚠️ ALWAYS RETURN TO STAGE 2/3/4
    - S2: Flesh out new/updated feature spec
    - S3: Epic-Level Docs, Tests, and Approval (ALL features)
-   - S4 deprecated — Test Scope Decision now in S5 Step 0 (check Testing Approach in EPIC_README)
+   - S4 = Interface Contract Definition stage (check contracts before S5)
    - Maintains epic-level alignment
 
 4. ⚠️ SEQUENCE MATTERS FOR NEW FEATURES
@@ -160,7 +160,7 @@ Missed requirement handling is complete when the new/updated feature has been pl
 7. ⚠️ SAME RIGOR AS ALL FEATURES
    - Full S2 deep dive
    - Full S3 re-alignment (all features)
-   - When implemented: Full S5 (S5 → S6 → S7 → S8; Test Scope Decision at S5 Step 0 — S4 deprecated)
+   - When implemented: Full S5 (S5 → S6 → S7 → S8; S4 before S5)
    - No shortcuts
 ```
 
@@ -205,17 +205,17 @@ The missed requirement protocol consists of 4 phases (plus special case):
 ### PHASE 3 & 4: Realignment (S3 & 4)
 **See:** `missed_requirement/realignment.md`
 
-**Purpose:** Re-align ALL features and update epic test plan
+**Purpose:** Re-align ALL features, update epic test plan, validate contracts
 
 **Key Activities:**
 - S3: Epic-Level Docs, Tests, and Approval (ALL features, not just new/updated)
 - Resolve conflicts between features
 - S3.P1: Update epic_smoke_test_plan.md with scenarios for new/updated feature
-- S4 deprecated — Test Scope Decision in S5 Step 0 (use Testing Approach from EPIC_README)
+- S4 = Interface Contract Definition stage (validate contracts before S5)
 - Update Epic Progress Tracker
 - Update EPIC_README with new sequence
 
-**Output:** All features aligned + epic test plan updated
+**Output:** All features aligned + epic test plan updated + contracts validated
 
 ---
 
@@ -290,7 +290,7 @@ User decided approach, need to plan?
 
 Planning complete, need to align features?
 └─ Read missed_requirement/realignment.md (PHASE 3 & 4)
-   └─ S3 re-alignment → Resume work (S4 deprecated — test scope at S5 Step 0)
+   └─ S3 re-alignment → S4 → Resume work
 
 Discovered during S9 or S10?
 └─ Read missed_requirement/s9_s10_special.md (SPECIAL CASE)
@@ -343,7 +343,7 @@ Discovered during S9 or S10?
 
 1. **Discovery:** Present two options (new feature vs update unstarted)
 2. **Planning:** Full S2 deep dive for new/updated feature
-3. **Realignment:** S3 re-alignment (S4 deprecated — test scope at S5 Step 0)
+3. **Realignment:** S3 re-alignment + S4 contract validation
 4. **Resume:** Continue paused work
 5. **Implementation:** Feature implemented later in sequence
 

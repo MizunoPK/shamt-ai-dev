@@ -59,7 +59,7 @@ git checkout -b fix/SHAMT-3   # Bug fix work
 
 **Branch Rules:**
 - All work happens on the epic branch
-- Stay on branch until S10 (Epic Cleanup)
+- Stay on branch until S10 (Final Changes & Merge)
 - Do not merge back to main until user approves PR
 
 **Commit Format:**
@@ -82,7 +82,7 @@ git commit -m "fix/SHAMT-1: Fix item name validation in draft mode"
 
 **When to Commit:**
 - After S7.P3 (Feature completed, reviewed, tested)
-- After S10 cleanup (Epic completed, ready for PR)
+- After S10 Final Changes & Merge (Epic completed, ready for PR)
 - Not during Stages 1-4 (planning only)
 - Not during S5-S6 (implementation in progress)
 
@@ -344,7 +344,7 @@ git push origin epic/SHAMT-{number} --force-with-lease
 
 **✅ DO:**
 - Commit after each feature completes S7.P3
-- Commit after S10 cleanup completes
+- Commit after S10 Final Changes & Merge completes
 - Commit with meaningful messages
 
 **❌ DON'T:**

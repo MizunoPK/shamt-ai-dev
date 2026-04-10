@@ -490,7 +490,7 @@ done
 - `debugging/` - Debugging protocol guides
 - `missed_requirement/` - Missed requirement protocol
 - `reference/` - Reference cards and supporting materials
-- `stages/` - Core workflow guides (S1-S10 with sub-guides)
+- `stages/` - Core workflow guides (S1-S11 with sub-guides)
 - `templates/` - File templates for epics/features
 - `prompts/` - Phase transition prompts
 - `audit/` - Audit guides (if checking for self-references)

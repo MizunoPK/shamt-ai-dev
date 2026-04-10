@@ -7,7 +7,7 @@
 
 ## Table of Contents
 
-1. [S11.P1: Guide Update from Lessons Learned](#s10p1-guide-update-from-lessons-learned)
+1. [S11.P1: Guide Update from Lessons Learned](#s11p1-guide-update-from-lessons-learned)
 2. [Overview](#overview)
 3. [Critical Rules](#critical-rules)
 4. [Prerequisites Checklist](#prerequisites-checklist)

@@ -6,7 +6,7 @@
 
 > ⚠️ TEMPORARY FILE — Do not commit. Refreshed at start of each round.
 > **Scope:** Improvements to audit guides ONLY (files in `audit/` folder).
-> Epic workflow guide improvements go through S10 lessons learned (separate ownership).
+> Epic workflow guide improvements go through S11.P1 guide updates (separate ownership).
 
 ---
 

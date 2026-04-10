@@ -428,7 +428,7 @@ All issues fixed and root causes analyzed?
 - S7.P1 → debugging → loop back
 - S7.P2 → debugging → loop back
 - S9 (Epic Testing) → debugging → loop back
-- S10 (User Testing) → add bugs to epic debugging → loop back to S9
+- S9.P3 (User Testing) → add bugs to epic debugging → loop back to S9
 
 ---
 

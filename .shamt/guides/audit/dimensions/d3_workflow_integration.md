@@ -32,13 +32,13 @@
 1. **Prerequisites** - Each stage lists correct previous stages/outputs required
 2. **Stage Transitions** - "Next Stage" references point to correct subsequent stages
 3. **Output-to-Input Mapping** - One stage's outputs match next stage's prerequisites
-4. **Workflow Completeness** - All stages (S1-S10) correctly linked in sequence
+4. **Workflow Completeness** - All stages (S1-S11) correctly linked in sequence
 5. **Phase Dependencies** - Phases within stages have correct ordering
 6. **Gate Placement** - Quality gates appear at correct stage boundaries
 7. **Workflow Description Consistency** - Text descriptions of workflow behavior agree across all guides
 
 **Coverage:**
-- All 10 stages (S1-S10) in `stages/` directory
+- All 11 stages (S1-S11) in `stages/` directory
 - Router files (README.md, stage guide entry points)
 - Root-level workflow documentation (EPIC_WORKFLOW_USAGE.md)
 - Reference materials describing workflow flow
@@ -102,22 +102,22 @@ CLAUDE.md (project root) (Stage Workflows section)
 **What to Validate:**
 
 **README.md:**
-- [ ] Stage overview lists S1-S10 in correct sequence
+- [ ] Stage overview lists S1-S11 in correct sequence
 - [ ] Each stage points to correct guide path
 - [ ] Stage dependencies shown correctly
 - [ ] No missing stages in overview
 
 **EPIC_WORKFLOW_USAGE.md:**
-- [ ] Stage-by-Stage section covers ALL stages (S1-S10)
+- [ ] Stage-by-Stage section covers ALL stages (S1-S11)
 - [ ] Each stage shows correct phases, iterations, gates
 - [ ] Prerequisites listed for each stage match reality
 - [ ] Next stage transitions are correct
 
 **CLAUDE.md (Stage Workflows section):**
-- [ ] All 10 stages listed with correct guides
+- [ ] All 11 stages listed with correct guides
 - [ ] Prerequisites shown correctly
 - [ ] "Next:" references point to correct subsequent stages
-- [ ] No references to non-existent stages (S11, S0, etc.)
+- [ ] No references to non-existent stages (S12, S0, etc.)
 
 **Search Commands:**
 ```bash
@@ -175,11 +175,13 @@ done
 **S3: Epic-Level Documentation**
 - [ ] Prerequisites: S2 complete for ALL features, all spec.md files exist
 
-**S4: (Deprecated)**
-- [ ] S4 is deprecated. Test Scope Decision is now Step 0 of S5. Skip S4 entirely.
+**S4: Interface Contract Definition**
+- [ ] Prerequisites: S3 complete, Gate 4 passed
+- [ ] Fast-skip: Single-feature or zero-integration epics — create stub interface_contracts.md and skip validation loop
+- [ ] Full path: ≥1 integration point — define all cross-feature contracts, run 5-dimension validation loop
 
 **S5: Implementation Planning**
-- [ ] Prerequisites: S3 complete, Testing Approach confirmed in EPIC_README (S4 deprecated)
+- [ ] Prerequisites: S3 complete, S4 complete, interface_contracts.md exists
 
 **S6: Implementation Execution**
 - [ ] Prerequisites: S5 complete, implementation_plan.md exists, user approved plan (Gate 5)
@@ -193,8 +195,8 @@ done
 **S9: Epic-Level Final QC**
 - [ ] Prerequisites: S8 complete for ALL features, all features committed
 
-**S10: Epic Cleanup**
-- [ ] Prerequisites: S9 complete, user testing passed (S9.P3), ZERO bugs reported
+**S10: Final Changes & Merge**
+- [ ] Prerequisites: S9 complete, user testing passed (S9.P3), Epic Final Review passed (S9.P4), ZERO bugs reported
 
 **Red Flags:**
 - Prerequisites reference non-existent files
@@ -259,13 +261,14 @@ done
 |---------------|-----------------|---------------|
 | S1 | S2 | Points to S3, missing S2 |
 | S2 | S3 (after ALL features) | Says "S4" or "S5" |
-| S3 | S5 (S4 deprecated — Test Scope Decision is S5 Step 0) | Says "S4" (stale) |
+| S3 | S4 (Interface Contract Definition) | Says "S5" (missing S4) |
+| S4 | S5 | Says "S3" or skips to S5 without contracts |
 | S5 | S6 | Says "S7" |
 | S6 | S7 | Says "S8" |
 | S7 | S8 | Says "S9" or "S10" |
 | S8 | Repeat S5 OR S9 | Unclear branching logic |
 | S9 | S10 | Says "Done" without S10 reference |
-| S10 | Done (no next stage) | References S11 |
+| S10 | S11 | Says "Done" without S11 reference |
 
 **Correct S8 Transition Logic:**
 ```markdown
@@ -339,17 +342,18 @@ done
 | S1 | epic folder, DISCOVERY.md, feature_XX folders | S2: epic folder exists, DISCOVERY.md exists |
 | S2 | spec.md, checklist.md, RESEARCH_NOTES.md | S3: all spec.md files exist |
 | S3 | epic_smoke_test_plan.md, refined EPIC_README.md | S5: Testing Approach confirmed, epic context |
-| S4 | (Deprecated — no output) | S5 Step 0: Test Scope Decision (Testing Approach from EPIC_README) |
+| S4 | interface_contracts.md (full path) or stub interface_contracts.md (fast-skip) | S5 Step 0a: read interface_contracts.md before per-feature planning |
 | S5 | implementation_plan.md | S6: implementation_plan.md as build guide |
 | S6 | implementation_checklist.md, implemented code | S7: code to test |
 | S7 | lessons_learned.md, committed feature | S8: committed feature for alignment check |
 | S8 | Updated remaining specs | S5 (repeat) or S9: updated specs as context |
 | S9 | Epic testing report | S10: confirmation all tests passed |
-| S10 | PR, updated .shamt/epics/EPIC_TRACKER.md | Done |
+| S10 | PR merged, main verified | S11: merge confirmed |
+| S11 | Proposal doc, archived epic, updated tracker | Done |
 
 **Red Flags:**
 - S2 produces "specification.md" but S3 looks for "spec.md"
-- S4 deprecated — auditors should NOT require test_strategy.md as S5 prerequisite
+- S4 output is interface_contracts.md — auditors SHOULD require it as S5 prerequisite; test_strategy.md is optional (Options C/D only)
 - S5 says output is "plan.md" but S6 looks for "implementation_plan.md"
 - Stage produces file but next stage doesn't mention it in prerequisites
 - Stage expects file but previous stage doesn't produce it
@@ -442,7 +446,8 @@ Quality gates appear at correct stage boundaries with correct gate numbers.
 | Gate 1 | S2.P1.I1 | Embedded | Agent | Research completeness |
 | Gate 2 | S2.P1.I3 | Embedded | Agent | Spec-to-epic alignment |
 | Gate 3 | S2.P1.I3 | Stage | User | Checklist approval |
-| Gate 4.5 | S3.P3 | Stage | User | Epic plan approval |
+| Gate 3a | S2.P1.I3 | Stage | User | Acceptance criteria approval |
+| Gate 4 | S3.P3 | Stage | User | Epic plan approval |
 | Gate 5 | S5 v2 (after Validation Loop, before S6) | Stage | User | Implementation plan approval |
 | Gate 4a | S5 v2 Dimension 4 | Iteration | Agent | Task specification audit |
 | Gate 7a | S5 v2 Dimension 7 | Iteration | Agent | Backward compatibility |
@@ -465,13 +470,14 @@ grep -rn "Gate 5" stages/s2/ stages/s3/ stages/s4/  # Should only be in S5
 **Validation Checklist:**
 
 - [ ] Gate 3 appears in S2.P1.I3 (not S2.P2 or S3)
-- [ ] Gate 4.5 appears in S3.P3 (not S3.P1 or S4)
+- [ ] Gate 3a appears in S2.P1.I3 (not S3 or later)
+- [ ] Gate 4 appears in S3.P3 (not S3.P1 or S4)
 - [ ] Gate 5 appears after S5 v2 Validation Loop, before S6 (not inside S5.P1 or in S6)
 - [ ] Gates 4a, 7a, 23a, 24, 25 appear embedded in S5 v2 Validation Loop dimensions (D5, D15, D12, D11, D12)
 - [ ] No gates reference deprecated gate numbers (Gate 6, Gate 7 that don't exist)
 - [ ] Gates appear in numerical order within their sections
 - [ ] Each gate has clear pass/fail criteria
-- [ ] User gates (3, 4.5, 5) clearly marked as requiring user approval
+- [ ] User gates (3, 3a, 4, 5) clearly marked as requiring user approval
 - [ ] Agent gates clearly marked as self-validation
 
 **Red Flags:**
@@ -480,7 +486,7 @@ grep -rn "Gate 5" stages/s2/ stages/s3/ stages/s4/  # Should only be in S5
 - Gate appears twice in workflow
 - Gate missing from stage where it should be
 - Gate says "user approval" but mandatory_gates.md says "agent"
-- Gate reference uses old numbering (Gate 4 instead of Gate 4.5)
+- Gate reference uses old numbering (Gate 4.5 instead of Gate 4, or Gate 4 instead of Gate 3a for acceptance criteria)
 
 **Automated:** ✅ Yes (can validate gate numbers and locations)
 
@@ -494,7 +500,7 @@ Text descriptions of workflow behavior must be consistent across all guides.
 **Why This Matters:**
 Different guides may describe the same workflow differently, creating confusion:
 - S1 says "groups complete S2->S3->S5 cycle"
-- S2 says "groups complete S2 only, then S3 (S4 deprecated, S5 is per-feature sequential)"
+- S2 says "groups complete S2 only, then S3, then S4, then S5 per-feature sequential"
 - **CONTRADICTION** - agents receive conflicting instructions
 
 **Common Patterns to Search:**
@@ -557,7 +563,7 @@ S1 Line 600: "Each group completes full S2->S3->S5 cycle"
 S2.P2: "After all groups complete S2 -> Proceed to S3"
 
 CONTRADICTION: S1 says groups matter for S3/S5, S2 says groups only matter for S2
-(Note: S4 is deprecated since SHAMT-6 — S5 is sequential per-feature, not part of group cycles)
+(Note: S4 is Interface Contract Definition — runs once after S3, before per-feature S5 begins)
 ```
 
 **Automated:** Partial - Can find workflow descriptions, requires manual consistency check
@@ -632,12 +638,12 @@ CONTRADICTION: S1 says groups matter for S3/S5, S2 says groups only matter for S
 ### Root Cause 5: Gate Renumbering Without Cross-Reference Updates
 
 **Scenario:**
-- Gate numbering system revised (Gate 4 becomes Gate 4.5)
+- Gate numbering system revised (e.g., Gate 4.5 renamed to Gate 4 in SHAMT-36)
 - Gate implementation section updated in S3
 - **FORGET** to update references in CLAUDE.md, Prerequisites sections
 
 **Result:**
-- CLAUDE.md says "Gate 4" but guides reference "Gate 4.5"
+- Some files say "Gate 4.5" but guides reference "Gate 4"
 - Agent confusion about which gate number is correct
 - Inconsistent documentation
 
@@ -651,9 +657,9 @@ CONTRADICTION: S1 says groups matter for S3/S5, S2 says groups only matter for S
 
 **CHECK 7: Stage Sequence Validation** *(planned, not yet implemented)*
 ```bash
-# Validate S1-S10 sequence in README.md
+# Validate S1-S11 sequence in README.md
 stages=$(grep -E "^\*\*S[0-9]" .shamt/guides/README.md | grep -oE "S[0-9]+")
-expected="S1 S2 S3 S4 S5 S6 S7 S8 S9 S10"
+expected="S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11"
 if [ "$stages" != "$expected" ]; then
   echo "ERROR: Stage sequence incorrect in README.md"
 fi
@@ -675,7 +681,7 @@ done
 # Validate gates appear in correct stages
 declare -A gate_locations=(
   ["Gate 3"]="stages/s2/"
-  ["Gate 4.5"]="stages/s3/"
+  ["Gate 4"]="stages/s3/"
   ["Gate 5"]="stages/s5/"
   ["Gate 4a"]="stages/s5/"
   ["Gate 7a"]="stages/s5/"
@@ -719,12 +725,12 @@ grep -E "^\| \*\*[0-9]" .shamt/guides/README.md | head -10
 # Get stage list from CLAUDE.md
 grep -E "^\*\*S[0-9]" CLAUDE.md
 
-# Compare - should match S1-S10
+# Compare - should match S1-S11
 ```bash
 
 **Step 2: Validate Each Stage Prerequisites (15-20 min)**
 
-For EACH stage S1-S10:
+For EACH stage S1-S11:
 ```bash
 # Read Prerequisites section
 stage_file="stages/sN/sN_name.md"  # Replace N with actual stage number
@@ -749,13 +755,13 @@ grep -A 10 "^## Prerequisites" "$stage_file"
 | S7 | S6, code complete | Implementation files |
 | S8 | S7, feature committed | Git commit for feature |
 | S9 | S8 (all features) | All features committed |
-| S10 | S9, user testing passed | S9.P3 user approval |
+| S10 | S9, user testing passed (S9.P3), Epic Final Review (S9.P4) | S9.P4 complete |
 
 **Step 3: Validate Stage Transitions (10-15 min)**
 
 ```bash
 # For each stage, check "Next Stage" section
-for stage_dir in stages/s{1..10}/; do
+for stage_dir in stages/s{1..11}/; do
   echo "=== $(basename $stage_dir) ==="
   main_file="$stage_dir/$(basename $stage_dir)_*.md"
   grep -A 3 "^## Next" $main_file
@@ -764,13 +770,14 @@ done
 # Validate:
 # S1 → S2
 # S2 → S3
-# S3 → S5  (S4 deprecated — no S3→S4 or S4→S5 transitions expected)
+# S3 → S4 → S5  (S4 = Interface Contract Definition, reinstated SHAMT-36)
 # S5 → S6
 # S6 → S7
 # S7 → S8
 # S8 → S5 (repeat) OR S9 (all done)
 # S9 → S10
-# S10 → Done
+# S10 → S11
+# S11 → Done
 ```bash
 
 **Step 4: Validate Output-to-Input Mapping (10-15 min)**
@@ -780,7 +787,7 @@ done
 echo "Stage Output-to-Input Validation" > /tmp/output_input_map.txt
 
 # For each stage, extract outputs
-for N in {1..9}; do  # S1-S9 (S10 is final)
+for N in {1..10}; do  # S1-S10 (S11 is final)
   echo "=== S$N Outputs ===" >> /tmp/output_input_map.txt
   grep -A 5 "^## Outputs" stages/s$N/*.md >> /tmp/output_input_map.txt
 
@@ -800,8 +807,8 @@ cat /tmp/output_input_map.txt
 echo "Gate 3 should be in S2:"
 grep -rn "Gate 3" stages/s2/
 
-echo "Gate 4.5 should be in S3:"
-grep -rn "Gate 4\.5" stages/s3/
+echo "Gate 4 should be in S3:"
+grep -rn "Gate 4[^a.5]" stages/s3/
 
 echo "Gate 5 should be in S5:"
 grep -rn "Gate 5" stages/s5/
@@ -887,7 +894,7 @@ This is simplified; actual workflow has detailed steps in each phase file. Route
 
 ### Rule 4: Parallel Work Sections May Reference Non-Linear Workflow
 
-**Context:** Parallel work guides describe coordination, which breaks linear S1→S2→...→S10 flow.
+**Context:** Parallel work guides describe coordination, which breaks linear S1→S2→...→S11 flow.
 
 **Example:**
 ```markdown
@@ -925,7 +932,7 @@ Proceed to S5: Implementation Planning (`stages/s5/s5_v2_validation_loop.md`)
 ```
 
 **Problem:**
-- S4 (Feature Testing Strategy) added between S3 and S5
+- S4 (Feature Testing Strategy) added between S3 and S5, then deprecated (SHAMT-6), then reinstated as Interface Contract Definition (SHAMT-36)
 - S3 guide updated for content, but "Next Stage" not updated
 - Agents would skip S4 entirely
 
@@ -934,10 +941,10 @@ Proceed to S5: Implementation Planning (`stages/s5/s5_v2_validation_loop.md`)
 ## Next Stage
 
 -Proceed to S5: Implementation Planning (`stages/s5/s5_v2_validation_loop.md`)
-+Proceed to S4: Feature Testing Strategy (`stages/s4/s4_feature_testing_strategy.md`)
-```markdown
++Proceed to S4: Interface Contract Definition (`stages/s4/s4_interface_contracts.md`)
+```
 
-> **Historical note:** S4 was deprecated in SHAMT-6. The fix shown above was correct at the time. The file is now at `stages/s4/archive/s4_feature_testing_strategy.md`.
+> **Historical note:** S4 as Feature Testing Strategy was deprecated in SHAMT-6. S4 was reinstated in SHAMT-36 as Interface Contract Definition.
 
 **Root Cause:** Workflow evolution without systematic update cascade
 
@@ -1001,13 +1008,13 @@ Proceed to S5: Implementation Planning (`stages/s5/s5_v2_validation_loop.md`)
 
 **S3 Guide:**
 ```markdown
-## Gate 4.5: Epic Plan Approval
+## Gate 4: Epic Plan Approval
 
 User must approve epic plan before proceeding to S4.
 ```
 
 **Problem:**
-- Gate renamed from "Gate 4" to "Gate 4.5" for clarity
+- Gate renamed ("Gate 4" → "Gate 4.5" in early SHAMT, then back to "Gate 4" in SHAMT-36)
 - S3 guide updated
 - CLAUDE.md root file NOT updated
 - Inconsistent documentation confuses agents
@@ -1015,9 +1022,9 @@ User must approve epic plan before proceeding to S4.
 **Fix:**
 ```diff
 **S3: Epic Planning**
--- Gate 4: User approves epic plan
-+- Gate 4.5: User approves epic plan
-```markdown
+-- Gate 4.5: User approves epic plan
++- Gate 4: User approves epic plan
+```
 
 **Root Cause:** Gate renumbering without cross-reference updates
 
@@ -1128,7 +1135,7 @@ Proceed to S9: Epic-Level Final QC (`stages/s9/s9_epic_final_qc.md`)
 
 **Example:**
 - D2 checks: Uses "S5.P1" not "S5a" ✅
-- D3 checks: S3 → S5 transition exists ✅ (S4 deprecated since SHAMT-6)
+- D3 checks: S3 → S4 → S5 transition exists ✅ (S4 reinstated as Interface Contract Definition in SHAMT-36)
 
 ---
 

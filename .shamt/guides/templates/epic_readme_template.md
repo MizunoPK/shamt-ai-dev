@@ -31,12 +31,11 @@
 
 **Stage Workflow:**
 ```
-S1 → S2 → S3 → [S5→S6→S7→S8] → S9 → S10
+S1 → S2 → S3 → S4 → [S5→S6→S7→S8] → S9 → S10 → S11
   ↓        ↓        ↓        ↓           ↓        ↓
-Epic  Features  Sanity  Implementation  Epic    Done
-Plan  Deep Dive  Check  (per feature)   QC
-```text
-(S4 deprecated — Test Scope Decision moved to S5 Step 0)
+Epic  Features  Sanity  Interface  Implementation  Epic    Final    Guide
+Plan  Deep Dive  Check  Definition (per feature)   QC     Merge   Updates
+```
 
 **You are here:** ➜ Stage {X}
 
@@ -129,7 +128,7 @@ Plan  Deep Dive  Check  (per feature)   QC
 - End-to-end validation passed: {✅/◻️}
 - Date completed: {YYYY-MM-DD or "Not complete"}
 
-**S10 - Epic Cleanup:** {✅ COMPLETE / ◻️ NOT STARTED / 🔄 IN PROGRESS}
+**S10 - Final Changes & Merge:** {✅ COMPLETE / ◻️ NOT STARTED / 🔄 IN PROGRESS}
 - Final commits made: {✅/◻️}
 - Epic moved to done/ folder: {✅/◻️}
 - Date completed: {YYYY-MM-DD or "Not complete"}
@@ -189,7 +188,7 @@ Plan  Deep Dive  Check  (per feature)   QC
 **After S2 Complete:**
 - Groups no longer matter
 - S3: Epic-level (all features together)
-- S4: Deprecated (test scope decision now at S5 Step 0)
+- S4: Interface Contract Definition (epic-level, runs once after S3)
 - S5-S8: Per-feature sequential OR parallel (if `Parallel Mode (S5): enabled`, S5 runs in parallel with S5-CA alignment before S6)
 - S9-S10: Epic-level
 
@@ -229,7 +228,9 @@ Plan  Deep Dive  Check  (per feature)   QC
   - Generate handoff packages for secondaries
   - Monitor coordination channels
   - Handle escalations within 15 min SLA
-  - Run S3 solo after all features complete S2 (S4 deprecated)
+  - Run S3 solo after all features complete S2
+  - Run S4 (Interface Contract Definition) solo
+  - Then proceed to S5
 
 **Secondary Agents:**
 
@@ -427,9 +428,10 @@ Plan  Deep Dive  Check  (per feature)   QC
 **S3 - Epic-Level Docs, Tests, and Approval:**
 - [ ] S3.P1: `epic_smoke_test_plan.md` created (integration tests across ALL features)
 - [ ] S3.P2: `EPIC_README.md` refined with feature summaries and architecture notes
-- [ ] S3.P3: Gate 4.5 — epic plan approved by user (mandatory before S5; S4 deprecated)
+- [ ] S3.P3: Gate 4 — epic plan approved by user (mandatory before S4)
 
-**S4 - (Deprecated):** Test Scope Decision is now Step 0 of S5.
+**S4 - Interface Contract Definition:**
+- [ ] Feature contracts validated across all features
 
 **S5 - Feature Implementation:**
 - [ ] Feature 1: S5→S6→S7→S8 complete
@@ -443,7 +445,7 @@ Plan  Deep Dive  Check  (per feature)   QC
 - [ ] Epic PR review passed (all 11 categories)
 - [ ] End-to-end validation vs original request passed
 
-**S10 - Epic Cleanup:**
+**S10 - Final Changes & Merge:**
 - [ ] Tests passed per Testing Approach (Options C/D: unit tests 100%; Options B/D: integration scripts exit 0; Option A: none)
 - [ ] Documentation verified complete
 - [ ] Guide update proposal doc created (if proposals accepted)

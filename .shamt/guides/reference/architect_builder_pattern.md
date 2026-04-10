@@ -50,13 +50,13 @@ The architect-builder pattern splits implementation into two distinct stages acr
 
 ## When to Use This Pattern
 
-### MANDATORY Usage (S1-S10 Epic Workflow)
+### MANDATORY Usage (S1-S11 Epic Workflow)
 
-The architect-builder pattern is **MANDATORY** for all implementations in the S1-S10 epic workflow:
+The architect-builder pattern is **MANDATORY** for all implementations in the S1-S11 epic workflow:
 
 - **S5/S6 implementation** MUST use this pattern
 - No traditional implementation option (architect executing own plan)
-- Rationale: The S1-S10 epic workflow is exclusively for non-trivial changes
+- Rationale: The S1-S11 epic workflow is exclusively for non-trivial changes
 
 **Workflow:**
 ```
@@ -68,7 +68,7 @@ S6: Architect receives validated plan → creates handoff package → spawns Hai
 
 ### Optional Usage (Outside Epic Workflow)
 
-For master dev workflow and ad-hoc work outside S1-S10:
+For master dev workflow and ad-hoc work outside S1-S11:
 
 **Use the pattern when:**
 - >10 file operations (CREATE, EDIT, DELETE, MOVE)
@@ -87,7 +87,7 @@ For master dev workflow and ad-hoc work outside S1-S10:
 ## Decision Tree
 
 ```
-Are you in S6 of the S1-S10 epic workflow?
+Are you in S6 of the S1-S11 epic workflow?
 ├─ YES → Use architect-builder pattern (MANDATORY)
 └─ NO → Are you doing master dev or ad-hoc work?
     └─ YES → Check implementation size:
@@ -594,7 +594,7 @@ Task(
 - ✅ Saves 60-70% tokens on implementation execution
 - ✅ Forces planning discipline through validation
 - ✅ Maintains quality through plan validation, not execution monitoring
-- ✅ MANDATORY in S1-S10 epic workflow (S6)
+- ✅ MANDATORY in S1-S11 epic workflow (S6)
 - ✅ Optional in master dev workflow and ad-hoc work
 
 **Remember:**

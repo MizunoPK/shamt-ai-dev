@@ -62,7 +62,7 @@ Primary Agent (Opus):
 - All requirements traced to sources
 - Zero scope creep
 - Zero assumptions (all uncertainties → checklist questions)
-- Ready for user approval (Gate 3 or Gate 4.5)
+- Ready for user approval (Gate 3 or Gate 4)
 
 **Uses:** All 7 master dimensions + 3 spec refinement-specific dimensions = 10 total
 
@@ -488,13 +488,13 @@ Requirement 3: Create API endpoint for data retrieval
 - Feature summaries accurate
 - Architecture decisions documented
 - Scope boundaries clear
-- Ready for user approval (Gate 4.5)
+- Ready for user approval (Gate 4)
 
 **Success Criteria:**
 - All features described
 - Epic-level architecture documented
 - Integration approach clear
-- Ready for Gate 4.5 (Epic Plan Approval)
+- Ready for Gate 4 (Epic Plan Approval)
 
 ---
 
@@ -775,7 +775,7 @@ Requirement 1: Use synchronous file I/O
 - [ ] Zero scope creep
 - [ ] Zero missing requirements
 - [ ] All acceptance criteria measurable
-- [ ] Ready for user approval (Gate 3 or Gate 4.5)
+- [ ] Ready for user approval (Gate 3 or Gate 4)
 
 **Cannot exit if:**
 - ❌ Any research gaps in checklist
@@ -822,9 +822,9 @@ Requirement 1: Use synchronous file I/O
 1. Use this validation loop protocol
 2. Check all 10 dimensions (7 master + 3 spec refinement)
 3. Exit when primary clean round + sub-agent confirmation
-4. Proceed to S3.P3 (Gate 4.5 - Epic Plan Approval)
+4. Proceed to S3.P3 (Gate 4 - Epic Plan Approval)
 
-**User Approval:** Gate 4.5 (separate from validation loop)
+**User Approval:** Gate 4 (separate from validation loop)
 
 ---
 

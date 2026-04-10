@@ -34,7 +34,14 @@ S9.P2: Epic Validation Loop (2-3 hours)
     ├─ Continue until primary clean round + sub-agent confirmation
     │       └─ Fix-and-continue approach (no restart for minor issues)
     ↓
-S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
+S9.P3: User Testing (Variable — depends on bug count)
+    ├─ Step 6: User Tests Complete Epic (45-60 min + bug fix cycles)
+    │   ├─ User tests with real data and realistic workflows
+    │   ├─ If bugs found: Fix (S2 → S5 → S6 → S7) → RESTART S9
+    │   └─ ZERO bugs required before proceeding
+    └─ Step 6d: Document User Testing Completion
+    ↓
+S9.P4: Epic Final Review (60-90 min + bug fixes if needed)
     ├─ Step 6: Epic PR Review - 11 Categories (45-60 min)
     │   ├─ Architecture (MOST IMPORTANT - epic-wide patterns)
     │   ├─ Code Quality, Security, Error Handling, etc.
@@ -56,7 +63,8 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 |-----------|-------|------|----------------|-----------------|
 | S9.P1 | 1-2 | 60-90 min | Pre-QC verification, Epic smoke testing (4 parts) | Part 4 data values |
 | S9.P2 | 3-5 | 2-3 hrs | Epic QC Validation Loop (integration, consistency, success criteria) | Primary clean round + sub-agent confirmation |
-| S9.P3 | 6-8 | 1-2 hrs | Epic PR review (11 categories), bug fixes, final verification | All 11 categories PASS |
+| S9.P3 | 6, 6d | Variable | User testing with real data, bug fix cycles if needed | ZERO bugs found |
+| S9.P4 | 6-8 | 1-2 hrs | Epic PR review (11 categories), bug fixes, final verification | All 11 categories PASS |
 
 ---
 
@@ -70,7 +78,8 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 3. **Re-run ALL 8 steps:**
    - S9.P1: Epic Smoke Testing (all 4 parts)
    - S9.P2: Validation Loop (primary clean round + sub-agent confirmation)
-   - S9.P3: Epic PR Review (all 11 categories)
+   - S9.P3: User Testing (ZERO bugs)
+   - S9.P4: Epic PR Review (all 11 categories)
 4. **Document restart** in epic_lessons_learned.md
 
 ### Why COMPLETE Restart?
@@ -231,7 +240,7 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 
 ### ❌ Pitfall 2: Only Checking File Existence
 **Problem:** "File exists, so test passed"
-**Impact:** File has incorrect data, bugs escape to S10
+**Impact:** File has incorrect data, bugs escape to S9.P3 user testing
 **Solution:** Verify DATA VALUES (not just file existence)
 
 ### ❌ Pitfall 3: Skipping Validation Loop
@@ -281,7 +290,12 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 - [ ] Zero issues deferred (fix-and-continue approach used)
 - [ ] All findings resolved immediately
 
-**S9.P3 → S10:**
+**S9.P3 → S9.P4:**
+- [ ] User Testing PASSED (ZERO bugs found)
+- [ ] User explicitly confirmed no bugs
+- [ ] If bugs found: bug fix complete and S9 restarted
+
+**S9.P4 → S10:**
 - [ ] Epic PR review PASSED (all 11 categories)
 - [ ] Architecture validation complete
 - [ ] No issues requiring bug fixes OR bug fixes complete and S9 restarted
@@ -300,6 +314,10 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 - Validation Loop findings (documented in epic_lessons_learned.md)
 
 **S9.P3:**
+- User testing results (documented in epic_lessons_learned.md)
+- Bug fixes (if issues found) - in bugfix_{priority}_{name}/ folders
+
+**S9.P4:**
 - Epic PR review results (documented in epic_lessons_learned.md)
 - Bug fixes (if issues found) - in bugfix_{priority}_{name}/ folders
 - Updated EPIC_README.md (S9 complete)
@@ -314,7 +332,8 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 | Starting S9 | stages/s9/s9_p1_epic_smoke_testing.md | 60-90 min |
 | Step 1-2 | stages/s9/s9_p1_epic_smoke_testing.md | 60-90 min |
 | Step 3-5 | stages/s9/s9_p2_epic_qc_rounds.md | 2-3 hours |
-| Step 6-8 | stages/s9/s9_p4_epic_final_review.md | 1-2 hours |
+| Step 6 (User Testing) | stages/s9/s9_p3_user_testing.md | Variable |
+| Step 6-8 (Epic Final Review) | stages/s9/s9_p4_epic_final_review.md | 1-2 hours |
 | Overview/navigation | stages/s9/s9_epic_final_qc.md (router) | 5 min |
 
 ---
@@ -331,9 +350,9 @@ S9.P3: Epic Final Review (60-90 min + bug fixes if needed)
 - [ ] EPIC_README.md shows S9 complete
 - [ ] All unit tests passing (100%)
 - [ ] Original epic goals validated and achieved
-- [ ] Ready to proceed to S10 (Epic Cleanup)
+- [ ] Ready to proceed to S10 (Final Changes & Merge)
 
-**Next Stage:** S10 (Epic Cleanup) - unit tests, guide updates, commit, archive
+**Next Stage:** S10 (Final Changes & Merge) - final docs, commit, PR, merge verification
 
 ---
 

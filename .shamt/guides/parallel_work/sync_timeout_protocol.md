@@ -21,7 +21,7 @@
 
 During parallel S2 work, agents must synchronize at specific points:
 - **S2 → S3 Sync Point:** All agents complete S2 before Primary runs S3
-- **S3 → S5 Sync Point:** Primary completes S3 before all agents proceed to S5 (S4 deprecated)
+- **S3/S4 → S5 Sync Point:** Primary completes S3 and S4 before secondaries are activated for S5
 
 The **Sync Timeout Protocol** handles scenarios where agents don't reach sync points within expected timeframes.
 
@@ -30,7 +30,7 @@ The **Sync Timeout Protocol** handles scenarios where agents don't reach sync po
 
 **When to use:**
 - When waiting for agents to complete S2 (Primary ready for S3)
-- When waiting for Primary to complete S3 (Secondaries ready for S5 — S4 deprecated)
+- When waiting for Primary to complete S3 + S4 (Secondaries not yet activated — SP2 fires after S4)
 
 ---
 
@@ -291,14 +291,14 @@ Parallel S2 work started 6 hours ago. Not all features have completed S2.
 
 ---
 
-## Sync Point 2: S3 → S5 (Primary Completes S3)
+## Sync Point 2: S3/S4 → S5 (Primary Completes S3 and S4)
 
 ### Expected Timeline
 
 **Assumptions:**
 - S3: 75-105 minutes (Epic-Level Docs, Tests, and Approval)
-- S4: Deprecated — Test Scope Decision moved to S5 Step 0 (per feature)
-- Total: 1.5-2 hours for Primary to complete S3
+- S4: 5-45 minutes (Interface Contract Definition — fast-skip or full path)
+- Total: 1.5-2.5 hours for Primary to complete S3+S4
 
 **Timeout thresholds:**
 - **Soft timeout:** 2 hours (secondary agents check status)
@@ -318,8 +318,8 @@ Parallel S2 work started 6 hours ago. Not all features have completed S2.
 3. **Elapsed time:**
    - Example: 2.5 hours
 
-4. **Has Primary signaled S3 complete?**
-   - Check inbox for "S3 complete - proceed to S5" message
+4. **Has Primary signaled S4 complete?**
+   - Check inbox for "S4 complete - proceed to S5" message
    - Example: No message received
 
 ### Soft Timeout Response (2 hours)
@@ -394,7 +394,7 @@ Parallel S2 work started 6 hours ago. Not all features have completed S2.
 **Secondary agent messages user:**
 
 ```markdown
-🕒 **SYNC TIMEOUT - S3 → S5**
+🕒 **SYNC TIMEOUT - S3/S4 → S5**
 
 **Situation:**
 Primary agent started S3 three hours ago. Have not received completion signal.

@@ -1,6 +1,6 @@
 # Critical Workflow Rules
 
-**Status:** Reference document for S2/S6 stages (S4 deprecated — S5 Step 0 handles test scope)
+**Status:** Reference document for S2/S6 stages
 **Last Updated:** 2026-04-02
 **Usage:** Copied to README Agent Status during workflow execution
 
@@ -103,7 +103,7 @@ Use Edit tool to update the Agent Status section.</parameter>
 **When to copy these rules:**
 - Beginning of S2.P1 (Spec Creation and Refinement)
 - Beginning of S2.P2 (Cross-Feature Alignment)
-- Beginning of S5 Step 0 (Test Scope Decision — S4 deprecated)
+- Beginning of S5 (after reading `interface_contracts.md` in Step 0a)
 - Beginning of S6 (Execution)
 
 **Where to copy:**
