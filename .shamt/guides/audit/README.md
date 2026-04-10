@@ -67,7 +67,7 @@ bash scripts/pre_audit_checks.sh
 
 **Note:** "Spawn Haiku/Sonnet/Opus" means using Task tool with `subagent_type="general-purpose"` and `model="haiku/sonnet/opus"`. See example below.
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → Pre-audit checks script (D1-D12 automated)
 ├─ Spawn Haiku → File counting, cross-reference grep (D13, D14, D15)
@@ -332,7 +332,7 @@ bash scripts/pre_audit_checks.sh
 # Start Round 1 focusing on high-risk dimensions
 # Read stages/stage_1_discovery.md
 # Then read d1, d2, d6, d8 dimension guides
-```markdown
+```
 
 **Estimated Duration:** 3-4 hours (5-8 rounds typical)
 
@@ -381,7 +381,7 @@ bash scripts/pre_audit_checks.sh
 # Generate pattern variations of old notation
 # Read dimensions/d2_terminology_consistency.md for pattern strategies
 # Manual review for context-sensitive cases
-```markdown
+```
 
 **Estimated Duration:** 3-5 hours (5-8 rounds typical)
 
@@ -420,7 +420,7 @@ bash scripts/pre_audit_checks.sh
 
 # If clean: No manual audit needed
 # If issues found: Run focused audit on failing dimensions
-```diff
+```
 
 **Estimated Duration:** 1-2 hours (mostly automated)
 

@@ -6,7 +6,7 @@ Export is how improvements you've made to shared guides and scripts flow back to
 
 Export workflow can save 25-35% tokens through delegation:
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → Run export script, verify file existence, grep for epic tag contamination
 ├─ Spawn Sonnet → Read CHANGES.md, compare rules file against template

@@ -10,7 +10,7 @@
 
 Parallel work coordination can save 10-20% tokens through delegation:
 
-```
+```text
 Primary Agent (Sonnet - balanced for coordination):
 ├─ Spawn Haiku → Read STATUS files, check checkpoints, verify file locks
 ├─ Spawn Sonnet (2-3x) → Secondary agents for features (same model as primary for consistency)

@@ -6,7 +6,7 @@ This guide provides the step-by-step process for validating a design doc using t
 
 Design doc validation MUST use strategic model delegation (20-30% token savings). This is mandatory, not optional.
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → Verify file paths exist, count files in proposals
 ├─ Spawn Sonnet → Read referenced guide files for context validation

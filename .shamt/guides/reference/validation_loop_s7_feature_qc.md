@@ -34,7 +34,7 @@
 
 S7 Feature QC validation can save 30-40% tokens through delegation (17 dimensions):
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → Run tests, count files, verify existence
 ├─ Spawn Sonnet → Read implementation code for dimension checks
@@ -126,7 +126,7 @@ These universal dimensions apply to S7 Feature QC validation:
 
 ## S7 Feature QC Dimensions (10) - Context-Specific
 
-These 9 dimensions are specific to S7.P2 Feature QC validation:
+These 10 dimensions are specific to S7.P2 Feature QC validation:
 
 ### Dimension 8: Cross-Feature Integration
 

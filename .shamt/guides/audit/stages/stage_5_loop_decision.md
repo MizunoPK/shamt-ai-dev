@@ -712,7 +712,7 @@ Please review findings and challenge if:
 **If user approves:**
 ```text
 ✅ Proceed to commit
-```diff
+```
 
 **If user challenges:**
 ```bash

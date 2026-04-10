@@ -1308,7 +1308,7 @@ bash .shamt/guides/parallel_work/scripts/validate_structure.sh \
 # ✅ PASSED - structure valid
 # ⚠️  PASSED WITH WARNINGS - functional but has style issues
 # ❌ FAILED - critical issues found
-```text
+```
 
 **When to run:**
 1. **After Primary creates infrastructure** (Phase 3, Step 1)

@@ -381,7 +381,7 @@ The sub-agent checks all 12 review categories but **interprets them at epic scop
 ### Step 6b: Wait for Sub-Agent Review Completion
 
 **Sub-agent output location:**
-```
+```text
 .shamt/code_reviews/{sanitized_epic_branch}/review_v1.md
 ```
 

@@ -16,7 +16,7 @@
 
 ## Overview of Steps
 
-```
+```text
 Step 1: Access the branch (read-only)
 Step 2: Create output directory
 Step 3: Write overview.md
@@ -30,7 +30,7 @@ Step 7: Run review file validation loop (12 dimensions)
 
 Code reviews MUST use strategic model delegation (30-40% token savings). This is mandatory, not optional.
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → Git operations (branch fetch, file list, commit messages)
 ├─ Spawn Sonnet → Overview.md ELI5 section (summarization)
@@ -345,7 +345,7 @@ Check all 12 categories below. For each category, read the relevant diff hunks a
 
 Group findings by severity (BLOCKING first, then CONCERN, SUGGESTION, NITPICK). Each comment uses the block format from `output_format.md`:
 
-```
+```text
 ### [SEVERITY] Category N — <Name>
 **File:** `path/to/file`, line N
 <Description of the issue>
@@ -458,7 +458,7 @@ Each round:
 6. State `consecutive_clean = N` at the end of the round
 
 **Counter tracking:**
-```
+```text
 consecutive_clean = 0   (tracked in review_validation_log.md)
 
 After each round:

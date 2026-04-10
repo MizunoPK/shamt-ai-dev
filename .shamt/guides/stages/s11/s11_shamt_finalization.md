@@ -70,7 +70,7 @@ S11 is the Shamt-specific housekeeping stage that runs after the feature branch 
 
 S11 can save 20-30% tokens through delegation:
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → Run file existence checks, count epics in done/
 ├─ Spawn Sonnet → Read documentation for S11.P1 lessons analysis

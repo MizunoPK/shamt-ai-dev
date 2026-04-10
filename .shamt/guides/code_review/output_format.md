@@ -23,7 +23,7 @@ All output lives under `.shamt/code_reviews/<sanitized-branch>/`.
 
 **Standard (formal code reviews):**
 
-```
+```text
 .shamt/code_reviews/<sanitized-branch>/
 ├── overview.md                  — branch overview (created/updated first)
 ├── overview_validation_log.md   — overview validation log (overwritten on re-review)
@@ -34,7 +34,7 @@ All output lives under `.shamt/code_reviews/<sanitized-branch>/`.
 
 **S7/S9 Variant (S7.P3 or S9.P4 reviews):**
 
-```
+```text
 .shamt/code_reviews/<sanitized-branch>/
 ├── review_v1.md                 — first code review (NO overview.md created)
 ├── review_validation_log.md     — review validation log (overwritten on re-review)

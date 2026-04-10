@@ -49,7 +49,7 @@ When workflow guides specify model delegation patterns (e.g., "Spawn Haiku → F
 
 ### Decision Flowchart
 
-```
+```text
 Is this a sub-agent confirmation task (verifying zero issues)?
 ├─ YES → Use Haiku
 └─ NO ↓
@@ -594,7 +594,7 @@ Based on typical Anthropic pricing (relative to Opus as baseline):
 
 ### Decision Rule
 
-```
+```text
 IF (task takes <30 seconds AND primary agent has context)
   → Do it inline
 ELSE IF (task is mechanical OR sub-agent confirmation)
@@ -614,7 +614,7 @@ ELSE IF (task is deep reasoning)
 **Scenario:** Need to explore codebase from multiple angles.
 
 **Pattern:**
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku #1 → File tree (src/)
 ├─ Spawn Haiku #2 → File tree (tests/)
@@ -636,7 +636,7 @@ Primary Agent synthesizes findings → DISCOVERY.md
 **Scenario:** Primary round is clean, need 2 sub-agent confirmations.
 
 **Pattern:**
-```
+```text
 Primary Agent (Opus):
 [Completed primary validation, consecutive_clean = 1]
 
@@ -661,7 +661,7 @@ ELSE:
 **Scenario:** Audit round needs mechanical checks + deep validation.
 
 **Pattern:**
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → Pre-audit script (D1-D12 automated)
 ├─ Spawn Haiku → File counting (D13, D14, D15)
@@ -689,7 +689,7 @@ IF consecutive_clean = 1:
 **Scenario:** S5 validation requires file checks before deep validation.
 
 **Pattern:**
-```
+```text
 Primary Agent (Opus):
 Step 1: Spawn Haiku → Verify all files in implementation plan exist
 
@@ -783,7 +783,7 @@ IF consecutive_clean = 1:
 ### Mistake 4: Spawning Many Agents Sequentially When Could Be Parallel
 
 **Wrong:**
-```
+```text
 [Spawn Haiku #1, wait for result]
 [Spawn Haiku #2, wait for result]
 [Spawn Haiku #3, wait for result]
@@ -815,7 +815,7 @@ IF consecutive_clean = 1:
 ### Mistake 5: Over-Delegating Trivial Operations
 
 **Wrong:**
-```
+```text
 Primary Agent reads spec.md (already in context)
 ↓
 Spawn Haiku to update "Agent Status: Step 3" in spec.md
@@ -826,7 +826,7 @@ Context switch cost > savings
 **Why Wrong:** Primary agent already has spec.md context. Spawning Haiku adds overhead for trivial 1-line update.
 
 **Correct:**
-```
+```text
 Primary Agent reads spec.md
 ↓
 Primary Agent updates Agent Status inline (5 seconds of work)

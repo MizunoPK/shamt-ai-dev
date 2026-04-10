@@ -66,7 +66,7 @@ If you are about to do any of the above: STOP and re-read the relevant section.
 
 Spec refinement can save 25-35% tokens through delegation:
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → File tree exploration (glob), keyword searches (grep)
 ├─ Spawn Sonnet → Read implementation code, identify patterns

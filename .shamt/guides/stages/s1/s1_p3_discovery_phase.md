@@ -105,7 +105,7 @@ Discovery Phase is complete when Validation Loop validation achieves a primary c
 
 Discovery Phase can save 30-40% tokens through delegation:
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → File tree exploration, keyword grep searches, file counting
 ├─ Spawn Sonnet → Architecture pattern analysis, code convention identification

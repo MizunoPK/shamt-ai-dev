@@ -545,7 +545,7 @@ Create standard checklist for builder to verify after execution
 
 MUST use strategic model delegation (mandatory per SHAMT-29) to save 35-45% tokens per validation:
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → File path checks, step numbering, checklist format (D1, D8)
 ├─ Spawn Sonnet → Operation specificity, verification clarity (D4, D5)

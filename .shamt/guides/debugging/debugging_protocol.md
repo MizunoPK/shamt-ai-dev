@@ -81,7 +81,7 @@ Debugging Protocol is an investigation-centric process integrated into QC/Smoke 
 
 Debugging protocol can save 25-35% tokens through delegation:
 
-```
+```text
 Primary Agent (Opus - deep reasoning for root cause analysis):
 ├─ Spawn Haiku → Run tests, verify file existence, read logs
 ├─ Spawn Sonnet → Read implementation code for context, trace execution paths

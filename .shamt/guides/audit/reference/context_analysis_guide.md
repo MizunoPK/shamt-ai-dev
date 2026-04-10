@@ -136,7 +136,7 @@ git stash  # Saves uncommitted work
 **Example - INTENTIONAL:**
 ```markdown
 The agent encountered this error:
-```yaml
+```
 Error: File stages/s6/file.md not found
 ```text
 ```
@@ -279,7 +279,7 @@ The old notation "S5a" referred to Round 1 of Stage 5, which is now called S5.P1
 
 **Example:**
 ```markdown
-```bash
+```
 # Read the discovery file
 Read stages/nonexistent_file.md
 ```text
@@ -428,7 +428,7 @@ END IF
 **File:** path/to/file.md:LINE
 **Pattern Found:** [pattern text]
 **Context (±5 lines):**
-```text
+```
 [context text]
 ```text
 
@@ -477,7 +477,7 @@ When documenting intentional exceptions for verification report:
 **File:** path/to/file.md:LINE
 **Pattern:** [pattern]
 **Context:**
-```text
+```
 [5 lines before]
 >>> [MATCH LINE] <<<
 [5 lines after]

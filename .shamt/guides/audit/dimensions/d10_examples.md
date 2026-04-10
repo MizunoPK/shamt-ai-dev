@@ -25,7 +25,7 @@ Complete S5a iterations first...  ← ERROR: Mixed "S5a" with "S5.P1"
 ## Iteration I1: Requirements
 
 Refer to S5.P1 guide for details...  ← Consistent notation
-```diff
+```
 
 **Problem:**
 - File header uses "S5.P1"
@@ -64,7 +64,7 @@ ALWAYS create a dedicated issue file for each problem found.
 ## Section 5: Minor Issues
 
 For minor issues, you can document them in the main checklist without creating separate files.  ← CONTRADICTION
-```diff
+```
 
 **Problem:**
 - Section 2: ALWAYS create file
@@ -113,7 +113,7 @@ The project aims to...  ← INCONSISTENT (epic or project?)
 ## Initiative Goals
 
 The initiative will deliver...  ← INCONSISTENT (epic, project, or initiative?)
-```diff
+```
 
 **Problem:**
 - Uses "epic," "project," and "initiative" interchangeably
@@ -171,7 +171,7 @@ The initiative will deliver...  ← INCONSISTENT (epic, project, or initiative?)
 **Problem:** Off-by-one error in loop
 **Fix:** Update loop condition  ← INCONSISTENT (should be "Solution")
 [No Result section]  ← INCONSISTENT (missing)
-```diff
+```
 
 **Problem:**
 - Example 1: Uses Scenario/Problem/Solution/Result
@@ -210,7 +210,7 @@ The initiative will deliver...  ← INCONSISTENT (epic, project, or initiative?)
 For detailed testing patterns, see Section 7: Advanced Testing Techniques.
 
 [File only has 5 sections - Section 7 doesn't exist]
-```diff
+```
 
 **What Happened:**
 - Original file had 8 sections

@@ -13,7 +13,7 @@ This process is intentionally lighter than the full S1-S11 epic workflow. It's a
 
 Master dev workflow can save 15-25% tokens through delegation:
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → Verify guide file paths, count files affected
 ├─ Spawn Sonnet → Read guides to understand current state

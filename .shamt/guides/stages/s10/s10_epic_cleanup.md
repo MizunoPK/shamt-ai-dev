@@ -79,7 +79,7 @@ S10 finalizes the feature branch: it verifies documentation, creates the final c
 
 S10 can save 15-25% tokens through delegation:
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Sonnet → Read documentation for completeness checks
 ├─ Primary handles → Commit message writing, decision-making

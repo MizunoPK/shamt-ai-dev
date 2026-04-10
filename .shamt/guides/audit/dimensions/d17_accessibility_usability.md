@@ -72,7 +72,7 @@ File: stages/s5/s5_v2_validation_loop.md (800 lines, no TOC)
 Agent task: "Find Gate 4a requirements"
 Problem: No TOC, must scan 800 lines manually
 Result: 5 minutes wasted searching, may miss information
-```markdown
+```
 
 **With TOC:**
 ```markdown
@@ -101,7 +101,7 @@ Result: 5 seconds, accurate
 README.md - Main entry point
 EPIC_WORKFLOW_USAGE.md - Detailed reference
 prompts_reference_v2.md - Prompt lookup
-```markdown
+```
 
 **Navigation Requirements:**
 - **README.md:** Quick Start section at top (no scrolling needed)
@@ -141,7 +141,7 @@ for file in $(find stages reference -name "*.md"); do
     fi
   fi
 done
-```markdown
+```
 
 **Automated:** ✅ Yes (CHECK 5 in pre_audit_checks.sh)
 
@@ -157,7 +157,7 @@ command here
 ```text
 
 # CORRECT (with language tag)
-```text
+```
 command here
 ```text
 
@@ -171,7 +171,7 @@ command here
 - Clear visual differentiation between code types
 
 **Search Command:**
-```markdown
+```
 # Find code blocks without language tags
 grep -rn "^\`\`\`$" stages templates prompts reference
 
@@ -225,7 +225,7 @@ Continue to [S5.P1.I2: Algorithm Design](s5_p1_i2_algorithms.md)
 - Use of callout boxes for warnings
 
 **Good Example:**
-```markdown
+```
 **CRITICAL:** Do not skip Gate 23a validation.
 
 **Required Steps:**
@@ -254,7 +254,7 @@ during implementation.
 - Commands show actual syntax (not pseudocode)
 
 **Good Example:**
-```markdown
+```
 ## Creating Feature Spec
 
 **Quick Reference:**
@@ -273,7 +273,7 @@ grep -n "TODO\|\[placeholder\]" spec.md  # Should return nothing
 ## Purpose
 Enable users to export record data in configurable formats with
 date ranges and data types (stats, projections, rankings).
-```markdown
+```
 ```markdown
 
 **Automated:** ❌ No (requires content review)
@@ -308,7 +308,7 @@ Version 4 (2026-02): 850 lines, definitely needs TOC
 **Scenario:** Adding examples by copying code snippets
 
 **What Happens:**
-```bash
+```
 User requests: "Add example command"
 
 Agent copies from terminal:
@@ -333,7 +333,7 @@ Result: No language tag (just ```)
 **Scenario:** Guide created standalone, not integrated into workflow
 
 **What Happens:**
-```markdown
+```
 # Guide Content
 
 [Extensive content about S5.P1.I1]
@@ -368,7 +368,7 @@ any assumptions and get user approval before proceeding to execution.
 ```text
 
 **Better:**
-```markdown
+```
 **Implementation Planning Requirements:**
 
 1. **Read Spec:** Review spec.md thoroughly
@@ -420,7 +420,7 @@ echo "Large files missing TOC: $MISSING_TOC"
 > Closing fences never have language tags — only opening fences can be untagged.
 > Use the Python pair-tracker below instead.
 
-```bash
+```
 # CHECK 7: Code Block Language Tags (D17)
 # ============================================================================
 
@@ -485,7 +485,7 @@ done
 
 **For each guide:**
 
-```diff
+```
 STEP 1: Quick Navigation Test
 - Open file
 - Can you find TOC within 5 seconds? (if file >500 lines)
@@ -529,7 +529,7 @@ Verdict: ✅ TOC Optional (file short enough to scan)
 ```text
 
 **2. Single-Topic Files:**
-```markdown
+```
 File: reference/naming_conventions.md (200 lines, one topic)
 Verdict: ✅ TOC Optional (straightforward navigation)
 ```markdown
@@ -543,7 +543,7 @@ Verdict: ❌ TOC REQUIRED (too long to scan)
 ```text
 
 **2. Multi-Section Guides:**
-```markdown
+```
 File: EPIC_WORKFLOW_USAGE.md (600 lines, 10 stage sections)
 Verdict: ❌ TOC REQUIRED (multiple distinct sections)
 ```markdown
@@ -554,7 +554,7 @@ Verdict: ❌ TOC REQUIRED (multiple distinct sections)
 ```
 ```json
 [Placeholder for user's custom content]
-```markdown
+```
 ```text
 **Verdict:** ✅ ACCEPTABLE (generic placeholder)
 
@@ -564,7 +564,7 @@ Verdict: ❌ TOC REQUIRED (multiple distinct sections)
 ┌─────────┐
 │  Box 1  │
 └─────────┘
-```markdown
+```
 ```bash
 **Verdict:** ✅ ACCEPTABLE (ASCII art, not code)
 
@@ -574,7 +574,7 @@ Verdict: ❌ TOC REQUIRED (multiple distinct sections)
 ```
 ```bash
 git commit -m "message"
-```markdown
+```
 ```text
 **Verdict:** ❌ ERROR (should be ```bash)
 
@@ -582,7 +582,7 @@ git commit -m "message"
 ```
 ```markdown
 ## Example Header
-```markdown
+```
 ```text
 **Verdict:** ❌ ERROR (should be ```markdown)
 
@@ -609,7 +609,7 @@ $ grep -i "table of contents" stages/s5/s5_v2_validation_loop.md
 **Impact:** ⚠️ MEDIUM - Time wasted finding specific sections
 
 **Fix:**
-```markdown
+```
 # S5.P1: Planning Round 1
 
 **Router:** Navigate to iteration guides
@@ -645,7 +645,7 @@ $ grep -n "^\`\`\`$" stages/s5/s5_p1_i1_requirements.md
 **Impact:** ⚠️ LOW - Reduces readability
 
 **Fix:**
-```bash
+```
 # Before
 ```bash
 grep -rn "TODO" feature_*/spec.md
@@ -654,7 +654,7 @@ grep -rn "TODO" feature_*/spec.md
 # After
 ```bash
 grep -rn "TODO" feature_*/spec.md
-```markdown
+```
 ```markdown
 
 ### Example 3: Missing Next Navigation
@@ -680,7 +680,7 @@ File: stages/s5/s5_p1_i1_requirements.md
 **Impact:** ⚠️ MEDIUM - Workflow clarity
 
 **Fix:**
-```markdown
+```
 ## Next
 
 **After completing I1:**

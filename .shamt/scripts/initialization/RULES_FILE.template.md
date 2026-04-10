@@ -120,13 +120,13 @@ reduce the requirement to follow the guide's specific steps.
 - **DO NOT** implement it directly — this is a protocol violation
 - **DO** read `.shamt/guides/missed_requirement/missed_requirement_protocol.md` FIRST
 - **DO** present options to user (new feature vs update unstarted feature)
-- **DO** follow the full protocol: Discovery → Planning → Realignment → S2/S3/S4 → S5-S8
+- **DO** follow the full protocol: Discovery → Planning → Realignment → S2/S3 → S5-S8
 
 **Trigger keywords:** "missed", "forgot", "should have", "discovered", "gap", "create another feature", "add a feature for", "we also need"
 
 **Decision tree — "NEW, CURRENT, or MISSED?"**
 - **NEW** requirement (no epic exists) → S1 epic planning
-- **CURRENT** requirement (during S2/S3/S4, before S5) → Update specs in current stage
+- **CURRENT** requirement (during S2/S3, before S5) → Update specs in current stage
 - **MISSED** requirement (after S5 started) → Missed requirement protocol (`.shamt/guides/missed_requirement/`)
 
 ---

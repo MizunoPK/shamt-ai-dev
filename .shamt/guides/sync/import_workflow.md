@@ -8,7 +8,7 @@ The import script prints a ready-to-use agent prompt at the end of its run. This
 
 Import workflow MUST use strategic model delegation (20-30% token savings). This is mandatory, not optional.
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → Read import diff files, count changed files
 ├─ Spawn Sonnet → Read supplement files, read pointer files for consistency

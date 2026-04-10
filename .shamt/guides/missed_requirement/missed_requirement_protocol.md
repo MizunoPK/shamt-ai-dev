@@ -91,7 +91,7 @@ Missed Requirement Protocol treats missing scope as real features - either creat
 
 Missed requirement handling can save 15-25% tokens through delegation:
 
-```
+```text
 Primary Agent (Opus - design decisions for feature integration):
 ├─ Spawn Haiku → Read existing feature specs, verify file structure
 ├─ Spawn Sonnet → Read epic docs, identify integration points

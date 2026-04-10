@@ -71,7 +71,7 @@
 
 Investigation rounds can save 30-40% tokens through delegation (same as debugging_protocol.md):
 
-```
+```text
 Primary Agent (Opus - deep reasoning for root cause analysis):
 ├─ Spawn Haiku → Run diagnostic tests, verify file existence, read logs/stack traces
 ├─ Spawn Sonnet → Read implementation code, trace execution paths, identify suspicious areas
