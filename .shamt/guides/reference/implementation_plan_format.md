@@ -90,7 +90,7 @@ export function authenticate(req, res, next) {
   // Verify token logic here
   next();
 }
-```
+```text
 **Verification:** File src/middleware/auth.ts exists, contains authenticate function export
 ```
 
@@ -296,7 +296,7 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
     return res.status(401).json({ error: 'Invalid token' });
   }
 }
-```
+```text
 **Verification:** File src/middleware/auth.ts exists, contains authenticate function with JWT verification logic
 
 ### Step 2: Add authentication middleware import to server
@@ -338,7 +338,7 @@ describe('authenticate middleware', () => {
 
   // Additional tests...
 });
-```
+```text
 **Verification:** File src/middleware/auth.test.ts exists, contains test for missing token scenario
 
 ## Post-Execution Checklist
@@ -383,7 +383,7 @@ describe('authenticate middleware', () => {
 export function authenticate() {
   // Implementation here
 }
-```
+```text
 ```
 
 ✅ **Good:**
@@ -400,7 +400,7 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
   }
   next();
 }
-```
+```text
 ```
 
 **Why:** Builder cannot fill in "Implementation here" - provide complete code.
@@ -443,7 +443,7 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
 **Details:**
 ```
 // Helper functions
-```
+```text
 **Verification:** File src/utils/helper.ts exists
 
 ### Step 2: Add export to utility file

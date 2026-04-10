@@ -59,7 +59,7 @@ The architect-builder pattern is **MANDATORY** for all implementations in the S1
 - Rationale: The S1-S11 epic workflow is exclusively for non-trivial changes
 
 **Workflow:**
-```
+```text
 S5 Phase 1: Create mechanical implementation plan (direct from spec)
 S5 Phase 2: Validate plan (9 dimensions, primary clean + 2 sub-agents)
 Gate 5: User approves validated plan
@@ -86,7 +86,7 @@ For master dev workflow and ad-hoc work outside S1-S11:
 
 ## Decision Tree
 
-```
+```text
 Are you in S6 of the S1-S11 epic workflow?
 ├─ YES → Use architect-builder pattern (MANDATORY)
 └─ NO → Are you doing master dev or ad-hoc work?
@@ -166,7 +166,7 @@ Task(
 6. Do NOT spawn sub-agents or parallelize work
 
 **Execution Flow:**
-```
+```text
 1. Read implementation_plan.md
 2. Execute Step 1
 3. Run Step 1 verification
@@ -325,14 +325,14 @@ Task(
 ## Token Savings Calculation
 
 ### Traditional Approach (Architect Executes)
-```
+```text
 Agent: Sonnet/Opus
 Tasks: Read plan + Execute 50 file operations + Verify
 Cost: ~150K tokens
 ```
 
 ### Architect-Builder Approach
-```
+```text
 Architect (Sonnet/Opus):
 - Read spec: 10K tokens
 - Create plan: 15K tokens
@@ -478,13 +478,13 @@ Task(
 ### Mistake 1: Architect Executes Own Plan
 
 ❌ **Wrong:**
-```
+```text
 S5: Create and validate plan
 S6: Architect reads plan and implements directly
 ```
 
 ✅ **Correct:**
-```
+```text
 S5: Create and validate plan
 S6: Architect creates handoff → spawns Haiku builder → builder executes
 ```
@@ -521,12 +521,12 @@ S6: Architect creates handoff → spawns Haiku builder → builder executes
 ### Mistake 3: Skipping Plan Validation
 
 ❌ **Wrong:**
-```
+```text
 Create plan → immediately hand to builder
 ```
 
 ✅ **Correct:**
-```
+```text
 Create plan → validate (9 dimensions, 2 sub-agent confirmations) → hand to builder
 ```
 
@@ -537,12 +537,12 @@ Create plan → validate (9 dimensions, 2 sub-agent confirmations) → hand to b
 ### Mistake 4: Builder Makes Design Decisions
 
 ❌ **Wrong:**
-```
+```text
 Builder encounters ambiguous step → builder chooses interpretation → executes
 ```
 
 ✅ **Correct:**
-```
+```text
 Builder encounters ambiguous step → builder STOPS → reports to architect → waits
 ```
 

@@ -97,7 +97,7 @@ These issues are typically caught by linters but should be verified manually if 
 
 ## 5. Security Patterns
 
-**Reference:** See `security_checklist.md` for comprehensive security patterns.
+**Reference:** See `reference/security_checklist.md` for comprehensive security patterns.
 
 ### Quick Security Scan
 

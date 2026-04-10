@@ -40,7 +40,7 @@ Use the prompt shortcut from `prompts/special_workflows_prompts.md` (Code Review
 
 Each review creates a sub-folder:
 
-```
+```text
 .shamt/code_reviews/<sanitized-branch>/
 ├── overview.md                  — ELI5 + What/Why/How (validated, created first)
 ├── overview_validation_log.md   — validation log for the overview

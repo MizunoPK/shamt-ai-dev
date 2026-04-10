@@ -35,7 +35,7 @@
 
 Spec refinement validation can save 25-35% tokens through delegation (10 dimensions):
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → File tree exploration, keyword searches (grep)
 ├─ Spawn Sonnet → Read implementation code, identify patterns
@@ -371,7 +371,7 @@ Requirement 5: Implement data processing module
 - Output: `List[ProcessedRecord]` (sorted by priority)
 
 **Interface Contract:**
-```python
+```
 class DataProcessor:
     def process(self, records: List[RawRecord]) -> List[ProcessedRecord]:
         """
@@ -389,7 +389,7 @@ class DataProcessor:
         Raises:
         - ValueError: If records list is malformed
         """
-```
+```text
 
 **Error Handling:**
 - Malformed record: Skip, log at WARNING level, continue processing

@@ -34,7 +34,7 @@
 
 S9 Epic QC validation can save 35-45% tokens through delegation (13 dimensions):
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → Run full test suite, count features/files
 ├─ Spawn Sonnet → Read cross-feature integration code, check consistency patterns

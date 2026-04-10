@@ -106,7 +106,7 @@
 CLAUDE.md (project root)
 .shamt/guides/README.md
 .shamt/guides/EPIC_WORKFLOW_USAGE.md
-```bash
+```
 
 **What to Validate:**
 
@@ -129,7 +129,7 @@ grep -ion "epic\|project\|initiative\|feature set" \
   cut -d: -f2 | sort | uniq -c
 
 # Should show consistent use of "epic" (not mixed terms)
-```bash
+```
 
 **EPIC_WORKFLOW_USAGE.md - Section Structure Consistency:**
 ```bash
@@ -168,7 +168,7 @@ Complete iterations I1-I7...
 ## S5a: Planning Round 1  ← ERROR: Mixed notation
 
 For backward compatibility, S5a refers to... ← If NOT explaining old notation, this is an error
-```bash
+```
 
 **Search Commands:**
 ```bash
@@ -203,7 +203,7 @@ INCONSISTENT:
 CONSISTENT:
 - "S5.P1" throughout entire file
 - "Stage 5" explained once as "(S5)", then "S5" used throughout
-```markdown
+```
 
 **Red Flags:**
 - Header uses "S5.P1.I1" but text uses "Iteration 1"
@@ -241,7 +241,7 @@ If you're in a hurry, you can commit first and run tests later.  ← CONTRADICTI
 ## When to Proceed
 
 You can proceed without user approval if changes are minor.  ← CONTRADICTION
-```markdown
+```
 
 **Pattern C: DO vs DON'T**
 ```markdown
@@ -263,7 +263,7 @@ grep -n "MUST\|ALWAYS\|REQUIRED\|NEVER" stages/s5/*.md > /tmp/mandatory.txt
 grep -n "optional\|can skip\|if needed\|may" stages/s5/*.md > /tmp/optional.txt
 
 # Manually review for contradictions (requires reading context)
-```markdown
+```
 
 **Validation Process:**
 
@@ -316,7 +316,7 @@ Complete all components...  ← Are "components" same as "features"?
 ## Testing
 
 Test each module independently...  ← Are "modules" same as "features" or "components"?
-```bash
+```
 
 **Search Commands:**
 ```bash
@@ -348,7 +348,7 @@ For each concept category:
 This guide covers **epic planning** (also called "project planning" in some organizations)...
 
 [Rest of file uses "epic" consistently]
-```markdown
+```
 
 This is VALID if variation is explained once then consistent term used throughout.
 
@@ -398,7 +398,7 @@ This section covers...
 **Problem:**...
 **Solution:**...
 [No Result section]  ← INCONSISTENT
-```bash
+```
 
 **Search Commands:**
 ```bash
@@ -461,7 +461,7 @@ References within file (e.g., "see Section 5") should point to sections that exi
 For detailed configuration, see Section 7.
 
 [File only has 5 sections]  ← ERROR: Section 7 doesn't exist
-```markdown
+```
 
 **"Above" and "Below" References:**
 ```markdown
@@ -480,7 +480,7 @@ grep -n "see Section [0-9]\|Section [0-9] for\|described in Section [0-9]" \
 
 # For each reference, verify section exists
 # (Manual validation - requires parsing file structure)
-```markdown
+```
 
 **Validation Process:**
 
@@ -504,7 +504,7 @@ After reorg: Section 5: Advanced Topics
 File had Sections 1-8
 Section 4 deleted
 References still mention Section 4  ← BROKEN
-```markdown
+```
 
 **Red Flags:**
 - "See Section N" where N > total sections
@@ -547,7 +547,7 @@ This guide provides comprehensive instructions for implementation planning.  ←
 ## Tips
 
 Yo, don't forget to run tests!  ← Informal  ← INCONSISTENT
-```markdown
+```
 
 **Imperative vs Declarative:**
 ```markdown
@@ -595,7 +595,7 @@ All functions should include complete type hints for parameters and return value
 
 def calculate_total(items):  ← ERROR: No type hints in example
     return sum(items)
-```markdown
+```
 
 **Another Pattern:**
 ```markdown
@@ -806,7 +806,7 @@ for file in stages/**/*.md reference/*.md; do
     echo "MIXED NOTATION in $file (old: $old, new: $new)"
   fi
 done
-```bash
+```
 
 **CHECK 17: Terminology Variation Detection** *(planned, not yet implemented)*
 ```bash
@@ -852,7 +852,7 @@ for file in stages/**/*.md; do
     fi
   done
 done
-```diff
+```
 
 **Automation Coverage: ~80%**
 - ✅ Notation mixing
@@ -908,7 +908,7 @@ grep -oi "feature\|component\|module" "$file" | sort | uniq -c
 
 echo "Process terms:"
 grep -oi "stage\|phase\|step\|iteration" "$file" | sort | uniq -c
-```diff
+```
 
 **Manual Review Questions:**
 - Does file use ONE term for each concept?
@@ -945,7 +945,7 @@ grep -n "MUST\|ALWAYS\|NEVER\|REQUIRED" "$file" > /tmp/mandatory.txt
 grep -n "optional\|can skip\|may\|if needed" "$file" > /tmp/permissive.txt
 
 # Manually review both files for contradictions
-```markdown
+```
 
 **Manual Review Process:**
 1. Read all mandatory statements
@@ -989,7 +989,7 @@ Always use S#.P# notation (e.g., S5.P1).
 
 ❌ WRONG: "For Stage 5a..."  ← This is showing what NOT to do
 ✅ CORRECT: "For S5.P1..."
-```markdown
+```
 
 **Validation:** If example explicitly labeled as anti-pattern/wrong → VALID (not inconsistency)
 
@@ -1027,7 +1027,7 @@ This guide covers **epic planning** (also called "project planning" or "initiati
 ## Rest of File
 
 [Uses "epic" exclusively, no "project" or "initiative"]
-```markdown
+```
 
 **Validation:** Multiple terms defined once then one used consistently → VALID
 

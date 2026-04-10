@@ -275,7 +275,7 @@ Proceed? {User confirms}
 
 **Missed Requirement Action:**
 - {Creating new feature_05_injury_tracking} OR {Updating feature_03_performance_tracker}
-- Returning to S2/3/4 for planning
+- Returning to S2/3 for planning (S4 deprecated)
 - Will resume this feature after planning complete
 
 **Resume Instructions:**

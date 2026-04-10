@@ -431,7 +431,7 @@ Beginning Wave 2 coordination. I'll verify all agents started at the first heart
 
 **Task tool calls (all in a single parallel response):**
 
-```
+```text
 For each Group 2 feature:
   subagent_type: general-purpose
   run_in_background: true

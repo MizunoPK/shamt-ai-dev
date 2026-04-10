@@ -352,7 +352,7 @@ echo "✅ Handoff packages saved to feature folders"
 
 **Step 2 — Spawn all secondaries in a single parallel response:**
 
-```
+```text
 Task tool call (one per secondary, all in same response):
   subagent_type: general-purpose
   run_in_background: true

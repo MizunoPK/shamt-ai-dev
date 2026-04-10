@@ -90,7 +90,7 @@ CLAUDE.md: 45,786 characters (5,786 over limit)
 Problem: Agents read CLAUDE.md at start of EVERY task
 Result: Information overload, reduced effectiveness, slower task start
 Solution: Reduced to 27,395 chars (40% reduction) by extracting to EPIC_WORKFLOW_USAGE.md
-```markdown
+```
 
 ### When Files Grow
 
@@ -138,7 +138,7 @@ if [ $CHARS -gt 40000 ]; then
   echo "POLICY VIOLATION: CLAUDE.md ($CHARS chars) exceeds 40,000 limit"
   echo "Overage: $((CHARS - 40000)) characters"
 fi
-```markdown
+```
 
 **Automated:** ✅ Yes (CHECK 1b in pre_audit_checks.sh)
 
@@ -172,7 +172,7 @@ find stages reference templates -name "*.md" -exec wc -l {} \; | \
 find stages reference templates -name "*.md" -exec wc -l {} \; | \
   awk '$1 > 1500 && $1 <= 1750 {print $1, $2}' | \
   sort -rn
-```markdown
+```
 
 **Automated:** ⚠️ Partial (detection automated, evaluation manual)
 
@@ -206,7 +206,7 @@ find stages reference templates -name "*.md" -exec wc -l {} \; | \
 find templates -name "*.md" -exec wc -l {} \; | \
   awk '$1 > 500 {print $1, $2}' | \
   sort -rn
-```markdown
+```
 
 **Automated:** ⚠️ Partial (no specific check, but caught by general file size check)
 
@@ -247,7 +247,7 @@ Epic 6: 720 lines (LARGE) - Added validation loop details
 s5_round1.md (400 lines)
 s5_round2.md (350 lines)
 s5_round3.md (450 lines)
-```markdown
+```
 
 **After (WRONG):**
 ```text
@@ -260,7 +260,7 @@ s5_planning.md (200 lines) ← Router to sub-guides
 s5_v2_validation_loop.md (400 lines)
 s5_v2_validation_loop.md (350 lines)
 s5_v2_validation_loop.md (450 lines)
-```markdown
+```
 
 ### Root Cause 3: Detailed Examples Added Inline
 
@@ -288,7 +288,7 @@ Create spec.md using template.
 
 ### Common Mistakes
 [40 lines of anti-patterns]
-```markdown
+```
 
 **Result:** Section grows from 3 lines → 225 lines
 
@@ -323,7 +323,7 @@ for file in $(find stages -name "*.md"); do
 done
 
 echo "Files >2000 lines: $TOO_LARGE"
-```bash
+```
 
 ### Script 2: CLAUDE.md Character Limit (IN pre_audit_checks.sh)
 
@@ -371,7 +371,7 @@ for file in $(find stages -name "*.md"); do
     fi
   fi
 done
-```diff
+```
 
 ---
 
@@ -435,7 +435,7 @@ STEP 5: Execute reduction
 
 STEP 6: Validate reduction
 $ wc -c CLAUDE.md  # Should be ≤40,000
-```diff
+```
 
 **For workflow guides >2000 lines:**
 
@@ -475,7 +475,7 @@ $ grep -r "old_file_path" .  # No broken references
 File: reference/glossary.md (700 lines)
 Content: Alphabetical term definitions
 Verdict: ✅ ACCEPTABLE (reference material, not sequential reading)
-```yaml
+```
 
 **2. Pattern Libraries:**
 ```markdown
@@ -489,7 +489,7 @@ Verdict: ✅ ACCEPTABLE (lookup reference, not read start-to-finish)
 File: templates/epic_readme_template.md (400 lines)
 Content: Complete template with all sections
 Verdict: ✅ ACCEPTABLE (copied then edited, not read repeatedly)
-```yaml
+```
 
 ### When Large Files Are Errors
 
@@ -507,7 +507,7 @@ File: CLAUDE.md (45,786 characters)
 Content: Project instructions
 Verdict: ❌ POLICY VIOLATION (exceeds 40,000 char limit)
 Fix: Extract to EPIC_WORKFLOW_USAGE.md, keep quick reference
-```yaml
+```
 
 **3. Guides with Multiple Purposes:**
 ```markdown
@@ -529,7 +529,7 @@ $ wc -c CLAUDE.md
 45786 CLAUDE.md
 
 POLICY VIOLATION: 5,786 characters over 40,000 limit
-```diff
+```
 
 **Analysis:**
 - CLAUDE.md read at start of every task
@@ -563,7 +563,7 @@ $ wc -l stages/s1/s1_epic_planning.md
 1289 stages/s1/s1_epic_planning.md
 
 ❌ TOO LARGE: Must reduce or justify
-```diff
+```
 
 **Analysis:**
 - File structure: 6 phases (P1-P6) with detailed steps
@@ -601,7 +601,7 @@ $ wc -l stages/s5/s5_v2_validation_loop.md
 685 lines (current)
 
 Growth: +265 lines (+63%) over 6 months
-```diff
+```
 
 **Analysis:**
 - No single commit added >50 lines
@@ -633,7 +633,7 @@ $ wc -l templates/epic_readme_template.md
 420 templates/epic_readme_template.md
 
 ⚠️  LARGE: Consider split?
-```diff
+```
 
 **Analysis:**
 - File is a template (copied once, then edited)

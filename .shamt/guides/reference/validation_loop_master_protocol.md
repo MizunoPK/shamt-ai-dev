@@ -70,7 +70,7 @@ Validation loops can save 30-45% tokens through strategic delegation:
 
 **Note:** "Spawn Haiku/Sonnet/Opus" means using Task tool with `subagent_type="general-purpose"` and `model="haiku/sonnet/opus"`.
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → File existence checks, counting, grep searches
 ├─ Spawn Sonnet → Read files for structural validation, pattern analysis
@@ -282,7 +282,7 @@ Draft Artifact Created
 - **"Fixing" does NOT increment counter:** A round where you found and fixed issues still resets the counter to 0; only rounds that start with zero issues (or exactly one LOW issue found mid-round) increment the counter
 
 **Example State Transitions:**
-```
+```text
 Round 1: 3 issues found → Fix all → counter = 0 (reset)
 Round 2: 0 issues found → counter = 1 (increment)
 Round 3 (sub-agent A): 1 issue found → counter = 0 (reset)
@@ -1648,7 +1648,7 @@ When spawning sub-agents for confirmation, provide the following context:
 **Complete Handoff Example:**
 
 When spawning sub-agents, provide:
-```
+```text
 You are a sub-agent tasked with confirming zero issues in a specification document.
 
 ARTIFACT TO VALIDATE:

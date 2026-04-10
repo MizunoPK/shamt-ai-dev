@@ -102,7 +102,7 @@ Primary Agent ({Model}):
 ├─ Spawn {Model} → {task description}
 ├─ ...
 └─ Primary {action} → {task description}
-```
+```text
 
 **See:** `reference/model_selection.md` for Task tool examples.
 ```
@@ -319,7 +319,7 @@ Primary Agent (Opus):
 ├─ Primary handles → Multi-dimensional validation, deep analysis
 ├─ Spawn Haiku (2x in parallel) → Sub-agent confirmations
 └─ Primary writes → Validation log, fixes
-```
+```text
 
 **See:** `reference/model_selection.md` for Task tool examples.
 ```

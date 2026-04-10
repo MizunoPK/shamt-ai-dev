@@ -55,7 +55,7 @@ Document all search patterns attempted this round:
 ### Pattern 1: [Description]
 ```bash
 grep -rn "PATTERN" --include="*.md"
-```markdown
+```
 **Results:** [N] matches found
 **Issues:** [N] are errors, [N] are intentional
 
@@ -83,7 +83,7 @@ grep -rn "PATTERN" --include="*.md"
 **Pattern That Found It:**
 ```bash
 grep -rn "pattern" --include="*.md"
-```markdown
+```
 
 **Context (5 lines):**
 ```text
@@ -97,7 +97,7 @@ grep -rn "pattern" --include="*.md"
 **Current State:**
 ```text
 old incorrect content here
-```markdown
+```
 
 **Should Be:**
 ```text
@@ -115,7 +115,7 @@ File path points to non-existent file. After S6→S9 renumbering, this path was 
 **Sed Command:**
 ```bash
 sed -i 's|old_path|new_path|g' path/to/file.md
-```markdown
+```
 
 ---
 

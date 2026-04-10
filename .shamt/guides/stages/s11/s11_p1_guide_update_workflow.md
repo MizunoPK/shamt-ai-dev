@@ -73,7 +73,7 @@ S11.P1 is complete when all proposals have been reviewed by user, proposal doc c
 
 S11.P1 guide updates MUST use delegation for token efficiency (15-25% savings):
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → Read lessons_learned.md files
 ├─ Spawn Sonnet → Read guide files to identify improvement opportunities

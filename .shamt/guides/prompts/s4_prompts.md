@@ -18,7 +18,7 @@
 ```markdown
 I'm beginning S4 (Interface Contract Definition) for {feature_name}.
 
-**Guide I'm following:** stages/s4/s4_interface_contract_definition.md
+**Guide I'm following:** stages/s4/s4_interface_contracts.md
 
 **The guide requires:**
 - Validate feature interface contracts with all dependencies
@@ -36,7 +36,7 @@ I'm beginning S4 (Interface Contract Definition) for {feature_name}.
 
 **Updating feature README.md Agent Status:**
 - Current Stage: S4 - Interface Contract Definition
-- Current Guide: stages/s4/s4_interface_contract_definition.md
+- Current Guide: stages/s4/s4_interface_contracts.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
 - Critical Rules: "Validate interface contracts", "Identify all dependencies", "Validation Loop required", "NO user approval gate in S4"
 - Next Action: Begin interface contract validation for {feature_name}

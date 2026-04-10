@@ -97,7 +97,7 @@
 .shamt/guides/README.md
 .shamt/guides/EPIC_WORKFLOW_USAGE.md
 CLAUDE.md (project root) (Stage Workflows section)
-```markdown
+```
 
 **What to Validate:**
 
@@ -150,7 +150,7 @@ Each stage guide must list correct prerequisites from previous stages.
 - [ ] File X exists (from Previous Stage output)
 - [ ] User approval at Gate N (if applicable)
 - [ ] All tests passing (if post-implementation)
-```bash
+```
 
 **Search Commands:**
 ```bash
@@ -238,7 +238,7 @@ Proceed to [Stage Name] (`path/to/guide.md`)
 
 ## See Also
 - Next: `stages/sN/sN_name.md`
-```bash
+```
 
 **Search Commands:**
 ```bash
@@ -281,7 +281,7 @@ done
 **If all features complete:**
 - Proceed to S9: Epic-Level Final QC
 - Read `stages/s9/s9_epic_final_qc.md`
-```markdown
+```
 
 **Red Flags:**
 - Next stage references non-existent stage (S11, S0)
@@ -316,7 +316,7 @@ Stage A's documented outputs must match Stage B's documented prerequisites.
 - [ ] Completed Stage A
 - [ ] `spec.md` exists
 - [ ] `checklist.md` resolved (all questions answered)
-```bash
+```
 
 **Search Commands:**
 ```bash
@@ -394,7 +394,7 @@ for file in stages/s5/*.md; do
   echo "=== $file ==="
   grep -n "^## " "$file" | grep -E "S5\.P[0-9]"
 done
-```markdown
+```
 
 **Validation Checklist:**
 
@@ -674,7 +674,7 @@ for file in stages/**/*.md; do
     fi
   done
 done
-```bash
+```
 
 **CHECK 8: Gate Placement Validation** *(planned, not yet implemented)*
 ```bash
@@ -726,7 +726,7 @@ grep -E "^\| \*\*[0-9]" .shamt/guides/README.md | head -10
 grep -E "^\*\*S[0-9]" CLAUDE.md
 
 # Compare - should match S1-S11
-```bash
+```
 
 **Step 2: Validate Each Stage Prerequisites (15-20 min)**
 
@@ -778,7 +778,7 @@ done
 # S9 → S10
 # S10 → S11
 # S11 → Done
-```bash
+```
 
 **Step 4: Validate Output-to-Input Mapping (10-15 min)**
 
@@ -815,7 +815,7 @@ grep -rn "Gate 5" stages/s5/
 
 echo "Gates 4a, 7a, 23a, 24, 25 should be in S5:"
 grep -rn "Gate 4a\|Gate 7a\|Gate 23a\|Gate 24\|Gate 25" stages/s5/
-```markdown
+```
 
 ---
 
@@ -859,7 +859,7 @@ grep -rn "If.*feature\|When.*bug" stages/
 
 In the old workflow, S5 was split into S5a/S5b/S5c phases. This caused confusion,
 so we adopted S5.P1/P2/P3 notation instead.
-```bash
+```
 
 **Detection:**
 ```bash
@@ -910,7 +910,7 @@ Secondary agents: S2.P1 for Features 02-04 (simultaneous)
 if [[ "$file" =~ parallel_work/ ]]; then
   # Non-linear workflow expected
 fi
-```markdown
+```
 
 **Validation:** Non-linear workflow in parallel_work/ → VALID
 
@@ -972,7 +972,7 @@ Proceed to S5: Implementation Planning (`stages/s5/s5_v2_validation_loop.md`)
 
 - [ ] Completed S4
 - [ ] `test_plan.md` exists
-```diff
+```
 
 **Problem:**
 - S4 creates "test_strategy.md"
@@ -1004,7 +1004,7 @@ Proceed to S5: Implementation Planning (`stages/s5/s5_v2_validation_loop.md`)
 ```markdown
 **S3: Epic Planning**
 - Gate 4: User approves epic plan
-```markdown
+```
 
 **S3 Guide:**
 ```markdown
@@ -1065,7 +1065,7 @@ Proceed to S9: Epic-Level Final QC (`stages/s9/s9_epic_final_qc.md`)
 **If all features complete:**
 - Proceed to S9: Epic-Level Final QC
 - Read `stages/s9/s9_epic_final_qc.md`
-```markdown
+```
 
 **Root Cause:** Workflow has conditional branching, but documentation showed only linear path
 

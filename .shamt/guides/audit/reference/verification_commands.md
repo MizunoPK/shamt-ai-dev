@@ -418,7 +418,7 @@ echo "Remaining placeholders: $N_remaining"
 
 ### Pattern Re-Run Results
 
-```bash
+```
 [Command used]
 [Output showing count]
 ```markdown

@@ -299,7 +299,7 @@ Use Task tool with the prompt template from `code_review/s7_s9_code_review_varia
 ### Step 1b: Wait for Sub-Agent Review Completion
 
 **Sub-agent output location:**
-```
+```text
 .shamt/code_reviews/{sanitized_feature_branch}/review_v1.md
 ```
 

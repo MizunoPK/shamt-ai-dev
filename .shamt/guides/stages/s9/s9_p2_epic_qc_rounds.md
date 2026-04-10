@@ -112,7 +112,7 @@ Epic QC Validation Loop is complete when primary clean round + sub-agent confirm
 
 Epic QC can save 35-45% tokens through delegation:
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → Run full test suite, count features/files
 ├─ Spawn Sonnet → Read cross-feature integration code, check consistency patterns

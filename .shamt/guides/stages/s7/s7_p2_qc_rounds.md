@@ -105,7 +105,7 @@ Feature QC is complete when primary clean round + sub-agent confirmation achieve
 
 Feature QC can save 30-40% tokens through delegation:
 
-```
+```text
 Primary Agent (Opus):
 ├─ Spawn Haiku → Run tests, count files, verify file existence
 ├─ Spawn Sonnet → Read implementation code for dimension checks
@@ -412,15 +412,15 @@ VALIDATION COMPLETE → Proceed to S7.P3 (Final Review)
 **Run these commands and document results in VALIDATION_LOOP_LOG.md:**
 
 ### 1. Change Summary
-```bash
-git diff --stat HEAD~N  # or vs feature branch base
 ```
+git diff --stat HEAD~N  # or vs feature branch base
+```text
 Document: Total files changed, lines added/removed
 
 ### 2. Deferred Work Scan
-```bash
-grep -rn "TODO\|FIXME\|HACK\|XXX" {feature_folder}/
 ```
+grep -rn "TODO\|FIXME\|HACK\|XXX" {feature_folder}/
+```text
 Document: Count and locations of deferred work markers (should be ZERO for clean validation)
 
 ### 3. Import/Dependency Analysis (if linter available)
@@ -436,9 +436,9 @@ Document: Any findings
 Document: Type errors or coverage gaps
 
 ### 5. Test Status
-```bash
-{TEST_COMMAND}
 ```
+{TEST_COMMAND}
+```text
 Document: Pass/fail count, any skipped tests
 
 **Only proceed to Round 1 after context gathering is complete and documented.**
@@ -471,7 +471,7 @@ This guide contains:
 6. Upstream Alignment - Matches spec and implementation plan
 7. Standards Compliance - Follows project standards
 
-**S7 QC Dimensions (9):**
+**S7 QC Dimensions (10):**
 8. Cross-Feature Integration - Integration points work
 9. Error Handling Completeness - All errors handled gracefully
 10. End-to-End Functionality - Complete user flow works
@@ -481,6 +481,7 @@ This guide contains:
 14. Cross-Layer & Type Consistency - Frontend types mirror backend, shared constants
 15. Input Validation & Path Safety - Allowlists, strict decoding, absolute paths
 16. Test Stub Consistency - Mock return values match mock state
+17. Mechanical Code Quality - Linter checks, code patterns
 
 **Detailed checklists for dimensions 13-16:**
 
