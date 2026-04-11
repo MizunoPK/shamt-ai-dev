@@ -53,7 +53,7 @@ S10.P1 is the optional epic overview document phase where you create `SHAMT-{N}-
 - The user has said "yes" to creating the overview document
 
 **Key Outputs (if opted in):**
-- ✅ `SHAMT-{N}-OVERVIEW.md` created at repository root
+- ✅ `SHAMT-{N}-OVERVIEW.md` created in the epic folder (`.shamt/epics/SHAMT-{N}-{epic_name}/`)
 - ✅ Validation loop passed (primary clean round + sub-agent confirmation)
 - ✅ Overview document committed as standalone commit
 
@@ -213,9 +213,9 @@ List what needs explanation. Do not pad sections explaining obvious things — f
 
 ### Step 4: Write the Document
 
-**Purpose:** Create `SHAMT-{N}-OVERVIEW.md` at the repository root following the section specification.
+**Purpose:** Create `SHAMT-{N}-OVERVIEW.md` in the epic folder following the section specification.
 
-**File location:** Repository root (e.g., `/SHAMT-15-OVERVIEW.md`)
+**File location:** Epic folder (`.shamt/epics/SHAMT-{N}-{epic_name}/SHAMT-{N}-OVERVIEW.md`)
 
 **Write all 10 sections:**
 
@@ -247,7 +247,7 @@ List what needs explanation. Do not pad sections explaining obvious things — f
 - **Large document (10,000+ words):** Prioritize depth in Sections 5 and 6. Keep Section 7 at one sentence per file. Keep Sections 8 and 10 concise.
 
 **Checkpoint:**
-- [ ] `SHAMT-{N}-OVERVIEW.md` created at repository root
+- [ ] `SHAMT-{N}-OVERVIEW.md` created in the epic folder
 - [ ] All 10 sections present
 - [ ] Section 7 lists every file from git diff
 - [ ] Cold-reader perspective maintained throughout
@@ -307,7 +307,7 @@ List what needs explanation. Do not pad sections explaining obvious things — f
 
 **6a. Stage only the overview document:**
 ```bash
-git add SHAMT-{N}-OVERVIEW.md
+git add .shamt/epics/SHAMT-{N}-{epic_name}/SHAMT-{N}-OVERVIEW.md
 ```
 
 **6b. Create the commit:**
@@ -325,7 +325,7 @@ git log -1 --stat
 Verify:
 - Only `SHAMT-{N}-OVERVIEW.md` in the commit stat
 - Commit message format is correct
-- File is at repository root (not in a subdirectory)
+- File is in the epic folder (`.shamt/epics/SHAMT-{N}-{epic_name}/`)
 
 **Checkpoint:**
 - [ ] Only the overview document staged
@@ -343,7 +343,7 @@ Verify:
 - [ ] User said "yes" in Step 1
 - [ ] All context gathered (Step 2)
 - [ ] Narrative planned (story spine, organization, foundation/dependent, assumed knowledge)
-- [ ] `SHAMT-{N}-OVERVIEW.md` created at repository root with all 10 sections
+- [ ] `SHAMT-{N}-OVERVIEW.md` created in epic folder with all 10 sections
 - [ ] Validation loop passed (primary clean round + sub-agent confirmation)
 - [ ] Overview document committed as standalone commit (`docs/SHAMT-{N}: Add epic overview document`)
 - [ ] Commit verified with `git log -1 --stat`
@@ -485,7 +485,7 @@ Use this skeleton as a template when writing the document. Replace each `[...]` 
 **What is not worth detailed scrutiny:**
 - [Mechanical changes — file renames, format updates, etc.]
 
-**Post-merge lifecycle:** This file (`SHAMT-{N}-OVERVIEW.md`) will remain in main unless explicitly removed. The team may: (a) keep it as historical documentation, (b) delete it in a follow-on cleanup commit, or (c) move it to a `docs/` folder. Decide at review time.
+**Post-merge lifecycle:** This file (`SHAMT-{N}-OVERVIEW.md`) lives in the epic folder and moves to `done/` alongside the epic when S11 archives it. No cleanup needed.
 ```
 
 ---

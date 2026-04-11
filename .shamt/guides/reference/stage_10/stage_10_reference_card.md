@@ -175,7 +175,7 @@ git log --oneline -10  # Verify merge
 
 **Step 3 → Step 4:**
 - [ ] User asked about creating epic overview document (yes or no)
-- [ ] If opted in: `SHAMT-{N}-OVERVIEW.md` committed at repository root
+- [ ] If opted in: `SHAMT-{N}-OVERVIEW.md` committed in epic folder
 - [ ] If declined: no file created
 
 **Step 4 → S11:**
@@ -197,7 +197,7 @@ git log --oneline -10  # Verify merge
 - Git commit (epic implementation work)
 
 **Step 3 (if opted in):**
-- `SHAMT-{N}-OVERVIEW.md` at repository root
+- `SHAMT-{N}-OVERVIEW.md` in epic folder (`.shamt/epics/SHAMT-{N}-{epic_name}/`)
 - Git commit (overview document)
 
 **Step 4:**

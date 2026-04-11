@@ -4,6 +4,24 @@ Changes to shared guides and scripts, recorded at time of change for use as PR c
 
 ---
 
+## 2026-04-11 — S10/S11 overview file location and done/ folder cleanup
+
+### Guide fixes
+
+- Modified: `.shamt/guides/stages/s10/s10_p1_overview_workflow.md`
+- Reason: Changed overview document location from repository root to the epic folder (`.shamt/epics/SHAMT-{N}-{epic_name}/`). Updated all references, `git add` commands, verification steps, and the post-merge lifecycle note to reflect the new location. The epic folder is the natural home since the file moves to `done/` with the rest of the epic in S11.
+
+- Modified: `.shamt/guides/reference/stage_10/stage_10_reference_card.md`
+- Reason: Updated two references to `SHAMT-{N}-OVERVIEW.md` location — checklist item and artifacts list — to reflect epic folder placement instead of repository root.
+
+- Modified: `.shamt/guides/stages/s11/s11_shamt_finalization.md`
+- Reason: Removed the "max 10 epics in done/ folder" rule entirely. Deleted the cleanup step (2b), associated verification step (2e), all related checklist items, and the delegation note about counting epics. Renumbered remaining sub-steps. Also removed the corresponding warning box entry.
+
+- Modified: `.shamt/guides/reference/stage_11/stage_11_reference_card.md`
+- Reason: Removed checklist item for done/ max-10 limit and the corresponding transition gate check (`done/ has 9 or fewer epics`). Removed the `✅ Max 10 epics in done/ folder` quick-reference item.
+
+---
+
 ## 2026-03-08 — S3 scope framing and stale-reference fixes
 
 ### Guide fixes

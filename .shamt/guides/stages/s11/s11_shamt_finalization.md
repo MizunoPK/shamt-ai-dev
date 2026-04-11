@@ -72,7 +72,7 @@ S11 can save 20-30% tokens through delegation:
 
 ```text
 Primary Agent (Opus):
-├─ Spawn Haiku → Run file existence checks, count epics in done/
+├─ Spawn Haiku → Run file existence checks
 ├─ Spawn Sonnet → Read documentation for S11.P1 lessons analysis
 ├─ Primary handles → Guide proposals, tracker update writing, decision-making
 └─ Primary executes → Git operations, file moves, final verification
@@ -104,18 +104,13 @@ Primary Agent (Opus):
 │    - Use git mv, not shell mv                                   │
 │    - Keep original epic request (.txt) in .shamt/epics/requests/│
 │                                                                  │
-│ 4. ⚠️ MAINTAIN MAX 10 EPICS IN done/ FOLDER                     │
-│    - Count epics in done/ before moving current epic            │
-│    - If count >= 10: Delete oldest epic(s) to make room         │
-│    - After move: done/ should have 10 or fewer epics            │
-│                                                                  │
-│ 5. ⚠️ UPDATE EPIC_TRACKER.md BEFORE FINAL VERIFICATION (Step 3) │
+│ 4. ⚠️ UPDATE EPIC_TRACKER.md BEFORE FINAL VERIFICATION (Step 3) │
 │    - Move epic from Active to Completed table                   │
 │    - Add epic detail section with commits                       │
 │    - Increment "Next Available Number"                          │
 │    - Commit EPIC_TRACKER.md and PROCESS_METRICS.md updates      │
 │                                                                  │
-│ 6. ⚠️ UPDATE CLAUDE.md IF GUIDES IMPROVED                       │
+│ 5. ⚠️ UPDATE CLAUDE.md IF GUIDES IMPROVED                       │
 │    - Check epic_lessons_learned.md for guide improvements       │
 │    - Update .shamt/guides/ files if needed                      │
 │    - Update CLAUDE.md if workflow changed                       │
@@ -169,10 +164,8 @@ STAGE 11: Shamt Finalization
 │
 ├─> STEP 2: Move Epic to done/ Folder
 │   ├─ Create done/ folder if doesn't exist
-│   ├─ Clean up done/ folder (max 10 epics, delete oldest if needed)
 │   ├─ Move entire epic folder to done/ using git mv
 │   ├─ Verify move successful (folder structure intact)
-│   ├─ Verify done/ has 10 or fewer epics
 │   ├─ Leave original epic request (.txt) in .shamt/epics/requests/
 │   └─ Commit the epic folder move
 │
@@ -249,34 +242,7 @@ If done/ doesn't exist:
 mkdir .shamt/epics/done
 ```
 
-**2b. Clean Up done/ Folder (Max 10 Epics)**
-
-Check current epic count:
-```bash
-ls -d .shamt/epics/done/*/ | wc -l
-```
-
-**If count is 10 or more:**
-
-1. List epics by date (oldest first):
-   ```bash
-   # Linux/Mac
-   ls -lt .shamt/epics/done/ | tail -n +2
-   ```
-
-2. Delete oldest epic(s) to bring count to 9 or fewer:
-   ```bash
-   rm -rf .shamt/epics/done/{oldest_epic_name}
-   ```
-
-3. Verify count after deletion:
-   ```bash
-   ls -d .shamt/epics/done/*/ | wc -l
-   ```
-
-**If count is less than 10:** No deletion needed, proceed.
-
-**2c. Move Entire Epic Folder to done/**
+**2b. Move Entire Epic Folder to done/**
 
 Use **`git mv`** (not shell `mv`):
 
@@ -286,7 +252,7 @@ git mv .shamt/epics/SHAMT-{N}-{epic_name} .shamt/epics/done/SHAMT-{N}-{epic_name
 
 **⚠️ CRITICAL: Use `git mv`, NOT shell `mv`.** Shell `mv` leaves old paths as unstaged deletions; `git mv` stages both sides atomically.
 
-**2d. Verify Move Successful**
+**2b. Verify Move Successful**
 
 ```bash
 ls .shamt/epics/done/SHAMT-{N}-{epic_name}/
@@ -297,19 +263,11 @@ Verify:
 - ✅ All epic-level files present (EPIC_README.md, epic_lessons_learned.md, etc.)
 - ✅ No files left behind in original location
 
-**2e. Verify done/ Folder Count**
-
-```bash
-ls -d .shamt/epics/done/*/ | wc -l
-```
-
-**Expected:** 10 or fewer
-
-**2f. Leave Original Epic Request in Requests Folder**
+**2c. Leave Original Epic Request in Requests Folder**
 
 Do NOT move the request file from `.shamt/epics/requests/`. It stays permanently for reference.
 
-**2g. Commit the Epic Folder Move**
+**2d. Commit the Epic Folder Move**
 
 ```bash
 git commit -m "chore/SHAMT-{N}: Move completed epic to done/ folder
@@ -432,7 +390,6 @@ The epic is complete!
 
 ### Epic Move (Step 2)
 - [ ] done/ folder exists
-- [ ] done/ folder has 10 or fewer epics
 - [ ] Entire epic folder moved to done/ using git mv
 - [ ] Epic folder structure intact in done/
 - [ ] Epic folder move committed
@@ -460,7 +417,7 @@ The epic is complete!
 
 **Key Activities:**
 1. S11.P1: Read all lessons + PR comment analysis, create guide update proposal doc (user-approved), commit proposal doc — runs FIRST, before archival
-2. Move entire epic folder to done/ (max 10 epics, delete oldest if needed), commit
+2. Move entire epic folder to done/, commit
 3. Update EPIC_TRACKER.md (move to Completed, add details, increment number), append to PROCESS_METRICS.md, commit
 4. Final verification and celebration
 

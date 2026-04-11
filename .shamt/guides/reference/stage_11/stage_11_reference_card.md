@@ -21,7 +21,6 @@ STEP 1: S11.P1 — Guide Update from Lessons Learned (20-45 min) ← MANDATORY (
     ↓
 STEP 2: Move Epic to done/ Folder (5 min)
     ├─ Create done/ folder if doesn't exist
-    ├─ Clean up done/ (max 10 epics, delete oldest if needed)
     ├─ Move entire epic folder using git mv
     ├─ Verify move successful
     ├─ Leave original .txt in .shamt/epics/requests/
@@ -92,7 +91,6 @@ git commit -m "chore/SHAMT-{N}: append PROCESS_METRICS row"
 - ✅ Run S11.P1 FIRST — before archiving the epic folder
 - ✅ Use `git mv` for epic folder move (not shell `mv`)
 - ✅ Keep original request file in `.shamt/epics/requests/`
-- ✅ Max 10 epics in done/ folder (delete oldest if needed)
 - ✅ EPIC_TRACKER update must include full detail section, not just table row
 
 ---
@@ -129,7 +127,6 @@ git commit -m "chore/SHAMT-{N}: append PROCESS_METRICS row"
 
 **Step 2 → Step 3:**
 - [ ] done/ folder exists
-- [ ] done/ has 9 or fewer epics (before adding current)
 - [ ] Entire epic folder moved using git mv
 - [ ] Move verified (folder structure intact in done/)
 - [ ] Original .txt still in .shamt/epics/requests/
