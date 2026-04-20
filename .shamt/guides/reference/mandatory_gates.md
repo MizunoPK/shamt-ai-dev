@@ -315,13 +315,13 @@ S4 has no formal user gates. Interface contracts are technical derivations of us
 **Embedded Gates (now validation dimensions):**
 - Gate 4a → Embedded in Dimension 4: Task Specification Quality
 - Gate 7a → Embedded in Dimension 7: Integration & Compatibility
-- Gate 23a → Embedded in Dimension 11: Spec Alignment & Cross-Validation
-- Gate 24 → Embedded in Dimension 10: Implementation Readiness (confidence check)
-- Gate 25 → Embedded in Dimension 11: Spec Alignment & Cross-Validation
+- Gate 23a → Embedded in Dimension 9: Spec Alignment
+- Gate 24 → Embedded in exit criteria (no dedicated dimension; confidence check)
+- Gate 25 → Embedded in Dimension 9: Spec Alignment
 
 **How it works:**
 - Draft Creation Phase (60-90 min): Create initial implementation_plan.md
-- Validation Loop Phase (3.5-6 hours): Validate against 11 dimensions each round
+- Validation Loop Phase (3.5-6 hours): Validate against 9 dimensions each round
 - Exit when primary clean round achieved + 2 independent sub-agents confirm zero issues
 - Present to user for Gate 5 approval
 
@@ -404,7 +404,7 @@ S4 has no formal user gates. Interface contracts are technical derivations of us
 
 ### Gate 23a: Pre-Implementation Spec Audit (5 PARTS)
 
-**Location:** Embedded in S5 v2 Dimension 11 (Spec Alignment & Cross-Validation), validated every round
+**Location:** Embedded in S5 v2 Dimension 9 (Spec Alignment), validated every round
 **When:** After preparation iterations (Iterations 14-19)
 
 **ALL 5 PARTS must PASS:**
@@ -451,7 +451,7 @@ S4 has no formal user gates. Interface contracts are technical derivations of us
 **If FAIL:**
 - Fix the failing part(s)
 - Re-run Validation Round (multiple dimensions) (all 5 parts)
-- Must PASS before proceeding to Dimension 11 validation
+- Must PASS before proceeding to Dimension 9 (Spec Alignment) validation
 
 **Why it matters:** Final verification that implementation_plan.md is complete and correct before validating against user-approved documents
 
@@ -459,7 +459,7 @@ S4 has no formal user gates. Interface contracts are technical derivations of us
 
 ### Gate 25: Spec Validation Against Validated Documents (CRITICAL)
 
-**Location:** Embedded in S5 v2 Dimension 11 (Spec Alignment & Cross-Validation), validated every round
+**Location:** Embedded in S5 v2 Dimension 9 (Spec Alignment), validated every round
 **When:** Checked in every validation round
 
 **What it checks:**
@@ -500,7 +500,7 @@ S4 has no formal user gates. Interface contracts are technical derivations of us
 **Historical Context:**
 - Feature 02 catastrophic bug: spec.md misinterpreted epic notes
 - Spec stated "no code changes needed" when epic actually required week_N+1 folder logic
-- Dimension 11 validation specifically designed to prevent this type of bug
+- Dimension 9 (Spec Alignment) validation specifically designed to prevent this type of bug
 
 **Why it matters:** Prevents implementing the wrong solution based on misinterpreted spec (most critical gate)
 
@@ -508,13 +508,13 @@ S4 has no formal user gates. Interface contracts are technical derivations of us
 
 ### Gate 24: GO/NO-GO Decision - Implementation Readiness Protocol
 
-**Location:** Embedded in S5 v2 Dimension 10 (Implementation Readiness), validated every round
+**Location:** Embedded in S5 v2 exit criteria (all 9 dimensions validated), checked every round
 **When:** Checked in every validation round
 
 **What it checks (comprehensive checklist):**
 - Spec Verification: Complete, validated
 - Implementation Plan Verification: All requirements have tasks, specificity 100%
-- Iteration Completion: S5 v2 Validation Loop complete (all 11 dimensions validated, primary clean round + sub-agent confirmation)
+- Iteration Completion: S5 v2 Validation Loop complete (all 9 dimensions validated, primary clean round + sub-agent confirmation)
 - Mandatory Gates: Iterations 4a, 23a (ALL 4 PARTS), 25 all PASSED
 - Confidence Assessment: >= MEDIUM
 - Integration Verification: Algorithm traceability, integration gaps, interfaces, mocks
@@ -547,7 +547,7 @@ S4 has no formal user gates. Interface contracts are technical derivations of us
 - User approves implementation approach before coding begins
 
 **Pass Criteria:**
-- User reviews implementation_plan.md containing (validated by 11 dimensions):
+- User reviews implementation_plan.md containing (validated by 9 dimensions):
   - Implementation tasks with acceptance criteria
   - Component dependencies matrix with file:line references
   - Algorithm traceability matrix (40+ mappings)
@@ -763,9 +763,9 @@ S4 has no formal user gates. Interface contracts are technical derivations of us
 - Gate 5 (S5 v2): Implementation Plan Approval (after validation loop)
 - Gate 4a (S5 v2): Embedded in Dimension 4 - Task Specification Quality
 - Gate 7a (S5 v2): Embedded in Dimension 7 - Integration & Compatibility
-- Gate 23a (S5 v2): Embedded in Dimension 11 - Spec Alignment & Cross-Validation
-- Gate 24 (S5 v2): Embedded in Dimension 10 - Implementation Readiness
-- Gate 25 (S5 v2): Embedded in Dimension 11 - Spec Alignment & Cross-Validation
+- Gate 23a (S5 v2): Embedded in Dimension 9 - Spec Alignment
+- Gate 24 (S5 v2): Embedded in exit criteria (no dedicated dimension)
+- Gate 25 (S5 v2): Embedded in Dimension 9 - Spec Alignment
 
 **Additional Stage Checkpoints (documented in this file but not formally numbered gates):**
 - S2.P1.I3: User Approval of Acceptance Criteria (Gate 3a — embedded in Gate 3)
@@ -780,7 +780,7 @@ S4 has no formal user gates. Interface contracts are technical derivations of us
 - S2: 4 formal gates per feature (Gates 1, 1.5 optional, 2, 3) - Gate 1.5 can skip I2
 - S3: 1 formal gate (Gate 4)
 - S4: 0 formal gates (Interface Contract Definition — agent-validated only)
-- S5 v2: 1 formal user gate (Gate 5 - User Approval), 5 embedded validation gates (4a, 7a, 23a, 24, 25 now embedded in 11 validation dimensions)
+- S5 v2: 1 formal user gate (Gate 5 - User Approval), 5 embedded validation gates (4a, 7a, 23a, 24, 25 now embedded in 9 validation dimensions)
 - S6-S8: 0 formal gates
 - S9: 0 formal gates (but restart protocol applies; Gates 7.1/7.1b test checkpoints and Gate 7.2 User Testing are critical)
 - S10: 0 formal gates
@@ -789,7 +789,7 @@ S4 has no formal user gates. Interface contracts are technical derivations of us
 - Gate 1 (S2.P1.I1 Research Audit): File paths, line numbers
 - Dimension 4 validation: Task count, criteria count
 - Validation Round (multiple dimensions): 4 parts with specific numbers
-- Dimension 11 validation: Three-way comparison results
+- Dimension 9 (Spec Alignment) validation: Three-way comparison results
 - Smoke Part 3: Data values
 - Validation Loop: primary clean round + sub-agent confirmation
 
@@ -805,7 +805,7 @@ S4 has no formal user gates. Interface contracts are technical derivations of us
 - Gate 3: User Checklist Approval (S2.P1.I3)
 - Gate 4: Epic Plan Approval (S3.P3) - includes test plan approval
 - Gate 5: Implementation Plan Approval (S5 v2 — after Validation Loop, before S6)
-- Gate 25 (Dimension 11 validation): User decision **only if discrepancies found** (conditional)
+- Gate 25 (Dimension 9 Spec Alignment validation): User decision **only if discrepancies found** (conditional)
 
 **Stage Checkpoints Requiring User Input:** 2
 - S2.P1.I3 Checkpoint: User approval of acceptance criteria (embedded in Gate 3)

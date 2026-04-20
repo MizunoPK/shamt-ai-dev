@@ -129,7 +129,7 @@ Primary Agent (Opus):
 │ CRITICAL RULES - Copy to README Agent Status                │
 └─────────────────────────────────────────────────────────────┘
 
-1. ⚠️ ALL 16 DIMENSIONS CHECKED EVERY ROUND
+1. ⚠️ ALL 17 DIMENSIONS CHECKED EVERY ROUND
    - 7 master dimensions (universal)
    - 10 S7 QC dimensions (feature-specific)
    - Cannot skip any dimension
@@ -738,7 +738,7 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 - Continue until primary clean round + sub-agent confirmation achieved
 - Fix issues immediately (no restart protocol needed)
 
-**16 Dimensions Checked:**
+**17 Dimensions Checked:**
 1. Empirical Verification (master)
 2. Completeness (master)
 3. Internal Consistency (master)
@@ -755,6 +755,7 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 14. Cross-Layer & Type Consistency (S7 QC)
 15. Input Validation & Path Safety (S7 QC)
 16. Test Stub Consistency (S7 QC)
+17. Mechanical Code Quality (S7 QC)
 
 **Critical Success Factors:**
 - Zero tech debt tolerance (100% or INCOMPLETE)

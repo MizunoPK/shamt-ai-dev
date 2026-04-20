@@ -82,7 +82,7 @@ Where each component ranges from 0.0 to 1.0
 | 0.8 | **Mostly Complete** | ✅ All 23 dimensions checked<br>✅ All 4 sub-rounds completed<br>⚠️ Root files partially checked<br>✅ Main directories searched<br>⚠️ Minor directories skipped (examples/) |
 | 0.6 | **Partial** | ⚠️ 15-18 dimensions checked<br>✅ All 4 sub-rounds completed<br>❌ Root files not specifically checked<br>✅ stages/ directory checked<br>⚠️ Some directories skipped |
 | 0.4 | **Incomplete** | ❌ <15 dimensions checked<br>⚠️ Some sub-rounds skipped<br>❌ Root files not checked<br>⚠️ Only stages/ directory checked |
-| 0.2 | **Minimal** | ❌ <11 dimensions checked<br>❌ Sub-rounds not followed<br>❌ Root files excluded<br>❌ Only subset of directories |
+| 0.2 | **Minimal** | ❌ <9 dimensions checked<br>❌ Sub-rounds not followed<br>❌ Root files excluded<br>❌ Only subset of directories |
 
 **Self-Assessment:**
 ```text

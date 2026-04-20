@@ -173,7 +173,7 @@ Sub-agent confirmation:
 **S1.P3 Discovery Phase:**
 - Use this protocol for epic-level discovery
 - Validate DISCOVERY.md has all epic components researched
-- Must pass before proceeding to S1.P4 (feature breakdown)
+- Must pass before proceeding to S1 Step 4 (Feature Breakdown Proposal)
 
 **S2.P1.I1 Feature Discovery:**
 - Use this protocol for feature-level discovery
@@ -192,7 +192,7 @@ Sub-agent confirmation:
 - [ ] All questions answered
 - [ ] Zero assumptions
 - [ ] Integration points clear
-- [ ] Ready for next stage (S1.P4 or S2.P1.I2)
+- [ ] Ready for next stage (S1 Step 4/Feature Breakdown if epic-level discovery, or S2.P1.I2 if feature-level discovery)
 - [ ] Question brainstorm categories in DISCOVERY.md are complete — each has questions listed OR an explicit one-line justification for why none apply
 - [ ] All questions asked during Discovery have been answered (Resolved Questions table not empty; Pending Questions table empty)
 - [ ] All implementation decisions requiring user input have been resolved or explicitly deferred with user agreement

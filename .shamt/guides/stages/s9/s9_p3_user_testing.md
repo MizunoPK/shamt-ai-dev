@@ -402,7 +402,7 @@ Update EPIC_README.md:
 
 ### Step 4: Return to Step 6 (User Testing Again)
 
-**After S9.P1 and 6b pass (no bugs found during smoke/QC):**
+**After S9.P1 and S9.P2 pass (no bugs found during smoke/QC):**
 
 **4a. Return to Step 6a**
 - Present user testing request again
@@ -532,7 +532,7 @@ User-reported bugs follow the epic debugging protocol:
 3. **Loop back to S9.P1:**
    - After ALL issues resolved
    - RESTART epic smoke testing from beginning
-   - Proceed through S9.P1 → 6b → Step 6 again
+   - Proceed through S9.P1 → S9.P2 → return to this step (User Testing)
 
 **Why loop back to S9.P1 (not continue validation loop)?**
 - User-reported bugs indicate real-world issues missed by agent validation

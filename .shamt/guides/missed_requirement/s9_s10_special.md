@@ -136,7 +136,7 @@ Actions needed:
 **When new/updated feature's turn comes in sequence:**
 
 **Run full S5:**
-- S5 v2: Implementation Planning (2 phases: Draft + Validation Loop with 11 dimensions)
+- S5 v2: Implementation Planning (2 phases: Draft + Validation Loop with 9 dimensions)
 - S6: Implementation Execution
 - S7: Post-Implementation (smoke testing, QC rounds, final review)
 - S8.P1: Cross-Feature Spec Alignment
@@ -344,7 +344,7 @@ Actions needed:
 
 **Why wrong:** Fixes might affect epic integration, need epic-level validation from S9.P1
 
-**Correct:** User finds bug → Fix → Restart S9.P1 → S9.P3 → S9.P4 → S10
+**Correct:** User finds bug → Fix → Restart S9.P1 → S9.P2 → S9.P3 → S9.P4 → S10
 
 ---
 

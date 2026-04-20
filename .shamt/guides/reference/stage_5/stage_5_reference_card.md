@@ -60,7 +60,7 @@ S7: Post-Implementation (1.5-2.5 hours, 3 phases)
     │   └─ primary clean round + sub-agent confirmation required ← MANDATORY
     │
     └─ Phase 3: Final Review (stages/s7/s7_p3_final_review.md)
-        ├─ PR review (11 categories)
+        ├─ PR review (12 categories)
         ├─ Lessons learned documentation
         └─ Zero tech debt tolerance
         ↓
@@ -110,8 +110,8 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 - **If FAIL:** Add migration/invalidation logic, add version markers, re-run Iteration 7a
 
 **Gate 23a: Pre-Implementation Spec Audit**
-- **Location:** stages/s5/s5_v2_validation_loop.md (Dimension 11)
-- **Embedded in:** Dimension 11 (Spec Alignment & Cross-Validation)
+- **Location:** stages/s5/s5_v2_validation_loop.md (Dimension 9)
+- **Embedded in:** Dimension 9 (Spec Alignment)
 - **Criteria:** ALL 5 PARTS must PASS with 100% metrics
   - Part 1: Completeness Audit (all requirements have implementation tasks)
   - Part 2: Specificity Audit (all tasks have criteria, location, tests)
@@ -122,8 +122,8 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 - **If FAIL:** Fix issues immediately, re-validate in next round
 
 **Gate 25: Spec Validation Check**
-- **Location:** stages/s5/s5_v2_validation_loop.md (Dimension 11)
-- **Embedded in:** Dimension 11 (Spec Alignment & Cross-Validation)
+- **Location:** stages/s5/s5_v2_validation_loop.md (Dimension 9)
+- **Embedded in:** Dimension 9 (Spec Alignment)
 - **Criteria:** Spec.md matches ALL three validated sources (epic notes + epic ticket + spec summary)
 - **Process:** Close spec.md first, re-read validated docs independently, three-way comparison
 - **If ANY DISCREPANCIES:** STOP, report to user with 3 options
@@ -131,8 +131,8 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 - **If FAIL:** User decides next action (fix spec + restart, fix spec + continue, discuss)
 
 **Gate 24: Implementation Readiness (GO/NO-GO)**
-- **Location:** stages/s5/s5_v2_validation_loop.md (Dimension 10)
-- **Embedded in:** Dimension 10 (Implementation Readiness)
+- **Location:** stages/s5/s5_v2_validation_loop.md (exit criteria)
+- **Embedded in:** S5 v2 exit criteria (no dedicated dimension)
 - **Criteria:** GO decision required (confidence >= MEDIUM, all embedded gates PASSED, checklists complete)
 - **If NO-GO:** Address concerns, cannot proceed to S6
 - **If GO:** Proceed to S6 implementation
@@ -218,7 +218,7 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 - ✅ Validation Loop requires primary clean round + sub-agent confirmation
 - ✅ If issues found → fix immediately, reset counter, continue
 - ✅ Zero tech debt tolerance (fix ALL issues immediately)
-- ✅ PR review covers all 11 categories
+- ✅ PR review covers all 12 categories
 
 ### S8.P1 & S8.P2
 - ✅ Update specs ONLY for remaining (not yet implemented) features
@@ -238,7 +238,7 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 **Impact:** Gates FAIL (no evidence = didn't actually verify)
 **Solution:** Cite specific numbers for every verification
 
-### ❌ Pitfall 3: Not Closing Spec.md in Dimension 11 validation
+### ❌ Pitfall 3: Not Closing Spec.md in Dimension 9 (Spec Alignment) validation
 **Problem:** Reading spec.md while comparing to epic notes
 **Impact:** Confirmation bias - see what you expect, not what's written
 **Solution:** Close spec.md FIRST, re-read validated docs independently
@@ -253,7 +253,7 @@ Next Feature (loop S5→S6→S7→S8) OR S9 (if all features done)
 **Impact:** Tech debt accumulates, bugs compound, rework in production
 **Solution:** Zero tech debt tolerance - fix ALL issues immediately
 
-### ❌ Pitfall 6: Mock Audit Assumptions (Dimension 11 validation)
+### ❌ Pitfall 6: Mock Audit Assumptions (Dimension 9 Spec Alignment validation)
 **Problem:** "I assume this mock matches the real interface"
 **Impact:** Unit tests pass with wrong mocks, integration tests fail
 **Solution:** READ actual source code, verify EACH mock against real interface

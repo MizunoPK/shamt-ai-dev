@@ -25,17 +25,18 @@ S9.P1 (Epic Smoke Testing) →
 4. [Critical Rules (Epic-Specific)](#critical-rules)
 5. [Prerequisites Checklist](#prerequisites-checklist)
 6. [Workflow Overview](#workflow-overview)
-7. [12 Dimensions Checklist](#12-dimensions-checklist)
+7. [13 Dimensions Checklist](#13-dimensions-checklist)
 8. [Dimension 8: Cross-Feature Integration](#dimension-8-cross-feature-integration)
 9. [Dimension 9: Epic Cohesion](#dimension-9-epic-cohesion)
 10. [Dimension 10: Error Handling Consistency](#dimension-10-error-handling-consistency)
 11. [Dimension 11: Architectural Alignment](#dimension-11-architectural-alignment)
 12. [Dimension 12: Success Criteria Completion](#dimension-12-success-criteria-completion)
-13. [Issue Handling: Fix and Continue](#issue-handling-fix-and-continue)
-14. [MANDATORY CHECKPOINT 1](#mandatory-checkpoint-1)
-15. [Next Steps](#next-steps)
-16. [Summary](#summary)
-17. [Exit Criteria](#exit-criteria)
+13. [Dimension 13: Mechanical Code Quality (Epic-Wide)](#dimension-13-mechanical-code-quality-epic-wide)
+15. [Issue Handling: Fix and Continue](#issue-handling-fix-and-continue)
+16. [MANDATORY CHECKPOINT 1](#mandatory-checkpoint-1)
+17. [Next Steps](#next-steps)
+18. [Summary](#summary)
+19. [Exit Criteria](#exit-criteria)
 
 ---
 
@@ -136,7 +137,7 @@ Primary Agent (Opus):
 │ CRITICAL RULES - Copy to EPIC_README Agent Status            │
 └─────────────────────────────────────────────────────────────┘
 
-1. ⚠️ ALL 12 DIMENSIONS CHECKED EVERY ROUND
+1. ⚠️ ALL 13 DIMENSIONS CHECKED EVERY ROUND
    - 7 master dimensions (universal)
    - 6 epic-specific dimensions
    - Cannot skip any dimension
@@ -445,13 +446,14 @@ pytest -v  # or npm test, cargo test, etc.
 6. **Upstream Alignment** - Matches specs and implementation plans
 7. **Standards Compliance** - Follows project standards
 
-### Epic-Specific Dimensions (5)
+### Epic-Specific Dimensions (6)
 
 8. **Cross-Feature Integration** - Integration points work correctly
 9. **Epic Cohesion** - Consistent patterns across all features
 10. **Error Handling Consistency** - Same error patterns across features
 11. **Architectural Alignment** - Features use compatible architectures
 12. **Success Criteria Completion** - Original epic goals achieved
+13. **Mechanical Code Quality (Epic-Wide)** - Code quality patterns consistent across all features
 
 ---
 
@@ -971,7 +973,7 @@ STOP - DO NOT PROCEED TO S9.P3 YET
 - Continue until primary clean round + sub-agent confirmation achieved
 - Fix issues immediately (no restart protocol for S9.P2)
 
-**12 Dimensions Checked:**
+**13 Dimensions Checked:**
 1. Empirical Verification (master)
 2. Completeness (master)
 3. Internal Consistency (master)
@@ -984,12 +986,13 @@ STOP - DO NOT PROCEED TO S9.P3 YET
 10. Error Handling Consistency (epic)
 11. Architectural Alignment (epic)
 12. Success Criteria Completion (epic)
+13. Mechanical Code Quality (epic)
 
 **Key Differences from Feature-Level (S7.P2):**
 - Focus on epic-wide patterns (not individual features)
 - Cross-feature integration and architectural consistency
 - Validation against original epic request
-- 6 epic-specific dimensions vs 5 S7-specific dimensions
+- 6 epic-specific dimensions vs 10 S7 QC-specific dimensions
 
 **Critical Success Factors:**
 - Primary clean round + sub-agent confirmation required (exit criteria)

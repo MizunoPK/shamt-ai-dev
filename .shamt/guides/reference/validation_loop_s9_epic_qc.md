@@ -125,7 +125,7 @@ These universal dimensions apply to S9 Epic QC validation:
 
 ## S9 Epic QC Dimensions (6) - Context-Specific
 
-These 5 dimensions are specific to S9.P2 Epic QC validation:
+These 6 dimensions are specific to S9.P2 Epic QC validation:
 
 ### Dimension 8: Cross-Feature Integration
 

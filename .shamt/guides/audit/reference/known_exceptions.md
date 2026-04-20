@@ -15,7 +15,7 @@ Audit Dimension D8 (Documentation Quality) checks for "## Prerequisites" and "##
 
 **Pattern:** Lightweight iteration guides with inline prerequisites, exit criteria inherited from parent round
 
-**⚠️ NOTE: All 14 files in this category have been DELETED from the filesystem** as part of the S5 v1 → S5 v2 migration. S5 v2 consolidates all iteration content into a single `s5_v2_validation_loop.md` file using an 11-dimension Validation Loop approach. These entries are retained for historical reference only — they cannot produce D8 false positives since the files no longer exist.
+**⚠️ NOTE: All 14 files in this category have been DELETED from the filesystem** as part of the S5 v1 → S5 v2 migration. S5 v2 consolidates all iteration content into a single `s5_v2_validation_loop.md` file using an 9-dimension Validation Loop approach. These entries are retained for historical reference only — they cannot produce D8 false positives since the files no longer exist.
 
 **Design Rationale (historical):**
 - Iteration files were sequential steps within S5 v1 rounds (Round 1, Round 2, Round 3)
@@ -105,13 +105,13 @@ Audit Dimension D8 (Documentation Quality) checks for "## Prerequisites" and "##
     - Design: Focused single-iteration guide (S5 v1 only)
 
 13. **stages/s5/s5_p3_i1_iter21_mockaudit.md** (DEPRECATED - S5 v1)
-    - Type: S5 v1 Iteration 21 - Mock Audit (now part of Dimension 11)
+    - Type: S5 v1 Iteration 21 - Mock Audit (now part of Dimension 9: Spec Alignment)
     - Prerequisites: Inline statement
     - Exit Criteria: Inherited from s5_v2_validation_loop.md
     - Design: Focused single-iteration guide (S5 v1 only)
 
 14. **stages/s5/s5_p3_i1_iter22_consumers.md** (DEPRECATED - S5 v1)
-    - Type: S5 v1 Iteration 22 - Consumers (now Dimension 10)
+    - Type: S5 v1 Iteration 22 - Consumers (now Dimension 8: Pre/Post Checklist Completeness)
     - Prerequisites: Inline statement
     - Exit Criteria: Inherited from s5_v2_validation_loop.md
     - Design: Focused single-iteration guide (S5 v1 only)

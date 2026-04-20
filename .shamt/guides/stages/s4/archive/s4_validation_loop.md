@@ -371,7 +371,7 @@ ls feature_{N}_{name}/test_strategy.md
 **After completing S4.I4:**
 
 📖 **READ:** `stages/s5/s5_v2_validation_loop.md`
-🎯 **GOAL:** Create implementation plan (S5 v2: Draft Creation + Validation Loop with 11 dimensions)
+🎯 **GOAL:** Create implementation plan (S5 v2: Draft Creation + Validation Loop with 9 dimensions)
 ⏱️ **ESTIMATE:** 4.5-7 hours per feature (60-90 min draft + 3.5-6 hours Validation Loop)
 
 **S5.P1 (Draft Creation) will:**
@@ -380,7 +380,7 @@ ls feature_{N}_{name}/test_strategy.md
 - Create comprehensive 400-line implementation plan draft
 
 **S5.P2 (Validation Loop) will:**
-- Validate all 11 dimensions each round
+- Validate all 9 dimensions each round
 - Fix all issues immediately (zero deferred issues)
 - Exit after 3 consecutive clean rounds
 

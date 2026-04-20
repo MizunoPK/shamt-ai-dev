@@ -139,7 +139,7 @@ Primary Agent (Opus):
 - [ ] Epic smoke testing passed (S9.P1)
 - [ ] Epic QC Validation Loop passed (primary clean round + sub-agent confirmation in S9.P2)
 - [ ] User testing passed (S9.P3 — ZERO bugs reported by user)
-- [ ] Epic PR review passed (all 11 categories)
+- [ ] Epic PR review passed (all 12 categories)
 - [ ] No pending issues from S9
 
 **Note:** Tests were validated as part of S9 QC. No test re-run is needed before the S10 commit — no new code has been written since S9 passed.

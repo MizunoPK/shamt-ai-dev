@@ -25,7 +25,7 @@
 
 ### Skipping Validation Dimensions
 - ❌ "Dimension 7 seems obvious, I'll skip it in this round"
-- ✅ ALL 11 dimensions in S5 v2 are MANDATORY every validation round, and the Validation Loop must be completed (primary clean round + sub-agent confirmation)
+- ✅ ALL 9 dimensions in S5 v2 are MANDATORY every validation round, and the Validation Loop must be completed (primary clean round + sub-agent confirmation)
 - **Why:** Each dimension catches specific bug categories
 
 ### Committing Without Tests

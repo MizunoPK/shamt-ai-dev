@@ -33,7 +33,7 @@ I'm beginning S9 (Epic Final QC).
   - Check ALL dimensions every round (7 master + 6 epic-specific = 13 total)
   - primary clean round + sub-agent confirmation required to exit
   - Fix issues immediately and continue (no restart for minor issues)
-- **Epic PR Review** (11 categories at EPIC scope):
+- **Epic PR Review** (12 categories at EPIC scope):
   - Focus: Architectural consistency across features
   - Review epic-wide changes (not individual features)
 - **Validation Against Original Epic Request**:

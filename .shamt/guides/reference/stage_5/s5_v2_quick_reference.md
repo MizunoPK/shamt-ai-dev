@@ -59,15 +59,15 @@
 | I9-16 | `s5_p2_i2_reverification.md` | Re-verify all aspects | **All Dimensions** | Validation Loop Round 1 |
 | I16 | `s5_p2_i3_final_checks.md` | Final verification | **All Dimensions** | Validation Loop (mid-rounds) |
 | **Phase 3: Round 3 (Final Review)** |
-| I17 | `s5_p3_i1_iter17_phasing.md` | Implementation phases | **D10** | Implementation Readiness |
-| I18 | `s5_p3_i1_iter18_rollback.md` | Rollback strategy | **D10** | Implementation Readiness |
+| I17 | `s5_p3_i1_iter17_phasing.md` | Implementation phases | **D8** | Pre/Post Checklist Completeness |
+| I18 | `s5_p3_i1_iter18_rollback.md` | Rollback strategy | **D8** | Pre/Post Checklist Completeness |
 | I19 | `s5_p3_i1_iter19_traceability.md` | Algorithm traceability | **D3** | Algorithm Traceability |
 | I20 | `s5_p3_i1_iter20_performance.md` | Performance analysis | **D9** | Performance & Dependencies |
-| I21 | `s5_p3_i1_iter21_mockaudit.md` | Mock spec audit | **D11** | Spec Alignment & Cross-Validation |
+| I21 | `s5_p3_i1_iter21_mockaudit.md` | Mock spec audit | **D9** | Spec Alignment |
 | I22 | `s5_p3_i1_iter22_consumers.md` | Data consumers | **D5** | Data Flow & Consumption |
-| I23 (Gate 23a) | `s5_p3_i2_gates_part1.md` | Pre-implementation audit | **D11** | Spec Alignment (Gate 23a) |
-| I24 (Gate 24) | `s5_p3_i3_gates_part2.md` | GO/NO-GO decision | **D10** | Implementation Readiness (Gate 24) |
-| I25 (Gate 25) | `s5_p3_i3_gates_part2.md` | Spec validation check | **D11** | Spec Alignment (Gate 25) |
+| I23 (Gate 23a) | `s5_p3_i2_gates_part1.md` | Pre-implementation audit | **D9** | Spec Alignment (Gate 23a) |
+| I24 (Gate 24) | `s5_p3_i3_gates_part2.md` | GO/NO-GO decision | **exit** | See validation exit criteria (Gate 24) |
+| I25 (Gate 25) | `s5_p3_i3_gates_part2.md` | Spec validation check | **D9** | Spec Alignment (Gate 25) |
 
 ---
 
@@ -96,9 +96,9 @@
 **Looking for Gates?**
 - Gate 4a (TODO spec) → Dimension 4
 - Gate 7a (Compatibility) → Dimension 7
-- Gate 23a (Spec audit) → Dimension 11
-- Gate 24 (GO/NO-GO) → Dimension 10
-- Gate 25 (Spec validation) → Dimension 11
+- Gate 23a (Spec audit) → Dimension 9 (Spec Alignment)
+- Gate 24 (GO/NO-GO) → exit criteria (no dedicated dimension)
+- Gate 25 (Spec validation) → Dimension 9 (Spec Alignment)
 
 **Looking for specific checks?**
 - Requirements coverage → D1
@@ -109,8 +109,8 @@
 - Test coverage → D8
 - Performance → D9
 - Integration points → D7
-- Implementation readiness → D10
-- Final spec alignment → D11
+- Implementation readiness → see validation exit criteria
+- Final spec alignment → D9 (Spec Alignment)
 
 **Looking for task quality checks?**
 - See Dimension 4 (Task Specification Quality)

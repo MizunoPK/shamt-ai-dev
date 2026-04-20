@@ -46,7 +46,7 @@
 - **Phase:** Distinct workflow section (S5 has 2 phases: Draft Creation + Validation Loop; S7 has 3 phases: Smoke Testing, QC Rounds, Final Review)
 - **Stage:** Top-level workflow division (11 stages total: S1-S11, all active)
 
-**Note:** S5 v2 uses "dimensions" (11 dimensions validated each round), not "iterations" (which were used in S5 v1).
+**Note:** S5 v2 uses "dimensions" (9 dimensions validated each round), not "iterations" (which were used in S5 v1).
 
 ### Q: When do I update EPIC_README.md vs feature README.md?
 
@@ -214,7 +214,7 @@ A: Make best predictions at S5 Step 0 (Test Scope Decision):
 
 **Q: Can I skip iterations if they don't seem relevant?**
 
-A: NO - All 11 dimensions and the Validation Loop are mandatory (primary clean round + sub-agent confirmation):
+A: NO - All 9 dimensions and the Validation Loop are mandatory (primary clean round + sub-agent confirmation):
 - Designed based on historical bugs and missed requirements
 - Each iteration catches specific issue types
 - Skipping iterations = high risk of bugs in S7
@@ -233,10 +233,10 @@ A: Follow the escalation protocol:
 
 A:
 - **Dimension 4:** Task Specification Quality - ensures all tasks have acceptance criteria and implementation location
-- **Dimension 11:** Spec Alignment & Cross-Validation - prevents catastrophic bugs (implementation_plan.md must match spec.md 100%)
-- **Dimension 10:** Implementation Readiness - final verification before S6 (confidence >= MEDIUM, all dimensions passing)
+- **Dimension 9:** Spec Alignment - prevents catastrophic bugs (implementation_plan.md must match spec.md 100%)
+- **Exit criteria:** Implementation Readiness - final verification before S6 (confidence >= MEDIUM, all dimensions passing)
 
-All 11 dimensions must PASS with primary clean round + sub-agent confirmation before S6.
+All 9 dimensions must PASS with primary clean round + sub-agent confirmation before S6.
 
 **Q: How long should Round 3 take?**
 
@@ -518,7 +518,7 @@ Context window limit reached → Session compacted
 
 ## Workflow Selection Guide
 
-### When to Use: Regular Implementation (Stages 1-7)
+### When to Use: Regular Implementation (Stages 1-11)
 
 **Use for:**
 - New epic development
@@ -898,7 +898,7 @@ Note: It's acceptable to fix pre-existing test failures from other epics during 
 - Feature breakdown looks correct? (S1)
 - Spec requirements clear? (S2)
 - How to resolve spec conflicts? (S3)
-- Dimension 11 found discrepancies - which approach to take? (S5)
+- Dimension 9 (Spec Alignment) found discrepancies - which approach to take? (S5)
 - Scope growing >35 items - split feature? (S2)
 - Bug fix vs missed requirement (if ambiguous)
 

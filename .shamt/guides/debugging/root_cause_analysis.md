@@ -164,7 +164,7 @@ WHY #5: Why didn't Iteration 9 catch it?
 - Validation Round, Dimension 7 (Integration & Compatibility): Should integration point have been verified?
 - Validation Round, Dimension 6 (Error Handling & Edge Cases): Should edge case have been identified?
 - Validation Round, Dimension 8 (Test Coverage Quality): Should test have covered this?
-- Validation Round, Dimension 11 (Spec Alignment): Should spec have included this requirement?
+- Validation Round, Dimension 9 (Spec Alignment): Should spec have included this requirement?
 
 **S6 (Implementation Execution):**
 - Mini-QC checkpoints: Should QC have caught this?

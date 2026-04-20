@@ -373,7 +373,7 @@ for the authoritative protocol.
 
 ### Feature-Level Validation Loop (S7.P2)
 
-**16 Dimensions Checked EVERY Round (7 master + 10 S7 QC-specific):**
+**17 Dimensions Checked EVERY Round (7 master + 10 S7 QC-specific):**
 
 **See `reference/validation_loop_s7_feature_qc.md` for the authoritative dimension checklists.**
 
@@ -404,7 +404,7 @@ S7 QC-Specific Dimensions (8-17):
 
 ### Epic-Level Validation Loop (S9.P2)
 
-**12 Dimensions Checked EVERY Round (7 master + 6 epic-specific):**
+**13 Dimensions Checked EVERY Round (7 master + 6 epic-specific):**
 
 Master Dimensions (1-7):
 1. Content Accuracy
@@ -417,10 +417,10 @@ Master Dimensions (1-7):
 
 Epic-Specific Dimensions (8-13):
 8. Cross-Feature Integration Points
-9. Data Flow Validation
-10. Epic Cohesion & Consistency
-11. Error Propagation
-12. End-to-End Success Criteria
+9. Epic Cohesion
+10. Error Handling Consistency
+11. Architectural Alignment
+12. Success Criteria Completion
 13. Mechanical Code Quality (Epic-Wide) - Consistent linter-type quality across all features
 
 **If issues found:** Fix immediately, reset counter, continue

@@ -301,16 +301,16 @@ Mandatory checkpoint that must PASS before proceeding.
 
 **See:** Mandatory Gates (reference/mandatory_gates.md), Iteration
 
-**Guide:** stages/s5/s5_v2_validation_loop.md, stages/s5/s5_v2_validation_loop.md (Dimension 11: Gate 23a), stages/s5/s5_v2_validation_loop.md (Dimensions 10, 11: Gates 24, 25)
+**Guide:** stages/s5/s5_v2_validation_loop.md, stages/s5/s5_v2_validation_loop.md (Dimension 9: Gate 23a), stages/s5/s5_v2_validation_loop.md (Dimension 9: Gates 23a/25, exit criteria: Gate 24)
 
 ---
 
 ### GO Decision
-S5 v2 Phase 2 complete - indicates readiness to proceed to S6 implementation after achieving primary clean round + sub-agent confirmation validation across all 11 dimensions.
+S5 v2 Phase 2 complete - indicates readiness to proceed to S6 implementation after achieving primary clean round + sub-agent confirmation validation across all 9 dimensions.
 
 **See:** S5 v2 Validation Loop, Phase 2, NO-GO, Sub-Agent Confirmation
 
-**Guide:** stages/s5/s5_v2_validation_loop.md (Dimension 10: Implementation Readiness)
+**Guide:** stages/s5/s5_v2_validation_loop.md (Dimension 9: Spec Alignment, exit criteria)
 
 ---
 
@@ -360,7 +360,7 @@ Process ensuring all new methods/functions have identified callers (no orphan co
 
 **See:** Iteration 23
 
-**Guide:** stages/s5/s5_v2_validation_loop.md (Dimension 11: Gate 23a)
+**Guide:** stages/s5/s5_v2_validation_loop.md (Dimension 9: Spec Alignment)
 
 ---
 
@@ -369,7 +369,7 @@ Agreements defining method signatures, parameters, return types.
 
 **See:** Hands-On Data Inspection
 
-**Guide:** stages/s5/s5_v2_validation_loop.md, stages/s5/s5_v2_validation_loop.md (Dimension 11: Gate 23a)
+**Guide:** stages/s5/s5_v2_validation_loop.md, stages/s5/s5_v2_validation_loop.md (Dimension 9: Spec Alignment)
 
 ---
 
@@ -388,11 +388,11 @@ Central tracking file for all discovered issues during debugging.
 
 **Historical Context (S5 v1):**
 - S5 v1 had 22 iterations across 3 rounds
-- S5 v2 uses 11 dimensions in Validation Loop instead
+- S5 v2 uses 9 dimensions in Validation Loop instead
 
 **See:** Dimension, Validation Loop, S5
 
-**Guide:** stages/s5/s5_v2_validation_loop.md, stages/s5/s5_v2_validation_loop.md, stages/s5/s5_v2_validation_loop.md (Validation Loop Round 3), stages/s5/s5_v2_validation_loop.md (Dimension 11: Gate 23a), stages/s5/s5_v2_validation_loop.md (Dimensions 10, 11: Gates 24, 25)
+**Guide:** stages/s5/s5_v2_validation_loop.md, stages/s5/s5_v2_validation_loop.md, stages/s5/s5_v2_validation_loop.md (Validation Loop Round 3), stages/s5/s5_v2_validation_loop.md (Dimension 9: Spec Alignment)
 
 ---
 
@@ -449,7 +449,7 @@ Functionality that was NOT in spec.md but should have been.
 ### Mock
 Test double that simulates real object behavior.
 
-**See:** Integration Test, Dimension 11
+**See:** Integration Test, Dimension 9 (Spec Alignment)
 
 **Guide:** stages/s5/s5_v2_validation_loop.md (Validation Loop Round 3)
 
@@ -526,7 +526,7 @@ S7 process of validating implemented feature.
 ---
 
 ### PR Review
-Pull Request review (7 categories) in S7 Phase 3 Final Review.
+Pull Request review (12 categories) in S7 Phase 3 Final Review.
 
 **See:** Final Review
 
@@ -538,15 +538,13 @@ Pull Request review (7 categories) in S7 Phase 3 Final Review.
 
 **[Two contexts]**
 
-**[S7 - Feature QC]** Three rounds testing single feature:
+**[S7 - Feature QC]** Validation loop checking 17 dimensions every round until primary clean round + sub-agent confirmation:
+- 7 master dimensions (universal) + 10 S7 QC-specific dimensions
+- Fix all issues immediately and continue (no restart)
 
-- Round 1: Algorithm Verification (spec vs code line-by-line)
-
-- Round 2: Consistency & Standards (coding standards, error handling)
-
-**[S9.P2 - Epic QC]** Three rounds testing entire epic:
-
-- Round 1: Epic Algorithm Verification (epic requirements vs implementation)
+**[S9.P2 - Epic QC]** Validation loop checking 13 dimensions every round until primary clean round + sub-agent confirmation:
+- 7 master dimensions (universal) + 6 epic-specific dimensions
+- Fix all issues immediately and continue (no restart)
 
 **See:** S7, S9.P2, Round
 
@@ -663,13 +661,13 @@ Specification document in each feature folder containing all requirements.
 
 ### Spec Validation
 
-**[Gate 25 Dimension 11]** Three-way validation of spec.md against validated documents.
+**[Gate 25 Dimension 9]** Three-way validation of spec.md against validated documents.
 
 1. Epic notes (user's original request in `.shamt/epics/requests/{epic_name}.txt`)
 
-**See:** Gate 25, Dimension 11
+**See:** Gate 25, Dimension 9 (Spec Alignment)
 
-**Guide:** stages/s5/s5_v2_validation_loop.md (Dimensions 10, 11: Gates 24, 25), reference/spec_validation.md
+**Guide:** stages/s5/s5_v2_validation_loop.md (Dimension 9: Spec Alignment, exit criteria: Gate 24), reference/spec_validation.md
 
 ---
 
@@ -745,7 +743,7 @@ S9.P3 mandatory testing by the user before proceeding to S10. The user tests the
 
 ### Workflow
 
-**[General]** The Epic-Driven Development v2 process (Stages 1-7)
+**[General]** The Epic-Driven Development v2 process (Stages 1-11)
 
 **[Sub-workflows]** Specialized processes:
 

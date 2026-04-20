@@ -508,7 +508,7 @@ Create standard checklist for builder to verify after execution
 
 1. **Time limit reached:** 90 minutes elapsed (stop even if only 70% complete)
 2. **Minimum content present:**
-   - ✅ All 11 dimension sections exist
+   - ✅ All 9 dimension sections exist
    - ✅ 70%+ of spec requirements have tasks
    - ✅ 70%+ of algorithms mapped
    - ✅ Basic error/edge cases listed

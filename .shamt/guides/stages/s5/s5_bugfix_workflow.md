@@ -472,7 +472,7 @@ Integration test:
 **Same rigor as features:**
 - Complete validation across all 9 mechanical dimensions
 - Algorithm Traceability (Dimension 3)
-- Spec Alignment & Cross-Validation (Dimension 11, includes Gates 23a, 25)
+- Spec Alignment (Dimension 9, includes Gates 23a, 25)
 - Exit with primary clean round + sub-agent confirmation
 
 **Bug fix TODOs usually shorter:**
@@ -518,12 +518,12 @@ Integration test:
 **Read guides in order:**
 1. stages/s7/s7_p1_smoke_testing.md - Smoke Testing (3 parts - MANDATORY GATE)
 2. stages/s7/s7_p2_qc_rounds.md - Validation Loop (primary clean round + sub-agent confirmation)
-3. stages/s7/s7_p3_final_review.md - PR Review (11 categories) + lessons learned
+3. stages/s7/s7_p3_final_review.md - PR Review (12 categories) + lessons learned
 
 **Same validation as features:**
 - Smoke Testing (3 parts)
 - Validation Loop (primary clean round + sub-agent confirmation)
-- PR Review (11 categories)
+- PR Review (12 categories)
 - Fix-and-continue approach if issues found
 
 **Bug fix smoke testing:**

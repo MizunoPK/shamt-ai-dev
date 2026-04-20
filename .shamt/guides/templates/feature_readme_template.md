@@ -63,8 +63,7 @@
 **S5 v2 - Implementation Planning:**
 - [ ] Phase 1: Draft Creation complete (~70% quality baseline)
 - [ ] Phase 2: Validation Loop complete (primary clean round + sub-agent confirmation)
-  - [ ] All 11 S5-specific dimensions validated
-  - [ ] All 7 master dimensions validated
+  - [ ] All 9 mechanical dimensions validated
   - [ ] Total validation rounds executed: {count}
 - [ ] `implementation_plan.md` created and user-approved (Gate 5)
 - [ ] `questions.md` created (or documented "no questions")
@@ -80,7 +79,7 @@
 - [ ] Smoke testing (3 parts) passed
 - [ ] Validation Loop passed (primary clean round + sub-agent confirmation)
 - [ ] All 17 dimensions checked every round (7 master + 10 S7 QC-specific)
-- [ ] PR Review (11 categories) passed
+- [ ] PR Review (12 categories) passed
 - [ ] `lessons_learned.md` updated with S7 insights
 - [ ] S7 complete: {✅/◻️}
 

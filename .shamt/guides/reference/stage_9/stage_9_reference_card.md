@@ -25,10 +25,10 @@ S9.P2: Epic Validation Loop (2-3 hours)
     ├─ Check ALL 13 dimensions every round (7 master + 6 epic-specific)
     │   ├─ Master dimensions (content, references, integration, etc.)
     │   ├─ Dimension 8: Cross-Feature Integration
-    │   ├─ Dimension 9: Data Flow Validation
-    │   ├─ Dimension 10: Epic Cohesion & Consistency
-    │   ├─ Dimension 11: Error Propagation
-    │   ├─ Dimension 12: End-to-End Success Criteria
+    │   ├─ Dimension 9: Epic Cohesion
+    │   ├─ Dimension 10: Error Handling Consistency
+    │   ├─ Dimension 11: Architectural Alignment
+    │   ├─ Dimension 12: Success Criteria Completion
     │   └─ Dimension 13: Mechanical Code Quality (Epic-Wide)
     ├─ Fix issues immediately, reset `consecutive_clean`
     ├─ Continue until primary clean round + sub-agent confirmation
@@ -42,10 +42,10 @@ S9.P3: User Testing (Variable — depends on bug count)
     └─ Step 6d: Document User Testing Completion
     ↓
 S9.P4: Epic Final Review (60-90 min + bug fixes if needed)
-    ├─ Step 6: Epic PR Review - 11 Categories (45-60 min)
+    ├─ Step 6: Epic PR Review - 12 Categories (45-60 min)
     │   ├─ Architecture (MOST IMPORTANT - epic-wide patterns)
     │   ├─ Code Quality, Security, Error Handling, etc.
-    │   └─ All 11 categories PASSED
+    │   └─ All 12 categories PASSED
     ├─ Step 7: Handle Issues (If Any) (Variable)
     │   ├─ Create bug fixes (S2 → S5 → S6 → S7)
     │   └─ RESTART S9 from S9.P1 (COMPLETE restart)
@@ -64,7 +64,7 @@ S9.P4: Epic Final Review (60-90 min + bug fixes if needed)
 | S9.P1 | 1-2 | 60-90 min | Pre-QC verification, Epic smoke testing (4 parts) | Part 4 data values |
 | S9.P2 | 3-5 | 2-3 hrs | Epic QC Validation Loop (integration, consistency, success criteria) | Primary clean round + sub-agent confirmation |
 | S9.P3 | 6, 6d | Variable | User testing with real data, bug fix cycles if needed | ZERO bugs found |
-| S9.P4 | 6-8 | 1-2 hrs | Epic PR review (11 categories), bug fixes, final verification | All 11 categories PASS |
+| S9.P4 | 6-8 | 1-2 hrs | Epic PR review (12 categories), bug fixes, final verification | All 12 categories PASS |
 
 ---
 
@@ -79,7 +79,7 @@ S9.P4: Epic Final Review (60-90 min + bug fixes if needed)
    - S9.P1: Epic Smoke Testing (all 4 parts)
    - S9.P2: Validation Loop (primary clean round + sub-agent confirmation)
    - S9.P3: User Testing (ZERO bugs)
-   - S9.P4: Epic PR Review (all 11 categories)
+   - S9.P4: Epic PR Review (all 12 categories)
 4. **Document restart** in epic_lessons_learned.md
 
 ### Why COMPLETE Restart?
@@ -120,7 +120,7 @@ S9.P4: Epic Final Review (60-90 min + bug fixes if needed)
 - ✅ Epic-level validation focuses on INTEGRATION (not individual features)
 - ✅ Epic QC Validation Loop is MANDATORY (primary clean round + sub-agent confirmation)
 - ✅ If ANY issues found → create bug fix → RESTART S9 from S9.P1
-- ✅ Epic PR review has 11 categories (all mandatory, Architecture MOST IMPORTANT)
+- ✅ Epic PR review has 12 categories (all mandatory, Architecture MOST IMPORTANT)
 - ✅ Validate against ORIGINAL epic request (re-read `.shamt/epics/requests/{epic_name}.txt`)
 - ✅ 100% test pass rate required throughout S9
 - ✅ Zero tolerance for epic-level quality issues
@@ -164,32 +164,34 @@ S9.P4: Epic Final Review (60-90 min + bug fixes if needed)
 
 **Pass Criteria:** All integration points working, no cross-feature errors
 
-### Dimension 9: Data Flow Validation
-**Check:**
-- Data flows correctly between all features
-- No data corruption at integration points
-- Correct data types and formats
-
-**Pass Criteria:** Data integrity maintained across features
-
-### Dimension 10: Epic Cohesion & Consistency
+### Dimension 9: Epic Cohesion
 **Check:**
 - Code style consistency (same style across all features)
 - Naming conventions alignment (consistent naming)
-- Error handling patterns (same error handling approach)
-- Architectural patterns (consistent architecture)
+- Design patterns compatible across features
+- Similar operations use similar approaches
 
-**Pass Criteria:** Epic is cohesive, no inconsistencies
+**Pass Criteria:** Epic is architecturally cohesive and consistent
 
-### Dimension 11: Error Propagation
+### Dimension 10: Error Handling Consistency
 **Check:**
-- Errors propagate correctly across feature boundaries
-- Error handling is consistent
-- User-facing error messages are appropriate
+- Same exception hierarchy used across features
+- Error messages follow same format
+- Error logging consistent (level, context, format)
+- Errors at feature boundaries handled consistently
 
-**Pass Criteria:** Error handling works end-to-end
+**Pass Criteria:** Error handling consistent across all features
 
-### Dimension 12: End-to-End Success Criteria
+### Dimension 11: Architectural Alignment
+**Check:**
+- Design patterns compatible (Manager, System, Engine)
+- No conflicting architectural approaches
+- Feature boundaries clear and consistent
+- Dependency directions correct (no circular)
+
+**Pass Criteria:** Features are architecturally aligned and compatible
+
+### Dimension 12: Success Criteria Completion
 **Check:**
 - Original epic goals validated (re-read epic request)
 - ALL success criteria met (100% - defined in epic_smoke_test_plan.md)
@@ -213,7 +215,7 @@ S9.P4: Epic Final Review (60-90 min + bug fixes if needed)
 
 ## Epic PR Review Categories (Step 6)
 
-### 11 Mandatory Categories:
+### 12 Mandatory Categories:
 1. **Architecture** ← MOST IMPORTANT (epic-wide patterns, consistency)
 2. Code Quality (readability, maintainability)
 3. Security (no vulnerabilities across epic)
@@ -225,8 +227,9 @@ S9.P4: Epic Final Review (60-90 min + bug fixes if needed)
 9. Dependencies (no conflicts)
 10. Logging (consistent logging patterns)
 11. User Experience (epic-wide UX flow)
+12. Context & Intent (epic-wide intent and scope consistency)
 
-**Pass Criteria:** ALL 11 categories PASSED
+**Pass Criteria:** ALL 12 categories PASSED
 **If FAIL:** Create bug fix → RESTART S9.P1
 
 ---
@@ -296,7 +299,7 @@ S9.P4: Epic Final Review (60-90 min + bug fixes if needed)
 - [ ] If bugs found: bug fix complete and S9 restarted
 
 **S9.P4 → S10:**
-- [ ] Epic PR review PASSED (all 11 categories)
+- [ ] Epic PR review PASSED (all 12 categories)
 - [ ] Architecture validation complete
 - [ ] No issues requiring bug fixes OR bug fixes complete and S9 restarted
 - [ ] Final verification complete
@@ -344,7 +347,7 @@ S9.P4: Epic Final Review (60-90 min + bug fixes if needed)
 - [ ] All 8 steps complete (1-8)
 - [ ] Epic smoke testing PASSED (all 4 parts with data values)
 - [ ] Epic QC Validation Loop PASSED (primary clean round + sub-agent confirmation)
-- [ ] Epic PR review PASSED (all 11 categories)
+- [ ] Epic PR review PASSED (all 12 categories)
 - [ ] All bug fixes complete (if any) + S9 restarted
 - [ ] epic_lessons_learned.md updated
 - [ ] EPIC_README.md shows S9 complete

@@ -697,7 +697,7 @@ File: stages/s5/s5_p1_i1_requirements.md
 ```
 ## Critical Rules
 
-You must complete the S5 v2 validation loop with all 11 dimensions before
+You must complete the S5 v2 validation loop with all 9 dimensions before
 proceeding to S6 and you cannot skip any dimensions and you must get user
 approval at Gate 5 before starting implementation and all tests must pass
 100% before committing and you must run verification after each round to
@@ -717,7 +717,7 @@ ensure no new issues were introduced.
 
 **🚨 MANDATORY Requirements:**
 
-1. ✅ **Complete S5 v2 validation loop** - All 11 dimensions, primary clean round + sub-agent confirmation required
+1. ✅ **Complete S5 v2 validation loop** - All 9 dimensions, primary clean round + sub-agent confirmation required
 2. ✅ **User approval at Gate 5** - Must pass before S6
 3. ✅ **100% test pass rate** - Required before commits
 4. ✅ **Verification after each round** - Ensure no new issues

@@ -100,7 +100,7 @@ Epic-Level Final QC is where you validate the ENTIRE epic as a cohesive whole af
 
 **Total Time Estimate:** 4-7 hours (4 phases across 4 guides, validation loop approach)
 
-**Exit Condition:** S9 is complete when epic smoke testing passed, validation loop achieved primary clean round + sub-agent confirmation, user testing passed (no bugs found), epic PR review passed (all 11 categories), and all issues resolved (no pending bug fixes)
+**Exit Condition:** S9 is complete when epic smoke testing passed, validation loop achieved primary clean round + sub-agent confirmation, user testing passed (no bugs found), epic PR review passed (all 12 categories), and all issues resolved (no pending bug fixes)
 
 ---
 
@@ -154,7 +154,7 @@ Epic-Level Final QC is where you validate the ENTIRE epic as a cohesive whole af
 - Deep validation of epic quality using systematic validation loop
 - ALL 13 dimensions checked EVERY round (comprehensive)
 - Fix-and-continue approach (no restart overhead for minor issues)
-- primary clean round + sub-agent confirmation ensuress thorough validation
+- primary clean round + sub-agent confirmation ensures thorough validation
 
 ---
 
@@ -189,12 +189,12 @@ Epic-Level Final QC is where you validate the ENTIRE epic as a cohesive whole af
 **Read:** `stages/s9/s9_p4_epic_final_review.md`
 
 **What it covers:**
-- **Step 7:** Epic PR Review (11 Categories - Epic Scope)
-- **Step 8:** Validate Against Epic Request (original user goals)
-- **Step 9:** Final Verification & README Update
+- **Step 6:** Epic PR Review (12 Categories - Epic Scope)
+- **Step 7:** Handle Issues (if any found)
+- **Step 8:** Final Verification & README Update
 
 **Key Outputs:**
-- Epic PR review results (all 11 categories PASSED)
+- Epic PR review results (all 12 categories PASSED)
 - Bug fixes created (if issues found)
 - S9 restarted after bug fixes (if applicable)
 - EPIC_README.md updated (S9 complete)
@@ -207,7 +207,7 @@ Epic-Level Final QC is where you validate the ENTIRE epic as a cohesive whole af
 
 **Why this sub-stage exists:**
 - Final validation before epic completion
-- 11-category PR review ensures comprehensive coverage
+- 12-category PR review ensures comprehensive coverage
 - Validation against original epic request
 - Clear completion criteria
 
@@ -263,7 +263,7 @@ Start Epic Final QC
           ▼
     ┌─────────────┐
     │   S9.P4     │  Epic Final Review
-    │  (60-90min) │  • Epic PR Review (11 Categories)
+    │  (60-90min) │  • Epic PR Review (12 Categories)
     └─────────────┘  • Validate Against Epic Request
           │          • Final Verification
           │
@@ -292,7 +292,7 @@ During S9.P2 Epic QC Validation Loop:
 **Why fix and continue?**
 - Faster than restarting entire S9 process
 - Each fix is verified in subsequent rounds
-- primary clean round + sub-agent confirmation ensuress quality
+- primary clean round + sub-agent confirmation ensures quality
 - 60-180 min saved per issue vs restart approach
 
 ---
@@ -342,7 +342,7 @@ When user reports bugs during S9.P3:
    - S9.P2: Fix immediately, reset counter, continue (validation loop)
    - S9.P3: User bugs require restart from S9.P1
 
-6. ⚠️ Epic PR review has 11 categories (all mandatory)
+6. ⚠️ Epic PR review has 12 categories (all mandatory)
    - Architecture category (Step 6.9) is MOST IMPORTANT
    - Focus on epic-wide concerns (not feature-level)
 
@@ -372,7 +372,7 @@ When user reports bugs during S9.P3:
 
 **Use the phase transition prompt** from `prompts_reference_v2.md`:
 ```markdown
-I'm starting S6 (Epic Smoke Testing) for Epic: {epic_name}.
+I'm starting S9.P1 (Epic Smoke Testing) for Epic: {epic_name}.
 
 I acknowledge:
 - This guide covers Steps 1-2 (Pre-QC Verification → Epic Smoke Testing)
@@ -438,7 +438,7 @@ Ready to begin Step 1: Pre-QC Verification.
   - S9.P1: Epic Smoke Testing PASSED (all 4 parts)
   - S9.P2: Epic QC Validation Loop PASSED (primary clean round + sub-agent confirmation, 13 dimensions)
   - S9.P3: User Testing PASSED (user reports "No bugs found")
-  - S9.P4: Epic PR Review PASSED (all 11 categories)
+  - S9.P4: Epic PR Review PASSED (all 12 categories)
   - S9.P4: Validate Against Epic Request PASSED
   - S9.P4: Final Verification complete
 
@@ -455,7 +455,7 @@ Ready to begin Step 1: Pre-QC Verification.
   - All issues fixed immediately (no deferred issues): ✅ PASSED
 
 - [ ] **Epic PR Review:**
-  - All 11 categories reviewed: ✅ PASSED
+  - All 12 categories reviewed: ✅ PASSED
   - Architectural consistency validated: ✅ PASSED
   - No issues requiring bug fixes
 
@@ -558,7 +558,7 @@ A: Yes, S9 was originally a single 1,644-line guide. It has been split into four
 1. **stages/s9/s9_p1_epic_smoke_testing.md** - Epic Smoke Testing (4 parts)
 2. **stages/s9/s9_p2_epic_qc_rounds.md** - Epic QC Validation Loop (13 dimensions, primary clean round + sub-agent confirmation)
 3. **stages/s9/s9_p3_user_testing.md** - User Testing & Bug Fix Protocol
-4. **stages/s9/s9_p4_epic_final_review.md** - Epic Final Review (11 categories)
+4. **stages/s9/s9_p4_epic_final_review.md** - Epic Final Review (12 categories)
 
 **Workflow:** Validation loop approach in S9.P2 (fix and continue, primary clean round + sub-agent confirmation)
 

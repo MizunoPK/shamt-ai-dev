@@ -620,7 +620,7 @@ I've created an epic ticket to validate my understanding of the epic's goals and
 2. Epic ticket is now **immutable reference** (like epic notes)
 3. Proceed to Step 5
 
-**Critical:** Epic ticket becomes source of truth for outcomes. During S5 v2 Validation Loop (Dimension 11: Spec Alignment), implementation_plan.md will be validated against spec.md, which was validated against both epic notes AND epic ticket.
+**Critical:** Epic ticket becomes source of truth for outcomes. During S5 v2 Validation Loop (Dimension 9: Spec Alignment), implementation_plan.md will be validated against spec.md, which was validated against both epic notes AND epic ticket.
 
 ---
 
@@ -697,7 +697,7 @@ Create `research/` folder in epic root with README.md explaining purpose (centra
 
 ### Step 5.5: Create GUIDE_ANCHOR.md
 
-Use template from `templates/` folder (see `templates/TEMPLATES_INDEX.md`) → "GUIDE_ANCHOR Template"
+Create this file from scratch with the following sections:
 
 **Critical sections:**
 - Instructions for resuming after session compaction
@@ -1047,7 +1047,7 @@ Would you like to:
 ```
 
 **Handle User Response:**
-- **Option 1 (Wave 1 Precedent):** Complete S2-S8 for Wave 1 feature solo, then spawn secondaries for Wave 2 S2 using `s2_primary_agent_group_wave_guide.md`
+- **Option 1 (Wave 1 Precedent):** Complete S2-S8 for Wave 1 feature solo, then spawn secondaries for Wave 2 S2 using `parallel_work/s2_primary_agent_group_wave_guide.md`
 - **Options 2-3:** See existing handling above
 
 ---

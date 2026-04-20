@@ -325,7 +325,7 @@ Get user approval for complete epic plan before proceeding to S4 (Gate 4)
 - User says: "Approach is good but scope is too big" OR "Features are right but missing technical constraint"
 - Action: Escalate to user for guidance:
   - Split epic into smaller phases?
-  - Redefine feature boundaries (loop back to S1.P4)?
+  - Redefine feature boundaries (loop back to S1 Step 4: Feature Breakdown Proposal)?
   - Adjust discovery assumptions (loop back to S1.P3)?
 - Await user decision, then proceed with appropriate fixes
 - Do NOT treat as total rejection — some planning can be salvaged
@@ -341,7 +341,7 @@ Get user approval for complete epic plan before proceeding to S4 (Gate 4)
 
 Ask user for guidance:
 1. **(A) Re-do Discovery Phase (S1.P3)** - research was incomplete
-2. **(B) Revise feature breakdown (S1.P4)** - features defined incorrectly
+2. **(B) Revise feature breakdown (S1 Step 4)** - features defined incorrectly
 3. **(C) Exit epic planning** - epic should not proceed
 
 Await user decision before proceeding.

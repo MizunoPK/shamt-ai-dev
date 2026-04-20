@@ -102,7 +102,7 @@ The Validation Loop is a systematic quality assurance process that validates art
 
 **Key Innovation (from S5 v2):**
 - Instead of sequential iterations checking different concerns (S5 v1 had 22 iterations)
-- Use validation dimensions checked EVERY round (S5 v2 has 11 dimensions)
+- Use validation dimensions checked EVERY round (S5 v2 has 9 dimensions)
 - Fix issues immediately, continue validation (no restart from beginning)
 - Exit when primary clean round achieved + 2 independent sub-agents confirm zero issues
 
@@ -1865,7 +1865,7 @@ Round 3: Check ALL 7 dimensions + scenario-specific
 
 ### Example: S5 Implementation Planning Loop
 
-**Full Guide:** `stages/s5/s5_v2_validation_loop.md` — 18 total dimensions per round (7 master + 11 S5-specific) covering requirements coverage, interface verification, algorithm traceability, task quality, data flow, error handling, integration, test coverage, performance, implementation readiness, and spec alignment.
+**Full Guide:** `stages/s5/s5_v2_validation_loop.md` — 9 mechanical dimensions per round covering step clarity, mechanical executability, file coverage, operation specificity, verification completeness, error handling, dependency ordering, checklist completeness, and spec alignment.
 
 ## Templates
 

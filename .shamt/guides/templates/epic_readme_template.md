@@ -65,7 +65,7 @@ Plan  Deep Dive  Check  Definition (per feature)   QC     Merge   Updates
 **Guide Last Read:** {YYYY-MM-DD HH:MM}
 
 **Critical Rules from Guide:**
-- {Rule 1 - e.g., "11 dimensions mandatory, complete Validation Loop required (primary clean round + sub-agent confirmation)"}
+- {Rule 1 - e.g., "9 dimensions mandatory, complete Validation Loop required (primary clean round + sub-agent confirmation)"}
 - {Rule 2 - e.g., "Update Agent Status after each round"}
 - {Rule 3 - e.g., "STOP if confidence < Medium"}
 - {Rule 4 - e.g., "RESTART Post-Implementation if ANY issues found"}
@@ -442,7 +442,7 @@ Plan  Deep Dive  Check  Definition (per feature)   QC     Merge   Updates
 **S9 - Epic Final QC:**
 - [ ] Epic smoke testing passed (all 4 parts)
 - [ ] Epic QC rounds passed (primary clean round + sub-agent confirmation)
-- [ ] Epic PR review passed (all 11 categories)
+- [ ] Epic PR review passed (all 12 categories)
 - [ ] End-to-end validation vs original request passed
 
 **S10 - Final Changes & Merge:**

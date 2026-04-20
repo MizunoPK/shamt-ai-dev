@@ -53,7 +53,7 @@ I'm reading `stages/s5/s5_bugfix_workflow.md` to ensure I follow the bug fix wor
   - Save current work state in README
 - PHASE 2: Bug Fix Implementation
   - S2: Deep Dive (adapted for bug fix)
-  - S5 v2: Implementation Planning (Validation Loop with 11 dimensions)
+  - S5 v2: Implementation Planning (Validation Loop with 9 dimensions)
   - S6: Implementation
   - S7: Post-Implementation
   - SKIP: S1, S3, S8, S9, S10, S11 (epic-level stages; S4)
@@ -271,7 +271,7 @@ the complete code review workflow...
 - Step 4: Run overview validation loop (5 dimensions, primary clean + 2 sub-agents)
 - Step 5: Determine review version number (v1 for first review, vN for re-review)
 - Step 6: Write review_vN.md (12 categories, severity-tagged, copy-paste ready)
-- Step 7: Run review file validation loop (13 dimensions, primary clean + 2 sub-agents)
+- Step 7: Run review file validation loop (12 dimensions, primary clean + 2 sub-agents)
 - **HALT if branch not found:** report to user immediately, no output files created
 - **Re-review:** create next review_vN.md, update overview.md in-place
 

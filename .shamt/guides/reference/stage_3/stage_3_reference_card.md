@@ -27,7 +27,7 @@ S3.P2: Epic Documentation Refinement (20-30 min)
 S3.P3: Epic Plan Approval (10-15 min) ← MANDATORY GATE
     ├─ Step 1: Create epic summary
     ├─ Step 2: Gate 4 — present to user, wait for explicit approval
-    └─ If rejected: 3-tier rejection handling (S1.P3 / S1.P4 / exit)
+    └─ If rejected: 3-tier rejection handling (S1.P3 / S1 Step 4 / exit)
 ```
 
 ---
@@ -97,7 +97,7 @@ S3.P3: Epic Plan Approval (10-15 min) ← MANDATORY GATE
 | Tier | User Says | Action |
 |------|-----------|--------|
 | A | "Research was incomplete" | Loop back to S1.P3 (Discovery) |
-| B | "Features defined incorrectly" | Loop back to S1.P4 (Feature Breakdown) |
+| B | "Features defined incorrectly" | Loop back to S1 Step 4 (Feature Breakdown Proposal) |
 | C | "Epic should not proceed" | Exit epic planning |
 
 ---

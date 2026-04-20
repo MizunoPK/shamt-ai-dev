@@ -701,7 +701,7 @@ ELSE:
   → Continue to deep validation
 
 Primary Agent (Opus):
-Step 2: Run 11-dimension validation (Opus handles all)
+Step 2: Run 9-dimension validation (Opus handles all)
 
 IF consecutive_clean = 1:
   ├─ Spawn Haiku Sub-Agent #1
@@ -845,7 +845,7 @@ No context switch, faster completion
 <!-- Primary validation round -->
 <invoke name="Task">
   <parameter name="model">sonnet</parameter>
-  <parameter name="prompt">Run full 11-dimension validation on implementation plan. This is the primary round.</parameter>
+  <parameter name="prompt">Run full 9-dimension validation on implementation plan. This is the primary round.</parameter>
 </invoke>
 ```
 
@@ -855,7 +855,7 @@ No context switch, faster completion
 ```xml
 <invoke name="Task">
   <parameter name="model">opus</parameter>
-  <parameter name="prompt">Run full 11-dimension validation on implementation plan. This is the primary round.</parameter>
+  <parameter name="prompt">Run full 9-dimension validation on implementation plan. This is the primary round.</parameter>
 </invoke>
 ```
 
@@ -876,7 +876,7 @@ Each workflow guide includes inline Task tool examples with copy-paste-ready XML
 - `stages/s7/s7_p2_qc_rounds.md` — Feature QC validation (17 dimensions)
 - `stages/s8/s8_p1_cross_feature_alignment.md` — Alignment validation
 - `stages/s9/s9_p2_epic_qc_rounds.md` — Epic QC validation (13 dimensions)
-- `stages/s9/s9_p4_epic_final_review.md` — Epic final review (5 categories)
+- `stages/s9/s9_p4_epic_final_review.md` — Epic final review (12 review categories + 5 epic-scope focus areas)
 - `stages/s11/s11_p1_guide_update_workflow.md` — Proposal doc verification
 
 **Master Protocol:**

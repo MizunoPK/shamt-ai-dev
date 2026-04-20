@@ -235,7 +235,7 @@ Note:
 | QC round missed issue | stages/s7/s7_p2_qc_rounds.md |
 | Smoke test didn't catch bug | stages/s7/s7_p1_smoke_testing.md |
 | Epic integration issue | stages/s9/s9_p2_epic_qc_rounds.md |
-| Spec misinterpretation | stages/s5/s5_v2_validation_loop.md (D11: Gate 23a - Spec Alignment) |
+| Spec misinterpretation | stages/s5/s5_v2_validation_loop.md (D9: Gate 23a - Spec Alignment) |
 | Checklist question unclear | templates/feature_checklist_template.md |
 | Implementation plan vague | templates/implementation_plan_template.md |
 | Prompt not followed | prompts/{stage}_prompts.md |
@@ -874,51 +874,49 @@ Use prompt from prompts/guide_update_prompts.md "After Creating Proposal Documen
 ### Proposal P0-1: Add Spec Validation Historical Context to Mandatory Gates
 
 **Lesson Learned:**
-> "S5 Validation Loop Dimension 11 (Spec Alignment & Cross-Validation) caught that implementation_plan.md misinterpreted spec.md about week_N+1 folder logic. Spec said 'create week folders' but implementation plan said 'no code changes needed for folders.' This validation dimension prevented a week+ of rework implementing the wrong solution."
+> "S5 Validation Loop Dimension 9 (Spec Alignment) caught that implementation_plan.md misinterpreted spec.md about week_N+1 folder logic. Spec said 'create week folders' but implementation plan said 'no code changes needed for folders.' This validation dimension prevented a week+ of rework implementing the wrong solution."
 
 **Source File:** `epic_lessons_learned.md` - Lesson #3
 
 **Root Cause:**
-Agent rushed through S5 Phase 1 (Draft Creation) and made assumptions about folder handling instead of carefully reading spec.md. Dimension 11's cross-validation (spec.md, test_strategy.md, epic context) caught the discrepancy during Validation Loop.
+Agent rushed through S5 Phase 1 (Draft Creation) and made assumptions about folder handling instead of carefully reading spec.md. Dimension 9's spec alignment check (plan vs. spec.md requirements) caught the discrepancy during Validation Loop.
 
 **Affected Guide(s):**
-- `stages/s5/s5_v2_validation_loop.md` - Section: "Dimension 11: Spec Alignment & Cross-Validation" (Lines 725-750)
+- `stages/s5/s5_v2_validation_loop.md` - Section: "Dimension 9: Spec Alignment"
 
 **Current State (BEFORE):**
 ```markdown
-### Dimension 11: Spec Alignment & Cross-Validation (CRITICAL)
+### Dimension 9: Spec Alignment
 
 **What to Check:**
-- [ ] Implementation plan matches spec.md requirements
-- [ ] All spec.md sections referenced in implementation tasks
-- [ ] No spec.md requirements missing from plan
-- [ ] Test strategy aligns with spec.md test requirements
+- [ ] Implementation plan faithfully translates ALL spec requirements into steps
+- [ ] No spec requirements missing from plan
+- [ ] No additions beyond spec scope
 ```
 
 **Proposed Change (AFTER):**
 ```markdown
-### Dimension 11: Spec Alignment & Cross-Validation (CRITICAL)
+### Dimension 9: Spec Alignment
 
 **Historical Context:**
 - Feature 02 catastrophic bug: implementation_plan.md misinterpreted spec.md
 - Plan stated "no code changes needed" when spec actually required week_N+1 folder logic
-- Dimension 11 specifically designed to prevent this type of bug
-- Cross-validation catches spec misinterpretations before implementation
+- Dimension 9 specifically designed to prevent this type of bug
+- Spec alignment check catches spec misinterpretations before implementation
 
 **What to Check:**
-- [ ] Implementation plan matches spec.md requirements
-- [ ] All spec.md sections referenced in implementation tasks
-- [ ] No spec.md requirements missing from plan
-- [ ] Test strategy aligns with spec.md test requirements
+- [ ] Implementation plan faithfully translates ALL spec requirements into steps
+- [ ] No spec requirements missing from plan
+- [ ] No additions beyond spec scope
 ```
 
 **Rationale:**
 Adding historical context shows future agents WHY this dimension exists and what happens if it's skipped. Real example makes the importance concrete instead of abstract.
 
 **Impact Assessment:**
-- **Who benefits:** All agents doing S5 v2 Validation Loop (Dimension 11)
+- **Who benefits:** All agents doing S5 v2 Validation Loop (Dimension 9)
 - **When it helps:** When validating implementation_plan.md against spec.md
-- **Severity if unfixed:** Critical - agents may skip or rush through Dimension 11 without understanding its importance, leading to week+ of rework from spec misinterpretation
+- **Severity if unfixed:** Critical - agents may skip or rush through Dimension 9 without understanding its importance, leading to week+ of rework from spec misinterpretation
 
 **User Decision:** [ ] Approve  [ ] Modify  [ ] Reject  [ ] Discuss
 

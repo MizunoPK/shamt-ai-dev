@@ -167,7 +167,7 @@
 
 **Current Stage:** S4 (Feature Testing Strategy)
 **Previous:** S3 (Epic-Level Docs, Tests, and Approval — Gate 4.5)
-**Next:** S5 v2 (Implementation Planning - 2 phases with 11-dimension Validation Loop)
+**Next:** S5 v2 (Implementation Planning - 2 phases with 9-dimension Validation Loop)
 
 **Start S5:**
 1. Use phase transition prompt from `prompts_reference_v2.md`

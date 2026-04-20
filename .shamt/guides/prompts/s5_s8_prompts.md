@@ -45,25 +45,22 @@ I'm beginning S5 (Implementation Planning) for {feature_name}.
 
 **Phase 1: Draft Creation (60-90 minutes)**
 - Use template: `templates/implementation_plan_template.md`
-- Create all 11 dimension sections in implementation_plan.md
+- Create all 9 dimension sections in implementation_plan.md
 - Target: ~70% completeness (known gaps acceptable)
 - Time limit: Stop at 90 minutes even if only 70% complete
 - Copy VALIDATION_LOOP_LOG_S5_template.md to feature folder
 
 **Phase 2: Validation Loop (3.5-6 hours, typically 6-8 rounds)**
-- Validate against 18 dimensions EVERY round (7 master + 11 S5-specific):
-- **11 S5-specific dimensions** (create sections in implementation_plan.md):
-  1. Requirements Completeness
-  2. Interface & Dependency Verification
-  3. Algorithm Traceability
-  4. Task Specification Quality (embeds Gate 4a)
-  5. Data Flow & Consumption
-  6. Error Handling & Edge Cases
-  7. Integration & Compatibility (embeds Gate 7a)
-  8. Test Coverage Quality
-  9. Performance & Dependencies
-  10. Implementation Readiness
-  11. Spec Alignment & Cross-Validation (embeds Gate 23a)
+- Validate against **9 mechanical dimensions** EVERY round (see s5_v2_validation_loop.md):
+  1. Step Clarity
+  2. Mechanical Executability
+  3. File Coverage Completeness
+  4. Operation Specificity
+  5. Verification Completeness
+  6. Error Handling Clarity
+  7. Dependency Ordering
+  8. Pre/Post Checklist Completeness
+  9. Spec Alignment
 - Fix ALL issues before next round (zero deferred issues)
 - Exit when primary clean round achieved, then spawn 2 sub-agents for confirmation
 - Document each round in VALIDATION_LOOP_LOG.md
@@ -94,7 +91,7 @@ I'm beginning S5 (Implementation Planning) for {feature_name}.
 - Current Phase: S5_V2_DRAFT_CREATION
 - Current Guide: stages/s5/s5_v2_validation_loop.md
 - Guide Last Read: {YYYY-MM-DD HH:MM}
-- Critical Rules: "Implementation tasks MUST trace to spec requirements", "Draft = 70% in 90 min", "Validation Loop: primary clean round + sub-agent confirmation", "11 S5-specific dimensions ALL rounds", "Zero deferred issues", "Interface verification: READ actual code"
+- Critical Rules: "Implementation tasks MUST trace to spec requirements", "Draft = 70% in 90 min", "Validation Loop: primary clean round + sub-agent confirmation", "9 mechanical dimensions ALL rounds", "Zero deferred issues", "Interface verification: READ actual code"
 - Progress: Phase 1 - Draft Creation
 - Next Action: Begin draft creation (target 90 minutes)
 
@@ -111,7 +108,7 @@ Do NOT present the draft to the user or proceed to S6 without completing this st
 
 **User says:** Agent completes draft creation (Phase 1)
 
-**Prerequisite:** Draft implementation_plan.md created with all 11 dimension sections
+**Prerequisite:** Draft implementation_plan.md created with all 9 dimension sections
 
 **Agent MUST respond:**
 
@@ -120,19 +117,16 @@ I'm starting S5 v2 Phase 2: Validation Loop...
 
 **The guide requires:**
 - **Validation Loop Protocol**: primary clean round + sub-agent confirmation required
-- **Check ALL 18 dimensions EVERY round** (7 master + 11 S5-specific, no skipping):
-- **11 S5-specific dimensions** (detailed in guide):
-  1. Requirements Completeness
-  2. Interface & Dependency Verification
-  3. Algorithm Traceability
-  4. Task Specification Quality
-  5. Data Flow & Consumption
-  6. Error Handling & Edge Cases
-  7. Integration & Compatibility
-  8. Test Coverage Quality
-  9. Performance & Dependencies
-  10. Implementation Readiness
-  11. Spec Alignment & Cross-Validation
+- **Check ALL 9 mechanical dimensions EVERY round** (see s5_v2_validation_loop.md, no skipping):
+  1. Step Clarity
+  2. Mechanical Executability
+  3. File Coverage Completeness
+  4. Operation Specificity
+  5. Verification Completeness
+  6. Error Handling Clarity
+  7. Dependency Ordering
+  8. Pre/Post Checklist Completeness
+  9. Spec Alignment
 - **Fix ALL issues immediately** before next round (zero deferral)
 - **Document each round** in VALIDATION_LOOP_LOG.md with:
   - Reading pattern used
@@ -145,7 +139,7 @@ I'm starting S5 v2 Phase 2: Validation Loop...
 **Reading Patterns (vary each round):**
 - Round 1: Sequential (top-to-bottom), focus D1-D4
 - Round 2: Reverse (bottom-to-top), focus D5-D8
-- Round 3: Spot-checks, focus D9-D11
+- Round 3: Spot-checks, focus D7-D9
 - Round 4+: Alternate patterns
 
 **Updating feature README Agent Status:**
@@ -221,18 +215,16 @@ Starting Validation Round 1...
 - Primary Clean Round: Round {N}
 - Sub-Agent Confirmation: Round {N} (Sub-agent A: clean, Sub-agent B: clean)
 
-**All 11 Dimensions Validated:**
-✅ Requirements Completeness
-✅ Interface & Dependency Verification
-✅ Algorithm Traceability
-✅ Task Specification Quality
-✅ Data Flow & Consumption
-✅ Error Handling & Edge Cases
-✅ Integration & Compatibility
-✅ Test Coverage Quality
-✅ Performance & Dependencies
-✅ Implementation Readiness
-✅ Spec Alignment & Cross-Validation
+**All 9 Mechanical Dimensions Validated:**
+✅ Step Clarity
+✅ Mechanical Executability
+✅ File Coverage Completeness
+✅ Operation Specificity
+✅ Verification Completeness
+✅ Error Handling Clarity
+✅ Dependency Ordering
+✅ Pre/Post Checklist Completeness
+✅ Spec Alignment
 
 **implementation_plan.md is ready for Gate 5: User Approval**
 
@@ -264,7 +256,7 @@ Starting iteration 8...
 
 I've completed the validation loop with primary clean round + sub-agent confirmation. implementation_plan.md is ready for your review (~400 lines):
 
-**Key Sections (validated by 11 dimensions):**
+**Key Sections (validated by 9 dimensions):**
 - Implementation Tasks (100% requirements coverage, all with acceptance criteria)
 - Component Dependencies Matrix (all interfaces verified from source code)
 - Algorithm Traceability Matrix (40+ mappings with file:line references)
@@ -290,7 +282,7 @@ I've completed the validation loop with primary clean round + sub-agent confirma
 2. Phasing is reasonable (4-6 checkpoints)
 3. Test coverage is adequate (>90%)
 4. No missing requirements
-5. All 11 validation dimensions look complete
+5. All 9 mechanical dimensions look complete
 
 **Say "approved" to proceed to S6 (Implementation), or request changes.**
 
@@ -327,7 +319,7 @@ I'm reading `stages/s6/s6_execution.md` to ensure I follow the implementation wo
 
 **Prerequisites I'm verifying:**
 ✅ S5 v2 complete (EPIC_README.md shows Validation Loop passed: primary clean round + sub-agent confirmation)
-✅ Phase 2 (Validation Loop) complete: All 11 dimensions validated
+✅ Phase 2 (Validation Loop) complete: All 9 dimensions validated
 ✅ implementation_plan.md exists and user-approved (Gate 5)
 ✅ questions.md resolved (or documented "no questions")
 
@@ -419,9 +411,9 @@ I'm reading `stages/s7/s7_p2_qc_rounds.md` and `reference/validation_loop_s7_fea
   - Fix ALL issues immediately before next round (no deferring)
   - Typical: 3-5 primary rounds to achieve primary clean round
 
-- **16 Dimensions Checked Every Round:**
+- **17 Dimensions Checked Every Round:**
   - Master (7): Empirical Verification, Completeness, Internal Consistency, Traceability, Clarity & Specificity, Upstream Alignment, Standards Compliance
-  - S7 QC (10): Cross-Feature Integration, Error Handling Completeness, End-to-End Functionality, Test Coverage Quality, Requirements Completion, Import & Dependency Hygiene, Cross-Layer & Type Consistency, Input Validation & Path Safety, Test Stub Consistency
+  - S7 QC (10): Cross-Feature Integration, Error Handling Completeness, End-to-End Functionality, Test Coverage Quality, Requirements Completion, Import & Dependency Hygiene, Cross-Layer & Type Consistency, Input Validation & Path Safety, Test Stub Consistency, Mechanical Code Quality
 
 - **Key Difference from Old Approach:**
   - OLD: Sequential rounds checking different concerns → Any issue → Restart from S7.P1
@@ -467,12 +459,12 @@ I'm reading `stages/s7/s7_p3_final_review.md` and `reference/validation_loop_qc_
 **The guide requires:**
 - **PR Validation Loop Protocol** (extends Master Validation Loop):
   - READ: `reference/validation_loop_qc_pr.md` (complete protocol)
-  - Check ALL 11 PR categories + 7 master dimensions EVERY round
+  - Check ALL 12 PR categories + 7 master dimensions EVERY round
   - Exit when primary clean round + sub-agent confirmation (both confirm zero issues)
   - Fresh eyes through re-reading and breaks (NOT agent spawning)
   - Fix ALL issues immediately before next round (no deferring)
   - Typical: 3-5 primary rounds to achieve primary clean round
-- **11 PR Categories:**
+- **12 PR Categories:**
   1. Code Quality & Standards
   2. Test Coverage & Quality
   3. Security & Data Handling
@@ -484,6 +476,7 @@ I'm reading `stages/s7/s7_p3_final_review.md` and `reference/validation_loop_qc_
   9. Configuration & Dependencies
   10. Edge Cases & Validation
   11. Commit History & Messages
+  12. Scope & Changes
 - **Lessons Learned Capture**:
   - Document what worked well
   - Document what didn't work
@@ -506,7 +499,7 @@ I'm reading `stages/s7/s7_p3_final_review.md` and `reference/validation_loop_qc_
 - Guide Last Read: {YYYY-MM-DD HH:MM}
 - Critical Rules: "PR Validation Loop MANDATORY", "primary clean round + sub-agent confirmation to exit", "Update guides immediately", "100% completion required"
 - Progress: PR Validation Loop starting
-- Next Action: Begin Round 1 - check all 11 PR categories + 7 master dimensions
+- Next Action: Begin Round 1 - check all 12 PR categories + 7 master dimensions
 
 Starting PR Validation Loop for {feature_name}...
 ```

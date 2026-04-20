@@ -371,7 +371,7 @@ Phases within a stage must have correct ordering and dependencies.
 ```text
 S5 Phase 1: Draft Creation
   ↓ Must complete before
-S5 Phase 2: Validation Loop (primary clean round + sub-agent confirmation across 11 dimensions)
+S5 Phase 2: Validation Loop (primary clean round + sub-agent confirmation across 9 dimensions)
 ```
 > ⚠️ **S5 v2 Note:** S5 v1 used 3 phases (S5.P1 Round 1, S5.P2 Round 2, S5.P3 Round 3). S5 v2 uses 2 phases only (Draft Creation + Validation Loop). When auditing S5 phase count, expect 2 phases, not 3.
 
@@ -451,9 +451,9 @@ Quality gates appear at correct stage boundaries with correct gate numbers.
 | Gate 5 | S5 v2 (after Validation Loop, before S6) | Stage | User | Implementation plan approval |
 | Gate 4a | S5 v2 Dimension 4 | Iteration | Agent | Task specification audit |
 | Gate 7a | S5 v2 Dimension 7 | Iteration | Agent | Backward compatibility |
-| Gate 23a | S5 v2 Dimension 11 | Iteration | Agent | Pre-implementation spec audit |
-| Gate 24 | S5 v2 Dimension 10 | Iteration | Agent | GO/NO-GO decision |
-| Gate 25 | S5 v2 Dimension 11 | Iteration | Agent | Spec validation check |
+| Gate 23a | S5 v2 Dimension 9 (Spec Alignment) | Iteration | Agent | Pre-implementation spec audit |
+| Gate 24 | S5 v2 exit criteria | Iteration | Agent | GO/NO-GO decision |
+| Gate 25 | S5 v2 Dimension 9 (Spec Alignment) | Iteration | Agent | Spec validation check |
 
 **Search Commands:**
 ```bash
@@ -473,7 +473,7 @@ grep -rn "Gate 5" stages/s2/ stages/s3/ stages/s4/  # Should only be in S5
 - [ ] Gate 3a appears in S2.P1.I3 (not S3 or later)
 - [ ] Gate 4 appears in S3.P3 (not S3.P1 or S4)
 - [ ] Gate 5 appears after S5 v2 Validation Loop, before S6 (not inside S5.P1 or in S6)
-- [ ] Gates 4a, 7a, 23a, 24, 25 appear embedded in S5 v2 Validation Loop dimensions (D5, D15, D12, D11, D12)
+- [ ] Gates 4a, 7a, 23a, 24, 25 appear embedded in S5 v2 Validation Loop dimensions (D4, D7, D9, exit criteria, D9)
 - [ ] No gates reference deprecated gate numbers (Gate 6, Gate 7 that don't exist)
 - [ ] Gates appear in numerical order within their sections
 - [ ] Each gate has clear pass/fail criteria

@@ -124,7 +124,7 @@ Runs **once per epic**, after Gate 4 approval. Defines all cross-feature interfa
 
 Two-phase approach:
 1. **Draft Creation** (60-90 min): Write `implementation_plan.md`
-2. **Validation Loop** (3.5-6 hours): 11 dimensions, primary clean round + sub-agent confirmation required
+2. **Validation Loop** (3.5-6 hours): 9 dimensions, primary clean round + sub-agent confirmation required
 
 Gate 5: User approval of implementation plan (3-tier rejection handling)
 

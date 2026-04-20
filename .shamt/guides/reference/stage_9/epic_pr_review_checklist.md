@@ -1,4 +1,4 @@
-# Epic PR Review Checklist - 11 Categories
+# Epic PR Review Checklist - 12 Categories
 
 **Purpose:** Complete checklist for epic-level PR review (S9.P4 Step 6)
 **When to Use:** After S9.P2 QC rounds complete, before final verification
@@ -57,7 +57,7 @@ This checklist supplements the complete PR review protocol. See `reference/valid
 1. Follow `reference/validation_loop_qc_pr.md` for complete review process
 2. Spawn fresh agents for each review round
 3. Use this checklist as **reference for epic-level considerations**
-4. Fresh agents automatically apply 11-category checklist during Rounds 2-5
+4. Fresh agents automatically apply 12-category checklist during Rounds 2-5
 5. Document findings in `SHAMT-{N}-{epic_name}/pr_review_issues.md`
 6. Continue until primary clean round + sub-agent confirmation achieved
 
@@ -816,9 +816,33 @@ warnings.warn("Old rank priority format deprecated. Use new format.", Deprecatio
 
 ---
 
+## Category 12: Context & Intent (Epic Level)
+
+**Focus:** Does the epic implementation reflect sound design intent? Are there signs of misalignment between the epic goals and the implementation approach?
+
+### Validation Checklist
+
+- [ ] Implementation approach aligns with the spirit of the original epic request
+- [ ] No major design decisions appear to contradict stated goals
+- [ ] Epic architecture choices are well-motivated (not arbitrary)
+- [ ] Any deviations from spec are documented and justified
+
+### Document Results
+
+```markdown
+### Context & Intent (Epic Level): ✅ PASS
+
+**Validated:**
+- Implementation approach aligns with epic goals
+- No unexplained design deviations
+- Architecture choices well-motivated
+```
+
+---
+
 ## After Review Completion
 
-**When all 11 categories reviewed:**
+**When all 12 categories reviewed:**
 
 1. **If ALL categories PASS:**
    - Document results in epic_lessons_learned.md (see main guide)
