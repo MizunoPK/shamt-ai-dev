@@ -53,6 +53,7 @@ fi
 echo "Creating directory structure..."
 mkdir -p "$LITE_DIR/reference"
 mkdir -p "$LITE_DIR/templates"
+mkdir -p "$LITE_DIR/stories"
 
 # --- Copy and instantiate files ----------------------------------------------
 
@@ -64,6 +65,14 @@ sed -e "s/{{PROJECT_NAME}}/$PROJECT_NAME/g" \
     "$SHAMT_SOURCE_DIR/SHAMT_LITE.template.md" \
     > "$LITE_DIR/SHAMT_LITE.md"
 
+# Story workflow file (no template variables)
+cp "$SHAMT_SOURCE_DIR/story_workflow_lite.template.md" \
+   "$LITE_DIR/story_workflow_lite.md"
+
+# CHANGES.md (no template variables)
+cp "$SHAMT_SOURCE_DIR/CHANGES.template.md" \
+   "$LITE_DIR/CHANGES.md"
+
 # Reference files (no template variables)
 cp "$SHAMT_SOURCE_DIR/reference/severity_classification_lite.md" \
    "$LITE_DIR/reference/"
@@ -74,11 +83,13 @@ cp "$SHAMT_SOURCE_DIR/reference/validation_exit_criteria_lite.md" \
 cp "$SHAMT_SOURCE_DIR/reference/question_brainstorm_categories_lite.md" \
    "$LITE_DIR/reference/"
 
-# Template files (with template variables)
-sed -e "s/{{PROJECT_NAME}}/$PROJECT_NAME/g" \
-    -e "s/{{DATE}}/$CURRENT_DATE/g" \
-    "$SHAMT_SOURCE_DIR/templates/discovery_lite.template.md" \
-    > "$LITE_DIR/templates/discovery.template.md"
+# Ticket template (no template variables)
+cp "$SHAMT_SOURCE_DIR/templates/ticket.template.md" \
+   "$LITE_DIR/templates/ticket.template.md"
+
+# Spec template (no template variables)
+cp "$SHAMT_SOURCE_DIR/templates/spec.template.md" \
+   "$LITE_DIR/templates/spec.template.md"
 
 sed -e "s/{{PROJECT_NAME}}/$PROJECT_NAME/g" \
     -e "s/{{DATE}}/$CURRENT_DATE/g" \
@@ -94,10 +105,9 @@ sed -e "s/{{PROJECT_NAME}}/$PROJECT_NAME/g" \
 cp "$SHAMT_SOURCE_DIR/templates/code_review_lite.template.md" \
    "$LITE_DIR/templates/code_review.template.md"
 
-# Implementation plan template (DATE variable only, no PROJECT_NAME)
-sed -e "s/{{DATE}}/$CURRENT_DATE/g" \
-    "$SHAMT_SOURCE_DIR/templates/implementation_plan_lite.template.md" \
-    > "$LITE_DIR/templates/implementation_plan.template.md"
+# Implementation plan template (no template variables)
+cp "$SHAMT_SOURCE_DIR/templates/implementation_plan_lite.template.md" \
+   "$LITE_DIR/templates/implementation_plan.template.md"
 
 # --- Success message ---------------------------------------------------------
 
@@ -108,13 +118,17 @@ echo "============================================================"
 echo ""
 echo "Files created:"
 echo "  shamt-lite/"
-echo "  ├── SHAMT_LITE.md                        (main rules file)"
+echo "  ├── SHAMT_LITE.md                        (5 patterns + token discipline)"
+echo "  ├── story_workflow_lite.md               (six-phase story workflow)"
+echo "  ├── CHANGES.md                           (Polish-phase upstream candidates)"
+echo "  ├── stories/                             (per-story work folders)"
 echo "  ├── reference/"
 echo "  │   ├── severity_classification_lite.md"
 echo "  │   ├── validation_exit_criteria_lite.md"
 echo "  │   └── question_brainstorm_categories_lite.md"
 echo "  └── templates/"
-echo "      ├── discovery.template.md"
+echo "      ├── ticket.template.md"
+echo "      ├── spec.template.md"
 echo "      ├── code_review.template.md"
 echo "      ├── implementation_plan.template.md"
 echo "      ├── architecture.template.md"
@@ -124,11 +138,12 @@ echo "Next steps:"
 echo "  1. Copy shamt-lite/SHAMT_LITE.md to your AI service's rules file"
 echo "     (e.g., CLAUDE.md, .cursorrules, copilot-instructions.md)"
 echo ""
-echo "  2. (Optional) Fill out architecture and coding standards templates:"
+echo "  2. Start a story: create stories/{slug}/ticket.md and follow"
+echo "     story_workflow_lite.md for the six-phase workflow"
+echo ""
+echo "  3. (Optional) Fill out architecture and coding standards templates:"
 echo "     • shamt-lite/templates/architecture.template.md → ARCHITECTURE.md"
 echo "     • shamt-lite/templates/coding_standards.template.md → CODING_STANDARDS.md"
-echo ""
-echo "  3. Start using validation loops, discovery, and code review!"
 echo ""
 echo "============================================================"
 echo ""

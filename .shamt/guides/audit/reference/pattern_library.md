@@ -503,7 +503,7 @@ grep -rn "proceed to.*level\|transition to.*level" --include="*.md" ../stages/
 
 ```bash
 # Extract workflow claims for comparison
-for stage in {1..10}; do
+for stage in {1..11}; do
   echo "=== S$stage workflow claims ==="
   grep -n "group\|parallel\|scope\|level" ../stages/s$stage/*.md | head -10
 done

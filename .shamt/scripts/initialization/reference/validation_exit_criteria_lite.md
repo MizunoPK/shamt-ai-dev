@@ -1,261 +1,108 @@
 # Validation Loop Exit Criteria
 
-**Purpose:** Define how to run validation loops and when they're complete
+**Extends Pattern 1 (Validation Loops) in SHAMT_LITE.md — read that first.**
+
+**Purpose:** Extended mechanics, counter logic examples, and common mistakes for Lite validation loops
 
 ---
 
-## What is a Validation Loop?
+## Lite Exit Criterion
 
-A systematic quality assurance process that validates artifacts (specs, plans, code, documentation) through iterative rounds until achieving:
-1. Primary clean round (zero issues or exactly 1 LOW-severity issue)
-2. Two independent sub-agents confirm zero issues
+**Primary clean round + 1 independent Haiku sub-agent confirmation.**
 
----
-
-## Core Process
-
-### Round Structure
-
-Each validation round follows this pattern:
-
-```text
-1. Read artifact completely with fresh perspective
-   ↓
-2. Identify issues across relevant dimensions
-   ↓
-3. Classify each issue by severity (CRITICAL/HIGH/MEDIUM/LOW)
-   ↓
-4. Fix ALL issues immediately (zero tolerance for deferred issues)
-   ↓
-5. Update consecutive_clean counter:
-   - 0 issues → counter = 1 (primary clean round)
-   - 1 LOW issue → counter = 1 (clean with 1 low fix)
-   - 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL → counter = 0
-   ↓
-6. Check exit condition:
-   - If counter < 1: Loop to step 1 (next round)
-   - If counter = 1: Proceed to sub-agent confirmation
-```
-
-### Fresh Eyes Principle
-
-**Critical:** Re-read the ENTIRE artifact every single round (not from memory)
-
-**Why:** First-pass reading misses 40%+ of important details. Memory-based validation is unreliable.
-
-**How:**
-- Round 1: Sequential read (top to bottom)
-- Round 2: Different order (bottom to top, by section, random)
-- Round 3+: Vary reading patterns each round
-
----
-
-## Exit Criteria
-
-### Primary Clean Round
-
-A round is considered **clean** if EITHER:
-- **Pure Clean:** Zero issues found
-- **Clean (1 Low Fix):** Exactly 1 LOW-severity issue found and fixed
-
-A round is **NOT clean** if:
-- 2+ LOW-severity issues found
-- Any MEDIUM-severity issue found
-- Any HIGH-severity issue found
-- Any CRITICAL-severity issue found
-
-### Sub-Agent Confirmation
-
-When primary clean round is achieved (`consecutive_clean = 1`):
-
-1. **Spawn 2 independent sub-agents in parallel**
-2. Each sub-agent:
-   - Reads the artifact completely
-   - Validates across all relevant dimensions
-   - Reports total issues found
-3. **Exit condition:**
-   - Both sub-agents confirm zero issues → **VALIDATION COMPLETE** ✅
-   - Either sub-agent finds issues → Reset `consecutive_clean = 0`, fix issues, continue loop
-
-**Important:** Sub-agents do NOT get the 1 LOW allowance. ANY issue found by a sub-agent (even LOW) means they cannot confirm.
+This applies to all Lite validation loops: specs, plans, code reviews, and ad-hoc artifacts. It does not apply to master Shamt design docs or full Shamt validation loops (those use 2 sub-agents per master repo policy).
 
 ---
 
 ## Counter Logic
 
-### consecutive_clean Tracking
-
 ```text
 Initial state: consecutive_clean = 0
 
-Round N finds 0 issues:
-  → consecutive_clean = 1 (primary clean round achieved)
-  → Trigger sub-agent confirmation
+Round finds 0 issues:
+  → consecutive_clean = 1 → trigger sub-agent
 
-Round N finds exactly 1 LOW issue (and fixes it):
-  → consecutive_clean = 1 (clean with 1 low fix)
-  → Trigger sub-agent confirmation
+Round finds exactly 1 LOW issue (and fixes it):
+  → consecutive_clean = 1 → trigger sub-agent
 
-Round N finds 2+ LOW issues:
-  → consecutive_clean = 0 (not clean)
-  → Fix all issues, continue to Round N+1
+Round finds 2+ LOW issues:
+  → consecutive_clean = 0 → fix all, continue
 
-Round N finds any MEDIUM/HIGH/CRITICAL issue:
-  → consecutive_clean = 0 (not clean)
-  → Fix all issues, continue to Round N+1
+Round finds any MEDIUM/HIGH/CRITICAL issue:
+  → consecutive_clean = 0 → fix all, continue
 
 Sub-agent finds ANY issue (even LOW):
-  → consecutive_clean = 0 (cannot confirm)
-  → Fix issues, continue to next round
+  → consecutive_clean = 0 → fix, continue to next round
 ```
 
 ### Example Sequences
 
-**Scenario 1: Quick Exit (2 rounds)**
+**Scenario 1: Quick exit (2 rounds)**
 ```
-Round 1: Found 3 MEDIUM issues → consecutive_clean = 0 → Fix → Continue
-Round 2: Found 0 issues → consecutive_clean = 1 → Trigger sub-agents
-Sub-agent A: 0 issues ✅
-Sub-agent B: 0 issues ✅
-→ COMPLETE
+Round 1: 3 MEDIUM issues → consecutive_clean = 0 → Fix → Continue
+Round 2: 0 issues → consecutive_clean = 1 → Spawn Haiku sub-agent
+Sub-agent: 0 issues ✅ → COMPLETE
 ```
 
-**Scenario 2: Multiple Rounds (4 rounds)**
+**Scenario 2: Sub-agent finds issue (3 rounds)**
 ```
-Round 1: Found 5 issues (2 HIGH, 3 MEDIUM) → consecutive_clean = 0 → Fix → Continue
-Round 2: Found 1 MEDIUM issue → consecutive_clean = 0 → Fix → Continue
-Round 3: Found 1 LOW issue → consecutive_clean = 1 → Trigger sub-agents
-Sub-agent A: Found 1 LOW issue ❌ → consecutive_clean = 0 → Fix → Continue
-Round 4: Found 0 issues → consecutive_clean = 1 → Trigger sub-agents
-Sub-agent A: 0 issues ✅
-Sub-agent B: 0 issues ✅
-→ COMPLETE
+Round 1: 2 HIGH, 1 MEDIUM → consecutive_clean = 0 → Fix → Continue
+Round 2: 1 LOW → consecutive_clean = 1 → Spawn Haiku sub-agent
+Sub-agent: 1 LOW issue ❌ → consecutive_clean = 0 → Fix → Continue
+Round 3: 0 issues → consecutive_clean = 1 → Spawn Haiku sub-agent
+Sub-agent: 0 issues ✅ → COMPLETE
+```
+
+**Scenario 3: Multiple LOW issues slow exit (3 rounds)**
+```
+Round 1: 1 HIGH, 2 LOW → consecutive_clean = 0 → Fix → Continue
+Round 2: 2 LOW → consecutive_clean = 0 → Fix → Continue
+Round 3: 1 LOW → consecutive_clean = 1 → Spawn Haiku sub-agent
+Sub-agent: 0 issues ✅ → COMPLETE
 ```
 
 ---
 
-## Documentation Requirements
+## Sub-Agent Exception Rule
 
-### Track Progress
+Sub-agents do NOT get the 1 LOW allowance. ANY issue found by a sub-agent (including LOW) resets `consecutive_clean = 0`.
 
-Document each round in a validation log:
-
-```markdown
-### Round 1
-
-**Reading Pattern:** Sequential (top to bottom)
-
-**Issues Found:** 3
-- Issue 1: Missing section X (Severity: HIGH)
-- Issue 2: Typo in line 42 (Severity: LOW)
-- Issue 3: Unclear description (Severity: MEDIUM)
-
-**Fixes Applied:**
-- Added section X with details
-- Fixed typo
-- Clarified description
-
-**consecutive_clean:** 0 (3 issues found)
+**Rationale:** The sub-agent is the final verification step with fresh eyes. If it finds anything — even cosmetic — the primary validation missed something. Fix and re-run.
 
 ---
 
-### Round 2
+## Fresh Eyes Principle
 
-**Reading Pattern:** Reverse order (bottom to top)
+Re-read the ENTIRE artifact every single round. Do not rely on memory of prior rounds.
 
-**Issues Found:** 0
+**Why:** First-pass reading misses issues that jump out on re-read. Memory-based validation is unreliable — you remember what you wrote, not what's actually there.
 
-**consecutive_clean:** 1 (primary clean round achieved)
-
-**Action:** Spawning sub-agents for confirmation
-
----
-
-### Sub-Agent Confirmations
-
-**Sub-Agent A:** 0 issues found ✅
-**Sub-Agent B:** 0 issues found ✅
-
-**Result:** VALIDATION COMPLETE ✅
-```
+**How:** Vary reading patterns across rounds (top-to-bottom, section-by-section, reverse order) to catch different classes of issues.
 
 ---
 
 ## Common Mistakes
 
-### ❌ Wrong: Exiting After First Clean Round
+**Exiting after primary clean round:** `consecutive_clean = 1` means trigger the sub-agent — it does NOT mean validation is complete. Wait for sub-agent confirmation.
 
-```
-Round 3: 0 issues found → consecutive_clean = 1
-Agent declares: "Validation complete!"
-```
+**Deferring issues:** All issues must be fixed immediately before moving to the next round. Never defer or batch fixes.
 
-**Problem:** Skipped sub-agent confirmation step. Not complete until BOTH sub-agents confirm.
+**Applying the 1 LOW allowance to sub-agents:** Sub-agents report any issue found, no exceptions. No 1 LOW grace period.
 
----
+**Reading from memory:** Must physically re-read the artifact. Memory validation is unreliable and defeats the purpose of fresh eyes.
 
-### ❌ Wrong: Deferring Issues
-
-```
-Round 2: Found 2 MEDIUM issues
-Agent says: "I'll fix these later, continuing validation..."
-```
-
-**Problem:** ALL issues must be fixed immediately before continuing.
+**Continuing with unresolved ambiguity:** If an issue is ambiguous (is this HIGH or MEDIUM?), classify higher and fix before continuing.
 
 ---
 
-### ❌ Wrong: Reading from Memory
+## Validation Dimensions Quick Reference
 
-```
-Round 3: Agent checks artifact from memory of Round 2
-```
-
-**Problem:** Must re-read ENTIRE artifact with fresh perspective every round.
-
----
-
-### ❌ Wrong: Allowing Sub-Agent LOW Issues
-
-```
-Sub-agent A: Found 1 LOW issue
-Agent says: "That's allowed, sub-agent confirms"
-```
-
-**Problem:** Sub-agents do NOT get the 1 LOW allowance. ANY issue = cannot confirm.
+See Pattern 1 in SHAMT_LITE.md for the full dimension lists per artifact type:
+- Specs: 7 dimensions (Completeness, Correctness, Consistency, Helpfulness, Improvements, Missing proposals, Open questions)
+- Implementation Plans: 7 dimensions (Step Clarity, Mechanical Executability, File Coverage, Operation Specificity, Verification Completeness, Dependency Ordering, Requirements Alignment)
+- Code Reviews: 5 dimensions (Correctness, Completeness, Helpfulness, Severity Accuracy, Evidence)
+- General Artifacts: 4 dimensions (Completeness, Clarity, Accuracy, Actionability)
 
 ---
 
-## Validation Dimensions
-
-When validating, check these dimensions (adapt based on your artifact type):
-
-### Generic Dimensions (applicable to most artifacts)
-
-1. **Completeness:** Are all necessary aspects covered?
-2. **Correctness:** Are factual claims accurate?
-3. **Consistency:** Are there internal contradictions?
-4. **Clarity:** Is everything understandable?
-
-### Spec-Specific Dimensions
-
-5. **Scope:** Is in/out/deferred clearly defined?
-6. **Acceptance Criteria:** How will success be measured?
-
-### Code-Specific Dimensions
-
-5. **Correctness:** Logic errors, bugs?
-6. **Security:** Vulnerabilities?
-7. **Performance:** Efficiency concerns?
-8. **Maintainability:** Code quality?
-
-### Plan-Specific Dimensions
-
-5. **Feasibility:** Can this actually be implemented?
-6. **Dependencies:** Are prerequisites identified?
-
-Choose dimensions relevant to what you're validating. Check ALL chosen dimensions EVERY round.
-
----
-
-*Adapted from Shamt Master Validation Loop Protocol*
+*Extends Pattern 1 in SHAMT_LITE.md*

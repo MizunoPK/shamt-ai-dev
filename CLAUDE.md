@@ -221,25 +221,46 @@ When a new AI service is discovered (reported by a child project or user):
 
 ## Shamt Lite
 
-**What it is:** A standalone lightweight version of Shamt (10 files total) that provides validation loops, discovery protocol, and code review workflows without the full S1-S11 epic framework.
+**What it is:** A standalone lightweight version of Shamt that provides a six-phase story workflow (Intake → Spec → Plan → Build → Review → Polish) plus 5 core quality patterns, without the full S1-S11 epic framework.
 
-**Target users:** Developers who want quality patterns and systematic validation but don't need epic tracking or the full workflow.
+**Target users:** Developers who want systematic quality patterns and a ticket-to-shipped workflow but don't need epic tracking or the full Shamt workflow.
 
 **Master repo storage:** All Shamt Lite files are stored in `.shamt/scripts/initialization/`:
-- `SHAMT_LITE.template.md` — Standalone rules file with 6 core patterns
+- `SHAMT_LITE.template.md` — Lean core: 5 patterns + token discipline (standalone executable)
+- `story_workflow_lite.template.md` — Full narrative of the six-phase story workflow
+- `CHANGES.template.md` — Template for per-project CHANGES.md (Polish-phase upstream candidates)
 - `init_lite.sh` / `init_lite.ps1` — Initialization scripts
-- `reference/` — 3 reference files (severity, validation, question brainstorming)
-- `templates/` — 5 templates (discovery, code review, implementation plan, architecture, coding standards)
+- `reference/` — 3 reference files (severity, validation, question brainstorming / spec categories)
+- `templates/` — 6 templates (ticket, spec, code review, implementation plan, architecture, coding standards)
 
-**Deployment:** When users run `init_lite.sh` or `init_lite.ps1`, these files are copied to `shamt-lite/` in their project with template variables replaced ({{PROJECT_NAME}}, {{DATE}}).
+**Deployed layout (after `init_lite` runs):**
+```
+shamt-lite/
+├── SHAMT_LITE.md                    # 5 patterns + token discipline
+├── story_workflow_lite.md           # Six-phase story workflow narrative
+├── CHANGES.md                       # Polish-phase upstream candidates accumulate here
+├── stories/                         # Per-story work folders (stories/{slug}/ticket.md, spec.md, etc.)
+├── reference/
+│   ├── severity_classification_lite.md
+│   ├── validation_exit_criteria_lite.md
+│   └── question_brainstorm_categories_lite.md
+└── templates/
+    ├── ticket.template.md
+    ├── spec.template.md
+    ├── code_review.template.md
+    ├── implementation_plan.template.md
+    ├── architecture.template.md
+    └── coding_standards.template.md
+```
 
-**Key principle:** `SHAMT_LITE.md` is standalone and executable. An agent can run all 6 patterns using only Part 1 of that file without reading any supporting files. Supporting files in `reference/` and `templates/` provide optional depth and copy-paste convenience.
+**Key principle:** `SHAMT_LITE.md` is standalone and executable. An agent can run all 5 patterns using only that file. `story_workflow_lite.md` adds the full story workflow narrative for ticket-based work.
+
+**Lite vs. full Shamt validation:** Lite validation loops use **1 sub-agent** confirmation (not 2). This applies to all Lite artifacts (specs, plans, reviews). Full Shamt retains 2 sub-agents. Lite `CHANGES.md` entries are proposals; master does not depend on any sync cadence.
 
 **When to update Shamt Lite:**
 - When validation loop mechanics change in the canonical guides
 - When severity classification rules are refined
-- When discovery protocol or question brainstorming framework improves
-- When code review workflow is updated
+- When spec protocol, code review, or implementation planning patterns improve
 - Never copy epic-specific content into lite files
 
 **Maintenance rule:** Shamt Lite files are NOT synced via import/export. They are maintained directly in the master repo and versioned independently.

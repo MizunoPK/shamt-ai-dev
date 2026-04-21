@@ -544,7 +544,7 @@ Verdict: ❌ TOC REQUIRED (too long to scan)
 
 **2. Multi-Section Guides:**
 ```
-File: EPIC_WORKFLOW_USAGE.md (600 lines, 10 stage sections)
+File: EPIC_WORKFLOW_USAGE.md (11 stage sections)
 Verdict: ❌ TOC REQUIRED (multiple distinct sections)
 ```markdown
 

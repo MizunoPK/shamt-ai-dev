@@ -127,10 +127,10 @@ CLAUDE.md (project root)
 ```bash
 # Count stage sections in CLAUDE.md
 grep -c "^\*\*S[0-9]" CLAUDE.md
-# Expected: 10 (S1-S11)
+# Expected: 11 (S1-S11)
 
 # Verify no missing stages
-for i in {1..10}; do
+for i in {1..11}; do
   if ! grep -q "^\*\*S$i:" CLAUDE.md; then
     echo "MISSING: S$i not found in CLAUDE.md"
   fi
@@ -442,7 +442,7 @@ The audit system has **23 dimensions** covering all quality aspects.
 ```bash
 # Count dimension files
 ls -1 .shamt/guides/audit/dimensions/d*.md | wc -l
-# Expected: 23 (d1-d19 guides + d21 guide + d22 guide + d10_examples.md + d16_examples.md; D20 in stage_1_discovery.md)
+# Expected: 24 (d1-d19 guides + d21 guide + d22 guide + d23 guide + d10_examples.md + d16_examples.md; D20 in stage_1_discovery.md)
 
 # Count dimension entries in README
 grep -c "^\| \*\*D[0-9]" .shamt/guides/audit/README.md
@@ -458,7 +458,7 @@ The workflow consists of **11 stages** with guides in stages/ directory.
 ```bash
 # Count stage directories
 ls -d .shamt/guides/stages/s*/ | wc -l
-# Expected: 10 (s1/ through s10/)
+# Expected: 11 (s1/ through s11/)
 ```
 
 **Template Count:**

@@ -174,7 +174,7 @@ grep -rn "Stage [0-9][a-z]\|S[0-9][a-z]" --include="*.md"
 ```
 
 **Validation:**
-- Verify stage numbers are 1-10 (current workflow)
+- Verify stage numbers are 1-11 (current workflow)
 - Verify phases exist for referenced stage
 - Verify iterations exist for referenced phase
 

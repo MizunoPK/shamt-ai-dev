@@ -1,13 +1,16 @@
 # Code Review Template
 
-Use this template structure for code reviews in Shamt Lite.
+Use this template for code reviews in Shamt Lite. Two modes:
+
+- **Story mode:** `stories/{slug}/code_review/review_v1.md` only — no overview.md (the story folder provides context via ticket.md, spec.md, and implementation_plan.md)
+- **Formal mode:** `.shamt/code_reviews/<branch>/overview.md` + `review_v1.md` — use when reviewing someone else's branch or PR
 
 ---
 
-## Overview Document
+## Overview Document (Formal Mode Only)
 
 **Filename:** `overview.md`
-**Purpose:** High-level description of what the branch/PR does
+**When:** Reviewing an external branch or PR (not used in story mode)
 
 ```markdown
 # Branch Overview: <branch-name>
@@ -16,13 +19,6 @@ Use this template structure for code reviews in Shamt Lite.
 **Base:** <base branch> (merge base: <short SHA>)
 **Commits:** N commits (<first SHA>..<last SHA>)
 **Files changed:** N files (+X -Y lines)
-
----
-
-## ELI5 — What Changed?
-
-<2-4 sentence plain-English summary for someone with no context. Avoid jargon.
-Focus on what the user would notice, not implementation details.>
 
 ---
 
@@ -39,56 +35,57 @@ If intent is not explicit, state "inferred from commit messages / code structure
 ## How Does It Work?
 
 <Technical walkthrough: which files were changed, what the key logic is, how
-components interact, notable design choices. Organize by area of change when
-multiple subsystems are touched.>
+components interact, notable design choices. Organize by area when multiple
+subsystems are touched.>
 
 ---
-
-*Overview generated using Shamt Lite code review workflow*
-*Branch: <branch> | Base: <base> | Date: YYYY-MM-DD*
+✅ Validated YYYY-MM-DD — N rounds, 1 sub-agent confirmed
+*Branch: <branch> | Base: <base>*
 ```
 
 ---
 
-## Review Document
+## Review Document (Both Modes)
 
-**Filename:** `review.md` (or `review_v1.md`, `review_v2.md` for versioning)
-**Purpose:** Structured feedback organized by severity
+**Filename:** `review_v1.md` (or `review_v2.md`, `review_v3.md` on re-review — never overwrite)
+
+**Story mode path:** `stories/{slug}/code_review/review_v1.md`
+**Formal mode path:** `.shamt/code_reviews/<branch>/review_v1.md`
 
 ```markdown
-# Code Review: <branch-name>
+# Code Review: <branch-name or story-slug>
 
 **Reviewed:** YYYY-MM-DD
 **Base:** <base branch> (merge base: <short SHA>)
-**Commits:** N commits (<first SHA>..<last SHA>)
-**Files changed:** N files (+X -Y lines)
-**Overview:** See `overview.md` for full description
+**Commits:** N commits | **Files changed:** N files (+X -Y lines)
+[Formal mode: **Overview:** See `overview.md`]
+[Story mode: **Story:** stories/{slug}/]
 
 ---
 
 ## Review Comments
 
-<Grouped by severity, then by category. Omit severity levels with no findings.>
+<Grouped by severity, then by category. Omit severity sections with no findings.>
 
 ### BLOCKING
 
-<Must be fixed before merge — bugs, security issues, data loss risks>
+<Must be fixed before merge — correctness bug, security vulnerability, data-loss risk>
 
-#### [BLOCKING] Category — <Category Name>
+#### [BLOCKING] — <Category Name>
 
 **File:** `path/to/file.ext`, line N
 
-<Description of issue. Be specific: what line, what it does wrong, what the consequence is.>
+<Description: what it does wrong and what the consequence is.>
 
-**Suggested fix:** <Concrete direction — what to change and why.>
+**Suggested fix:** <What to change and why.>
 
 ---
 
 ### CONCERN
 
-<Should be addressed — quality, performance, or maintainability issues>
+<Should be addressed — quality, performance, or maintainability issue>
 
-#### [CONCERN] Category — <Category Name>
+#### [CONCERN] — <Category Name>
 
 **File:** `path/to/file.ext`, line N
 
@@ -100,9 +97,9 @@ multiple subsystems are touched.>
 
 ### SUGGESTION
 
-<Optional improvements — code works but could be better>
+<Optional improvement — code works but could be better>
 
-#### [SUGGESTION] Category — <Category Name>
+#### [SUGGESTION] — <Category Name>
 
 **File:** `path/to/file.ext`, line N
 
@@ -116,28 +113,15 @@ multiple subsystems are touched.>
 
 <Minor style or preference — author decides>
 
-#### [NITPICK] Category — <Category Name>
+#### [NITPICK] — <Category Name>
 
 **File:** `path/to/file.ext`, line N
 
 <Description>
 
-**Suggested fix:** <Direction>
-
 ---
-
-## Validation Summary
-
-**Rounds completed:** N
-**Exit criteria:** Primary clean round + sub-agent confirmation
-**Sub-agent A:** 0 issues ✅
-**Sub-agent B:** 0 issues ✅
-**Issues found and resolved during validation:** N
-
----
-
+✅ Validated YYYY-MM-DD — N rounds, 1 sub-agent confirmed
 *Review generated using Shamt Lite code review workflow*
-*Branch: <branch> | Base: <base> | Date: YYYY-MM-DD*
 ```
 
 ---
@@ -146,29 +130,27 @@ multiple subsystems are touched.>
 
 | Severity | Meaning |
 |----------|---------|
-| **BLOCKING** | Must be fixed before merge. Correctness bug, security vulnerability, or data-loss risk. |
-| **CONCERN** | Should be addressed. Quality, performance, or maintainability issue that will cause real problems. |
-| **SUGGESTION** | Optional improvement. The code works but could be better. |
-| **NITPICK** | Minor style or preference. Author decides. |
+| **BLOCKING** | Must be fixed before merge — correctness bug, security vulnerability, data-loss risk |
+| **CONCERN** | Should be addressed — quality, performance, or maintainability issue |
+| **SUGGESTION** | Optional improvement — code works but could be better |
+| **NITPICK** | Minor style or preference — author decides |
 
 ---
 
 ## Review Categories
 
-Use these categories when organizing feedback:
-
-1. **Correctness** - Logic errors, bugs, incorrect behavior
-2. **Security** - Vulnerabilities, unsafe practices
-3. **Performance** - Inefficiencies, scalability issues
-4. **Maintainability** - Code clarity, organization, complexity
-5. **Testing** - Test coverage, test quality
-6. **Edge Cases** - Unhandled scenarios, missing validation
-7. **Naming** - Variable, function, class naming
-8. **Documentation** - Comments, docstrings, README updates
-9. **Error Handling** - Exception handling, error recovery
-10. **Concurrency** - Race conditions, thread safety
-11. **Dependencies** - Library usage, version constraints
-12. **Architecture** - Design patterns, structure, coupling
+1. **Correctness** — Logic errors, bugs, incorrect behavior
+2. **Security** — Vulnerabilities, unsafe practices
+3. **Performance** — Inefficiencies, scalability issues
+4. **Maintainability** — Code clarity, organization, complexity
+5. **Testing** — Test coverage, test quality
+6. **Edge Cases** — Unhandled scenarios, missing validation
+7. **Naming** — Variable, function, class naming
+8. **Documentation** — Comments, docstrings, README updates
+9. **Error Handling** — Exception handling, error recovery
+10. **Concurrency** — Race conditions, thread safety
+11. **Dependencies** — Library usage, version constraints
+12. **Architecture** — Design patterns, structure, coupling
 
 ---
 

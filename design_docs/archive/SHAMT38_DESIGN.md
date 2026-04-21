@@ -1,6 +1,6 @@
 # SHAMT-38: Shamt Lite Story Workflow, Polishing Phase, and Token Discipline
 
-**Status:** Draft
+**Status:** In Progress
 **Created:** 2026-04-20
 **Branch:** `feat/SHAMT-38`
 **Validation Log:** [SHAMT38_VALIDATION_LOG.md](./SHAMT38_VALIDATION_LOG.md)
@@ -104,7 +104,6 @@ shamt_lite/stories/{slug}/
 ├── implementation_plan.md        # Created in Plan phase
 ├── code_review/
 │   └── review_v1.md              # Created in Review phase (no overview.md)
-└── notes.md                      # Optional — any scratch notes the user or agent adds
 ```
 
 **No per-story polish log.** The Polish phase uses commit messages (for root-cause reasoning and applied fixes) and `shamt_lite/CHANGES.md` (for upstream-worthy proposals) as its durable records. See P6.
@@ -112,6 +111,8 @@ shamt_lite/stories/{slug}/
 **Slug convention:** Free-form. Examples: `PROJ-1234-csv-export`, `fix-login-timeout`, `2026-04-20-dashboard-bug`. The agent does not enforce a format; it uses whatever the user provides.
 
 **Naming collisions:** If the user creates a story folder that already exists, the agent warns and halts — does not overwrite. This is explicit in the Intake phase instructions.
+
+**Active-story convention:** The agent does NOT track which story is "active" via marker files, most-recent-modified heuristics, or session state. The user **names the slug explicitly** every time they invoke the agent on story work — e.g., "begin Spec phase for `PROJ-1234-csv-export`" or "polish the `fix-login-timeout` story." Rationale: marker files go stale across sessions, heuristics guess wrong when multiple stories are in flight, and explicit naming costs the user ~5 tokens per invocation while removing an entire class of "wrong story modified" failure mode. If the user invokes a story-phase action without naming a slug, the agent asks rather than guessing.
 
 **Rationale:** Co-locates all artifacts for a story in one place. Easy for the user to send a reviewer the folder; easy for the agent in the Polish phase to see the full arc of the story (ticket → spec → plan → review → polish).
 
@@ -161,6 +162,8 @@ shamt_lite/stories/{slug}/
 
 **Step 1 — Ingest the ticket.** Read `ticket.md`. Treat it as unstructured raw text (could be Jira HTML, a pasted email, Slack thread, voice-memo transcript). Extract structured understanding: what's being asked, acceptance criteria (explicit or implied), links, due dates, any constraints. Output a **brief in-agent summary** (3-5 bullets, do NOT write it to disk yet).
 
+**Minimum input requirement:** Any non-empty content is sufficient — there is no schema. If `ticket.md` is empty or missing, the agent halts and asks the user to populate it. The agent does NOT attempt to fabricate ticket content from prior conversation context.
+
 **Step 2 — Targeted research.** Unlike Discovery's broad exploration, Spec research is scoped by the ticket. Grep for referenced file paths, function names, feature names. Read `ARCHITECTURE.md` and `CODING_STANDARDS.md` if present. Skim related code. Document findings in spec.md under "Research Findings" (3-10 bullets).
 
 **Step 3 — Draft spec skeleton.** Create `spec.md` with these sections:
@@ -192,7 +195,7 @@ Exit criterion: primary clean round + **1 sub-agent confirmation** (see P10).
 
 **Step 7 — User approval (GATE 2b).** Present validated spec. User approves or requests changes. On approval, the Spec phase is complete.
 
-**Question brainstorming:** The 6-category framework (currently Pattern 5) is **demoted from a top-level pattern** to a reference callout used inside Spec Step 4 when proposing design options or inside Step 6 when checking the "Open questions" dimension. The reference file `reference/question_brainstorm_categories_lite.md` remains, but is linked from Spec Protocol rather than from a top-level pattern listing.
+**Question brainstorming:** The 6-category framework (currently Pattern 5 in the pre-SHAMT-38 structure) is **demoted from a top-level pattern** to a reference callout used inside Spec Step 4 when proposing design options or inside Step 6 when checking the "Open questions" dimension. The reference file `reference/question_brainstorm_categories_lite.md` remains, but is linked from Spec Protocol rather than from a top-level pattern listing.
 
 **Rationale:** Ticketed work starts with *some* concrete input (the ticket). The old Discovery Protocol treats every request as a blank-slate exploration, which wastes tokens. Spec Protocol assumes a ticket exists and optimizes for "research + design dialog + validated spec" — the actual workplace shape.
 
@@ -206,7 +209,7 @@ Exit criterion: primary clean round + **1 sub-agent confirmation** (see P10).
 
 **Description:** Extend the existing Code Review pattern to support two modes:
 
-**Formal mode (existing behavior):** Reviewing someone else's branch/PR. Produces `.shamt/code_reviews/<branch>/` with `overview.md` (ELI5 + What/Why/How) + `review_v1.md`. Unchanged.
+**Formal mode (external PR/branch review):** Reviewing someone else's branch/PR. Produces `.shamt/code_reviews/<branch>/` with `overview.md` + `review_v1.md`. The `overview.md` in the existing Shamt Lite (pre-SHAMT-38) has four sections (ELI5, What, Why, How); P11-D removes ELI5, leaving three: What Does This Branch Do, Why Was It Built, How Does It Work.
 
 **Story mode (NEW):** Reviewing the code changes for a story the agent/user just built. Produces `stories/{slug}/code_review/review_v1.md` **only** — no `overview.md`. Rationale: the story folder already has `ticket.md`, `spec.md`, and `implementation_plan.md`, which collectively provide better context than an overview.md would.
 
@@ -243,6 +246,16 @@ Exit criterion: primary clean round + **1 sub-agent confirmation** (see P10).
 - An unclear step or example in `SHAMT_LITE.md` itself?
 - Or genuinely a one-off that wouldn't be caught by any standard?
 
+**Target selection guidance (when multiple targets apply):** Draft proposals for all applicable targets — the user decides which to accept in Step 4. The following maps common issue types to the right proposal target:
+- Code style, naming, or pattern issue → `CODE_STANDARDS.md`
+- Architectural decision or structural principle → `ARCHITECTURE.md`
+- Something a spec question would have caught → Spec Protocol dimensions or Question Brainstorm categories; if a structural section is missing from the spec template → spec.template.md
+- Something a review dimension would have caught → Code review categories in `SHAMT_LITE.md`
+- Framework behavior the agent got wrong → `SHAMT_LITE.md` pattern wording or example
+- One-off with no generalizable lesson → commit message only, no upstream proposal
+
+**Spec loopback:** If root-cause analysis reveals that the spec was fundamentally wrong — not just incomplete in a patchable way, but the chosen design/architecture was the wrong approach — the agent recommends formally re-entering the Spec phase (Gate 2a/2b). The user decides whether to accept that loopback. This is distinct from small gaps, which are handled in place via Polish's upstream proposals.
+
 **Step 3 — Propose upstream changes.** For each applicable target, draft a specific change:
 - **Spec template** (`spec.template.md`) — new required section, new prompt
 - **SHAMT_LITE.md patterns** — new validation dimension, new example, stricter gate wording
@@ -251,7 +264,7 @@ Exit criterion: primary clean round + **1 sub-agent confirmation** (see P10).
 - **`CODE_STANDARDS.md`** — new rule, new example, anti-pattern
 - **`ARCHITECTURE.md`** — new decision record, new principle
 
-Each proposal is drafted as a specific diff/snippet, not a vague idea.
+Each proposal is drafted as a specific diff/snippet, not a vague idea. If multiple targets apply, draft a proposal for each — the user gates them independently in Step 4.
 
 **Step 4 — User decides.** The agent presents the proposals. The user approves, rejects, or modifies each one. No validation loop — the user is the gate.
 
@@ -352,7 +365,7 @@ Upstream to master? Yes — CHANGES.md entry added / No — project-specific
 | Spec Step 6 (validation loop) | Opus | Multi-dimensional reasoning |
 | Plan creation | Sonnet | Structured, pattern-following |
 | Plan validation | Sonnet | 7-dimension check, lighter than spec |
-| **Builder (Build phase)** | **Haiku (mandatory if plan is mechanical)** | 60-70% savings |
+| **Builder (Build phase)** | **Haiku (mandatory if plan is mechanical)** | Execution at Haiku rates instead of planning-model rates |
 | Review (issue finding) | Opus | Classification + judgment |
 | Review (git metadata fetch) | Haiku | Mechanical |
 | Polish Step 1 (apply fix) | Sonnet | Code editing |
@@ -367,9 +380,9 @@ Upstream to master? Yes — CHANGES.md entry added / No — project-specific
 - Between Review and Polish (optional, depending on review size)
 
 **8c. Inline "cost notes":** Small callouts at key decision points, e.g.:
-> 💡 *Cost note: if plan has >20 mechanical steps and you stay in this context, you're burning Opus/Sonnet tokens on file operations. Spawn a Haiku builder (see Pattern 5, Builder Handoff) for ~65% savings.*
+> 💡 *Cost note: if plan has >20 mechanical steps and you stay in this context, you're burning Opus/Sonnet tokens on file operations. Spawn a Haiku builder (see Pattern 5 — implementation planning section) — builder execution is materially cheaper than self-execution.*
 
-**8d. Pattern-level token notes:** Each of the 5 patterns gets a one-line "token cost profile" — e.g. "Validation loop: typical cost 2-4 rounds × 1 sub-agent ≈ 1.5x artifact re-reads."
+**8d. Pattern-level token notes:** Each of the 5 patterns gets a one-line **qualitative** "token cost profile" — e.g. "Validation loop: cost scales with rounds × artifact size; one sub-agent confirmation per loop." No numeric token estimates and no model-pricing references — both go stale fast as the model lineup and pricing change. Where helpful, use relative comparisons ("Builder handoff is materially cheaper than self-execution for plans with many mechanical steps") instead of percentages.
 
 **Rationale:** Without explicit doctrine, token discipline is wishful thinking. Codifying model choices and context-clear breakpoints makes the expectation concrete and auditable.
 
@@ -408,7 +421,7 @@ Upstream to master? Yes — CHANGES.md entry added / No — project-specific
 
 **Description:** Change Lite's validation loop exit criterion from "primary clean round + 2 independent sub-agent confirmations" to "primary clean round + **1** sub-agent confirmation."
 
-**Scope:** Applies to all Lite validation loops (spec validation, implementation plan validation, review.md validation, overview.md validation in formal mode). Does **not** apply to full Shamt — full Shamt retains its 2-sub-agent criterion.
+**Scope:** Applies to **every** Lite validation loop invocation, whether inside the story workflow (spec, plan, review) or invoked ad-hoc outside any story (e.g., user says "validate this file"). The criterion travels with Lite, not with the workflow context. Does **not** apply to full Shamt or to master-repo design docs (artifacts in `design_docs/`) — only to per-project Lite invocations. Full Shamt retains its 2-sub-agent criterion.
 
 **Behavior change:**
 - When `consecutive_clean = 1`, spawn **1** Haiku sub-agent (not 2).
@@ -470,7 +483,24 @@ These are redundant with per-step Verifications (already present in every step) 
 
 Current format requires a Verification line on every CREATE/EDIT/DELETE/MOVE step. For trivial edits ("change `cnt` to `count` in line 42"), verification is self-evident and adds noise.
 
-New rule: include Verification only when non-obvious. Examples where it's required: new file compiles, new endpoint responds, new rule is picked up by linter. Examples where it can be omitted: text replacements, typo fixes, comment additions.
+New rule: **Verification is required when step success depends on tooling or runtime behavior; optional for pure text/content edits.** Captured as an examples list rather than a strict rule, because the boundary is fuzzy in practice.
+
+**Verification REQUIRED — examples:**
+- Step creates or modifies code that must compile (TypeScript, Java, Rust, etc.)
+- Step adds or modifies a test (`npm test` / `pytest` / etc. must pass)
+- Step adds a linter-affecting change (rule must be picked up)
+- Step adds a new API endpoint (must respond to a request)
+- Step adds a config value consumed at runtime (must be loaded successfully)
+- Step modifies a database schema or migration
+
+**Verification OPTIONAL — examples:**
+- Pure text replacements (typo fixes, wording changes)
+- Markdown / docs / comment edits with no code impact
+- Renaming a private variable consistently in a single file
+- Reordering imports for style
+- Deleting an obsolete file that has no remaining references
+
+**When in doubt:** include the verification — it's cheaper than discovering breakage later.
 
 ---
 
@@ -563,38 +593,38 @@ Considered deleting `reference/*.md` entirely and keeping only what's in SHAMT_L
 | `CLAUDE.md` (master root) | MODIFY | Update "Shamt Lite" section to reflect new file layout, new workflow, `CHANGES.md` convention |
 | `README.md` (master root) | MODIFY | Update Shamt Lite mentions to reflect new structure if any |
 
-**Total:** 4 CREATE, 9 MODIFY, 1 DELETE. (Down from 5 CREATE after dropping `polishing_log.template.md`.)
+**Total:** 4 CREATE, 10 MODIFY, 1 DELETE. (Down from 5 CREATE after dropping `polishing_log.template.md`.)
 
 ---
 
 ## Implementation Plan
 
-### Phase 1: Skeleton + Templates
-Produce the new files empty/skeletal and verify init_lite copies them correctly.
+### Phase 1: Skeleton, Templates, and Init Script Updates
+Produce the new files empty/skeletal, update init_lite scripts, and verify init_lite copies them correctly.
 - [ ] Create `story_workflow_lite.template.md` with section headers only
 - [ ] Create `CHANGES.template.md` with header + empty entry
 - [ ] Create `ticket.template.md` and `spec.template.md` (minimal)
-- [ ] Update `init_lite.sh` and `init_lite.ps1` to create `stories/` folder and copy new files
+- [ ] Update `init_lite.sh` and `init_lite.ps1` to create `stories/` folder and copy new files (P2)
 - [ ] Smoke test: run `init_lite.sh` against a scratch directory, verify structure
 
 ### Phase 2: Write Story Workflow Narrative
-Flesh out `story_workflow_lite.template.md` per P3.
+Flesh out `story_workflow_lite.template.md` per P3-P8.
 - [ ] Intake phase section with freeform ticket.md note
-- [ ] Spec phase section with 7-step Spec Protocol (P4), including architecture dialog (Gate 2a) and validation loop (Gate 2b); include P11-F note on 1-3 options
+- [ ] Spec phase section with 7-step Spec Protocol (P4), including architecture dialog (Gate 2a) and validation loop (Gate 2b, using single-sub-agent criterion per P10); include P11-F note on 1-3 options
 - [ ] Plan phase section (reference Pattern 5 in SHAMT_LITE.md)
 - [ ] Build phase section with mandatory Haiku builder guidance (P8)
 - [ ] Review phase section with story-mode pointer (P5)
 - [ ] Polish phase section with 5-step polish cycle (P6) using commit messages + CHANGES.md (no polishing_log.md), CHANGES.md writeout rules (P7)
-- [ ] Per-phase model recommendations inline (P8)
+- [ ] Inline per-phase model recommendations from the P8 table into each phase section of story_workflow_lite.md
 - [ ] Context-clear breakpoint recommendations (P8)
 
 ### Phase 3: Rewrite SHAMT_LITE.md
-Execute P1 + P9 + P11-A + P11-G: lean core file.
+Execute P1 (file structure), P9 (content cuts), P10 (single sub-agent in Pattern 1), and all P11 cuts that affect SHAMT_LITE.md's pattern descriptions and structure (see task checklist; P11-B/C/D are documented in pattern text here — their template-level changes are in Phase 4): lean core file.
 - [ ] Part 0: Workflow map (1-screen, pointer to story_workflow_lite.md)
 - [ ] Part 1: 5 core patterns
   - [ ] Pattern 1 (Validation) — update for single sub-agent criterion (P10); replace multi-line validation summary with single-line footer (P11-A); trim example
   - [ ] Pattern 2 (Severity) — trim verbose examples, move to reference (P11-H)
-  - [ ] Pattern 3 (Spec Protocol) — NEW, replaces Discovery; include 1-3 option rule (P11-F)
+  - [ ] Pattern 3 (Spec Protocol) — NEW, replaces Discovery; include 1-3 option rule (P11-F; also written into story_workflow_lite.md in Phase 2)
   - [ ] Pattern 4 (Code Review) — note formal vs story mode (P5); drop ELI5 from formal overview.md (P11-D)
   - [ ] Pattern 5 (Implementation Planning) — Haiku builder emphasis; drop pre/post-execution checklists (P11-B); optional Verification field (P11-C)
 - [ ] Part 2: Token Discipline Doctrine (P8)
@@ -618,8 +648,9 @@ Execute P1 + P9 + P11-A + P11-G: lean core file.
 ### Phase 6: End-to-End Dry Run
 - [ ] Run `init_lite.sh` into a scratch directory
 - [ ] Fabricate a tiny ticket.md
-- [ ] Walk through all six phases manually (as if being the agent), verifying the workflow file makes sense step-by-step
+- [ ] Walk through all six phases step-by-step (simulating how an agent would follow the workflow file), verifying each phase instruction is complete and unambiguous
 - [ ] Fabricate one PR comment and walk through Polish phase: commit-message writeout + CHANGES.md entry
+- [ ] Verify Polish Step 2 root-cause path can recommend re-entering Spec (loopback scenario, P6 Step 2)
 - [ ] Spot-check a validated artifact has a single-line footer, not a multi-line block (P11-A)
 - [ ] Verify final scratch directory looks like what we'd want a user to have
 
@@ -635,16 +666,16 @@ Execute P1 + P9 + P11-A + P11-G: lean core file.
 
 ## Validation Strategy
 
-**Design doc validation:** Run the 7-dimension validation loop per `.shamt/guides/design_doc_validation/` on this document. Exit: primary clean round + 2 sub-agent confirmations (master criterion, NOT Lite's single-sub-agent criterion).
+**Design doc validation:** Run the 7-dimension validation loop per `.shamt/guides/design_doc_validation/` on this document. Exit: primary clean round + 2 independent sub-agent confirmations. Use the master validation criterion (2 sub-agents) — this design doc is a master-repo artifact (permanent design_docs/ archive entry that governs all future Lite deployments), not a per-project Lite artifact (which is what P10's single-sub-agent scope covers), so P10 does not apply here.
 
 **Implementation validation:** After Phase 6 (dry run) but before Phase 8 archive, run 5-dimension implementation validation:
-1. **Completeness** — Every proposal (P1-P10) implemented?
+1. **Completeness** — Every proposal (P1-P11) implemented?
 2. **Correctness** — Does the implementation match what was proposed?
 3. **Files Affected Accuracy** — Files in the table match reality?
 4. **No Regressions** — Full-mode code review still works? Init scripts still produce valid output?
 5. **Documentation Sync** — `CLAUDE.md` reflects new layout?
 
-**Dry run is the primary user-facing validation.** Phase 6 (fabricated story walkthrough) must succeed before we consider this done — if the workflow reads awkwardly or is missing a step, we catch it here rather than on first real use.
+**Gate: Phase 6 (dry run) is a mandatory prerequisite before Phase 8 (implementation validation) can begin.** Phase 6 (fabricated story walkthrough) must succeed before proceeding to Phase 8 (implementation validation, which also includes archival). If the workflow reads awkwardly or a step is missing, it must be fixed and the dry run re-run. The dry run is not optional.
 
 **Full guide audit:** After implementation validation passes, run the full `.shamt/guides/` audit (3 consecutive clean rounds) to ensure master guides weren't inadvertently affected. This design primarily touches `.shamt/scripts/initialization/`, but `CLAUDE.md` and master docs are in scope.
 
@@ -663,18 +694,15 @@ Execute P1 + P9 + P11-A + P11-G: lean core file.
 | Ticket.md format? | Freeform, no schema, no assumptions | User direction #5 |
 | Story cleanup? | Not handled — user's responsibility | User direction #6 |
 | Validation loop in Polish? | No loop; user is the gate | User direction #7 |
+| Should `polishing_log.md` be auto-created? | Dissolved — no `polishing_log.md`; Polish uses commit messages + `CHANGES.md` | Design iteration, user-approved |
+| Minimum `ticket.md` content before Spec proceeds? | Any non-empty content — Spec Step 1 handles arbitrary text; agent halts only on empty file | Design iteration, user-approved lean |
+| Single sub-agent criterion outside stories (ad-hoc invocation)? | Yes — it's Lite's criterion regardless of context | Design iteration, user-approved lean |
+| Numeric token estimates in Token Discipline section? | Qualitative only — numbers go stale with model/pricing changes | Design iteration, user-approved lean |
+| Precise rule for "obvious" Verification (P11-C)? | Required when success depends on tooling (compile, test, lint, runtime); optional for pure text/content edits. Documented via examples list, not strict rule | Design iteration, user-approved lean |
+| Active-story convention — how does agent know which story is active? | User names the slug explicitly each invocation; no marker file, no most-recent heuristic | Design iteration, user-approved lean |
+| Polish → Spec loopback path? | Polish Step 2 may recommend re-entering Spec; user gates the loopback | Design iteration, user-approved lean |
 
-**Remaining open items to resolve during validation:**
-
-- **Q-OPEN-1:** ~~Should `polishing_log.md` be auto-created when the Polish phase starts?~~ **DISSOLVED** — no polishing_log.md; Polish uses commit messages + CHANGES.md.
-- **Q-OPEN-2:** What is the minimum content required for `ticket.md` before the agent proceeds to Spec? (Leaning: anything non-empty — the agent's Spec Step 1 already handles arbitrary text.)
-- **Q-OPEN-3:** When a user invokes a Lite pattern outside of a story (e.g. "validate this file"), does the agent still follow the single-sub-agent criterion? (Leaning: yes — it's Lite's criterion regardless of context.)
-- **Q-OPEN-4:** Should the Token Discipline section include estimated token counts per phase (anchored to a reference story size), or keep it qualitative? (Leaning: qualitative — numbers go stale fast and anchor in model pricing that changes.)
-- **Q-OPEN-5 (new):** For P11-C (optional Verification field), what is the precise rule for "obvious"? Leaning: verification required when the step produces anything whose success depends on tooling (compile, test, lint, runtime); optional for pure text/content edits. Document an examples list rather than a strict rule.
-- **Q-OPEN-6 (new):** Active-story convention (previously flagged #5 in pre-doc chat): user names the slug explicitly each time. Confirm during validation that this isn't too burdensome.
-- **Q-OPEN-7 (new):** Polish → Spec loopback path (previously flagged #7 in pre-doc chat): Polish Step 2 may recommend re-entering Spec; user gates it. Confirm during implementation that this is documented in the workflow file.
-
-These are not blockers; they will be resolved during the validation loop or during implementation.
+**No remaining open items.** All design decisions are resolved. Validation loop may still surface new questions during review — those will be logged in the validation log and folded back into the design as needed.
 
 ---
 
@@ -701,3 +729,5 @@ These are not blockers; they will be resolved during the validation loop or duri
 |---|---|
 | 2026-04-20 | Initial draft created (pre-validation) |
 | 2026-04-20 | Removed `polishing_log.md` entirely; Polish now uses commit messages + `CHANGES.md` (redundancy was pure token cost). Added Proposal 11 (Existing-Practice Token Cuts): single-line validation footer, drop impl-plan checklists, optional Verification field, drop ELI5 from formal overview.md, drop empty-category justifications, allow 1-option spec dialogs when obvious, trim "Key Rules", de-duplicate main/reference. Added Goal 8. Clarified Non-Goals: all changes are Lite-only; full Shamt is untouched. Updated Files Affected (5→4 CREATE). Dissolved Q-OPEN-1; added Q-OPEN-5/6/7. |
+| 2026-04-20 | Resolved all remaining open questions (Q-OPEN-2 through Q-OPEN-7): ticket.md minimum is non-empty; single sub-agent applies everywhere in Lite regardless of context; token discipline is qualitative only; Verification rule documented via tooling-dependent examples list; active-story convention is explicit slug naming by user; Polish Step 2 includes Spec loopback path gated by user. No open questions remain. |
+| 2026-04-20 | Validation complete (13 primary rounds + 13 sub-agent rounds). Status → Validated. |

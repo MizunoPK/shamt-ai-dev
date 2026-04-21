@@ -116,7 +116,7 @@ audit/README.md
 
 **README.md:**
 - [ ] Quick Start section has actual quick start steps (not just "See guides")
-- [ ] 10 Stages overview describes all 11 stages (not placeholder for S8-S10)
+- [ ] 11 Stages overview describes all 11 stages (not placeholder for S8-S11)
 - [ ] Guide Index lists all guide categories
 - [ ] Last Updated is recent
 
@@ -126,7 +126,7 @@ audit/README.md
 - [ ] No "Coming Soon" for any stage
 
 **prompts_reference_v2.md:**
-- [ ] All 10 stage prompts present
+- [ ] All 11 stage prompts present
 - [ ] Debugging protocol prompt present
 - [ ] Missed requirement prompt present
 - [ ] Special workflow prompts present
@@ -137,12 +137,12 @@ audit/README.md
 grep -A 5 "## Quick Start" README.md | grep -i "coming soon\|todo\|⏳"
 
 # Check EPIC_WORKFLOW_USAGE for missing stage sections
-for stage in {1..10}; do
+for stage in {1..11}; do
   grep -q "### S$stage:" EPIC_WORKFLOW_USAGE.md || echo "Missing S$stage details"
 done
 
 # Check prompts_reference for missing prompts
-for stage in {1..10}; do
+for stage in {1..11}; do
   grep -q "Starting S$stage" prompts_reference_v2.md || echo "Missing S$stage prompt"
 done
 ```
@@ -523,21 +523,21 @@ fi
 echo "=== Root File Completeness Check ==="
 
 # Check EPIC_WORKFLOW_USAGE.md has all 11 stages
-for stage in {1..10}; do
+for stage in {1..11}; do
   if ! grep -q "### S$stage:" EPIC_WORKFLOW_USAGE.md; then
     echo "⚠️  EPIC_WORKFLOW_USAGE.md missing S$stage section"
   fi
 done
 
 # Check prompts_reference_v2.md has all stage prompts
-for stage in {1..10}; do
+for stage in {1..11}; do
   if ! grep -q "Starting S$stage" prompts_reference_v2.md; then
     echo "⚠️  prompts_reference_v2.md missing S$stage prompt"
   fi
 done
 
 # Check README.md has announced sections
-for section in "Quick Start" "The 10 Stages" "Guide Index"; do
+for section in "Quick Start" "The 11 Stages" "Guide Index"; do
   if ! grep -q "## $section" README.md; then
     echo "⚠️  README.md missing section: $section"
   fi
@@ -557,7 +557,7 @@ STEP 0: Verify root files have COMPLETE content (not stubs)
 
 For README.md:
 - [ ] Quick Start has actual steps (not "see guides")
-- [ ] 10 Stages section describes all 10 (not just S1-S5)
+- [ ] 11 Stages section describes all 11 (not just S1-S5)
 - [ ] Guide Index lists all categories (stages, reference, templates, etc.)
 - [ ] No "Coming Soon" or "⏳" in any section
 
@@ -567,7 +567,7 @@ For EPIC_WORKFLOW_USAGE.md:
 - [ ] No placeholders or incomplete stage sections
 
 For prompts_reference_v2.md:
-- [ ] All 10 stage prompts present
+- [ ] All 11 stage prompts present
 - [ ] All special workflow prompts present (debugging, missed requirement)
 - [ ] Each prompt has: full text, when to use, expected outcome
 ```

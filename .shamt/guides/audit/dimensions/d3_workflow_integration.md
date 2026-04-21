@@ -787,7 +787,7 @@ done
 echo "Stage Output-to-Input Validation" > /tmp/output_input_map.txt
 
 # For each stage, extract outputs
-for N in {1..10}; do  # S1-S10 (S11 is final)
+for N in {1..11}; do  # S1-S11
   echo "=== S$N Outputs ===" >> /tmp/output_input_map.txt
   grep -A 5 "^## Outputs" stages/s$N/*.md >> /tmp/output_input_map.txt
 

@@ -52,6 +52,7 @@ if (Test-Path $LiteDir) {
 Write-Host "Creating directory structure..."
 New-Item -ItemType Directory -Path (Join-Path $LiteDir "reference") -Force | Out-Null
 New-Item -ItemType Directory -Path (Join-Path $LiteDir "templates") -Force | Out-Null
+New-Item -ItemType Directory -Path (Join-Path $LiteDir "stories") -Force | Out-Null
 
 # --- Helper function for template substitution -------------------------------
 
@@ -80,6 +81,16 @@ Copy-WithSubstitutions `
     -DestPath (Join-Path $LiteDir "SHAMT_LITE.md") `
     -Replacements $Substitutions
 
+# Story workflow file (no template variables)
+Copy-Item `
+    -Path (Join-Path $ShamtSourceDir "story_workflow_lite.template.md") `
+    -Destination (Join-Path $LiteDir "story_workflow_lite.md")
+
+# CHANGES.md (no template variables)
+Copy-Item `
+    -Path (Join-Path $ShamtSourceDir "CHANGES.template.md") `
+    -Destination (Join-Path $LiteDir "CHANGES.md")
+
 # Reference files (no template variables)
 Copy-Item `
     -Path (Join-Path $ShamtSourceDir "reference\severity_classification_lite.md") `
@@ -93,17 +104,23 @@ Copy-Item `
     -Path (Join-Path $ShamtSourceDir "reference\question_brainstorm_categories_lite.md") `
     -Destination (Join-Path $LiteDir "reference\")
 
-# Template files (with template variables)
-Copy-WithSubstitutions `
-    -SourcePath (Join-Path $ShamtSourceDir "templates\discovery_lite.template.md") `
-    -DestPath (Join-Path $LiteDir "templates\discovery.template.md") `
-    -Replacements $Substitutions
+# Ticket template (no template variables)
+Copy-Item `
+    -Path (Join-Path $ShamtSourceDir "templates\ticket.template.md") `
+    -Destination (Join-Path $LiteDir "templates\ticket.template.md")
 
+# Spec template (no template variables)
+Copy-Item `
+    -Path (Join-Path $ShamtSourceDir "templates\spec.template.md") `
+    -Destination (Join-Path $LiteDir "templates\spec.template.md")
+
+# Architecture template
 Copy-WithSubstitutions `
     -SourcePath (Join-Path $ShamtSourceDir "templates\architecture_lite.template.md") `
     -DestPath (Join-Path $LiteDir "templates\architecture.template.md") `
     -Replacements $Substitutions
 
+# Coding standards template
 Copy-WithSubstitutions `
     -SourcePath (Join-Path $ShamtSourceDir "templates\coding_standards_lite.template.md") `
     -DestPath (Join-Path $LiteDir "templates\coding_standards.template.md") `
@@ -114,11 +131,10 @@ Copy-Item `
     -Path (Join-Path $ShamtSourceDir "templates\code_review_lite.template.md") `
     -Destination (Join-Path $LiteDir "templates\code_review.template.md")
 
-# Implementation plan template (DATE variable only, no PROJECT_NAME)
-Copy-WithSubstitutions `
-    -SourcePath (Join-Path $ShamtSourceDir "templates\implementation_plan_lite.template.md") `
-    -DestPath (Join-Path $LiteDir "templates\implementation_plan.template.md") `
-    -Replacements @{ "{{DATE}}" = $CurrentDate }
+# Implementation plan template (no template variables)
+Copy-Item `
+    -Path (Join-Path $ShamtSourceDir "templates\implementation_plan_lite.template.md") `
+    -Destination (Join-Path $LiteDir "templates\implementation_plan.template.md")
 
 # --- Success message ---------------------------------------------------------
 
@@ -129,13 +145,17 @@ Write-Host "============================================================" -Foreg
 Write-Host ""
 Write-Host "Files created:"
 Write-Host "  shamt-lite\"
-Write-Host "  ├── SHAMT_LITE.md                        (main rules file)"
+Write-Host "  ├── SHAMT_LITE.md                        (5 patterns + token discipline)"
+Write-Host "  ├── story_workflow_lite.md               (six-phase story workflow)"
+Write-Host "  ├── CHANGES.md                           (Polish-phase upstream candidates)"
+Write-Host "  ├── stories\                             (per-story work folders)"
 Write-Host "  ├── reference\"
 Write-Host "  │   ├── severity_classification_lite.md"
 Write-Host "  │   ├── validation_exit_criteria_lite.md"
 Write-Host "  │   └── question_brainstorm_categories_lite.md"
 Write-Host "  └── templates\"
-Write-Host "      ├── discovery.template.md"
+Write-Host "      ├── ticket.template.md"
+Write-Host "      ├── spec.template.md"
 Write-Host "      ├── code_review.template.md"
 Write-Host "      ├── implementation_plan.template.md"
 Write-Host "      ├── architecture.template.md"
@@ -145,11 +165,12 @@ Write-Host "Next steps:"
 Write-Host "  1. Copy shamt-lite\SHAMT_LITE.md to your AI service's rules file"
 Write-Host "     (e.g., CLAUDE.md, .cursorrules, copilot-instructions.md)"
 Write-Host ""
-Write-Host "  2. (Optional) Fill out architecture and coding standards templates:"
+Write-Host "  2. Start a story: create stories\{slug}\ticket.md and follow"
+Write-Host "     story_workflow_lite.md for the six-phase workflow"
+Write-Host ""
+Write-Host "  3. (Optional) Fill out architecture and coding standards templates:"
 Write-Host "     • shamt-lite\templates\architecture.template.md → ARCHITECTURE.md"
 Write-Host "     • shamt-lite\templates\coding_standards.template.md → CODING_STANDARDS.md"
-Write-Host ""
-Write-Host "  3. Start using validation loops, discovery, and code review!"
 Write-Host ""
 Write-Host "============================================================"
 Write-Host ""

@@ -123,7 +123,7 @@ Result: Cannot validate planning completeness, workflow stuck
 - [ ] Duration estimates
 
 **prompts_reference_v2.md:**
-- [ ] All 10 stage prompts
+- [ ] All 11 stage prompts
 - [ ] Debugging protocol prompts
 - [ ] Missed requirement prompts
 - [ ] Special workflow prompts
@@ -522,7 +522,7 @@ for file in README.md EPIC_WORKFLOW_USAGE.md prompts_reference_v2.md; do
   fi
 
   if [ "$file" = "prompts_reference_v2.md" ]; then
-    for stage in {1..10}; do
+    for stage in {1..11}; do
       grep -q "Starting S$stage" "$file" || echo "  MISSING: S$stage prompt"
     done
   fi

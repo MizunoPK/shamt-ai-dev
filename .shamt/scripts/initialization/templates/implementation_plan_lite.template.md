@@ -1,19 +1,8 @@
 # Implementation Plan
 
-**Created:** {{DATE}}
+**Created:** [Date]
 **Feature/Task:** [Brief description]
-**Related Requirements:** [Reference to discovery doc, user request, or feature brief]
-
----
-
-## Pre-Execution Checklist
-
-Before starting implementation, verify:
-- [ ] Requirements are clearly documented (in discovery doc, user request, or feature brief)
-- [ ] All affected files have been identified
-- [ ] Dependencies between steps are understood
-- [ ] Backup/version control is current (commit or branch created)
-- [ ] This plan has passed validation (see Pattern 6 in SHAMT_LITE.md)
+**Related:** stories/{slug}/spec.md
 
 ---
 
@@ -23,12 +12,12 @@ Before starting implementation, verify:
 **Operation:** CREATE | EDIT | DELETE | MOVE
 **File:** `path/to/file.ext`
 **Details:**
-- [For CREATE: Describe file purpose and initial content]
-- [For EDIT: Provide exact locate string and replacement]
-- [For DELETE: State reason for deletion]
-- [For MOVE: Specify source → destination]
+- [For CREATE: file purpose and initial content]
+- [For EDIT: exact locate string and exact replacement string]
+- [For DELETE: reason for deletion]
+- [For MOVE: source → destination and reason]
 
-**Verification:** [How to verify this step completed correctly]
+**Verification:** [Required when success depends on tooling (compile, test, lint, runtime); omit for pure text/content edits]
 
 ---
 
@@ -36,9 +25,9 @@ Before starting implementation, verify:
 **Operation:** CREATE | EDIT | DELETE | MOVE
 **File:** `path/to/file.ext`
 **Details:**
-- [Specific details for this operation]
+- [Specific details for this step]
 
-**Verification:** [How to verify this step completed correctly]
+**Verification:** [Required or omit]
 
 ---
 
@@ -46,9 +35,9 @@ Before starting implementation, verify:
 **Operation:** CREATE | EDIT | DELETE | MOVE
 **File:** `path/to/file.ext`
 **Details:**
-- [Specific details for this operation]
+- [Specific details for this step]
 
-**Verification:** [How to verify this step completed correctly]
+**Verification:** [Required or omit]
 
 ---
 
@@ -56,18 +45,9 @@ Before starting implementation, verify:
 
 ---
 
-## Post-Execution Checklist
-
-After completing all steps:
-- [ ] All steps executed in order without errors
-- [ ] Each step's verification passed
-- [ ] All affected files exist and contain expected changes
-- [ ] No unintended side effects (check related files)
-- [ ] Tests pass (if applicable)
-- [ ] Feature works as specified in requirements
-
----
-
 ## Notes
 
-[Optional: Add implementation notes, gotchas, or reminders]
+[Optional: gotchas, constraints, implementation notes]
+
+---
+✅ Validated [Date] — N rounds, 1 sub-agent confirmed

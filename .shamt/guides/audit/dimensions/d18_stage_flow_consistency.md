@@ -38,7 +38,7 @@
 5. **Scope Alignment** - Epic/feature/group scope is consistent across transitions
 
 **Coverage:**
-- All 10 stage transitions (S1->S2, S2->S3, ..., S9->S10, S10->S11)
+- All 11 stage transitions (S1->S2, S2->S3, ..., S10->S11)
 - Branching transitions (S8->S5 loop, S8->S9 exit)
 - Parallel work transitions (Primary->Secondary handoffs)
 

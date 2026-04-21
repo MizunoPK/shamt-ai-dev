@@ -134,7 +134,7 @@ grep -ion "epic\|project\|initiative\|feature set" \
 **EPIC_WORKFLOW_USAGE.md - Section Structure Consistency:**
 ```bash
 # Check if all stage sections have same subsections
-for stage in S{1..10}; do
+for stage in S{1..11}; do
   echo "=== $stage ==="
   grep "^###" .shamt/guides/EPIC_WORKFLOW_USAGE.md | \
     grep -A 5 "$stage"
