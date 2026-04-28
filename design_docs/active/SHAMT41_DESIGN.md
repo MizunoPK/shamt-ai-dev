@@ -133,6 +133,7 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 | `.shamt/guides/sync/import_workflow.md` | MODIFY | Note that GUIDE_ANCHOR rituals are partially superseded by PreCompact / SessionStart hooks |
 | `.shamt/commands/CHEATSHEET.md` | MODIFY | Add "Active Enforcement" section listing each hook, the event that fires it, and what it blocks or requires. Users need to know which operations are now harness-enforced rather than prose-convention. |
 | `CLAUDE.md` | MODIFY | New section "Hooks and MCP Server (SHAMT-41)" |
+| `.shamt/guides/master_dev_workflow/master_dev_workflow.md` | MODIFY | Add hook and MCP tool references at Steps 4, 5, and design-doc workflow steps |
 
 ---
 
@@ -173,6 +174,17 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 - [ ] Modify S5/S7/S9 stage guides similarly.
 - [ ] Modify `import_workflow.md` to note PreCompact / SessionStart partial supersession.
 - [ ] Add CLAUDE.md section "Hooks and MCP Server (SHAMT-41)".
+
+### Phase 6.5: Master repo hook + MCP activation
+- [ ] Wire master-applicable hooks (10 of 12) into master's `.claude/settings.json` via regen. Excluded hooks: `pre-export-audit-gate.sh` (master doesn't export), `user-testing-gate.sh` (S9-only child workflow). Note: SHAMT-41 creates 10 hooks; SHAMT-44 adds 2 more (`validation-stall-detector`, `pre-push-tripwire`), bringing the total to 12. At SHAMT-41 implementation time, 8 of 10 SHAMT-41 hooks are master-applicable; the remaining 2 master-applicable hooks arrive with SHAMT-44.
+- [ ] Register MCP tools in master's config: `shamt.next_number()`, `shamt.validation_round()` (implemented in this design doc, active immediately). Note: `shamt.audit_run()`, `shamt.epic_status()`, `shamt.metrics.append()` are implemented in SHAMT-44; they will be registered in master's config when SHAMT-44's regen updates land.
+- [ ] Update `master_dev_workflow.md` to reference hooks and MCP tools at relevant steps:
+  - Step 4 (Guide Audit): note that `shamt.audit_run()` will be available after SHAMT-44
+  - Step 5 (Commit): note that `commit-format` and `pre-push-tripwire` hooks enforce commit discipline
+  - Larger Changes section, sub-step "Reserve N": use `shamt.next_number()` MCP tool
+  - Larger Changes section, sub-step "Validate design doc": `shamt.validation_round()` tracks rounds; `validation-log-stamp` hook auto-stamps
+  - Session Management: `precompact-snapshot` and `session-start-resume` hooks auto-manage context across compactions
+- [ ] Test on master repo: create a test branch, make a commit with wrong format, verify `commit-format` hook rejects it.
 
 ### Phase 7: Validation — Claude doc Experiment B
 - [ ] On a test child project (post-SHAMT-40), install hooks + MCP via the new flow.
@@ -232,3 +244,5 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 | 2026-04-27 | Added stage-transition-snapshot hook to bundle (10th hook); added HTTP-served MCP note for Codex Cloud to Open Questions |
 | 2026-04-27 | Fixed feature flag naming conflict: Files Affected init.sh row now references `features.shamt_hooks=true` consistent with Open Question 1 |
 | 2026-04-27 | Added CHEATSHEET.md MODIFY entry to Files Affected; Phase 6 step to add "Active Enforcement" section listing hooks and their enforcement rules |
+| 2026-04-28 | SHAMT-47 fold-in: Added Phase 6.5 (master repo hook + MCP activation); added `master_dev_workflow.md` to Files Affected; master gets 10 of 12 hooks and MCP tool registration |
+| 2026-04-28 | Validation fix: Hook count corrected to 10 of 12 (SHAMT-41 creates 10 hooks, SHAMT-44 adds 2 more; 2 excluded for master); MCP tool registration timing clarified (SHAMT-44 tools registered when SHAMT-44 lands); workflow references now use "Larger Changes section" sub-step names instead of ambiguous "Branch + Design Doc" |

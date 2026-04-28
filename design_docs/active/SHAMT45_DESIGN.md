@@ -219,7 +219,8 @@ Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orches
 | `.shamt/guides/reference/guide_pruning_audit.md` | CREATE | Audit findings + proposed deletions |
 | (various — enumerated at Phase 8 start) | DELETE / MODIFY | Placeholder: specific guides identified by the pruning audit and listed before Phase 8 begins. Cannot be enumerated before the audit runs. |
 | `.shamt/commands/CHEATSHEET.md` | MODIFY | (a) Update the status line format example to show the enhanced render (`effort`, `stall`, `profile` fields from Proposal 7). (b) Add a "Gate Prompts" section documenting each AskUserQuestion gate (stage, options, and what "bugs found" requires). (c) Add a "Memory Quick Reference" box: one-sentence decision rule ("Would another agent need this to resume? → artifact. Preference/fact/reference? → harness memory.") |
-| `CLAUDE.md` | MODIFY | New section "Polish Wave (SHAMT-45)" + tracking entry for deferred shamt-meta-orchestrator |
+| `CLAUDE.md` | MODIFY | New section "Polish Wave (SHAMT-45)" + tracking entry for deferred shamt-meta-orchestrator; add lifecycle-state primitive annotations to Design Doc Lifecycle section |
+| `.shamt/guides/master_dev_workflow/master_dev_workflow.md` | MODIFY | Add polish-wave primitive references (stall detection, memory tiers, reasoning escalation) |
 
 ---
 
@@ -267,6 +268,21 @@ Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orches
 ### Phase 9: shamt-meta-orchestrator decision
 - [ ] Document the deferral in CLAUDE.md with a tracking note.
 - [ ] If the user wants to proceed with a stub anyway, add `.shamt/sdk/shamt-meta-orchestrator-stub.py` with a "TODO: implement when cross-host orchestration becomes a real goal" header.
+
+### Phase 9.5: Master dev workflow finalization
+- [ ] Update `master_dev_workflow.md` with polish-wave primitive references:
+  - Step 2: note that `shamt-guide-audit` skill (SHAMT-39) provides systematic reading
+  - Step 3.5: reference reasoning escalation from stall detector for stuck implementations
+  - Step 4: reference stall detection — if guide audit stalls at ≥3 rounds, `validation-stall-detector` triggers STALL_ALERT.md with escalation recommendation
+  - Larger Changes section: reference memory-tier separation for master design doc work artifacts
+- [ ] Add lifecycle-state primitive annotations to CLAUDE.md's "Design Doc Lifecycle" section:
+  - Draft: `shamt.next_number()` for reservation; `precompact-snapshot` for context preservation
+  - Validated: `validation_loop_composite` drives 7D loop; `shamt.validation_round()` tracks rounds; `validation-log-stamp` auto-stamps; `shamt-validator` sub-agents for confirmation
+  - In Progress: `architect_builder_composite` for large implementations; `validation-stall-detector` for stall alerts; `pre-push-tripwire` for push gating
+  - Implemented: `shamt.audit_run()` for final guide audit; `shamt.metrics.append()` for retrospective metrics
+- [ ] Note: SHAMT-44 Phase 4.5 owns the "Primitives Available" subsection in CLAUDE.md's Master Dev Workflow section. Phase 9.5 does not duplicate or extend that subsection — it adds lifecycle annotations to the separate "Design Doc Lifecycle" section only.
+- [ ] Verify no circular references between master_dev_workflow.md and composite guides.
+- [ ] Note: SHAMT-44 must be implemented before Phase 9.5, as this phase builds on composite references added by SHAMT-44 Phase 4.5.
 
 ### Phase 10: Validation
 - [ ] Implementation validation loop (5 dimensions).
@@ -330,3 +346,5 @@ Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orches
 | 2026-04-27 | Validated — added clarifying note to "(various)" placeholder row in Files Affected |
 | 2026-04-27 | Fixed Proposal 8 contradiction: "propose within this design doc" → "write to guide_pruning_audit.md" (aligning with Files Affected); added S3 to Goal 3 to match Proposal 3 |
 | 2026-04-27 | Added CHEATSHEET.md MODIFY entry to Files Affected; Phase 7 step to update status line format, gate prompts, and memory quick reference in the cheat sheet |
+| 2026-04-28 | SHAMT-47 fold-in: Added Phase 9.5 (master dev workflow finalization); added `master_dev_workflow.md` to Files Affected; added lifecycle-state primitive annotations to CLAUDE.md Design Doc Lifecycle section |
+| 2026-04-28 | Validation fix: Phase 9.5 now explicitly notes SHAMT-44 ownership of Primitives Available subsection (no duplication); clarified workflow references use "Larger Changes section" instead of ambiguous "Session management"; added SHAMT-44 ordering dependency note |

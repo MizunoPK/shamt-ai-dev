@@ -153,6 +153,12 @@ All three proposals together: init detects Claude Code, runs regen script, write
 - [ ] Add section "Claude Code Host Wiring (SHAMT-40)" describing the init flow, regen script, settings.json reserved blocks.
 - [ ] Note that Codex equivalent lands in SHAMT-42.
 
+### Phase 7.5: Master repo wiring
+- [ ] Run regen on the master repo itself to generate `.claude/skills/`, `.claude/agents/`, `.claude/commands/` from the canonical content.
+- [ ] Verify `shamt-master-reviewer` skill deploys on master (regen includes master-only skills when running on the master repo) and does NOT deploy on child projects (regen excludes master-only skills on child repos).
+- [ ] Verify master's `.claude/settings.json` has the status line, reserved blocks, and project name resolved.
+- [ ] This is the first integration test of the full regen pipeline — master eats its own dog food.
+
 ### Phase 8: Validation — Claude doc Experiment A
 - [ ] On a test child project, run init with Claude Code selected.
 - [ ] Verify `.claude/skills/`, `.claude/agents/`, `.claude/commands/` populate correctly.
@@ -210,3 +216,5 @@ All three proposals together: init detects Claude Code, runs regen script, write
 | 2026-04-27 | Initial draft created |
 | 2026-04-27 | Validated — added explicit Phase 4 step for pre-existing settings.json handling |
 | 2026-04-27 | Added CHEATSHEET.md passthrough entry to Files Affected; regen deploys it verbatim to `.claude/commands/CHEATSHEET.md` alongside all other command files |
+| 2026-04-28 | SHAMT-47 fold-in: Added Phase 7.5 (master repo wiring) — run regen on master itself as first integration test |
+| 2026-04-28 | Validation fix: Phase 7.5 wording clarified — explicit about regen including/excluding master-only skills based on repo type |

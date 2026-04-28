@@ -130,8 +130,9 @@ All five proposals together. SHAMT-44 is the assembly step — without it, the p
 | `.shamt/guides/composites/stale_work_janitor_composite.md` | CREATE | Composite workflow guide |
 | `.shamt/guides/composites/master_review_pipeline_composite.md` | CREATE | Composite workflow guide |
 | `.shamt/guides/composites/metrics_observability_composite.md` | CREATE | Composite workflow guide |
-| `.shamt/guides/composites/rollback_recovery_composite.md` | CREATE | Composite workflow guide |
+| `.shamt/guides/composites/rollback_recovery_composite.md` | CREATE | Composite workflow guide; includes "Master Dev Variant" section |
 | `.shamt/guides/composites/README.md` | CREATE | Index + decision tree for picking a composite |
+| `.shamt/guides/master_dev_workflow/master_dev_workflow.md` | MODIFY | Add composite references at Steps 3.5, 4, design-doc validation, implementation validation, and session management; add "Primitives Available" overview |
 | `.shamt/skills/shamt-architect-builder/SKILL.md` | MODIFY | Reference composite guide; reference cloud variant from SHAMT-43 |
 | `.shamt/skills/shamt-guide-audit/SKILL.md` | MODIFY | Call `shamt.audit_run()` MCP verb; extend audit scope to cover `guides/composites/` — the seven new composite guides must be included in the full guide audit walk. Without this, the composites directory would be silently unaudited. |
 | `.shamt/scripts/regen/regen-claude-shims.sh` | MODIFY | Register new hooks; verify metrics emission compatible |
@@ -140,7 +141,7 @@ All five proposals together. SHAMT-44 is the assembly step — without it, the p
 | `.shamt/observability/README.md` | MODIFY | Document the bootstrapping caveat (§3.5 in overview) |
 | `.shamt/guides/parallel_work/*.md` | MODIFY | Phase 4: revise to reflect `run_in_background` primitive; specific files enumerated at Phase 4 start after reviewing current parallel_work/ content |
 | `.shamt/commands/CHEATSHEET.md` | MODIFY | Add "Composites" section listing all six cross-cutting workflows (validation loop, architect-builder, stale-work janitor, master review pipeline, metrics/observability, rollback/recovery) with a one-line "when to use" and a pointer to the relevant composite guide. |
-| `CLAUDE.md` | MODIFY | New section "Cross-Cutting Composites (SHAMT-44)" — references each composite guide |
+| `CLAUDE.md` | MODIFY | New section "Cross-Cutting Composites (SHAMT-44)" — references each composite guide; add "Primitives Available" subsection to Master Dev Workflow section |
 
 ---
 
@@ -173,6 +174,31 @@ All five proposals together. SHAMT-44 is the assembly step — without it, the p
   - Includes "when to use" criteria
 - [ ] Author the index README.
 - [ ] Update `CHEATSHEET.md` with a "Composites" section listing each composite, a one-line "when to use" description, and a file path pointer to the composite guide. This makes the composites discoverable from the cheat sheet without reading the composite guides first.
+
+### Phase 4.5: Master dev variants in composites
+- [ ] Add "Master Dev Variant" section to `validation_loop_composite.md`:
+  - Master uses for design doc validation (7D) and implementation validation (5D)
+  - Exit: primary clean + 2 sub-agents (same as child)
+  - No `/loop` auto-pacing for master — validation is manual-invoke
+- [ ] Add "Master Dev Variant" section to `architect_builder_composite.md`:
+  - Optional for master (decision criteria in `master_dev_workflow.md` Step 3.5)
+  - Architect creates plan in `design_docs/active/SHAMT{N}_IMPLEMENTATION_PLAN.md`
+  - No S6 enforcement hook — master triggers builder manually
+- [ ] Add master-internal scan targets to `stale_work_janitor_composite.md`:
+  - `design_docs/active/` — design docs with no commits >4 weeks
+  - `design_docs/incoming/` — proposals >30 days untriaged
+  - Supplement existing child-sync scans
+- [ ] Add "Master Dev Variant" section to `rollback_recovery_composite.md`:
+  - Stall detection + reasoning escalation for design doc validation stalls
+  - Worktree rollback for builder errors during guide implementation
+- [ ] Note: `master_review_pipeline_composite` and `metrics_observability_composite` already cover master use cases (child PR review and metrics emission respectively) and do not need separate master-dev variant sections. Document this decision in each composite's guide.
+- [ ] Update `master_dev_workflow.md` to reference composites at each applicable step:
+  - Step 3.5: reference `architect_builder_composite`
+  - Step 4: reference `validation_loop_composite` for guide audit round tracking
+  - Larger Changes section, sub-step "Validate design doc" (sub-step 4): reference `validation_loop_composite` (7D variant)
+  - Larger Changes section, sub-step "Validate implementation" (sub-step 6): reference `validation_loop_composite` (5D variant)
+  - Larger Changes section, "Guide audit" (sub-step 7): reference `shamt.audit_run()` + `validation_loop_composite`
+- [ ] Add "Primitives Available" subsection to CLAUDE.md's "Master Dev Workflow" section listing all active hooks, MCP tools, composites, skills, and agent personas for master dev work.
 
 ### Phase 5: Metrics emission wiring
 - [ ] Update existing hooks (validation-log-stamp, etc.) to call `metrics.append()`.
@@ -250,3 +276,5 @@ All five proposals together. SHAMT-44 is the assembly step — without it, the p
 | 2026-04-27 | Specified run_in_background usage and plan-mode sites (S5 + S10.P1) in architect-builder composite spec; enumerated recurring-scan and one-shot post-event routines in stale-work janitor composite spec |
 | 2026-04-27 | Added CHEATSHEET.md MODIFY entry to Files Affected; Phase 4 step to add "Composites" section with all six cross-cutting workflows |
 | 2026-04-27 | Extended shamt-guide-audit SKILL.md MODIFY note: must extend audit scope to cover `guides/composites/` so the seven new composite guides are included in full guide audit walks. |
+| 2026-04-28 | SHAMT-47 fold-in: Added Phase 4.5 (master dev variants in composites); added `master_dev_workflow.md` to Files Affected; updated CLAUDE.md note to include Primitives Available subsection; each composite gets a "Master Dev Variant" section |
+| 2026-04-28 | Validation fix: Step references in Phase 4.5 now use explicit "Larger Changes section, sub-step N" instead of ambiguous names; added explicit note on why master_review_pipeline and metrics_observability composites don't need master-dev variants |

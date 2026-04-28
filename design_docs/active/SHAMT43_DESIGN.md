@@ -166,7 +166,7 @@ All five proposals together. SHAMT-43 is essentially "everything Codex offers th
 | `.shamt/scripts/initialization/init.sh` | MODIFY | Optional `--with-cloud` flag for Codex hosts; copies cloud-environment template |
 | `.shamt/scripts/initialization/init.ps1` | MODIFY | Mirror |
 | `.shamt/commands/CHEATSHEET.md` | MODIFY | Add "CI Automation" section describing `shamt-validate-pr.py` (automatic PR validation gate), `shamt-cron-janitor.py` (scheduled stale-work scanner), and the `@codex` master review pipeline — including how to enable each via their GitHub Actions workflow templates. |
-| `CLAUDE.md` | MODIFY | New section "Codex Cloud, OTel, and SDK (SHAMT-43)" |
+| `CLAUDE.md` | MODIFY | New section "Codex Cloud, OTel, and SDK (SHAMT-43)"; update "Reviewing Child Project PRs" section with composite references |
 
 ---
 
@@ -200,6 +200,17 @@ All five proposals together. SHAMT-43 is essentially "everything Codex offers th
 - [ ] Configure `@codex` mention trigger to invoke the workflow.
 - [ ] Verify the `shamt-master-reviewer` skill (from SHAMT-39) loads correctly when the cloud task runs.
 - [ ] Test on a real child PR.
+
+### Phase 4.5: Master repo SDK + CI deployment
+- [ ] Deploy `shamt-validate-pr.py` GitHub Actions workflow on the master repo itself for incoming child PRs.
+- [ ] Deploy `shamt-cron-janitor.py` weekly cron workflow on the master repo to scan `design_docs/incoming/` (>30 days) and `design_docs/active/` (no commits >4 weeks).
+- [ ] Deploy the `@codex` master review pipeline workflow on the master repo.
+- [ ] Update CLAUDE.md "Reviewing Child Project PRs" section to reference:
+  - `shamt-code-reviewer` agent for code changes
+  - `shamt-master-reviewer` skill for guide changes
+  - `shamt.audit_run()` for post-merge guide audit
+  - `master_review_pipeline_composite` for the full automated flow
+- [ ] Test: open a synthetic child PR against master; verify the validate-pr workflow runs and the @codex review pipeline produces a review draft.
 
 ### Phase 5: Stage guide updates
 - [ ] Author S6/S7/S9 cloud_variant.md files.
@@ -275,3 +286,4 @@ All five proposals together. SHAMT-43 is essentially "everything Codex offers th
 | 2026-04-27 | Added shamt-cron-janitor.py and its cron workflow template to Proposal 3, Files Affected, and Phase 3 |
 | 2026-04-27 | Added scope justification to Proposal 5: explains why S6/S7/S9 get cloud variants and S8/S10/S11 do not |
 | 2026-04-27 | Added CHEATSHEET.md MODIFY entry to Files Affected; Phase 3 step to add "CI Automation" section covering SDK scripts and @codex master review |
+| 2026-04-28 | SHAMT-47 fold-in: Added Phase 4.5 (master repo SDK + CI deployment); updated CLAUDE.md Files Affected note to include child PR review composite references |

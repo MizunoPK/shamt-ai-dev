@@ -122,7 +122,7 @@ Both proposals together: existing guides as authoritative content sources, new `
 | `.shamt/commands/shamt-resume.md` | CREATE | Re-hydrate context after compaction / new session |
 | `.shamt/commands/shamt-promote.md` | CREATE | Master-only: promote incoming proposal to design doc |
 | `.shamt/commands/CHEATSHEET.md` | CREATE | User-facing quick reference: all slash commands with one-line descriptions, S1–S11 stage flow table, sub-agent persona summary. Foundation file that grows with each subsequent SHAMT-N. Not covered by the guide audit (lives in `commands/`, not `guides/`); kept accurate by explicit update steps in SHAMT-41/43/44/45 implementation plans. |
-| `CLAUDE.md` | MODIFY | Add section describing the three new directories and their roles |
+| `CLAUDE.md` | MODIFY | Add section describing the three new directories and their roles; add master-applicable skill/persona note to Master Dev Workflow section |
 | `.shamt/skills/README.md` | CREATE | Index + authoring conventions |
 | `.shamt/agents/README.md` | CREATE | Persona format spec + tier-to-model mapping |
 | `.shamt/commands/README.md` | CREATE | Command body format + argument-substitution conventions |
@@ -156,6 +156,14 @@ Both proposals together: existing guides as authoritative content sources, new `
 - [ ] Add a new section "Canonical Content Layer (SHAMT-39)" describing `.shamt/skills/`, `.shamt/agents/`, `.shamt/commands/`.
 - [ ] Note that this is content-only — host wiring lands in SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
 - [ ] Note that child projects on prior versions ignore the new directories until they re-init or run regen.
+- [ ] In the "Master Dev Workflow" section of CLAUDE.md, add a note that master-applicable skills (`shamt-validation-loop`, `shamt-guide-audit`, `shamt-code-review`, `shamt-master-reviewer`) and agent personas (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-code-reviewer`) are available for master dev work once host wiring (SHAMT-40/42) is deployed.
+
+### Phase 5.5: Master repo agent persona subset
+- [ ] Document which agent personas are master-applicable vs. child-only in `.shamt/agents/README.md`.
+- [ ] Master-applicable personas (5): `shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-code-reviewer`.
+- [ ] Master-only skill (not a persona): `shamt-master-reviewer` — this is a skill file, not an agent persona YAML.
+- [ ] Child-only personas (2): `shamt-spec-aligner`, `shamt-discovery-researcher`.
+- [ ] Add a "Master Applicability" column or section to the persona index so regen scripts can filter correctly.
 
 ### Phase 6: Post-Implementation Validation
 - [ ] Run implementation validation loop (5 dimensions) to confirm all files in "Files Affected" were created correctly.
@@ -208,3 +216,5 @@ Both proposals together: existing guides as authoritative content sources, new `
 | 2026-04-27 | Validated — corrected file count 27→29 in Validation Strategy; clarified Phase 6 ordering |
 | 2026-04-27 | Added `.shamt/commands/CHEATSHEET.md` (CREATE) to Files Affected; added Phase 4 authoring step and Validation Strategy check; CHEATSHEET.md is the user-facing quick reference that grows across SHAMT-41 through SHAMT-45 |
 | 2026-04-27 | Added audit scope note to shamt-guide-audit SKILL.md row: scope covers all of `.shamt/guides/` (all subdirs); `.shamt/commands/` and `.shamt/skills/` are explicitly out of audit scope. Added out-of-audit-scope note to CHEATSHEET.md row: accuracy maintained by implementation-plan update steps, not the guide audit. |
+| 2026-04-28 | SHAMT-47 fold-in: Added Phase 5.5 (master repo agent persona subset); extended Phase 5 CLAUDE.md update to include master-applicable skill/persona note in Master Dev Workflow section |
+| 2026-04-28 | Validation fix: Phase 5.5 persona count corrected from 6 to 5; `shamt-master-reviewer` is a skill, not a persona |
