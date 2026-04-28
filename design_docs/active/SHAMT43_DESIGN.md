@@ -83,7 +83,7 @@ The setup script installs the Shamt MCP server (HTTP-served, since cloud STDIO M
 
 ### Proposal 3: Agents SDK CI script
 
-**Description:** `.shamt/sdk/shamt-validate-pr.py` is a standalone Python script using the OpenAI Agents SDK. Behavior:
+**Description:** `.shamt/sdk/shamt-validate-pr.py` is a standalone Python script using the OpenAI Agents SDK (chosen because it is the official, maintained library for driving Codex sessions programmatically, with typed results and built-in retry semantics; direct REST API calls to Codex would require reimplementing session lifecycle management). Behavior:
 
 1. Read GitHub Actions environment variables (PR number, base ref, head ref).
 2. Identify changed artifacts in the PR diff (specs, validation logs, design docs).
@@ -189,6 +189,7 @@ All five proposals together. SHAMT-43 is essentially "everything Codex offers th
 - [ ] Implement: load PR context from GitHub Actions env, identify changed artifacts, drive Codex sessions per artifact, post structured PR comment.
 - [ ] Author the PR-trigger GitHub Actions workflow template.
 - [ ] Test on a synthetic PR with a deliberately-broken spec; verify the script catches it and posts an actionable comment.
+- [ ] Document CI credential management: `ANTHROPIC_API_KEY` (or Codex equivalent) must be set as a CI secret; the Agents SDK reads it from the environment by default. Document this requirement in `.shamt/sdk/README.md`.
 - [ ] Author `shamt-cron-janitor.py`.
 - [ ] Implement: scan `incoming/` (age >30 days), `active/` (no commit in N weeks), child sync timestamps (no import in N weeks); produce digest file; optionally post to GitHub issue via API.
 - [ ] Author the weekly-cron GitHub Actions workflow template.
@@ -274,6 +275,7 @@ All five proposals together. SHAMT-43 is essentially "everything Codex offers th
 | Master review pipeline burns through API budget on PR storms | Add a rate-limit guard or label-trigger; document cost expectations |
 | Container disposability rollback corrupts cached artifacts | Cloud caches are 12h; corrupted-cache scenario triggers full rebuild on next setup-script run; document the recovery |
 | GitHub Action runs against wrong base ref | Workflow template uses `${{ github.event.pull_request.base.ref }}` — verified pattern |
+| `@codex` cloud task fails mid-review (timeout, OOM, network error) | Master review pipeline posts a "review task failed — retry with `@codex review`" comment on failure; task failure is surfaced to the PR, not silent. Phase 4 must specify the failure-notification behavior in the workflow template. |
 
 ---
 
@@ -287,3 +289,4 @@ All five proposals together. SHAMT-43 is essentially "everything Codex offers th
 | 2026-04-27 | Added scope justification to Proposal 5: explains why S6/S7/S9 get cloud variants and S8/S10/S11 do not |
 | 2026-04-27 | Added CHEATSHEET.md MODIFY entry to Files Affected; Phase 3 step to add "CI Automation" section covering SDK scripts and @codex master review |
 | 2026-04-28 | SHAMT-47 fold-in: Added Phase 4.5 (master repo SDK + CI deployment); updated CLAUDE.md Files Affected note to include child PR review composite references |
+| 2026-04-28 | Validation fix (sub-agent round): added Agents SDK justification in Proposal 3; added CI credential management step in Phase 3; added cloud task failure risk row to Risks table |

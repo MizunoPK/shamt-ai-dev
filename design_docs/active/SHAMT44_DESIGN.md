@@ -134,7 +134,7 @@ All five proposals together. SHAMT-44 is the assembly step — without it, the p
 | `.shamt/guides/composites/README.md` | CREATE | Index + decision tree for picking a composite |
 | `.shamt/guides/master_dev_workflow/master_dev_workflow.md` | MODIFY | Add composite references at Steps 3.5, 4, design-doc validation, implementation validation, and session management; add "Primitives Available" overview |
 | `.shamt/skills/shamt-architect-builder/SKILL.md` | MODIFY | Reference composite guide; reference cloud variant from SHAMT-43 |
-| `.shamt/skills/shamt-guide-audit/SKILL.md` | MODIFY | Call `shamt.audit_run()` MCP verb; extend audit scope to cover `guides/composites/` — the seven new composite guides must be included in the full guide audit walk. Without this, the composites directory would be silently unaudited. |
+| `.shamt/skills/shamt-guide-audit/SKILL.md` | MODIFY | Call `shamt.audit_run()` MCP verb; extend audit scope to cover `guides/composites/` — the seven new composite files (six composite guides + the README) must be included in the full guide audit walk. Without this, the composites directory would be silently unaudited. |
 | `.shamt/scripts/regen/regen-claude-shims.sh` | MODIFY | Register new hooks; verify metrics emission compatible |
 | `.shamt/scripts/regen/regen-codex-shims.sh` | MODIFY | Mirror |
 | `.shamt/observability/grafana/shamt-savings-tracker.json` | MODIFY | Update queries to consume metrics emitted by hooks/skills |
@@ -278,3 +278,4 @@ All five proposals together. SHAMT-44 is the assembly step — without it, the p
 | 2026-04-27 | Extended shamt-guide-audit SKILL.md MODIFY note: must extend audit scope to cover `guides/composites/` so the seven new composite guides are included in full guide audit walks. |
 | 2026-04-28 | SHAMT-47 fold-in: Added Phase 4.5 (master dev variants in composites); added `master_dev_workflow.md` to Files Affected; updated CLAUDE.md note to include Primitives Available subsection; each composite gets a "Master Dev Variant" section |
 | 2026-04-28 | Validation fix: Step references in Phase 4.5 now use explicit "Larger Changes section, sub-step N" instead of ambiguous names; added explicit note on why master_review_pipeline and metrics_observability composites don't need master-dev variants |
+| 2026-04-28 | Validation fix (sub-agent round): clarified "seven new composite guides" → "seven new composite files (six composite guides + the README)" in shamt-guide-audit SKILL.md row |

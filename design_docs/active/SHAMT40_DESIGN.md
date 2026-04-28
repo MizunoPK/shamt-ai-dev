@@ -56,7 +56,7 @@ For all other AI services, current behavior is unchanged — `init.sh` writes th
 - **Skills:** Each `.shamt/skills/<name>/SKILL.md` becomes `.claude/skills/<name>/SKILL.md`. The neutral frontmatter `triggers:` is preserved (Claude Code reads it directly). A "managed by Shamt — do not edit" header is prepended.
 - **Agents:** Each `.shamt/agents/<name>.yaml` is transformed to `.claude/agents/<name>.md` with frontmatter (`name`, `description`, `tools`, `model`) and a body that's the persona's prompt_template. The `model_tier` translates per the mapping in `.shamt/agents/README.md` (cheap=haiku, balanced=sonnet, reasoning=opus).
 - **Commands:** Each `.shamt/commands/<name>.md` becomes `.claude/commands/<name>.md` with the body preserved and a "managed by Shamt" header. `{placeholder}` syntax is unchanged (Claude Code's command argument syntax matches).
-- **Master-only filter:** Skills with `master-only: true` frontmatter are skipped on child projects.
+- **Master-only filter:** Skills with `master-only: true` frontmatter are skipped on child projects. The regen script reads `.shamt/config/repo_type.conf` (value: `master` or `child`, written by `init.sh` at initialization time) to determine whether it is running on the master repo or a child project and applies the filter accordingly.
 - **Idempotence:** Running the script multiple times produces the same output. Existing files in `.claude/skills/`, `.claude/agents/`, `.claude/commands/` that don't have the "managed by Shamt" header are preserved (user may have authored their own).
 
 **Rationale:** A single transform script is simpler than per-shim authoring. Idempotence and the managed-header convention let the script run on every `shamt import` without losing user-authored content.
@@ -110,6 +110,7 @@ All three proposals together: init detects Claude Code, runs regen script, write
 | `.shamt/host/claude/README.md` | CREATE | Document the host-wiring layout |
 | `.shamt/scripts/import/import.sh` | MODIFY | Invoke regen after successful import (Claude Code branch) |
 | `.shamt/scripts/initialization/ai_services.md` | MODIFY | Add "wiring tier" column; mark Claude Code as "full-wiring" |
+| `.shamt/config/repo_type.conf` | CREATE | Written by `init.sh` at initialization time with value `master` or `child`; read by `regen-claude-shims.sh` to determine master-vs-child mode for master-only skill filter |
 | `.shamt/commands/CHEATSHEET.md` | PASSTHROUGH (via regen) | Deployed verbatim (no argument-substitution) to `.claude/commands/CHEATSHEET.md` by `regen-claude-shims.sh`; managed-header prepended. Content is authored in SHAMT-39 and updated in SHAMT-41, 43, 44, 45. |
 | `CLAUDE.md` | MODIFY | Document the Claude Code wiring story under a new section |
 
@@ -218,3 +219,4 @@ All three proposals together: init detects Claude Code, runs regen script, write
 | 2026-04-27 | Added CHEATSHEET.md passthrough entry to Files Affected; regen deploys it verbatim to `.claude/commands/CHEATSHEET.md` alongside all other command files |
 | 2026-04-28 | SHAMT-47 fold-in: Added Phase 7.5 (master repo wiring) — run regen on master itself as first integration test |
 | 2026-04-28 | Validation fix: Phase 7.5 wording clarified — explicit about regen including/excluding master-only skills based on repo type |
+| 2026-04-28 | Validation fix (Round 1): specified master-vs-child detection mechanism in Proposal 2 (regen reads `.shamt/config/repo_type.conf` written by init.sh); added `repo_type.conf` to Files Affected |

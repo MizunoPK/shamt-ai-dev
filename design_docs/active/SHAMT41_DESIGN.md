@@ -5,7 +5,7 @@
 **Branch:** `feat/SHAMT-41`
 **Validation Log:** [SHAMT41_VALIDATION_LOG.md](./SHAMT41_VALIDATION_LOG.md)
 **Depends on:** SHAMT-39 (canonical content), SHAMT-40 (Claude Code wiring with reserved hooks/mcpServers blocks)
-**Companion docs:** `CLAUDE_INTEGRATION_THEORIES.md`, `FUTURE_ARCHITECTURE_OVERVIEW.md`
+**Companion docs:** [`CLAUDE_INTEGRATION_THEORIES.md`](../CLAUDE_INTEGRATION_THEORIES.md), [`FUTURE_ARCHITECTURE_OVERVIEW.md`](../FUTURE_ARCHITECTURE_OVERVIEW.md)
 
 ---
 
@@ -70,12 +70,17 @@ shamt.validation_round(
     round: int,
     severity_counts: dict[str, int],
     fixed: bool = false,
+    exit_threshold: int = 1,
 ) -> {"round_number": int, "consecutive_clean": int, "should_exit": bool}
 ```
 
 `next_number()` opens `design_docs/NEXT_NUMBER.txt` with an OS-level lock, reads the current value, increments, writes back, releases the lock. Returns the reserved number atomically.
 
-`validation_round()` parses the log, appends a structured entry, computes `consecutive_clean` from the severity_counts and history, and returns whether the loop should exit. Before incrementing `consecutive_clean`, it checks for the `.shamt/epics/<active>/.subagent_confirmation_veto` flag file written by `subagent-confirmation-receipt.sh`; if present, the counter is not incremented and the flag is deleted. The agent writes its prose analysis separately; the MCP call is bookkeeping only.
+`validation_round()` parses the log, appends a structured entry, computes `consecutive_clean` from the severity_counts and history, and returns whether the loop should exit. Parameters:
+- `fixed`: Set to `true` when the round found exactly 1 LOW issue that was immediately fixed (the "1-LOW-fixed" exception to the clean-round rule). When `fixed=true` and `severity_counts` shows exactly 1 LOW and zero higher-severity issues, the round counts as clean and `consecutive_clean` increments. For all other severity combinations, `fixed` is ignored.
+- `exit_threshold`: The `consecutive_clean` value at which `should_exit` returns `true`. Default 1 for validation loops (per `validation_loop_master_protocol.md` primary-clean exit criterion). Pass 3 for guide audits (which require 3 consecutive clean rounds). `should_exit` is computed as `consecutive_clean >= exit_threshold` after processing the current round.
+
+Before incrementing `consecutive_clean`, the tool checks for the `.shamt/epics/<active>/.subagent_confirmation_veto` flag file written by `subagent-confirmation-receipt.sh`; if present, the counter is not incremented and the flag is deleted. The agent writes its prose analysis separately; the MCP call is bookkeeping only.
 
 The server uses the standard MCP Python SDK and exposes itself over stdio. SHAMT-40's regen registers it under `mcpServers.shamt` in `.claude/settings.json`.
 
@@ -144,7 +149,7 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 - [ ] Implement `next_number()` with file-locking.
 - [ ] Implement `validation_round()` parsing existing log format and computing `consecutive_clean`.
 - [ ] Add unit tests covering atomic reservation under simulated concurrent access and `consecutive_clean` arithmetic edge cases.
-- [ ] Document install, run, and configuration in `.shamt/mcp/README.md`.
+- [ ] Document install, run, and configuration in `.shamt/mcp/README.md`. **Installation strategy decision:** Default to repo-local venv (per Open Question 2 recommendation); document the alternative paths (system pip-install, packaged binary) but specify repo-local venv as the default and what the registered command in settings.json should invoke (`python -m shamt_mcp` from within the venv).
 
 ### Phase 2: Audit-state contract
 - [ ] Define `.shamt/audit/last_run.json` schema (timestamp, scope, severity counts, unfixed issue list).
@@ -246,3 +251,5 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 | 2026-04-27 | Added CHEATSHEET.md MODIFY entry to Files Affected; Phase 6 step to add "Active Enforcement" section listing hooks and their enforcement rules |
 | 2026-04-28 | SHAMT-47 fold-in: Added Phase 6.5 (master repo hook + MCP activation); added `master_dev_workflow.md` to Files Affected; master gets 10 of 12 hooks and MCP tool registration |
 | 2026-04-28 | Validation fix: Hook count corrected to 10 of 12 (SHAMT-41 creates 10 hooks, SHAMT-44 adds 2 more; 2 excluded for master); MCP tool registration timing clarified (SHAMT-44 tools registered when SHAMT-44 lands); workflow references now use "Larger Changes section" sub-step names instead of ambiguous "Branch + Design Doc" |
+| 2026-04-28 | Validation fix (sub-agent round): clarified Phase 1 step 4 to explicitly name the installation strategy decision (repo-local venv default per Open Question 2) |
+| 2026-04-28 | Validation fix (sub-agent round 2): (1) companion docs in frontmatter changed to markdown hyperlinks; (2) `validation_round()` signature extended with `exit_threshold` parameter; `fixed` and `should_exit` semantics fully documented in Proposal 2 |

@@ -4,7 +4,7 @@
 **Created:** 2026-04-27
 **Branch:** `feat/SHAMT-39`
 **Validation Log:** [SHAMT39_VALIDATION_LOG.md](./SHAMT39_VALIDATION_LOG.md)
-**Companion docs:** `CLAUDE_INTEGRATION_THEORIES.md`, `CODEX_INTEGRATION_THEORIES.md`, `FUTURE_ARCHITECTURE_OVERVIEW.md`
+**Companion docs:** [`CLAUDE_INTEGRATION_THEORIES.md`](../CLAUDE_INTEGRATION_THEORIES.md), [`CODEX_INTEGRATION_THEORIES.md`](../CODEX_INTEGRATION_THEORIES.md), [`FUTURE_ARCHITECTURE_OVERVIEW.md`](../FUTURE_ARCHITECTURE_OVERVIEW.md)
 
 ---
 
@@ -176,7 +176,7 @@ Both proposals together: existing guides as authoritative content sources, new `
 ## Validation Strategy
 
 - **Primary validation:** Design doc validation loop on this doc (7 dimensions, primary clean + 2 sub-agents).
-- **Implementation validation:** After Phase 5, run implementation validation loop (5 dimensions). Verify each file in "Files Affected" was created with the expected structure.
+- **Implementation validation:** After Phase 5.5, run implementation validation loop (5 dimensions). Verify each file in "Files Affected" was created with the expected structure.
 - **CHEATSHEET.md review:** Confirm all 8 commands are listed and each description matches the command body authored in Phase 4; confirm S1–S11 table and persona summary are present.
 - **Content quality check:** Each skill body must be self-contained — an agent reading only the SKILL.md should be able to execute the protocol without reading the source guide. Verify this empirically by spawning a clean-context agent on each skill and asking it to walk through the protocol.
 - **Persona format check:** Each persona YAML must validate against the schema in `.shamt/agents/README.md`. Use a schema validator (yamale, jsonschema-yaml) in Phase 6 sanity check.
@@ -218,3 +218,5 @@ Both proposals together: existing guides as authoritative content sources, new `
 | 2026-04-27 | Added audit scope note to shamt-guide-audit SKILL.md row: scope covers all of `.shamt/guides/` (all subdirs); `.shamt/commands/` and `.shamt/skills/` are explicitly out of audit scope. Added out-of-audit-scope note to CHEATSHEET.md row: accuracy maintained by implementation-plan update steps, not the guide audit. |
 | 2026-04-28 | SHAMT-47 fold-in: Added Phase 5.5 (master repo agent persona subset); extended Phase 5 CLAUDE.md update to include master-applicable skill/persona note in Master Dev Workflow section |
 | 2026-04-28 | Validation fix: Phase 5.5 persona count corrected from 6 to 5; `shamt-master-reviewer` is a skill, not a persona |
+| 2026-04-28 | Validation fix (sub-agent round): added hyperlinks to companion docs in frontmatter (relative paths from `active/` to `design_docs/`) |
+| 2026-04-28 | Validation fix (sub-agent round 2): Validation Strategy "After Phase 5" corrected to "After Phase 5.5" to match actual implementation plan sequencing (Phase 5.5 added in SHAMT-47 fold-in) |
