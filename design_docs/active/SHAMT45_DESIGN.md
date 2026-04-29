@@ -207,14 +207,14 @@ Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orches
 | `.shamt/agents/README.md` | MODIFY | Map profiles to per-host model/effort tuples |
 | `.shamt/hooks/validation-stall-detector.sh` | MODIFY | Write recommendation to STALL_ALERT.md (escalation) |
 | `.shamt/skills/shamt-validation-loop/SKILL.md` | MODIFY | Pick up STALL_ALERT and propose escalation; maintain `source_guides:` frontmatter |
-| `.shamt/skills/shamt-spec-protocol/SKILL.md` | MODIFY | AskUserQuestion at S1/S2/S5/S9 gates; /fork on S2.P1.I2; maintain `source_guides:` frontmatter |
+| `.shamt/skills/shamt-spec-protocol/SKILL.md` | MODIFY | AskUserQuestion at S1/S2/S5/S9 gates; /fork on S2.P1.I2; maintain `source_guides:` frontmatter. Note: S3 testing-approach gate (Proposal 3) is hosted in a separate skill TBD at implementation time — whichever skill drives the S3 phase gate receives the equivalent AskUserQuestion update. |
 | `.shamt/skills/shamt-architect-builder/SKILL.md` | MODIFY | /fork on S5 alternative-architectures; maintain `source_guides:` frontmatter |
 | `.shamt/skills/shamt-discovery/SKILL.md` | MODIFY | Multi-modal + Web tools; update `source_guides:` frontmatter if new guide content is introduced to support these features |
 | `.shamt/host/codex/profiles/shamt-s1.fragment.toml` | MODIFY | Enable web_search="cached" |
 | `.shamt/host/codex/profiles/shamt-s2.fragment.toml` | MODIFY | Enable web_search if research stage; disable otherwise |
 | `.shamt/host/codex/profiles/*.fragment.toml` | MODIFY | Set web_search="disabled" on non-research stages |
 | `.shamt/guides/reference/memory_tiers.md` | CREATE | Tier separation rules |
-| `.shamt/scripts/initialization/templates/AGENT_STATUS.template.md` | MODIFY | Push memory-tier content out |
+| `.shamt/scripts/initialization/templates/AGENT_STATUS.template.md` | MODIFY or CREATE | Push memory-tier content out; if the template does not exist at implementation time (no predecessor SHAMT creates it), create it from the live `.shamt/epics/<active>/AGENT_STATUS.md` pattern and then apply the memory-tier separation |
 | `.shamt/scripts/statusline/shamt-statusline.sh` | MODIFY | Render effort, stall, profile |
 | `.shamt/guides/reference/guide_pruning_audit.md` | CREATE | Audit findings + proposed deletions |
 | (various — enumerated at Phase 8 start) | DELETE / MODIFY | Placeholder: specific guides identified by the pruning audit and listed before Phase 8 begins. Cannot be enumerated before the audit runs. |
@@ -237,7 +237,7 @@ Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orches
 - [ ] Test with a deliberately-stuck validation case.
 
 ### Phase 3: AskUserQuestion at gates
-- [ ] Update each gated skill (spec-protocol, validation-loop, code-review where applicable) to use AskUserQuestion with predefined option sets.
+- [ ] Update each gated skill to use AskUserQuestion with predefined option sets, covering all five gates from Proposal 3: S1 feature breakdown approval (`shamt-spec-protocol`), S2.P1.I2 checklist resolution (`shamt-spec-protocol`), S3 testing-approach selection (whichever skill hosts the S3 phase gate), S5 plan approval (`shamt-architect-builder`), and S9 user-testing zero-bug confirmation (`shamt-validation-loop` or equivalent).
 - [ ] Document Codex headless equivalent: PR comment with structured response template; SDK script parses reply.
 
 ### Phase 4: Memory tier separation guide
@@ -350,3 +350,4 @@ Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orches
 | 2026-04-28 | SHAMT-47 fold-in: Added Phase 9.5 (master dev workflow finalization); added `master_dev_workflow.md` to Files Affected; added lifecycle-state primitive annotations to CLAUDE.md Design Doc Lifecycle section |
 | 2026-04-28 | Validation fix: Phase 9.5 now explicitly notes SHAMT-44 ownership of Primitives Available subsection (no duplication); clarified workflow references use "Larger Changes section" instead of ambiguous "Session management"; added SHAMT-44 ordering dependency note |
 | 2026-04-29 | Drift/coverage sync: all four skill MODIFY rows in Files Affected updated with `source_guides:` maintenance note; Phase 8 extended with bidirectional coverage-gap check (prune-aware source_guides: update + D-COVERAGE pass for new guide content). |
+| 2026-04-29 | Validation fixes: (1) Phase 3 step now explicitly enumerates all five gate stages from Proposal 3 (S1, S2.P1.I2, S3, S5, S9) to prevent implementer oversight; (2) AGENT_STATUS.template.md Files Affected row clarified to "MODIFY or CREATE" with guidance for create-if-absent case since no predecessor SHAMT creates it; (3) shamt-spec-protocol Files Affected Notes updated to acknowledge S3 gate is hosted in a separate TBD skill (not shamt-spec-protocol). |

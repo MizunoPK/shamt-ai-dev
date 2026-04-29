@@ -450,7 +450,7 @@ All six proposals together. They form a coherent layer: abstraction (P1), CI tem
 
 3. **ADO MCP Server version pinning:** Should Shamt pin a specific version of `@azure-devops/mcp` or use `@latest`? Pinning avoids breakage; `@latest` gets improvements. **Recommendation:** Pin in templates, document how to update.
 
-4. **Thread status mapping:** When the agent posts a review finding, should the thread status be `active` (default) or `pending`? ADO treats these differently in the UI and branch policy evaluation.
+4. **Thread status mapping:** When the agent posts a review finding, should the thread status be `active` (default) or `pending`? ADO treats these differently in the UI and branch policy evaluation. **Resolved in Proposal 4:** Use `active` for review findings (the standard "needs attention" state); the Open Questions section retains this entry for traceability but the decision is made.
 
 5. **Cross-org PRs:** ADO PRs are scoped to a single ADO organization. Cross-org PRs (child on org A, master on org B) would require the ADO MCP Server to authenticate to both orgs. Is this a supported scenario? If so, two MCP server instances may be needed.
 
@@ -481,3 +481,4 @@ All six proposals together. They form a coherent layer: abstraction (P1), CI tem
 | 2026-04-28 | Validation: added missing Validation Log header field; corrected Files Affected path for master_review_pipeline_composite.md from `.shamt/guides/reference/` to `.shamt/guides/composites/` (per SHAMT-44) |
 | 2026-04-28 | Validation fix (Round 1): corrected `requirements.txt` status from MODIFY to CREATE — SHAMT-43 creates `pyproject.toml` only; `requirements.txt` is a new file required by Azure Pipelines templates |
 | 2026-04-29 | Drift/coverage sync: added D-COVERAGE decision to `ado_pr_review_workflow.md` CREATE row — no new skill warranted; ADO review uses existing `shamt-code-review` skill with ADO MCP tools wired. |
+| 2026-04-29 | Validation fix (Round 1 LOW): annotated Open Question 4 (thread status) as resolved — Proposal 4 already decided `active`; OQ4 retained for traceability with resolution note. |

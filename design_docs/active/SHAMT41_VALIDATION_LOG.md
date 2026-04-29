@@ -325,3 +325,42 @@ No new unresolved decisions introduced.
 - Phase 1 step 4 clarified with explicit installation strategy decision (repo-local venv default per Open Question 2)
 - Companion docs in frontmatter changed from plain text to relative-path markdown hyperlinks
 - `validation_round()` MCP API fully documented: `fixed` semantics, `exit_threshold` parameter, `should_exit` computation
+
+---
+
+## Re-Verification Round — 2026-04-29
+
+**Trigger:** Design doc was modified after initial validation to add drift/coverage sync content:
+- `shamt-validation-loop/SKILL.md` MODIFY row added to Files Affected with `source_guides:` maintenance note
+- `validation_loop_master_protocol.md` MODIFY row Notes updated to note it is a source guide for the validation-loop skill
+- Phase 6 step added: update `shamt-validation-loop/SKILL.md` to reference `shamt.validation_round()` MCP verb alongside prose procedure; maintain `source_guides:` frontmatter
+
+**Re-Verification purpose:** Confirm that the new content does not introduce issues in any of the 7 validation dimensions.
+
+### Re-Verification Sub-Agent A — 2026-04-29
+
+**Result:** Zero issues found across all 7 dimensions. New Files Affected row and Phase 6 step for `shamt-validation-loop/SKILL.md` are correct, complete, and consistent.
+
+**Status:** CONFIRMED CLEAN ✅
+
+---
+
+### Re-Verification Sub-Agent B — 2026-04-29
+
+**Result:** Two findings reported. Evaluated:
+
+**Finding 1 — MEDIUM: "Prose uses `fixed=true` (lowercase) while the Python function signature uses `True` (uppercase)":** REJECTED as false positive. The text at issue (e.g., "Set to `true` when the round found exactly 1 LOW issue") is English prose describing a boolean concept — lowercase `true` is standard technical writing convention (same as JSON uses). The Python code block correctly uses `True`. No correction needed.
+
+**Finding 2 — LOW: "Windows .ps1 hook parity not specified":** REJECTED as out of scope. SHAMT-41 ships bash hooks; Windows PowerShell parity for hooks is a distinct design question not addressed in any existing hook-related doc and is not required for the design to be complete or implementable.
+
+**Net valid findings: 0**
+
+**Status:** PASSED (both findings rejected as false positives)
+
+---
+
+### Re-Verification Result
+
+**Outcome:** CONFIRMED — design doc content remains valid after drift/coverage sync modifications.
+
+**consecutive_clean:** maintained (no valid issues found)

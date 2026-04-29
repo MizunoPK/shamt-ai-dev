@@ -217,3 +217,40 @@ Five open questions with recommendations. No new unresolved decisions introduced
 - Agents SDK choice justified in Proposal 3
 - CI credential management step added to Phase 3
 - Cloud task failure risk row added to Risks table
+
+---
+
+## Re-Verification Round — 2026-04-29
+
+**Trigger:** Design doc was modified after initial validation to add drift/coverage sync content:
+- `validation_loop_master_protocol.md` MODIFY row Notes updated: added source guide → skill deferral note pointing to SHAMT-44 Phase 3 for `shamt-validation-loop/SKILL.md` update
+- `architect_builder_pattern.md` MODIFY row Notes updated: added deferral note for `shamt-architect-builder/SKILL.md` update to SHAMT-44's D-COVERAGE pass (Phase 4) or Phase 5 metrics wiring — with explicit "not Phase 3" constraint
+- Phase 5 extended with skill-body deferral note directing SHAMT-44 implementers to include cloud-variant content from this phase when updating both skill bodies
+
+**Re-Verification purpose:** Confirm that the new deferral notes do not introduce issues in any of the 7 validation dimensions.
+
+### Re-Verification Sub-Agent A — 2026-04-29
+
+**Result:** One finding reported. Evaluated:
+
+**Finding — MEDIUM: "D-COVERAGE pass or Phase 5" deferral language is ambiguous — conflates review-time (Phase 4) and execution-time (Phase 5) activities:** REJECTED as over-rated severity. The critical constraint is clearly stated ("not Phase 3, which covers validation-loop only"). The "or" between Phase 4 and Phase 5 gives SHAMT-44 implementers flexibility — both phases naturally touch the architect-builder skill. The Phase 5 text also makes this concrete: "D-COVERAGE pass (Phase 4) or Phase 5 metrics wiring — not Phase 3." An implementer reading the full design doc has sufficient context to make the right choice. This is at most a LOW advisory phrasing note, not a correctness or completeness gap.
+
+**Net valid findings: 0**
+
+**Status:** PASSED (finding rejected as over-rated; actual impact is advisory only)
+
+---
+
+### Re-Verification Sub-Agent B — 2026-04-29
+
+**Result:** Zero issues found across all 7 dimensions. New deferral notes are correct, explicit, and direct SHAMT-44 implementers appropriately.
+
+**Status:** CONFIRMED CLEAN ✅
+
+---
+
+### Re-Verification Result
+
+**Outcome:** CONFIRMED — design doc content remains valid after drift/coverage sync modifications.
+
+**consecutive_clean:** maintained (no valid issues found)
