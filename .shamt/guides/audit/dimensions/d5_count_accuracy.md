@@ -33,7 +33,7 @@
 2. **Phase Counts** - "S5 has 2 phases" matches S5 v2 Phase 1 (Draft Creation) and Phase 2 (Validation Loop)
 3. **Iteration Counts** - "22 iterations in S5" matches actual iteration count
 4. **Gate Counts** - "8 mandatory gates" matches reference/mandatory_gates.md
-5. **File Counts** - "23 dimensions" matches actual dimension count
+5. **File Counts** - "25 dimensions" (23 core + D-DRIFT + D-COVERAGE) matches actual dimension count
 6. **List Item Counts** - Numbered lists match their claimed count
 7. **Duration Claims** - "5-8 total rounds typical" matches historical evidence
 
@@ -139,18 +139,22 @@ done
 
 **README.md - Dimension Count:**
 ```markdown
-The audit evaluates guides across **23 critical dimensions**:
+The audit evaluates guides across **25 dimensions** (23 core + D-DRIFT + D-COVERAGE added in SHAMT-39):
 ```
 
 **Validation:**
 ```bash
-# Count dimension entries in README.md dimension table
+# Count core dimension entries in README.md dimension table
 grep -c "^\| \*\*D[0-9]" .shamt/guides/audit/README.md
-# Expected: 23
+# Expected: 23 (core dimensions D1-D23)
+
+# Also verify D-DRIFT and D-COVERAGE entries in README.md
+grep -c "D-DRIFT\|D-COVERAGE" .shamt/guides/audit/README.md
+# Expected: >= 2
 
 # Count actual dimension files
 ls -1 .shamt/guides/audit/dimensions/d*.md | wc -l
-# Should match README claim
+# Should match README claim (23 core)
 ```
 
 **EPIC_WORKFLOW_USAGE.md - Stage/Phase/Iteration Claims:**
@@ -435,7 +439,7 @@ Claims about file counts match actual file system.
 
 **Dimension Count:**
 ```markdown
-The audit system has **23 dimensions** covering all quality aspects.
+The audit system has **25 dimensions** (23 core + D-DRIFT + D-COVERAGE) covering all quality aspects.
 ```
 
 **Validation:**

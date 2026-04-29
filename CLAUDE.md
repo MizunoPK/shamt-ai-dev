@@ -36,6 +36,16 @@ shamt-ai-dev/
     │   ├── prompts/                    # prompt templates and reference cards
     │   ├── sync/                       # README, separation rule, export workflow, import workflow
     │   └── templates/                  # templates (design_doc_template.md)
+    ├── skills/                         (canonical skill bodies — host-portable, content-only; SHAMT-39)
+    │   ├── README.md
+    │   └── {skill-name}/SKILL.md       # one subdirectory per skill
+    ├── agents/                         (sub-agent persona YAML definitions; SHAMT-39)
+    │   ├── README.md
+    │   └── {persona}.yaml
+    ├── commands/                       (slash command bodies + CHEATSHEET.md; SHAMT-39)
+    │   ├── README.md
+    │   ├── CHEATSHEET.md               # user-facing quick reference
+    │   └── {command}.md
     ├── scripts/
     │   ├── initialization/
     │   │   ├── init.sh / init.ps1                           # Full Shamt initialization
@@ -85,6 +95,26 @@ Review steps:
 
 ---
 
+## Canonical Content Layer (SHAMT-39)
+
+Three directories under `.shamt/` hold host-portable canonical content. These are **content-only** — no host-specific wiring. Regen scripts (SHAMT-40 for Claude Code, SHAMT-42 for Codex) deploy the content to host-specific locations at init/regen time.
+
+**`.shamt/skills/`** — Skill bodies encoding Shamt protocols (validation loop, architect-builder, spec protocol, code review, guide audit, discovery, import/export, master reviewer, lite story). Each skill lives in its own subdirectory as `SKILL.md`. Each SKILL.md is self-contained and includes `source_guides:` frontmatter listing every guide file it was distilled from.
+
+**`.shamt/agents/`** — Sub-agent persona YAML definitions (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-spec-aligner`, `shamt-code-reviewer`, `shamt-discovery-researcher`). Each file declares model_tier (cheap/balanced/reasoning), reasoning_effort, sandbox, tools_allowed, and prompt_template with `{placeholder}` syntax.
+
+**`.shamt/commands/`** — Slash command bodies (`shamt-start-epic`, `shamt-validate`, `shamt-audit`, `shamt-export`, `shamt-import`, `shamt-status`, `shamt-resume`, `shamt-promote`) plus `CHEATSHEET.md`. Regen scripts copy command bodies verbatim to `.claude/commands/` (Claude Code) and `~/.codex/prompts/` (Codex).
+
+**Child projects on prior versions** ignore these directories until they re-init or run regen — the directories are additive and backward-compatible.
+
+**Master-applicable skills:** `shamt-validation-loop`, `shamt-guide-audit`, `shamt-code-review`, `shamt-master-reviewer`  
+**Master-applicable personas:** `shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-code-reviewer`  
+**Child-only personas:** `shamt-spec-aligner`, `shamt-discovery-researcher`
+
+Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex). Until those are implemented, the content directories exist but are not auto-loaded by any host.
+
+---
+
 ## Master Dev Workflow
 
 For improving the guides directly:
@@ -97,6 +127,8 @@ Master work does **not** follow the S1-S11 epic workflow and does **not** use EP
 - **Large changes:** Create a design doc in `design_docs/active/` (version-controlled), validate it, implement, then archive to `design_docs/archive/`
 - **SHAMT-N numbers:** Sequence markers for change sets, not epic identifiers. Reserved via `design_docs/NEXT_NUMBER.txt`
 - **No stage gates:** Master work proceeds at judgment, not through S1-S11 phase transitions
+
+**Available skills and personas (after SHAMT-40/42 host wiring):** Master-applicable skills (`shamt-validation-loop`, `shamt-guide-audit`, `shamt-code-review`, `shamt-master-reviewer`) and personas (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-code-reviewer`) are available for master dev work once the host wiring is deployed.
 
 See "Design Doc Lifecycle" below for the full design doc process.
 
@@ -116,7 +148,7 @@ See "Design Doc Lifecycle" below for the full design doc process.
 2. **Create from template:** Use `.shamt/guides/templates/design_doc_template.md` to create `design_docs/active/SHAMT{N}_DESIGN.md`
 3. **Write design:** Capture problem statement, goals, proposals, implementation plan, validation strategy
 4. **Validate:** Run 7-dimension validation loop (see Design Doc Validation section below)
-5. **Implement:** Execute implementation plan on `feat/SHAMT-N` branch
+5. **Implement:** Execute implementation plan on `feat/SHAMT-N` branch. After implementing, run a D-COVERAGE pass: verify that (a) guide changes have corresponding skill body updates where warranted — if a modified source guide now diverges from its SKILL.md, update the skill body in the same commit; and (b) skill body changes have corresponding guide updates — if a skill introduces protocol content not present in any source guide, add the missing content to the appropriate guide. The D-DRIFT and D-COVERAGE audit dimensions will catch gaps that slip through, but catching them during implementation is cheaper.
 6. **Validate implementation:** Run implementation validation loop (see Implementation Validation section below)
 7. **Archive:** Move `SHAMT{N}_DESIGN.md` and validation log to `design_docs/archive/` when complete
 

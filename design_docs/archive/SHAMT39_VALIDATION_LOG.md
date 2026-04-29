@@ -337,3 +337,75 @@ No new unresolved decisions introduced.
 **Key Improvements Made During Validation:**
 - Companion docs in frontmatter changed from plain text to relative-path markdown hyperlinks
 - Validation Strategy corrected: "After Phase 5" → "After Phase 5.5"
+
+---
+
+## Implementation Validation — 2026-04-29
+
+**Implementation:** 30 files created across `.shamt/skills/`, `.shamt/agents/`, `.shamt/commands/`, and CLAUDE.md updates.
+
+**Implementation Validation Exit Criterion:** Primary clean round (consecutive_clean = 1) + 2 independent Haiku sub-agent confirmations with zero findings.
+
+---
+
+### Implementation Round 1 — 2026-04-29
+
+**5 Dimensions Checked:** Completeness, Correctness, Files Affected Accuracy, No Regressions, Documentation Sync
+
+**Issue Found (MEDIUM):** `shamt-code-review/SKILL.md` and `shamt-guide-audit/SKILL.md` used `master_only` (underscore) instead of canonical `master-only` (hyphen) per `.shamt/skills/README.md`.
+
+**Fix Applied:** Changed both files from `master_only:` to `master-only:`.
+
+**consecutive_clean:** 0
+
+---
+
+### Implementation Round 2 — 2026-04-29
+
+**5 Dimensions Checked:** All pass. Zero issues found.
+
+**consecutive_clean:** 1 — **Primary clean round achieved.**
+
+---
+
+### Implementation Sub-Agent Confirmations (Attempt 1) — 2026-04-29
+
+**Confirmer A:** Found 2 potential issues:
+- "Missing version field in 7 SKILL.md files" — REJECTED as false positive. `version` is not a defined frontmatter field per `.shamt/skills/README.md`. The 3 skills that have it carry an unofficial extra field; the 7 without are spec-conformant.
+- "source_guides prose annotation in shamt-master-reviewer" — VALID LOW. Entry read `CLAUDE.md (Reviewing Child Project PRs section)` — parenthetical annotation makes the path unparseable for D-DRIFT. Fix applied.
+
+**Confirmer B:** CONFIRMED CLEAN — zero issues.
+
+**Net valid findings:** 1 LOW (prose annotation). consecutive_clean reset to 0.
+
+**Fix Applied:** `CLAUDE.md (Reviewing Child Project PRs section)` → `../CLAUDE.md` in `shamt-master-reviewer/SKILL.md`.
+
+---
+
+### Implementation Round 3 — 2026-04-29
+
+**5 Dimensions Checked:** All pass. Fixed path verified. Zero issues.
+
+**consecutive_clean:** 1 — **Primary clean round achieved.**
+
+---
+
+### Implementation Sub-Agent Confirmations (Attempt 2) — 2026-04-29
+
+**Confirmer A:** CONFIRMED CLEAN — zero issues. Verified all 10 source_guides lists are clean paths (no prose annotations), all master-only fields use hyphen, `../CLAUDE.md` resolves correctly, and CLAUDE.md Canonical Content Layer section present.
+
+**Confirmer B:** CONFIRMED CLEAN — zero issues. Verified all 7 agent YAML model_tier values are host-neutral (cheap/balanced/reasoning), D-DRIFT and D-COVERAGE present in shamt-guide-audit SKILL.md, CHEATSHEET.md has all required tables, no regressions to existing guides.
+
+---
+
+### Implementation Validation Final Summary
+
+**Implementation Rounds:** 3
+**Sub-Agent Confirmation Attempts:** 2 (Attempt 1: two fixes applied; Attempt 2: both confirmers clean)
+**Exit Criterion Met:** YES ✅ — Round 3 primary clean + both sub-agents confirmed zero issues
+
+**Implementation Status:** IMPLEMENTED ✅
+
+**Fixes During Implementation Validation:**
+- `master_only:` → `master-only:` in shamt-code-review/SKILL.md and shamt-guide-audit/SKILL.md
+- `CLAUDE.md (Reviewing Child Project PRs section)` → `../CLAUDE.md` in shamt-master-reviewer/SKILL.md

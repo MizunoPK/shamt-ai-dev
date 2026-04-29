@@ -23,7 +23,7 @@
 
 This audit ensures **consistency, accuracy, and completeness** across all .shamt/guides files AND related external files.
 
-### The 23 Audit Dimensions
+### The 25 Audit Dimensions (23 core + D-DRIFT + D-COVERAGE)
 
 **Core Dimensions (Always Check) - D1, D2, D3, D4:**
 - ✅ **D1: Cross-Reference Accuracy** - All file paths, stage references, and cross-links are valid
@@ -56,6 +56,12 @@ This audit ensures **consistency, accuracy, and completeness** across all .shamt
 - ✅ **D21: Agent Comprehension Risk** - Each guide unambiguously states its scope near the H1; no migration notes in the instruction path; structurally similar guides have explicit scope differentiation callouts
 - ✅ **D22: Guide Bypass Risk** - Each guide has MANDATORY READING PROTOCOL; FORBIDDEN SHORTCUTS block naming guide-specific bypasses; phase commitment gate for multi-phase guides; NEXT MANDATORY STEP footers in phase transition prompts
 
+**Skill Artifact Dimensions (Added in SHAMT-39) - D-DRIFT, D-COVERAGE:**
+- ✅ **D-DRIFT: Skill Protocol Drift** - For each SKILL.md in `.shamt/skills/`, compare protocol steps against `source_guides:` frontmatter references. MEDIUM for prose drift; HIGH for missing or contradicted steps.
+- ✅ **D-COVERAGE: Skill Coverage Gap** - Walk `.shamt/guides/` and flag guides with no corresponding skill as LOW candidates. Also flag SKILL.md protocol steps not traceable to any source guide as MEDIUM.
+
+*D-DRIFT and D-COVERAGE are checked during Sub-Round N.4 (or as a dedicated Sub-Round N.5 if N.4 is already large). See `.shamt/skills/shamt-guide-audit/SKILL.md` for the full D-DRIFT and D-COVERAGE check procedures.*
+
 ### Model Selection for Dimensions (SHAMT-27)
 
 **Token optimization:** Audit rounds can save 40-50% tokens through strategic model delegation.
@@ -75,6 +81,7 @@ This audit ensures **consistency, accuracy, and completeness** across all .shamt
 - **Opus** (deep validation):
   - D2-D5, D7-D9 (accuracy, completeness, consistency, terminology)
   - D17-D23 (advanced dimensions)
+  - D-DRIFT and D-COVERAGE (skill artifact analysis)
   - Adversarial self-check
 
 **See:** `reference/model_selection.md` for complete Task tool examples and delegation patterns.
@@ -463,7 +470,7 @@ Round N:
   │   └─ If 0 issues found → Sub-Round N.4
   │       If issues found → Fix all → Re-run Sub-Round N.3
   │
-  └─> Sub-Round N.4: Advanced (D15, D16, D17, D18, D19, D20, D21, D22)
+  └─> Sub-Round N.4: Advanced (D15, D16, D17, D18, D19, D20, D21, D22 + D-DRIFT + D-COVERAGE)
       ├─ S1: Discovery → S2: Planning → S3: Apply → S4: Verify → S5: Loop Decision
       └─ If 0 issues found → Round N complete
           If issues found → Fix all → Re-run Sub-Round N.4
@@ -482,11 +489,11 @@ EXIT (only if Round N had 0 issues in all 4 sub-rounds + 9 criteria met)
 **Benefits of the 4 sub-round structure:**
 
 1. **Dependency Management:** Core dimension fixes (broken references) applied before Structural checks (cross-file dependencies)
-2. **Focused Discovery:** Check 4-8 related dimensions per sub-round, not all 23 at once
+2. **Focused Discovery:** Check 4-10 related dimensions per sub-round, not all 25 at once
 3. **Incremental Verification:** Verify fixes before moving to next category
 4. **Mental Clarity:** Fresh mental model between dimension categories
 5. **Better Tracking:** Know exactly which category and dimensions you're auditing
-6. **Prevents Blind Spots:** ALL 23 dimensions checked systematically every round
+6. **Prevents Blind Spots:** ALL 25 dimensions (23 + D-DRIFT + D-COVERAGE) checked systematically every round
 
 ### Dimension Organization by Sub-Round
 
@@ -517,7 +524,7 @@ EXIT (only if Round N had 0 issues in all 4 sub-rounds + 9 criteria met)
 
 **Why Third:** Structure depends on correct content and references
 
-**Sub-Round N.4: Advanced Dimensions**
+**Sub-Round N.4: Advanced Dimensions (including D-DRIFT and D-COVERAGE)**
 - D15: Context-Sensitive Validation - Intentional exceptions (20% automated)
 - D16: Duplication Detection - DRY principle (50% automated)
 - D17: Accessibility - Navigation, UX (80% automated)
@@ -526,6 +533,8 @@ EXIT (only if Round N had 0 issues in all 4 sub-rounds + 9 criteria met)
 - D20: Script Integrity - Sync/init script correctness and bash/PS parity (20% automated, manual review)
 - D21: Agent Comprehension Risk - Per-guide scope clarity, migration note absence, structural similarity differentiation (15% automated)
 - D22: Guide Bypass Risk - MRP presence, FORBIDDEN SHORTCUTS, phase commitment gates, bypass resistance (30% automated)
+- D-DRIFT: Skill Protocol Drift - Compare each SKILL.md's protocol steps against its source_guides (Opus)
+- D-COVERAGE: Skill Coverage Gap - Walk guides/ and flag uncovered protocols as LOW candidates (Opus)
 
 **Why Last:** Advanced checks require all other dimensions to be clean
 
@@ -616,7 +625,7 @@ Round N complete (all 4 sub-rounds clean) → Round N+1 (fresh patterns)
 4. ✅ **3 consecutive clean rounds:** consecutive_clean >= 3 (rounds with 2+ LOW or any MEDIUM/HIGH/CRITICAL reset counter; ≤1 LOW per round is clean)
 5. ✅ **All remaining documented:** All remaining instances documented as intentional
 6. ✅ **User has NOT challenged:** User has not questioned findings
-7. ✅ **Confidence score:** ≥ 80% confidence in completeness across all 23 dimensions
+7. ✅ **Confidence score:** ≥ 80% confidence in completeness across all 25 dimensions (23 core + D-DRIFT and D-COVERAGE)
 8. ✅ **Pattern diversity:** ≥ 5 pattern types used per dimension category across rounds
 9. ✅ **Spot-check clean:** 10+ files manually checked per sub-round, zero issues
 

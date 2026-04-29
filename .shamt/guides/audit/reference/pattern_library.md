@@ -216,11 +216,11 @@ grep -rn "[0-9]+ files\|[0-9]+ stages\|[0-9]+ iterations\|[0-9]+ rounds" --inclu
 ### Pattern 4.2: Dimension Count Claims
 
 ```bash
-# Should be 23 dimensions; search for stale 22-dimension claims
+# Should be 25 dimensions (23 core + D-DRIFT + D-COVERAGE); search for stale 23-dimension claims
 grep -rn "22 dimensions\|all 22\|22 critical" --include="*.md" .
 
 # Check for old counts (stale references to previous dimension counts)
-grep -rn "19 dimensions\|all 19\|19 critical\|18 dimensions\|all 18\|18 critical\|16 dimensions\|16 critical\|14 dimensions\|15 dimensions" --include="*.md" .
+grep -rn "19 dimensions\|all 19\|19 critical\|18 dimensions\|all 18\|18 critical\|16 dimensions\|16 critical\|14 dimensions\|15 dimensions\|\"23 dimensions\"" --include="*.md" .
 ```
 
 ### Pattern 4.3: Stage Count Claims
