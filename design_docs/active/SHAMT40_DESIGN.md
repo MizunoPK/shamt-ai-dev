@@ -1,6 +1,6 @@
 # SHAMT-40: Claude Code Host Wiring — Init Extension and Regen Scripts
 
-**Status:** Validated
+**Status:** Validated ✅
 **Created:** 2026-04-27
 **Branch:** `feat/SHAMT-40`
 **Validation Log:** [SHAMT40_VALIDATION_LOG.md](./SHAMT40_VALIDATION_LOG.md)
@@ -34,7 +34,7 @@ The Codex equivalent of this work lands separately in SHAMT-42; this doc focuses
 
 ### Proposal 1: Init-script branch by AI service detection
 
-**Description:** `init.sh` already detects/asks about the AI service (Claude Code, Cursor, etc.) and writes the appropriate rules file. Extend the same decision point: when `AI_SERVICE=claude-code`, additionally:
+**Description:** `init.sh` already detects/asks about the AI service (Claude Code, Cursor, etc.) and writes the appropriate rules file. Extend the same decision point: when `AI_SERVICE=claude_code`, additionally:
 
 1. Create `.claude/` directory tree (`skills/`, `agents/`, `commands/`).
 2. Run `regen-claude-shims.sh` to populate them from `.shamt/`.
@@ -58,6 +58,8 @@ For all other AI services, current behavior is unchanged — `init.sh` writes th
 - **Commands:** Each `.shamt/commands/<name>.md` becomes `.claude/commands/<name>.md` with the body preserved and a "managed by Shamt" header. `{placeholder}` syntax is unchanged (Claude Code's command argument syntax matches).
 - **Master-only filter:** Skills with `master-only: true` frontmatter are skipped on child projects. The regen script reads `.shamt/config/repo_type.conf` (value: `master` or `child`, written by `init.sh` at initialization time) to determine whether it is running on the master repo or a child project and applies the filter accordingly.
 - **Idempotence:** Running the script multiple times produces the same output. Existing files in `.claude/skills/`, `.claude/agents/`, `.claude/commands/` that don't have the "managed by Shamt" header are preserved (user may have authored their own).
+- **Stale shim files:** Regen does not delete managed-header files whose source has been removed from `.shamt/`. If a skill or command is removed from canonical content, its shim in `.claude/` persists until manually removed. Users can identify stale shims by the managed header.
+- **Version control:** Generated shim files in `.claude/skills/`, `.claude/agents/`, `.claude/commands/` are committed to version control — they behave like lock files, not build artifacts. After each `shamt import` that changes canonical content, regen runs automatically and the user stages and commits the updated shims.
 
 **Rationale:** A single transform script is simpler than per-shim authoring. Idempotence and the managed-header convention let the script run on every `shamt import` without losing user-authored content.
 
@@ -111,6 +113,7 @@ All three proposals together: init detects Claude Code, runs regen script, write
 | `.shamt/scripts/import/import.sh` | MODIFY | Invoke regen after successful import (Claude Code branch) |
 | `.shamt/scripts/initialization/ai_services.md` | MODIFY | Add "wiring tier" column; mark Claude Code as "full-wiring" |
 | `.shamt/config/repo_type.conf` | CREATE | Written by `init.sh` at initialization time with value `master` or `child`; read by `regen-claude-shims.sh` to determine master-vs-child mode for master-only skill filter |
+| `.shamt/config/ai_service.conf` | CREATE | Written by `init.sh` at initialization time with the AI service value (e.g., `claude_code`); read by `import.sh` to determine whether to invoke regen after import |
 | `.shamt/commands/CHEATSHEET.md` | PASSTHROUGH (via regen) | Deployed verbatim (no argument-substitution) to `.claude/commands/CHEATSHEET.md` by `regen-claude-shims.sh`; managed-header prepended. Content is authored in SHAMT-39 and updated in SHAMT-41, 43, 44, 45. |
 | `CLAUDE.md` | MODIFY | Document the Claude Code wiring story under a new section |
 
@@ -136,13 +139,15 @@ All three proposals together: init detects Claude Code, runs regen script, write
 - [ ] Author `.shamt/host/claude/README.md` describing what's in this directory and how it's consumed by init.
 
 ### Phase 4: Init script extension
-- [ ] Add Claude Code branch to `init.sh`: create `.claude/` tree, run regen, copy starter settings.json with `${PROJECT}` resolved.
+- [ ] Add Claude Code branch to `init.sh`: create `.claude/` tree, run regen, copy starter settings.json with `${PROJECT}` resolved. Branch condition: `if [ "$AI_SERVICE" = "claude_code" ]` (note: init.sh uses underscore, matching the existing `AI_SERVICE="claude_code"` assignment).
+- [ ] Write `.shamt/config/ai_service.conf` with the value of `$AI_SERVICE` at init time (same point where `repo_type.conf` is written). This persists the host choice for use by import.sh and regen without requiring user interaction post-init.
+- [ ] Write `.shamt/config/repo_type.conf` with `master` or `child` based on whether the project is initialized as the master Shamt repo or a child project.
 - [ ] Handle pre-existing `.claude/settings.json`: detect its presence; if Shamt-managed blocks are absent, merge them in; if a safe merge is not possible, print a clear instruction for the user to merge manually.
 - [ ] Mirror the change in `init.ps1`.
 - [ ] Print a one-line trust-list reminder if Claude Code config doesn't auto-trust the project.
 
 ### Phase 5: Import script extension
-- [ ] Add post-import hook in `import.sh`: if Claude Code is the detected host, run regen script.
+- [ ] Add post-import hook in `import.sh`: read `.shamt/config/ai_service.conf`; if the value is `claude_code`, run regen script. If the file is absent (pre-SHAMT-40 install), skip regen silently.
 - [ ] Mirror in PowerShell.
 
 ### Phase 6: AI services registry update
@@ -220,3 +225,4 @@ All three proposals together: init detects Claude Code, runs regen script, write
 | 2026-04-28 | SHAMT-47 fold-in: Added Phase 7.5 (master repo wiring) — run regen on master itself as first integration test |
 | 2026-04-28 | Validation fix: Phase 7.5 wording clarified — explicit about regen including/excluding master-only skills based on repo type |
 | 2026-04-28 | Validation fix (Round 1): specified master-vs-child detection mechanism in Proposal 2 (regen reads `.shamt/config/repo_type.conf` written by init.sh); added `repo_type.conf` to Files Affected |
+| 2026-04-29 | Re-validation fixes: corrected `AI_SERVICE` value from `claude-code` to `claude_code` (matching init.sh); added `ai_service.conf` to Files Affected and Phase 4 (init writes it), Phase 5 (import reads it for host detection); added stale shim and version-control notes to Proposal 2 |

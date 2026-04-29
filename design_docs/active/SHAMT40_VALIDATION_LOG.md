@@ -2,7 +2,7 @@
 
 **Design Doc:** [SHAMT40_DESIGN.md](./SHAMT40_DESIGN.md)
 **Validation Started:** 2026-04-28
-**Validation Completed:** 2026-04-28
+**Validation Completed:** 2026-04-29
 **Final Status:** Validated
 
 ---
@@ -80,35 +80,77 @@ Three open questions with recommendations. Cross-platform line endings and `_sha
 
 ---
 
-## Sub-Agent Confirmations
+## Re-Validation — 2026-04-29
 
-### Sub-Agent A — 2026-04-28
+Round 1 above was from the prior session. This section records the fresh full re-validation run after SHAMT-39 merged to main.
 
-**Task:** Validate SHAMT-40 design doc against all 7 dimensions
+### Re-Validation Round 1 — 2026-04-29
 
-**Result:** See agent output below
+**2 MEDIUMs + 2 LOWs found. NOT clean. consecutive_clean = 0.**
 
-**Status:** Pending
+**Issue 1 (MEDIUM — D2 Correctness):** Design doc said `AI_SERVICE=claude-code` (hyphen) but init.sh uses `AI_SERVICE="claude_code"` (underscore). The branch condition in Phase 4 would never match.
+**Fix:** Changed all occurrences to `claude_code` throughout design doc; Phase 4 now explicitly states `if [ "$AI_SERVICE" = "claude_code" ]`.
+
+**Issue 2 (MEDIUM — D2 Correctness / D1 Completeness):** Phase 5 said "if Claude Code is the detected host, run regen script" but specified no detection mechanism. init.sh does not persist AI service to any config file — so import.sh had nothing to read.
+**Fix:** Added `.shamt/config/ai_service.conf` to Files Affected (CREATE); Phase 4 now writes it at init time (alongside `repo_type.conf`); Phase 5 now reads it. Graceful degradation if absent (pre-SHAMT-40 installs) specified.
+
+**Issue 3 (LOW — D5 Improvements):** Regen's stale shim behavior not documented. If a skill/command is removed from `.shamt/`, its managed-header file in `.claude/` persists.
+**Fix:** Added bullet to Proposal 2 stating stale files are not cleaned up and are identifiable by the managed header.
+
+**Issue 4 (LOW — D6 Missing):** No version-control policy stated for generated `.claude/` shim files.
+**Fix:** Added bullet to Proposal 2 stating generated shims are committed to version control (lock file pattern); user stages and commits after import + regen.
 
 ---
 
-### Sub-Agent B — 2026-04-28
+### Re-Validation Round 2 — 2026-04-29
 
-**Task:** Validate SHAMT-40 design doc against all 7 dimensions
+**All 7 dimensions pass. 0 issues. CLEAN. consecutive_clean = 1.**
 
-**Result:** See agent output below
+D1 Completeness: 14 Files Affected entries (ai_service.conf added). Phase 4 specifies branch condition. Phase 5 specifies detection mechanism with graceful degradation. Stale shim and version-control policies documented. Pass.
 
-**Status:** Pending
+D2 Correctness: `AI_SERVICE=claude_code` matches init.sh. ai_service.conf in Phase 4, Phase 5, and Files Affected. Phase 5 silent skip for pre-SHAMT-40 installs. Model tier delegates to agents/README.md. Pass.
+
+D3 Consistency: `claude_code` underscore consistent throughout. ai_service.conf and repo_type.conf both written in Phase 4. Version-control policy aligns with init.sh's `.shamt/*.conf` exclude (not `.claude/`). Pass.
+
+D4 Helpfulness: Proposals solve stated problem. Stale shim acknowledgment is sufficient (manual cleanup via managed header). Pass.
+
+D5 Improvements: No new opportunities. Pass.
+
+D6 Missing proposals: None. Pass.
+
+D7 Open questions: Three questions with recommendations. No new unresolved decisions from today's fixes. Pass.
+
+---
+
+### Sub-Agent Confirmations — 2026-04-29
+
+#### Sub-Agent A
+
+**Result:** CONFIRMED CLEAN — zero issues found.
+
+Verified: `AI_SERVICE=claude_code` in design doc and init.sh consistent; ai_service.conf in all three required locations; graceful pre-SHAMT-40 degradation stated; repo_type.conf consistent; Phase 7.5 explicit about master-only filter; Experiment A criterion specific and measurable.
+
+---
+
+#### Sub-Agent B
+
+**Result:** CONFIRMED CLEAN — zero issues found.
+
+Verified: Files Affected has 14 entries including all required CREATE/MODIFY/PASSTHROUGH rows; Proposal 2 covers all 7 behaviors (skills, agents, commands, master-only, idempotence, stale shims, version control); phase ordering correct for all dependencies; all 3 open questions have recommendations; regression check uses correct `cursor` value matching init.sh.
 
 ---
 
 ## Final Summary
 
-**Total Validation Rounds:** 1
-**Sub-Agent Confirmations:** Pending
-**Exit Criterion Met:** Pending
+**Total Validation Rounds:** 2 (original Round 1) + 2 (re-validation rounds) = 4 rounds total
+**Sub-Agent Confirmations:** 2 — both CONFIRMED CLEAN ✅
+**Exit Criterion Met:** YES ✅ — Re-validation Round 2 primary clean + both sub-agents confirmed zero issues
 
-**Design Doc Status:** Pending sub-agent confirmation
+**Design Doc Status:** VALIDATED
 
 **Key Improvements Made During Validation:**
 - Specified master-vs-child detection mechanism for regen script (`.shamt/config/repo_type.conf` written by init.sh)
+- Corrected `AI_SERVICE` value from `claude-code` to `claude_code` (matching init.sh underscore convention)
+- Added `ai_service.conf` to Files Affected, Phase 4, and Phase 5 (solves import.sh host detection)
+- Documented stale shim file behavior in Proposal 2 (not cleaned up; identifiable by managed header)
+- Documented version-control policy for generated shims (commit them; lock-file pattern)
