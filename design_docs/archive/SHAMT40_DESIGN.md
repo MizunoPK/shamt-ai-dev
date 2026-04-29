@@ -1,6 +1,6 @@
 # SHAMT-40: Claude Code Host Wiring — Init Extension and Regen Scripts
 
-**Status:** Validated ✅
+**Status:** Implemented ✅
 **Created:** 2026-04-27
 **Branch:** `feat/SHAMT-40`
 **Validation Log:** [SHAMT40_VALIDATION_LOG.md](./SHAMT40_VALIDATION_LOG.md)

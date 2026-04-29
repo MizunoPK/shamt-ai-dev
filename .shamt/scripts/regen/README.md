@@ -76,6 +76,12 @@ Every Shamt-generated file begins with:
 
 The regen script reads the first line of any existing file in `.claude/skills/`, `.claude/agents/`, `.claude/commands/`. If the first line does NOT contain "Managed by Shamt", the file is **user-authored** and is **preserved** (not overwritten).
 
+## Version Control
+
+Generated shim files in `.claude/skills/`, `.claude/agents/`, `.claude/commands/` are **committed to version control** — they behave like lock files, not build artifacts. After each `shamt import` that changes canonical content, regen runs automatically and the resulting changes in `.claude/` should be staged and committed. This ensures the exact set of deployed shims is visible in git history and child project members all use the same shims without needing to run regen themselves.
+
+`.gitignore` excludes only `.claude/settings.json` and `.claude/settings.local.json` (machine-specific) — not the generated shim directories.
+
 ## Idempotence
 
 Running the regen script multiple times produces identical output. Diff between two consecutive runs is always empty (assuming no changes to source content).

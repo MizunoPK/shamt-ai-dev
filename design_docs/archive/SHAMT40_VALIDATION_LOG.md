@@ -154,3 +154,59 @@ Verified: Files Affected has 14 entries including all required CREATE/MODIFY/PAS
 - Added `ai_service.conf` to Files Affected, Phase 4, and Phase 5 (solves import.sh host detection)
 - Documented stale shim file behavior in Proposal 2 (not cleaned up; identifiable by managed header)
 - Documented version-control policy for generated shims (commit them; lock-file pattern)
+
+---
+
+## Implementation Validation (Phase 9)
+
+**Date:** 2026-04-29
+**Artifact:** Full SHAMT-40 implementation (commit 66d8f8e + amendments)
+
+### Round 1 — 2026-04-29
+
+- D1 Completeness: MEDIUM — import.ps1 missing Claude Code regen hook (Phase 5 said "Mirror in PowerShell")
+- D5 Documentation Sync: LOW — CLAUDE.md skills paragraph used future-tense language about wiring already deployed
+- `consecutive_clean = 0`; fixes applied
+
+**Fixes:**
+- Added regen hook to import.ps1 (lines 299-313)
+- Updated CLAUDE.md skills paragraph to present tense ("Claude Code host wiring is live (SHAMT-40)")
+
+### Round 2 — 2026-04-29
+
+All 5 dimensions: no issues. `consecutive_clean = 1`.
+
+Sub-agent A: raised `\$` heredoc as CRITICAL — adjudicated FALSE POSITIVE. In unquoted `<<PYEOF` heredoc, `\$` → `$` (end-of-line anchor) in Python. Generated agents have correct populated content; direct empirical test confirmed match. No fix needed.
+
+Sub-agent B: MEDIUM (D5) — regen README missing version-control / lock-file section (Proposal 2 explicitly specifies this). Genuine. `consecutive_clean = 0`.
+
+**Fix:** Added "Version Control" section to `.shamt/scripts/regen/README.md` documenting lock-file pattern and gitignore rules.
+
+### Round 3 — 2026-04-29
+
+All 5 dimensions: no issues. `consecutive_clean = 1`.
+
+Sub-agent C: MEDIUM (D3) — `.claude/settings.json` not created on master during Phase 7.5 (design doc says "Verify master's settings.json has statusLine, reserved blocks, project name resolved"). Genuine. `consecutive_clean = 0`.
+
+Sub-agent D: Same `\$` heredoc false positive as sub-agent A. Adjudicated false positive.
+
+**Fix:** Created `.claude/settings.json` on master by resolving `${PROJECT}` from settings.starter.json. Verified statusline renders.
+
+### Round 4 — 2026-04-29
+
+All 5 dimensions: no issues. `consecutive_clean = 1`.
+
+Sub-agent E: CONFIRMED — zero issues found
+Sub-agent F: CONFIRMED — zero issues found
+
+**Exit criterion met:** primary clean round (Round 4) + 2 independent sub-agent confirmations.
+
+**Implementation Validation Status: VALIDATED ✅**
+
+---
+
+## Final Implementation Summary
+
+**Status:** IMPLEMENTED ✅
+**Implementation commits:** `66d8f8e` (main implementation) + amendments (import.ps1 regen hook, regen README version-control section, CLAUDE.md phrasing)
+**Post-implementation guide audit:** pending
