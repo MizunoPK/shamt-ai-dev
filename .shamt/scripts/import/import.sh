@@ -198,6 +198,11 @@ remove_deleted "$CHILD_SHAMT_DIR/agents" "$MASTER_SHAMT_DIR/agents" ""
 remove_deleted "$CHILD_SHAMT_DIR/commands" "$MASTER_SHAMT_DIR/commands" ""
 remove_deleted "$CHILD_SHAMT_DIR/hooks" "$MASTER_SHAMT_DIR/hooks" ""
 
+# Ensure hook scripts are executable after import
+if [ -d "$CHILD_SHAMT_DIR/hooks" ]; then
+    find "$CHILD_SHAMT_DIR/hooks" -name "*.sh" -exec chmod +x {} \;
+fi
+
 # Record sync state now — before diff generation and output, so a script
 # interruption after syncing still produces an accurate last_sync.conf.
 write_last_sync

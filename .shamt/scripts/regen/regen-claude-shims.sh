@@ -329,6 +329,8 @@ with open(settings_path, 'w') as f:
 print(f"  Hooks: installed")
 print(f"  MCP: {mcp_status}")
 PYEOF
+    # Ensure hook scripts are executable
+    find "$HOOKS_SRC" -name "*.sh" -exec chmod +x {} \;
 else
     echo "  Hooks + MCP: skipped (.shamt/hooks/ or .claude/settings.json not found)"
 fi
