@@ -41,4 +41,4 @@
 
 - Scenario-specific dimensions are auto-detected from the artifact type (spec → D8-D10; implementation plan → D8-D12; design doc → 7 dimensions)
 - To validate a design doc, prefer `/shamt-validate` over running the design doc validation workflow manually — the skill handles dimension selection
-- For guide audits (23 dimensions, 3 consecutive clean rounds), use `/shamt-audit` instead
+- For guide audits (25 dimensions: 23 core + D-DRIFT/D-COVERAGE, 3 consecutive clean rounds), use `/shamt-audit` instead

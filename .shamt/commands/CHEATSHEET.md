@@ -10,7 +10,7 @@ Quick reference for all Shamt operations, stage flow, and sub-agent personas.
 |---------|-------------|
 | `/shamt-start-epic {request}` | Begin a new epic — initialize folders, enter S1 Discovery |
 | `/shamt-validate {artifact}` | Run a validation loop on any artifact (spec, plan, design doc) |
-| `/shamt-audit` | Run the full guide audit on `.shamt/guides/` (23 dimensions, 3 clean rounds) |
+| `/shamt-audit` | Run the full guide audit on `.shamt/guides/` (23 dimensions + D-DRIFT/D-COVERAGE, 3 clean rounds) |
 | `/shamt-export` | Export generic guide improvements to master via pull request |
 | `/shamt-import` | Run post-import validation after `import.sh` completes |
 | `/shamt-status` | Print current epic, stage, last action, and blockers |

@@ -88,7 +88,7 @@ Any edge cases, restrictions, or related commands.
 
 ## Command Scope: Master-Only Commands
 
-`shamt-promote` is master-only — it promotes incoming child proposals to design docs. Child projects receive the command body file via `shamt import` but the wiring is skipped by child regen scripts.
+`shamt-promote` is master-only — it promotes incoming child proposals to design docs. The `.shamt/commands/` directory is NOT synced via `shamt import` / `shamt export` — those only sync `guides/` and `scripts/`. Command bodies reach child projects via `init.sh` (fresh init) or the regen scripts (SHAMT-40 / SHAMT-42). Child regen scripts skip wiring the `shamt-promote` command.
 
 ## CHEATSHEET.md
 
@@ -97,9 +97,6 @@ Any edge cases, restrictions, or related commands.
 - **Command table**: all slash commands with one-line descriptions
 - **S1–S11 stage flow**: key artifact per stage
 - **Sub-agent persona quick reference**: name, tier, use case
-- **Active enforcement rules** (added by SHAMT-41)
-- **CI automation** (added by SHAMT-43)
-- **Gate prompts and memory quick reference** (added by SHAMT-45)
 
 CHEATSHEET.md grows with each SHAMT-N that adds user-visible operational patterns.
 

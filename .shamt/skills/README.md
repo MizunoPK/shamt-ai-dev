@@ -111,4 +111,4 @@ When updating a source guide, update the corresponding skill body in the same co
 
 ## Master-Only Skills
 
-Skills with `master-only: true` (currently `shamt-master-reviewer`) are synced to child projects via `shamt import` (children receive the latest content) but are not wired to `.claude/skills/` or Codex on child projects. The wiring skip is in the regen scripts (SHAMT-40 / SHAMT-42), not in the sync layer.
+Skills with `master-only: true` (currently `shamt-master-reviewer`) are propagated to child projects via `init.sh` (fresh init) or the regen scripts (SHAMT-40 / SHAMT-42). The `.shamt/skills/`, `.shamt/agents/`, and `.shamt/commands/` directories are NOT synced via the `shamt import` / `shamt export` cycle — those only sync `guides/` and `scripts/`. The master-only skill is present in the child's `.shamt/skills/` directory after regen, but is not wired to `.claude/skills/` or Codex on child projects.
