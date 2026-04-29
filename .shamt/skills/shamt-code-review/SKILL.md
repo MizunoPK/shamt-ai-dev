@@ -17,7 +17,7 @@ source_guides:
   - guides/code_review/code_review_workflow.md
   - guides/code_review/output_format.md
   - guides/code_review/s7_s9_code_review_variant.md
-master_only: false
+master-only: false
 ---
 
 # Skill: shamt-code-review

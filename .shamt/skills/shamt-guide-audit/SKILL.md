@@ -13,7 +13,7 @@ source_guides:
   - guides/audit/README.md
   - guides/audit/audit_overview.md
   - guides/reference/severity_classification_universal.md
-master_only: false
+master-only: false
 ---
 
 # Skill: shamt-guide-audit

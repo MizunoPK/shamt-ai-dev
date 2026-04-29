@@ -10,7 +10,7 @@ triggers:
   - "review incoming PR"
   - "review this PR from a child project"
 source_guides:
-  - CLAUDE.md (Reviewing Child Project PRs section)
+  - ../CLAUDE.md
 master-only: true
 ---
 
