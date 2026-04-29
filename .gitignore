@@ -2,8 +2,9 @@
 # shamt-ai-dev — Master Repository Gitignore
 # =============================================================================
 
-# Claude Code local settings (machine-specific)
-.claude/
+# Claude Code — machine-specific settings only; generated shims (.claude/skills/ etc.) are committed
+.claude/settings.json
+.claude/settings.local.json
 
 # Audit outputs — local working files, never commit
 # Each child project generates its own outputs during audits.

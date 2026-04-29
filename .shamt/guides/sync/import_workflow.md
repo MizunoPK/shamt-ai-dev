@@ -51,10 +51,11 @@ bash .shamt/scripts/import/import.sh
 ```
 
 The script has already:
-- Copied updated/new files from master's `guides/` and `scripts/` into your `.shamt/`
+- Copied updated/new files from master's `guides/`, `scripts/`, `skills/`, `agents/`, and `commands/` into your `.shamt/`
 - Removed files that were previously imported from master but have since been deleted from master
 - Preserved (without deleting) any files in your `.shamt/` that were never in master — these are child-only files
 - Generated one or more diff files at `.shamt/import_diff.md` (or `.shamt/import_diff_1.md`, `import_diff_2.md`, etc. if the diff was large)
+- If your project uses Claude Code (`ai_service.conf = claude_code`): run `regen-claude-shims.sh` automatically to refresh `.claude/skills/`, `.claude/agents/`, `.claude/commands/` from the updated canonical content (transparent — no agent action required)
 
 Your job is to assess the impact and ensure your project-specific configuration stays consistent.
 

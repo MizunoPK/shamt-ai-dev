@@ -1,3 +1,4 @@
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-export
 description: >

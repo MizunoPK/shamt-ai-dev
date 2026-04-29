@@ -185,7 +185,7 @@ Creating proposal doc...
 - ✅ Proposal doc path logged
 - ✅ Rejected proposals documented with rationale
 
-**Next step:** When ready to send proposals to master, run `bash .shamt/scripts/export/export.sh` — this automatically moves the proposal doc to the master repo's `design_docs/unimplemented/`.
+**Next step:** When ready to send proposals to master, run `bash .shamt/scripts/export/export.sh` — this automatically moves the proposal doc to the master repo's `design_docs/incoming/`.
 
 **Next: S11 Step 2 - Archival**
 

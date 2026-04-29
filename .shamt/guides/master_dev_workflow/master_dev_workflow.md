@@ -159,7 +159,7 @@ For multi-guide or cross-cutting changes, use a branch with a design doc:
 2. **Create branch:** `feat/SHAMT-[N]`
 3. **Create design doc:** Use the template at `.shamt/guides/templates/design_doc_template.md` to create `design_docs/active/SHAMT[N]_DESIGN.md`
 4. **Validate design doc:** Follow `.shamt/guides/design_doc_validation/validation_workflow.md` to validate the design (7-dimension validation loop with sub-agent confirmation)
-5. **Implement:** Make changes across the affected guides and scripts
+5. **Implement:** Make changes across the affected guides and scripts. After implementing, run a D-COVERAGE pass: (a) if you modified a guide that is a `source_guides:` reference in a SKILL.md, update the skill body where warranted — if a modified source guide now diverges from its SKILL.md, update the skill body in the same commit; (b) if you modified a SKILL.md, add to the corresponding source guides any protocol content not present in any source guide. The D-DRIFT / D-COVERAGE audit dimensions will catch gaps, but catching them during implementation is cheaper.
 6. **Validate implementation:** Run implementation validation loop (see design doc Proposal 10 pattern)
 7. **Guide audit:** Run the full guide audit (3 consecutive clean rounds required; ≤1 LOW per round is clean)
 8. **Archive design doc:** Move `SHAMT[N]_DESIGN.md` and validation log to `design_docs/archive/`

@@ -111,7 +111,32 @@ Three directories under `.shamt/` hold host-portable canonical content. These ar
 **Master-applicable personas:** `shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-code-reviewer`  
 **Child-only personas:** `shamt-spec-aligner`, `shamt-discovery-researcher`
 
-Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex). Until those are implemented, the content directories exist but are not auto-loaded by any host.
+Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
+
+---
+
+## Claude Code Host Wiring (SHAMT-40)
+
+`init.sh` detects Claude Code (`AI_SERVICE=claude_code`) and runs additional wiring steps:
+
+1. Creates `.claude/skills/`, `.claude/agents/`, `.claude/commands/`
+2. Runs `regen-claude-shims.sh` to populate them from canonical `.shamt/` content
+3. Writes `.claude/settings.json` from `.shamt/host/claude/settings.starter.json` (with `${PROJECT}` resolved)
+4. Writes `.shamt/config/ai_service.conf` (value: `claude_code`) and `.shamt/config/repo_type.conf` (value: `master` or `child`)
+
+**`regen-claude-shims.sh`** — deterministic transform script at `.shamt/scripts/regen/`:
+- Skills: copies `SKILL.md` verbatim with a managed header; skips `master-only: true` skills on child projects
+- Agents: transforms YAML → Claude Code agent markdown; maps model tiers (cheap→Haiku, balanced→Sonnet, reasoning→Opus)
+- Commands: copies markdown verbatim with a managed header; `{placeholder}` notation is documentation-style
+- Idempotent: user-authored files (no managed header) are preserved; safe to run on every import
+- Run automatically by `import.sh` when `ai_service.conf` is `claude_code`
+
+**`shamt-statusline.sh`** — status bar renderer at `.shamt/scripts/statusline/`:
+- Reads `EPIC_TRACKER.md` → finds active epic → reads its `AGENT_STATUS.md`
+- Emits: `EPIC-N | S{stage}.P{phase} | round {N} | blocker: {text or "none"}`
+- Falls back to `Shamt | no active epic` when no epic is in progress
+
+**Codex equivalent** lands in SHAMT-42.
 
 ---
 
@@ -128,7 +153,7 @@ Master work does **not** follow the S1-S11 epic workflow and does **not** use EP
 - **SHAMT-N numbers:** Sequence markers for change sets, not epic identifiers. Reserved via `design_docs/NEXT_NUMBER.txt`
 - **No stage gates:** Master work proceeds at judgment, not through S1-S11 phase transitions
 
-**Available skills and personas (after SHAMT-40/42 host wiring):** Master-applicable skills (`shamt-validation-loop`, `shamt-guide-audit`, `shamt-code-review`, `shamt-master-reviewer`) and personas (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-code-reviewer`) are available for master dev work once the host wiring is deployed.
+**Available skills and personas:** Master-applicable skills (`shamt-validation-loop`, `shamt-guide-audit`, `shamt-code-review`, `shamt-master-reviewer`) and personas (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-code-reviewer`) are available for master dev work. Claude Code host wiring is live (SHAMT-40); Codex wiring lands in SHAMT-42.
 
 See "Design Doc Lifecycle" below for the full design doc process.
 
