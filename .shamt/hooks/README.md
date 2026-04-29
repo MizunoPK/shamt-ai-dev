@@ -35,7 +35,9 @@ Each hook registration in `.claude/settings.json`:
         "matcher": "Bash",
         "hooks": [
           {"type": "command", "command": "/path/to/.shamt/hooks/no-verify-blocker.sh"},
-          {"type": "command", "command": "/path/to/.shamt/hooks/commit-format.sh"}
+          {"type": "command", "command": "/path/to/.shamt/hooks/commit-format.sh"},
+          {"type": "command", "command": "/path/to/.shamt/hooks/user-testing-gate.sh"},
+          {"type": "command", "command": "/path/to/.shamt/hooks/pre-export-audit-gate.sh"}
         ]
       },
       {
@@ -90,7 +92,7 @@ Paths are resolved to absolute project-root-relative paths by `regen-claude-shim
 
 ---
 
-## Master-Applicable Subset (Phase 6.5)
+## Master-Applicable Subset
 
 Master repo activates 8 of 10 hooks. Excluded:
 

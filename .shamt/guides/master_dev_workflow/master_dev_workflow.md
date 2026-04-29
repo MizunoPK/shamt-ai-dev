@@ -143,7 +143,7 @@ After making changes:
 ## Step 5: Commit
 
 ```bash
-git add .shamt/guides/ .shamt/scripts/
+git add .shamt/guides/ .shamt/scripts/ .shamt/skills/ .shamt/agents/ .shamt/commands/ .shamt/hooks/
 git commit -m "feat/SHAMT-[N]: [brief description of guide improvement]"
 ```
 
