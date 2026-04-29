@@ -115,13 +115,14 @@ All five proposals together. SHAMT-44 is the assembly step — without it, the p
 
 | File | Status | Notes |
 |------|--------|-------|
-| `.shamt/skills/shamt-validation-loop/SKILL.md` | MODIFY | Add `/loop` integration on Claude Code; document Codex equivalent |
+| `.shamt/skills/shamt-validation-loop/SKILL.md` | MODIFY | Add `/loop` integration on Claude Code; document Codex equivalent (driver script with `codex exec`); incorporate cloud-task-as-confirmer-instance variant deferred from SHAMT-43 Phase 5 (content originates in `validation_loop_master_protocol.md`) |
 | `.shamt/mcp/src/shamt_mcp/audit_run.py` | CREATE | New MCP tool |
 | `.shamt/mcp/src/shamt_mcp/epic_status.py` | CREATE | New MCP tool |
 | `.shamt/mcp/src/shamt_mcp/metrics_append.py` | CREATE | New MCP tool, emits to OTel + local log |
 | `.shamt/mcp/src/shamt_mcp/export_pipeline.py` | CREATE | New MCP tool |
 | `.shamt/mcp/src/shamt_mcp/import_pipeline.py` | CREATE | New MCP tool |
 | `.shamt/mcp/src/shamt_mcp/server.py` | MODIFY | Register new tools |
+| `.shamt/mcp/README.md` | MODIFY | Document expanded MCP tool surface (five new tools) |
 | `.shamt/hooks/validation-stall-detector.sh` (+ .ps1) | CREATE | Stall detection hook |
 | `.shamt/hooks/pre-push-tripwire.sh` (+ .ps1) | CREATE | Final-guard hook |
 | `.shamt/hooks/README.md` | MODIFY | Document new hooks |
@@ -132,7 +133,7 @@ All five proposals together. SHAMT-44 is the assembly step — without it, the p
 | `.shamt/guides/composites/metrics_observability_composite.md` | CREATE | Composite workflow guide |
 | `.shamt/guides/composites/rollback_recovery_composite.md` | CREATE | Composite workflow guide; includes "Master Dev Variant" section |
 | `.shamt/guides/composites/README.md` | CREATE | Index + decision tree for picking a composite |
-| `.shamt/guides/master_dev_workflow/master_dev_workflow.md` | MODIFY | Add composite references at Steps 3.5, 4, design-doc validation, implementation validation, and session management; add "Primitives Available" overview |
+| `.shamt/guides/master_dev_workflow/master_dev_workflow.md` | MODIFY | Add composite references at Steps 3.5, 4, design-doc validation (sub-step 4), implementation validation (sub-step 6), and guide audit (sub-step 7); add "Primitives Available" overview |
 | `.shamt/skills/shamt-architect-builder/SKILL.md` | MODIFY | Reference composite guide; reference cloud variant from SHAMT-43 |
 | `.shamt/skills/shamt-guide-audit/SKILL.md` | MODIFY | Call `shamt.audit_run()` MCP verb; extend audit scope to cover `guides/composites/` — the seven new composite files (six composite guides + the README) must be included in the full guide audit walk. Preserve and extend the D-DRIFT and D-COVERAGE dimensions (established in SHAMT-39): composite guides accurately describing composed primitives must be drift-checked against the skill bodies they reference; the D-COVERAGE pass must flag any composite guide describing a workflow with no backing skill body as a LOW-severity candidate. |
 | `.shamt/scripts/regen/regen-claude-shims.sh` | MODIFY | Register new hooks; verify metrics emission compatible |
@@ -281,3 +282,4 @@ All five proposals together. SHAMT-44 is the assembly step — without it, the p
 | 2026-04-28 | Validation fix: Step references in Phase 4.5 now use explicit "Larger Changes section, sub-step N" instead of ambiguous names; added explicit note on why master_review_pipeline and metrics_observability composites don't need master-dev variants |
 | 2026-04-28 | Validation fix (sub-agent round): clarified "seven new composite guides" → "seven new composite files (six composite guides + the README)" in shamt-guide-audit SKILL.md row |
 | 2026-04-29 | Drift/coverage sync: shamt-guide-audit SKILL.md MODIFY row extended to preserve D-DRIFT/D-COVERAGE dimensions and apply them to composite guides; Phase 3 updated with source_guides: maintenance note; Phase 4 updated with D-COVERAGE pass after composite guide authoring; Phase 5 updated with source_guides: maintenance note. |
+| 2026-04-29 | Validation fixes (round 1): (1) shamt-validation-loop/SKILL.md Files Affected Notes extended to include cloud-task-as-confirmer-instance variant (was implicit in Phase 3 only); (2) added missing .shamt/mcp/README.md MODIFY row to Files Affected table; (3) master_dev_workflow.md Files Affected Notes corrected — replaced vague "session management" with explicit sub-step references matching Phase 4.5 steps. |

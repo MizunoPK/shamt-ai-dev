@@ -219,7 +219,7 @@ Both proposals together: existing guides as authoritative content sources, new `
 | 2026-04-27 | Initial draft created |
 | 2026-04-27 | Validated — corrected file count 27→29 in Validation Strategy; clarified Phase 6 ordering |
 | 2026-04-27 | Added `.shamt/commands/CHEATSHEET.md` (CREATE) to Files Affected; added Phase 4 authoring step and Validation Strategy check; CHEATSHEET.md is the user-facing quick reference that grows across SHAMT-41 through SHAMT-45 |
-| 2026-04-27 | Added audit scope note to shamt-guide-audit SKILL.md row: scope covers all of `.shamt/guides/` (all subdirs); `.shamt/commands/` and `.shamt/skills/` are explicitly out of audit scope. Added out-of-audit-scope note to CHEATSHEET.md row: accuracy maintained by implementation-plan update steps, not the guide audit. |
+| 2026-04-27 | Added audit scope note to shamt-guide-audit SKILL.md row: scope covers all of `.shamt/guides/` (all subdirs); `.shamt/commands/` is explicitly out of guide-audit scope (`.shamt/skills/` was also noted out-of-scope at this date; superseded by 2026-04-29 D-DRIFT/D-COVERAGE additions which actively inspect skill bodies). Added out-of-audit-scope note to CHEATSHEET.md row: accuracy maintained by implementation-plan update steps, not the guide audit. |
 | 2026-04-28 | SHAMT-47 fold-in: Added Phase 5.5 (master repo agent persona subset); extended Phase 5 CLAUDE.md update to include master-applicable skill/persona note in Master Dev Workflow section |
 | 2026-04-28 | Validation fix: Phase 5.5 persona count corrected from 6 to 5; `shamt-master-reviewer` is a skill, not a persona |
 | 2026-04-28 | Validation fix (sub-agent round): added hyperlinks to companion docs in frontmatter (relative paths from `active/` to `design_docs/`) |
