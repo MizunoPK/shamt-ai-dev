@@ -224,6 +224,7 @@ Export workflow is complete when ALL of the following are true:
 | Guide customizations for your tech stack only | No |
 | Test command overrides or language-specific instructions | No |
 | Content in `project-specific-configs/` | No (never exported by script) |
+| Files in `.shamt/skills/`, `.shamt/agents/`, `.shamt/commands/` | No (master-authored one-way imports — propose via CHANGES.md instead) |
 
 ### CHANGES.md is the PR description
 

@@ -2,7 +2,11 @@
 
 ## The Rule
 
-All content in `.shamt/guides/` and `.shamt/scripts/` must be **generic** — applicable to any Shamt project, regardless of tech stack, domain, or conventions. Never write project-specific information into these files.
+All content in `.shamt/guides/`, `.shamt/scripts/`, `.shamt/skills/`, `.shamt/agents/`, and `.shamt/commands/` must be **generic** — applicable to any Shamt project, regardless of tech stack, domain, or conventions. Never write project-specific information into these files.
+
+The three canonical content directories (`.shamt/skills/`, `.shamt/agents/`, `.shamt/commands/`) hold host-portable skill bodies, sub-agent persona definitions, and slash command bodies (added in SHAMT-39). **These are master-authored and flow in one direction: master → child via `import.sh`. Child projects import them read-only and do not modify or export them.** Skills with `master-only: true` frontmatter are an intentional exception — they are scoped to the master repo and the regen script skips them on child repos.
+
+Note on sync direction: `.shamt/guides/` and `.shamt/scripts/` support two-way sync (children can contribute improvements back via export and child PRs). `.shamt/skills/`, `.shamt/agents/`, and `.shamt/commands/` are one-way — if a child finds a skill bug or improvement, propose it via `.shamt/CHANGES.md` (proposal doc mechanism) rather than modifying the canonical file directly.
 
 Project-specific content belongs **exclusively** in `.shamt/project-specific-configs/`. This includes:
 - Architecture and coding standards for this project
@@ -18,7 +22,9 @@ Project-specific content belongs **exclusively** in `.shamt/project-specific-con
 
 ## What Goes Where
 
-### Shared (`guides/` and `scripts/`)
+### Shared — two-way sync (`guides/`, `scripts/`)
+
+Children can contribute improvements back to master via export and child PRs.
 
 - Workflow stages and protocols (S1–S11)
 - Reference materials, gates, decision trees
@@ -26,6 +32,14 @@ Project-specific content belongs **exclusively** in `.shamt/project-specific-con
 - Debugging, missed requirement, parallel work protocols
 - Export, import, and initialization scripts
 - The separation rule itself (this file)
+
+### Shared — one-way import only (`skills/`, `agents/`, `commands/`)
+
+Master-authored. Imported to children by `import.sh`. Children do not modify or export these.
+
+- Skill bodies (`.shamt/skills/`) — host-portable agent protocols; exception: `master-only: true` skills are master-repo-scoped
+- Sub-agent persona definitions (`.shamt/agents/`) — model tier, tools, prompt templates
+- Slash command bodies (`.shamt/commands/`) — slash command definitions
 
 ### Project-specific (`project-specific-configs/`)
 
@@ -52,13 +66,13 @@ Project-specific content belongs **exclusively** in `.shamt/project-specific-con
 
 - Files here are project-originated proposals for changes to shared guides
 - They are NOT subject to the generic/project-specific separation rule
-- On export, these files are **moved** to the master repo's `design_docs/unimplemented/`
+- On export, these files are **moved** to the master repo's `design_docs/incoming/`
   directory (copied to master, then deleted from the child). After export the child's
   directory is empty.
 - Import scripts do not touch `design_docs/` at all — proposal docs are never
   distributed back to children
 - After a proposal is implemented (master PR merged), the master maintainer manually
-  deletes the file from `design_docs/unimplemented/`. No automated cleanup is needed.
+  deletes the file from `design_docs/incoming/`. No automated cleanup is needed.
 
 ---
 

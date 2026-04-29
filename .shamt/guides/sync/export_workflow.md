@@ -212,6 +212,7 @@ After the PR is merged, the improvement is available to all Shamt projects on th
 - Guide customizations that only make sense for your tech stack
 - Test command overrides or language-specific instructions
 - Content in `project-specific-configs/` (never exported by the script)
+- Files in `.shamt/skills/`, `.shamt/agents/`, or `.shamt/commands/` — these are master-authored one-way imports; the export script ignores them. To propose a skill or command improvement, add it to `.shamt/CHANGES.md` as a proposal doc.
 
 ---
 

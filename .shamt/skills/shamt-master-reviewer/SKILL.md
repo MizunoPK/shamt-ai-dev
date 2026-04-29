@@ -51,6 +51,8 @@ git diff --stat origin/main...origin/<branch-name>
 
 ### Step 2: Apply the Separation Rule
 
+**Scope:** This step applies only to `.shamt/guides/` and `.shamt/scripts/`. Skills (`.shamt/skills/`), agents (`.shamt/agents/`), and commands (`.shamt/commands/`) are master-authored one-way imports — children should not modify them directly. If a child PR includes changes to those directories, guide them to the proposal doc mechanism (`.shamt/CHANGES.md`) instead of applying the separation rule.
+
 For each changed file in `.shamt/guides/` and `.shamt/scripts/`, evaluate:
 
 **Is this change generic (applicable to all Shamt projects)?**
@@ -145,6 +147,7 @@ Review is complete when ALL of the following are true:
 | Child project's actual filenames in examples | Project-specific — request changes |
 | Content only meaningful for that domain | Project-specific — request changes |
 | Proposal doc in `design_docs/incoming/` | Always acceptable — approve |
+| Child PR modifies file in `skills/`, `agents/`, or `commands/` | Always request changes — guide to proposal doc mechanism (`.shamt/CHANGES.md`) instead |
 
 ### Post-merge audit exit criterion
 

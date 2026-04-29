@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Intentionally no set -e: status renderers must always exit 0 and produce output.
+# Critical greps use || true for graceful degradation.
 # =============================================================================
 # shamt-statusline.sh — Shamt Claude Code status line renderer
 # =============================================================================
