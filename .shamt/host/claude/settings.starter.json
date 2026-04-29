@@ -1,0 +1,9 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "${PROJECT}/.shamt/scripts/statusline/shamt-statusline.sh"
+  },
+  "hooks": {},
+  "mcpServers": {},
+  "_shamt_managed_blocks": ["statusLine"]
+}

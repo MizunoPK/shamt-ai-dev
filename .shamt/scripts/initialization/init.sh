@@ -234,6 +234,15 @@ _master_hash="$(git -C "$SHAMT_SOURCE_DIR" rev-parse --short HEAD 2>/dev/null ||
 printf '%s | %s\n' "$_sync_date" "$_master_hash" > "$SHAMT_DIR/last_sync.conf"
 echo "  ✓ Sync state written to .shamt/last_sync.conf"
 
+mkdir -p "$SHAMT_DIR/config"
+echo "$AI_SERVICE" > "$SHAMT_DIR/config/ai_service.conf"
+if [ "$TARGET_DIR" = "$SHAMT_SOURCE_DIR" ]; then
+    echo "master" > "$SHAMT_DIR/config/repo_type.conf"
+else
+    echo "child" > "$SHAMT_DIR/config/repo_type.conf"
+fi
+echo "  ✓ Host config written to .shamt/config/"
+
 # --- Configure local git excludes --------------------------------------------
 
 separator "Configuring local git excludes"
@@ -301,6 +310,18 @@ separator "Copying scripts"
 
 cp -r "$SHAMT_SOURCE_DIR/.shamt/scripts/"* "$SHAMT_DIR/scripts/"
 echo "  ✓ Scripts copied"
+
+# --- Copy Canonical Content --------------------------------------------------
+
+separator "Copying canonical content"
+
+for _dir in skills agents commands; do
+    if [ -d "$SHAMT_SOURCE_DIR/.shamt/$_dir" ]; then
+        mkdir -p "$SHAMT_DIR/$_dir"
+        cp -r "$SHAMT_SOURCE_DIR/.shamt/$_dir/"* "$SHAMT_DIR/$_dir/" 2>/dev/null || true
+    fi
+done
+echo "  ✓ Canonical content copied (skills/, agents/, commands/)"
 
 # --- Configure Rules File ----------------------------------------------------
 
@@ -437,6 +458,49 @@ $( [ "$EXCLUDE_SHAMT" = "true" ] && echo "- .shamt/ and rules file are excluded 
 EOF
 
 echo "  ✓ Handoff file written to .shamt/project-specific-configs/init_config.md"
+
+# --- Claude Code Host Wiring -------------------------------------------------
+
+if [ "$AI_SERVICE" = "claude_code" ]; then
+    separator "Claude Code host wiring"
+
+    # Create .claude/ directory structure
+    mkdir -p "$TARGET_DIR/.claude/skills"
+    mkdir -p "$TARGET_DIR/.claude/agents"
+    mkdir -p "$TARGET_DIR/.claude/commands"
+    echo "  ✓ .claude/ directory structure created"
+
+    # Run regen script to populate .claude/ from canonical content
+    REGEN_SCRIPT="$SHAMT_DIR/scripts/regen/regen-claude-shims.sh"
+    if [ -f "$REGEN_SCRIPT" ]; then
+        bash "$REGEN_SCRIPT"
+        echo "  ✓ Claude Code shims generated"
+    else
+        echo "  ⚠  regen-claude-shims.sh not found — run it manually after init"
+    fi
+
+    # Write starter settings.json (written once; user owns it after init)
+    STARTER_SETTINGS="$SHAMT_SOURCE_DIR/.shamt/host/claude/settings.starter.json"
+    TARGET_SETTINGS="$TARGET_DIR/.claude/settings.json"
+    if [ -f "$TARGET_SETTINGS" ]; then
+        if grep -q "_shamt_managed_blocks" "$TARGET_SETTINGS" 2>/dev/null; then
+            echo "  ✓ .claude/settings.json already has Shamt-managed blocks — skipping"
+        else
+            echo "  ⚠  .claude/settings.json exists but lacks Shamt blocks."
+            echo "     To merge manually, add the statusLine block from:"
+            echo "     $STARTER_SETTINGS"
+        fi
+    elif [ -f "$STARTER_SETTINGS" ]; then
+        sed "s|\${PROJECT}|$TARGET_DIR|g" "$STARTER_SETTINGS" > "$TARGET_SETTINGS"
+        echo "  ✓ .claude/settings.json written"
+    else
+        echo "  ⚠  settings.starter.json not found — skipping settings.json creation"
+    fi
+
+    echo ""
+    echo "  ⚠  Trust reminder: ensure this project is trusted in Claude Code."
+    echo "     Open Claude Code in $TARGET_DIR — it will prompt for trust on first open."
+fi
 
 # --- Done --------------------------------------------------------------------
 
