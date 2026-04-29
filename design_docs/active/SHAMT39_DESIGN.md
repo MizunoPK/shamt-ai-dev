@@ -137,7 +137,7 @@ Both proposals together: existing guides as authoritative content sources, new `
 - [ ] Decide on the model_tier → model mapping (cheap = Haiku/cheap-Codex, balanced = Sonnet/default-Codex, reasoning = Opus/frontier-Codex). Document in `.shamt/agents/README.md`.
 
 ### Phase 2: Author skill content
-- [ ] Distill each skill body from the corresponding source guide(s). Each SKILL.md should be self-contained: protocol body + frontmatter (name, description, triggers).
+- [ ] Distill each skill body from the corresponding source guide(s). Each SKILL.md should be self-contained: protocol body + frontmatter (name, description, triggers). Use neutral `triggers:` as a YAML list in the frontmatter — not Claude Code-specific syntax; regen scripts translate to host-specific trigger format at deployment time.
 - [ ] Cross-link from the skill body back to the source guide for deeper reference.
 - [ ] For each skill, include a "When this skill triggers" section so authors of future host shims know the trigger semantics.
 
@@ -149,6 +149,7 @@ Both proposals together: existing guides as authoritative content sources, new `
 ### Phase 4: Author slash command bodies
 - [ ] One markdown file per command (8 total).
 - [ ] Each command body describes: purpose, what it invokes (skill name or script path), argument shape, expected output.
+- [ ] Use `{name}` placeholder syntax for arguments in command bodies. Regen scripts translate to host syntax if needed (e.g., `$ARGUMENTS` for Codex custom-prompts).
 - [ ] Commands that wrap skills (e.g., `shamt-validate` wraps `shamt-validation-loop`) state the wrap relationship explicitly.
 - [ ] Author `CHEATSHEET.md` with: (a) a command table listing all 8 commands with one-line descriptions, (b) the S1–S11 stage flow with key artifact per stage, (c) sub-agent persona quick reference (name, model tier, use case). This file is the foundation that subsequent SHAMT-N designs (41, 43, 44, 45) extend with enforcement rules, CI automation, composite workflows, and status line enhancements respectively. Regen scripts copy it verbatim (no argument substitution needed) to `.claude/commands/CHEATSHEET.md` and `~/.codex/prompts/CHEATSHEET.md`.
 
@@ -188,11 +189,13 @@ Both proposals together: existing guides as authoritative content sources, new `
 
 ---
 
-## Open Questions
+## Decisions
 
-1. **Skill trigger format:** Claude Code skills support a `triggers` field in frontmatter; Codex's incoming skills surface format is not yet locked. Should the canonical SKILL.md use Claude Code's frontmatter directly, or a neutral format that the regen scripts translate? **Recommendation:** Use a neutral frontmatter (`triggers:` as a YAML list) and let regen scripts translate. Defer final decision until Codex skills surface stabilizes.
-2. **`shamt-master-reviewer` skill location:** This is master-only content. Should it live in `.shamt/skills/` (synced to children unnecessarily) or in a master-only path like `.shamt/master/skills/`? **Recommendation:** Keep in `.shamt/skills/` with a `master-only: true` frontmatter flag so child regen scripts can skip it.
-3. **Argument substitution syntax:** Choose between `{name}`, `${name}`, `$1..$9`. Codex's existing custom-prompts feature uses `$1..$9` and `$ARGUMENTS`; Claude Code skills typically use `{name}` placeholders. **Recommendation:** Use `{name}` in canonical content; regen scripts translate to host syntax if needed.
+1. **Skill trigger format:** Use neutral `triggers:` as a YAML list in canonical SKILL.md frontmatter. Regen scripts (SHAMT-40 for Claude Code, SHAMT-42 for Codex) translate to host-specific trigger format at deployment time.
+
+2. **`shamt-master-reviewer` skill location:** Keep in `.shamt/skills/` with a `master-only: true` frontmatter flag. `shamt import` syncs the file to children (it lives in their `.shamt/skills/` and gets updates on every import); regen skips wiring it to `.claude/skills/` on child projects. The "skip" is in wiring only — children always receive the latest skill content.
+
+3. **Argument substitution syntax:** Use `{name}` placeholder syntax in all canonical content (command bodies and persona prompt templates). Regen scripts translate to host syntax if needed (e.g., `$ARGUMENTS` for Codex custom-prompts).
 
 ---
 
@@ -220,3 +223,4 @@ Both proposals together: existing guides as authoritative content sources, new `
 | 2026-04-28 | Validation fix: Phase 5.5 persona count corrected from 6 to 5; `shamt-master-reviewer` is a skill, not a persona |
 | 2026-04-28 | Validation fix (sub-agent round): added hyperlinks to companion docs in frontmatter (relative paths from `active/` to `design_docs/`) |
 | 2026-04-28 | Validation fix (sub-agent round 2): Validation Strategy "After Phase 5" corrected to "After Phase 5.5" to match actual implementation plan sequencing (Phase 5.5 added in SHAMT-47 fold-in) |
+| 2026-04-29 | Resolved all 3 open questions: (1) trigger format → neutral YAML list, regen translates; (2) master-reviewer location → .shamt/skills/ with master-only flag, wiring skipped on children, sync unaffected; (3) argument syntax → {name}, regen translates. Section renamed Decisions. Phase 2 and Phase 4 updated to reflect decisions. |
