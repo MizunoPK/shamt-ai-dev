@@ -256,7 +256,7 @@ Do not leave diff files in place after the import is complete — they are tempo
 Stage and commit the results of the import:
 
 ```bash
-git add .shamt/guides/ .shamt/scripts/ .shamt/project-specific-configs/
+git add .shamt/guides/ .shamt/scripts/ .shamt/skills/ .shamt/agents/ .shamt/commands/ .shamt/hooks/ .shamt/project-specific-configs/
 git commit -m "sync: Import Shamt updates from master (YYYY-MM-DD)
 
 [Brief description of what changed]"

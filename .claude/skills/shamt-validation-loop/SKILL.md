@@ -105,8 +105,9 @@ shamt.validation_round(
 )
 ```
 The tool appends a structured round entry and returns updated `consecutive_clean`
-and `should_exit`. If MCP is not registered, skip this step and update the log
-manually.
+and `should_exit`. The prose dimension-by-dimension analysis is still written by
+you (the primary agent); the MCP call handles counter arithmetic only. If MCP is
+not registered, skip this step and update the log manually.
 
 **Step 8 — Post-round gate.** Update VALIDATION_LOG.md with all dimension results,
 tool call evidence, adversarial self-check outcome, and updated consecutive_clean.

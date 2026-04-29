@@ -148,7 +148,7 @@ Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
 |------|-------|---------|
 | `no-verify-blocker.sh` | PreToolUse (Bash) | Block `--no-verify` / `--no-gpg-sign` |
 | `commit-format.sh` | PreToolUse (Bash) | Enforce `feat/SHAMT-N:` or `fix/SHAMT-N:` prefix |
-| `pre-export-audit-gate.sh` | UserPromptSubmit | Block export if audit is stale or failed (child-only) |
+| `pre-export-audit-gate.sh` | UserPromptSubmit + PreToolUse | Block export if audit is stale or failed (child-only) |
 | `validation-log-stamp.sh` | PostToolUse (Edit) | Append timestamp to validation logs |
 | `architect-builder-enforcer.sh` | PreToolUse (Task) | S6: reject non-`shamt-builder` Task spawns |
 | `user-testing-gate.sh` | PreToolUse (Bash) | S9: block push without user-testing confirmation (child-only) |
