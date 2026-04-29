@@ -342,7 +342,7 @@ CRITICAL: Report ANY issue found, even LOW severity. If zero issues found after 
 - Previous rounds: {summary of Rounds 1 through N-1}
 - Consecutive clean rounds before this: {consecutive_clean count}
 - Total files modified in Round {N}: {count}
-- Dimensions checked in Round {N}: All 23
+- Dimensions checked in Round {N}: All 25 (23 core + D-DRIFT + D-COVERAGE)
   </parameter>
 </invoke>
 
@@ -374,7 +374,7 @@ CRITICAL: Report ANY issue found, even LOW severity. If zero issues found after 
 - Previous rounds: {summary of Rounds 1 through N-1}
 - Consecutive clean rounds before this: {consecutive_clean count}
 - Total files modified in Round {N}: {count}
-- Dimensions checked in Round {N}: All 23
+- Dimensions checked in Round {N}: All 25 (23 core + D-DRIFT + D-COVERAGE)
   </parameter>
 </invoke>
 ```

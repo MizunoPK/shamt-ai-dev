@@ -78,10 +78,10 @@ Active when `features.shamt_hooks=true` in `.claude/settings.json`. Hooks regist
 |------|-------|-------------------|
 | `no-verify-blocker.sh` | PreToolUse (Bash) | `--no-verify` and `--no-gpg-sign` git flags |
 | `commit-format.sh` | PreToolUse (Bash) | Commits not matching `feat/SHAMT-N:` or `fix/SHAMT-N:` prefix |
-| `pre-export-audit-gate.sh` | UserPromptSubmit + PreToolUse | Export if audit is stale (>7 days) or `exit_criterion_met=false` |
+| `pre-export-audit-gate.sh` *(child-only)* | UserPromptSubmit + PreToolUse | Export if audit is stale (>7 days) or `exit_criterion_met=false` |
 | `validation-log-stamp.sh` | PostToolUse (Edit on `*VALIDATION_LOG.md`) | Appends timestamp after each log edit (always passes) |
 | `architect-builder-enforcer.sh` | PreToolUse (Task) | S6 Task spawns that don't use `shamt-builder` persona |
-| `user-testing-gate.sh` | PreToolUse (Bash) | `git push` in S9 unless user-testing artifact shows "ZERO bugs found" |
+| `user-testing-gate.sh` *(child-only)* | PreToolUse (Bash) | `git push` in S9 unless user-testing artifact shows "ZERO bugs found" |
 | `precompact-snapshot.sh` | PreCompact | Writes `RESUME_SNAPSHOT.md` before auto-compaction |
 | `session-start-resume.sh` | SessionStart | Injects `RESUME_SNAPSHOT.md` as agent context on start |
 | `subagent-confirmation-receipt.sh` | SubagentStop | Writes veto flag if confirming sub-agent reports issues |
