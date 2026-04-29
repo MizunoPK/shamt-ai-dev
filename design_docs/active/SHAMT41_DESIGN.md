@@ -131,7 +131,8 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 | `.shamt/scripts/regen/regen-claude-shims.ps1` | MODIFY | Mirror |
 | `.shamt/scripts/initialization/init.sh` | MODIFY | After SHAMT-40 wiring, install hooks + MCP if `features.shamt_hooks=true` is set in settings.json (see Open Question 1) |
 | `.shamt/scripts/initialization/init.ps1` | MODIFY | Mirror |
-| `.shamt/guides/reference/validation_loop_master_protocol.md` | MODIFY | Reference `shamt.validation_round()` MCP verb |
+| `.shamt/skills/shamt-validation-loop/SKILL.md` | MODIFY | Reference `shamt.validation_round()` MCP verb alongside prose round-entry procedure (for hosts without MCP). Maintain `source_guides:` frontmatter. |
+| `.shamt/guides/reference/validation_loop_master_protocol.md` | MODIFY | Reference `shamt.validation_round()` MCP verb; source guide for `shamt-validation-loop/SKILL.md` — skill body updated in same phase (Phase 6) |
 | `.shamt/guides/stages/s5/*.md` | MODIFY | Reference MCP verbs where validation rounds happen |
 | `.shamt/guides/stages/s7/*.md` | MODIFY | Same |
 | `.shamt/guides/stages/s9/*.md` | MODIFY | Same |
@@ -176,6 +177,7 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 ### Phase 6: Guide updates
 - [ ] Update `CHEATSHEET.md` with an "Active Enforcement" section listing each hook, its trigger event, and what it blocks or requires (e.g., "commit-format.sh — rejects commits not matching `feat/SHAMT-N:` or `fix/SHAMT-N:` prefix").
 - [ ] Modify `validation_loop_master_protocol.md` to reference `shamt.validation_round()`.
+- [ ] Update `shamt-validation-loop/SKILL.md` to reference `shamt.validation_round()` MCP verb alongside the prose round-entry procedure (for hosts without MCP). Maintain `source_guides:` frontmatter.
 - [ ] Modify S5/S7/S9 stage guides similarly.
 - [ ] Modify `import_workflow.md` to note PreCompact / SessionStart partial supersession.
 - [ ] Add CLAUDE.md section "Hooks and MCP Server (SHAMT-41)".
@@ -253,3 +255,4 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 | 2026-04-28 | Validation fix: Hook count corrected to 10 of 12 (SHAMT-41 creates 10 hooks, SHAMT-44 adds 2 more; 2 excluded for master); MCP tool registration timing clarified (SHAMT-44 tools registered when SHAMT-44 lands); workflow references now use "Larger Changes section" sub-step names instead of ambiguous "Branch + Design Doc" |
 | 2026-04-28 | Validation fix (sub-agent round): clarified Phase 1 step 4 to explicitly name the installation strategy decision (repo-local venv default per Open Question 2) |
 | 2026-04-28 | Validation fix (sub-agent round 2): (1) companion docs in frontmatter changed to markdown hyperlinks; (2) `validation_round()` signature extended with `exit_threshold` parameter; `fixed` and `should_exit` semantics fully documented in Proposal 2 |
+| 2026-04-29 | Drift/coverage sync: Added `shamt-validation-loop/SKILL.md` MODIFY to Files Affected — Phase 6 modifies `validation_loop_master_protocol.md` (source guide), so the skill body must be updated in the same phase to reference the MCP verb. Updated guide MODIFY row Notes to link source guide → skill. Added Phase 6 step for skill update. |

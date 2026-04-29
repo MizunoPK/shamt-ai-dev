@@ -161,8 +161,8 @@ All five proposals together. SHAMT-43 is essentially "everything Codex offers th
 | `.shamt/guides/stages/s6/cloud_variant.md` | CREATE | Documents cloud-native architect-builder |
 | `.shamt/guides/stages/s7/cloud_variant.md` | CREATE | Documents cloud QC fan-out |
 | `.shamt/guides/stages/s9/cloud_variant.md` | CREATE | Documents cloud epic QC fan-out |
-| `.shamt/guides/reference/validation_loop_master_protocol.md` | MODIFY | Add cloud-task-as-confirmer-instance variant |
-| `.shamt/guides/reference/architect_builder_pattern.md` | MODIFY | Reference cloud variant |
+| `.shamt/guides/reference/validation_loop_master_protocol.md` | MODIFY | Add cloud-task-as-confirmer-instance variant. Source guide for `shamt-validation-loop/SKILL.md` — skill body update deferred to SHAMT-44 Phase 3 (which already has a MODIFY entry for this skill). |
+| `.shamt/guides/reference/architect_builder_pattern.md` | MODIFY | Reference cloud variant. Source guide for `shamt-architect-builder/SKILL.md` — skill body update deferred to SHAMT-44 Phase 3 (which already has a MODIFY entry for this skill with explicit "reference cloud variant from SHAMT-43"). |
 | `.shamt/scripts/initialization/init.sh` | MODIFY | Optional `--with-cloud` flag for Codex hosts; copies cloud-environment template |
 | `.shamt/scripts/initialization/init.ps1` | MODIFY | Mirror |
 | `.shamt/commands/CHEATSHEET.md` | MODIFY | Add "CI Automation" section describing `shamt-validate-pr.py` (automatic PR validation gate), `shamt-cron-janitor.py` (scheduled stale-work scanner), and the `@codex` master review pipeline — including how to enable each via their GitHub Actions workflow templates. |
@@ -217,6 +217,7 @@ All five proposals together. SHAMT-43 is essentially "everything Codex offers th
 - [ ] Author S6/S7/S9 cloud_variant.md files.
 - [ ] Update `validation_loop_master_protocol.md` and `architect_builder_pattern.md` to reference cloud variants.
 - [ ] Cross-link from CLI-flow descriptions to cloud-flow descriptions and back.
+- [ ] **Skill body deferral note:** Both modified guides are source guides for existing skills. Skill body updates are deferred to SHAMT-44 Phase 3, which already has MODIFY entries for both `shamt-validation-loop/SKILL.md` and `shamt-architect-builder/SKILL.md`. SHAMT-44 implementers must include the cloud-variant content from this phase when updating those skill bodies.
 
 ### Phase 6: Init script extension
 - [ ] Add `--with-cloud` flag to init for Codex hosts.
@@ -290,3 +291,4 @@ All five proposals together. SHAMT-43 is essentially "everything Codex offers th
 | 2026-04-27 | Added CHEATSHEET.md MODIFY entry to Files Affected; Phase 3 step to add "CI Automation" section covering SDK scripts and @codex master review |
 | 2026-04-28 | SHAMT-47 fold-in: Added Phase 4.5 (master repo SDK + CI deployment); updated CLAUDE.md Files Affected note to include child PR review composite references |
 | 2026-04-28 | Validation fix (sub-agent round): added Agents SDK justification in Proposal 3; added CI credential management step in Phase 3; added cloud task failure risk row to Risks table |
+| 2026-04-29 | Drift/coverage sync: added source guide → skill deferral notes to `validation_loop_master_protocol.md` and `architect_builder_pattern.md` Files Affected rows; added Phase 5 skill-body deferral note directing SHAMT-44 implementers to include cloud-variant content when updating those skill bodies. |

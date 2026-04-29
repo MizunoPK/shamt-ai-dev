@@ -370,7 +370,7 @@ All six proposals together. They form a coherent layer: abstraction (P1), CI tem
 | `.shamt/sdk/azure-pipelines/shamt-cron-janitor.yml.template` | CREATE | ADO Pipeline weekly cron janitor |
 | `.shamt/sdk/azure-pipelines/README.md` | CREATE | Setup instructions for ADO pipeline templates |
 | `.shamt/sdk/README.md` | MODIFY | Add ADO provider documentation, `--provider` flag usage |
-| `.shamt/guides/reference/ado_pr_review_workflow.md` | CREATE | Full ADO PR review workflow guide (Triggers A/B/C, thread statuses, voting, re-review) |
+| `.shamt/guides/reference/ado_pr_review_workflow.md` | CREATE | Full ADO PR review workflow guide (Triggers A/B/C, thread statuses, voting, re-review). **D-COVERAGE decision:** no dedicated skill warranted — ADO PR review is a user-facing workflow that uses the existing `shamt-code-review` skill with ADO MCP tools wired; the guide explains the trigger patterns and ADO-specific behaviors for the user, not a new agent protocol. |
 | `.shamt/host/claude/settings.starter.json` | MODIFY | Add conditional ADO MCP server block (commented out by default, uncommented by init when `--pr-provider=ado`) |
 | `.shamt/host/codex/config.starter.toml` | MODIFY | Add conditional ADO MCP server block |
 | `.shamt/config/pr_provider.conf.template` | CREATE | Template for PR provider config |
@@ -480,3 +480,4 @@ All six proposals together. They form a coherent layer: abstraction (P1), CI tem
 | 2026-04-28 | Round 2 sub-agent fix: clarified PRProvider scope — protocol is PR-only; janitor uses provider-specific issue/work-item APIs directly since it posts digests as issues, not PR comments |
 | 2026-04-28 | Validation: added missing Validation Log header field; corrected Files Affected path for master_review_pipeline_composite.md from `.shamt/guides/reference/` to `.shamt/guides/composites/` (per SHAMT-44) |
 | 2026-04-28 | Validation fix (Round 1): corrected `requirements.txt` status from MODIFY to CREATE — SHAMT-43 creates `pyproject.toml` only; `requirements.txt` is a new file required by Azure Pipelines templates |
+| 2026-04-29 | Drift/coverage sync: added D-COVERAGE decision to `ado_pr_review_workflow.md` CREATE row — no new skill warranted; ADO review uses existing `shamt-code-review` skill with ADO MCP tools wired. |

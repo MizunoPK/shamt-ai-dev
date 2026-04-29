@@ -162,7 +162,7 @@ All five proposals together. SHAMT-44 is the assembly step — without it, the p
 
 ### Phase 3: `/loop` integration in validation-loop skill
 - [ ] Update `shamt-validation-loop` SKILL.md body to invoke `/loop` on Claude Code. Maintain the `source_guides:` frontmatter field — if this change draws on new guide content, add those guides to the list.
-- [ ] Document the Codex equivalent (driver script with `codex exec`).
+- [ ] Document the Codex equivalent (driver script with `codex exec`) and the cloud-task-as-confirmer-instance variant (deferred from SHAMT-43 Phase 5 — this skill body update must include the cloud-task-as-confirmer content added to `validation_loop_master_protocol.md` in SHAMT-43).
 - [ ] Verify regen still produces a valid `.claude/skills/shamt-validation-loop/SKILL.md`.
 
 ### Phase 4: Composite guides authoring
