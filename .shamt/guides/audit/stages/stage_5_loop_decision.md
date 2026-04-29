@@ -596,6 +596,42 @@ The working file is temporary — **do NOT commit it.**
 - [ ] Intentional cases documented
 - [ ] Commit message drafted
 - [ ] User presentation prepared
+- [ ] Write .shamt/audit/last_run.json (see below)
+```
+
+### Writing `last_run.json`
+
+After exit criteria are met and before committing, write `.shamt/audit/last_run.json` to record the audit result. This file is consumed by `pre-export-audit-gate.sh` to block exports on stale or failed audits.
+
+```bash
+# From repo root — substitute actual values
+python3 -c "
+import json, datetime
+
+data = {
+    '_schema': 'shamt-audit-v1',
+    'timestamp': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'scope': '.shamt/guides/',
+    'severity_counts': {
+        'CRITICAL': 0,
+        'HIGH': 0,
+        'MEDIUM': 0,
+        'LOW': 0   # total found across all rounds (not just last round)
+    },
+    'unfixed_issues': [],          # list any intentional-but-not-fixed items
+    'consecutive_clean_rounds': 3,
+    'exit_criterion_met': True
+}
+with open('.shamt/audit/last_run.json', 'w') as f:
+    json.dump(data, f, indent=2)
+print('Written: .shamt/audit/last_run.json')
+"
+```
+
+Commit `last_run.json` alongside the audit fixes:
+
+```bash
+git add .shamt/audit/last_run.json
 ```
 
 ### Creating Final Summary

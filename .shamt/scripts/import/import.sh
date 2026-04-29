@@ -145,6 +145,7 @@ import_dir "$MASTER_SHAMT_DIR/scripts" "$CHILD_SHAMT_DIR/scripts" "scripts/impor
 import_dir "$MASTER_SHAMT_DIR/skills" "$CHILD_SHAMT_DIR/skills" ""
 import_dir "$MASTER_SHAMT_DIR/agents" "$CHILD_SHAMT_DIR/agents" ""
 import_dir "$MASTER_SHAMT_DIR/commands" "$CHILD_SHAMT_DIR/commands" ""
+import_dir "$MASTER_SHAMT_DIR/hooks" "$CHILD_SHAMT_DIR/hooks" ""
 
 # --- Remove files deleted from master ----------------------------------------
 
@@ -195,6 +196,7 @@ remove_deleted "$CHILD_SHAMT_DIR/scripts" "$MASTER_SHAMT_DIR/scripts" "scripts/i
 remove_deleted "$CHILD_SHAMT_DIR/skills" "$MASTER_SHAMT_DIR/skills" ""
 remove_deleted "$CHILD_SHAMT_DIR/agents" "$MASTER_SHAMT_DIR/agents" ""
 remove_deleted "$CHILD_SHAMT_DIR/commands" "$MASTER_SHAMT_DIR/commands" ""
+remove_deleted "$CHILD_SHAMT_DIR/hooks" "$MASTER_SHAMT_DIR/hooks" ""
 
 # Record sync state now — before diff generation and output, so a script
 # interruption after syncing still produces an accurate last_sync.conf.

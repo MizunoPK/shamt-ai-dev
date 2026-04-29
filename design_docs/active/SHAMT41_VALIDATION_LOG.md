@@ -364,3 +364,59 @@ No new unresolved decisions introduced.
 **Outcome:** CONFIRMED — design doc content remains valid after drift/coverage sync modifications.
 
 **consecutive_clean:** maintained (no valid issues found)
+
+---
+
+## Re-Validation — Post SHAMT-40 Merge (2026-04-29)
+
+**Trigger:** SHAMT-40 (Claude Code host wiring) merged to main after initial SHAMT-41 validation. Re-validation required to confirm SHAMT-41 design doc remains consistent with the now-merged SHAMT-40 changes, particularly the import scope which SHAMT-40 expanded to include `skills/`, `agents/`, and `commands/`.
+
+### Re-Validation Round 1 — 2026-04-29
+
+#### Dimension 2: Correctness
+**Status:** Fail — 1 MEDIUM issue found
+
+**Issue (MEDIUM):** SHAMT-41 design doc specifies that `import.sh` copies from `hooks/` on the master side, but as of SHAMT-40 the import sync scope in `import.sh` covers only: `guides/`, `scripts/`, `skills/`, `agents/`, `commands/`. The `hooks/` directory created by SHAMT-41 is not included. Without `import.sh` being updated to include `hooks/`, child projects would never receive hook scripts on import — breaking the core delivery mechanism for the hooks bundle.
+
+All other dimensions: Pass.
+
+**Round 1 Summary:**
+- Total Issues: 1
+- MEDIUM: 1
+- consecutive_clean: 0
+
+---
+
+**Fix Applied (2026-04-29):**
+
+1. Added `import.sh` and `import.ps1` to Files Affected table as MODIFY entries with note: "Add `hooks/` to import sync scope (import_dir + remove_deleted calls)"
+2. Added Phase 5 step: "Update `import.sh` (and `import.ps1`) to add `hooks/` to the import scope — add `import_dir "$MASTER_SHAMT_DIR/hooks" "$CHILD_SHAMT_DIR/hooks" ""` and corresponding `remove_deleted` call"
+3. Added Change History entry: "2026-04-29 | Re-validation fix (post SHAMT-40 merge): Added import.sh and import.ps1 to Files Affected; added Phase 5 step for hooks/ import scope"
+
+---
+
+### Re-Validation Round 2 — 2026-04-29
+
+All 7 dimensions: Pass.
+
+**Round 2 Summary:**
+- Total Issues: 0
+- consecutive_clean: 1
+
+---
+
+### Re-Validation Sub-Agent Confirmation — 2026-04-29
+
+**Sub-Agent A (Haiku):** Zero issues found. CONFIRMED CLEAN ✅
+
+**Sub-Agent B (Haiku):** Zero issues found. CONFIRMED CLEAN ✅
+
+---
+
+### Re-Validation Final Result
+
+**Outcome:** RE-VALIDATED ✅ — design doc is consistent with post-SHAMT-40-merge state.
+
+**Exit criterion met:** consecutive_clean = 1 + both sub-agents confirmed zero issues.
+
+**Key fix:** `import.sh` and `import.ps1` added to Files Affected; Phase 5 step added to ensure `hooks/` is included in import sync scope.

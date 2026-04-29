@@ -212,6 +212,127 @@ else
     echo "  Commands: .shamt/commands/ not found — skipping"
 fi
 
+# --- Phase 4: Hooks + MCP registration ----------------------------------------
+# Installs hook registrations and mcpServers.shamt into .claude/settings.json
+# when features.shamt_hooks=true is set in settings.json.
+
+SETTINGS_JSON="$CLAUDE_DIR/settings.json"
+HOOKS_SRC="$SHAMT_DIR/hooks"
+
+if [ -d "$HOOKS_SRC" ] && [ -f "$SETTINGS_JSON" ]; then
+    python3 - "$SETTINGS_JSON" "$PROJECT_ROOT" "$HOOKS_SRC" "$REPO_TYPE" <<'PYEOF'
+import sys, json
+from pathlib import Path
+
+settings_path, project_root, hooks_src, repo_type = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
+
+with open(settings_path) as f:
+    settings = json.load(f)
+
+features = settings.get('features', {})
+if not features.get('shamt_hooks', False):
+    print("  Hooks: skipped (set features.shamt_hooks=true in .claude/settings.json to enable)")
+    sys.exit(0)
+
+root = Path(project_root)
+
+def hook_cmd(name):
+    return str(root / '.shamt' / 'hooks' / name)
+
+hooks_block = {
+    "PreToolUse": [
+        {
+            "matcher": "Bash",
+            "hooks": [
+                {"type": "command", "command": hook_cmd("no-verify-blocker.sh")},
+                {"type": "command", "command": hook_cmd("commit-format.sh")},
+            ]
+        },
+        {
+            "matcher": "Task",
+            "hooks": [
+                {"type": "command", "command": hook_cmd("architect-builder-enforcer.sh")},
+            ]
+        }
+    ],
+    "PostToolUse": [
+        {
+            "matcher": "Edit",
+            "hooks": [
+                {"type": "command", "command": hook_cmd("validation-log-stamp.sh")},
+            ]
+        }
+    ],
+    "UserPromptSubmit": [
+        {
+            "hooks": [
+                {"type": "command", "command": hook_cmd("stage-transition-snapshot.sh")},
+            ]
+        }
+    ],
+    "PreCompact": [
+        {
+            "hooks": [
+                {"type": "command", "command": hook_cmd("precompact-snapshot.sh")},
+            ]
+        }
+    ],
+    "SessionStart": [
+        {
+            "hooks": [
+                {"type": "command", "command": hook_cmd("session-start-resume.sh")},
+            ]
+        }
+    ],
+    "SubagentStop": [
+        {
+            "hooks": [
+                {"type": "command", "command": hook_cmd("subagent-confirmation-receipt.sh")},
+            ]
+        }
+    ]
+}
+
+# Child projects only: add pre-export-audit-gate to UserPromptSubmit
+if repo_type != 'master':
+    hooks_block["UserPromptSubmit"][0]["hooks"].insert(0, {
+        "type": "command", "command": hook_cmd("pre-export-audit-gate.sh")
+    })
+    # user-testing-gate in S9 push path (child-only, add to PreToolUse Bash)
+    hooks_block["PreToolUse"][0]["hooks"].append({
+        "type": "command", "command": hook_cmd("user-testing-gate.sh")
+    })
+
+settings["hooks"] = hooks_block
+
+managed = settings.get("_shamt_managed_blocks", [])
+if "hooks" not in managed:
+    managed.append("hooks")
+settings["_shamt_managed_blocks"] = managed
+
+# Register MCP server if venv exists
+venv_python = root / '.shamt' / 'mcp' / '.venv' / 'bin' / 'python'
+if venv_python.exists():
+    settings.setdefault("mcpServers", {})["shamt"] = {
+        "command": str(venv_python),
+        "args": ["-m", "shamt_mcp"],
+        "env": {}
+    }
+    mcp_status = f"registered ({venv_python})"
+else:
+    mcp_status = "skipped (venv not found — see .shamt/mcp/README.md)"
+
+with open(settings_path, 'w') as f:
+    json.dump(settings, f, indent=2)
+    f.write('\n')
+
+print(f"  Hooks: installed")
+print(f"  MCP: {mcp_status}")
+PYEOF
+else
+    echo "  Hooks + MCP: skipped (.shamt/hooks/ or .claude/settings.json not found)"
+fi
+
 echo ""
 echo "  ✓ Regen complete"
 echo ""

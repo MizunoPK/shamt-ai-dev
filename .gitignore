@@ -24,3 +24,9 @@ design_docs/validation_logs/
 # last_sync.conf would exist in a child project tracking import history
 .shamt/shamt_master_path.conf
 .shamt/last_sync.conf
+
+# MCP server virtual environment — local install, not version controlled
+.shamt/mcp/.venv/
+
+# Scratch files
+test_agent.yaml

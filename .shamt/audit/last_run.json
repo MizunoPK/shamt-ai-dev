@@ -1,0 +1,15 @@
+{
+  "_schema": "shamt-audit-v1",
+  "_note": "Written by the guide audit on completion. Read by pre-export-audit-gate.sh.",
+  "timestamp": null,
+  "scope": null,
+  "severity_counts": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0
+  },
+  "unfixed_issues": [],
+  "consecutive_clean_rounds": 0,
+  "exit_criterion_met": false
+}

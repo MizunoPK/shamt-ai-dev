@@ -92,6 +92,21 @@ open question requiring user input: handle via Open Questions Protocol (see belo
 **Step 7 — Score the round and fix all issues.** Classify each issue by severity.
 Fix immediately. Update consecutive_clean.
 
+**Step 7b — MCP bookkeeping (if `shamt.validation_round()` is registered).** After
+fixing all issues, call:
+```
+shamt.validation_round(
+    log_path="{path/to/VALIDATION_LOG.md}",
+    round={N},
+    severity_counts={"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0},
+    fixed=False,       # True only if exactly 1 LOW was found and fixed
+    exit_threshold=1   # default for validation loops
+)
+```
+The tool appends a structured round entry and returns updated `consecutive_clean`
+and `should_exit`. If MCP is not registered, skip this step and update the log
+manually.
+
 **Step 8 — Post-round gate.** Update VALIDATION_LOG.md with all dimension results,
 tool call evidence, adversarial self-check outcome, and updated consecutive_clean.
 

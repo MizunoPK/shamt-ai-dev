@@ -140,6 +140,41 @@ Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
 
 ---
 
+## Hooks and MCP Server (SHAMT-41)
+
+**Hooks bundle** — 10 enforcement hook scripts in `.shamt/hooks/`. Activated by setting `features.shamt_hooks=true` in `.claude/settings.json`; regen installs registrations into `settings.json`'s `hooks` block.
+
+| Hook | Event | Purpose |
+|------|-------|---------|
+| `no-verify-blocker.sh` | PreToolUse (Bash) | Block `--no-verify` / `--no-gpg-sign` |
+| `commit-format.sh` | PreToolUse (Bash) | Enforce `feat/SHAMT-N:` or `fix/SHAMT-N:` prefix |
+| `pre-export-audit-gate.sh` | UserPromptSubmit | Block export if audit is stale or failed (child-only) |
+| `validation-log-stamp.sh` | PostToolUse (Edit) | Append timestamp to validation logs |
+| `architect-builder-enforcer.sh` | PreToolUse (Task) | S6: reject non-`shamt-builder` Task spawns |
+| `user-testing-gate.sh` | PreToolUse (Bash) | S9: block push without user-testing confirmation (child-only) |
+| `precompact-snapshot.sh` | PreCompact | Write `RESUME_SNAPSHOT.md` before compaction |
+| `session-start-resume.sh` | SessionStart | Inject `RESUME_SNAPSHOT.md` as context on start |
+| `subagent-confirmation-receipt.sh` | SubagentStop | Write veto flag if confirming sub-agent reports issues |
+| `stage-transition-snapshot.sh` | UserPromptSubmit | Write `RESUME_SNAPSHOT.md` at stage-advance phrases |
+
+**Master-applicable hooks (8 of 10):** all except `pre-export-audit-gate.sh` (master doesn't export) and `user-testing-gate.sh` (S9 child-only).
+
+**MCP server** — Python package at `.shamt/mcp/`. Install via repo-local venv:
+```bash
+python -m venv .shamt/mcp/.venv && source .shamt/mcp/.venv/bin/activate
+pip install -e .shamt/mcp
+```
+
+Two tools:
+- `shamt.next_number()` — atomic SHAMT-N reservation (reads/increments `design_docs/NEXT_NUMBER.txt` under OS-level lock)
+- `shamt.validation_round(log_path, round, severity_counts, fixed, exit_threshold)` — appends structured round entry and returns updated `consecutive_clean` + `should_exit`. Pass `exit_threshold=1` for validation loops, `exit_threshold=3` for guide audits.
+
+Regen registers the MCP server in `mcpServers.shamt` when the venv is found.
+
+**Session continuity:** `precompact-snapshot.sh` + `session-start-resume.sh` replace the GUIDE_ANCHOR / Resume Instructions ritual for sessions where both hooks fire. The manual ritual remains authoritative when hooks are not installed.
+
+---
+
 ## Master Dev Workflow
 
 For improving the guides directly:

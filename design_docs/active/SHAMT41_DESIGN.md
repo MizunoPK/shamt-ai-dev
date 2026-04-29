@@ -131,6 +131,8 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 | `.shamt/scripts/regen/regen-claude-shims.ps1` | MODIFY | Mirror |
 | `.shamt/scripts/initialization/init.sh` | MODIFY | After SHAMT-40 wiring, install hooks + MCP if `features.shamt_hooks=true` is set in settings.json (see Open Question 1) |
 | `.shamt/scripts/initialization/init.ps1` | MODIFY | Mirror |
+| `.shamt/scripts/import/import.sh` | MODIFY | Add `hooks/` to the import scope (analogous to how skills/agents/commands were added in SHAMT-40); ensures existing child projects receive hook scripts on `shamt import` |
+| `.shamt/scripts/import/import.ps1` | MODIFY | Mirror |
 | `.shamt/skills/shamt-validation-loop/SKILL.md` | MODIFY | Reference `shamt.validation_round()` MCP verb alongside prose round-entry procedure (for hosts without MCP). Maintain `source_guides:` frontmatter. |
 | `.shamt/guides/reference/validation_loop_master_protocol.md` | MODIFY | Reference `shamt.validation_round()` MCP verb; source guide for `shamt-validation-loop/SKILL.md` — skill body updated in same phase (Phase 6) |
 | `.shamt/guides/stages/s2/*.md` | MODIFY | Reference MCP verbs where validation rounds happen (spec validation loop in S2.P1) |
@@ -175,6 +177,7 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 - [ ] Update `regen-claude-shims.sh` to install the `hooks` block into `.claude/settings.json` and the `mcpServers.shamt` entry.
 - [ ] Add hooks key to `_shamt_managed_blocks`.
 - [ ] Update init script: after SHAMT-40 wiring, run the same install step.
+- [ ] Update `import.sh` (and `import.ps1`) to add `hooks/` to the import scope so that existing child projects receive hook scripts when running `shamt import`.
 
 ### Phase 6: Guide updates
 - [ ] Update `CHEATSHEET.md` with an "Active Enforcement" section listing each hook, its trigger event, and what it blocks or requires (e.g., "commit-format.sh — rejects commits not matching `feat/SHAMT-N:` or `fix/SHAMT-N:` prefix").
@@ -260,3 +263,4 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 | 2026-04-29 | Drift/coverage sync: Added `shamt-validation-loop/SKILL.md` MODIFY to Files Affected — Phase 6 modifies `validation_loop_master_protocol.md` (source guide), so the skill body must be updated in the same phase to reference the MCP verb. Updated guide MODIFY row Notes to link source guide → skill. Added Phase 6 step for skill update. |
 | 2026-04-29 | Validation fixes: (1) Fixed `false` → `False` in `validation_round()` Python signature (correctness); (2) Added Phase 3 note that `stage-transition-snapshot.sh` must be authored alongside `precompact-snapshot.sh` in Phase 4 due to shared RESUME_SNAPSHOT.md schema; (3) Added `.shamt/guides/stages/s2/*.md` MODIFY to Files Affected and updated Phase 6 step to include S2 alongside S5/S7/S9 (spec validation loop also uses `shamt.validation_round()`). |
 | 2026-04-29 | Validation fixes (round 2): (1) Phase 6.5 Step 5 bullet now notes `pre-push-tripwire` will be available after SHAMT-44 (consistent with audit_run forward reference pattern); (2) Added `.shamt/guides/stages/s8/*.md` MODIFY to Files Affected and Phase 6 step (S8 alignment validation loop tracks consecutive_clean explicitly). |
+| 2026-04-29 | Re-validation fix (post SHAMT-40 merge): Added `import.sh` and `import.ps1` to Files Affected as MODIFY — `.shamt/hooks/` is a new top-level directory not in the prior import scope; without syncing it, child projects would have hooks registered in settings.json but no hook scripts. Added Phase 5 step to update import scripts. |

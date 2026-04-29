@@ -447,7 +447,7 @@ Record the misclassification guard result in `S8_ALIGNMENT_VALIDATION_{feature_N
    - **Loop 2 - Implementation Consistency:** Check for contradictions between specs and implementation
 3. Find issues (misalignments, contradictions, missing updates)
 4. Resolve ALL issues (zero tolerance standard)
-5. **Exit condition:** primary clean round + sub-agent confirmation (ZERO issues found)
+5. **Exit condition:** primary clean round + sub-agent confirmation (ZERO issues found). **If `shamt.validation_round()` MCP tool is registered, call it after scoring each round with `exit_threshold=1`.**
 
 **Sub-Agent Confirmation (when consecutive_clean = 1):**
 

@@ -170,7 +170,7 @@ Each validation round checks all 9 dimensions systematically:
 - **MEDIUM:** Reduces quality (vague verifications, incomplete checklists)
 - **LOW:** Cosmetic (typos, formatting)
 
-**Core Validation Process:** Same as master protocol - primary clean round + sub-agent confirmation required, fresh eyes every round. A round is clean if it has ZERO issues OR exactly ONE LOW-severity issue (fixed). Multiple LOW-severity issues OR any MEDIUM/HIGH/CRITICAL issue resets `consecutive_clean` to 0.
+**Core Validation Process:** Same as master protocol - primary clean round + sub-agent confirmation required, fresh eyes every round. A round is clean if it has ZERO issues OR exactly ONE LOW-severity issue (fixed). Multiple LOW-severity issues OR any MEDIUM/HIGH/CRITICAL issue resets `consecutive_clean` to 0. **If `shamt.validation_round()` MCP tool is registered, call it after scoring each round with `exit_threshold=1`.**
 
 ---
 

@@ -770,7 +770,7 @@ STOP - DO NOT PROCEED TO S7.P3 YET
 
 ## Exit Criteria
 
-S7.P2 is complete when the Validation Loop exits: primary agent declares one clean round (ZERO issues OR exactly ONE LOW-severity issue fixed, all 17 dimensions) AND both independent sub-agents confirm zero issues. Agent Status is updated.
+S7.P2 is complete when the Validation Loop exits: primary agent declares one clean round (ZERO issues OR exactly ONE LOW-severity issue fixed, all 17 dimensions) AND both independent sub-agents confirm zero issues. Agent Status is updated. **If `shamt.validation_round()` MCP tool is registered, call it after scoring each round with `exit_threshold=1`.**
 
 ### Sub-Agent Confirmation Protocol
 
