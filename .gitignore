@@ -30,3 +30,7 @@ design_docs/validation_logs/
 
 # Scratch files
 test_agent.yaml
+
+# Python cache
+.shamt/mcp/**/__pycache__/
+*.pyc

@@ -108,12 +108,11 @@ def test_exit_threshold_1(tmp_path):
 
 
 def test_veto_prevents_increment(tmp_path, monkeypatch):
-    from shamt_mcp import validation_round as vr_module
+    import importlib
+    vr_module = importlib.import_module("shamt_mcp.validation_round")
 
     # Patch _check_and_consume_veto to return True (veto active)
-    monkeypatch.setattr(
-        "shamt_mcp.validation_round._check_and_consume_veto", lambda: True
-    )
+    monkeypatch.setattr(vr_module, "_check_and_consume_veto", lambda: True)
     log = tmp_path / "LOG.md"
     log.write_text("consecutive_clean: 1\n")
     result = validation_round(str(log), 2, {}, False, 3)

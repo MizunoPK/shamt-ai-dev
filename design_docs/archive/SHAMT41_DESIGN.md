@@ -1,6 +1,6 @@
 # SHAMT-41: Hooks Bundle and Minimal MCP Server (Claude Code)
 
-**Status:** Validated
+**Status:** Implemented
 **Created:** 2026-04-27
 **Branch:** `feat/SHAMT-41`
 **Validation Log:** [SHAMT41_VALIDATION_LOG.md](./SHAMT41_VALIDATION_LOG.md)
@@ -109,17 +109,18 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 
 | File | Status | Notes |
 |------|--------|-------|
-| `.shamt/hooks/no-verify-blocker.sh` (+ .ps1) | CREATE | PreToolUse on Bash |
-| `.shamt/hooks/commit-format.sh` (+ .ps1) | CREATE | PreToolUse on Bash |
-| `.shamt/hooks/pre-export-audit-gate.sh` (+ .ps1) | CREATE | UserPromptSubmit + PreToolUse |
-| `.shamt/hooks/validation-log-stamp.sh` (+ .ps1) | CREATE | PostToolUse on Edit |
-| `.shamt/hooks/architect-builder-enforcer.sh` (+ .ps1) | CREATE | PreToolUse on Task |
-| `.shamt/hooks/user-testing-gate.sh` (+ .ps1) | CREATE | PreToolUse on Bash (S9 only) |
-| `.shamt/hooks/precompact-snapshot.sh` (+ .ps1) | CREATE | PreCompact |
-| `.shamt/hooks/session-start-resume.sh` (+ .ps1) | CREATE | SessionStart |
-| `.shamt/hooks/subagent-confirmation-receipt.sh` (+ .ps1) | CREATE | SubagentStop |
-| `.shamt/hooks/stage-transition-snapshot.sh` (+ .ps1) | CREATE | UserPromptSubmit on stage-advance |
+| `.shamt/hooks/no-verify-blocker.sh` | CREATE | PreToolUse on Bash |
+| `.shamt/hooks/commit-format.sh` | CREATE | PreToolUse on Bash |
+| `.shamt/hooks/pre-export-audit-gate.sh` | CREATE | UserPromptSubmit + PreToolUse |
+| `.shamt/hooks/validation-log-stamp.sh` | CREATE | PostToolUse on Edit |
+| `.shamt/hooks/architect-builder-enforcer.sh` | CREATE | PreToolUse on Task |
+| `.shamt/hooks/user-testing-gate.sh` | CREATE | PreToolUse on Bash (S9 only) |
+| `.shamt/hooks/precompact-snapshot.sh` | CREATE | PreCompact |
+| `.shamt/hooks/session-start-resume.sh` | CREATE | SessionStart |
+| `.shamt/hooks/subagent-confirmation-receipt.sh` | CREATE | SubagentStop |
+| `.shamt/hooks/stage-transition-snapshot.sh` | CREATE | UserPromptSubmit on stage-advance |
 | `.shamt/hooks/README.md` | CREATE | Document each hook's purpose, event, and registration shape |
+| `.shamt/hooks/*.ps1` | DEFERRED | Windows PowerShell hook parity deferred (validation log Re-Verification Round: scoped out as out of scope for SHAMT-41) |
 | `.shamt/mcp/pyproject.toml` | CREATE | Python package metadata |
 | `.shamt/mcp/src/shamt_mcp/__init__.py` | CREATE | Server entry point |
 | `.shamt/mcp/src/shamt_mcp/next_number.py` | CREATE | Atomic SHAMT-N reservation |
@@ -128,9 +129,9 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 | `.shamt/audit/last_run.json` (schema only) | CREATE | Schema documented in pre-export-audit-gate.sh; format defined |
 | `.shamt/guides/audit/*.md` (relevant files) | MODIFY | Phase 2: update audit workflow guides to write `last_run.json` on audit completion; specific file list determined in Phase 2 |
 | `.shamt/scripts/regen/regen-claude-shims.sh` | MODIFY | Install hooks block into `.claude/settings.json`; install mcpServers.shamt |
-| `.shamt/scripts/regen/regen-claude-shims.ps1` | MODIFY | Mirror |
-| `.shamt/scripts/initialization/init.sh` | MODIFY | After SHAMT-40 wiring, install hooks + MCP if `features.shamt_hooks=true` is set in settings.json (see Open Question 1) |
-| `.shamt/scripts/initialization/init.ps1` | MODIFY | Mirror |
+| `.shamt/scripts/regen/regen-claude-shims.ps1` | DEFERRED | Windows PS1 hook registration deferred (same scope decision as .ps1 hook scripts) |
+| `.shamt/scripts/initialization/init.sh` | NO-CHANGE | init.sh already delegates to regen-claude-shims.sh; Phase 4 in regen satisfies the requirement without direct init.sh changes |
+| `.shamt/scripts/initialization/init.ps1` | NO-CHANGE | Same — delegates to regen.ps1 (PS1 parity deferred) |
 | `.shamt/scripts/import/import.sh` | MODIFY | Add `hooks/` to the import scope (analogous to how skills/agents/commands were added in SHAMT-40); ensures existing child projects receive hook scripts on `shamt import` |
 | `.shamt/scripts/import/import.ps1` | MODIFY | Mirror |
 | `.shamt/skills/shamt-validation-loop/SKILL.md` | MODIFY | Reference `shamt.validation_round()` MCP verb alongside prose round-entry procedure (for hosts without MCP). Maintain `source_guides:` frontmatter. |

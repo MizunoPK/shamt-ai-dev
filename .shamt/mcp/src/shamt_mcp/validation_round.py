@@ -49,7 +49,7 @@ def _read_consecutive_clean(log_path: Path) -> int:
     if not log_path.exists():
         return 0
     text = log_path.read_text()
-    matches = re.findall(r"\*{0,2}consecutive_clean\*{0,2}:\s*(\d+)", text)
+    matches = re.findall(r"\*{0,2}consecutive_clean\*{0,2}:\*{0,2}\s*(\d+)", text)
     return int(matches[-1]) if matches else 0
 
 
