@@ -211,6 +211,18 @@ After each round:
 Exit only when: consecutive_clean >= 3 AND all 9 criteria met
 ```
 
+**MCP bookkeeping (if `shamt.validation_round()` is registered).** After assessing each round, call:
+```
+shamt.validation_round(
+    log_path="{path/to/audit_log_or_loop_decision.md}",
+    round={N},
+    severity_counts={"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0},
+    fixed=False,       # True only if exactly 1 LOW was found and fixed
+    exit_threshold=3   # guide audits require 3 consecutive clean rounds
+)
+```
+The prose analysis and issue documentation are still written by you; the MCP call handles counter arithmetic only. If MCP is not registered, skip this step and update the log manually.
+
 **ALL 9 criteria must be met to exit:**
 
 1. All issues resolved — every issue from all rounds fixed and verified

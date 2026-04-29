@@ -60,7 +60,7 @@ declare -a size_exceptions=(
 for file in $(find stages sync -name "*.md" 2>/dev/null); do
   lines=$(wc -l < "$file")
 
-  if [ "$lines" -gt 1250 ]; then
+  if [ "$lines" -gt 2000 ]; then
     # Check if this file is a known D11 exception
     is_exception=false
     for exception in "${size_exceptions[@]}"; do
@@ -72,7 +72,7 @@ for file in $(find stages sync -name "*.md" 2>/dev/null); do
     if [ "$is_exception" = true ]; then
       echo -e "${YELLOW}⚠️  KNOWN D11 EXCEPTION:${NC} $file ($lines lines) - tracked in known_exceptions.md for future splitting"
     else
-      echo -e "${RED}❌ TOO LARGE:${NC} $file ($lines lines) - exceeds 1250-line baseline"
+      echo -e "${RED}❌ TOO LARGE:${NC} $file ($lines lines) - exceeds 2000-line baseline"
       ((TOO_LARGE++))
       ((CRITICAL_ISSUES++))
       ((TOTAL_ISSUES++))
@@ -81,16 +81,17 @@ for file in $(find stages sync -name "*.md" 2>/dev/null); do
 done
 
 if [ $TOO_LARGE -eq 0 ]; then
-  echo -e "${GREEN}✅ All files within 1250-line baseline${NC}"
+  echo -e "${GREEN}✅ All files within 2000-line baseline${NC}"
 fi
 
 echo ""
-echo "Files >1250 lines: $TOO_LARGE"
+echo "Files >2000 lines: $TOO_LARGE"
 echo ""
-echo "Note: Files ≤1250 lines are acceptable if content is non-duplicated."
+echo "Note: Files ≤2000 lines are acceptable if content is non-duplicated."
 echo "      Updated policy:"
 echo "        - Round 3 (2026-02-05): Simplified from 3-tier to single 1000-line baseline"
 echo "        - Meta-Audit (2026-02-05): Increased baseline to 1250 lines for comprehensive reference guides"
+echo "        - 2026-04-29: Updated baseline to 2000 lines (propagating d11_file_size_assessment.md policy)"
 echo ""
 
 # ============================================================================
