@@ -271,11 +271,11 @@ grep -rh "templates/.*\.md" --include="*.md" . | grep -o "templates/[^)]*\.md" |
 # CLAUDE.md character count (must be <40,000)
 wc -c ../../../CLAUDE.md
 
-# Workflow guides line count (should be <1250)
+# Workflow guides line count (should be ≤2000)
 for file in ../stages/**/*.md; do
   lines=$(wc -l < "$file")
   if [ $lines -gt 2000 ]; then
-    echo "⚠️  $file: $lines lines (exceeds 1250)"
+    echo "⚠️  $file: $lines lines (exceeds 2000)"
   fi
 done
 ```
@@ -287,7 +287,7 @@ done
 for file in dimensions/*.md stages/*.md reference/*.md; do
   lines=$(wc -l < "$file")
   if [ $lines -gt 2000 ]; then
-    echo "⚠️  $file: $lines lines (exceeds 1250)"
+    echo "⚠️  $file: $lines lines (exceeds 2000)"
   fi
 done
 ```
