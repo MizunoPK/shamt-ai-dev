@@ -100,7 +100,7 @@ Both proposals together: existing guides as authoritative content sources, new `
 | `.shamt/skills/shamt-architect-builder/SKILL.md` | CREATE | From architect_builder_pattern.md + implementation_plan_format.md |
 | `.shamt/skills/shamt-spec-protocol/SKILL.md` | CREATE | From spec refinement + critical workflow rules |
 | `.shamt/skills/shamt-code-review/SKILL.md` | CREATE | From code_review/ guides |
-| `.shamt/skills/shamt-guide-audit/SKILL.md` | CREATE | From audit/ guides + severity classification; audit scope covers all of `.shamt/guides/` (walk all subdirectories including any added by later SHAMTs). `.shamt/commands/` and `.shamt/skills/` are explicitly out of audit scope — accuracy of command bodies and skill bodies is maintained by implementation-plan update steps and the skill-body drift check in Risks & Mitigation, not the guide audit. |
+| `.shamt/skills/shamt-guide-audit/SKILL.md` | CREATE | From audit/ guides + severity classification; audit scope covers all of `.shamt/guides/` (walk all subdirectories including any added by later SHAMTs). Command bodies (`.shamt/commands/`) are out of guide-audit scope — kept accurate by implementation-plan update steps. Skill bodies are checked by two dedicated dimensions within the audit: **(D-DRIFT)** for each SKILL.md, read its `source_guides:` frontmatter and compare key protocol steps against each referenced guide file — flag divergences (MEDIUM for minor prose drift, HIGH for missing or contradicted steps); **(D-COVERAGE)** walk `.shamt/guides/` and flag guide files with no corresponding skill body as LOW-severity candidates — agent proposes whether a new skill is warranted; also flag skills whose source guides don't cover the skill's protocol steps (reverse gap). |
 | `.shamt/skills/shamt-discovery/SKILL.md` | CREATE | From S1.P3 guide + discovery validation loop |
 | `.shamt/skills/shamt-import/SKILL.md` | CREATE | From sync/import_workflow.md |
 | `.shamt/skills/shamt-export/SKILL.md` | CREATE | From sync/export_workflow.md |
@@ -123,7 +123,7 @@ Both proposals together: existing guides as authoritative content sources, new `
 | `.shamt/commands/shamt-promote.md` | CREATE | Master-only: promote incoming proposal to design doc |
 | `.shamt/commands/CHEATSHEET.md` | CREATE | User-facing quick reference: all slash commands with one-line descriptions, S1–S11 stage flow table, sub-agent persona summary. Foundation file that grows with each subsequent SHAMT-N. Not covered by the guide audit (lives in `commands/`, not `guides/`); kept accurate by explicit update steps in SHAMT-41/43/44/45 implementation plans. |
 | `CLAUDE.md` | MODIFY | Add section describing the three new directories and their roles; add master-applicable skill/persona note to Master Dev Workflow section |
-| `.shamt/skills/README.md` | CREATE | Index + authoring conventions |
+| `.shamt/skills/README.md` | CREATE | Index + authoring conventions; must document: (1) `source_guides:` frontmatter requirement for every SKILL.md, (2) bidirectional coverage expectation — every skill should correspond to guide content, and major guide sections should have corresponding skills |
 | `.shamt/agents/README.md` | CREATE | Persona format spec + tier-to-model mapping |
 | `.shamt/commands/README.md` | CREATE | Command body format + argument-substitution conventions |
 
@@ -137,7 +137,7 @@ Both proposals together: existing guides as authoritative content sources, new `
 - [ ] Decide on the model_tier → model mapping (cheap = Haiku/cheap-Codex, balanced = Sonnet/default-Codex, reasoning = Opus/frontier-Codex). Document in `.shamt/agents/README.md`.
 
 ### Phase 2: Author skill content
-- [ ] Distill each skill body from the corresponding source guide(s). Each SKILL.md should be self-contained: protocol body + frontmatter (name, description, triggers). Use neutral `triggers:` as a YAML list in the frontmatter — not Claude Code-specific syntax; regen scripts translate to host-specific trigger format at deployment time.
+- [ ] Distill each skill body from the corresponding source guide(s). Each SKILL.md should be self-contained: protocol body + frontmatter (name, description, triggers, source_guides). Use neutral `triggers:` as a YAML list in the frontmatter — not Claude Code-specific syntax; regen scripts translate to host-specific trigger format at deployment time. Add a `source_guides:` YAML list naming every guide file the skill body was distilled from (relative paths from `.shamt/`); this field is the input to the D-DRIFT audit dimension in `shamt-guide-audit`.
 - [ ] Cross-link from the skill body back to the source guide for deeper reference.
 - [ ] For each skill, include a "When this skill triggers" section so authors of future host shims know the trigger semantics.
 
@@ -158,6 +158,7 @@ Both proposals together: existing guides as authoritative content sources, new `
 - [ ] Note that this is content-only — host wiring lands in SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
 - [ ] Note that child projects on prior versions ignore the new directories until they re-init or run regen.
 - [ ] In the "Master Dev Workflow" section of CLAUDE.md, add a note that master-applicable skills (`shamt-validation-loop`, `shamt-guide-audit`, `shamt-code-review`, `shamt-master-reviewer`) and agent personas (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-code-reviewer`) are available for master dev work once host wiring (SHAMT-40/42) is deployed.
+- [ ] In the "Design Doc Lifecycle" section of CLAUDE.md, add a coverage-gap check to the Implementation step: when implementing a design doc that modifies guides or skill bodies, run a D-COVERAGE pass — verify that (a) guide changes have corresponding skill body updates where warranted and (b) skill body changes have corresponding guide updates. If content exists only in one area and warrants being in both, create the missing counterpart as part of the same implementation. The D-DRIFT and D-COVERAGE audit dimensions catch gaps that slip through during implementation.
 
 ### Phase 5.5: Master repo agent persona subset
 - [ ] Document which agent personas are master-applicable vs. child-only in `.shamt/agents/README.md`.
@@ -203,7 +204,7 @@ Both proposals together: existing guides as authoritative content sources, new `
 
 | Risk | Mitigation |
 |------|------------|
-| Skill bodies drift from source guides over time | Add a check in `shamt-guide-audit` skill (audit dimensions) to verify skill bodies match the canonical guide content; flag drift |
+| Skill bodies drift from source guides over time | **D-DRIFT** dimension in `shamt-guide-audit`: reads each SKILL.md's `source_guides:` frontmatter, compares key protocol steps against the referenced guide files, and flags divergences (MEDIUM for minor prose drift; HIGH for missing or contradicted protocol steps). **D-COVERAGE** dimension: walks `.shamt/guides/` and flags guide files with no corresponding skill as LOW-severity candidates; also flags skills whose source guides don't cover stated protocol steps (reverse gap). Both dimensions run as part of every guide audit pass. |
 | Persona YAML schema becomes a bottleneck for new personas | Schema is YAML-not-JSON-Schema-strict — additive fields don't break old files; document this in README |
 | `model_tier` mapping changes when model lineups evolve | Mapping is in `.shamt/agents/README.md` and is the single source of truth — update there and re-run regen scripts |
 | Child projects with stale `.shamt/skills/` content miss updates | Sync flow already handles `.shamt/` updates; child runs `shamt import` then regen (handled in SHAMT-40 / SHAMT-42) |
@@ -224,3 +225,4 @@ Both proposals together: existing guides as authoritative content sources, new `
 | 2026-04-28 | Validation fix (sub-agent round): added hyperlinks to companion docs in frontmatter (relative paths from `active/` to `design_docs/`) |
 | 2026-04-28 | Validation fix (sub-agent round 2): Validation Strategy "After Phase 5" corrected to "After Phase 5.5" to match actual implementation plan sequencing (Phase 5.5 added in SHAMT-47 fold-in) |
 | 2026-04-29 | Resolved all 3 open questions: (1) trigger format → neutral YAML list, regen translates; (2) master-reviewer location → .shamt/skills/ with master-only flag, wiring skipped on children, sync unaffected; (3) argument syntax → {name}, regen translates. Section renamed Decisions. Phase 2 and Phase 4 updated to reflect decisions. |
+| 2026-04-29 | Drift/coverage sync: Phase 2 updated to require `source_guides:` frontmatter on every SKILL.md; shamt-guide-audit Files Affected row replaced with concrete D-DRIFT + D-COVERAGE dimension specs; Risks row made concrete; Skills README Notes updated with bidirectional coverage expectation; Phase 5 CLAUDE.md step extended with coverage-gap check for Design Doc Lifecycle. |

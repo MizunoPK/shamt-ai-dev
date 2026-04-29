@@ -206,10 +206,10 @@ Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orches
 | `.shamt/guides/reference/model_selection.md` | MODIFY | Three-axis profiles |
 | `.shamt/agents/README.md` | MODIFY | Map profiles to per-host model/effort tuples |
 | `.shamt/hooks/validation-stall-detector.sh` | MODIFY | Write recommendation to STALL_ALERT.md (escalation) |
-| `.shamt/skills/shamt-validation-loop/SKILL.md` | MODIFY | Pick up STALL_ALERT and propose escalation |
-| `.shamt/skills/shamt-spec-protocol/SKILL.md` | MODIFY | AskUserQuestion at S1/S2/S5/S9 gates; /fork on S2.P1.I2 |
-| `.shamt/skills/shamt-architect-builder/SKILL.md` | MODIFY | /fork on S5 alternative-architectures |
-| `.shamt/skills/shamt-discovery/SKILL.md` | MODIFY | Multi-modal + Web tools |
+| `.shamt/skills/shamt-validation-loop/SKILL.md` | MODIFY | Pick up STALL_ALERT and propose escalation; maintain `source_guides:` frontmatter |
+| `.shamt/skills/shamt-spec-protocol/SKILL.md` | MODIFY | AskUserQuestion at S1/S2/S5/S9 gates; /fork on S2.P1.I2; maintain `source_guides:` frontmatter |
+| `.shamt/skills/shamt-architect-builder/SKILL.md` | MODIFY | /fork on S5 alternative-architectures; maintain `source_guides:` frontmatter |
+| `.shamt/skills/shamt-discovery/SKILL.md` | MODIFY | Multi-modal + Web tools; update `source_guides:` frontmatter if new guide content is introduced to support these features |
 | `.shamt/host/codex/profiles/shamt-s1.fragment.toml` | MODIFY | Enable web_search="cached" |
 | `.shamt/host/codex/profiles/shamt-s2.fragment.toml` | MODIFY | Enable web_search if research stage; disable otherwise |
 | `.shamt/host/codex/profiles/*.fragment.toml` | MODIFY | Set web_search="disabled" on non-research stages |
@@ -261,6 +261,7 @@ Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orches
 
 ### Phase 8: Guide pruning audit
 - [ ] Inventory Resume Instructions sections and GUIDE_ANCHOR references.
+- [ ] Also run a bidirectional coverage-gap check: (a) skill bodies whose `source_guides:` reference guide sections being pruned — update `source_guides:` or the skill body accordingly; (b) guide sections that introduce new protocol content with no corresponding skill — flag as D-COVERAGE candidates and decide whether a new skill is warranted.
 - [ ] For each, run the validation skill on representative epics with and without the section in context.
 - [ ] Categorize per audit (keep / simplify / delete) and write findings to `.shamt/guides/reference/guide_pruning_audit.md`.
 - [ ] Apply deletions / simplifications. This is the most invasive phase; review carefully.
@@ -348,3 +349,4 @@ Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orches
 | 2026-04-27 | Added CHEATSHEET.md MODIFY entry to Files Affected; Phase 7 step to update status line format, gate prompts, and memory quick reference in the cheat sheet |
 | 2026-04-28 | SHAMT-47 fold-in: Added Phase 9.5 (master dev workflow finalization); added `master_dev_workflow.md` to Files Affected; added lifecycle-state primitive annotations to CLAUDE.md Design Doc Lifecycle section |
 | 2026-04-28 | Validation fix: Phase 9.5 now explicitly notes SHAMT-44 ownership of Primitives Available subsection (no duplication); clarified workflow references use "Larger Changes section" instead of ambiguous "Session management"; added SHAMT-44 ordering dependency note |
+| 2026-04-29 | Drift/coverage sync: all four skill MODIFY rows in Files Affected updated with `source_guides:` maintenance note; Phase 8 extended with bidirectional coverage-gap check (prune-aware source_guides: update + D-COVERAGE pass for new guide content). |
