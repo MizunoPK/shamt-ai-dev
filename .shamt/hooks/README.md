@@ -1,8 +1,11 @@
 # Shamt Hooks Bundle
 
-Ten enforcement hook scripts for Claude Code's hook system. Each script reads the tool event JSON from stdin and exits 0 (allow) or 2 (block).
+Ten enforcement hook scripts for Claude Code and Codex hook systems. Each script reads the tool event JSON from stdin and exits 0 (allow) or 2 (block).
 
-These hooks are registered in `.claude/settings.json` by `regen-claude-shims.sh` when `features.shamt_hooks=true` is set. They are propagated to child projects via `import.sh`.
+**Claude Code:** Hooks are registered in `.claude/settings.json` by `regen-claude-shims.sh` when `features.shamt_hooks=true` is set.
+**Codex:** Hooks are registered in `.codex/config.toml`'s `SHAMT-HOOKS` block by `regen-codex-shims.sh`. See the "Codex Event Mapping" section below for event name translation.
+
+Both hosts receive hooks via `import.sh` running the appropriate regen script after sync.
 
 ---
 
@@ -20,6 +23,32 @@ These hooks are registered in `.claude/settings.json` by `regen-claude-shims.sh`
 | `session-start-resume.sh` | SessionStart | Inject RESUME_SNAPSHOT.md as agent context on session start |
 | `subagent-confirmation-receipt.sh` | SubagentStop | If confirming sub-agent reports issues, write veto flag |
 | `stage-transition-snapshot.sh` | UserPromptSubmit (stage-advance phrases) | Write RESUME_SNAPSHOT.md at each explicit stage transition |
+
+---
+
+## Codex Event Mapping
+
+Codex's hook event set differs from Claude Code's. SHAMT-42 maps the bundle:
+
+| Shamt hook | Claude Code event | Codex event |
+|---|---|---|
+| `no-verify-blocker.sh` | PreToolUse (Bash) | `hooks.pre_tool_use.shell` |
+| `commit-format.sh` | PreToolUse (Bash) | `hooks.pre_tool_use.shell` |
+| `pre-export-audit-gate.sh` | UserPromptSubmit / PreToolUse | `hooks.user_prompt_submit` / `hooks.pre_tool_use.shell` |
+| `validation-log-stamp.sh` | PostToolUse (Edit) | `hooks.post_tool_use.edit` |
+| `architect-builder-enforcer.sh` | PreToolUse (Task) | `hooks.pre_tool_use.agent_spawn` |
+| `user-testing-gate.sh` | PreToolUse (Bash) | `hooks.pre_tool_use.shell` |
+| `precompact-snapshot.sh` | PreCompact | **No equivalent** — use `codex-compact-prompt.txt` + `/compact` discipline |
+| `session-start-resume.sh` | SessionStart | `hooks.session_start` (direct port) |
+| `subagent-confirmation-receipt.sh` | SubagentStop | `hooks.stop` (Stop hook with stdin-parsing for sub-agent context) |
+| `stage-transition-snapshot.sh` | UserPromptSubmit | `hooks.user_prompt_submit` (direct port) |
+| `permission-router.sh` | *(Codex-only)* | `hooks.permission_request` |
+
+**PreCompact gap:** Codex has no PreCompact hook. Mitigation triplet: (1) `codex-compact-prompt.txt` registered as custom compact_prompt; (2) advance to a stage boundary before `/compact` so `stage-transition-snapshot.sh` writes `RESUME_SNAPSHOT.md`; (3) `session-start-resume.sh` reads the snapshot on resume. See `.shamt/host/codex/README.md` for details.
+
+**`permission-router.sh`** is Codex-only (no Claude Code equivalent). Registered only in `.codex/config.toml`.
+
+Codex hook registrations are managed by `regen-codex-shims.sh` in `.codex/config.toml`'s `SHAMT-HOOKS` block.
 
 ---
 

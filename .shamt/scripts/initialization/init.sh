@@ -12,6 +12,14 @@ SHAMT_SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 TARGET_DIR="$(pwd)"
 SHAMT_DIR="$TARGET_DIR/.shamt"
 
+# Parse --host flag (non-interactive shorthand; overrides AI service menu)
+HOST_FLAG=""
+for _arg in "$@"; do
+    case "$_arg" in
+        --host=*) HOST_FLAG="${_arg#--host=}" ;;
+    esac
+done
+
 echo ""
 echo "============================================================"
 echo "  Shamt Initialization"
@@ -58,77 +66,116 @@ separator() {
 # --- AI Service Selection ----------------------------------------------------
 
 separator "AI Service"
-echo "Which AI coding assistant will you use with this project?"
-echo ""
-echo "  1) Claude Code (Anthropic)       → CLAUDE.md at project root"
-echo "  2) GitHub Copilot                → .github/copilot-instructions.md"
-echo "  3) Cursor                        → .cursorrules (legacy) or .cursor/index.mdc (new)"
-echo "  4) Windsurf (Codeium)            → .windsurfrules at project root"
-echo "  5) Amazon Q Developer            → (setup TBD)"
-echo "  6) Other                         → you will specify"
-echo ""
-read -rp "Enter choice [1]: " ai_choice
-ai_choice="${ai_choice:-1}"
 
-case "$ai_choice" in
-    1)
-        AI_SERVICE="claude_code"
-        RULES_FILE_NAME="CLAUDE.md"
-        RULES_FILE_DIR="$TARGET_DIR"
-        ;;
-    2)
-        AI_SERVICE="github_copilot"
-        RULES_FILE_NAME="copilot-instructions.md"
-        RULES_FILE_DIR="$TARGET_DIR/.github"
-        ;;
-    3)
-        AI_SERVICE="cursor"
-        echo ""
-        echo "  Cursor supports two rules file formats:"
-        echo "    1) Legacy .cursorrules (project root) — still widely used"
-        echo "    2) New .cursor/index.mdc — recommended as of 2026"
-        echo ""
-        read -rp "  Which format? [2]: " cursor_format
-        cursor_format="${cursor_format:-2}"
-        if [ "$cursor_format" = "1" ]; then
-            RULES_FILE_NAME=".cursorrules"
+# --host flag short-circuits the menu for known hosts
+CODEX_FRONTIER_MODEL=""
+CODEX_DEFAULT_MODEL=""
+
+if [ -n "$HOST_FLAG" ] && [[ "$HOST_FLAG" =~ codex ]]; then
+    # Codex (or dual-host) selected via flag
+    if [[ "$HOST_FLAG" =~ claude ]]; then
+        AI_SERVICE="claude_codex"
+        RULES_FILE_NAME="AGENTS.md"   # canonical; CLAUDE.md symlinked to it
+    else
+        AI_SERVICE="codex"
+        RULES_FILE_NAME="AGENTS.md"
+    fi
+    RULES_FILE_DIR="$TARGET_DIR"
+    echo "  → Host flag: $HOST_FLAG — AI service set to $AI_SERVICE"
+elif [ -n "$HOST_FLAG" ] && [[ "$HOST_FLAG" =~ claude ]]; then
+    AI_SERVICE="claude_code"
+    RULES_FILE_NAME="CLAUDE.md"
+    RULES_FILE_DIR="$TARGET_DIR"
+    echo "  → Host flag: $HOST_FLAG — AI service set to claude_code"
+else
+    echo "Which AI coding assistant will you use with this project?"
+    echo ""
+    echo "  1) Claude Code (Anthropic)       → CLAUDE.md at project root"
+    echo "  2) Codex (OpenAI)                → AGENTS.md at project root"
+    echo "  3) GitHub Copilot                → .github/copilot-instructions.md"
+    echo "  4) Cursor                        → .cursorrules (legacy) or .cursor/index.mdc (new)"
+    echo "  5) Windsurf (Codeium)            → .windsurfrules at project root"
+    echo "  6) Amazon Q Developer            → (setup TBD)"
+    echo "  7) Other                         → you will specify"
+    echo ""
+    read -rp "Enter choice [1]: " ai_choice
+    ai_choice="${ai_choice:-1}"
+
+    case "$ai_choice" in
+        1)
+            AI_SERVICE="claude_code"
+            RULES_FILE_NAME="CLAUDE.md"
             RULES_FILE_DIR="$TARGET_DIR"
-        else
-            RULES_FILE_NAME="index.mdc"
-            RULES_FILE_DIR="$TARGET_DIR/.cursor"
-        fi
-        ;;
-    4)
-        AI_SERVICE="windsurf"
-        RULES_FILE_NAME=".windsurfrules"
-        RULES_FILE_DIR="$TARGET_DIR"
-        ;;
-    5)
-        AI_SERVICE="amazon_q"
-        RULES_FILE_NAME="TBD"
-        RULES_FILE_DIR="$TARGET_DIR"
-        echo ""
-        echo "  ⚠  Amazon Q rules file convention is not yet confirmed."
-        echo "  The agent will help you determine the correct setup."
-        ;;
-    6)
-        AI_SERVICE="other"
-        echo ""
-        RULES_FILE_NAME=$(prompt_required "  Rules file name (e.g. .myrules)")
-        RULES_FILE_LOCATION=$(prompt "  Rules file location relative to project root" ".")
-        if [ "$RULES_FILE_LOCATION" = "." ]; then
+            ;;
+        2)
+            AI_SERVICE="codex"
+            RULES_FILE_NAME="AGENTS.md"
             RULES_FILE_DIR="$TARGET_DIR"
-        else
-            RULES_FILE_DIR="$TARGET_DIR/$RULES_FILE_LOCATION"
-        fi
-        ;;
-    *)
-        echo "Invalid choice. Defaulting to Claude Code."
-        AI_SERVICE="claude_code"
-        RULES_FILE_NAME="CLAUDE.md"
-        RULES_FILE_DIR="$TARGET_DIR"
-        ;;
-esac
+            ;;
+        3)
+            AI_SERVICE="github_copilot"
+            RULES_FILE_NAME="copilot-instructions.md"
+            RULES_FILE_DIR="$TARGET_DIR/.github"
+            ;;
+        4)
+            AI_SERVICE="cursor"
+            echo ""
+            echo "  Cursor supports two rules file formats:"
+            echo "    1) Legacy .cursorrules (project root) — still widely used"
+            echo "    2) New .cursor/index.mdc — recommended as of 2026"
+            echo ""
+            read -rp "  Which format? [2]: " cursor_format
+            cursor_format="${cursor_format:-2}"
+            if [ "$cursor_format" = "1" ]; then
+                RULES_FILE_NAME=".cursorrules"
+                RULES_FILE_DIR="$TARGET_DIR"
+            else
+                RULES_FILE_NAME="index.mdc"
+                RULES_FILE_DIR="$TARGET_DIR/.cursor"
+            fi
+            ;;
+        5)
+            AI_SERVICE="windsurf"
+            RULES_FILE_NAME=".windsurfrules"
+            RULES_FILE_DIR="$TARGET_DIR"
+            ;;
+        6)
+            AI_SERVICE="amazon_q"
+            RULES_FILE_NAME="TBD"
+            RULES_FILE_DIR="$TARGET_DIR"
+            echo ""
+            echo "  ⚠  Amazon Q rules file convention is not yet confirmed."
+            echo "  The agent will help you determine the correct setup."
+            ;;
+        7)
+            AI_SERVICE="other"
+            echo ""
+            RULES_FILE_NAME=$(prompt_required "  Rules file name (e.g. .myrules)")
+            RULES_FILE_LOCATION=$(prompt "  Rules file location relative to project root" ".")
+            if [ "$RULES_FILE_LOCATION" = "." ]; then
+                RULES_FILE_DIR="$TARGET_DIR"
+            else
+                RULES_FILE_DIR="$TARGET_DIR/$RULES_FILE_LOCATION"
+            fi
+            ;;
+        *)
+            echo "Invalid choice. Defaulting to Claude Code."
+            AI_SERVICE="claude_code"
+            RULES_FILE_NAME="CLAUDE.md"
+            RULES_FILE_DIR="$TARGET_DIR"
+            ;;
+    esac
+fi
+
+# Prompt for Codex model names when Codex is selected
+if [[ "$AI_SERVICE" =~ codex ]]; then
+    echo ""
+    echo "  Codex model names (from Codex changelog — press Enter to accept defaults):"
+    read -rp "    Frontier model [o3]: " CODEX_FRONTIER_MODEL
+    CODEX_FRONTIER_MODEL="${CODEX_FRONTIER_MODEL:-o3}"
+    read -rp "    Default model  [o4-mini]: " CODEX_DEFAULT_MODEL
+    CODEX_DEFAULT_MODEL="${CODEX_DEFAULT_MODEL:-o4-mini}"
+fi
 
 echo "  ✓ AI service: $AI_SERVICE"
 
@@ -193,6 +240,10 @@ echo "  Starting epic #:       $STARTING_EPIC"
 echo "  AI service:            $AI_SERVICE"
 echo "  Rules file:            $RULES_FILE_NAME"
 echo "  Rules file path:       $RULES_FILE_DIR/"
+if [ -n "$CODEX_FRONTIER_MODEL" ]; then
+echo "  Codex frontier model:  $CODEX_FRONTIER_MODEL"
+echo "  Codex default model:   $CODEX_DEFAULT_MODEL"
+fi
 echo "  Git platform:          $GIT_PLATFORM"
 echo "  Default branch:        $DEFAULT_BRANCH"
 echo "  Exclude .shamt/ (local): $EXCLUDE_SHAMT"
@@ -461,7 +512,7 @@ echo "  ✓ Handoff file written to .shamt/project-specific-configs/init_config.
 
 # --- Claude Code Host Wiring -------------------------------------------------
 
-if [ "$AI_SERVICE" = "claude_code" ]; then
+if [[ "$AI_SERVICE" =~ claude ]]; then
     separator "Claude Code host wiring"
 
     # Create .claude/ directory structure
@@ -500,6 +551,66 @@ if [ "$AI_SERVICE" = "claude_code" ]; then
     echo ""
     echo "  ⚠  Trust reminder: ensure this project is trusted in Claude Code."
     echo "     Open Claude Code in $TARGET_DIR — it will prompt for trust on first open."
+fi
+
+# For dual-host (claude_codex): symlink CLAUDE.md → AGENTS.md so both names work
+if [ "$AI_SERVICE" = "claude_codex" ]; then
+    AGENTS_FILE="$TARGET_DIR/AGENTS.md"
+    CLAUDE_FILE="$TARGET_DIR/CLAUDE.md"
+    if [ -f "$AGENTS_FILE" ] && [ ! -e "$CLAUDE_FILE" ]; then
+        ln -s AGENTS.md "$CLAUDE_FILE"
+        echo "  ✓ CLAUDE.md → AGENTS.md symlink created (dual-host)"
+    fi
+fi
+
+# --- Codex Host Wiring -------------------------------------------------------
+
+if [[ "$AI_SERVICE" =~ codex ]]; then
+    separator "Codex host wiring"
+
+    # Create .codex/ directory structure
+    mkdir -p "$TARGET_DIR/.codex/agents"
+    echo "  ✓ .codex/ directory structure created"
+
+    # Write model resolution file
+    MODEL_RESOLUTION="$SHAMT_DIR/host/codex/.model_resolution.local.toml"
+    mkdir -p "$SHAMT_DIR/host/codex"
+    printf 'FRONTIER_MODEL = "%s"\nDEFAULT_MODEL = "%s"\n' \
+        "$CODEX_FRONTIER_MODEL" "$CODEX_DEFAULT_MODEL" > "$MODEL_RESOLUTION"
+    echo "  ✓ .model_resolution.local.toml written ($CODEX_FRONTIER_MODEL / $CODEX_DEFAULT_MODEL)"
+
+    # Write starter config.toml
+    STARTER_CONFIG="$SHAMT_SOURCE_DIR/.shamt/host/codex/config.starter.toml"
+    TARGET_CONFIG="$TARGET_DIR/.codex/config.toml"
+    if [ -f "$TARGET_CONFIG" ]; then
+        echo "  ✓ .codex/config.toml already exists — skipping"
+    elif [ -f "$STARTER_CONFIG" ]; then
+        cp "$STARTER_CONFIG" "$TARGET_CONFIG"
+        echo "  ✓ .codex/config.toml written from starter"
+    else
+        echo "  ⚠  config.starter.toml not found — skipping"
+    fi
+
+    # Copy requirements.toml.template to project root
+    REQUIREMENTS_TPL="$SHAMT_SOURCE_DIR/.shamt/host/codex/requirements.toml.template"
+    TARGET_REQUIREMENTS="$TARGET_DIR/requirements.toml"
+    if [ -f "$TARGET_REQUIREMENTS" ]; then
+        echo "  ✓ requirements.toml already exists — skipping"
+    elif [ -f "$REQUIREMENTS_TPL" ]; then
+        cp "$REQUIREMENTS_TPL" "$TARGET_REQUIREMENTS"
+        echo "  ✓ requirements.toml written"
+    else
+        echo "  ⚠  requirements.toml.template not found — skipping"
+    fi
+
+    # Run regen script to populate .codex/ from canonical content
+    REGEN_SCRIPT="$SHAMT_DIR/scripts/regen/regen-codex-shims.sh"
+    if [ -f "$REGEN_SCRIPT" ]; then
+        bash "$REGEN_SCRIPT"
+        echo "  ✓ Codex shims generated"
+    else
+        echo "  ⚠  regen-codex-shims.sh not found — run it manually after init"
+    fi
 fi
 
 # --- Done --------------------------------------------------------------------

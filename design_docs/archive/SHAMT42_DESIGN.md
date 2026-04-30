@@ -1,6 +1,6 @@
 # SHAMT-42: Codex Host Parity — AGENTS.md, Profiles, requirements.toml, PermissionRequest
 
-**Status:** Validated (re-validated 2026-04-29 after SHAMT-41 merge)
+**Status:** Implemented (implementation validated 2026-04-29; pending guide audit)
 **Created:** 2026-04-27
 **Branch:** `feat/SHAMT-42`
 **Validation Log:** [SHAMT42_VALIDATION_LOG.md](./SHAMT42_VALIDATION_LOG.md)

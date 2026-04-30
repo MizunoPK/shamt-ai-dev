@@ -1,6 +1,6 @@
 # {{PROJECT_NAME}} — Agent Rules
 
-> **This file:** `RULES_FILE.template.md` is renamed and placed during initialization per the AI service being used (e.g., `CLAUDE.md` for Claude Code, `.github/copilot-instructions.md` for GitHub Copilot).
+> **This file:** `RULES_FILE.template.md` is renamed and placed during initialization per the AI service being used (e.g., `CLAUDE.md` for Claude Code, `AGENTS.md` for Codex, `.github/copilot-instructions.md` for GitHub Copilot). The content is identical regardless of filename.
 
 ---
 

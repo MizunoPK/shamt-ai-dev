@@ -1,0 +1,4 @@
+[profiles.shamt-s3]
+model = "${FRONTIER_MODEL}"
+model_reasoning_effort = "medium"
+sandbox_mode = "workspace-write"

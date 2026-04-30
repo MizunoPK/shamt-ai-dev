@@ -136,13 +136,43 @@ Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
 - Emits: `EPIC-N | S{stage}.P{phase} | round {N} | blocker: {text or "none"}`
 - Falls back to `Shamt | no active epic` when no epic is in progress
 
-**Codex equivalent** lands in SHAMT-42.
+---
+
+## Codex Host Parity (SHAMT-42)
+
+`init.sh` detects Codex (`AI_SERVICE=codex` or `claude_codex`) and runs additional wiring steps:
+
+1. Creates `.codex/agents/`
+2. Prompts for `FRONTIER_MODEL` and `DEFAULT_MODEL`; writes `.shamt/host/codex/.model_resolution.local.toml` (gitignored)
+3. Writes `.codex/config.toml` from `.shamt/host/codex/config.starter.toml`
+4. Copies `.shamt/host/codex/requirements.toml.template` to project root as `requirements.toml`
+5. Runs `regen-codex-shims.sh` to populate skills/agents/commands/profiles/hooks
+
+**`--host` flag:** `init.sh --host=codex` skips the AI service menu. `--host=claude,codex` sets up both hosts (dual-host): `AGENTS.md` is the canonical rules file; `CLAUDE.md` is a symlink on Unix or a duplicate on Windows.
+
+**`regen-codex-shims.sh`** — deterministic transform script at `.shamt/scripts/regen/`:
+- Skills: deploys to `~/.codex/prompts/shamt-<name>.md` (interim; see `.shamt/host/codex/README.md` for migration path)
+- Agents: transforms YAML → TOML (`.codex/agents/<name>.toml`); maps model tiers (cheap→DEFAULT, balanced/reasoning→FRONTIER)
+- Commands: deploys to `~/.codex/prompts/`; translates `{placeholder}` → `$PLACEHOLDER` (Codex prompt syntax)
+- Profiles: concatenates `.shamt/host/codex/profiles/*.fragment.toml` into `.codex/config.toml` SHAMT-PROFILES block; substitutes `${FRONTIER_MODEL}` / `${DEFAULT_MODEL}` from `.model_resolution.local.toml`
+- Hooks: writes SHAMT-HOOKS block in `.codex/config.toml` (see hook event mapping in `.shamt/hooks/README.md`)
+- Run automatically by `import.sh` when `ai_service.conf` is `codex` or `claude_codex`
+
+**Stage transitions as session boundaries:** Codex profiles are loaded at session start; switching profiles mid-session requires relaunching Codex with `--profile shamt-s<N>`. Stage transitions in the Shamt workflow are therefore natural session boundaries on Codex.
+
+**`shamt-add-host.sh <host>`** (at `.shamt/scripts/initialization/`) — adds Codex or Claude Code wiring to an existing project without re-running full init.
+
+**`requirements.toml`** — admin enforcement floor written to the project root: sandbox mode ceiling (`workspace-write`), MCP allowlist, hook source pin, secret-glob deny, approval floor.
+
+**`permission-router.sh`** — Codex-only `hooks.permission_request` handler: auto-approves in-scope edits within the active epic folder; always escalates commits and pushes to the user; passes unknown tools through to Codex default.
+
+**Profile fragments** — `.shamt/host/codex/profiles/*.fragment.toml` — one per Shamt stage (s1–s10) and key personas (validator, builder, architect, s6-builder). Model, reasoning effort, and sandbox mode calibrated per stage. See `.shamt/host/codex/README.md` for the full layout.
 
 ---
 
 ## Hooks and MCP Server (SHAMT-41)
 
-**Hooks bundle** — 10 enforcement hook scripts in `.shamt/hooks/`. Activated by setting `features.shamt_hooks=true` in `.claude/settings.json`; regen installs registrations into `settings.json`'s `hooks` block.
+**Hooks bundle** — 10 enforcement hook scripts in `.shamt/hooks/`. For Claude Code: activated by setting `features.shamt_hooks=true` in `.claude/settings.json`; `regen-claude-shims.sh` installs registrations into `settings.json`'s `hooks` block. For Codex: `regen-codex-shims.sh` writes the `SHAMT-HOOKS` block in `.codex/config.toml` (see SHAMT-42 section above and `.shamt/hooks/README.md` for event mapping).
 
 | Hook | Event | Purpose |
 |------|-------|---------|
@@ -188,7 +218,7 @@ Master work does **not** follow the S1-S11 epic workflow and does **not** use EP
 - **SHAMT-N numbers:** Sequence markers for change sets, not epic identifiers. Reserved via `design_docs/NEXT_NUMBER.txt`
 - **No stage gates:** Master work proceeds at judgment, not through S1-S11 phase transitions
 
-**Available skills and personas:** Master-applicable skills (`shamt-validation-loop`, `shamt-guide-audit`, `shamt-code-review`, `shamt-master-reviewer`) and personas (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-code-reviewer`) are available for master dev work. Claude Code host wiring is live (SHAMT-40); Codex wiring lands in SHAMT-42.
+**Available skills and personas:** Master-applicable skills (`shamt-validation-loop`, `shamt-guide-audit`, `shamt-code-review`, `shamt-master-reviewer`) and personas (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-code-reviewer`) are available for master dev work. Claude Code host wiring is live (SHAMT-40); Codex wiring is live (SHAMT-42).
 
 See "Design Doc Lifecycle" below for the full design doc process.
 

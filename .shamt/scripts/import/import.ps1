@@ -328,18 +328,31 @@ if ($Preserved.Count -gt 0) {
     Write-Host ""
 }
 
-# --- Claude Code regen hook --------------------------------------------------
+# --- Host regen hooks ---------------------------------------------------------
 
 $AiServiceConf = Join-Path $ChildShamtDir "config\ai_service.conf"
 if (Test-Path $AiServiceConf) {
     $_aiService = (Get-Content $AiServiceConf -Raw).Trim()
-    if ($_aiService -eq "claude_code") {
+    if ($_aiService -eq "claude_code" -or $_aiService -eq "claude_codex") {
         $RegenScript = Join-Path $ChildShamtDir "scripts\regen\regen-claude-shims.ps1"
         if (Test-Path $RegenScript) {
+            Write-Host "------------------------------------------------------------"
             Write-Host "  Claude Code regen"
-            & $RegenScript
+            Write-Host "------------------------------------------------------------"
+            & powershell -ExecutionPolicy Bypass -File $RegenScript
         } else {
-            Write-Host "  ⚠  regen-claude-shims.ps1 not found — skipping shim refresh"
+            Write-Host "  WARNING: regen-claude-shims.ps1 not found — skipping shim refresh" -ForegroundColor Yellow
+        }
+    }
+    if ($_aiService -eq "codex" -or $_aiService -eq "claude_codex") {
+        $RegenScript = Join-Path $ChildShamtDir "scripts\regen\regen-codex-shims.ps1"
+        if (Test-Path $RegenScript) {
+            Write-Host "------------------------------------------------------------"
+            Write-Host "  Codex regen"
+            Write-Host "------------------------------------------------------------"
+            & powershell -ExecutionPolicy Bypass -File $RegenScript
+        } else {
+            Write-Host "  WARNING: regen-codex-shims.ps1 not found — skipping Codex shim refresh" -ForegroundColor Yellow
         }
     }
 }

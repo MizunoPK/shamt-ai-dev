@@ -11,6 +11,12 @@ $ShamtSourceDir = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PS
 $TargetDir = Get-Location
 $ShamtDir = Join-Path $TargetDir ".shamt"
 
+# Parse --host flag (non-interactive shorthand; overrides AI service menu)
+$HostFlag = ""
+foreach ($arg in $args) {
+    if ($arg -match '^--host=(.+)$') { $HostFlag = $matches[1] }
+}
+
 Write-Host ""
 Write-Host "============================================================"
 Write-Host "  Shamt Initialization"
@@ -77,54 +83,86 @@ function Add-ExcludeEntry {
 # --- AI Service Selection ----------------------------------------------------
 
 Write-Separator "AI Service"
-Write-Host "Which AI coding assistant will you use with this project?"
-Write-Host ""
-Write-Host "  1) Claude Code (Anthropic)       -> CLAUDE.md at project root"
-Write-Host "  2) GitHub Copilot                -> .github/copilot-instructions.md"
-Write-Host "  3) Cursor                        -> .cursorrules (legacy) or .cursor\index.mdc (new)"
-Write-Host "  4) Windsurf (Codeium)            -> .windsurfrules at project root"
-Write-Host "  5) Amazon Q Developer            -> (setup TBD)"
-Write-Host "  6) Other                         -> you will specify"
-Write-Host ""
-$aiChoice = Prompt-Input "Enter choice" "1"
 
-switch ($aiChoice) {
-    "2" { $AiService = "github_copilot"; $RulesFileName = "copilot-instructions.md"; $RulesFileSubdir = ".github" }
-    "3" {
-        $AiService = "cursor"
-        Write-Host ""
-        Write-Host "  Cursor supports two rules file formats:"
-        Write-Host "    1) Legacy .cursorrules (project root) - still widely used"
-        Write-Host "    2) New .cursor\index.mdc - recommended as of 2026"
-        Write-Host ""
-        $cursorFormat = Prompt-Input "  Which format?" "2"
-        if ($cursorFormat -eq "1") {
-            $RulesFileName = ".cursorrules"
-            $RulesFileSubdir = ""
-        } else {
-            $RulesFileName = "index.mdc"
-            $RulesFileSubdir = ".cursor"
+$CodexFrontierModel = ""
+$CodexDefaultModel  = ""
+
+if ($HostFlag -ne "" -and $HostFlag -match "codex") {
+    if ($HostFlag -match "claude") {
+        $AiService = "claude_codex"; $RulesFileName = "AGENTS.md"; $RulesFileSubdir = ""
+    } else {
+        $AiService = "codex"; $RulesFileName = "AGENTS.md"; $RulesFileSubdir = ""
+    }
+    $RulesFileDir = $TargetDir
+    Write-Host "  -> Host flag: $HostFlag — AI service set to $AiService"
+} elseif ($HostFlag -ne "" -and $HostFlag -match "claude") {
+    $AiService = "claude_code"; $RulesFileName = "CLAUDE.md"; $RulesFileSubdir = ""
+    $RulesFileDir = $TargetDir
+    Write-Host "  -> Host flag: $HostFlag — AI service set to claude_code"
+} else {
+    Write-Host "Which AI coding assistant will you use with this project?"
+    Write-Host ""
+    Write-Host "  1) Claude Code (Anthropic)       -> CLAUDE.md at project root"
+    Write-Host "  2) Codex (OpenAI)                -> AGENTS.md at project root"
+    Write-Host "  3) GitHub Copilot                -> .github/copilot-instructions.md"
+    Write-Host "  4) Cursor                        -> .cursorrules (legacy) or .cursor\index.mdc (new)"
+    Write-Host "  5) Windsurf (Codeium)            -> .windsurfrules at project root"
+    Write-Host "  6) Amazon Q Developer            -> (setup TBD)"
+    Write-Host "  7) Other                         -> you will specify"
+    Write-Host ""
+    $aiChoice = Prompt-Input "Enter choice" "1"
+
+    switch ($aiChoice) {
+        "2" { $AiService = "codex"; $RulesFileName = "AGENTS.md"; $RulesFileSubdir = "" }
+        "3" { $AiService = "github_copilot"; $RulesFileName = "copilot-instructions.md"; $RulesFileSubdir = ".github" }
+        "4" {
+            $AiService = "cursor"
+            Write-Host ""
+            Write-Host "  Cursor supports two rules file formats:"
+            Write-Host "    1) Legacy .cursorrules (project root) - still widely used"
+            Write-Host "    2) New .cursor\index.mdc - recommended as of 2026"
+            Write-Host ""
+            $cursorFormat = Prompt-Input "  Which format?" "2"
+            if ($cursorFormat -eq "1") {
+                $RulesFileName = ".cursorrules"
+                $RulesFileSubdir = ""
+            } else {
+                $RulesFileName = "index.mdc"
+                $RulesFileSubdir = ".cursor"
+            }
         }
+        "5" { $AiService = "windsurf"; $RulesFileName = ".windsurfrules"; $RulesFileSubdir = "" }
+        "6" {
+            $AiService = "amazon_q"; $RulesFileName = "TBD"; $RulesFileSubdir = ""
+            Write-Host "  WARNING: Amazon Q rules file convention is not yet confirmed." -ForegroundColor Yellow
+            Write-Host "  The agent will help you determine the correct setup." -ForegroundColor Yellow
+        }
+        "7" {
+            $AiService = "other"
+            $RulesFileName = Prompt-Required "  Rules file name (e.g. .myrules)"
+            $subdir = Prompt-Input "  Rules file subdirectory relative to project root (leave blank for root)" ""
+            $RulesFileSubdir = $subdir
+        }
+        default { $AiService = "claude_code"; $RulesFileName = "CLAUDE.md"; $RulesFileSubdir = "" }
     }
-    "4" { $AiService = "windsurf"; $RulesFileName = ".windsurfrules"; $RulesFileSubdir = "" }
-    "5" {
-        $AiService = "amazon_q"; $RulesFileName = "TBD"; $RulesFileSubdir = ""
-        Write-Host "  WARNING: Amazon Q rules file convention is not yet confirmed." -ForegroundColor Yellow
-        Write-Host "  The agent will help you determine the correct setup." -ForegroundColor Yellow
+
+    if ($RulesFileSubdir) {
+        $RulesFileDir = Join-Path $TargetDir $RulesFileSubdir
+    } else {
+        $RulesFileDir = $TargetDir
     }
-    "6" {
-        $AiService = "other"
-        $RulesFileName = Prompt-Required "  Rules file name (e.g. .myrules)"
-        $subdir = Prompt-Input "  Rules file subdirectory relative to project root (leave blank for root)" ""
-        $RulesFileSubdir = $subdir
-    }
-    default { $AiService = "claude_code"; $RulesFileName = "CLAUDE.md"; $RulesFileSubdir = "" }
 }
 
-if ($RulesFileSubdir) {
-    $RulesFileDir = Join-Path $TargetDir $RulesFileSubdir
-} else {
-    $RulesFileDir = $TargetDir
+# Prompt for Codex model names when Codex is selected
+if ($AiService -match "codex") {
+    Write-Host ""
+    Write-Host "  Codex model names (from Codex changelog — press Enter to accept defaults):"
+    $fm = Read-Host "    Frontier model [o3]"
+    if ([string]::IsNullOrWhiteSpace($fm)) { $fm = "o3" }
+    $dm = Read-Host "    Default model  [o4-mini]"
+    if ([string]::IsNullOrWhiteSpace($dm)) { $dm = "o4-mini" }
+    $CodexFrontierModel = $fm
+    $CodexDefaultModel  = $dm
 }
 
 Write-Host "  OK AI service: $AiService"
@@ -187,6 +225,10 @@ Write-Host "  Starting epic #:       $StartingEpic"
 Write-Host "  AI service:            $AiService"
 Write-Host "  Rules file:            $RulesFileName"
 Write-Host "  Rules file path:       $RulesFileDir\"
+if ($CodexFrontierModel -ne "") {
+    Write-Host "  Codex frontier model:  $CodexFrontierModel"
+    Write-Host "  Codex default model:   $CodexDefaultModel"
+}
 Write-Host "  Git platform:          $GitPlatform"
 Write-Host "  Default branch:        $DefaultBranch"
 Write-Host "  Exclude .shamt/ (local): $ExcludeShamt"
@@ -470,7 +512,7 @@ Write-Host "  OK Handoff file written to .shamt\project-specific-configs\init_co
 
 # --- Claude Code Host Wiring -------------------------------------------------
 
-if ($AiService -eq "claude_code") {
+if ($AiService -match "claude") {
     Write-Separator "Claude Code host wiring"
 
     foreach ($d in @("skills", "agents", "commands")) {
@@ -507,6 +549,65 @@ if ($AiService -eq "claude_code") {
     Write-Host ""
     Write-Host "  NOTE: Ensure this project is trusted in Claude Code." -ForegroundColor Cyan
     Write-Host "     Open Claude Code in $TargetDir — it will prompt for trust on first open." -ForegroundColor Cyan
+}
+
+# For dual-host (claude_codex): duplicate AGENTS.md as CLAUDE.md (symlinks not reliable on Windows)
+if ($AiService -eq "claude_codex") {
+    $agentsFile = Join-Path $TargetDir "AGENTS.md"
+    $claudeFile = Join-Path $TargetDir "CLAUDE.md"
+    if ((Test-Path $agentsFile) -and -not (Test-Path $claudeFile)) {
+        Copy-Item $agentsFile $claudeFile
+        Write-Host "  OK CLAUDE.md written as duplicate of AGENTS.md (dual-host; keep in sync)"
+    }
+}
+
+# --- Codex Host Wiring -------------------------------------------------------
+
+if ($AiService -match "codex") {
+    Write-Separator "Codex host wiring"
+
+    New-Item -ItemType Directory -Force -Path (Join-Path $TargetDir ".codex\agents") | Out-Null
+    Write-Host "  OK .codex\ directory structure created"
+
+    # Write model resolution file
+    $ModelResolution = Join-Path $ShamtDir "host\codex\.model_resolution.local.toml"
+    New-Item -ItemType Directory -Force -Path (Split-Path $ModelResolution) | Out-Null
+    $modelContent = "FRONTIER_MODEL = `"$CodexFrontierModel`"`nDEFAULT_MODEL = `"$CodexDefaultModel`""
+    [System.IO.File]::WriteAllText($ModelResolution, $modelContent, [System.Text.Encoding]::UTF8)
+    Write-Host "  OK .model_resolution.local.toml written ($CodexFrontierModel / $CodexDefaultModel)"
+
+    # Write starter config.toml
+    $StarterConfig = Join-Path $ShamtSourceDir ".shamt\host\codex\config.starter.toml"
+    $TargetConfig  = Join-Path $TargetDir ".codex\config.toml"
+    if (Test-Path $TargetConfig) {
+        Write-Host "  OK .codex\config.toml already exists — skipping"
+    } elseif (Test-Path $StarterConfig) {
+        Copy-Item $StarterConfig $TargetConfig
+        Write-Host "  OK .codex\config.toml written from starter"
+    } else {
+        Write-Host "  WARNING: config.starter.toml not found — skipping" -ForegroundColor Yellow
+    }
+
+    # Copy requirements.toml.template to project root
+    $RequirementsTpl    = Join-Path $ShamtSourceDir ".shamt\host\codex\requirements.toml.template"
+    $TargetRequirements = Join-Path $TargetDir "requirements.toml"
+    if (Test-Path $TargetRequirements) {
+        Write-Host "  OK requirements.toml already exists — skipping"
+    } elseif (Test-Path $RequirementsTpl) {
+        Copy-Item $RequirementsTpl $TargetRequirements
+        Write-Host "  OK requirements.toml written"
+    } else {
+        Write-Host "  WARNING: requirements.toml.template not found — skipping" -ForegroundColor Yellow
+    }
+
+    # Run regen script
+    $RegenScript = Join-Path $ShamtDir "scripts\regen\regen-codex-shims.ps1"
+    if (Test-Path $RegenScript) {
+        & powershell -ExecutionPolicy Bypass -File $RegenScript
+        Write-Host "  OK Codex shims generated"
+    } else {
+        Write-Host "  WARNING: regen-codex-shims.ps1 not found — run it manually after init" -ForegroundColor Yellow
+    }
 }
 
 # --- Done --------------------------------------------------------------------

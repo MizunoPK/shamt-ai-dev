@@ -28,6 +28,9 @@ design_docs/validation_logs/
 # MCP server virtual environment — local install, not version controlled
 .shamt/mcp/.venv/
 
+# Codex model resolution — local per-developer config, not version controlled
+.shamt/host/codex/.model_resolution.local.toml
+
 # Scratch files
 test_agent.yaml
 
