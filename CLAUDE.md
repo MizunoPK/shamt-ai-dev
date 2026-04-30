@@ -172,7 +172,7 @@ Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
 
 ## Hooks and MCP Server (SHAMT-41)
 
-**Hooks bundle** — 10 enforcement hook scripts in `.shamt/hooks/`. Activated by setting `features.shamt_hooks=true` in `.claude/settings.json`; regen installs registrations into `settings.json`'s `hooks` block.
+**Hooks bundle** — 10 enforcement hook scripts in `.shamt/hooks/`. For Claude Code: activated by setting `features.shamt_hooks=true` in `.claude/settings.json`; `regen-claude-shims.sh` installs registrations into `settings.json`'s `hooks` block. For Codex: `regen-codex-shims.sh` writes the `SHAMT-HOOKS` block in `.codex/config.toml` (see SHAMT-42 section above and `.shamt/hooks/README.md` for event mapping).
 
 | Hook | Event | Purpose |
 |------|-------|---------|

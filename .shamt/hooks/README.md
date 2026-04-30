@@ -1,8 +1,11 @@
 # Shamt Hooks Bundle
 
-Ten enforcement hook scripts for Claude Code's hook system. Each script reads the tool event JSON from stdin and exits 0 (allow) or 2 (block).
+Ten enforcement hook scripts for Claude Code and Codex hook systems. Each script reads the tool event JSON from stdin and exits 0 (allow) or 2 (block).
 
-These hooks are registered in `.claude/settings.json` by `regen-claude-shims.sh` when `features.shamt_hooks=true` is set. They are propagated to child projects via `import.sh`.
+**Claude Code:** Hooks are registered in `.claude/settings.json` by `regen-claude-shims.sh` when `features.shamt_hooks=true` is set.
+**Codex:** Hooks are registered in `.codex/config.toml`'s `SHAMT-HOOKS` block by `regen-codex-shims.sh`. See the "Codex Event Mapping" section below for event name translation.
+
+Both hosts receive hooks via `import.sh` running the appropriate regen script after sync.
 
 ---
 
