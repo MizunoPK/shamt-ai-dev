@@ -160,7 +160,7 @@ Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
 
 **Stage transitions as session boundaries:** Codex profiles are loaded at session start; switching profiles mid-session requires relaunching Codex with `--profile shamt-s<N>`. Stage transitions in the Shamt workflow are therefore natural session boundaries on Codex.
 
-**`shamt-add-host.sh <host>`** — adds Codex or Claude Code wiring to an existing project without re-running full init.
+**`shamt-add-host.sh <host>`** (at `.shamt/scripts/initialization/`) — adds Codex or Claude Code wiring to an existing project without re-running full init.
 
 **`requirements.toml`** — admin enforcement floor written to the project root: sandbox mode ceiling (`workspace-write`), MCP allowlist, hook source pin, secret-glob deny, approval floor.
 
