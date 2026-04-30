@@ -14,8 +14,9 @@ triggers:
 source_guides:
   - guides/reference/architect_builder_pattern.md
   - guides/reference/implementation_plan_format.md
+  - guides/composites/architect_builder_composite.md
 master-only: false
-version: "1.0 (SHAMT-39)"
+version: "1.1 (SHAMT-44)"
 ---
 
 # Skill: shamt-architect-builder

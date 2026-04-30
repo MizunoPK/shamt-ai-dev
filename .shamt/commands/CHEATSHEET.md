@@ -105,6 +105,22 @@ Three automated pipelines. All are **opt-in** — copy the workflow template man
 
 ---
 
+## Cross-Cutting Composites (SHAMT-44)
+
+Six assembled workflows. Each composite shows how the component primitives work together.
+Read the composite first; read the primitive guides for full detail.
+
+| Composite | When to use | Guide |
+|-----------|------------|-------|
+| Validation loop | Any artifact validation (spec, plan, guide, design doc) | `composites/validation_loop_composite.md` |
+| Architect–builder | Large implementations (>10 file ops or >100K tokens) | `composites/architect_builder_composite.md` |
+| Stale-work janitor | Weekly cleanup, post-event follow-up | `composites/stale_work_janitor_composite.md` |
+| Master review pipeline | Child PR review, post-merge guide audit | `composites/master_review_pipeline_composite.md` |
+| Metrics / observability | Hook emission, OTel, Grafana dashboards | `composites/metrics_observability_composite.md` |
+| Rollback / recovery | Stall detection, worktree rollback, pre-push guard | `composites/rollback_recovery_composite.md` |
+
+---
+
 ## Severity Quick Reference
 
 | Level | Definition | Clean Round Impact |

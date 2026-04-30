@@ -56,6 +56,16 @@ Primary Agent (Sonnet - balanced for coordination):
 
 ## System Overview
 
+**`run_in_background` (SHAMT-44):** The guides in this folder predate the `run_in_background`
+Agent parameter. The modern recommended pattern for S2 multi-feature parallel work is to
+use `Agent(..., run_in_background=True)` so each feature sub-agent runs asynchronously
+and the primary agent is notified on completion rather than blocking. Each sub-agent
+should use its own git worktree (Claude Code) or container (Codex Cloud) for isolation.
+The file-based coordination mechanisms below remain valid for scenarios where `run_in_background`
+is not available or when the coordination overhead is warranted. See
+[`composites/architect_builder_composite.md`](../composites/architect_builder_composite.md)
+for the updated S2 parallel pattern.
+
 **Agent Roles:**
 - **Primary Agent:** Coordinator + Feature 01 owner (85% feature work, 15% coordination) — spawns secondary agents automatically via Task tool (no new terminal windows required)
 - **Secondary Agent:** Feature owner only (90% feature work, 10% coordination) — spawned by Primary via Task tool, reads handoff package from disk

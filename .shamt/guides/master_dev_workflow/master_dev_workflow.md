@@ -25,6 +25,22 @@ Primary Agent (Opus):
 
 ---
 
+## Primitives Available
+
+The following cross-cutting workflows are available as documented composites. Reference
+these rather than re-deriving the assembly from scratch:
+
+| Composite | When to use in master dev |
+|-----------|--------------------------|
+| [`composites/validation_loop_composite.md`](../composites/validation_loop_composite.md) | Any design doc validation or implementation validation loop |
+| [`composites/architect_builder_composite.md`](../composites/architect_builder_composite.md) | Step 3.5 — large implementation tasks |
+| [`composites/rollback_recovery_composite.md`](../composites/rollback_recovery_composite.md) | When worktree isolation or stall recovery is needed |
+| [`composites/stale_work_janitor_composite.md`](../composites/stale_work_janitor_composite.md) | Recurring janitor scans for incoming proposals and stale docs |
+| [`composites/master_review_pipeline_composite.md`](../composites/master_review_pipeline_composite.md) | Child PR review, guide audit post-merge |
+| [`composites/metrics_observability_composite.md`](../composites/metrics_observability_composite.md) | Metrics emission and dashboard setup |
+
+---
+
 ## When to Use This vs. the Full Epic Workflow
 
 | Scope | Use |
@@ -123,6 +139,7 @@ If using architect-builder pattern for master dev work:
 **See:**
 - `reference/architect_builder_pattern.md` - Complete pattern documentation and decision tree
 - `reference/implementation_plan_format.md` - Mechanical plan specification (9 validation dimensions)
+- [`composites/architect_builder_composite.md`](../composites/architect_builder_composite.md) — End-to-end composite (plan mode, async builder, worktree rollback)
 
 **Note:** Architect-builder pattern is **optional** for master dev workflow (use judgment based on thresholds above). It is **mandatory** for S1-S11 epic workflow S6 (no exceptions).
 
@@ -136,7 +153,7 @@ After making changes:
 2. Run the pre-audit checks: `bash .shamt/guides/audit/scripts/pre_audit_checks.sh` (if applicable)
 3. Work through the audit stages
 4. Fix any issues found before proceeding
-5. The audit must pass cleanly (note: `shamt.audit_run()` MCP tool will be available after SHAMT-44)
+5. The audit must pass cleanly. Record the result with `shamt.audit_run()` MCP tool so the pre-push tripwire can verify it. See [`composites/master_review_pipeline_composite.md`](../composites/master_review_pipeline_composite.md) for the `/loop`-driven guide audit flow.
 
 ---
 
@@ -166,10 +183,10 @@ For multi-guide or cross-cutting changes, use a branch with a design doc:
 1. **Reserve SHAMT-N number:** Use `shamt.next_number()` MCP tool (atomic — handles concurrent sessions safely) OR read `design_docs/NEXT_NUMBER.txt` manually, use that number, increment the file
 2. **Create branch:** `feat/SHAMT-[N]`
 3. **Create design doc:** Use the template at `.shamt/guides/templates/design_doc_template.md` to create `design_docs/active/SHAMT[N]_DESIGN.md`
-4. **Validate design doc:** Follow `.shamt/guides/design_doc_validation/validation_workflow.md` to validate the design (7-dimension validation loop with sub-agent confirmation). Use `shamt.validation_round()` with `exit_threshold=1` to track rounds; `validation-log-stamp` hook auto-stamps log edits.
+4. **Validate design doc:** Follow `.shamt/guides/design_doc_validation/validation_workflow.md` to validate the design (7-dimension validation loop with sub-agent confirmation). Use `shamt.validation_round()` with `exit_threshold=1` to track rounds; `validation-log-stamp` hook auto-stamps log edits. See [`composites/validation_loop_composite.md`](../composites/validation_loop_composite.md) for the full assembled picture including `/loop` self-pacing and stall detection.
 5. **Implement:** Make changes across the affected guides and scripts. After implementing, run a D-COVERAGE pass: (a) if you modified a guide that is a `source_guides:` reference in a SKILL.md, update the skill body where warranted — if a modified source guide now diverges from its SKILL.md, update the skill body in the same commit; (b) if you modified a SKILL.md, add to the corresponding source guides any protocol content not present in any source guide. The D-DRIFT / D-COVERAGE audit dimensions will catch gaps, but catching them during implementation is cheaper.
-6. **Validate implementation:** Run implementation validation loop (see design doc Proposal 10 pattern). Use `shamt.validation_round()` with `exit_threshold=1`.
-7. **Guide audit:** Run the full guide audit (3 consecutive clean rounds required; ≤1 LOW per round is clean)
+6. **Validate implementation:** Run implementation validation loop (see design doc Proposal 10 pattern). Use `shamt.validation_round()` with `exit_threshold=1`. See [`composites/validation_loop_composite.md`](../composites/validation_loop_composite.md) for `/loop` self-pacing.
+7. **Guide audit:** Run the full guide audit (3 consecutive clean rounds required; ≤1 LOW per round is clean). See [`composites/master_review_pipeline_composite.md`](../composites/master_review_pipeline_composite.md) for `/loop`-driven audit flow.
 8. **Archive design doc:** Move `SHAMT[N]_DESIGN.md` and validation log to `design_docs/archive/`
 9. **Open PR:** PR against `main` — child projects receive the changes on their next import run
 
