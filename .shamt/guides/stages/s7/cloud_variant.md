@@ -43,14 +43,7 @@ In the CLI variant, validation dimensions run sequentially under `consecutive_cl
 
 ### Step 1 — Define validation dimensions for this feature
 
-Before launching, list the dimensions to validate (from `s7_p2_qc_rounds.md`):
-- D1: Correctness
-- D2: Edge cases
-- D3: Security
-- D4: Performance
-- D5: Test coverage
-- D6: Documentation
-- D7+: Feature-specific dimensions
+Use the full dimension list from `s7_p2_qc_rounds.md`: **7 Master Dimensions + 10 S7 QC Dimensions = 17 total**. Read that guide for the complete list before launching. One cloud task per dimension; do not reduce the dimension count for the cloud variant.
 
 ### Step 2 — Launch parallel cloud tasks
 

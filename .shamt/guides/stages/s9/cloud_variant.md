@@ -54,12 +54,7 @@ Ensure all feature PRs are merged to the epic integration branch and the branch 
 
 ### Step 2 — Define S9 epic validation dimensions
 
-S9 epic dimensions (from `s9_p2_epic_qc_rounds.md`):
-- Epic-level correctness — all features work together as described in the epic spec
-- Cross-feature integration — no conflicts between feature implementations
-- Acceptance criteria — all epic acceptance criteria from the spec are met
-- Regression — no regressions in pre-existing functionality
-- Documentation completeness — ARCHITECTURE.md, CODING_STANDARDS.md, API docs updated
+Use the full dimension list from `s9_p2_epic_qc_rounds.md`: **7 Master Dimensions + 6 Epic-Specific Dimensions (D8–D13: Cross-Feature Integration, Epic Cohesion, Error Handling Consistency, Architectural Alignment, Success Criteria Completion, Mechanical Code Quality Epic-Wide) = 13 total**. Read that guide for the complete list. One cloud task per dimension.
 
 ### Step 3 — Launch parallel cloud tasks
 
