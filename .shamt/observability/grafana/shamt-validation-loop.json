@@ -1,0 +1,109 @@
+{
+  "__inputs": [
+    {"name": "DS_PROMETHEUS", "label": "Prometheus", "type": "datasource", "pluginId": "prometheus"}
+  ],
+  "__requires": [
+    {"type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0"},
+    {"type": "datasource", "id": "prometheus", "name": "Prometheus", "version": "1.0.0"}
+  ],
+  "title": "Shamt Validation Loop",
+  "uid": "shamt-validation-loop",
+  "description": "Round counts, severity distributions, and time-to-exit per validation loop",
+  "tags": ["shamt", "validation"],
+  "refresh": "15s",
+  "time": {"from": "now-7d", "to": "now"},
+  "panels": [
+    {
+      "id": 1,
+      "title": "consecutive_clean (current loop)",
+      "type": "gauge",
+      "gridPos": {"x": 0, "y": 0, "w": 4, "h": 4},
+      "targets": [{
+        "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+        "expr": "max(shamt_validation_consecutive_clean)",
+        "legendFormat": "consecutive_clean"
+      }],
+      "options": {
+        "minValue": 0, "maxValue": 3,
+        "thresholds": {"steps": [
+          {"color": "red", "value": 0},
+          {"color": "yellow", "value": 1},
+          {"color": "green", "value": 3}
+        ]}
+      }
+    },
+    {
+      "id": 2,
+      "title": "Rounds per Loop (last 7d)",
+      "type": "histogram",
+      "gridPos": {"x": 4, "y": 0, "w": 10, "h": 8},
+      "targets": [{
+        "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+        "expr": "shamt_validation_rounds_total",
+        "legendFormat": "rounds"
+      }],
+      "fieldConfig": {"defaults": {"unit": "short"}}
+    },
+    {
+      "id": 3,
+      "title": "Issue Severity Distribution",
+      "type": "piechart",
+      "gridPos": {"x": 14, "y": 0, "w": 10, "h": 8},
+      "targets": [
+        {
+          "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+          "expr": "sum(increase(shamt_validation_issues_total{severity=\"CRITICAL\"}[7d]))",
+          "legendFormat": "CRITICAL"
+        },
+        {
+          "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+          "expr": "sum(increase(shamt_validation_issues_total{severity=\"HIGH\"}[7d]))",
+          "legendFormat": "HIGH"
+        },
+        {
+          "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+          "expr": "sum(increase(shamt_validation_issues_total{severity=\"MEDIUM\"}[7d]))",
+          "legendFormat": "MEDIUM"
+        },
+        {
+          "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+          "expr": "sum(increase(shamt_validation_issues_total{severity=\"LOW\"}[7d]))",
+          "legendFormat": "LOW"
+        }
+      ],
+      "options": {"pieType": "donut", "legend": {"displayMode": "table", "placement": "right"}}
+    },
+    {
+      "id": 4,
+      "title": "Time to Exit (minutes) per Loop Type",
+      "type": "timeseries",
+      "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8},
+      "targets": [
+        {
+          "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+          "expr": "histogram_quantile(0.50, sum by(le, shamt_loop_type) (rate(shamt_validation_exit_duration_seconds_bucket[1h])))/60",
+          "legendFormat": "p50 {{shamt_loop_type}}"
+        },
+        {
+          "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+          "expr": "histogram_quantile(0.95, sum by(le, shamt_loop_type) (rate(shamt_validation_exit_duration_seconds_bucket[1h])))/60",
+          "legendFormat": "p95 {{shamt_loop_type}}"
+        }
+      ],
+      "fieldConfig": {"defaults": {"unit": "m"}}
+    },
+    {
+      "id": 5,
+      "title": "Clean Round Rate (7d rolling)",
+      "type": "timeseries",
+      "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8},
+      "targets": [{
+        "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+        "expr": "sum(rate(shamt_validation_clean_rounds_total[7d])) / sum(rate(shamt_validation_rounds_total[7d]))",
+        "legendFormat": "clean round rate"
+      }],
+      "fieldConfig": {"defaults": {"unit": "percentunit", "min": 0, "max": 1}}
+    }
+  ],
+  "schemaVersion": 38
+}

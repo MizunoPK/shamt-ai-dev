@@ -40,7 +40,10 @@ max_depth = 1  # Codex ceiling; Shamt validation loops flatten to depth-1
 # =============================================================================
 
 # =============================================================================
-# OTel / Tracing (optional — uncomment if using OpenTelemetry)
+# OTel / Tracing (optional — uncomment to enable OpenTelemetry)
+# See .shamt/observability/README.md for collector setup and dashboard import.
 # =============================================================================
 # [telemetry]
-# otlp_endpoint = "http://localhost:4317"
+# otlp_endpoint = "http://localhost:4317"   # local Docker collector (default)
+# # otlp_endpoint = "http://otel-collector:4317"  # shared/org collector
+# # otlp_transport = "grpc"                        # grpc (default) or http

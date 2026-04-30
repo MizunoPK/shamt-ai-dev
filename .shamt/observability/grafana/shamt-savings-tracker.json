@@ -1,0 +1,148 @@
+{
+  "__inputs": [
+    {"name": "DS_PROMETHEUS", "label": "Prometheus", "type": "datasource", "pluginId": "prometheus"}
+  ],
+  "__requires": [
+    {"type": "grafana", "id": "grafana", "name": "Grafana", "version": "10.0.0"},
+    {"type": "datasource", "id": "prometheus", "name": "Prometheus", "version": "1.0.0"}
+  ],
+  "title": "Shamt Savings Tracker",
+  "uid": "shamt-savings-tracker",
+  "description": "Measured vs. projected token savings: cache hit rate, sub-agent vs. parent token ratio, architect-builder ratio",
+  "tags": ["shamt", "savings", "observability"],
+  "refresh": "1m",
+  "time": {"from": "now-30d", "to": "now"},
+  "panels": [
+    {
+      "id": 1,
+      "title": "Prompt Cache Hit Rate",
+      "type": "gauge",
+      "gridPos": {"x": 0, "y": 0, "w": 6, "h": 6},
+      "description": "Projected: 70-80% for sub-agent confirmations. Measures actual Anthropic prompt cache usage.",
+      "targets": [{
+        "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+        "expr": "sum(rate(shamt_tokens_total{token_type=\"cache_read\"}[7d])) / (sum(rate(shamt_tokens_total{token_type=\"cache_read\"}[7d])) + sum(rate(shamt_tokens_total{token_type=\"input\"}[7d])))",
+        "legendFormat": "cache hit rate"
+      }],
+      "options": {
+        "minValue": 0, "maxValue": 1,
+        "thresholds": {"steps": [
+          {"color": "red", "value": 0},
+          {"color": "yellow", "value": 0.4},
+          {"color": "green", "value": 0.7}
+        ]}
+      },
+      "fieldConfig": {"defaults": {"unit": "percentunit"}}
+    },
+    {
+      "id": 2,
+      "title": "Sub-Agent vs. Parent Token Ratio",
+      "type": "gauge",
+      "gridPos": {"x": 6, "y": 0, "w": 6, "h": 6},
+      "description": "Projected: 30-45% savings from sub-agent confirmations (Haiku vs. Sonnet/Opus). Lower ratio = more savings.",
+      "targets": [{
+        "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+        "expr": "sum(rate(shamt_tokens_total{shamt_persona=~\".*validator.*\"}[7d])) / sum(rate(shamt_tokens_total[7d]))",
+        "legendFormat": "sub-agent token share"
+      }],
+      "options": {
+        "minValue": 0, "maxValue": 1,
+        "thresholds": {"steps": [
+          {"color": "green", "value": 0},
+          {"color": "yellow", "value": 0.3},
+          {"color": "red", "value": 0.5}
+        ]}
+      },
+      "fieldConfig": {"defaults": {"unit": "percentunit"}}
+    },
+    {
+      "id": 3,
+      "title": "Architect-Builder Token Split",
+      "type": "gauge",
+      "gridPos": {"x": 12, "y": 0, "w": 6, "h": 6},
+      "description": "Projected: 60-70% savings on implementation execution (Haiku builder vs. Sonnet/Opus architect).",
+      "targets": [{
+        "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+        "expr": "sum(rate(shamt_tokens_total{shamt_persona=\"shamt-builder\"}[7d])) / sum(rate(shamt_tokens_total{shamt_persona=~\"shamt-architect|shamt-builder\"}[7d]))",
+        "legendFormat": "builder token share"
+      }],
+      "options": {
+        "minValue": 0, "maxValue": 1,
+        "thresholds": {"steps": [
+          {"color": "green", "value": 0},
+          {"color": "yellow", "value": 0.2},
+          {"color": "red", "value": 0.4}
+        ]}
+      },
+      "fieldConfig": {"defaults": {"unit": "percentunit"}}
+    },
+    {
+      "id": 4,
+      "title": "Savings Claims vs. Measured (30d)",
+      "type": "table",
+      "gridPos": {"x": 18, "y": 0, "w": 6, "h": 6},
+      "description": "Projected savings from SHAMT design docs vs. measured actuals.",
+      "targets": [
+        {
+          "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+          "expr": "sum(increase(shamt_tokens_saved_total{method=\"cache_read\"}[30d])) / sum(increase(shamt_tokens_total[30d]))",
+          "legendFormat": "cache savings (meas.)"
+        },
+        {
+          "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+          "expr": "sum(increase(shamt_tokens_saved_total{method=\"haiku_subagent\"}[30d])) / sum(increase(shamt_tokens_total[30d]))",
+          "legendFormat": "haiku sub-agent savings (meas.)"
+        },
+        {
+          "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+          "expr": "sum(increase(shamt_tokens_saved_total{method=\"haiku_builder\"}[30d])) / sum(increase(shamt_tokens_total[30d]))",
+          "legendFormat": "haiku builder savings (meas.)"
+        }
+      ],
+      "fieldConfig": {"defaults": {"unit": "percentunit"}}
+    },
+    {
+      "id": 5,
+      "title": "Token Usage Over Time by Model Tier",
+      "type": "timeseries",
+      "gridPos": {"x": 0, "y": 6, "w": 12, "h": 8},
+      "targets": [
+        {
+          "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+          "expr": "sum(rate(shamt_tokens_total{model_tier=\"cheap\"}[1d]))",
+          "legendFormat": "Haiku (cheap)"
+        },
+        {
+          "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+          "expr": "sum(rate(shamt_tokens_total{model_tier=\"balanced\"}[1d]))",
+          "legendFormat": "Sonnet (balanced)"
+        },
+        {
+          "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+          "expr": "sum(rate(shamt_tokens_total{model_tier=\"reasoning\"}[1d]))",
+          "legendFormat": "Opus (reasoning)"
+        }
+      ],
+      "fieldConfig": {"defaults": {"unit": "short"}}
+    },
+    {
+      "id": 6,
+      "title": "Cumulative Tokens Saved (30d)",
+      "type": "stat",
+      "gridPos": {"x": 12, "y": 6, "w": 12, "h": 8},
+      "targets": [{
+        "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+        "expr": "sum(increase(shamt_tokens_saved_total[30d]))",
+        "legendFormat": "tokens saved"
+      }],
+      "options": {
+        "reduceOptions": {"calcs": ["lastNotNull"]},
+        "orientation": "auto",
+        "textMode": "value_and_name",
+        "colorMode": "background"
+      },
+      "fieldConfig": {"defaults": {"unit": "short", "color": {"mode": "fixed", "fixedColor": "green"}}}
+    }
+  ],
+  "schemaVersion": 38
+}

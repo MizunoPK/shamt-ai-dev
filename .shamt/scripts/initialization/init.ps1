@@ -11,10 +11,12 @@ $ShamtSourceDir = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PS
 $TargetDir = Get-Location
 $ShamtDir = Join-Path $TargetDir ".shamt"
 
-# Parse --host flag (non-interactive shorthand; overrides AI service menu)
+# Parse --host and --with-cloud flags
 $HostFlag = ""
+$WithCloud = $false
 foreach ($arg in $args) {
     if ($arg -match '^--host=(.+)$') { $HostFlag = $matches[1] }
+    if ($arg -eq '--with-cloud')     { $WithCloud = $true }
 }
 
 Write-Host ""
@@ -608,6 +610,39 @@ if ($AiService -match "codex") {
     } else {
         Write-Host "  WARNING: regen-codex-shims.ps1 not found — run it manually after init" -ForegroundColor Yellow
     }
+}
+
+# --- Cloud environment setup (--with-cloud, Codex hosts only) -----------------
+
+if ($WithCloud) {
+    if ($AiService -notmatch "codex") {
+        Write-Host "  WARNING: --with-cloud is only applicable to Codex hosts. Skipping." -ForegroundColor Yellow
+        $WithCloud = $false
+    }
+}
+
+if ($WithCloud) {
+    Write-Host ""
+    Write-Host "  Setting up Codex Cloud environment..."
+    Write-Host ""
+
+    $CloudTemplate  = Join-Path $ShamtSourceDir ".shamt\host\codex\cloud-environment.template.json"
+    $TargetCloud    = Join-Path $TargetDir "codex-environment.json"
+    if (Test-Path $TargetCloud) {
+        Write-Host "  OK codex-environment.json already exists — skipping"
+    } elseif (Test-Path $CloudTemplate) {
+        Copy-Item $CloudTemplate $TargetCloud
+        Write-Host "  OK codex-environment.json written from template"
+    } else {
+        Write-Host "  WARNING: cloud-environment.template.json not found — skipping" -ForegroundColor Yellow
+    }
+
+    Write-Host ""
+    Write-Host "  NOTE: Cloud setup notes:" -ForegroundColor Cyan
+    Write-Host "     1. Verify the manifest filename for your Codex Cloud version." -ForegroundColor Cyan
+    Write-Host "        See .shamt\host\codex\cloud-README.md for details." -ForegroundColor Cyan
+    Write-Host "     2. Set EPIC_BRANCH in the manifest before launching a cloud task." -ForegroundColor Cyan
+    Write-Host "     3. Register your project in Codex Cloud and link the manifest." -ForegroundColor Cyan
 }
 
 # --- Done --------------------------------------------------------------------

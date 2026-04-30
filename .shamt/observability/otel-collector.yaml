@@ -1,0 +1,103 @@
+# =============================================================================
+# Shamt OTel Collector Configuration
+# =============================================================================
+# Ready-to-run OpenTelemetry Collector config for Shamt projects.
+#
+# Receives OTLP traces/metrics from Codex sessions and routes them to local
+# Prometheus + Tempo backends with Shamt-domain labels.
+#
+# Quick start (Docker):
+#   docker compose -f .shamt/observability/docker-compose.yml up -d
+#
+# See .shamt/observability/README.md for full wiring instructions.
+# =============================================================================
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4317"
+      http:
+        endpoint: "0.0.0.0:4318"
+
+processors:
+  # Batch for efficiency
+  batch:
+    timeout: 5s
+    send_batch_size: 512
+
+  # Add Shamt-domain attributes to every span/metric
+  attributes/shamt:
+    actions:
+      # Promote Shamt-domain labels from span attributes to resource attributes
+      # so Grafana can filter/group by them efficiently.
+      - action: upsert
+        key: shamt.stage
+        from_attribute: shamt.stage
+      - action: upsert
+        key: shamt.phase
+        from_attribute: shamt.phase
+      - action: upsert
+        key: shamt.persona
+        from_attribute: shamt.persona
+      - action: upsert
+        key: shamt.hook
+        from_attribute: shamt.hook
+      - action: upsert
+        key: shamt.epic
+        from_attribute: shamt.epic
+      - action: upsert
+        key: shamt.round
+        from_attribute: shamt.round
+
+  # Drop spans with no Shamt label (raw model API calls, not Shamt-orchestrated)
+  filter/shamt_only:
+    error_mode: ignore
+    traces:
+      span:
+        - 'attributes["shamt.stage"] == nil and attributes["shamt.persona"] == nil and attributes["shamt.hook"] == nil'
+
+  # Memory limiter — prevent OOM in long-running collector
+  memory_limiter:
+    limit_mib: 256
+    check_interval: 5s
+
+exporters:
+  # Prometheus metrics (scrape endpoint on 8889; Prometheus server scrapes this)
+  prometheus:
+    endpoint: "0.0.0.0:8889"
+    namespace: shamt
+    resource_to_telemetry_conversion:
+      enabled: true
+
+  # Tempo traces (Grafana TraceQL)
+  otlp/tempo:
+    endpoint: "tempo:4317"
+    tls:
+      insecure: true
+
+  # Logging exporter for debugging (disable in production)
+  logging:
+    verbosity: normal
+
+  # Cloud exporter template (uncomment and configure for shared/org deployments)
+  # otlp/cloud:
+  #   endpoint: "${OTEL_EXPORTER_OTLP_ENDPOINT}"
+  #   headers:
+  #     authorization: "Bearer ${OTEL_EXPORTER_OTLP_HEADERS_AUTHORIZATION}"
+
+service:
+  pipelines:
+    traces/shamt:
+      receivers: [otlp]
+      processors: [memory_limiter, attributes/shamt, filter/shamt_only, batch]
+      exporters: [otlp/tempo, logging]
+
+    metrics/shamt:
+      receivers: [otlp]
+      processors: [memory_limiter, attributes/shamt, batch]
+      exporters: [prometheus]
+
+  telemetry:
+    logs:
+      level: "warn"

@@ -1942,3 +1942,55 @@ Round 3: Check ALL 7 dimensions + scenario-specific
 ---
 
 *End of Master Validation Loop Protocol v2.4 (SHAMT-24)*
+
+---
+
+## Cloud-Task-as-Confirmer-Instance Variant (SHAMT-43)
+
+When running on Codex Cloud, sub-agent confirmations can be dispatched as isolated cloud tasks instead of in-session spawned agents. This section documents the variant; the rest of this protocol applies unchanged.
+
+### Why cloud tasks as confirmers
+
+- **Container isolation:** each cloud task starts from a clean container — no shared state between the primary validator and the confirmers
+- **True independence:** cloud tasks are provably independent (different container, different session context) — stronger independence guarantee than same-session sub-agents
+- **Parallelism at depth-1 limit:** Codex enforces `agents.max_depth = 1`; cloud tasks sidestep this limit because they are separate top-level sessions, not nested sub-agents
+
+### How it works
+
+After the primary agent reaches `consecutive_clean = 1` (clean primary round):
+
+1. Launch 2 cloud tasks, each with:
+   - Profile: `shamt-validator`
+   - Branch: current working branch
+   - Prompt: same artifact + dimensions as the primary round
+2. Wait for both tasks to complete
+3. Collect results:
+   - Both report zero issues → EXIT criterion met (same as CLI sub-agent confirmation)
+   - One or both report issues → fixes apply, `consecutive_clean` resets to 0, new primary round begins
+
+### Cloud confirmer prompt
+
+```
+You are a Shamt validation confirmer (independent sub-agent role). The primary
+validator found zero issues. Your job: verify independently across all dimensions.
+
+Artifact: [path or content]
+Dimensions: [same list as primary round]
+
+Report: CONFIRMED CLEAN (0 issues) or list of issues found with severity.
+```
+
+### Exit criterion (cloud variant)
+
+- Primary clean round (`consecutive_clean = 1`) + 2 cloud task confirmers both report zero issues → EXIT
+- Same as CLI variant, different transport
+
+### When NOT to use cloud confirmers
+
+- Small validations where CLI sub-agent confirmations are faster and cheaper
+- When Codex Cloud is not available on the project
+- During S9.P3 user testing (human-in-the-loop; cloud automation does not apply)
+
+### Skill body update
+
+This cloud variant content will be incorporated into the `shamt-validation-loop/SKILL.md` skill body in SHAMT-44 Phase 3.

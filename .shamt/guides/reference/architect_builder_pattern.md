@@ -602,3 +602,25 @@ Task(
 - Validate plans before handoff (9 dimensions, 2 sub-agent confirmations)
 - Always use `model="haiku"` for builder execution
 - Error recovery: builder reports, architect diagnoses and decides
+
+---
+
+## Cloud-Native Variant (SHAMT-43)
+
+The architect-builder pattern has a Codex Cloud variant where the builder executes as a disposable cloud task rather than a local CLI sub-agent. See `stages/s6/cloud_variant.md` for the step-by-step.
+
+**Key differences from CLI variant:**
+
+| | CLI variant | Cloud variant |
+|---|---|---|
+| Builder runtime | local CLI, Haiku model | Codex Cloud task, `shamt-s6-builder` profile |
+| Failure recovery | builder reports; architect fixes in-session | container discarded; branch unchanged; architect re-launches |
+| Sandbox enforcement | Task tool model parameter | `requirements.toml` + `shamt-s6-builder` profile ceiling |
+| Result delivery | builder reports to architect in-session | builder opens a PR on success |
+| Rollback semantics | git revert if needed | container disposability (automatic; no explicit revert) |
+
+**When to choose cloud:** large implementations (>20 file ops), when S7 QC fan-out will also run in cloud, when container-disposability rollback is preferred over manual git revert.
+
+**The plan format is identical** — the validated mechanical implementation plan from S5 is used verbatim in both variants. The cloud variant just changes who executes it and where.
+
+**Skill body update:** This cloud variant content will be incorporated into the `shamt-architect-builder/SKILL.md` skill body in SHAMT-44.

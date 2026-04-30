@@ -205,6 +205,43 @@ Regen registers the MCP server in `mcpServers.shamt` when the venv is found.
 
 ---
 
+## Codex Cloud, OTel, and SDK (SHAMT-43)
+
+**Depends on:** SHAMT-42 (Codex CLI parity). SHAMT-43 is live.
+
+### Cloud environment
+
+`.shamt/host/codex/cloud-environment.template.json` — copy to project root and rename per current Codex Cloud docs. `cloud-setup.sh` runs at container provision time: installs Shamt MCP as HTTP listener (port 7400), pre-caches guides, seeds `AGENTS.md`, verifies `requirements.toml`. `cloud-maintenance.sh` runs on cached-container resume.
+
+`init.sh --with-cloud` (Codex hosts only) copies the manifest template to the project root and prints setup notes. Verify the manifest filename against Codex Cloud docs at implementation time.
+
+**Cloud-native S6 builder:** architect commits the validated plan, launches a Codex Cloud task with `shamt-s6-builder` profile; container executes mechanically and opens a PR on success or discards on failure (container disposability = zero local damage on failure). See `.shamt/guides/stages/s6/cloud_variant.md`.
+
+**S7 / S9 QC fan-out:** parallel cloud tasks per validation dimension with `shamt-validator` profile. All tasks run simultaneously; one parallel fan-out where all pass = exit criterion met. See `.shamt/guides/stages/s7/cloud_variant.md` and `s9/cloud_variant.md`.
+
+### OTel observability
+
+`.shamt/observability/` — OTel collector preset and Grafana dashboards. Enable by uncommenting the `[telemetry]` block in `.codex/config.toml` and pointing `otlp_endpoint` at the collector. Local-Docker default; org-level deployment documented in `.shamt/observability/README.md`. No hosted master collector (privacy, cost).
+
+Four dashboards: `shamt-overview.json`, `shamt-validation-loop.json`, `shamt-architect-builder.json`, `shamt-savings-tracker.json`. The savings-tracker measures actual token savings vs. the projected figures from SHAMT-27/30.
+
+### SDK CI automation
+
+`.shamt/sdk/` — two standalone Python scripts using the OpenAI Agents SDK. Both are **opt-in** — copy the workflow template manually.
+
+- `shamt-validate-pr.py` — PR validation gate: validates changed Shamt artifacts, posts structured comment, exits non-zero on failure. Enable: copy `shamt-validate.yml.template` → `.github/workflows/shamt-validate.yml`. Requires `OPENAI_API_KEY` secret. `GITHUB_TOKEN` is automatic. Label-gate option (`needs-shamt-review`) recommended for high-PR-volume repos.
+- `shamt-cron-janitor.py` — weekly stale-work scanner: proposals >30d old, stalled design docs, stale child syncs. Enable: copy `shamt-cron-janitor.yml.template` → `.github/workflows/shamt-cron-janitor.yml`. Creates `shamt-janitor` label as GitHub issues.
+
+### Master review pipeline
+
+`.shamt/host/codex/master-reviewer-workflow.yml.template` — **master repo only**. Copy to `.github/workflows/master-reviewer.yml`. Triggered when a PR is labeled `needs-shamt-review`. Launches a Codex Cloud task that loads `shamt-master-reviewer` skill, checks separation-rule compliance, posts a draft review comment. On task failure, posts a retry comment (not silent).
+
+### Reviewing Child Project PRs (updated for SHAMT-43)
+
+For code changes: `shamt-code-reviewer` agent. For guide changes: `shamt-master-reviewer` skill. For automated review on the master repo: `master-reviewer-workflow.yml` fires when `needs-shamt-review` label is applied. Full composite workflow documented in SHAMT-44's `master_review_pipeline_composite.md` (shipped in SHAMT-44).
+
+---
+
 ## Master Dev Workflow
 
 For improving the guides directly:
