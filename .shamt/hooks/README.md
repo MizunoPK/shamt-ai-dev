@@ -1,6 +1,6 @@
 # Shamt Hooks Bundle
 
-Ten enforcement hook scripts for Claude Code and Codex hook systems. Each script reads the tool event JSON from stdin and exits 0 (allow) or 2 (block).
+Twelve enforcement hook scripts for Claude Code and Codex hook systems. Each script reads the tool event JSON from stdin and exits 0 (allow) or 2 (block).
 
 **Claude Code:** Hooks are registered in `.claude/settings.json` by `regen-claude-shims.sh` when `features.shamt_hooks=true` is set.
 **Codex:** Hooks are registered in `.codex/config.toml`'s `SHAMT-HOOKS` block by `regen-codex-shims.sh`. See the "Codex Event Mapping" section below for event name translation.
@@ -23,6 +23,8 @@ Both hosts receive hooks via `import.sh` running the appropriate regen script af
 | `session-start-resume.sh` | SessionStart | Inject RESUME_SNAPSHOT.md as agent context on session start |
 | `subagent-confirmation-receipt.sh` | SubagentStop | If confirming sub-agent reports issues, write veto flag |
 | `stage-transition-snapshot.sh` | UserPromptSubmit (stage-advance phrases) | Write RESUME_SNAPSHOT.md at each explicit stage transition |
+| `validation-stall-detector.sh` | PostToolUse (Edit on `*VALIDATION_LOG.md`) | Alert when `consecutive_clean=0` for ≥N rounds (stall detection) |
+| `pre-push-tripwire.sh` | PreToolUse (Bash matching `git push`) | Final guard: verify audit clean, validation log non-zero, builder log clear |
 
 ---
 
@@ -42,6 +44,8 @@ Codex's hook event set differs from Claude Code's. SHAMT-42 maps the bundle:
 | `session-start-resume.sh` | SessionStart | `hooks.session_start` (direct port) |
 | `subagent-confirmation-receipt.sh` | SubagentStop | `hooks.stop` (Stop hook with stdin-parsing for sub-agent context) |
 | `stage-transition-snapshot.sh` | UserPromptSubmit | `hooks.user_prompt_submit` (direct port) |
+| `validation-stall-detector.sh` | PostToolUse (Edit) | `hooks.post_tool_use.edit` |
+| `pre-push-tripwire.sh` | PreToolUse (Bash) | `hooks.pre_tool_use.shell` |
 | `permission-router.sh` | *(Codex-only)* | `hooks.permission_request` |
 
 **PreCompact gap:** Codex has no PreCompact hook. Mitigation triplet: (1) `codex-compact-prompt.txt` registered as custom compact_prompt; (2) advance to a stage boundary before `/compact` so `stage-transition-snapshot.sh` writes `RESUME_SNAPSHOT.md`; (3) `session-start-resume.sh` reads the snapshot on resume. See `.shamt/host/codex/README.md` for details.
@@ -66,7 +70,8 @@ Each hook registration in `.claude/settings.json`:
           {"type": "command", "command": "/path/to/.shamt/hooks/no-verify-blocker.sh"},
           {"type": "command", "command": "/path/to/.shamt/hooks/commit-format.sh"},
           {"type": "command", "command": "/path/to/.shamt/hooks/user-testing-gate.sh"},
-          {"type": "command", "command": "/path/to/.shamt/hooks/pre-export-audit-gate.sh"}
+          {"type": "command", "command": "/path/to/.shamt/hooks/pre-export-audit-gate.sh"},
+          {"type": "command", "command": "/path/to/.shamt/hooks/pre-push-tripwire.sh"}
         ]
       },
       {
@@ -80,7 +85,8 @@ Each hook registration in `.claude/settings.json`:
       {
         "matcher": "Edit",
         "hooks": [
-          {"type": "command", "command": "/path/to/.shamt/hooks/validation-log-stamp.sh"}
+          {"type": "command", "command": "/path/to/.shamt/hooks/validation-log-stamp.sh"},
+          {"type": "command", "command": "/path/to/.shamt/hooks/validation-stall-detector.sh"}
         ]
       }
     ],
@@ -123,7 +129,7 @@ Paths are resolved to absolute project-root-relative paths by `regen-claude-shim
 
 ## Master-Applicable Subset
 
-Master repo activates 8 of 10 hooks. Excluded:
+Master repo activates 10 of 12 hooks. Excluded:
 
 | Hook | Reason excluded from master |
 |------|----------------------------|
@@ -168,5 +174,17 @@ echo '{"command": "git commit -m \"bad message\""}' | bash .shamt/hooks/commit-f
 
 # commit-format: allow path
 echo '{"command": "git commit -m \"feat/SHAMT-41: add hooks\""}' | bash .shamt/hooks/commit-format.sh
+# exit 0 expected
+
+# validation-stall-detector: stall path (requires a real validation log with trailing zeros)
+echo '{"tool_input": {"file_path": "/path/to/VALIDATION_LOG.md"}}' | bash .shamt/hooks/validation-stall-detector.sh
+# exit 0 always (informational); STALL_ALERT.md written if stall detected
+
+# pre-push-tripwire: block path (no audit record)
+echo '{"tool_input": {"command": "git push origin main"}}' | bash .shamt/hooks/pre-push-tripwire.sh
+# exit 2 expected
+
+# pre-push-tripwire: bypass path
+SHAMT_BYPASS_TRIPWIRE=1 echo '{"tool_input": {"command": "git push origin main"}}' | bash .shamt/hooks/pre-push-tripwire.sh
 # exit 0 expected
 ```
