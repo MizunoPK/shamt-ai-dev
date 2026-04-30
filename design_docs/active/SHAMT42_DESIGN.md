@@ -1,6 +1,6 @@
 # SHAMT-42: Codex Host Parity — AGENTS.md, Profiles, requirements.toml, PermissionRequest
 
-**Status:** Validated
+**Status:** Validated (re-validated 2026-04-29 after SHAMT-41 merge)
 **Created:** 2026-04-27
 **Branch:** `feat/SHAMT-42`
 **Validation Log:** [SHAMT42_VALIDATION_LOG.md](./SHAMT42_VALIDATION_LOG.md)
@@ -88,7 +88,8 @@ sandbox_mode = "read-only"
 [profiles.shamt-s5.mcp_servers]
 shamt = { command = "shamt-mcp", args = ["serve"] }
 
-[profiles.shamt-s6]
+# S6 uses the builder sub-profile name to distinguish it from shamt-builder (persona)
+[profiles.shamt-s6-builder]
 model = "${DEFAULT_MODEL}"
 model_reasoning_effort = "minimal"
 sandbox_mode = "workspace-write"
@@ -186,6 +187,7 @@ All six proposals together. SHAMT-42 is large but cohesive — porting the SHAMT
 | `.shamt/scripts/regen/regen-codex-shims.sh` | CREATE | Transform `.shamt/{skills,agents,commands,hooks}/` → Codex shapes |
 | `.shamt/scripts/regen/regen-codex-shims.ps1` | CREATE | Mirror |
 | `.shamt/scripts/initialization/shamt-add-host.sh` | CREATE | Adds a new host to an existing project |
+| `.shamt/scripts/initialization/shamt-add-host.ps1` | CREATE | Mirror (Windows) |
 | `.shamt/host/codex/config.starter.toml` | CREATE | Starter `.codex/config.toml` with marker blocks for profile imports |
 | `.shamt/host/codex/requirements.toml.template` | CREATE | Master enforcement floor |
 | `.shamt/host/codex/profiles/shamt-s1.fragment.toml` | CREATE | Per-stage profile |
@@ -209,6 +211,8 @@ All six proposals together. SHAMT-42 is large but cohesive — porting the SHAMT
 | `.shamt/scripts/initialization/ai_services.md` | MODIFY | Mark Codex "full-wiring" |
 | `.shamt/scripts/initialization/RULES_FILE.template.md` | MODIFY | Note that this same content generates either CLAUDE.md or AGENTS.md based on host |
 | `.shamt/scripts/import/import.sh` | MODIFY | Invoke regen-codex-shims.sh on Codex projects |
+| `.shamt/scripts/import/import.ps1` | MODIFY | Mirror — invoke regen-codex-shims.ps1 on Codex projects |
+| `.gitignore` | MODIFY | Add `.shamt/host/codex/.model_resolution.local.toml` (gitignored local config) |
 | `.shamt/commands/CHEATSHEET.md` | PASSTHROUGH (via regen) | Deployed verbatim to `~/.codex/prompts/CHEATSHEET.md` (same interim location as other commands). Argument-substitution syntax translated (`{name}` → `$NAME`) but reference content requires no substitution. Content is authored in SHAMT-39 and updated in SHAMT-41, 43, 44, 45. |
 | `CLAUDE.md` | MODIFY | New section "Codex Host Parity (SHAMT-42)" — also covers dual-host story |
 
@@ -220,7 +224,7 @@ All six proposals together. SHAMT-42 is large but cohesive — porting the SHAMT
 - [ ] Extend init.sh/init.ps1 with `--host` flag accepting claude / codex / claude,codex.
 - [ ] Codex branch generates AGENTS.md from RULES_FILE.template.md.
 - [ ] Dual-host generates both (symlink CLAUDE.md → AGENTS.md on Unix, duplicate on Windows).
-- [ ] Author `shamt-add-host.sh` for adding hosts post-init.
+- [ ] Author `shamt-add-host.sh` and `shamt-add-host.ps1` for adding hosts post-init.
 
 ### Phase 2: regen-codex-shims.sh
 - [ ] Author the transform: skills → `~/.codex/prompts/`, agents → `.codex/agents/`, commands → prompts.
@@ -230,7 +234,7 @@ All six proposals together. SHAMT-42 is large but cohesive — porting the SHAMT
 
 ### Phase 3: Profile fragments + starter config
 - [ ] Author 10 stage profile fragments (s1–s10) with model_tier / reasoning_effort / sandbox_mode declared.
-- [ ] Author validator and architect persona profile fragments.
+- [ ] Author validator, builder, and architect persona profile fragments.
 - [ ] Author `.shamt/host/codex/config.starter.toml` with marker blocks for profile imports, MCP registration, hook registration, OTel placeholder.
 
 ### Phase 4: requirements.toml.template
@@ -252,6 +256,9 @@ All six proposals together. SHAMT-42 is large but cohesive — porting the SHAMT
 - [ ] CLAUDE.md section on Codex host parity and dual-host story.
 
 ### Phase 8: Import script extension
+- [ ] Extend `import.sh`: add Codex detection branch (check `ai_service.conf` for `codex`); invoke `regen-codex-shims.sh` analogously to the existing Claude Code branch.
+- [ ] Extend `import.ps1`: mirror the above for Windows.
+- [ ] Update `.gitignore`: add `.shamt/host/codex/.model_resolution.local.toml`.
 - [ ] After Codex-targeted regen, also reload `.codex/config.toml` if Codex CLI requires explicit config-reload (verify per Codex docs).
 
 ### Phase 9: Validation — Codex doc Experiment A
@@ -315,3 +322,6 @@ All six proposals together. SHAMT-42 is large but cohesive — porting the SHAMT
 | 2026-04-27 | Initial draft created |
 | 2026-04-27 | Validated — added shamt-builder.fragment.toml to Files Affected; updated Goal 3 to name builder + architect persona profiles |
 | 2026-04-27 | Added CHEATSHEET.md passthrough entry to Files Affected; regen deploys it verbatim to `~/.codex/prompts/CHEATSHEET.md` alongside other commands |
+| 2026-04-29 | Re-validated after SHAMT-41 merge — added import.ps1 (MODIFY) and .gitignore (MODIFY) to Files Affected; expanded Phase 8 with explicit import script steps |
+| 2026-04-29 | Round 2 fixes — updated Proposal 3 code example to use `shamt-s6-builder` (with comment explaining distinction from builder persona); updated Phase 3 step 2 to include builder persona profile |
+| 2026-04-29 | Round 3 fix — added shamt-add-host.ps1 (CREATE, Windows mirror) to Files Affected and Phase 1 |
