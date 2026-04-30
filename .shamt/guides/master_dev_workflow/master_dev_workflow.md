@@ -164,7 +164,7 @@ git add .shamt/guides/ .shamt/scripts/ .shamt/skills/ .shamt/agents/ .shamt/comm
 git commit -m "feat/SHAMT-[N]: [brief description of guide improvement]"
 ```
 
-Note: the `commit-format` hook (SHAMT-41) enforces the `feat/SHAMT-N:` prefix — commits with non-conforming messages are blocked. The `pre-push-tripwire` hook will be available after SHAMT-44.
+Note: the `commit-format` hook (SHAMT-41) enforces the `feat/SHAMT-N:` prefix — commits with non-conforming messages are blocked. The `pre-push-tripwire` hook (SHAMT-44) blocks pushes when the guide audit is stale or the active validation log shows `consecutive_clean=0`.
 
 For master-internal improvements, commit directly to a branch and open a PR against `main`. Child projects will receive the improvement on their next import.
 

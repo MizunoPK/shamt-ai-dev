@@ -104,7 +104,7 @@ import sys
 sys.path.insert(0, '$PROJECT_ROOT/.shamt/mcp/src')
 try:
     from shamt_mcp.metrics_append import metrics_append
-    metrics_append('builder_step', 1.0, {'shamt_stage': '${stage:-unknown}'}, epic_id='$active_epic')
+    metrics_append('shamt_session_active', 1.0, {'shamt_stage': '${stage:-unknown}'}, epic_id='$active_epic')
 except Exception:
     pass
 " 2>/dev/null || true

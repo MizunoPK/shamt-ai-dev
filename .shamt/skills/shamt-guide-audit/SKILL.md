@@ -179,11 +179,14 @@ Sub-Round N.5 if the advanced dimensions are already large).
 
 **Walk `.shamt/guides/` and assess coverage:**
 
-1. List all guide files in `.shamt/guides/` (all subdirectories)
+1. List all guide files in `.shamt/guides/` (all subdirectories, including `composites/`)
 2. For each guide file, check whether a corresponding SKILL.md exists that covers its protocol
 3. Flag guide files with NO corresponding skill body as **LOW-severity candidates** — propose
    whether a new skill is warranted (not a defect unless coverage was intended)
-4. Also check the reverse gap: for each SKILL.md, verify its `source_guides:` list actually
+4. For composite guides: check whether each composite guide accurately describes the composed
+   primitives (skill bodies, hooks, MCP tools) — drift between the composite and its referenced
+   skill bodies is a **MEDIUM** finding
+5. Also check the reverse gap: for each SKILL.md, verify its `source_guides:` list actually
    covers all the protocol steps in the skill body — flag any protocol steps in the SKILL.md
    that have no traceable source guide as **MEDIUM** (the skill is asserting steps that are not
    anchored to canonical guide content)
