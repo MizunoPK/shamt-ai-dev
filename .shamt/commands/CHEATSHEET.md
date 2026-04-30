@@ -91,6 +91,20 @@ Active when `features.shamt_hooks=true` in `.claude/settings.json`. Hooks regist
 
 ---
 
+## CI Automation (SHAMT-43)
+
+Three automated pipelines. All are **opt-in** — copy the workflow template manually; none run automatically after init.
+
+| Tool | Purpose | Enable |
+|------|---------|--------|
+| `shamt-validate-pr.py` | Validates changed Shamt artifacts on PRs; posts structured comment; exits non-zero on failure | Copy `.shamt/sdk/.github/workflows/shamt-validate.yml.template` → `.github/workflows/shamt-validate.yml`; add `OPENAI_API_KEY` secret |
+| `shamt-cron-janitor.py` | Weekly scan: proposals >30d old, stalled design docs, stale child syncs; posts digest as GitHub issue | Copy `.shamt/sdk/.github/workflows/shamt-cron-janitor.yml.template` → `.github/workflows/shamt-cron-janitor.yml`; create `shamt-janitor` label |
+| Master reviewer pipeline | `@codex` on a child PR triggers Codex Cloud review using `shamt-master-reviewer` skill; posts draft comment; label-gated via `needs-shamt-review` | **Master repo only:** copy `.shamt/host/codex/master-reviewer-workflow.yml.template` → `.github/workflows/master-reviewer.yml`; enable Codex Cloud on the repo |
+
+**Label gate (recommended):** To avoid running the PR validator on every PR and managing API costs, uncomment the `if: contains(..., 'needs-shamt-review')` line in `shamt-validate.yml`. Apply the label only to PRs touching Shamt artifacts.
+
+---
+
 ## Severity Quick Reference
 
 | Level | Definition | Clean Round Impact |

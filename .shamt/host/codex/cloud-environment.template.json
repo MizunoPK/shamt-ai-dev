@@ -1,0 +1,20 @@
+{
+  "_schema_note": "Codex Cloud environment manifest template. The exact filename and schema may differ per current Codex Cloud documentation — verify at https://platform.openai.com/docs/codex/cloud at implementation time and rename/restructure this template accordingly.",
+  "image": "codex-universal:latest",
+  "setup_script": ".shamt/host/codex/cloud-setup.sh",
+  "maintenance_script": ".shamt/host/codex/cloud-maintenance.sh",
+  "environment_variables": {
+    "SHAMT_MCP_PATH": ".shamt/mcp",
+    "SHAMT_MCP_HOST": "http://localhost:7400",
+    "SHAMT_CLOUD": "1"
+  },
+  "secrets_setup_only": ["GITHUB_TOKEN"],
+  "network_policy": "limited",
+  "branch": "${EPIC_BRANCH}",
+  "_notes": {
+    "secrets_setup_only": "GITHUB_TOKEN is available during setup_script only; removed before the agent phase begins. Service account tokens for MCP auth are resolved during setup and written to the container environment via shell_environment_policy.",
+    "network_policy": "limited allows outbound HTTPS; cloud task cannot initiate arbitrary inbound connections.",
+    "SHAMT_MCP_HOST": "The setup script starts the Shamt MCP server as an HTTP listener on this endpoint. Codex Cloud uses HTTP-served MCP (not STDIO) because container STDIO MCP behavior is constrained.",
+    "branch": "Set to the active epic branch before launching a cloud task. The container checks out this branch so the builder works against the correct in-progress state."
+  }
+}

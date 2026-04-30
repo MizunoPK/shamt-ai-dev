@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "shamt-sdk"
+version = "0.1.0"
+description = "Shamt SDK scripts — CI validation gate and stale-work scanner"
+requires-python = ">=3.11"
+
+dependencies = [
+    "openai>=1.30.0",           # Agents SDK (includes codex session driver)
+    "PyGithub>=2.1.0",          # GitHub API client for PR comments and issue creation
+    "requests>=2.31.0",         # HTTP fallback for GitHub API calls
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "responses>=0.25",          # HTTP mock for testing GitHub API calls
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

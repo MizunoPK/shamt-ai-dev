@@ -12,11 +12,13 @@ SHAMT_SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 TARGET_DIR="$(pwd)"
 SHAMT_DIR="$TARGET_DIR/.shamt"
 
-# Parse --host flag (non-interactive shorthand; overrides AI service menu)
+# Parse --host and --with-cloud flags
 HOST_FLAG=""
+WITH_CLOUD=0
 for _arg in "$@"; do
     case "$_arg" in
-        --host=*) HOST_FLAG="${_arg#--host=}" ;;
+        --host=*)       HOST_FLAG="${_arg#--host=}" ;;
+        --with-cloud)   WITH_CLOUD=1 ;;
     esac
 done
 
@@ -611,6 +613,42 @@ if [[ "$AI_SERVICE" =~ codex ]]; then
     else
         echo "  ⚠  regen-codex-shims.sh not found — run it manually after init"
     fi
+fi
+
+# --- Cloud environment setup (--with-cloud, Codex hosts only) -----------------
+
+if [ "$WITH_CLOUD" -eq 1 ]; then
+    case "$AI_SERVICE" in
+        codex|claude_codex) ;;
+        *)
+            echo "  ⚠  --with-cloud is only applicable to Codex hosts (ai_service = codex or claude_codex). Skipping."
+            WITH_CLOUD=0
+            ;;
+    esac
+fi
+
+if [ "$WITH_CLOUD" -eq 1 ]; then
+    echo ""
+    echo "  Setting up Codex Cloud environment..."
+    echo ""
+
+    CLOUD_TEMPLATE="$SHAMT_SOURCE_DIR/.shamt/host/codex/cloud-environment.template.json"
+    TARGET_CLOUD="$TARGET_DIR/codex-environment.json"
+    if [ -f "$TARGET_CLOUD" ]; then
+        echo "  ✓ codex-environment.json already exists — skipping"
+    elif [ -f "$CLOUD_TEMPLATE" ]; then
+        cp "$CLOUD_TEMPLATE" "$TARGET_CLOUD"
+        echo "  ✓ codex-environment.json written from template"
+    else
+        echo "  ⚠  cloud-environment.template.json not found — skipping"
+    fi
+
+    echo ""
+    echo "  ⚠  Cloud setup notes:"
+    echo "     1. Verify the manifest filename for your Codex Cloud version."
+    echo "        See .shamt/host/codex/cloud-README.md for details."
+    echo "     2. Set EPIC_BRANCH in the manifest before launching a cloud task."
+    echo "     3. Register your project in Codex Cloud and link the manifest."
 fi
 
 # --- Done --------------------------------------------------------------------
