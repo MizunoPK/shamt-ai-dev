@@ -512,7 +512,7 @@ Write-Host "  OK Handoff file written to .shamt\project-specific-configs\init_co
 
 # --- Claude Code Host Wiring -------------------------------------------------
 
-if ($AiService -eq "claude_code") {
+if ($AiService -match "claude") {
     Write-Separator "Claude Code host wiring"
 
     foreach ($d in @("skills", "agents", "commands")) {

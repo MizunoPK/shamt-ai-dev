@@ -145,8 +145,15 @@ if ($Host -eq "codex") {
 
     $AiServiceConf = Join-Path $ShamtDir "config\ai_service.conf"
     New-Item -ItemType Directory -Force -Path (Split-Path $AiServiceConf) | Out-Null
-    Set-Content $AiServiceConf "codex" -NoNewline
-    Write-Host "  OK ai_service.conf updated to codex"
+    $existingService = ""
+    if (Test-Path $AiServiceConf) { $existingService = (Get-Content $AiServiceConf -Raw).Trim() }
+    if ($existingService -eq "claude_code") {
+        Set-Content $AiServiceConf "claude_codex" -NoNewline
+        Write-Host "  OK ai_service.conf updated to claude_codex (dual-host)"
+    } else {
+        Set-Content $AiServiceConf "codex" -NoNewline
+        Write-Host "  OK ai_service.conf updated to codex"
+    }
 }
 
 Write-Host ""

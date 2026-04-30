@@ -151,11 +151,18 @@ if [ "$HOST" = "codex" ]; then
         echo "  ⚠  regen-codex-shims.sh not found — run it manually"
     fi
 
-    # Update ai_service.conf
+    # Update ai_service.conf — use claude_codex if Claude Code was already registered
     AI_SERVICE_CONF="$SHAMT_DIR/config/ai_service.conf"
     mkdir -p "$SHAMT_DIR/config"
-    echo "codex" > "$AI_SERVICE_CONF"
-    echo "  ✓ ai_service.conf updated to codex"
+    _existing=""
+    [ -f "$AI_SERVICE_CONF" ] && _existing="$(tr -d '[:space:]' < "$AI_SERVICE_CONF")"
+    if [ "$_existing" = "claude_code" ]; then
+        echo "claude_codex" > "$AI_SERVICE_CONF"
+        echo "  ✓ ai_service.conf updated to claude_codex (dual-host)"
+    else
+        echo "codex" > "$AI_SERVICE_CONF"
+        echo "  ✓ ai_service.conf updated to codex"
+    fi
 fi
 
 echo ""

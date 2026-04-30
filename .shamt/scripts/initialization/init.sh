@@ -512,7 +512,7 @@ echo "  ✓ Handoff file written to .shamt/project-specific-configs/init_config.
 
 # --- Claude Code Host Wiring -------------------------------------------------
 
-if [ "$AI_SERVICE" = "claude_code" ]; then
+if [[ "$AI_SERVICE" =~ claude ]]; then
     separator "Claude Code host wiring"
 
     # Create .claude/ directory structure

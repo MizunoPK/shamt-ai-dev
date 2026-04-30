@@ -218,7 +218,7 @@ Master work does **not** follow the S1-S11 epic workflow and does **not** use EP
 - **SHAMT-N numbers:** Sequence markers for change sets, not epic identifiers. Reserved via `design_docs/NEXT_NUMBER.txt`
 - **No stage gates:** Master work proceeds at judgment, not through S1-S11 phase transitions
 
-**Available skills and personas:** Master-applicable skills (`shamt-validation-loop`, `shamt-guide-audit`, `shamt-code-review`, `shamt-master-reviewer`) and personas (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-code-reviewer`) are available for master dev work. Claude Code host wiring is live (SHAMT-40); Codex wiring lands in SHAMT-42.
+**Available skills and personas:** Master-applicable skills (`shamt-validation-loop`, `shamt-guide-audit`, `shamt-code-review`, `shamt-master-reviewer`) and personas (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-code-reviewer`) are available for master dev work. Claude Code host wiring is live (SHAMT-40); Codex wiring is live (SHAMT-42).
 
 See "Design Doc Lifecycle" below for the full design doc process.
 
