@@ -1,9 +1,14 @@
 # Shamt MCP Server
 
-Provides two MCP tools used by the Shamt workflow:
+Provides seven MCP tools used by the Shamt workflow:
 
 - **`shamt.next_number()`** — atomically reserve the next SHAMT-N design-doc number
 - **`shamt.validation_round()`** — append a structured round entry to a validation log and return updated `consecutive_clean` state
+- **`shamt.audit_run()`** — record a completed guide audit result for the pre-export-audit-gate hook
+- **`shamt.epic_status()`** — return a structured snapshot of an epic's stage / phase / blocker state
+- **`shamt.metrics_append()`** — emit a Shamt-domain metric to the sidecar log and optionally OTel
+- **`shamt.export_pipeline()`** — drive the export pipeline with pre-condition checks
+- **`shamt.import_pipeline()`** — drive the import pipeline
 
 ## Tools
 
@@ -40,6 +45,45 @@ Parameters:
 - `fixed` (optional, default `false`) — `true` when exactly 1 LOW was found and immediately fixed (counts as clean per the 1-LOW-fixed exception)
 - `exit_threshold` (optional, default `1`) — `consecutive_clean` value at which `should_exit` returns `true`; use `1` for standard validation loops, `3` for guide audits
 
+### `shamt.audit_run(scope, consecutive_clean, exit_criterion_met, issues_by_severity)`
+
+Record a completed guide audit. Writes `.shamt/audit/last_run.json` so `pre-export-audit-gate.sh` can gate exports without re-running the audit.
+
+```json
+{"recorded": true, "path": "/repo/.shamt/audit/last_run.json", "exit_criterion_met": true}
+```
+
+- `scope` — what was audited (e.g., `".shamt/guides/"`)
+- `consecutive_clean` — final value when the audit exited
+- `exit_criterion_met` — `true` when 3 consecutive clean rounds were achieved
+- `issues_by_severity` — final round counts `{"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0}`
+
+### `shamt.epic_status(epic_id)`
+
+Return a structured snapshot of an epic. `epic_id` may be `"active"` to auto-detect from `EPIC_TRACKER.md`.
+
+```json
+{"found": true, "epic_id": "KAI-007", "stage": "S6", "phase": "P2", "step": "...", "blocker": "none", "consecutive_clean": 1}
+```
+
+### `shamt.metrics_append(metric_name, value, labels, epic_id?)`
+
+Emit a Shamt-domain metric event to `.shamt/metrics/sidecar.jsonl` and optionally to the OTel endpoint at `SHAMT_OTEL_ENDPOINT`. Labels are validated against a per-metric permit-list; unknown labels are rejected with `accepted: false`.
+
+Permitted metric names: `validation_round`, `audit_round`, `builder_step`, `builder_runs_total`, `confirmer_run`, `shamt_session_active`, `shamt_tokens_saved`, `shamt_tool_calls`.
+
+```json
+{"accepted": true, "metric_name": "validation_round", "rejected_labels": []}
+```
+
+### `shamt.export_pipeline(epic_id, dry_run?)`
+
+Drive the export pipeline. Checks that `CHANGES.md` exists and the last audit is clean before invoking `export.sh`. `dry_run=true` checks pre-conditions only.
+
+### `shamt.import_pipeline(dry_run?)`
+
+Drive the import pipeline via `import.sh`. `dry_run=true` fetches and diffs without applying changes.
+
 ## Installation (default: repo-local venv)
 
 The default installation method is a repo-local Python venv. This is what the registered command in `.claude/settings.json` invokes.
@@ -75,8 +119,9 @@ Not yet shipped. Future SHAMT release may publish a binary via PyPI for projects
 # stdio (default — used by Claude Code)
 python -m shamt_mcp
 
-# HTTP (not yet implemented — activates in SHAMT-43 for Codex Cloud)
+# HTTP on port 7400 (for Codex Cloud containers)
 python -m shamt_mcp --http
+python -m shamt_mcp --http --port 7400 --host 0.0.0.0
 ```
 
 ## Testing

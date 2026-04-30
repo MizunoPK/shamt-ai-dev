@@ -48,10 +48,9 @@ echo "[shamt-cloud-setup] Shamt MCP server installed"
 
 echo "[shamt-cloud-setup] Starting Shamt MCP HTTP server on port $SHAMT_MCP_PORT..."
 
-python3 -m shamt.server.http \
+python3 -m shamt_mcp --http \
     --host 0.0.0.0 \
     --port "$SHAMT_MCP_PORT" \
-    --project-root "$(pwd)" \
     > "$SHAMT_MCP_LOG" 2>&1 &
 MCP_PID=$!
 
