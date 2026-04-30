@@ -1,11 +1,11 @@
 # SHAMT-44: Cross-Cutting Composites — Validation Loop, Architect-Builder, Stale-Work, Metrics, Rollback
 
-**Status:** Validated
+**Status:** Validated (re-validated 2026-04-30 post-SHAMT-43 merge)
 **Created:** 2026-04-27
 **Branch:** `feat/SHAMT-44`
 **Validation Log:** [SHAMT44_VALIDATION_LOG.md](./SHAMT44_VALIDATION_LOG.md)
 **Depends on:** SHAMT-39, SHAMT-40, SHAMT-41, SHAMT-42, SHAMT-43 (the primitives must all exist before they can be composed)
-**Companion docs:** `CLAUDE_INTEGRATION_THEORIES.md` (§3), `CODEX_INTEGRATION_THEORIES.md` (§3), `FUTURE_ARCHITECTURE_OVERVIEW.md`
+**Companion docs:** `CLAUDE_INTEGRATION_THEORIES.md` (§3 — Cross-Cutting Workflows), `CODEX_INTEGRATION_THEORIES.md` (§3 — Cross-Cutting Workflows), `FUTURE_ARCHITECTURE_OVERVIEW.md`
 
 ---
 
@@ -121,7 +121,9 @@ All five proposals together. SHAMT-44 is the assembly step — without it, the p
 | `.shamt/mcp/src/shamt_mcp/metrics_append.py` | CREATE | New MCP tool, emits to OTel + local log |
 | `.shamt/mcp/src/shamt_mcp/export_pipeline.py` | CREATE | New MCP tool |
 | `.shamt/mcp/src/shamt_mcp/import_pipeline.py` | CREATE | New MCP tool |
-| `.shamt/mcp/src/shamt_mcp/server.py` | MODIFY | Register new tools |
+| `.shamt/mcp/src/shamt_mcp/__init__.py` | MODIFY | Register new tools; also implement HTTP transport (`--http` mode, uvicorn on port 7400) — the `--http` stub must be promoted to a working implementation |
+| `.shamt/host/codex/cloud-setup.sh` | MODIFY | Fix module path: change `python3 -m shamt.server.http` → `python3 -m shamt_mcp --http --port $SHAMT_MCP_PORT` (SHAMT-43 shipped the wrong package name; `shamt` package does not exist — the MCP package is `shamt_mcp`) |
+| `.shamt/guides/composites/` | CREATE | New directory; six composite guides + index README reside here |
 | `.shamt/mcp/README.md` | MODIFY | Document expanded MCP tool surface (five new tools) |
 | `.shamt/hooks/validation-stall-detector.sh` (+ .ps1) | CREATE | Stall detection hook |
 | `.shamt/hooks/pre-push-tripwire.sh` (+ .ps1) | CREATE | Final-guard hook |
@@ -136,6 +138,10 @@ All five proposals together. SHAMT-44 is the assembly step — without it, the p
 | `.shamt/guides/master_dev_workflow/master_dev_workflow.md` | MODIFY | Add composite references at Steps 3.5, 4, design-doc validation (sub-step 4), implementation validation (sub-step 6), and guide audit (sub-step 7); add "Primitives Available" overview |
 | `.shamt/skills/shamt-architect-builder/SKILL.md` | MODIFY | Reference composite guide; reference cloud variant from SHAMT-43 |
 | `.shamt/skills/shamt-guide-audit/SKILL.md` | MODIFY | Call `shamt.audit_run()` MCP verb; extend audit scope to cover `guides/composites/` — the seven new composite files (six composite guides + the README) must be included in the full guide audit walk. Preserve and extend the D-DRIFT and D-COVERAGE dimensions (established in SHAMT-39): composite guides accurately describing composed primitives must be drift-checked against the skill bodies they reference; the D-COVERAGE pass must flag any composite guide describing a workflow with no backing skill body as a LOW-severity candidate. |
+| `.shamt/hooks/validation-log-stamp.sh` | MODIFY | Phase 5: add `shamt.metrics.append("validation_round", ...)` call at each round end |
+| `.shamt/hooks/stage-transition-snapshot.sh` | MODIFY | Phase 5: add `shamt.metrics.append("shamt_session_active", ...)` gauge on stage transitions |
+| `.shamt/hooks/architect-builder-enforcer.sh` | MODIFY | Phase 5: add `shamt.metrics.append("builder_runs_total", ...)` on builder spawn |
+| `.shamt/hooks/subagent-confirmation-receipt.sh` | MODIFY | Phase 5: add `shamt.metrics.append("confirmer_run", ...)` on each confirmation |
 | `.shamt/scripts/regen/regen-claude-shims.sh` | MODIFY | Register new hooks; verify metrics emission compatible |
 | `.shamt/scripts/regen/regen-codex-shims.sh` | MODIFY | Mirror |
 | `.shamt/observability/grafana/shamt-savings-tracker.json` | MODIFY | Update queries to consume metrics emitted by hooks/skills |
@@ -149,14 +155,15 @@ All five proposals together. SHAMT-44 is the assembly step — without it, the p
 ## Implementation Plan
 
 ### Phase 1: MCP server tool additions
+- [ ] **HTTP transport (prerequisite):** Implement the `--http` mode in `.shamt/mcp/src/shamt_mcp/__init__.py` (uvicorn + FastMCP HTTP wrapper, port 7400). The `--http` stub currently exits with "not yet implemented." Also fix `cloud-setup.sh`: change `python3 -m shamt.server.http` → `python3 -m shamt_mcp --http --port $SHAMT_MCP_PORT` (the `shamt` package does not exist; the MCP package is `shamt_mcp`). Complete this before the new tools, as cloud-confirmer instances need a working HTTP server.
 - [ ] Implement `audit_run`, `epic_status`, `metrics.append`, `export`, `import` in shamt-mcp.
 - [ ] `metrics.append` emits to OTel via OTLP exporter (configurable endpoint) and to a local sidecar log.
-- [ ] Register tools in the server entry point.
+- [ ] Register new tools in `__init__.py` (the FastMCP registration point — there is no `server.py`).
 - [ ] Unit tests per tool.
 - [ ] Update `.shamt/mcp/README.md` with the expanded surface.
 
 ### Phase 2: New hooks
-- [ ] Author `validation-stall-detector.sh` (and .ps1).
+- [ ] Author `validation-stall-detector.sh` (and .ps1). Hook fires on PostToolUse of validation log; parses `consecutive_clean` from recent round history. **Backward-compat:** if `consecutive_clean` field is absent (old log format), skip gracefully — emit a low-priority log line and do not fire the stall alert.
 - [ ] Author `pre-push-tripwire.sh` (and .ps1).
 - [ ] Update `.shamt/hooks/README.md`.
 - [ ] Test each: deny-path scenarios, pass-through scenarios.
@@ -203,9 +210,9 @@ All five proposals together. SHAMT-44 is the assembly step — without it, the p
 - [ ] Add "Primitives Available" subsection to CLAUDE.md's "Master Dev Workflow" section listing all active hooks, MCP tools, composites, skills, and agent personas for master dev work.
 
 ### Phase 5: Metrics emission wiring
-- [ ] Update existing hooks (validation-log-stamp, etc.) to call `metrics.append()`.
+- [ ] Update these existing hooks to call `shamt.metrics.append()` at meaningful events: `validation-log-stamp.sh` (emit `validation_round` metric at each round end), `stage-transition-snapshot.sh` (emit `shamt_session_active` gauge), `architect-builder-enforcer.sh` (emit `builder_runs_total` on spawn), `subagent-confirmation-receipt.sh` (emit `confirmer_run` metric). Emit `audit_round` metrics from the guide-audit flow similarly.
 - [ ] Update existing skill bodies (validation-loop, architect-builder, guide-audit) to emit metrics at meaningful events. Maintain `source_guides:` frontmatter on each modified SKILL.md.
-- [ ] Update Grafana dashboard `shamt-savings-tracker.json` to consume the new metric names.
+- [ ] Update Grafana dashboard `shamt-savings-tracker.json`: this is a **query-definition step** — add new PromQL queries for the metrics introduced above (e.g., `shamt_tokens_saved_total`, `shamt_builder_duration_seconds`, `shamt_validation_consecutive_clean`). Draft the Grafana JSON panel structure during this phase; verify queries return data after the Phase 7 epic run.
 
 ### Phase 6: Regen + CLAUDE.md updates
 - [ ] Regen scripts pick up the new hooks automatically (no changes needed if the regen logic walks `.shamt/hooks/`).
@@ -283,3 +290,6 @@ All five proposals together. SHAMT-44 is the assembly step — without it, the p
 | 2026-04-28 | Validation fix (sub-agent round): clarified "seven new composite guides" → "seven new composite files (six composite guides + the README)" in shamt-guide-audit SKILL.md row |
 | 2026-04-29 | Drift/coverage sync: shamt-guide-audit SKILL.md MODIFY row extended to preserve D-DRIFT/D-COVERAGE dimensions and apply them to composite guides; Phase 3 updated with source_guides: maintenance note; Phase 4 updated with D-COVERAGE pass after composite guide authoring; Phase 5 updated with source_guides: maintenance note. |
 | 2026-04-29 | Validation fixes (round 1): (1) shamt-validation-loop/SKILL.md Files Affected Notes extended to include cloud-task-as-confirmer-instance variant (was implicit in Phase 3 only); (2) added missing .shamt/mcp/README.md MODIFY row to Files Affected table; (3) master_dev_workflow.md Files Affected Notes corrected — replaced vague "session management" with explicit sub-step references matching Phase 4.5 steps. |
+| 2026-04-30 | Re-validation post-SHAMT-43 merge Round 1: (1) Files Affected server.py → __init__.py (server.py does not exist; FastMCP registration is in __init__.py); (2) Added .shamt/guides/composites/ CREATE directory row to Files Affected; (3) Phase 1 extended with HTTP transport prerequisite step (--http stub must be promoted to working implementation); (4) Companion doc section refs clarified to "§3 — Cross-Cutting Workflows". |
+| 2026-04-30 | Re-validation Round 2: (1) Added cloud-setup.sh MODIFY row — fix module path from `python3 -m shamt.server.http` to `python3 -m shamt_mcp --http --port $SHAMT_MCP_PORT` (shamt package does not exist); Phase 1 HTTP step extended with cloud-setup.sh fix obligation; (2) Phase 5 hooks enumerated explicitly (validation-log-stamp, stage-transition-snapshot, architect-builder-enforcer, subagent-confirmation-receipt) instead of "etc."; (3) Phase 5 Grafana update clarified as query-definition step with PromQL examples; (4) Phase 2 stall-detector backward-compat specified: graceful skip when consecutive_clean field absent. |
+| 2026-04-30 | Sub-agent confirmation round: Sub-Agent B found valid MEDIUM — 4 hooks named in Phase 5 (validation-log-stamp, stage-transition-snapshot, architect-builder-enforcer, subagent-confirmation-receipt) were missing from Files Affected table. Added 4 MODIFY rows. |
