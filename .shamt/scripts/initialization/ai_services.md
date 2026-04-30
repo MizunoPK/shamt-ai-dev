@@ -4,6 +4,15 @@ This file lists known AI coding assistant services and the rules file convention
 
 During initialization, the init script reads this file to determine how to name and place the rules file template (`RULES_FILE.template.md`) for the user's chosen AI service.
 
+## Wiring Tiers
+
+| Service | Wiring Tier | Description |
+|---------|-------------|-------------|
+| Claude Code | **full-wiring** | Skills, agents, commands, and settings.json deployed automatically via `init.sh` and `regen-claude-shims.sh` |
+| All others | **rules-file-only** | Only the rules file is written; no `.claude/` equivalents |
+
+Codex will become **full-wiring** when SHAMT-42 ships.
+
 ---
 
 ## Claude Code (Anthropic)

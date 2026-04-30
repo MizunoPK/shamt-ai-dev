@@ -2,8 +2,9 @@
 # shamt-ai-dev — Master Repository Gitignore
 # =============================================================================
 
-# Claude Code local settings (machine-specific)
-.claude/
+# Claude Code — machine-specific settings only; generated shims (.claude/skills/ etc.) are committed
+.claude/settings.json
+.claude/settings.local.json
 
 # Audit outputs — local working files, never commit
 # Each child project generates its own outputs during audits.
@@ -23,3 +24,13 @@ design_docs/validation_logs/
 # last_sync.conf would exist in a child project tracking import history
 .shamt/shamt_master_path.conf
 .shamt/last_sync.conf
+
+# MCP server virtual environment — local install, not version controlled
+.shamt/mcp/.venv/
+
+# Scratch files
+test_agent.yaml
+
+# Python cache
+.shamt/mcp/**/__pycache__/
+*.pyc

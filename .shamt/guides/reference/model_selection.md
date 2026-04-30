@@ -534,7 +534,7 @@ Based on typical Anthropic pricing (relative to Opus as baseline):
 
 ### Real-World Savings Examples
 
-**Guide Audit (23 dimensions, 4.5-6.5 hrs/round):**
+**Guide Audit (25 dimensions: 23 core + D-DRIFT + D-COVERAGE, 4.5-6.5 hrs/round):**
 - **Before:** All Opus = 100% cost
 - **After (SHAMT-27):** Mixed delegation = ~50-60% cost
 - **Savings:** 40-50% per round

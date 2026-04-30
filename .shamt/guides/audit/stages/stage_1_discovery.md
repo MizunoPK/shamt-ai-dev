@@ -39,7 +39,7 @@
 
 ### Dimension Focus by Sub-Round
 
-**🚨 CRITICAL:** Only check dimensions assigned to your current sub-round. Do NOT check all 23 dimensions in one discovery phase.
+**🚨 CRITICAL:** Only check dimensions assigned to your current sub-round. Do NOT check all 25 dimensions in one discovery phase.
 
 #### Sub-Round N.1: Core Dimensions
 **Focus on:** D1, D2, D3, D4 (4 dimensions)
@@ -86,7 +86,7 @@
 
 **Dimensions:**
 - **D10: Intra-File Consistency** - Within-file quality (formatting, headers, etc.)
-- **D11: File Size Assessment** - Files within readable limits (CLAUDE.md <40K, guides <1250 lines)
+- **D11: File Size Assessment** - Files within readable limits (CLAUDE.md <40K, guides ≤2000 lines)
 - **D12: Structural Patterns** - Guides follow expected template structures
 - **D13: Cross-File Dependencies** - Stage prerequisites match outputs, workflow continuity
 - **D14: Character and Format Compliance** - No Unicode checkboxes, curly quotes, or other banned non-ASCII chars
@@ -99,7 +99,7 @@
 5. D13 last (cross-file dependencies require D10-D12 clean)
 
 #### Sub-Round N.4: Advanced Dimensions
-**Focus on:** D15, D16, D17, D18, D19, D20, D21, D22 (8 dimensions)
+**Focus on:** D15, D16, D17, D18, D19, D20, D21, D22, D-DRIFT, D-COVERAGE (10 dimensions)
 **Duration:** 60-90 minutes (full cycle)
 **Why Last:** Advanced checks require all other dimensions to be clean
 
@@ -112,6 +112,8 @@
 - **D20: Script Integrity** - Sync scripts are functionally correct, parity between bash/PowerShell, output matches guide instructions (**all contexts** — see D20 checklist in Priority 5 below)
 - **D21: Agent Comprehension Risk** - Each stage guide prominently states its scope; no migration notes in the agent instruction path; structurally similar sibling guides have explicit scope differentiation callouts (see `dimensions/d21_agent_comprehension_risk.md`)
 - **D22: Guide Bypass Risk** - MANDATORY READING PROTOCOL present, FORBIDDEN SHORTCUTS block, phase commitment gates
+- **D-DRIFT: Skill Protocol Drift** - Each SKILL.md's protocol steps match its `source_guides:` — HIGH if step missing or contradicted; MEDIUM if prose drift
+- **D-COVERAGE: Skill Coverage Gap** - Protocols with no skill have LOW gap; SKILL.md steps with no traceable source guide have MEDIUM gap
 
 **Priority Order:**
 1. D17 first (accessibility - missing TOCs and platform parity)
@@ -119,9 +121,11 @@
 3. D18 third (stage flow and handoff accuracy)
 4. D21 fourth (agent comprehension risk — per-guide scope clarity; run after D18)
 5. D22 fifth (guide bypass risk — MRP and FORBIDDEN SHORTCUTS)
-5. D15 fifth (context-sensitive validation requires understanding all content)
-6. D19 sixth (child context only; skip entirely if master context)
-7. D20 last (script integrity — manual review of sync scripts)
+6. D15 sixth (context-sensitive validation requires understanding all content)
+7. D19 seventh (child context only; skip entirely if master context)
+8. D20 eighth (script integrity — manual review of sync scripts)
+9. D-DRIFT ninth (compare each SKILL.md against its source_guides:)
+10. D-COVERAGE last (identify uncovered protocols and sourceless skill steps)
 
 ### How to Use This Section
 
@@ -142,7 +146,7 @@ Output: Discovery report with D1, D2, D3, D4 issues ONLY
 ```
 
 **Do NOT:**
-- ❌ Check all 23 dimensions in Sub-Round N.1
+- ❌ Check all 25 dimensions in Sub-Round N.1
 - ❌ Check D11 (file size) during Sub-Round N.1 (save for N.3)
 - ❌ Mix dimensions from different sub-rounds
 - ❌ Skip dimensions assigned to current sub-round
@@ -755,7 +759,7 @@ Checklist for each script pair (bash + PowerShell):
 - Sub-Round N.1: D1 ✓, D2 ✓, D3 ✓, D4 ✓ (Core)
 - Sub-Round N.2: D5 ✓, D6 ✓, D7 ✓, D8 ✓, D9 ✓, D23 ✓ (Content)
 - Sub-Round N.3: D10 ✓, D11 ✓, D12 ✓, D13 ✓, D14 ✓ (Structural)
-- Sub-Round N.4: D15 ✓, D16 ✓, D17 ✓, D18 ✓, D19 ✓, D20 ✓, D21 ✓, D22 ✓ (Advanced; D19 child context only; D20 manual script review)
+- Sub-Round N.4: D15 ✓, D16 ✓, D17 ✓, D18 ✓, D19 ✓, D20 ✓, D21 ✓, D22 ✓, D-DRIFT ✓, D-COVERAGE ✓ (Advanced; D19 child context only; D20 manual script review)
 
 ---
 

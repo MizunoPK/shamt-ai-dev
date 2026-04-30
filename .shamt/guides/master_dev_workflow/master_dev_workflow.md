@@ -136,18 +136,26 @@ After making changes:
 2. Run the pre-audit checks: `bash .shamt/guides/audit/scripts/pre_audit_checks.sh` (if applicable)
 3. Work through the audit stages
 4. Fix any issues found before proceeding
-5. The audit must pass cleanly
+5. The audit must pass cleanly (note: `shamt.audit_run()` MCP tool will be available after SHAMT-44)
 
 ---
 
 ## Step 5: Commit
 
 ```bash
-git add .shamt/guides/ .shamt/scripts/
+git add .shamt/guides/ .shamt/scripts/ .shamt/skills/ .shamt/agents/ .shamt/commands/ .shamt/hooks/
 git commit -m "feat/SHAMT-[N]: [brief description of guide improvement]"
 ```
 
+Note: the `commit-format` hook (SHAMT-41) enforces the `feat/SHAMT-N:` prefix — commits with non-conforming messages are blocked. The `pre-push-tripwire` hook will be available after SHAMT-44.
+
 For master-internal improvements, commit directly to a branch and open a PR against `main`. Child projects will receive the improvement on their next import.
+
+---
+
+## Session Management
+
+The `precompact-snapshot.sh` and `session-start-resume.sh` hooks (SHAMT-41) auto-manage context across compaction events when `features.shamt_hooks=true` is set. On session start, if a `RESUME_SNAPSHOT.md` exists for the active epic, its content is injected as agent context automatically. No manual GUIDE_ANCHOR / Resume Instructions step is needed for sessions where these hooks fire.
 
 ---
 
@@ -155,12 +163,12 @@ For master-internal improvements, commit directly to a branch and open a PR agai
 
 For multi-guide or cross-cutting changes, use a branch with a design doc:
 
-1. **Reserve SHAMT-N number:** Read `design_docs/NEXT_NUMBER.txt`, use that number, increment the file
+1. **Reserve SHAMT-N number:** Use `shamt.next_number()` MCP tool (atomic — handles concurrent sessions safely) OR read `design_docs/NEXT_NUMBER.txt` manually, use that number, increment the file
 2. **Create branch:** `feat/SHAMT-[N]`
 3. **Create design doc:** Use the template at `.shamt/guides/templates/design_doc_template.md` to create `design_docs/active/SHAMT[N]_DESIGN.md`
-4. **Validate design doc:** Follow `.shamt/guides/design_doc_validation/validation_workflow.md` to validate the design (7-dimension validation loop with sub-agent confirmation)
-5. **Implement:** Make changes across the affected guides and scripts
-6. **Validate implementation:** Run implementation validation loop (see design doc Proposal 10 pattern)
+4. **Validate design doc:** Follow `.shamt/guides/design_doc_validation/validation_workflow.md` to validate the design (7-dimension validation loop with sub-agent confirmation). Use `shamt.validation_round()` with `exit_threshold=1` to track rounds; `validation-log-stamp` hook auto-stamps log edits.
+5. **Implement:** Make changes across the affected guides and scripts. After implementing, run a D-COVERAGE pass: (a) if you modified a guide that is a `source_guides:` reference in a SKILL.md, update the skill body where warranted — if a modified source guide now diverges from its SKILL.md, update the skill body in the same commit; (b) if you modified a SKILL.md, add to the corresponding source guides any protocol content not present in any source guide. The D-DRIFT / D-COVERAGE audit dimensions will catch gaps, but catching them during implementation is cheaper.
+6. **Validate implementation:** Run implementation validation loop (see design doc Proposal 10 pattern). Use `shamt.validation_round()` with `exit_threshold=1`.
 7. **Guide audit:** Run the full guide audit (3 consecutive clean rounds required; ≤1 LOW per round is clean)
 8. **Archive design doc:** Move `SHAMT[N]_DESIGN.md` and validation log to `design_docs/archive/`
 9. **Open PR:** PR against `main` — child projects receive the changes on their next import run

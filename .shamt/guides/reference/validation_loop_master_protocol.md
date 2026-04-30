@@ -28,6 +28,7 @@
      * Zero issues found (pure clean)
      * Exactly one LOW-severity issue found and fixed (clean with 1 low fix)
    - See `reference/severity_classification_universal.md` for severity definitions
+   - **If `shamt.validation_round()` MCP tool is registered:** call it after each round with `severity_counts` and `fixed=True/False`; it appends a structured entry and returns updated `consecutive_clean` and `should_exit`. The prose dimension-by-dimension analysis is still written by the primary agent; the MCP call is bookkeeping only. Pass `exit_threshold=1` (default) for validation loops.
 3. **Use `read_file` to read the ENTIRE artifact** every single round — partial reads do not count
 4. **Walk through ALL dimensions** (master + scenario-specific) and document each as PASS or ISSUE
 5. **Verify ≥3 technical claims** against source code every round using tools (read_file, grep_search)

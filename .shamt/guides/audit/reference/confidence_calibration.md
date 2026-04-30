@@ -37,7 +37,7 @@
 ### Quick Self-Assessment
 
 **Ask yourself:**
-1. Did I check ALL 23 dimensions across all 4 sub-rounds? (Yes/No)
+1. Did I check ALL 25 dimensions (23 core + D-DRIFT + D-COVERAGE) across all 4 sub-rounds? (Yes/No)
 2. Did I use 5+ different pattern types across rounds? (Yes/No)
 3. Did I manually read 10+ random files per sub-round? (Yes/No)
 4. Did I find ZERO new issues in latest round (all 4 sub-rounds)? (Yes/No)
@@ -78,8 +78,8 @@ Where each component ranges from 0.0 to 1.0
 
 | Score | Coverage Description | Checklist |
 |-------|----------------------|-----------|
-| 1.0 | **Complete** | ✅ All 23 dimensions checked<br>✅ All 4 sub-rounds completed<br>✅ Root files checked (README.md, EPIC_WORKFLOW_USAGE.md, prompts_reference_v2.md)<br>✅ All directories searched (stages/, templates/, reference/, dimensions/)<br>✅ No intentional exclusions |
-| 0.8 | **Mostly Complete** | ✅ All 23 dimensions checked<br>✅ All 4 sub-rounds completed<br>⚠️ Root files partially checked<br>✅ Main directories searched<br>⚠️ Minor directories skipped (examples/) |
+| 1.0 | **Complete** | ✅ All 25 dimensions checked (23 core + D-DRIFT + D-COVERAGE)<br>✅ All 4 sub-rounds completed<br>✅ Root files checked (README.md, EPIC_WORKFLOW_USAGE.md, prompts_reference_v2.md)<br>✅ All directories searched (stages/, templates/, reference/, dimensions/, skills/)<br>✅ No intentional exclusions |
+| 0.8 | **Mostly Complete** | ✅ All 25 dimensions checked<br>✅ All 4 sub-rounds completed<br>⚠️ Root files partially checked<br>✅ Main directories searched<br>⚠️ Minor directories skipped (examples/) |
 | 0.6 | **Partial** | ⚠️ 15-18 dimensions checked<br>✅ All 4 sub-rounds completed<br>❌ Root files not specifically checked<br>✅ stages/ directory checked<br>⚠️ Some directories skipped |
 | 0.4 | **Incomplete** | ❌ <15 dimensions checked<br>⚠️ Some sub-rounds skipped<br>❌ Root files not checked<br>⚠️ Only stages/ directory checked |
 | 0.2 | **Minimal** | ❌ <9 dimensions checked<br>❌ Sub-rounds not followed<br>❌ Root files excluded<br>❌ Only subset of directories |
@@ -208,9 +208,9 @@ Conclusion: MUST LOOP (< 80% threshold)
 ### Honest Evaluation (Answer Yes/No)
 
 **Coverage Questions:**
-1. Did I check ALL 23 dimensions? ___
+1. Did I check ALL 25 dimensions (23 core + D-DRIFT + D-COVERAGE)? ___
 2. Did I check root files (README.md, EPIC_WORKFLOW_USAGE.md, prompts_reference_v2.md)? ___
-3. Did I search ALL directories (stages/, templates/, reference/, dimensions/)? ___
+3. Did I search ALL directories (stages/, templates/, reference/, dimensions/, skills/)? ___
 4. Did I complete ALL 4 sub-rounds (Core, Content, Structural, Advanced)? ___
 
 **Rigor Questions:**
@@ -262,7 +262,7 @@ Conclusion: MUST LOOP (< 80% threshold)
 
 **Example:**
 ```text
-Coverage: 1.0 (all 23 dimensions, all directories, root files)
+Coverage: 1.0 (all 25 dimensions, all directories including skills/, root files)
 Rigor: 0.95 (6 pattern types, automated + manual, deep context analysis)
 Verification: 0.95 (all patterns re-run, new variations, extensive spot-checks)
 Consistency: 1.0 (5+ pattern types across rounds, fresh eyes each round)
@@ -413,7 +413,7 @@ Decision:
 ### Example 1: Strong Audit (Can Exit)
 
 ```text
-Coverage: 1.0 (all 23 dimensions, all directories, root files checked)
+Coverage: 1.0 (all 25 dimensions including D-DRIFT/D-COVERAGE, all directories, root files checked)
 Rigor: 0.9 (5 pattern types, automated + manual, thorough context analysis)
 Verification: 0.9 (all patterns re-run, new variations, N_new=0)
 Consistency: 0.95 (fresh eyes, different patterns each round)

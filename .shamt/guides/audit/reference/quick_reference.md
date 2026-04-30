@@ -209,6 +209,10 @@ grep -n "S[0-9]" CLAUDE.md | grep -o "S[0-9][0-9]*\(\.P[0-9][0-9]*\)\?\(\.I[0-9]
 | **D19: Rules Alignment** | Rules file structure (child only) | 30% | After import — verify rules file |
 | **D20: Script Integrity** | Sync/init script correctness | 20% | After modifying sync/init scripts |
 | **D21: Agent Comprehension Risk** | Per-guide scope clarity, migration notes, sibling differentiation | 15% | After stage restructuring or adding new guides |
+| **D22: Guide Bypass Risk** | MRP presence, FORBIDDEN SHORTCUTS, phase commitment gates, bypass resistance | 30% | After workflow changes or adding new guides |
+| **D23: Architecture/Standards Currency** | ARCHITECTURE.md and CODING_STANDARDS.md accuracy and freshness | 50% | After architecture or standards changes |
+| **D-DRIFT: Skill Drift** | SKILL.md steps traceable to source guides; no contradicted/missing protocol steps | manual | After modifying source guides or skill bodies |
+| **D-COVERAGE: Skill Coverage** | All guide protocol content has a corresponding skill; all skill steps trace to a guide | manual | After adding guides or skills |
 
 **Recommended:** Start with D1-D2 (most common issues, highest automation)
 

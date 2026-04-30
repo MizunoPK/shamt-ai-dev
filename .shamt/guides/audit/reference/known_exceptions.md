@@ -308,42 +308,37 @@ follows the emoji (space → hyphen after stripping the emoji).
 **Files:**
 
 **F1. stages/s1/s1_epic_planning.md (1394 lines)**
-- **D11 Status:** Exceeds 2000-line baseline by 144 lines
+- **D11 Status:** RETIRED — file is 1394 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
 - **Pre-existing:** Yes — was 1304 lines before SHAMT-9 (~28 lines); SHAMT-20 added ~62 more lines (P2 S3 overlap note, P6 Gate 1.5, P8 S3 early start, P9 metrics references)
 - **Split candidates:** S1.P1–P3 are each large enough to warrant standalone files
-- **Why deferred:** Splitting requires updating all "read s1_epic_planning.md" references across the guide tree; out of SHAMT-20 scope
-- **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
+- **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; 1394-line file no longer violates D11
 
 **F2. stages/s5/s5_v2_validation_loop.md (1397 lines)**
-- **D11 Status:** Exceeds 2000-line baseline by 147 lines
+- **D11 Status:** RETIRED — file is 1397 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
 - **Pre-existing:** Yes — was 1327 lines before SHAMT-9; SHAMT-20 added ~5 more lines (secondary agent guide references)
 - **Split candidates:** Phase 1 (Draft), Phase 2 (Validation Loop), dimension reference sections
-- **Why deferred:** Splitting requires updating all "read s5_v2_validation_loop.md" references and agent prompts; out of SHAMT-20 scope
-- **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
+- **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; 1397-line file no longer violates D11
 
 **F3. reference/validation_loop_master_protocol.md (1582 lines)**
-- **D11 Status:** Exceeds 2000-line baseline by 332 lines
+- **D11 Status:** RETIRED — file is 1582 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
 - **Pre-existing:** Yes — consolidated master protocol predates SHAMT-7; grew to 1582 lines through SHAMT-20 additions
 - **Split candidates:** Could be split into protocol core + dimension-specific appendices
-- **Why deferred:** This is the central reference document for all validation loop scenarios; splitting requires updating all scenario files (`validation_loop_*.md`) that defer to it; out of SHAMT-7 scope
-- **Note:** `pre_audit_checks.sh` does not scan `reference/` for D11, so this exception is for manual audit rounds only
-- **Audit Action:** SKIP D11 violation — tracked for future file-splitting SHAMT-N
+- **Note:** `pre_audit_checks.sh` does not scan `reference/` for D11, so this exception was for manual audit rounds only
+- **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; 1582-line file no longer violates D11
 
 **F4. stages/s10/s10_epic_cleanup.md (1316 lines)**
-- **D11 Status:** Exceeds 2000-line baseline by 66 lines (5.3% over)
+- **D11 Status:** RETIRED — file is 1316 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
 - **Pre-existing:** Yes — grew to 1316 lines through SHAMT-25 (Step 3e: Architecture/Standards Review)
 - **Split candidates:** Could be split into P1 (guide updates), P2 (overview/archive), P3 (metrics), P4 (PR/commit)
-- **Why deferred:** Splitting would fragment the epic cleanup workflow. Content is non-duplicated and necessary. Overage is minimal (66 lines).
-- **Audit Action:** SKIP D11 violation — tracked as known exception, approved SHAMT-26 audit Round 1
-- **Review trigger:** If file exceeds 1500 lines, re-evaluate for splitting
+- **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; 1316-line file no longer violates D11
+- **Review trigger:** If file exceeds 2200 lines, re-evaluate for splitting
 
 **F5. stages/s6/s6_execution.md (1267 lines)**
-- **D11 Status:** Exceeds 1250-line baseline by 17 lines (1.4% over)
+- **D11 Status:** RETIRED — file is 1267 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
 - **Pre-existing:** No — restructured in SHAMT-30 (architect-builder pattern mandatory in S6)
 - **Split candidates:** Could be split into architect workflow + builder workflow + reference material (traditional implementation)
-- **Why deferred:** Splitting would fragment the architect-builder pattern documentation. Content is non-duplicated and necessary for S6 execution. Overage is minimal (17 lines, 1.4%). The restructure added comprehensive architect workflow steps (6 steps), handoff package template, error recovery guidance, and preserved existing content as reference.
-- **Audit Action:** SKIP D11 violation — tracked as known exception, approved SHAMT-30 implementation validation
-- **Review trigger:** If file exceeds 1400 lines, re-evaluate for splitting
+- **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; 1267-line file no longer violates D11
+- **Review trigger:** If file exceeds 2200 lines, re-evaluate for splitting
 
 ---
 
@@ -508,11 +503,12 @@ wc -l real_violations.txt  # Should be low count
 - Category E (D12 Companion/Reference Files in stages/): **2 active files**
   - stages/s5/s5_v2_example.md (worked example companion — added child-sync-20260326)
   - stages/s5/s5_v2_troubleshooting.md (troubleshooting reference companion — added child-sync-20260326)
-- Category F (D11 File Size — pre-existing, deferred splitting): **4 active files**
-  - stages/s1/s1_epic_planning.md (1394 lines, 144 over 2000 baseline)
-  - stages/s5/s5_v2_validation_loop.md (1406 lines, 156 over 2000 baseline)
-  - stages/s6/s6_execution.md (1267 lines, 17 over 1250 baseline — restructured SHAMT-30)
-  - reference/validation_loop_master_protocol.md (1582 lines, 332 over 2000 baseline)
+- Category F (D11 File Size — pre-existing, deferred splitting): **0 active files** — all retired when threshold raised to 2000 lines
+  - ~~stages/s1/s1_epic_planning.md~~ (1394 lines — RETIRED, below 2000-line threshold)
+  - ~~stages/s5/s5_v2_validation_loop.md~~ (1397 lines — RETIRED, below 2000-line threshold)
+  - ~~stages/s6/s6_execution.md~~ (1267 lines — RETIRED, below 2000-line threshold)
+  - ~~stages/s10/s10_epic_cleanup.md~~ (1316 lines — RETIRED, below 2000-line threshold)
+  - ~~reference/validation_loop_master_protocol.md~~ (1582 lines — RETIRED, below 2000-line threshold)
 - Category G (D22 Lightweight MRP — Router and Optional Guides): **5 active files**
   - stages/s2/s2_feature_deep_dive.md (router guide — lightweight MRP only, no FS)
   - stages/s9/s9_epic_final_qc.md (router guide — lightweight MRP only, no FS)

@@ -165,6 +165,22 @@ Import-Dir -MasterDir (Join-Path $MasterShamtDir "scripts") `
            -ChildDir (Join-Path $ChildShamtDir "scripts") `
            -SkipPrefix "scripts/import"
 
+Import-Dir -MasterDir (Join-Path $MasterShamtDir "skills") `
+           -ChildDir (Join-Path $ChildShamtDir "skills") `
+           -SkipPrefix ""
+
+Import-Dir -MasterDir (Join-Path $MasterShamtDir "agents") `
+           -ChildDir (Join-Path $ChildShamtDir "agents") `
+           -SkipPrefix ""
+
+Import-Dir -MasterDir (Join-Path $MasterShamtDir "commands") `
+           -ChildDir (Join-Path $ChildShamtDir "commands") `
+           -SkipPrefix ""
+
+Import-Dir -MasterDir (Join-Path $MasterShamtDir "hooks") `
+           -ChildDir (Join-Path $ChildShamtDir "hooks") `
+           -SkipPrefix ""
+
 # --- Remove files deleted from master ----------------------------------------
 
 function Remove-Deleted {
@@ -216,6 +232,22 @@ Remove-Deleted -ChildDir (Join-Path $ChildShamtDir "guides") `
 Remove-Deleted -ChildDir (Join-Path $ChildShamtDir "scripts") `
                -MasterDir (Join-Path $MasterShamtDir "scripts") `
                -SkipPrefix "scripts/import"
+
+Remove-Deleted -ChildDir (Join-Path $ChildShamtDir "skills") `
+               -MasterDir (Join-Path $MasterShamtDir "skills") `
+               -SkipPrefix ""
+
+Remove-Deleted -ChildDir (Join-Path $ChildShamtDir "agents") `
+               -MasterDir (Join-Path $MasterShamtDir "agents") `
+               -SkipPrefix ""
+
+Remove-Deleted -ChildDir (Join-Path $ChildShamtDir "commands") `
+               -MasterDir (Join-Path $MasterShamtDir "commands") `
+               -SkipPrefix ""
+
+Remove-Deleted -ChildDir (Join-Path $ChildShamtDir "hooks") `
+               -MasterDir (Join-Path $MasterShamtDir "hooks") `
+               -SkipPrefix ""
 
 # Record sync state now — before diff generation and output, so a script
 # interruption after syncing still produces an accurate last_sync.conf.
@@ -294,6 +326,22 @@ if ($Preserved.Count -gt 0) {
     Write-Host "  Preserved $($Preserved.Count) child-only file(s) (not present in master — not deleted):"
     foreach ($f in $Preserved) { Write-Host "    ~ $f" }
     Write-Host ""
+}
+
+# --- Claude Code regen hook --------------------------------------------------
+
+$AiServiceConf = Join-Path $ChildShamtDir "config\ai_service.conf"
+if (Test-Path $AiServiceConf) {
+    $_aiService = (Get-Content $AiServiceConf -Raw).Trim()
+    if ($_aiService -eq "claude_code") {
+        $RegenScript = Join-Path $ChildShamtDir "scripts\regen\regen-claude-shims.ps1"
+        if (Test-Path $RegenScript) {
+            Write-Host "  Claude Code regen"
+            & $RegenScript
+        } else {
+            Write-Host "  ⚠  regen-claude-shims.ps1 not found — skipping shim refresh"
+        }
+    }
 }
 
 # --- Agent prompt ------------------------------------------------------------

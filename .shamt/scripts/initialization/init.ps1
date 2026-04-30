@@ -235,6 +235,16 @@ $masterHash = if ($LASTEXITCODE -eq 0) { ($masterHashResult | Out-String).Trim()
 Set-Content (Join-Path $ShamtDir "last_sync.conf") "$syncDate | $masterHash" -NoNewline
 Write-Host "  OK Sync state written to .shamt\last_sync.conf"
 
+$ConfigDir = Join-Path $ShamtDir "config"
+New-Item -ItemType Directory -Force -Path $ConfigDir | Out-Null
+Set-Content (Join-Path $ConfigDir "ai_service.conf") $AiService -NoNewline
+if ($TargetDir -eq $ShamtSourceDir) {
+    Set-Content (Join-Path $ConfigDir "repo_type.conf") "master" -NoNewline
+} else {
+    Set-Content (Join-Path $ConfigDir "repo_type.conf") "child" -NoNewline
+}
+Write-Host "  OK Host config written to .shamt\config\"
+
 # --- Configure local git excludes --------------------------------------------
 
 Write-Separator "Configuring local git excludes"
@@ -300,6 +310,20 @@ Write-Separator "Copying scripts"
 
 Copy-Item -Path "$ShamtSourceDir\.shamt\scripts\*" -Destination "$ShamtDir\scripts\" -Recurse -Force
 Write-Host "  OK Scripts copied"
+
+# --- Copy Canonical Content --------------------------------------------------
+
+Write-Separator "Copying canonical content"
+
+foreach ($canonDir in @("skills", "agents", "commands")) {
+    $srcPath = Join-Path $ShamtSourceDir ".shamt\$canonDir"
+    $dstPath = Join-Path $ShamtDir $canonDir
+    if (Test-Path $srcPath) {
+        New-Item -ItemType Directory -Force -Path $dstPath | Out-Null
+        Copy-Item -Path "$srcPath\*" -Destination $dstPath -Recurse -Force -ErrorAction SilentlyContinue
+    }
+}
+Write-Host "  OK Canonical content copied (skills\, agents\, commands\)"
 
 # --- Configure Rules File ----------------------------------------------------
 
@@ -443,6 +467,47 @@ $excludeNote
 Set-Content "$ShamtDir\project-specific-configs\init_config.md" $initConfigContent
 
 Write-Host "  OK Handoff file written to .shamt\project-specific-configs\init_config.md"
+
+# --- Claude Code Host Wiring -------------------------------------------------
+
+if ($AiService -eq "claude_code") {
+    Write-Separator "Claude Code host wiring"
+
+    foreach ($d in @("skills", "agents", "commands")) {
+        New-Item -ItemType Directory -Force -Path (Join-Path $TargetDir ".claude\$d") | Out-Null
+    }
+    Write-Host "  OK .claude\ directory structure created"
+
+    $RegenScript = Join-Path $ShamtDir "scripts\regen\regen-claude-shims.ps1"
+    if (Test-Path $RegenScript) {
+        & powershell -ExecutionPolicy Bypass -File $RegenScript
+        Write-Host "  OK Claude Code shims generated"
+    } else {
+        Write-Host "  WARNING: regen-claude-shims.ps1 not found — run it manually after init" -ForegroundColor Yellow
+    }
+
+    $StarterSettings = Join-Path $ShamtSourceDir ".shamt\host\claude\settings.starter.json"
+    $TargetSettings  = Join-Path $TargetDir ".claude\settings.json"
+    if (Test-Path $TargetSettings) {
+        $existingContent = Get-Content $TargetSettings -Raw
+        if ($existingContent -match "_shamt_managed_blocks") {
+            Write-Host "  OK .claude\settings.json already has Shamt-managed blocks — skipping"
+        } else {
+            Write-Host "  WARNING: .claude\settings.json exists but lacks Shamt blocks." -ForegroundColor Yellow
+            Write-Host "     Merge the statusLine block from: $StarterSettings" -ForegroundColor Yellow
+        }
+    } elseif (Test-Path $StarterSettings) {
+        $settingsContent = (Get-Content $StarterSettings -Raw) -replace [regex]::Escape('${PROJECT}'), $TargetDir
+        [System.IO.File]::WriteAllText($TargetSettings, $settingsContent, [System.Text.Encoding]::UTF8)
+        Write-Host "  OK .claude\settings.json written"
+    } else {
+        Write-Host "  WARNING: settings.starter.json not found — skipping settings.json creation" -ForegroundColor Yellow
+    }
+
+    Write-Host ""
+    Write-Host "  NOTE: Ensure this project is trusted in Claude Code." -ForegroundColor Cyan
+    Write-Host "     Open Claude Code in $TargetDir — it will prompt for trust on first open." -ForegroundColor Cyan
+}
 
 # --- Done --------------------------------------------------------------------
 

@@ -216,11 +216,11 @@ grep -rn "[0-9]+ files\|[0-9]+ stages\|[0-9]+ iterations\|[0-9]+ rounds" --inclu
 ### Pattern 4.2: Dimension Count Claims
 
 ```bash
-# Should be 23 dimensions; search for stale 22-dimension claims
+# Should be 25 dimensions (23 core + D-DRIFT + D-COVERAGE); search for stale 23-dimension claims
 grep -rn "22 dimensions\|all 22\|22 critical" --include="*.md" .
 
 # Check for old counts (stale references to previous dimension counts)
-grep -rn "19 dimensions\|all 19\|19 critical\|18 dimensions\|all 18\|18 critical\|16 dimensions\|16 critical\|14 dimensions\|15 dimensions" --include="*.md" .
+grep -rn "19 dimensions\|all 19\|19 critical\|18 dimensions\|all 18\|18 critical\|16 dimensions\|16 critical\|14 dimensions\|15 dimensions\|\"23 dimensions\"" --include="*.md" .
 ```
 
 ### Pattern 4.3: Stage Count Claims
@@ -271,11 +271,11 @@ grep -rh "templates/.*\.md" --include="*.md" . | grep -o "templates/[^)]*\.md" |
 # CLAUDE.md character count (must be <40,000)
 wc -c ../../../CLAUDE.md
 
-# Workflow guides line count (should be <1250)
+# Workflow guides line count (should be ≤2000)
 for file in ../stages/**/*.md; do
   lines=$(wc -l < "$file")
   if [ $lines -gt 2000 ]; then
-    echo "⚠️  $file: $lines lines (exceeds 1250)"
+    echo "⚠️  $file: $lines lines (exceeds 2000)"
   fi
 done
 ```
@@ -287,7 +287,7 @@ done
 for file in dimensions/*.md stages/*.md reference/*.md; do
   lines=$(wc -l < "$file")
   if [ $lines -gt 2000 ]; then
-    echo "⚠️  $file: $lines lines (exceeds 1250)"
+    echo "⚠️  $file: $lines lines (exceeds 2000)"
   fi
 done
 ```

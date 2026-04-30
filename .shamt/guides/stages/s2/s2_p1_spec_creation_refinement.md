@@ -325,7 +325,7 @@ Primary agent reviews during coordination heartbeat (every 15 minutes).
 
 **Reference:** `reference/validation_loop_spec_refinement.md`
 
-🚨 **MANDATORY:** Create `{feature_folder}/VALIDATION_LOG.md` BEFORE starting Round 1. If this file does not exist, the validation loop has not started. Track `consecutive_clean` in the log (starts at 0, increments to 1 when ZERO issues OR exactly ONE LOW-severity issue fixed, resets to 0 on multiple LOW issues OR any MEDIUM/HIGH/CRITICAL issue, exit at 1 then trigger sub-agent confirmation).
+🚨 **MANDATORY:** Create `{feature_folder}/VALIDATION_LOG.md` BEFORE starting Round 1. If this file does not exist, the validation loop has not started. Track `consecutive_clean` in the log (starts at 0, increments to 1 when ZERO issues OR exactly ONE LOW-severity issue fixed, resets to 0 on multiple LOW issues OR any MEDIUM/HIGH/CRITICAL issue, exit at 1 then trigger sub-agent confirmation). **If `shamt.validation_round()` MCP tool is registered, call it after scoring each round with `exit_threshold=1`; it owns the counter arithmetic and appends a structured entry.**
 
 - **Round 1:** Sequential read, requirement traceability check
   - **Gate 2 Check (Spec-to-Epic Alignment):**

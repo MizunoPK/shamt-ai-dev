@@ -544,7 +544,7 @@ and why these proposals were generated}
 - Apply all proposals as a single batch
 - Run full guide audit (3 consecutive clean rounds) before committing
 - Update `reference/guide_update_tracking.md` with implementation entry
-- Delete this file from `design_docs/unimplemented/` after successful implementation and commit
+- Delete this file from `design_docs/incoming/` after successful implementation and commit
 ```
 
 5.4. **For each approved proposal:** populate using the template above with "Current State" and "Proposed Change" showing the original proposed text.
@@ -755,7 +755,7 @@ Compare your project's rules file (wherever it lives: `CLAUDE.md`, `.github/copi
 **Note: No CHANGES.md entry is needed for the proposal doc.** The proposal doc in `.shamt/unimplemented_design_proposals/` is exported to master automatically when `export.sh` is run — it is not a modification to a shared guide or script file, so it does not require a CHANGES.md entry.
 
 If a proposal doc was created:
-- Inform the user: "Guide update proposals have been captured in `.shamt/unimplemented_design_proposals/`. When ready to export, run `bash .shamt/scripts/export/export.sh` — this will move the proposal doc to the master repo's `design_docs/unimplemented/` directory automatically."
+- Inform the user: "Guide update proposals have been captured in `.shamt/unimplemented_design_proposals/`. When ready to export, run `bash .shamt/scripts/export/export.sh` — this will move the proposal doc to the master repo's `design_docs/incoming/` directory automatically."
 
 If zero proposals were accepted:
 - Note "No export warranted — no proposals accepted" in your completion announcement and proceed.

@@ -36,6 +36,16 @@ shamt-ai-dev/
     │   ├── prompts/                    # prompt templates and reference cards
     │   ├── sync/                       # README, separation rule, export workflow, import workflow
     │   └── templates/                  # templates (design_doc_template.md)
+    ├── skills/                         (canonical skill bodies — host-portable, content-only; SHAMT-39)
+    │   ├── README.md
+    │   └── {skill-name}/SKILL.md       # one subdirectory per skill
+    ├── agents/                         (sub-agent persona YAML definitions; SHAMT-39)
+    │   ├── README.md
+    │   └── {persona}.yaml
+    ├── commands/                       (slash command bodies + CHEATSHEET.md; SHAMT-39)
+    │   ├── README.md
+    │   ├── CHEATSHEET.md               # user-facing quick reference
+    │   └── {command}.md
     ├── scripts/
     │   ├── initialization/
     │   │   ├── init.sh / init.ps1                           # Full Shamt initialization
@@ -85,6 +95,86 @@ Review steps:
 
 ---
 
+## Canonical Content Layer (SHAMT-39)
+
+Three directories under `.shamt/` hold host-portable canonical content. These are **content-only** — no host-specific wiring. Regen scripts (SHAMT-40 for Claude Code, SHAMT-42 for Codex) deploy the content to host-specific locations at init/regen time.
+
+**`.shamt/skills/`** — Skill bodies encoding Shamt protocols (validation loop, architect-builder, spec protocol, code review, guide audit, discovery, import/export, master reviewer, lite story). Each skill lives in its own subdirectory as `SKILL.md`. Each SKILL.md is self-contained and includes `source_guides:` frontmatter listing every guide file it was distilled from.
+
+**`.shamt/agents/`** — Sub-agent persona YAML definitions (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-spec-aligner`, `shamt-code-reviewer`, `shamt-discovery-researcher`). Each file declares model_tier (cheap/balanced/reasoning), reasoning_effort, sandbox, tools_allowed, and prompt_template with `{placeholder}` syntax.
+
+**`.shamt/commands/`** — Slash command bodies (`shamt-start-epic`, `shamt-validate`, `shamt-audit`, `shamt-export`, `shamt-import`, `shamt-status`, `shamt-resume`, `shamt-promote`) plus `CHEATSHEET.md`. Regen scripts copy command bodies verbatim to `.claude/commands/` (Claude Code) and `~/.codex/prompts/` (Codex).
+
+**Child projects on prior versions** ignore these directories until they re-init or run regen — the directories are additive and backward-compatible.
+
+**Master-applicable skills:** `shamt-validation-loop`, `shamt-guide-audit`, `shamt-code-review`, `shamt-master-reviewer`  
+**Master-applicable personas:** `shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-code-reviewer`  
+**Child-only personas:** `shamt-spec-aligner`, `shamt-discovery-researcher`
+
+Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
+
+---
+
+## Claude Code Host Wiring (SHAMT-40)
+
+`init.sh` detects Claude Code (`AI_SERVICE=claude_code`) and runs additional wiring steps:
+
+1. Creates `.claude/skills/`, `.claude/agents/`, `.claude/commands/`
+2. Runs `regen-claude-shims.sh` to populate them from canonical `.shamt/` content
+3. Writes `.claude/settings.json` from `.shamt/host/claude/settings.starter.json` (with `${PROJECT}` resolved)
+4. Writes `.shamt/config/ai_service.conf` (value: `claude_code`) and `.shamt/config/repo_type.conf` (value: `master` or `child`)
+
+**`regen-claude-shims.sh`** — deterministic transform script at `.shamt/scripts/regen/`:
+- Skills: copies `SKILL.md` verbatim with a managed header; skips `master-only: true` skills on child projects
+- Agents: transforms YAML → Claude Code agent markdown; maps model tiers (cheap→Haiku, balanced→Sonnet, reasoning→Opus)
+- Commands: copies markdown verbatim with a managed header; `{placeholder}` notation is documentation-style
+- Idempotent: user-authored files (no managed header) are preserved; safe to run on every import
+- Run automatically by `import.sh` when `ai_service.conf` is `claude_code`
+
+**`shamt-statusline.sh`** — status bar renderer at `.shamt/scripts/statusline/`:
+- Reads `EPIC_TRACKER.md` → finds active epic → reads its `AGENT_STATUS.md`
+- Emits: `EPIC-N | S{stage}.P{phase} | round {N} | blocker: {text or "none"}`
+- Falls back to `Shamt | no active epic` when no epic is in progress
+
+**Codex equivalent** lands in SHAMT-42.
+
+---
+
+## Hooks and MCP Server (SHAMT-41)
+
+**Hooks bundle** — 10 enforcement hook scripts in `.shamt/hooks/`. Activated by setting `features.shamt_hooks=true` in `.claude/settings.json`; regen installs registrations into `settings.json`'s `hooks` block.
+
+| Hook | Event | Purpose |
+|------|-------|---------|
+| `no-verify-blocker.sh` | PreToolUse (Bash) | Block `--no-verify` / `--no-gpg-sign` |
+| `commit-format.sh` | PreToolUse (Bash) | Enforce `feat/SHAMT-N:` or `fix/SHAMT-N:` prefix |
+| `pre-export-audit-gate.sh` | UserPromptSubmit + PreToolUse | Block export if audit is stale or failed (child-only) |
+| `validation-log-stamp.sh` | PostToolUse (Edit) | Append timestamp to validation logs |
+| `architect-builder-enforcer.sh` | PreToolUse (Task) | S6: reject non-`shamt-builder` Task spawns |
+| `user-testing-gate.sh` | PreToolUse (Bash) | S9: block push without user-testing confirmation (child-only) |
+| `precompact-snapshot.sh` | PreCompact | Write `RESUME_SNAPSHOT.md` before compaction |
+| `session-start-resume.sh` | SessionStart | Inject `RESUME_SNAPSHOT.md` as context on start |
+| `subagent-confirmation-receipt.sh` | SubagentStop | Write veto flag if confirming sub-agent reports issues |
+| `stage-transition-snapshot.sh` | UserPromptSubmit | Write `RESUME_SNAPSHOT.md` at stage-advance phrases |
+
+**Master-applicable hooks (8 of 10):** all except `pre-export-audit-gate.sh` (master doesn't export) and `user-testing-gate.sh` (S9 child-only).
+
+**MCP server** — Python package at `.shamt/mcp/`. Install via repo-local venv:
+```bash
+python -m venv .shamt/mcp/.venv && source .shamt/mcp/.venv/bin/activate
+pip install -e .shamt/mcp
+```
+
+Two tools:
+- `shamt.next_number()` — atomic SHAMT-N reservation (reads/increments `design_docs/NEXT_NUMBER.txt` under OS-level lock)
+- `shamt.validation_round(log_path, round, severity_counts, fixed, exit_threshold)` — appends structured round entry and returns updated `consecutive_clean` + `should_exit`. Pass `exit_threshold=1` for validation loops, `exit_threshold=3` for guide audits.
+
+Regen registers the MCP server in `mcpServers.shamt` when the venv is found.
+
+**Session continuity:** `precompact-snapshot.sh` + `session-start-resume.sh` replace the GUIDE_ANCHOR / Resume Instructions ritual for sessions where both hooks fire. The manual ritual remains authoritative when hooks are not installed.
+
+---
+
 ## Master Dev Workflow
 
 For improving the guides directly:
@@ -97,6 +187,8 @@ Master work does **not** follow the S1-S11 epic workflow and does **not** use EP
 - **Large changes:** Create a design doc in `design_docs/active/` (version-controlled), validate it, implement, then archive to `design_docs/archive/`
 - **SHAMT-N numbers:** Sequence markers for change sets, not epic identifiers. Reserved via `design_docs/NEXT_NUMBER.txt`
 - **No stage gates:** Master work proceeds at judgment, not through S1-S11 phase transitions
+
+**Available skills and personas:** Master-applicable skills (`shamt-validation-loop`, `shamt-guide-audit`, `shamt-code-review`, `shamt-master-reviewer`) and personas (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-code-reviewer`) are available for master dev work. Claude Code host wiring is live (SHAMT-40); Codex wiring lands in SHAMT-42.
 
 See "Design Doc Lifecycle" below for the full design doc process.
 
@@ -116,7 +208,7 @@ See "Design Doc Lifecycle" below for the full design doc process.
 2. **Create from template:** Use `.shamt/guides/templates/design_doc_template.md` to create `design_docs/active/SHAMT{N}_DESIGN.md`
 3. **Write design:** Capture problem statement, goals, proposals, implementation plan, validation strategy
 4. **Validate:** Run 7-dimension validation loop (see Design Doc Validation section below)
-5. **Implement:** Execute implementation plan on `feat/SHAMT-N` branch
+5. **Implement:** Execute implementation plan on `feat/SHAMT-N` branch. After implementing, run a D-COVERAGE pass: verify that (a) guide changes have corresponding skill body updates where warranted — if a modified source guide now diverges from its SKILL.md, update the skill body in the same commit; and (b) skill body changes have corresponding guide updates — if a skill introduces protocol content not present in any source guide, add the missing content to the appropriate guide. The D-DRIFT and D-COVERAGE audit dimensions will catch gaps that slip through, but catching them during implementation is cheaper.
 6. **Validate implementation:** Run implementation validation loop (see Implementation Validation section below)
 7. **Archive:** Move `SHAMT{N}_DESIGN.md` and validation log to `design_docs/archive/` when complete
 

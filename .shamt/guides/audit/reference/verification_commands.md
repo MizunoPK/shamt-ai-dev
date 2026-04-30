@@ -359,7 +359,7 @@ grep -rh "stages/s9/.*\.md" --include="*.md" . | \
 **Verification:**
 
 ```bash
-# Step 1: Check original files still >1250?
+# Step 1: Check original files still >2000?
 LARGE_FILES=("file1.md" "file2.md" "file3.md" "file4.md" "file5.md")
 for file in "${LARGE_FILES[@]}"; do
   lines=$(wc -l < "$file" 2>/dev/null || echo 0)

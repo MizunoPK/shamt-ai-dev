@@ -238,8 +238,8 @@ If answer is NO → LOW
 |------------|----------|--------|
 | CLAUDE.md >40K chars | 🔴 CRITICAL | Hard policy limit |
 | File >2000 lines | 🟠 HIGH | Severely impacts readability |
-| File 1251-1500 lines | 🟡 MEDIUM | Exceeds guideline |
-| File 1000-1250 lines | 🟢 LOW | Within acceptable range |
+| File 1501-2000 lines | 🟡 MEDIUM | Approaching limit |
+| File 1001-1500 lines | 🟢 LOW | Within acceptable range |
 
 ### D8: Documentation Quality
 
@@ -339,7 +339,7 @@ Fix Order:
 | 2 | Template broken path | D7 | 🔴 CRITICAL | All epics | None |
 | 3 | Stage 2 broken path | D1 | 🔴 CRITICAL | Single guide | None |
 | 4 | Mixed notation S5 guide | D2 | 🟠 HIGH | Single guide | None |
-| 5 | File >1500 lines | D11 | 🟡 MEDIUM | Single file | None |
+| 5 | File 1501-2000 lines | D11 | 🟡 MEDIUM | Single file | None |
 | 6 | Extra blank line | None | 🟢 LOW | Cosmetic | None |
 
 **Fix Order:**

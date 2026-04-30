@@ -142,6 +142,10 @@ import_dir() {
 
 import_dir "$MASTER_SHAMT_DIR/guides" "$CHILD_SHAMT_DIR/guides" "guides/audit/outputs"
 import_dir "$MASTER_SHAMT_DIR/scripts" "$CHILD_SHAMT_DIR/scripts" "scripts/import"
+import_dir "$MASTER_SHAMT_DIR/skills" "$CHILD_SHAMT_DIR/skills" ""
+import_dir "$MASTER_SHAMT_DIR/agents" "$CHILD_SHAMT_DIR/agents" ""
+import_dir "$MASTER_SHAMT_DIR/commands" "$CHILD_SHAMT_DIR/commands" ""
+import_dir "$MASTER_SHAMT_DIR/hooks" "$CHILD_SHAMT_DIR/hooks" ""
 
 # --- Remove files deleted from master ----------------------------------------
 
@@ -189,6 +193,15 @@ remove_deleted() {
 
 remove_deleted "$CHILD_SHAMT_DIR/guides" "$MASTER_SHAMT_DIR/guides" "guides/audit/outputs"
 remove_deleted "$CHILD_SHAMT_DIR/scripts" "$MASTER_SHAMT_DIR/scripts" "scripts/import"
+remove_deleted "$CHILD_SHAMT_DIR/skills" "$MASTER_SHAMT_DIR/skills" ""
+remove_deleted "$CHILD_SHAMT_DIR/agents" "$MASTER_SHAMT_DIR/agents" ""
+remove_deleted "$CHILD_SHAMT_DIR/commands" "$MASTER_SHAMT_DIR/commands" ""
+remove_deleted "$CHILD_SHAMT_DIR/hooks" "$MASTER_SHAMT_DIR/hooks" ""
+
+# Ensure hook scripts are executable after import
+if [ -d "$CHILD_SHAMT_DIR/hooks" ]; then
+    find "$CHILD_SHAMT_DIR/hooks" -name "*.sh" -exec chmod +x {} \;
+fi
 
 # Record sync state now — before diff generation and output, so a script
 # interruption after syncing still produces an accurate last_sync.conf.
@@ -336,5 +349,22 @@ fi
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
+
+# --- Claude Code regen hook --------------------------------------------------
+
+AI_SERVICE_CONF="$CHILD_SHAMT_DIR/config/ai_service.conf"
+if [ -f "$AI_SERVICE_CONF" ]; then
+    _ai_service="$(tr -d '[:space:]' < "$AI_SERVICE_CONF")"
+    if [ "$_ai_service" = "claude_code" ]; then
+        REGEN_SCRIPT="$CHILD_SHAMT_DIR/scripts/regen/regen-claude-shims.sh"
+        if [ -f "$REGEN_SCRIPT" ]; then
+            echo "------------------------------------------------------------"
+            echo "  Claude Code regen"
+            echo "------------------------------------------------------------"
+            bash "$REGEN_SCRIPT"
+        fi
+    fi
+fi
+
 echo "============================================================"
 echo ""

@@ -1,11 +1,11 @@
 # SHAMT-41: Hooks Bundle and Minimal MCP Server (Claude Code)
 
-**Status:** Validated
+**Status:** Implemented
 **Created:** 2026-04-27
 **Branch:** `feat/SHAMT-41`
 **Validation Log:** [SHAMT41_VALIDATION_LOG.md](./SHAMT41_VALIDATION_LOG.md)
 **Depends on:** SHAMT-39 (canonical content), SHAMT-40 (Claude Code wiring with reserved hooks/mcpServers blocks)
-**Companion docs:** `CLAUDE_INTEGRATION_THEORIES.md`, `FUTURE_ARCHITECTURE_OVERVIEW.md`
+**Companion docs:** [`CLAUDE_INTEGRATION_THEORIES.md`](../CLAUDE_INTEGRATION_THEORIES.md), [`FUTURE_ARCHITECTURE_OVERVIEW.md`](../FUTURE_ARCHITECTURE_OVERVIEW.md)
 
 ---
 
@@ -25,7 +25,7 @@ This design doc ships the high-value hook subset, the minimal MCP server, and va
 2. Author the **PreCompact and SessionStart hook pair** as the framework's compaction-survival mechanism, replacing GUIDE_ANCHOR / Resume Instructions for sessions where they fire.
 3. Author `.shamt/mcp/` containing a minimal MCP server with two functions: `shamt.next_number()` (atomic SHAMT-N reservation) and `shamt.validation_round()` (append a structured round entry, return updated `consecutive_clean`).
 4. Update the Claude Code regen and init flows so hooks register in `.claude/settings.json` and the MCP server registers in `.claude/settings.json`'s `mcpServers` block.
-5. Update `validation_loop_master_protocol.md` and S5/S7/S9 stage guides to call the new MCP verbs and acknowledge that hooks now enforce specific rules.
+5. Update `validation_loop_master_protocol.md` and S2/S5/S7/S8/S9 stage guides to call the new MCP verbs and acknowledge that hooks now enforce specific rules.
 6. Validate Claude doc Experiment B: run a full epic where the agent does not read `GUIDE_ANCHOR.md` or `Resume Instructions` because PreCompact + SessionStart carry the context, *and* a deliberate compaction event mid-epic produces a clean resume.
 
 ---
@@ -69,15 +69,20 @@ shamt.validation_round(
     log_path: str,
     round: int,
     severity_counts: dict[str, int],
-    fixed: bool = false,
+    fixed: bool = False,
+    exit_threshold: int = 1,
 ) -> {"round_number": int, "consecutive_clean": int, "should_exit": bool}
 ```
 
 `next_number()` opens `design_docs/NEXT_NUMBER.txt` with an OS-level lock, reads the current value, increments, writes back, releases the lock. Returns the reserved number atomically.
 
-`validation_round()` parses the log, appends a structured entry, computes `consecutive_clean` from the severity_counts and history, and returns whether the loop should exit. Before incrementing `consecutive_clean`, it checks for the `.shamt/epics/<active>/.subagent_confirmation_veto` flag file written by `subagent-confirmation-receipt.sh`; if present, the counter is not incremented and the flag is deleted. The agent writes its prose analysis separately; the MCP call is bookkeeping only.
+`validation_round()` parses the log, appends a structured entry, computes `consecutive_clean` from the severity_counts and history, and returns whether the loop should exit. Parameters:
+- `fixed`: Set to `true` when the round found exactly 1 LOW issue that was immediately fixed (the "1-LOW-fixed" exception to the clean-round rule). When `fixed=true` and `severity_counts` shows exactly 1 LOW and zero higher-severity issues, the round counts as clean and `consecutive_clean` increments. For all other severity combinations, `fixed` is ignored.
+- `exit_threshold`: The `consecutive_clean` value at which `should_exit` returns `true`. Default 1 for validation loops (per `validation_loop_master_protocol.md` primary-clean exit criterion). Pass 3 for guide audits (which require 3 consecutive clean rounds). `should_exit` is computed as `consecutive_clean >= exit_threshold` after processing the current round.
 
-The server uses the standard MCP Python SDK and exposes itself over stdio. SHAMT-40's regen registers it under `mcpServers.shamt` in `.claude/settings.json`.
+Before incrementing `consecutive_clean`, the tool checks for the `.shamt/epics/<active>/.subagent_confirmation_veto` flag file written by `subagent-confirmation-receipt.sh`; if present, the counter is not incremented and the flag is deleted. The agent writes its prose analysis separately; the MCP call is bookkeeping only.
+
+The server uses the standard MCP Python SDK and exposes itself over stdio. SHAMT-40's regen reserved the empty `mcpServers: {}` block; SHAMT-41's regen (Phase 5) populates the `mcpServers.shamt` entry in `.claude/settings.json`.
 
 **Rationale:** Python is portable, the MCP Python SDK is mature, and these two functions are the friction points the Claude doc identified as worth carving out first. Other tools (`audit_run`, `epic_status`, `metrics.append`, `export`, `import`) are deferred to SHAMT-44 where they pair naturally with cross-cutting workflows.
 
@@ -88,7 +93,7 @@ The server uses the standard MCP Python SDK and exposes itself over stdio. SHAMT
 
 ### Proposal 3: Update validation guides to reference the MCP verbs
 
-**Description:** `validation_loop_master_protocol.md` is updated to say "call `shamt.validation_round()` to log each round; the harness owns the counter and exit determination." S5, S7, S9 stage guides are updated similarly. The prose protocol still describes the dimensions and severity classification — only the bookkeeping moves to MCP.
+**Description:** `validation_loop_master_protocol.md` is updated to say "call `shamt.validation_round()` to log each round; the harness owns the counter and exit determination." S2, S5, S7, S8, and S9 stage guides are updated similarly (all stages that run validation loops with `consecutive_clean` tracking). The prose protocol still describes the dimensions and severity classification — only the bookkeeping moves to MCP.
 
 `GUIDE_ANCHOR.md` and Resume Instructions guides note that on Claude Code with PreCompact + SessionStart enabled, the manual snapshot ritual is partially superseded; they remain authoritative when hooks are not installed.
 
@@ -104,17 +109,18 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 
 | File | Status | Notes |
 |------|--------|-------|
-| `.shamt/hooks/no-verify-blocker.sh` (+ .ps1) | CREATE | PreToolUse on Bash |
-| `.shamt/hooks/commit-format.sh` (+ .ps1) | CREATE | PreToolUse on Bash |
-| `.shamt/hooks/pre-export-audit-gate.sh` (+ .ps1) | CREATE | UserPromptSubmit + PreToolUse |
-| `.shamt/hooks/validation-log-stamp.sh` (+ .ps1) | CREATE | PostToolUse on Edit |
-| `.shamt/hooks/architect-builder-enforcer.sh` (+ .ps1) | CREATE | PreToolUse on Task |
-| `.shamt/hooks/user-testing-gate.sh` (+ .ps1) | CREATE | PreToolUse on Bash (S9 only) |
-| `.shamt/hooks/precompact-snapshot.sh` (+ .ps1) | CREATE | PreCompact |
-| `.shamt/hooks/session-start-resume.sh` (+ .ps1) | CREATE | SessionStart |
-| `.shamt/hooks/subagent-confirmation-receipt.sh` (+ .ps1) | CREATE | SubagentStop |
-| `.shamt/hooks/stage-transition-snapshot.sh` (+ .ps1) | CREATE | UserPromptSubmit on stage-advance |
+| `.shamt/hooks/no-verify-blocker.sh` | CREATE | PreToolUse on Bash |
+| `.shamt/hooks/commit-format.sh` | CREATE | PreToolUse on Bash |
+| `.shamt/hooks/pre-export-audit-gate.sh` | CREATE | UserPromptSubmit + PreToolUse |
+| `.shamt/hooks/validation-log-stamp.sh` | CREATE | PostToolUse on Edit |
+| `.shamt/hooks/architect-builder-enforcer.sh` | CREATE | PreToolUse on Task |
+| `.shamt/hooks/user-testing-gate.sh` | CREATE | PreToolUse on Bash (S9 only) |
+| `.shamt/hooks/precompact-snapshot.sh` | CREATE | PreCompact |
+| `.shamt/hooks/session-start-resume.sh` | CREATE | SessionStart |
+| `.shamt/hooks/subagent-confirmation-receipt.sh` | CREATE | SubagentStop |
+| `.shamt/hooks/stage-transition-snapshot.sh` | CREATE | UserPromptSubmit on stage-advance |
 | `.shamt/hooks/README.md` | CREATE | Document each hook's purpose, event, and registration shape |
+| `.shamt/hooks/*.ps1` | DEFERRED | Windows PowerShell hook parity deferred (validation log Re-Verification Round: scoped out as out of scope for SHAMT-41) |
 | `.shamt/mcp/pyproject.toml` | CREATE | Python package metadata |
 | `.shamt/mcp/src/shamt_mcp/__init__.py` | CREATE | Server entry point |
 | `.shamt/mcp/src/shamt_mcp/next_number.py` | CREATE | Atomic SHAMT-N reservation |
@@ -123,12 +129,17 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 | `.shamt/audit/last_run.json` (schema only) | CREATE | Schema documented in pre-export-audit-gate.sh; format defined |
 | `.shamt/guides/audit/*.md` (relevant files) | MODIFY | Phase 2: update audit workflow guides to write `last_run.json` on audit completion; specific file list determined in Phase 2 |
 | `.shamt/scripts/regen/regen-claude-shims.sh` | MODIFY | Install hooks block into `.claude/settings.json`; install mcpServers.shamt |
-| `.shamt/scripts/regen/regen-claude-shims.ps1` | MODIFY | Mirror |
-| `.shamt/scripts/initialization/init.sh` | MODIFY | After SHAMT-40 wiring, install hooks + MCP if `features.shamt_hooks=true` is set in settings.json (see Open Question 1) |
-| `.shamt/scripts/initialization/init.ps1` | MODIFY | Mirror |
-| `.shamt/guides/reference/validation_loop_master_protocol.md` | MODIFY | Reference `shamt.validation_round()` MCP verb |
-| `.shamt/guides/stages/s5/*.md` | MODIFY | Reference MCP verbs where validation rounds happen |
+| `.shamt/scripts/regen/regen-claude-shims.ps1` | DEFERRED | Windows PS1 hook registration deferred (same scope decision as .ps1 hook scripts) |
+| `.shamt/scripts/initialization/init.sh` | NO-CHANGE | init.sh already delegates to regen-claude-shims.sh; Phase 4 in regen satisfies the requirement without direct init.sh changes |
+| `.shamt/scripts/initialization/init.ps1` | NO-CHANGE | Same — delegates to regen.ps1 (PS1 parity deferred) |
+| `.shamt/scripts/import/import.sh` | MODIFY | Add `hooks/` to the import scope (analogous to how skills/agents/commands were added in SHAMT-40); ensures existing child projects receive hook scripts on `shamt import` |
+| `.shamt/scripts/import/import.ps1` | MODIFY | Mirror |
+| `.shamt/skills/shamt-validation-loop/SKILL.md` | MODIFY | Reference `shamt.validation_round()` MCP verb alongside prose round-entry procedure (for hosts without MCP). Maintain `source_guides:` frontmatter. |
+| `.shamt/guides/reference/validation_loop_master_protocol.md` | MODIFY | Reference `shamt.validation_round()` MCP verb; source guide for `shamt-validation-loop/SKILL.md` — skill body updated in same phase (Phase 6) |
+| `.shamt/guides/stages/s2/*.md` | MODIFY | Reference MCP verbs where validation rounds happen (spec validation loop in S2.P1) |
+| `.shamt/guides/stages/s5/*.md` | MODIFY | Same |
 | `.shamt/guides/stages/s7/*.md` | MODIFY | Same |
+| `.shamt/guides/stages/s8/*.md` | MODIFY | Same (S8 alignment validation loop tracks consecutive_clean explicitly) |
 | `.shamt/guides/stages/s9/*.md` | MODIFY | Same |
 | `.shamt/guides/sync/import_workflow.md` | MODIFY | Note that GUIDE_ANCHOR rituals are partially superseded by PreCompact / SessionStart hooks |
 | `.shamt/commands/CHEATSHEET.md` | MODIFY | Add "Active Enforcement" section listing each hook, the event that fires it, and what it blocks or requires. Users need to know which operations are now harness-enforced rather than prose-convention. |
@@ -144,7 +155,7 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 - [ ] Implement `next_number()` with file-locking.
 - [ ] Implement `validation_round()` parsing existing log format and computing `consecutive_clean`.
 - [ ] Add unit tests covering atomic reservation under simulated concurrent access and `consecutive_clean` arithmetic edge cases.
-- [ ] Document install, run, and configuration in `.shamt/mcp/README.md`.
+- [ ] Document install, run, and configuration in `.shamt/mcp/README.md`. **Installation strategy decision:** Default to repo-local venv (per Open Question 2 recommendation); document the alternative paths (system pip-install, packaged binary) but specify repo-local venv as the default and what the registered command in settings.json should invoke (`python -m shamt_mcp` from within the venv).
 
 ### Phase 2: Audit-state contract
 - [ ] Define `.shamt/audit/last_run.json` schema (timestamp, scope, severity counts, unfixed issue list).
@@ -152,7 +163,7 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 - [ ] This contract is consumed by `pre-export-audit-gate.sh`.
 
 ### Phase 3: Hook scripts
-- [ ] Author each `.sh` and `.ps1` hook script per the table.
+- [ ] Author each `.sh` and `.ps1` hook script per the table. **Note:** `stage-transition-snapshot.sh` shares the `RESUME_SNAPSHOT.md` schema defined in Phase 4; author it alongside `precompact-snapshot.sh` in Phase 4 rather than before the schema exists. All other hooks in the table can be authored in Phase 3.
 - [ ] Each script reads stdin (event details from harness) and writes stdout / sets exit code per Claude Code hook protocol.
 - [ ] Test each script's deny-path: feed it an out-of-spec input and verify rejection. Feed it a legitimate input and verify pass-through.
 - [ ] Document each in `.shamt/hooks/README.md`.
@@ -167,11 +178,13 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 - [ ] Update `regen-claude-shims.sh` to install the `hooks` block into `.claude/settings.json` and the `mcpServers.shamt` entry.
 - [ ] Add hooks key to `_shamt_managed_blocks`.
 - [ ] Update init script: after SHAMT-40 wiring, run the same install step.
+- [ ] Update `import.sh` (and `import.ps1`) to add `hooks/` to the import scope so that existing child projects receive hook scripts when running `shamt import`.
 
 ### Phase 6: Guide updates
 - [ ] Update `CHEATSHEET.md` with an "Active Enforcement" section listing each hook, its trigger event, and what it blocks or requires (e.g., "commit-format.sh — rejects commits not matching `feat/SHAMT-N:` or `fix/SHAMT-N:` prefix").
 - [ ] Modify `validation_loop_master_protocol.md` to reference `shamt.validation_round()`.
-- [ ] Modify S5/S7/S9 stage guides similarly.
+- [ ] Update `shamt-validation-loop/SKILL.md` to reference `shamt.validation_round()` MCP verb alongside the prose round-entry procedure (for hosts without MCP). Maintain `source_guides:` frontmatter.
+- [ ] Modify S2/S5/S7/S8/S9 stage guides similarly (S2.P1 spec validation loop, S5/S7/S9 implementation and QC validation loops, S8 alignment validation loop).
 - [ ] Modify `import_workflow.md` to note PreCompact / SessionStart partial supersession.
 - [ ] Add CLAUDE.md section "Hooks and MCP Server (SHAMT-41)".
 
@@ -180,7 +193,7 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 - [ ] Register MCP tools in master's config: `shamt.next_number()`, `shamt.validation_round()` (implemented in this design doc, active immediately). Note: `shamt.audit_run()`, `shamt.epic_status()`, `shamt.metrics.append()` are implemented in SHAMT-44; they will be registered in master's config when SHAMT-44's regen updates land.
 - [ ] Update `master_dev_workflow.md` to reference hooks and MCP tools at relevant steps:
   - Step 4 (Guide Audit): note that `shamt.audit_run()` will be available after SHAMT-44
-  - Step 5 (Commit): note that `commit-format` and `pre-push-tripwire` hooks enforce commit discipline
+  - Step 5 (Commit): note that `commit-format` hook enforces commit discipline now; `pre-push-tripwire` hook will be available after SHAMT-44
   - Larger Changes section, sub-step "Reserve N": use `shamt.next_number()` MCP tool
   - Larger Changes section, sub-step "Validate design doc": `shamt.validation_round()` tracks rounds; `validation-log-stamp` hook auto-stamps
   - Session Management: `precompact-snapshot` and `session-start-resume` hooks auto-manage context across compactions
@@ -246,3 +259,9 @@ Ship all three: hooks bundle (opt-in installation through Shamt-managed `hooks` 
 | 2026-04-27 | Added CHEATSHEET.md MODIFY entry to Files Affected; Phase 6 step to add "Active Enforcement" section listing hooks and their enforcement rules |
 | 2026-04-28 | SHAMT-47 fold-in: Added Phase 6.5 (master repo hook + MCP activation); added `master_dev_workflow.md` to Files Affected; master gets 10 of 12 hooks and MCP tool registration |
 | 2026-04-28 | Validation fix: Hook count corrected to 10 of 12 (SHAMT-41 creates 10 hooks, SHAMT-44 adds 2 more; 2 excluded for master); MCP tool registration timing clarified (SHAMT-44 tools registered when SHAMT-44 lands); workflow references now use "Larger Changes section" sub-step names instead of ambiguous "Branch + Design Doc" |
+| 2026-04-28 | Validation fix (sub-agent round): clarified Phase 1 step 4 to explicitly name the installation strategy decision (repo-local venv default per Open Question 2) |
+| 2026-04-28 | Validation fix (sub-agent round 2): (1) companion docs in frontmatter changed to markdown hyperlinks; (2) `validation_round()` signature extended with `exit_threshold` parameter; `fixed` and `should_exit` semantics fully documented in Proposal 2 |
+| 2026-04-29 | Drift/coverage sync: Added `shamt-validation-loop/SKILL.md` MODIFY to Files Affected — Phase 6 modifies `validation_loop_master_protocol.md` (source guide), so the skill body must be updated in the same phase to reference the MCP verb. Updated guide MODIFY row Notes to link source guide → skill. Added Phase 6 step for skill update. |
+| 2026-04-29 | Validation fixes: (1) Fixed `false` → `False` in `validation_round()` Python signature (correctness); (2) Added Phase 3 note that `stage-transition-snapshot.sh` must be authored alongside `precompact-snapshot.sh` in Phase 4 due to shared RESUME_SNAPSHOT.md schema; (3) Added `.shamt/guides/stages/s2/*.md` MODIFY to Files Affected and updated Phase 6 step to include S2 alongside S5/S7/S9 (spec validation loop also uses `shamt.validation_round()`). |
+| 2026-04-29 | Validation fixes (round 2): (1) Phase 6.5 Step 5 bullet now notes `pre-push-tripwire` will be available after SHAMT-44 (consistent with audit_run forward reference pattern); (2) Added `.shamt/guides/stages/s8/*.md` MODIFY to Files Affected and Phase 6 step (S8 alignment validation loop tracks consecutive_clean explicitly). |
+| 2026-04-29 | Re-validation fix (post SHAMT-40 merge): Added `import.sh` and `import.ps1` to Files Affected as MODIFY — `.shamt/hooks/` is a new top-level directory not in the prior import scope; without syncing it, child projects would have hooks registered in settings.json but no hook scripts. Added Phase 5 step to update import scripts. |

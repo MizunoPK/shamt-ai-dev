@@ -1024,6 +1024,8 @@ STOP - DO NOT PROCEED TO S9.P3 YET
 
 ### Sub-Agent Confirmation Protocol
 
+**If `shamt.validation_round()` MCP tool is registered, call it after scoring each round with `exit_threshold=1`** — it appends a structured entry and returns updated `consecutive_clean` and `should_exit`.
+
 When `consecutive_clean = 1` (primary clean round achieved), EXECUTE THE FOLLOWING TASK TOOL CALLS IN A SINGLE MESSAGE:
 
 ```xml

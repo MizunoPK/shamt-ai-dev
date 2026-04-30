@@ -365,12 +365,12 @@ All six proposals together. They form a coherent layer: abstraction (P1), CI tem
 | `.shamt/sdk/pr_provider.py` | CREATE | Provider abstraction: `PRProvider` protocol, `GitHubProvider`, `AzureDevOpsProvider` |
 | `.shamt/sdk/shamt-validate-pr.py` | MODIFY | Refactor to use `PRProvider` instead of direct GitHub API calls; add `--provider` flag |
 | `.shamt/sdk/shamt-cron-janitor.py` | MODIFY | Refactor issue-posting to use provider-specific API (GitHub Issues API / ADO Work Items API); PR provider abstraction not applicable since janitor posts to issues, not PRs |
-| `.shamt/sdk/requirements.txt` | MODIFY | Add `requests` (for ADO REST API calls in `AzureDevOpsProvider`; likely already present for GitHub provider) |
+| `.shamt/sdk/requirements.txt` | CREATE | New file: `requests` for ADO REST API calls in `AzureDevOpsProvider`; add any additional deps needed by `GitHubProvider` (e.g., `PyGithub`). SHAMT-43 creates `pyproject.toml` for packaging but not `requirements.txt`; this file is required by the Azure Pipelines templates (`pip install -r .shamt/sdk/requirements.txt`). |
 | `.shamt/sdk/azure-pipelines/shamt-validate.yml.template` | CREATE | ADO Pipeline PR validation gate |
 | `.shamt/sdk/azure-pipelines/shamt-cron-janitor.yml.template` | CREATE | ADO Pipeline weekly cron janitor |
 | `.shamt/sdk/azure-pipelines/README.md` | CREATE | Setup instructions for ADO pipeline templates |
 | `.shamt/sdk/README.md` | MODIFY | Add ADO provider documentation, `--provider` flag usage |
-| `.shamt/guides/reference/ado_pr_review_workflow.md` | CREATE | Full ADO PR review workflow guide (Triggers A/B/C, thread statuses, voting, re-review) |
+| `.shamt/guides/reference/ado_pr_review_workflow.md` | CREATE | Full ADO PR review workflow guide (Triggers A/B/C, thread statuses, voting, re-review). **D-COVERAGE decision:** no dedicated skill warranted — ADO PR review is a user-facing workflow that uses the existing `shamt-code-review` skill with ADO MCP tools wired; the guide explains the trigger patterns and ADO-specific behaviors for the user, not a new agent protocol. |
 | `.shamt/host/claude/settings.starter.json` | MODIFY | Add conditional ADO MCP server block (commented out by default, uncommented by init when `--pr-provider=ado`) |
 | `.shamt/host/codex/config.starter.toml` | MODIFY | Add conditional ADO MCP server block |
 | `.shamt/config/pr_provider.conf.template` | CREATE | Template for PR provider config |
@@ -450,7 +450,7 @@ All six proposals together. They form a coherent layer: abstraction (P1), CI tem
 
 3. **ADO MCP Server version pinning:** Should Shamt pin a specific version of `@azure-devops/mcp` or use `@latest`? Pinning avoids breakage; `@latest` gets improvements. **Recommendation:** Pin in templates, document how to update.
 
-4. **Thread status mapping:** When the agent posts a review finding, should the thread status be `active` (default) or `pending`? ADO treats these differently in the UI and branch policy evaluation.
+4. **Thread status mapping:** When the agent posts a review finding, should the thread status be `active` (default) or `pending`? ADO treats these differently in the UI and branch policy evaluation. **Resolved in Proposal 4:** Use `active` for review findings (the standard "needs attention" state); the Open Questions section retains this entry for traceability but the decision is made.
 
 5. **Cross-org PRs:** ADO PRs are scoped to a single ADO organization. Cross-org PRs (child on org A, master on org B) would require the ADO MCP Server to authenticate to both orgs. Is this a supported scenario? If so, two MCP server instances may be needed.
 
@@ -479,3 +479,6 @@ All six proposals together. They form a coherent layer: abstraction (P1), CI tem
 | 2026-04-28 | Round 1 fixes: corrected regen script paths from `scripts/export/` to `scripts/regen/` (Issue 2.1); clarified ADO_ORG placeholder resolution pattern (Issue 2.2); resolved `requirements.txt` to `requests` (Issue 2.3); added SHAMT-40/42 to dependency list (Issue 3.1); aligned goal 4 naming with file name (Issue 3.2) |
 | 2026-04-28 | Round 2 sub-agent fix: clarified PRProvider scope — protocol is PR-only; janitor uses provider-specific issue/work-item APIs directly since it posts digests as issues, not PR comments |
 | 2026-04-28 | Validation: added missing Validation Log header field; corrected Files Affected path for master_review_pipeline_composite.md from `.shamt/guides/reference/` to `.shamt/guides/composites/` (per SHAMT-44) |
+| 2026-04-28 | Validation fix (Round 1): corrected `requirements.txt` status from MODIFY to CREATE — SHAMT-43 creates `pyproject.toml` only; `requirements.txt` is a new file required by Azure Pipelines templates |
+| 2026-04-29 | Drift/coverage sync: added D-COVERAGE decision to `ado_pr_review_workflow.md` CREATE row — no new skill warranted; ADO review uses existing `shamt-code-review` skill with ADO MCP tools wired. |
+| 2026-04-29 | Validation fix (Round 1 LOW): annotated Open Question 4 (thread status) as resolved — Proposal 4 already decided `active`; OQ4 retained for traceability with resolution note. |

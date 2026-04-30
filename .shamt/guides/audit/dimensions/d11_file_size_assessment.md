@@ -583,7 +583,7 @@ $ wc -l stages/s1/s1_epic_planning.md
 $ wc -l stages/s1/s1_p3_discovery_phase.md
 400 stages/s1/s1_p3_discovery_phase.md
 
-✅ PASS: Both files <1250 lines, improved navigation
+✅ PASS: Both files <2000 lines, improved navigation
 ```
 
 ### Example 3: Incremental Growth Not Noticed
