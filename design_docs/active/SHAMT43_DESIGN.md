@@ -1,6 +1,6 @@
 # SHAMT-43: Codex Cloud, OpenTelemetry Observability, and Agents SDK CI
 
-**Status:** Validated
+**Status:** Validated (re-validated 2026-04-29 post-SHAMT-42 merge)
 **Created:** 2026-04-27
 **Branch:** `feat/SHAMT-43`
 **Validation Log:** [SHAMT43_VALIDATION_LOG.md](./SHAMT43_VALIDATION_LOG.md)
@@ -74,7 +74,7 @@ The setup script installs the Shamt MCP server (HTTP-served, since cloud STDIO M
 - `shamt-savings-tracker.json` — measured vs. projected savings claims (cache hit rate, sub-agent vs. parent token ratio, etc.)
 
 `.shamt/observability/README.md` documents:
-- How to wire OTel into a Codex project's `.codex/config.toml` `[otel]` block
+- How to wire OTel into a Codex project's `.codex/config.toml` `[telemetry]` block (Codex uses `[telemetry]`, not `[otel]`; `config.starter.toml` ships a commented-out placeholder)
 - How to run a local collector via Docker
 - How to import the Grafana dashboards
 - For Claude Code projects: a brief note that OTel is not native; wiring requires the metrics-emitting MCP tool from SHAMT-44
@@ -112,7 +112,7 @@ Ships with `.shamt/sdk/.github/workflows/shamt-cron-janitor.yml.template` for we
 3. Codex Cloud spawns task; reads PR diff; loads `shamt-master-reviewer` skill; loads `shamt-guide-audit` skill for any touched guide files; produces draft review comment.
 4. Maintainer reviews the draft; iterates with further `@codex` mentions or merges.
 
-This requires (a) the `shamt-master-reviewer` skill from SHAMT-39, (b) Codex Cloud being available on the master repo, (c) the workflow template deployed to the master repo's `.github/workflows/` (not to child projects), (d) `@codex` configuration enabling the mention-trigger, (e) `requirements.toml` allowing the cloud task to write PR comments.
+This requires (a) the `shamt-master-reviewer` skill from SHAMT-39, (b) Codex Cloud being available on the master repo, (c) the workflow template deployed to the master repo's `.github/workflows/` (not to child projects), (d) `@codex` configuration enabling the mention-trigger, (e) a `GITHUB_TOKEN` (or fine-grained PAT) available to the cloud task with `pull_requests: write` permission — note that `requirements.toml` controls Codex sandbox mode, not GitHub API permissions; PR-comment write access is granted via the Actions token or a repo secret.
 
 **Rationale:** This is the master review pipeline (Claude doc §2.17 / §3.4) shipping as a primitive instead of a speculative deployment. On Codex this is configuration, not implementation.
 
@@ -151,6 +151,7 @@ All five proposals together. SHAMT-43 is essentially "everything Codex offers th
 | `.shamt/observability/grafana/shamt-architect-builder.json` | CREATE | S6 builder dashboard |
 | `.shamt/observability/grafana/shamt-savings-tracker.json` | CREATE | Measured vs. projected savings |
 | `.shamt/observability/README.md` | CREATE | Wiring guide for Codex / Claude Code |
+| `.shamt/host/codex/config.starter.toml` | MODIFY | Uncomment and expand the `[telemetry]` block with OTLP config and routing tags |
 | `.shamt/sdk/shamt-validate-pr.py` | CREATE | Agents SDK CI script — PR validation gate |
 | `.shamt/sdk/shamt-cron-janitor.py` | CREATE | Agents SDK scheduled script — stale-work scanner |
 | `.shamt/sdk/pyproject.toml` | CREATE | SDK script dependencies (shared by both scripts) |
@@ -177,12 +178,13 @@ All five proposals together. SHAMT-43 is essentially "everything Codex offers th
 - [ ] Author `cloud-environment.template.json`, `cloud-setup.sh`, `cloud-maintenance.sh`.
 - [ ] Setup script: install shamt-mcp via HTTP-served pattern; cache guide tree; seed AGENTS.md if missing.
 - [ ] Document secrets handling: `GITHUB_TOKEN` is setup-only; service account tokens for MCP auth resolved at setup; `shell_environment_policy` allows specific vars into agent phase.
+- [ ] Author `cloud-README.md` covering cloud setup, secrets handling, network policy, container lifecycle, and recovery procedures (cached container corruption → full rebuild on next setup-script run).
 
 ### Phase 2: OTel collector and Grafana dashboards
 - [ ] Author `otel-collector.yaml` with OTLP receivers and Shamt-domain pipelines.
 - [ ] Author 4 Grafana dashboard JSON files (overview, validation loop, architect-builder, savings tracker).
 - [ ] Document local-dev setup (Docker compose) and shared-deployment patterns.
-- [ ] Wire `[otel]` block into Codex starter config.toml (built on SHAMT-42's `.shamt/host/codex/config.starter.toml`).
+- [ ] Uncomment and expand the `[telemetry]` block in `.shamt/host/codex/config.starter.toml` (SHAMT-42 ships a commented-out `otlp_endpoint` placeholder; Phase 2 fills it out with OTLP config and routing tags). Note: Codex uses `[telemetry]`, not `[otel]`.
 
 ### Phase 3: Agents SDK scripts
 - [ ] Author `shamt-validate-pr.py`.
@@ -292,3 +294,4 @@ All five proposals together. SHAMT-43 is essentially "everything Codex offers th
 | 2026-04-28 | SHAMT-47 fold-in: Added Phase 4.5 (master repo SDK + CI deployment); updated CLAUDE.md Files Affected note to include child PR review composite references |
 | 2026-04-28 | Validation fix (sub-agent round): added Agents SDK justification in Proposal 3; added CI credential management step in Phase 3; added cloud task failure risk row to Risks table |
 | 2026-04-29 | Drift/coverage sync: added source guide → skill deferral notes to `validation_loop_master_protocol.md` and `architect_builder_pattern.md` Files Affected rows; added Phase 5 skill-body deferral note directing SHAMT-44 implementers to include cloud-variant content when updating those skill bodies. |
+| 2026-04-29 | Re-validated post-SHAMT-42 merge: fixed `[otel]`→`[telemetry]` throughout; added `config.starter.toml` MODIFY row to Files Affected; added explicit `cloud-README.md` authoring step to Phase 1; corrected Proposal 4 prerequisite (e) to reference GITHUB_TOKEN, not `requirements.toml`. |
