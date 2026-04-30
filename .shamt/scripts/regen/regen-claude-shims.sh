@@ -246,6 +246,7 @@ hooks_block = {
             "hooks": [
                 {"type": "command", "command": hook_cmd("no-verify-blocker.sh")},
                 {"type": "command", "command": hook_cmd("commit-format.sh")},
+                {"type": "command", "command": hook_cmd("pre-push-tripwire.sh")},
             ]
         },
         {
@@ -260,6 +261,7 @@ hooks_block = {
             "matcher": "Edit",
             "hooks": [
                 {"type": "command", "command": hook_cmd("validation-log-stamp.sh")},
+                {"type": "command", "command": hook_cmd("validation-stall-detector.sh")},
             ]
         }
     ],

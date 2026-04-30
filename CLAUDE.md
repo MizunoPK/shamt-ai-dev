@@ -238,7 +238,28 @@ Four dashboards: `shamt-overview.json`, `shamt-validation-loop.json`, `shamt-arc
 
 ### Reviewing Child Project PRs (updated for SHAMT-43)
 
-For code changes: `shamt-code-reviewer` agent. For guide changes: `shamt-master-reviewer` skill. For automated review on the master repo: `master-reviewer-workflow.yml` fires when `needs-shamt-review` label is applied. Full composite workflow documented in SHAMT-44's `master_review_pipeline_composite.md` (shipped in SHAMT-44).
+For code changes: `shamt-code-reviewer` agent. For guide changes: `shamt-master-reviewer` skill. For automated review on the master repo: `master-reviewer-workflow.yml` fires when `needs-shamt-review` label is applied. Full composite workflow documented in `master_review_pipeline_composite.md`.
+
+---
+
+## Cross-Cutting Composites (SHAMT-44)
+
+Six documented workflows that assemble component primitives (hooks, MCP, skills, agents, slash commands) into end-to-end patterns. Each composite includes a Claude Code variant, a Codex variant (where behavior differs), and a Master Dev Variant (where applicable).
+
+| Composite | What it assembles | Guide |
+|-----------|------------------|-------|
+| Validation loop | Skill + MCP + auto-stamp hook + stall-detector + `/loop` | `.shamt/guides/composites/validation_loop_composite.md` |
+| Architect–builder | Plan mode + S5/S6 guides + builder sub-agent + `run_in_background` + worktree/container | `.shamt/guides/composites/architect_builder_composite.md` |
+| Stale-work janitor | SDK cron + Claude Code CronCreate + one-shot post-event triggers | `.shamt/guides/composites/stale_work_janitor_composite.md` |
+| Master review pipeline | Label trigger + `shamt-master-reviewer` + `/loop` guide audit | `.shamt/guides/composites/master_review_pipeline_composite.md` |
+| Metrics / observability | Hook emission + `shamt.metrics_append()` + OTel + Grafana | `.shamt/guides/composites/metrics_observability_composite.md` |
+| Rollback / recovery | Stall detection + worktree/container disposability + pre-push tripwire | `.shamt/guides/composites/rollback_recovery_composite.md` |
+
+**New hooks (SHAMT-44):**
+- `validation-stall-detector.sh/.ps1` — PostToolUse (Edit on `*VALIDATION_LOG.md`): detects `consecutive_clean=0` for ≥N rounds, writes `STALL_ALERT.md`
+- `pre-push-tripwire.sh/.ps1` — PreToolUse (Bash `git push`): verifies audit clean + validation non-zero + builder log clear; bypass via `SHAMT_BYPASS_TRIPWIRE=1`
+
+**MCP tools added (SHAMT-44):** `shamt.audit_run()`, `shamt.epic_status()`, `shamt.metrics_append()`, `shamt.export_pipeline()`, `shamt.import_pipeline()` (joined existing `shamt.next_number()` and `shamt.validation_round()`).
 
 ---
 
@@ -256,6 +277,22 @@ Master work does **not** follow the S1-S11 epic workflow and does **not** use EP
 - **No stage gates:** Master work proceeds at judgment, not through S1-S11 phase transitions
 
 **Available skills and personas:** Master-applicable skills (`shamt-validation-loop`, `shamt-guide-audit`, `shamt-code-review`, `shamt-master-reviewer`) and personas (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-code-reviewer`) are available for master dev work. Claude Code host wiring is live (SHAMT-40); Codex wiring is live (SHAMT-42).
+
+**Primitives Available (master dev work):**
+
+| Primitive | Type | Use in master dev |
+|-----------|------|------------------|
+| `shamt.validation_round()` | MCP tool | Track consecutive_clean across validation rounds |
+| `shamt.audit_run()` | MCP tool | Record guide audit result for pre-push tripwire |
+| `shamt.next_number()` | MCP tool | Atomically reserve next SHAMT-N number |
+| `shamt.metrics_append()` | MCP tool | Emit metrics to sidecar.jsonl and OTel |
+| `validation-log-stamp.sh` | Hook | Auto-stamps validation logs |
+| `validation-stall-detector.sh` | Hook | Alerts on consecutive_clean=0 stalls |
+| `pre-push-tripwire.sh` | Hook | Guards push: audit clean + validation non-zero |
+| `architect-builder-enforcer.sh` | Hook | Enforces builder pattern in S6-equivalent work |
+| `/shamt-validate` | Slash command | Start a validation loop with `/loop` self-pacing |
+| `/shamt-audit` | Slash command | Start a guide audit |
+| `composites/` | Guides | End-to-end assembled workflows (see SHAMT-44 section) |
 
 See "Design Doc Lifecycle" below for the full design doc process.
 

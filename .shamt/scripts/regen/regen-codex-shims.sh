@@ -320,7 +320,7 @@ def hook_cmd(name):
 hooks_lines = []
 
 # pre_tool_use: shell (Bash-equivalent)
-pre_shell = [hook_cmd('no-verify-blocker.sh'), hook_cmd('commit-format.sh')]
+pre_shell = [hook_cmd('no-verify-blocker.sh'), hook_cmd('commit-format.sh'), hook_cmd('pre-push-tripwire.sh')]
 if repo_type != 'master':
     pre_shell += [hook_cmd('user-testing-gate.sh'), hook_cmd('pre-export-audit-gate.sh')]
 hooks_lines += ['[hooks.pre_tool_use.shell]']
@@ -339,7 +339,10 @@ hooks_lines += [
 # post_tool_use: edit
 hooks_lines += [
     '[hooks.post_tool_use.edit]',
-    f'commands = ["{hook_cmd("validation-log-stamp.sh")}"]',
+    'commands = [',
+    f'  "{hook_cmd("validation-log-stamp.sh")}",',
+    f'  "{hook_cmd("validation-stall-detector.sh")}",',
+    ']',
     '',
 ]
 
