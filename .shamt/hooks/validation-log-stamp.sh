@@ -42,4 +42,19 @@ fi
 timestamp="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 printf '\n<!-- stamp: %s -->\n' "$timestamp" >> "$log_path"
 
+# Emit validation_round metric (best-effort — never blocks the hook)
+SCRIPT_DIR2="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT2="$(cd "$SCRIPT_DIR2/../.." && pwd)"
+SHAMT_PY="$PROJECT_ROOT2/.shamt/mcp/.venv/bin/python3"
+[ -x "$SHAMT_PY" ] || SHAMT_PY="python3"
+"$SHAMT_PY" -c "
+import sys
+sys.path.insert(0, '$PROJECT_ROOT2/.shamt/mcp/src')
+try:
+    from shamt_mcp.metrics_append import metrics_append
+    metrics_append('validation_round', 1.0, {})
+except Exception:
+    pass
+" 2>/dev/null || true
+
 exit 0

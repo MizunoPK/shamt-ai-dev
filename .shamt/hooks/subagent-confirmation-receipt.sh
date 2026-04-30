@@ -39,7 +39,9 @@ if echo "$output_text" | grep -qiE 'zero issues|0 issues|confirmed.*clean|CLEAN 
 fi
 
 # Issue-report phrases — if any match, write veto
+confirmer_status="clean"
 if echo "$output_text" | grep -qiE 'issue.*found|finding|CRITICAL|HIGH|MEDIUM|LOW:|severity'; then
+    confirmer_status="issues_found"
     active_epic="$(grep -i "In Progress" "$EPIC_TRACKER" 2>/dev/null \
         | grep -oP '(?<=\| )[A-Z]+-[0-9]+(?= \|)' | head -1 || true)"
     if [ -n "$active_epic" ]; then
@@ -48,5 +50,19 @@ if echo "$output_text" | grep -qiE 'issue.*found|finding|CRITICAL|HIGH|MEDIUM|LO
         echo "SHAMT: Sub-agent confirmation veto written — issues detected in sub-agent output." >&2
     fi
 fi
+
+# Emit confirmer_run metric (best-effort — never blocks the hook)
+SHAMT_PY="$PROJECT_ROOT/.shamt/mcp/.venv/bin/python3"
+[ -x "$SHAMT_PY" ] || SHAMT_PY="python3"
+"$SHAMT_PY" -c "
+import sys
+sys.path.insert(0, '$PROJECT_ROOT/.shamt/mcp/src')
+try:
+    from shamt_mcp.metrics_append import metrics_append
+    epic_id = '$active_epic' if '$active_epic' else None
+    metrics_append('confirmer_run', 1.0, {'shamt_persona': 'shamt-validator', 'model': 'haiku'}, epic_id=epic_id)
+except Exception:
+    pass
+" 2>/dev/null || true
 
 exit 0

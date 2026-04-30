@@ -224,6 +224,17 @@ shamt.validation_round(
 ```
 The prose analysis and issue documentation are still written by you; the MCP call handles counter arithmetic only. If MCP is not registered, skip this step and update the log manually.
 
+After the audit exits, record the result with `shamt.audit_run()` so the pre-push tripwire can verify it:
+```
+shamt.audit_run(
+    scope=".shamt/guides/",
+    consecutive_clean={final_value},
+    exit_criterion_met=True,
+    issues_by_severity={"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0}
+)
+```
+The `validation-log-stamp.sh` hook emits an `audit_round` metric on each audit log edit automatically.
+
 **ALL 9 criteria must be met to exit:**
 
 1. All issues resolved — every issue from all rounds fixed and verified

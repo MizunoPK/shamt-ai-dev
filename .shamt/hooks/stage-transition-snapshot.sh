@@ -95,4 +95,18 @@ ${recent_edits}
 *This snapshot was written at a stage transition. The SessionStart hook reads it to restore context.*
 EOF
 
+# Emit builder_step metric (best-effort — never blocks the hook)
+SHAMT_PY="$SHAMT_DIR/../../.shamt/mcp/.venv/bin/python3"
+[ -x "$SHAMT_PY" ] || SHAMT_PY="$PROJECT_ROOT/.shamt/mcp/.venv/bin/python3"
+[ -x "$SHAMT_PY" ] || SHAMT_PY="python3"
+"$SHAMT_PY" -c "
+import sys
+sys.path.insert(0, '$PROJECT_ROOT/.shamt/mcp/src')
+try:
+    from shamt_mcp.metrics_append import metrics_append
+    metrics_append('builder_step', 1.0, {'shamt_stage': '${stage:-unknown}'}, epic_id='$active_epic')
+except Exception:
+    pass
+" 2>/dev/null || true
+
 exit 0

@@ -46,4 +46,17 @@ if ! echo "$input" | grep -qi 'shamt-builder'; then
     exit 2
 fi
 
+# Emit builder_runs_total metric for the allowed spawn (best-effort)
+SHAMT_PY="$PROJECT_ROOT/.shamt/mcp/.venv/bin/python3"
+[ -x "$SHAMT_PY" ] || SHAMT_PY="python3"
+"$SHAMT_PY" -c "
+import sys
+sys.path.insert(0, '$PROJECT_ROOT/.shamt/mcp/src')
+try:
+    from shamt_mcp.metrics_append import metrics_append
+    metrics_append('builder_runs_total', 1.0, {'shamt_variant': 'cli', 'status': 'spawned'}, epic_id='$active_epic')
+except Exception:
+    pass
+" 2>/dev/null || true
+
 exit 0

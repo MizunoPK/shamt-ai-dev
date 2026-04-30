@@ -93,8 +93,7 @@ open question requiring user input: handle via Open Questions Protocol (see belo
 **Step 7 — Score the round and fix all issues.** Classify each issue by severity.
 Fix immediately. Update consecutive_clean.
 
-**Step 7b — MCP bookkeeping (if `shamt.validation_round()` is registered).** After
-fixing all issues, call:
+**Step 7b — MCP bookkeeping and metrics (if MCP is registered).** After fixing all issues, call:
 ```
 shamt.validation_round(
     log_path="{path/to/VALIDATION_LOG.md}",
@@ -108,6 +107,10 @@ The tool appends a structured round entry and returns updated `consecutive_clean
 and `should_exit`. The prose dimension-by-dimension analysis is still written by
 you (the primary agent); the MCP call handles counter arithmetic only. If MCP is
 not registered, skip this step and update the log manually.
+
+The `validation-log-stamp.sh` hook also fires on each log edit and emits a
+`validation_round` metric to the sidecar log (and OTel if configured). This is
+automatic — no extra action required.
 
 **Step 8 — Post-round gate.** Update VALIDATION_LOG.md with all dimension results,
 tool call evidence, adversarial self-check outcome, and updated consecutive_clean.

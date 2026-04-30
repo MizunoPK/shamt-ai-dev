@@ -90,6 +90,21 @@ Shamt master does **not** ship a hosted collector (privacy, cost). The collector
 
 ---
 
+## Bootstrapping Caveat
+
+The observability stack is only useful once there are metrics to visualize. During
+the first 1–2 epics after enabling metrics, the Grafana dashboards will be sparse or
+empty. This is expected.
+
+The sidecar log (`.shamt/metrics/sidecar.jsonl`) provides local queryability before
+the full stack is running — each accepted `shamt.metrics_append()` call appends one
+JSON line, queryable with `grep` and `python3 -c "..."` without starting Docker.
+
+Do not let sparse dashboards delay metrics emission. Start emitting from day one;
+the visual layer will populate as work accumulates.
+
+---
+
 ## Metric Names
 
 | Metric | Type | Labels |

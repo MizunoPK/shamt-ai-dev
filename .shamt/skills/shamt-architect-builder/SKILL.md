@@ -47,6 +47,10 @@ Gate 5: User approves validated plan
 S6: Architect creates handoff package → spawns Haiku builder → builder executes
 ```
 
+**Metrics:** The `architect-builder-enforcer.sh` hook emits a `builder_runs_total`
+metric each time a `shamt-builder` Task spawn is allowed through. The `subagent-confirmation-receipt.sh`
+hook emits a `confirmer_run` metric after sub-agent confirmation. Both are automatic.
+
 ### Optional (Master Dev / Ad-hoc Work)
 
 Use when:
