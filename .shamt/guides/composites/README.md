@@ -34,8 +34,14 @@ guides/reference/             composites/validation_loop_composite.md
 guides/reference/             composites/architect_builder_composite.md
   architect_builder_pattern.md         ← assembles ↑ + S5/S6 guides + cloud
 
+.shamt/sdk/ + CronCreate      composites/stale_work_janitor_composite.md
+                              ← assembles SDK cron + one-shot triggers
+
+guides/code_review/ +         composites/master_review_pipeline_composite.md
+  guides/audit/               ← assembles review skill + audit + /loop
+
 .shamt/mcp/README.md          composites/metrics_observability_composite.md
-.shamt/observability/         ← assembles ↑
+.shamt/observability/         ← assembles MCP + OTel + sidecar + Grafana
 
 .shamt/hooks/README.md        composites/rollback_recovery_composite.md
                               ← assembles stall-detector + tripwire + worktree

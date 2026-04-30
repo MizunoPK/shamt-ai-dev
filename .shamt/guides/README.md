@@ -45,6 +45,7 @@ This directory contains the complete Shamt epic-driven development workflow guid
 | `sync/` | Separation rule, export workflow, import workflow |
 | `master_dev_workflow/` | Guide for improving guides directly |
 | `code_review/` | Standalone branch/PR review workflow |
+| `composites/` | End-to-end assembled workflows (validation loop, architect-builder, stale-work janitor, master review pipeline, metrics/observability, rollback/recovery) |
 
 ---
 

@@ -34,7 +34,10 @@ interact; read the primitive guides for full detail on each part.
 
 **Plan mode is ACTIVE during S5.** On Claude Code, the architect enters Plan mode before
 reading the codebase. Plan mode prevents any file writes during the planning phase; the
-architect can read, search, and reason, but cannot implement. This ensures the validated
+architect can read, search, and reason, but cannot implement. (Plan mode is a Claude Code
+built-in; it is invoked via the `/plan` command or by the host. It is not documented in
+`architect_builder_pattern.md` — this composite is the authoritative reference for
+plan-mode integration with the architect-builder pattern.) This ensures the validated
 plan commits to the architectural decisions before any code is written.
 
 S5 flow:
@@ -56,8 +59,8 @@ The architect creates a builder handoff package containing:
 Then spawns the builder **asynchronously** using `run_in_background=True`:
 
 ```python
-Agent(
-    subagent_type="general-purpose",
+Task(
+    subagent_type="shamt-builder",
     model="haiku",
     description="S6 builder: execute implementation plan",
     prompt="[full handoff package content]",

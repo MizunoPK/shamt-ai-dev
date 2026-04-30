@@ -18,7 +18,7 @@ documented here: recurring weekly scans and one-shot post-event triggers.
 
 **Primitive home guides:**
 - SDK cron script: `.shamt/sdk/README.md`
-- Cron job template: `.github/workflows/shamt-cron-janitor.yml.template`
+- Cron job template: `.shamt/sdk/.github/workflows/shamt-cron-janitor.yml.template`
 
 ---
 
@@ -38,7 +38,7 @@ Run weekly on a schedule. Three scan targets:
   a GitHub issue prompting the owner to update or archive it
 
 ### Child sync timestamp check
-- Read `.shamt/config/last_import_timestamp` in each configured child project
+- Read `.shamt/config/last_import.txt` in each configured child project
 - If no import in N weeks (default: 4 weeks), emit a reminder issue
 
 **Running on Claude Code (CronCreate):**

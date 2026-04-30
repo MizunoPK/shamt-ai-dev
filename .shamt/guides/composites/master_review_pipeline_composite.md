@@ -25,7 +25,7 @@ because the master repo IS the subject of this composite.
 **Primitive home guides:**
 - Code review workflow: `guides/code_review/code_review_workflow.md`
 - Guide audit workflow: `guides/audit/`
-- Separation rule: `guides/sync/README.md` (separation rule section)
+- Separation rule: `guides/sync/separation_rule.md`
 
 ---
 

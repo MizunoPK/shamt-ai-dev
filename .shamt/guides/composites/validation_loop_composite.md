@@ -171,8 +171,8 @@ Master repo validation loops follow the same composite, with one exception:
 
 ---
 
-## Metrics Integration (Phase 5)
+## Metrics Integration
 
-When `shamt.metrics_append()` is wired into the hooks, `validation-log-stamp.sh` emits
-a `validation_round` metric on each log edit. See `metrics_observability_composite.md`
-for the full metrics picture.
+The `validation-log-stamp.sh` hook emits a `validation_round` metric on each log edit
+(wired as of SHAMT-44 Phase 5 — this is live, not deferred). No extra action required
+from the skill. See `metrics_observability_composite.md` for the full metrics picture.

@@ -18,13 +18,13 @@ useful in both contexts.
 | `shamt.metrics_append()` | `.shamt/mcp/` | MCP tool: validates labels, writes sidecar, best-effort OTLP |
 | `sidecar.jsonl` | `.shamt/metrics/sidecar.jsonl` | Local queryable metrics log (one JSON line per event) |
 | `validation-log-stamp.sh` | `.shamt/hooks/` | Emits `validation_round` metric on each log edit |
-| `stage-transition-snapshot.sh` | `.shamt/hooks/` | Emits `builder_step` metric at stage transitions |
+| `stage-transition-snapshot.sh` | `.shamt/hooks/` | Emits `shamt_session_active` metric at stage transitions |
 | `architect-builder-enforcer.sh` | `.shamt/hooks/` | Emits `builder_runs_total` metric on S6 spawns |
 | `subagent-confirmation-receipt.sh` | `.shamt/hooks/` | Emits `confirmer_run` metric on sub-agent completion |
 | OTel collector | `.shamt/observability/otel-collector.yaml` | Receives OTLP; exports to Prometheus (scrape endpoint :8889) |
 | Prometheus | `.shamt/observability/prometheus.yml` | Scrapes OTel collector :8889; stores time series |
 | Tempo | `.shamt/observability/tempo.yaml` | OTLP trace ingress :4317; local trace storage |
-| Grafana dashboards | `.shamt/observability/` | Visualizes: overview, validation loop, architect-builder, savings |
+| Grafana dashboards | `.shamt/observability/grafana/` | Visualizes: overview, validation loop, architect-builder, savings |
 | Docker Compose | `.shamt/observability/docker-compose.yml` | Local stack: otel-collector + prometheus + tempo + grafana |
 
 ---
@@ -38,7 +38,7 @@ Each hook emits metrics at meaningful events via `shamt.metrics_append()`:
 | Hook | Metric emitted | When |
 |------|---------------|------|
 | `validation-log-stamp.sh` | `validation_round` | Every validation log edit |
-| `stage-transition-snapshot.sh` | `builder_step` | Stage transition phrase detected |
+| `stage-transition-snapshot.sh` | `shamt_session_active` | Stage transition phrase detected |
 | `architect-builder-enforcer.sh` | `builder_runs_total` | S6 builder Task spawn |
 | `subagent-confirmation-receipt.sh` | `confirmer_run` | Sub-agent confirmation completes |
 
@@ -86,14 +86,14 @@ Services:
 - OTel collector: `:4317` (OTLP gRPC), `:4318` (OTLP HTTP), `:8889` (Prometheus scrape)
 - Prometheus: `:9090`
 - Tempo: `:3200`
-- Grafana: `:3000` (default credentials: admin/admin)
+- Grafana: `:3000` (anonymous Admin access enabled by default; no login required in the shipped compose config)
 
 **Port layout note:** The OTel collector exposes its Prometheus exporter on `:8889`
 (not `:9090`, which is the Prometheus server). Prometheus scrapes `otel-collector:8889`.
 
 ### 5. Grafana Dashboards
 
-Four dashboards in `.shamt/observability/`:
+Four dashboards in `.shamt/observability/grafana/`:
 
 | Dashboard | File | Purpose |
 |-----------|------|---------|
