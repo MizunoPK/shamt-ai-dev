@@ -1,0 +1,5 @@
+[profiles.shamt-s5]
+model = "${FRONTIER_MODEL}"
+model_reasoning_effort = "high"
+sandbox_mode = "read-only"
+# MCP: shamt server appended by regen-codex-shims.sh when .shamt/mcp/.venv is present

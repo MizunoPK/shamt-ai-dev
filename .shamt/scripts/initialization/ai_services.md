@@ -9,9 +9,8 @@ During initialization, the init script reads this file to determine how to name 
 | Service | Wiring Tier | Description |
 |---------|-------------|-------------|
 | Claude Code | **full-wiring** | Skills, agents, commands, and settings.json deployed automatically via `init.sh` and `regen-claude-shims.sh` |
-| All others | **rules-file-only** | Only the rules file is written; no `.claude/` equivalents |
-
-Codex will become **full-wiring** when SHAMT-42 ships.
+| Codex | **full-wiring** | Skills, agents, commands, profiles, hooks, and config.toml deployed automatically via `init.sh` and `regen-codex-shims.sh` (SHAMT-42) |
+| All others | **rules-file-only** | Only the rules file is written; no host-specific equivalents |
 
 ---
 
@@ -20,6 +19,14 @@ Codex will become **full-wiring** when SHAMT-42 ships.
 - **Rules file name:** `CLAUDE.md`
 - **Rules file location:** Project root
 - **Notes:** Claude Code reads `CLAUDE.md` at the project root automatically. The file is included in every agent session as system context.
+
+---
+
+## Codex (OpenAI)
+
+- **Rules file name:** `AGENTS.md`
+- **Rules file location:** Project root
+- **Notes:** Codex reads `AGENTS.md` at the project root automatically. Full-wiring: `regen-codex-shims.sh` deploys skills to `~/.codex/prompts/` (interim), agents to `.codex/agents/`, profiles and hooks to `.codex/config.toml`. Run `init.sh --host=codex` to set up. Use `--host=claude,codex` for dual-host (both `CLAUDE.md` and `AGENTS.md` generated). Model names are resolved from `.shamt/host/codex/.model_resolution.local.toml` (gitignored).
 
 ---
 

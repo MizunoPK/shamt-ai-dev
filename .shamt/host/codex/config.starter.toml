@@ -1,0 +1,46 @@
+# .codex/config.toml — Shamt-managed Codex project config
+# Written by init.sh (Shamt SHAMT-42). User-editable outside managed blocks.
+# Run regen-codex-shims.sh to refresh managed sections.
+
+[model]
+# Set by regen-codex-shims.sh from .shamt/host/codex/.model_resolution.local.toml
+# Override here or use --profile at session start.
+
+[agents]
+max_depth = 1  # Codex ceiling; Shamt validation loops flatten to depth-1
+
+# =============================================================================
+# SHAMT-PROFILES-START — managed by regen-codex-shims.sh; do not edit manually
+# =============================================================================
+
+# (profile fragments inserted here by regen-codex-shims.sh)
+
+# =============================================================================
+# SHAMT-PROFILES-END
+# =============================================================================
+
+# =============================================================================
+# SHAMT-MCP-START — managed by regen-codex-shims.sh; do not edit manually
+# =============================================================================
+
+# (MCP server registration inserted here by regen-codex-shims.sh when venv present)
+
+# =============================================================================
+# SHAMT-MCP-END
+# =============================================================================
+
+# =============================================================================
+# SHAMT-HOOKS-START — managed by regen-codex-shims.sh; do not edit manually
+# =============================================================================
+
+# (hook registrations inserted here by regen-codex-shims.sh)
+
+# =============================================================================
+# SHAMT-HOOKS-END
+# =============================================================================
+
+# =============================================================================
+# OTel / Tracing (optional — uncomment if using OpenTelemetry)
+# =============================================================================
+# [telemetry]
+# otlp_endpoint = "http://localhost:4317"

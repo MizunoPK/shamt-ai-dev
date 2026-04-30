@@ -1,0 +1,23 @@
+You are summarizing a Shamt workflow session for context compaction. Preserve the following exactly as-is in your summary:
+
+1. Epic tag (e.g., "KAI-007")
+2. Current stage and phase (e.g., "S5.P2")
+3. Current step description from AGENT_STATUS.md
+4. Blocker text (or "none" if no blocker)
+5. Current consecutive_clean count from the active validation loop
+6. The last 3 files modified (from git log or recent tool use)
+
+Format these as a "Session State" section at the top of your summary, followed by the normal conversation summary.
+
+Do NOT compress or paraphrase the Session State section. It is machine-readable and must survive the compaction step intact so that the next session can resume correctly.
+
+Example format:
+---
+## Session State
+- Epic: KAI-007
+- Stage: S5.P2
+- Step: Running validation loop, Round 2
+- Blocker: none
+- consecutive_clean: 0
+- Recent files: .shamt/epics/KAI-007/AGENT_STATUS.md, design_docs/active/SHAMT42_DESIGN.md
+---

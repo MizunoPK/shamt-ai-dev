@@ -1,0 +1,25 @@
+# requirements.toml — Shamt enforcement floor for Codex CLI
+# Managed by Shamt (SHAMT-42). Written to project root by init.sh.
+# Child projects must not weaken these constraints.
+# Local overrides: create requirements.local.toml (gitignored) if Codex supports layered files.
+
+[sandbox]
+# Never allow danger-full-access; workspace-write is the ceiling for implementation stages
+allowed_modes = ["read-only", "workspace-write"]
+
+[mcp]
+# Allowlist: only Shamt-registered MCP servers permitted
+allowed_servers = ["shamt", "git"]
+
+[hooks]
+# Admin-pinned hook source — Shamt hooks must come from this directory
+managed_dir = ".shamt/hooks/"
+
+[denied_reads]
+# Block reads of common secret file patterns
+globs = [".env", "**/.env.*", "**/secrets.*", "**/.aws/credentials", "**/.ssh/id_*"]
+
+[approval]
+# Minimum approval policy for all stages; never set to "never" for stages touching git push
+# or external services
+floor = "on-request"

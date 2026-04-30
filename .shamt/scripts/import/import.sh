@@ -350,16 +350,25 @@ echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
-# --- Claude Code regen hook --------------------------------------------------
+# --- Host regen hooks ---------------------------------------------------------
 
 AI_SERVICE_CONF="$CHILD_SHAMT_DIR/config/ai_service.conf"
 if [ -f "$AI_SERVICE_CONF" ]; then
     _ai_service="$(tr -d '[:space:]' < "$AI_SERVICE_CONF")"
-    if [ "$_ai_service" = "claude_code" ]; then
+    if [ "$_ai_service" = "claude_code" ] || [ "$_ai_service" = "claude_codex" ]; then
         REGEN_SCRIPT="$CHILD_SHAMT_DIR/scripts/regen/regen-claude-shims.sh"
         if [ -f "$REGEN_SCRIPT" ]; then
             echo "------------------------------------------------------------"
             echo "  Claude Code regen"
+            echo "------------------------------------------------------------"
+            bash "$REGEN_SCRIPT"
+        fi
+    fi
+    if [ "$_ai_service" = "codex" ] || [ "$_ai_service" = "claude_codex" ]; then
+        REGEN_SCRIPT="$CHILD_SHAMT_DIR/scripts/regen/regen-codex-shims.sh"
+        if [ -f "$REGEN_SCRIPT" ]; then
+            echo "------------------------------------------------------------"
+            echo "  Codex regen"
             echo "------------------------------------------------------------"
             bash "$REGEN_SCRIPT"
         fi

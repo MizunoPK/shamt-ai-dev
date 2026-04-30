@@ -1,0 +1,5 @@
+# S6 uses the builder sub-profile name to distinguish it from shamt-builder (persona)
+[profiles.shamt-s6-builder]
+model = "${DEFAULT_MODEL}"
+model_reasoning_effort = "minimal"
+sandbox_mode = "workspace-write"

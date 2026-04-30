@@ -1,0 +1,4 @@
+[profiles.shamt-architect]
+model = "${FRONTIER_MODEL}"
+model_reasoning_effort = "high"
+sandbox_mode = "workspace-write"
