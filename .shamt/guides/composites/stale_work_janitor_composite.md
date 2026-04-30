@@ -33,7 +33,7 @@ Run weekly on a schedule. Three scan targets:
 - Do NOT auto-decide — only surface the signal
 
 ### Active design doc sweep (`design_docs/active/`)
-- Find design docs with no git commit in the last N weeks (default: 3 weeks)
+- Find design docs with no git commit in the last N weeks (default: 4 weeks, configurable via `SHAMT_ACTIVE_MAX_WEEKS`)
 - Check if the doc is marked "In Progress" or "Draft" — if so and it's stale, create
   a GitHub issue prompting the owner to update or archive it
 
@@ -49,13 +49,13 @@ CronCreate(
     schedule="0 9 * * 1",  # Monday 9am
     prompt="Run the Shamt weekly janitor scan: check design_docs/incoming/ for
             proposals >30d, design_docs/active/ for stale docs, and
-            .shamt/config/last_import_timestamp for stale child syncs.
+            .shamt/config/last_import.txt for stale child syncs.
             Create GitHub issues for anything that needs attention."
 )
 ```
 
 **Running on Codex (GitHub Actions):** Copy
-`.github/workflows/shamt-cron-janitor.yml.template` to
+`.shamt/sdk/.github/workflows/shamt-cron-janitor.yml.template` to
 `.github/workflows/shamt-cron-janitor.yml`. Requires `OPENAI_API_KEY` secret.
 
 ### Master-internal scan targets

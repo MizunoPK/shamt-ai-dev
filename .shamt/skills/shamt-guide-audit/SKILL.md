@@ -236,7 +236,7 @@ shamt.audit_run(
     issues_by_severity={"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0}
 )
 ```
-The `validation-log-stamp.sh` hook emits an `audit_round` metric on each audit log edit automatically.
+Note: `validation-log-stamp.sh` only fires on files with `VALIDATION_LOG` in the name; guide audit output files (`round_N_loop_decision.md`) do not trigger it. No hook automatically emits `audit_round` — use `shamt.metrics_append("audit_round", ...)` manually if audit metrics are needed.
 
 **ALL 9 criteria must be met to exit:**
 
