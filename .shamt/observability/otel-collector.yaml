@@ -63,9 +63,9 @@ processors:
     check_interval: 5s
 
 exporters:
-  # Prometheus metrics (scrape endpoint for Grafana)
+  # Prometheus metrics (scrape endpoint on 8889; Prometheus server scrapes this)
   prometheus:
-    endpoint: "0.0.0.0:9090"
+    endpoint: "0.0.0.0:8889"
     namespace: shamt
     resource_to_telemetry_conversion:
       enabled: true
