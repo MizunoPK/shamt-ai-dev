@@ -172,7 +172,7 @@ Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
 
 ## Hooks and MCP Server (SHAMT-41)
 
-**Hooks bundle** — 10 enforcement hook scripts in `.shamt/hooks/`. For Claude Code: activated by setting `features.shamt_hooks=true` in `.claude/settings.json`; `regen-claude-shims.sh` installs registrations into `settings.json`'s `hooks` block. For Codex: `regen-codex-shims.sh` writes the `SHAMT-HOOKS` block in `.codex/config.toml` (see SHAMT-42 section above and `.shamt/hooks/README.md` for event mapping).
+**Hooks bundle** — 13 scripts in `.shamt/hooks/` (12 enforcement hooks; `permission-router.sh` is Codex-only, see SHAMT-42). For Claude Code: activated by setting `features.shamt_hooks=true` in `.claude/settings.json`; `regen-claude-shims.sh` installs registrations into `settings.json`'s `hooks` block. For Codex: `regen-codex-shims.sh` writes the `SHAMT-HOOKS` block in `.codex/config.toml` (see SHAMT-42 section above and `.shamt/hooks/README.md` for event mapping).
 
 | Hook | Event | Purpose |
 |------|-------|---------|
@@ -187,7 +187,9 @@ Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
 | `subagent-confirmation-receipt.sh` | SubagentStop | Write veto flag if confirming sub-agent reports issues |
 | `stage-transition-snapshot.sh` | UserPromptSubmit | Write `RESUME_SNAPSHOT.md` at stage-advance phrases |
 
-**Master-applicable hooks (8 of 10):** all except `pre-export-audit-gate.sh` (master doesn't export) and `user-testing-gate.sh` (S9 child-only).
+**SHAMT-44 additions:** `validation-stall-detector.sh` + `pre-push-tripwire.sh` — see Cross-Cutting Composites section.
+
+**Master-applicable (10 of 12):** all except `pre-export-audit-gate.sh` (master doesn't export) and `user-testing-gate.sh` (S9 child-only).
 
 **MCP server** — Python package at `.shamt/mcp/`. Install via repo-local venv:
 ```bash
@@ -365,9 +367,7 @@ When asked to validate a design doc, run a validation loop following `.shamt/gui
 6. **Missing proposals** — Is anything important left out of scope that should be addressed here?
 7. **Open questions** — Are there unresolved decisions that need to be surfaced before implementation?
 
-**Exit criterion:** Primary clean round (all 7 dimensions pass with ≤1 LOW-severity issue) + 2 independent sub-agents both confirming zero issues. Same pattern as workflow validation loops: `consecutive_clean = 1`, then spawn 2 parallel sub-agents.
-
-A round is clean if it has ZERO issues OR exactly ONE LOW-severity issue (fixed). Multiple LOW-severity issues OR any MEDIUM/HIGH/CRITICAL severity issue resets `consecutive_clean` to 0. See `reference/severity_classification_universal.md` for severity definitions.
+**Exit criterion:** Primary clean round (all 7 dimensions pass with ≤1 LOW-severity issue) + 2 independent sub-agents both confirming zero issues (`consecutive_clean = 1`, then spawn 2 parallel sub-agents). See `reference/severity_classification_universal.md` for severity definitions.
 
 **Detailed workflow:** See `.shamt/guides/design_doc_validation/` for complete validation process, validation log template, and guidance.
 
@@ -527,8 +527,6 @@ Child projects maintain ARCHITECTURE.md and CODING_STANDARDS.md through the S1-S
 
 **CRITICAL:** Model selection is not optional. When workflow guides specify delegation patterns (e.g., "Spawn Haiku → File operations"), you MUST use the Task tool with the specified model parameter.
 
-**Note:** As of SHAMT-29, model selection is mandatory at all execution points. See workflow guides for inline Task tool examples.
-
 **Quick Reference:**
 - **Haiku** (cheap, fast): File operations, git operations, grep/glob searches, tests, sub-agent confirmations
 - **Sonnet** (balanced): Code reading, structural analysis, medium-complexity tasks
@@ -552,24 +550,6 @@ Child projects maintain ARCHITECTURE.md and CODING_STANDARDS.md through the S1-S
 
 **Purpose:** Two-stage implementation pattern that separates planning (architect) from execution (builder) for 60-70% token savings on implementation execution.
 
-**Pattern Overview:**
-
-**S5 Phase 1-2 - Architect (Sonnet/Opus):**
-- Reads codebase and spec
-- Creates mechanical, step-by-step implementation plan (Phase 1)
-- Validates plan using 9-dimension validation loop (Phase 2)
-- User approves validated plan (Gate 5)
-
-**S6 - Handoff and Execution:**
-- S6 Architect receives validated plan from S5
-- Creates handoff package
-- Spawns Haiku builder agent
-
-**S6 Builder (Haiku):**
-- Executes plan mechanically, reports completion or errors
-
-**Separation:** Planning (S5) uses expensive model, execution (S6) uses cheap model
-
 **Usage:**
 
 **MANDATORY** for S1-S11 epic workflow:
@@ -583,24 +563,21 @@ Child projects maintain ARCHITECTURE.md and CODING_STANDARDS.md through the S1-S
 - See decision tree in `reference/architect_builder_pattern.md`
 
 **Key Files:**
-- `reference/architect_builder_pattern.md` - Complete pattern documentation (when to use, mechanics, error recovery)
-- `reference/implementation_plan_format.md` - Mechanical plan specification (CREATE/EDIT/DELETE/MOVE operations, 9 validation dimensions)
-- `templates/implementation_plan_template.md` - Mechanical plan template (copy-paste starting point)
-- `templates/implementation_plan_validation_log_template.md` - Validation log template
+- `reference/architect_builder_pattern.md` — decision tree, mechanics, error recovery
+- `reference/implementation_plan_format.md` — plan format, CREATE/EDIT/DELETE/MOVE, 9 validation dimensions
+- `templates/implementation_plan_template.md` — plan template
+- `templates/implementation_plan_validation_log_template.md` — validation log template
 
 **Workflow:**
 1. **S5 Phase 1:** Architect creates mechanical implementation plan (step-by-step file operations with exact details)
-2. **S5 Phase 2:** Architect validates plan (9-dimension validation loop: step clarity, mechanical executability, file coverage, operation specificity, verification completeness, error handling, dependency ordering, checklist completeness, spec alignment)
+2. **S5 Phase 2:** Architect validates plan (9-dimension loop — see `reference/implementation_plan_format.md`)
 3. **Gate 5:** User approves validated plan
-4. **S6:** Architect receives validated plan from S5, creates handoff package (builder instructions, error handling protocol)
-5. **S6:** Architect spawns Haiku builder (Task tool with `model="haiku"`)
-6. **S6:** Builder executes plan sequentially (no design decisions, reports errors immediately)
-7. **S6:** Architect monitors execution (handles success/errors, diagnoses, fixes plan if needed)
+4. **S6:** Architect creates handoff package, spawns Haiku builder (`model="haiku"`); builder executes sequentially; architect monitors and fixes on error
 
 **Token Savings:** 60-70% on implementation execution (Haiku builder vs. Sonnet/Opus architect)
 
 **Integration Points:**
 - S2: Added Dimension 10 (Design Completeness) to spec validation - ensures specs contain complete architectural/design detail (prerequisite for mechanical planning)
-- S5: Creates and validates mechanical implementation plans using 9-dimension validation loop (Step Clarity, Mechanical Executability, File Coverage, Operation Specificity, Verification Completeness, Error Handling, Dependency Ordering, Checklist Completeness, Spec Alignment)
-- S6: Receives validated mechanical plan from S5, creates handoff package, spawns Haiku builder for execution
+- S5: Creates and validates mechanical implementation plans (9-dimension loop)
+- S6: Creates handoff package, spawns Haiku builder for execution
 - Master dev: Optional integration at Step 3.5 with decision criteria

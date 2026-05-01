@@ -218,6 +218,20 @@ I'll wait for your testing results before proceeding to the final review.
 
 **DO NOT PROCEED** until user responds with testing results.
 
+**Structured confirmation gate (SHAMT-45):** When the user signals they have finished testing, use `AskUserQuestion` to record the outcome as a machine-readable artifact before routing:
+
+```python
+AskUserQuestion(
+    question="S9 user-testing confirmation: Did you find any bugs during user testing?",
+    options=["ZERO bugs found", "bugs found"]
+)
+```
+
+- **"ZERO bugs found"** → proceed to Outcome 1 below, then Step 6d.
+- **"bugs found"** → ask a follow-up free-text question for the bug list, then follow Outcome 2 below. Do NOT proceed to `git push` until a "ZERO bugs found" response is recorded.
+
+On Codex headless: post the question as a PR comment with the two options and parse the reply. The `user-testing-gate.sh` hook (child-only) also guards the push path and requires this confirmation to be present.
+
 **Possible outcomes:**
 
 ### Outcome 1: User reports "No bugs found"
@@ -237,7 +251,7 @@ I'll wait for your testing results before proceeding to the final review.
 
 **Actions:**
 1. STOP current workflow
-2. Proceed to Step 6c (Bug Fix Protocol)
+2. Proceed to Step S9.P3 (Bug Fix Protocol)
 3. Do NOT proceed to PR review until bugs fixed
 
 ---
@@ -595,7 +609,7 @@ User-reported bugs follow the epic debugging protocol:
 
 1. ✅ Ask user to test the system (Step 6a)
 2. ✅ Wait for user testing results (Step 6b)
-3. ✅ If bugs found → Fix all bugs → RESTART S9 → Return to Step 6 (Step 6c)
+3. ✅ If bugs found → Fix all bugs → RESTART S9 → Return to Step 6 (Step S9.P3)
 4. ✅ If no bugs → Document completion → Proceed to Step 7 (Step 6d)
 
 **Critical Requirements:**

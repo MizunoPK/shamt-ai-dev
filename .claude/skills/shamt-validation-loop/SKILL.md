@@ -16,6 +16,7 @@ source_guides:
   - guides/reference/validation_loop_master_protocol.md
   - guides/reference/severity_classification_universal.md
   - guides/composites/validation_loop_composite.md
+  - guides/stages/s9/s9_p3_user_testing.md
 master-only: false
 version: "1.2 (SHAMT-45)"
 ---

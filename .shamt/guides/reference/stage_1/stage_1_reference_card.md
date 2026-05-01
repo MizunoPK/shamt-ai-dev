@@ -225,7 +225,7 @@ STEP 6: Transition to S2 (5 min)
 - [ ] epic_smoke_test_plan.md created (PLACEHOLDER)
 - [ ] epic_lessons_learned.md created
 - [ ] research/ folder created
-- [ ] GUIDE_ANCHOR.md created
+- [ ] GUIDE_ANCHOR.md created (skip if shamt_hooks=true — RESUME_SNAPSHOT.md replaces it)
 - [ ] EPIC_README.md updated with Epic Progress Tracker
 
 **Step 6 -> S2:**
