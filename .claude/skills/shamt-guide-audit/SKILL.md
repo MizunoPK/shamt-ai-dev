@@ -14,7 +14,9 @@ source_guides:
   - guides/audit/README.md
   - guides/audit/audit_overview.md
   - guides/reference/severity_classification_universal.md
+  - guides/composites/master_review_pipeline_composite.md
 master-only: false
+version: "1.1 (SHAMT-44)"
 ---
 
 # Skill: shamt-guide-audit
@@ -178,11 +180,14 @@ Sub-Round N.5 if the advanced dimensions are already large).
 
 **Walk `.shamt/guides/` and assess coverage:**
 
-1. List all guide files in `.shamt/guides/` (all subdirectories)
+1. List all guide files in `.shamt/guides/` (all subdirectories, including `composites/`)
 2. For each guide file, check whether a corresponding SKILL.md exists that covers its protocol
 3. Flag guide files with NO corresponding skill body as **LOW-severity candidates** — propose
    whether a new skill is warranted (not a defect unless coverage was intended)
-4. Also check the reverse gap: for each SKILL.md, verify its `source_guides:` list actually
+4. For composite guides: check whether each composite guide accurately describes the composed
+   primitives (skill bodies, hooks, MCP tools) — drift between the composite and its referenced
+   skill bodies is a **MEDIUM** finding
+5. Also check the reverse gap: for each SKILL.md, verify its `source_guides:` list actually
    covers all the protocol steps in the skill body — flag any protocol steps in the SKILL.md
    that have no traceable source guide as **MEDIUM** (the skill is asserting steps that are not
    anchored to canonical guide content)
@@ -222,6 +227,17 @@ shamt.validation_round(
 )
 ```
 The prose analysis and issue documentation are still written by you; the MCP call handles counter arithmetic only. If MCP is not registered, skip this step and update the log manually.
+
+After the audit exits, record the result with `shamt.audit_run()` so the pre-push tripwire can verify it:
+```
+shamt.audit_run(
+    scope=".shamt/guides/",
+    consecutive_clean={final_value},
+    exit_criterion_met=True,
+    issues_by_severity={"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0}
+)
+```
+Note: `validation-log-stamp.sh` only fires on files with `VALIDATION_LOG` in the name; guide audit output files (`round_N_loop_decision.md`) do not trigger it. No hook automatically emits `audit_round` — use `shamt.metrics_append("audit_round", ...)` manually if audit metrics are needed.
 
 **ALL 9 criteria must be met to exit:**
 

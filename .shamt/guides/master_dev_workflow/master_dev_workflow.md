@@ -21,7 +21,11 @@ Primary Agent (Opus):
 └─ Primary executes → Git operations, commits, PR creation
 ```
 
-**See:** `reference/model_selection.md` for Task tool examples.
+**See:** `reference/model_selection.md` for Task tool examples, including the named profiles (`validate-cheap`, `validate-careful`, `diagnose`, `plan`) added by SHAMT-45.
+
+**Stall detection (SHAMT-45):** If a design doc validation or implementation validation loop stalls at `consecutive_clean=0` for ≥3 rounds, `validation-stall-detector.sh` writes `STALL_ALERT.md` with the current model/effort and a recommended escalation step. Read this file at the start of the next round and apply the recommended profile change (see `reference/model_selection.md` — Named Profiles).
+
+**Memory tier separation (SHAMT-45):** For master design doc work artifacts, keep epic state and validation counters in `.shamt/epics/<active>/` artifacts. Store user preferences, project facts, and approach history in harness memory (`~/.claude/projects/.../memory/`). Decision rule: "Would another agent on another machine need this?" See `reference/memory_tiers.md`.
 
 ---
 
@@ -68,6 +72,8 @@ This becomes the basis for your commit message or PR description.
 Use the Read tool to load the full content of every guide you plan to modify.
 
 Do not work from memory. Even if you just read the guide, re-read it now.
+
+**Systematic audit reading (SHAMT-45):** The `shamt-guide-audit` skill (SHAMT-39) provides a structured 23-dimension reading framework with Fresh Eyes protocol and 4 sub-rounds per round. For complex multi-guide changes, consider running the guide audit before and after your changes to ensure no regressions.
 
 ---
 

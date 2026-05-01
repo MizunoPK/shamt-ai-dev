@@ -2,3 +2,4 @@
 model = "${FRONTIER_MODEL}"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
+web_search = "disabled"

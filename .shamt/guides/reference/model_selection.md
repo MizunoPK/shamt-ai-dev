@@ -1,9 +1,9 @@
 # Model Selection for Token Optimization
 
-**Purpose:** Guide for strategically selecting Haiku, Sonnet, or Opus models when spawning sub-agents
+**Purpose:** Guide for strategically selecting Haiku, Sonnet, or Opus models when spawning sub-agents; includes named three-axis profiles (model × cache × reasoning) for common workflow patterns
 **Audience:** All agents working in .shamt workflows
-**Last Updated:** 2026-04-01
-**Version:** 1.0 (SHAMT-27)
+**Last Updated:** 2026-04-30
+**Version:** 1.1 (SHAMT-27, SHAMT-45)
 
 ---
 
@@ -26,14 +26,63 @@ When workflow guides specify model delegation patterns (e.g., "Spawn Haiku → F
 
 ## Table of Contents
 
-1. [Quick Reference](#quick-reference)
-2. [Decision Framework](#decision-framework)
-3. [Task Catalog](#task-catalog)
-4. [Task Tool Examples](#task-tool-examples)
-5. [Cost & Latency Comparison](#cost--latency-comparison)
-6. [When NOT to Delegate](#when-not-to-delegate)
-7. [Parallel Delegation Patterns](#parallel-delegation-patterns)
-8. [Common Mistakes](#common-mistakes)
+1. [Named Profiles (SHAMT-45)](#named-profiles-shamt-45)
+2. [Quick Reference](#quick-reference)
+3. [Decision Framework](#decision-framework)
+4. [Task Catalog](#task-catalog)
+5. [Task Tool Examples](#task-tool-examples)
+6. [Cost & Latency Comparison](#cost--latency-comparison)
+7. [When NOT to Delegate](#when-not-to-delegate)
+8. [Parallel Delegation Patterns](#parallel-delegation-patterns)
+9. [Common Mistakes](#common-mistakes)
+
+---
+
+## Named Profiles (SHAMT-45)
+
+The binary Haiku/Sonnet/Opus decision is a starting point. Optimal selection uses three axes:
+**model tier × cache state × reasoning effort.** Four named profiles cover the common patterns.
+
+These profiles are advisory — agents and users override per-task as needed.
+
+```
+Profile: validate-cheap
+  Model:           cheap tier (Haiku / Codex default)
+  Cache:           warm  (sub-agent confirmation prompts hit cache on repeated invocation)
+  Reasoning effort: minimal-to-low
+  Use for:         sub-agent confirmation rounds, mechanical file checks, grep counts
+
+Profile: validate-careful
+  Model:           reasoning tier (Opus / Codex frontier)
+  Cache:           warm  (loop iterations cache the validation log + guide content)
+  Reasoning effort: medium-to-high
+  Use for:         primary validation rounds 3+, hard-to-resolve issues, guide audits
+
+Profile: diagnose
+  Model:           reasoning tier
+  Cache:           cold  (fresh context for root-cause analysis — avoid cached assumptions)
+  Reasoning effort: high-to-xhigh
+  Use for:         builder error diagnosis, validation loop stalls, unexpected failures
+
+Profile: plan
+  Model:           reasoning tier
+  Cache:           warm  (reference guides + spec cached)
+  Reasoning effort: high
+  Use for:         S5 mechanical implementation plan authoring, design doc writing
+```
+
+### Profile → Host Mapping
+
+| Profile | Claude Code | Codex |
+|---------|------------|-------|
+| `validate-cheap` | Haiku, extended thinking off | `shamt-validator` profile (cheap tier) |
+| `validate-careful` | Opus, extended thinking medium | frontier model, `model_reasoning_effort = "high"` |
+| `diagnose` | Opus, extended thinking high, no cache carry-over | frontier model, `model_reasoning_effort = "xhigh"`, fresh session |
+| `plan` | Opus, extended thinking high | `shamt-architect` profile (frontier, effort=high) |
+
+**Cache warm vs cold on Claude Code:** Warm cache is the default within a session (prior tool results and prompts are cached). Cold cache means spawning a Task sub-agent with a minimal prompt that doesn't reference prior session context, or starting a new session. Use `diagnose` profile for any task where cached assumptions might bias the result.
+
+**Escalation under stall:** When `validation-stall-detector.sh` fires, the recommended escalation path is `validate-cheap` → `validate-careful` → `diagnose`. The stall detector writes the recommended next profile to `STALL_ALERT.md`. See `composites/validation_loop_composite.md` for the assembled flow.
 
 ---
 

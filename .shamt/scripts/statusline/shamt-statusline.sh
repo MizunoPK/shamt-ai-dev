@@ -8,8 +8,8 @@
 # epic's AGENT_STATUS.md and emits a compact status string for the Claude Code
 # statusLine feature.
 #
-# Output format (active epic):
-#   {EPIC-TAG} | S{N}.P{N} | round {N} | blocker: {text or "none"}
+# Output format (active epic, enhanced SHAMT-45):
+#   {EPIC-TAG} | S{N}.P{N} | round {N} | effort: {effort} | stall: {warn|none} | profile: {name}
 #
 # Output format (no active epic):
 #   Shamt | no active epic
@@ -40,6 +40,7 @@ fi
 # --- Read AGENT_STATUS.md for that epic ---------------------------------------
 
 STATUS_FILE="$SHAMT_DIR/epics/$ACTIVE_EPIC/AGENT_STATUS.md"
+STALL_FILE="$SHAMT_DIR/epics/$ACTIVE_EPIC/STALL_ALERT.md"
 
 if [ ! -f "$STATUS_FILE" ]; then
     printf '%s | status unknown' "$ACTIVE_EPIC"
@@ -54,17 +55,34 @@ STAGE="$(grep -oP '(?i)(?:stage:\s*\*{0,2}\s*)S\d+\.P\d+' "$STATUS_FILE" 2>/dev/
 ROUND="$(grep -oP '(?i)(?:round|consecutive_clean):\s*\*{0,2}\s*\K[0-9]+' "$STATUS_FILE" 2>/dev/null \
     | tail -1 || true)"
 
-# Extract blocker (look for "Blocker: ..." or "Blocked: ...")
-BLOCKER="$(grep -oP '(?i)(?:blocked?|blocker):\s*\*{0,2}\s*\K.+' "$STATUS_FILE" 2>/dev/null \
-    | head -1 | sed 's/\*//g; s/^ *//; s/ *$//' || true)"
+# Extract reasoning effort (look for "Reasoning: high" or "Effort: high")
+EFFORT="$(grep -oP '(?i)(?:reasoning|effort):\s*\*{0,2}\s*\K\S+' "$STATUS_FILE" 2>/dev/null \
+    | head -1 || true)"
+
+# Determine stall indicator from STALL_ALERT.md
+STALL="none"
+if [ -f "$STALL_FILE" ]; then
+    STALL="warn"
+fi
+
+# Determine active profile:
+#   1. Read SHAMT_ACTIVE_PROFILE env var
+#   2. Derive from stage as shamt-s{N} if stage is known
+PROFILE="${SHAMT_ACTIVE_PROFILE:-}"
+if [ -z "$PROFILE" ] && [ -n "$STAGE" ]; then
+    STAGE_NUM="$(echo "$STAGE" | grep -oP '(?<=S)\d+' | head -1 || true)"
+    [ -n "$STAGE_NUM" ] && PROFILE="shamt-s${STAGE_NUM}"
+fi
 
 # Build output
 STAGE="${STAGE:-?}"
 ROUND="${ROUND:-?}"
-BLOCKER="${BLOCKER:-none}"
-# Trim blocker if too long
-if [ "${#BLOCKER}" -gt 40 ]; then
-    BLOCKER="${BLOCKER:0:37}..."
-fi
+EFFORT="${EFFORT:-?}"
+PROFILE="${PROFILE:-?}"
 
-printf '%s | %s | round %s | blocker: %s' "$ACTIVE_EPIC" "$STAGE" "$ROUND" "$BLOCKER"
+OUTPUT="${ACTIVE_EPIC} | ${STAGE} | round ${ROUND}"
+[ "$EFFORT" != "?" ] && OUTPUT="${OUTPUT} | effort: ${EFFORT}"
+OUTPUT="${OUTPUT} | stall: ${STALL}"
+[ "$PROFILE" != "?" ] && OUTPUT="${OUTPUT} | profile: ${PROFILE}"
+
+printf '%s' "$OUTPUT"

@@ -2,3 +2,4 @@
 model = "${FRONTIER_MODEL}"
 model_reasoning_effort = "high"
 sandbox_mode = "read-only"
+web_search = "cached"

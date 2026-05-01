@@ -1,6 +1,6 @@
 # SHAMT-45: Refinements — Caching, Reasoning Escalation, AskUserQuestion, Memory, Multi-Modal, /fork, Pruning
 
-**Status:** Validated
+**Status:** Implemented (2026-04-30)
 **Created:** 2026-04-27
 **Branch:** `feat/SHAMT-45`
 **Validation Log:** [SHAMT45_VALIDATION_LOG.md](./SHAMT45_VALIDATION_LOG.md)
@@ -15,7 +15,7 @@ SHAMT-39 through SHAMT-44 deliver the architecturally load-bearing primitives an
 
 - **Prompt caching awareness in `model_selection.md`** (Claude #9, Codex #21 implicit) — the framework's mandatory model delegation patterns predate prompt caching as a first-class cost lever; the guidance should be revised to a (model, cache state, reasoning effort) three-axis recommendation.
 - **Reasoning effort escalation rule** (Claude #21, Codex #17) — auto-bump reasoning when `consecutive_clean` is stuck or root-cause analysis is in progress; SHAMT-44 added the stall detector but the escalation isn't yet wired.
-- **`AskUserQuestion` at gates** (Claude #6) — turn user-blocking gates from prose into machine-readable artifacts so SHAMT-41's pre-push tripwire and similar hooks have structured inputs.
+- **`AskUserQuestion` at gates** (Claude #6) — turn user-blocking gates from prose into machine-readable artifacts so SHAMT-44's pre-push tripwire and similar hooks have structured inputs.
 - **Memory tier separation** (Claude #15, Codex #15) — split user-preference and project-fact memory from epic state; document what belongs in `~/.claude/projects/<path>/memory/` (or Codex's `[memories]`) vs. what stays in `.shamt/epics/<active>/`.
 - **Multi-modal in Discovery skill + Web tools** (Claude #17, Codex #16) — ingest design diagrams, allow WebFetch with citation requirement during Discovery research.
 - **`/fork`-based hypothesis branching** (Codex #25) — codify the S2.P1.I2 / S5 alternative-architectures patterns for Codex.
@@ -86,7 +86,7 @@ The named profiles map directly to:
 **Description:** SHAMT-44 added `validation-stall-detector.sh`. Wire its output to a recommended action:
 
 When the stall detector fires (`consecutive_clean = 0` for ≥3 rounds), it writes `.shamt/epics/<active>/STALL_ALERT.md` with:
-- Current model and reasoning effort
+- Current model and reasoning effort (read from AGENT_STATUS.md — grep for `Model:` field for the model name, and `Reasoning:` or `Effort:` field for the reasoning effort level; emit `"see AGENT_STATUS.md"` as placeholder if absent or unparseable)
 - Recommended next step: bump reasoning effort one level OR escalate model tier (if already at maximum reasoning)
 - A user-confirm prompt via `AskUserQuestion` (or PR comment on Codex headless)
 
@@ -94,7 +94,7 @@ The `shamt-validation-loop` skill picks up the alert on next round and proposes 
 
 **Rationale:** Stall detection without an action recommendation is just noise. Coupling them with explicit user-confirm preserves human-in-the-loop while making escalation easy.
 
-### Proposal 3: AskUserQuestion at S1 / S2 / S5 / S9 gates (Claude Code)
+### Proposal 3: AskUserQuestion at S1 / S2 / S3 / S5 / S9 gates (Claude Code)
 
 **Description:** Update the relevant skills to invoke `AskUserQuestion` rather than free-text prose for:
 
@@ -167,7 +167,7 @@ vs. current minimal:
 SHAMT-42 │ S5.P2 round 3 │ blocker: user approval
 ```
 
-Reads from `.shamt/epics/<active>/AGENT_STATUS.md`, `.shamt/epics/<active>/STALL_ALERT.md` (if present), and active profile from environment.
+Reads from `.shamt/epics/<active>/AGENT_STATUS.md` (for stage and effort), `.shamt/epics/<active>/STALL_ALERT.md` (if present, for stall warning), and `SHAMT_ACTIVE_PROFILE` env var (for profile field). If `SHAMT_ACTIVE_PROFILE` is unset, the script derives the profile name from the stage using the `shamt-s{N}` naming convention (e.g., stage=S5 → profile=shamt-s5). The `effort` field is read from AGENT_STATUS.md by grepping for `Reasoning:` or `Effort:` fields; omitted from output if absent.
 
 **Rationale:** Pure UX. Surfaces SHAMT-44's stall detection and SHAMT-45's reasoning-effort escalation without requiring the user to chase down separate files.
 
@@ -195,7 +195,7 @@ SHAMT-45 evaluates: is cross-host orchestration a real goal yet? If yes, ship a 
 
 ### Recommended approach
 
-Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orchestrator`) is deferred with a tracking entry. Optional follow-on (Proposal 10): `TaskCreate`-based AGENT_STATUS.md replacement if Proposal 8's pruning audit reveals the artifact is over-engineered. Defer that to a follow-on design doc if the audit findings warrant it.
+Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orchestrator`) is deferred with a tracking entry. Optional follow-on: `TaskCreate`-based AGENT_STATUS.md replacement if Proposal 8's pruning audit reveals the artifact is over-engineered. Defer that to a follow-on design doc if the audit findings warrant it.
 
 ---
 
@@ -206,19 +206,20 @@ Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orches
 | `.shamt/guides/reference/model_selection.md` | MODIFY | Three-axis profiles |
 | `.shamt/agents/README.md` | MODIFY | Map profiles to per-host model/effort tuples |
 | `.shamt/hooks/validation-stall-detector.sh` | MODIFY | Write recommendation to STALL_ALERT.md (escalation) |
-| `.shamt/skills/shamt-validation-loop/SKILL.md` | MODIFY | Pick up STALL_ALERT and propose escalation; maintain `source_guides:` frontmatter |
-| `.shamt/skills/shamt-spec-protocol/SKILL.md` | MODIFY | AskUserQuestion at S1/S2/S5/S9 gates; /fork on S2.P1.I2; maintain `source_guides:` frontmatter. Note: S3 testing-approach gate (Proposal 3) is hosted in a separate skill TBD at implementation time — whichever skill drives the S3 phase gate receives the equivalent AskUserQuestion update. |
-| `.shamt/skills/shamt-architect-builder/SKILL.md` | MODIFY | /fork on S5 alternative-architectures; maintain `source_guides:` frontmatter |
+| `.shamt/skills/shamt-validation-loop/SKILL.md` | MODIFY | (a) Pick up STALL_ALERT on round entry and propose escalation via AskUserQuestion (Claude Code) / PR comment template (Codex headless); (b) S9 user-testing zero-bug confirmation gate (AskUserQuestion with "ZERO bugs found" / "bugs found" options, required reason if "bugs found") — from Phase 3; maintain `source_guides:` frontmatter |
+| `.shamt/skills/shamt-spec-protocol/SKILL.md` | MODIFY | AskUserQuestion at S1 and S2.P1.I2 gates only (S5 AskUserQuestion → shamt-architect-builder; S9 → shamt-validation-loop); /fork on S2.P1.I2; maintain `source_guides:` frontmatter. Note: S3 testing-approach gate (Proposal 3) is hosted in a separate skill TBD at implementation time — whichever skill drives the S3 phase gate receives the equivalent AskUserQuestion update. |
+| `.shamt/skills/shamt-architect-builder/SKILL.md` | MODIFY | (a) S5 plan approval AskUserQuestion gate (`["approve", "request changes", "reject"]`) — from Phase 3; (b) /fork on S5 alternative-architectures for Codex; maintain `source_guides:` frontmatter |
+| (S3 phase-gate skill — TBD at Phase 3) | MODIFY | AskUserQuestion at S3 testing-approach selection gate (`["A", "B", "C", "D"]` variant options); identify this skill at Phase 3 time by reading `.shamt/guides/stages/s3/` — see Open Question 6 |
 | `.shamt/skills/shamt-discovery/SKILL.md` | MODIFY | Multi-modal + Web tools; update `source_guides:` frontmatter if new guide content is introduced to support these features |
 | `.shamt/host/codex/profiles/shamt-s1.fragment.toml` | MODIFY | Enable web_search="cached" |
-| `.shamt/host/codex/profiles/shamt-s2.fragment.toml` | MODIFY | Enable web_search if research stage; disable otherwise |
-| `.shamt/host/codex/profiles/*.fragment.toml` | MODIFY | Set web_search="disabled" on non-research stages |
+| `.shamt/host/codex/profiles/shamt-s2.fragment.toml` | MODIFY | Set web_search="disabled" (S2 is not a research stage; all research web use is in S1) |
+| `.shamt/host/codex/profiles/*.fragment.toml` | MODIFY | Set web_search="disabled" on all remaining stage profiles (shamt-s3 through shamt-s10; shamt-s1 and shamt-s2 are covered by their own explicit rows above; persona profiles shamt-architect, shamt-builder, shamt-validator, shamt-s6-builder are excluded — these are role profiles, not stage profiles, and web_search is not applicable to them) |
 | `.shamt/guides/reference/memory_tiers.md` | CREATE | Tier separation rules |
 | `.shamt/scripts/initialization/templates/AGENT_STATUS.template.md` | MODIFY or CREATE | Push memory-tier content out; if the template does not exist at implementation time (no predecessor SHAMT creates it), create it from the live `.shamt/epics/<active>/AGENT_STATUS.md` pattern and then apply the memory-tier separation |
 | `.shamt/scripts/statusline/shamt-statusline.sh` | MODIFY | Render effort, stall, profile |
 | `.shamt/guides/reference/guide_pruning_audit.md` | CREATE | Audit findings + proposed deletions |
 | (various — enumerated at Phase 8 start) | DELETE / MODIFY | Placeholder: specific guides identified by the pruning audit and listed before Phase 8 begins. Cannot be enumerated before the audit runs. |
-| `.shamt/commands/CHEATSHEET.md` | MODIFY | (a) Update the status line format example to show the enhanced render (`effort`, `stall`, `profile` fields from Proposal 7). (b) Add a "Gate Prompts" section documenting each AskUserQuestion gate (stage, options, and what "bugs found" requires). (c) Add a "Memory Quick Reference" box: one-sentence decision rule ("Would another agent need this to resume? → artifact. Preference/fact/reference? → harness memory.") |
+| `.shamt/commands/CHEATSHEET.md` | MODIFY | (a) Update the status line format example to show the enhanced render (`effort`, `stall`, `profile` fields from Proposal 7). (b) Add a "Gate Prompts" section documenting each AskUserQuestion gate (stage, options, and what "bugs found" requires). (c) Add a "Memory Quick Reference" box: one-sentence decision rule ("Would another agent need this to resume? → artifact. Preference/fact/reference? → harness memory."). (d) Update Active Enforcement hooks table to add `validation-stall-detector.sh` (PostToolUse Edit on `*VALIDATION_LOG.md`, detects stalls) and `pre-push-tripwire.sh` (PreToolUse Bash `git push`, verifies audit/validation/builder log) — these were added by SHAMT-44 but omitted from the cheat sheet. (e) Update MCP tools line to list all 7 tools: `next_number`, `validation_round` (SHAMT-41) + `audit_run`, `epic_status`, `metrics_append`, `export_pipeline`, `import_pipeline` (SHAMT-44). |
 | `CLAUDE.md` | MODIFY | New section "Polish Wave (SHAMT-45)" + tracking entry for deferred shamt-meta-orchestrator; add lifecycle-state primitive annotations to Design Doc Lifecycle section |
 | `.shamt/guides/master_dev_workflow/master_dev_workflow.md` | MODIFY | Add polish-wave primitive references (stall detection, memory tiers, reasoning escalation) |
 
@@ -242,12 +243,12 @@ Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orches
 
 ### Phase 4: Memory tier separation guide
 - [ ] Author `.shamt/guides/reference/memory_tiers.md` with the decision rule.
-- [ ] Update AGENT_STATUS.md template to remove memory-tier content guidance.
+- [ ] Update or create the AGENT_STATUS.md template (see Files Affected row for create-if-absent guidance) to remove memory-tier content guidance. Ensure the template includes `Model:` and `Reasoning:`/`Effort:` fields — these are grepped by the stall-detector (Proposal 2) and status line (Proposal 7).
 - [ ] Cross-link from existing GUIDE_ANCHOR.md (if not deleted in Phase 8) and resume guides.
 
 ### Phase 5: Discovery skill multi-modal + Web tools
 - [ ] Update `shamt-discovery` SKILL.md.
-- [ ] Update Codex S1 profile fragment to enable web_search="cached".
+- [ ] Update Codex S1 profile fragment to enable web_search="cached". Note: verify `web_search` is the correct Codex profile TOML field name against current Codex documentation (field name sourced from CODEX_INTEGRATION_THEORIES.md #16); update the key if needed.
 - [ ] Disable web_search in non-research profiles.
 
 ### Phase 6: /fork patterns
@@ -255,9 +256,9 @@ Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orches
 - [ ] Document the Claude Code sequential equivalent.
 
 ### Phase 7: Status line enhancement
-- [ ] Update `shamt-statusline.sh` to read the additional sources (STALL_ALERT, profile env var).
+- [ ] Update `shamt-statusline.sh` to read the additional sources: STALL_ALERT.md (for stall indicator), `SHAMT_ACTIVE_PROFILE` env var (for profile; derive from stage as `shamt-s{N}` if unset), and AGENT_STATUS.md `Reasoning:`/`Effort:` field (for effort; omit if absent).
 - [ ] Test rendering with various states (no epic, active epic, stalled epic, S6 builder running).
-- [ ] Update `CHEATSHEET.md` with: (a) the new status line format showing `effort`, `stall`, and `profile` fields; (b) the "Gate Prompts" section documenting each AskUserQuestion gate (from Proposal 3) with its options; (c) the "Memory Quick Reference" decision rule from Proposal 4.
+- [ ] Update `CHEATSHEET.md` with: (a) the new status line format showing `effort`, `stall`, and `profile` fields; (b) the "Gate Prompts" section documenting each AskUserQuestion gate (from Proposal 3) with its options; (c) the "Memory Quick Reference" decision rule from Proposal 4. See also Files Affected row for CHEATSHEET.md items (d) and (e) — SHAMT-44 hook and MCP tool additions — which must also be applied in this phase.
 
 ### Phase 8: Guide pruning audit
 - [ ] Inventory Resume Instructions sections and GUIDE_ANCHOR references.
@@ -280,7 +281,7 @@ Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orches
   - Draft: `shamt.next_number()` for reservation; `precompact-snapshot` for context preservation
   - Validated: `validation_loop_composite` drives 7D loop; `shamt.validation_round()` tracks rounds; `validation-log-stamp` auto-stamps; `shamt-validator` sub-agents for confirmation
   - In Progress: `architect_builder_composite` for large implementations; `validation-stall-detector` for stall alerts; `pre-push-tripwire` for push gating
-  - Implemented: `shamt.audit_run()` for final guide audit; `shamt.metrics.append()` for retrospective metrics
+  - Implemented: `shamt.audit_run()` for final guide audit; `shamt.metrics_append()` for retrospective metrics
 - [ ] Note: SHAMT-44 Phase 4.5 owns the "Primitives Available" subsection in CLAUDE.md's Master Dev Workflow section. Phase 9.5 does not duplicate or extend that subsection — it adds lifecycle annotations to the separate "Design Doc Lifecycle" section only.
 - [ ] Verify no circular references between master_dev_workflow.md and composite guides.
 - [ ] Note: SHAMT-44 must be implemented before Phase 9.5, as this phase builds on composite references added by SHAMT-44 Phase 4.5.
@@ -321,8 +322,9 @@ Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orches
 1. **Pruning audit thoroughness vs. risk:** Aggressive pruning could hurt edge-case recovery. **Recommendation:** Keep anything where the audit shows even minor regression; bias toward conservative deletions.
 2. **AskUserQuestion on Codex CLI (interactive):** Codex's CLI may have a structured-question equivalent. **Recommendation:** Verify at implementation time; if present, use it natively; if not, fall back to prose with structured response template.
 3. **`shamt-meta-orchestrator` revisit cadence:** When should the deferral be reconsidered? **Recommendation:** When 3+ child projects use both Claude Code and Codex actively and ask for cross-host orchestration; track in CLAUDE.md.
-4. **Memory-tier guide enforcement:** Should there be a hook that checks AGENT_STATUS.md doesn't contain memory-tier content? **Recommendation:** Optional; add to SHAMT-44's hook bundle if violations are observed in practice.
+4. **Memory-tier guide enforcement:** Should there be a hook that checks AGENT_STATUS.md doesn't contain memory-tier content? **Recommendation:** Optional; add to a future SHAMT's hook bundle if violations are observed in practice (SHAMT-44 is already implemented and its hook bundle finalized).
 5. **TaskCreate-based AGENT_STATUS.md:** If Phase 8's audit shows AGENT_STATUS.md is over-engineered, should TaskCreate replace it? **Recommendation:** Defer to a separate follow-on design doc; SHAMT-45 is already substantial.
+6. **S3 testing-approach gate skill:** Proposal 3 includes AskUserQuestion at S3 ("testing-approach selection — A/B/C/D variant options"), but which existing skill drives the S3 phase gate is unresolved. **Recommendation:** Determine at Phase 3 implementation time by reading the S3 stage guide (`.shamt/guides/stages/s3/`); update whichever skill drives the S3 Epic Documentation & Approval gate, or flag it for a new skill if no existing one covers it. This is the only gate among the five without a pre-assigned skill.
 
 ---
 
@@ -351,3 +353,5 @@ Proposals 1–8 ship together as the polish wave. Proposal 9 (`shamt-meta-orches
 | 2026-04-28 | Validation fix: Phase 9.5 now explicitly notes SHAMT-44 ownership of Primitives Available subsection (no duplication); clarified workflow references use "Larger Changes section" instead of ambiguous "Session management"; added SHAMT-44 ordering dependency note |
 | 2026-04-29 | Drift/coverage sync: all four skill MODIFY rows in Files Affected updated with `source_guides:` maintenance note; Phase 8 extended with bidirectional coverage-gap check (prune-aware source_guides: update + D-COVERAGE pass for new guide content). |
 | 2026-04-29 | Validation fixes: (1) Phase 3 step now explicitly enumerates all five gate stages from Proposal 3 (S1, S2.P1.I2, S3, S5, S9) to prevent implementer oversight; (2) AGENT_STATUS.template.md Files Affected row clarified to "MODIFY or CREATE" with guidance for create-if-absent case since no predecessor SHAMT creates it; (3) shamt-spec-protocol Files Affected Notes updated to acknowledge S3 gate is hosted in a separate TBD skill (not shamt-spec-protocol). |
+| 2026-04-30 | Re-validation from scratch post-SHAMT-44 merge. Round 1 fixes: (1) CHEATSHEET.md MODIFY row extended with items (d) fix missing SHAMT-44 hooks in Active Enforcement table and (e) update MCP tools line to list all 7 tools; (2) Proposal 2 clarified: stall-detector reads current model/effort from AGENT_STATUS.md with "see AGENT_STATUS.md" fallback. Round 2 fixes: (3) shamt-s2.fragment.toml MODIFY row clarified to "Set web_search='disabled'" (was ambiguous; contradicted Proposal 5); (4) shamt-validation-loop Files Affected Notes extended with S9 AskUserQuestion gate. Round 3 fixes: (5) Phase 7 CHEATSHEET.md step cross-references Files Affected items (d)/(e); (6) Open Question 4 corrected stale SHAMT-44 reference. Round 4 fixes: (7) shamt-spec-protocol Files Affected Notes corrected from "S1/S2/S5/S9 gates" to "S1 and S2.P1.I2 gates only" (S5→shamt-architect-builder per Phase 3; S9→shamt-validation-loop already fixed in Round 2); (8) shamt-architect-builder Notes extended with S5 plan approval AskUserQuestion gate. Round 5 fixes: (9) Proposal 7 and Phase 7 step now specify data sources for status line fields: `SHAMT_ACTIVE_PROFILE` env var (or derive from stage as shamt-s{N}) for profile; AGENT_STATUS.md Reasoning:/Effort: field for effort. Sub-agent round fixes: (10) Proposal 2 field names unified: Model: for model name, Reasoning: or Effort: for effort level — consistent with Proposal 7; (11) wildcard *.fragment.toml row now explicitly excludes shamt-s1.fragment.toml from scope; (12) Added Open Question 6: S3 testing-approach gate skill assignment (resolve at Phase 3 implementation time by reading S3 stage guide). Round 6 fixes: (13) Status header corrected from "Validated" to "Draft (re-validating)" to reflect active re-validation state; (14) Proposal 3 section heading updated from "S1 / S2 / S5 / S9" to "S1 / S2 / S3 / S5 / S9" — heading omitted S3 which is covered in the proposal body. Round 7 fixes: (15) Phase 9.5 corrected MCP tool name `shamt.metrics.append()` → `shamt.metrics_append()` (incorrect dot notation); (16) Phase 4 step 2 updated from "Update AGENT_STATUS.md template" to "Update or create the AGENT_STATUS.md template" for consistency with Files Affected "MODIFY or CREATE" guidance. Round 8 fix: (17) Problem Statement line 18 corrected "SHAMT-41's pre-push tripwire" → "SHAMT-44's pre-push tripwire" (pre-push tripwire was added by SHAMT-44, not SHAMT-41; line 107 already correct). Sub-agent confirmation 2 fixes: (18) Recommended Approach section removed incorrect "Proposal 10" label — renamed to "Optional follow-on design doc" (there are only 9 proposals; the TaskCreate option is a conditional follow-on, not a numbered proposal); (19) wildcard *.fragment.toml scope note extended to explicitly exclude both shamt-s1 and shamt-s2 (both have their own explicit rows; the wildcard handles all remaining profiles). Round 9 fix: (20) "Optional follow-on design doc:" label simplified to "Optional follow-on:" — "follow-on design doc" appeared twice in the same sentence (redundancy introduced by fix 18). Sub-agent confirmation 3 fix: (21) Phase 5 step 2 added "verify at implementation time" note for the `web_search` Codex profile field name (consistent with OQ2's verification note for AskUserQuestion; field sourced from CODEX_INTEGRATION_THEORIES.md #16). Round 10: 0 issues — consecutive_clean = 1. Sub-agent confirmation 4 fix: (22) Phase 4 step 2 extended with cross-compatibility note: template must include `Model:` and `Reasoning:`/`Effort:` fields for stall-detector (Proposal 2) and status line (Proposal 7) grep compatibility. Both sub-agents independently found this gap. Round 11 fix: (23) Added TBD placeholder row to Files Affected table for S3 phase-gate skill — the only AskUserQuestion gate (of five) without an explicit FA row; all four prior sub-agent confirmation rounds independently flagged this gap; row specifies skill is TBD at Phase 3 time via reading .shamt/guides/stages/s3/ (see OQ6). Sub-agent confirmation 5 fix: (24) Wildcard *.fragment.toml scope note updated to explicitly enumerate excluded persona profiles (shamt-architect, shamt-builder, shamt-validator, shamt-s6-builder) and clarify the wildcard covers stage profiles shamt-s3 through shamt-s10 only — previously the "all remaining profiles" wording was ambiguous and would have included persona profiles in the web_search change. |
+| 2026-04-30 | Re-validation complete. 12 rounds + 6 sub-agent confirmation attempts (24 total fixes). Sub-agents I and J both confirmed zero issues in Round 12. Status updated to Validated. |

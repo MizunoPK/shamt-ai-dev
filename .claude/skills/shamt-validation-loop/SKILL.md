@@ -15,8 +15,9 @@ triggers:
 source_guides:
   - guides/reference/validation_loop_master_protocol.md
   - guides/reference/severity_classification_universal.md
+  - guides/composites/validation_loop_composite.md
 master-only: false
-version: "1.0 (SHAMT-39)"
+version: "1.2 (SHAMT-45)"
 ---
 
 # Skill: shamt-validation-loop
@@ -55,6 +56,7 @@ use for simple checklists or one-time reviews.
 2. Write `consecutive_clean: 0` in the log header.
 3. Identify all applicable dimensions (7 master + any scenario-specific).
 4. Document reading plan for Round 1.
+5. Check for a `STALL_ALERT.md` in the active epic folder (`.shamt/epics/<active>/STALL_ALERT.md`). If present from a prior stall, read its **Recommended Next Step** and apply the profile/effort change before Round 1 begins.
 
 ### Round Structure (Repeat Every Round)
 
@@ -93,8 +95,7 @@ open question requiring user input: handle via Open Questions Protocol (see belo
 **Step 7 — Score the round and fix all issues.** Classify each issue by severity.
 Fix immediately. Update consecutive_clean.
 
-**Step 7b — MCP bookkeeping (if `shamt.validation_round()` is registered).** After
-fixing all issues, call:
+**Step 7b — MCP bookkeeping and metrics (if MCP is registered).** After fixing all issues, call:
 ```
 shamt.validation_round(
     log_path="{path/to/VALIDATION_LOG.md}",
@@ -108,6 +109,10 @@ The tool appends a structured round entry and returns updated `consecutive_clean
 and `should_exit`. The prose dimension-by-dimension analysis is still written by
 you (the primary agent); the MCP call handles counter arithmetic only. If MCP is
 not registered, skip this step and update the log manually.
+
+The `validation-log-stamp.sh` hook also fires on each log edit and emits a
+`validation_round` metric to the sidecar log (and OTel if configured). This is
+automatic — no extra action required.
 
 **Step 8 — Post-round gate.** Update VALIDATION_LOG.md with all dimension results,
 tool call evidence, adversarial self-check outcome, and updated consecutive_clean.
@@ -174,6 +179,28 @@ Output: "CONFIRMED: Zero issues found" OR list all issues with severity.
 
 - Both confirm zero issues → EXIT validation loop.
 - Either finds an issue → fix, reset consecutive_clean to 0, continue.
+
+### S9 User-Testing Zero-Bug Confirmation Gate
+
+When this skill is used during S9 (Epic Smoke + QC) and user-testing is complete, present the
+structured zero-bug confirmation gate before proceeding to push:
+
+```python
+AskUserQuestion(
+    question="S9 user-testing confirmation: Did you find any bugs during user testing?",
+    options=["ZERO bugs found", "bugs found"]
+)
+```
+
+If the user selects **"bugs found"**: require a reason (ask as a follow-up free-text question),
+halt the push path, and route back to the appropriate fix stage. Do NOT proceed to `git push`
+until a "ZERO bugs found" response is recorded.
+
+On Codex headless: post the question as a PR comment with the two options; parse the reply.
+The `user-testing-gate.sh` hook (child-only) also guards the push path and requires this
+confirmation to be present.
+
+---
 
 ### Open Questions Protocol
 
@@ -280,6 +307,133 @@ Each clean round must have at least one tool call citation.
 
 ---
 
+## `/loop` Self-Pacing (Claude Code)
+
+On Claude Code, the validation loop can self-pace using the `/loop` dynamic mode so
+each round fires automatically rather than requiring a manual re-invoke.
+
+### Activating `/loop` for a validation loop
+
+When the user invokes `/shamt-validate` or "run validation loop" on Claude Code:
+
+1. Run Round 1 normally (read artifact, check all dimensions, fix issues, update log).
+2. After the round is scored and logged, call `ScheduleWakeup` with:
+   - `delaySeconds`: 30 (fast feedback; use 60 for large artifacts or human-paced review)
+   - `reason`: `"validation round N complete — consecutive_clean=X; firing next round"`
+   - `prompt`: the same `/shamt-validate` invocation that started the loop
+3. On each `/loop` wake-up, check if exit criteria are already met (consecutive_clean = 1
+   AND sub-agent confirmations pending or complete). If met, **do not** schedule another
+   wake-up — the loop ends.
+4. When consecutive_clean = 1, spawn 2 Haiku sub-agents (see Sub-Agent Confirmation
+   section) **before** scheduling the next wake-up. If both confirm zero issues, the loop
+   ends. If either finds an issue, fix, reset counter, and schedule the next round.
+
+**`/loop` and sub-agents:** `/loop` does not restart sub-agents that are already running.
+Spawn confirmers once at the end of the primary clean round. Do not re-schedule a wake-up
+until confirmers have reported; use the confirmer results to decide whether to exit or
+continue.
+
+**Stall detection and escalation:** The `validation-stall-detector.sh` hook fires automatically
+on each validation log edit. If `consecutive_clean = 0` for ≥3 consecutive rounds, the hook
+writes a `STALL_ALERT.md` in the active epic folder with the current model/effort and a
+recommended next step.
+
+At the start of each round after a stall alert is present, read `STALL_ALERT.md` and propose
+the escalation to the user via `AskUserQuestion`:
+
+```python
+AskUserQuestion(
+    question="Validation loop stall detected (consecutive_clean=0 for {N} rounds). "
+             "Recommended: {next_step_from_STALL_ALERT}. Proceed?",
+    options=["Apply recommended escalation", "Continue without escalation", "Decompose artifact", "Escalate to human review"]
+)
+```
+
+On Codex headless deployments, post this as a PR comment with the structured template above
+and parse the reviewer's reply. Delete `STALL_ALERT.md` after applying (or declining) the
+escalation so the alert does not re-fire on the next loop entry.
+
+### Codex equivalent (no native `/loop`)
+
+Codex does not have a native `/loop` command. Two alternatives:
+
+**Option A — Manual round invocation (simplest):** After each round, the agent ends
+its response; the user re-invokes the validation skill for the next round. The validation
+log tracks state across invocations. Use this when the team needs to inspect each round.
+
+**Option B — `codex exec` driver script:** Create a small driver script that loops
+until the exit condition is observable from the file system:
+
+```bash
+#!/usr/bin/env bash
+# validate-driver.sh — run until consecutive_clean >= 1
+set -euo pipefail
+LOG="$1"
+while true; do
+    codex exec --profile shamt-validator \
+        "Run one validation round on the artifact linked from $LOG. " \
+        "Update the log. If consecutive_clean >= 1 and both sub-agents confirmed, exit."
+    last_clean=$(grep -o 'consecutive_clean.*[0-9]' "$LOG" | tail -1 | grep -o '[0-9]*$' || echo 0)
+    if [ "$last_clean" -ge 1 ]; then break; fi
+    sleep 30
+done
+```
+
+Run with: `bash validate-driver.sh path/to/VALIDATION_LOG.md`
+
+**Note on Codex `/loop` equivalent:** A native Codex equivalent to `/loop` may appear in
+a future Codex release. Until then, Option B (driver script) is the closest approximation.
+
+---
+
+## Cloud-Task-as-Confirmer-Instance Variant
+
+When running on Codex Cloud, sub-agent confirmations can be dispatched as isolated cloud
+tasks instead of in-session spawned agents. The rest of this protocol applies unchanged.
+
+### Why cloud tasks
+
+- **Container isolation:** each cloud task starts from a clean container — no shared state
+  between the primary validator and the confirmers
+- **True independence:** cloud tasks are provably independent (different container, different
+  session context) — stronger independence guarantee than same-session sub-agents
+- **Parallelism at depth-1 limit:** Codex enforces `agents.max_depth = 1`; cloud tasks
+  sidestep this limit because they are separate top-level sessions, not nested sub-agents
+
+### How it works
+
+After the primary agent reaches `consecutive_clean = 1`:
+
+1. Launch 2 cloud tasks, each with:
+   - Profile: `shamt-validator`
+   - Branch: current working branch
+   - Prompt: same artifact + dimensions as the primary round
+2. Wait for both tasks to complete
+3. Collect results:
+   - Both report zero issues → EXIT criterion met (same as CLI sub-agent confirmation)
+   - One or both report issues → fixes apply, `consecutive_clean` resets to 0, new
+     primary round begins
+
+### Cloud confirmer prompt
+
+```
+You are a Shamt validation confirmer (independent sub-agent role). The primary
+validator found zero issues. Your job: verify independently across all dimensions.
+
+Artifact: [path or content]
+Dimensions: [same list as primary round]
+
+Report: CONFIRMED CLEAN (0 issues) or list of issues found with severity.
+```
+
+### When NOT to use cloud confirmers
+
+- Small validations where CLI sub-agent confirmations are faster and cheaper
+- When Codex Cloud is not available on the project
+- During S9.P3 user testing (human-in-the-loop; cloud automation does not apply)
+
+---
+
 ## Exit Criteria
 
 Validation loop is COMPLETE when ALL are true:
@@ -320,4 +474,3 @@ Exit condition: consecutive_clean = 1 AND both Haiku sub-agents confirm zero iss
 - File searches, grep, existence checks: Haiku (delegate to save tokens)
 - Code reading, structural analysis: Sonnet
 - Sub-agent confirmations: ALWAYS Haiku (70-80% savings, no quality loss)
-```

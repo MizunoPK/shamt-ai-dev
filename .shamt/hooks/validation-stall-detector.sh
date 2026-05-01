@@ -82,20 +82,52 @@ alert_msg="SHAMT validation loop stalled — consecutive_clean=0 for ${stall_cou
 # Write STALL_ALERT.md if epic found
 if [ -n "$active_epic" ]; then
     alert_dir="$PROJECT_ROOT/.shamt/epics/$active_epic"
+    status_file="$alert_dir/AGENT_STATUS.md"
     mkdir -p "$alert_dir"
+
+    # Read current model and reasoning effort from AGENT_STATUS.md (best-effort)
+    current_model="see AGENT_STATUS.md"
+    current_effort="see AGENT_STATUS.md"
+    if [ -f "$status_file" ]; then
+        parsed_model="$(grep -oP '(?i)model:\s*\*{0,2}\s*\K\S+' "$status_file" 2>/dev/null | head -1 || true)"
+        parsed_effort="$(grep -oP '(?i)(?:reasoning|effort):\s*\*{0,2}\s*\K\S+' "$status_file" 2>/dev/null | head -1 || true)"
+        [ -n "$parsed_model" ] && current_model="$parsed_model"
+        [ -n "$parsed_effort" ] && current_effort="$parsed_effort"
+    fi
+
+    # Determine escalation recommendation based on current effort
+    case "$current_effort" in
+        minimal|low)       next_step="Bump reasoning effort to **medium** (switch to validate-careful profile)." ;;
+        medium)            next_step="Bump reasoning effort to **high** (switch to validate-careful profile with higher effort)." ;;
+        high)              next_step="Escalate to **diagnose** profile: Opus with xhigh reasoning effort, fresh (cold) context." ;;
+        xhigh|"see AGENT_STATUS.md") next_step="Maximum effort already set (or unknown). Consider decomposing the artifact or escalating to human judgment." ;;
+        *)                 next_step="Escalate reasoning effort one level, or switch to **diagnose** profile (Opus, xhigh, cold cache)." ;;
+    esac
+
     cat > "$alert_dir/STALL_ALERT.md" <<ALERT
 # Validation Loop Stall Alert
 
 **consecutive_clean = 0 for ${stall_count} consecutive rounds** (threshold: ${THRESHOLD})
 
 **Log:** $log_path
+**Current model:** $current_model
+**Current reasoning effort:** $current_effort
 
-## Recommended Actions
+## Recommended Next Step
 
-1. **Review the last round's findings** — are the issues genuinely hard, or is the validator being too strict?
-2. **Escalate reasoning effort** — if using Haiku/Sonnet, switch to Opus for the next round.
-3. **Decompose the artifact** — validate sections independently if the artifact is large.
-4. **Human judgment** — if the loop has been stuck for many rounds, bring in a human reviewer.
+$next_step
+
+## Escalation Path
+
+| Step | Action | Profile |
+|------|--------|---------|
+| 1 | Review last round's findings — is the validator being too strict? | (no model change) |
+| 2 | Bump reasoning effort one level | validate-careful |
+| 3 | Switch to cold-cache root-cause analysis | diagnose |
+| 4 | Decompose artifact — validate sub-sections independently | any |
+| 5 | Escalate to human judgment | — |
+
+The validation loop skill will read this file on the next round entry and propose escalation via AskUserQuestion (Claude Code) or PR comment template (Codex headless).
 
 Stall threshold is configurable via \`SHAMT_STALL_THRESHOLD\` env var (current: ${THRESHOLD}).
 ALERT

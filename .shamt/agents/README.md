@@ -88,6 +88,19 @@ The `model_tier` field maps to actual host models. This mapping is the single so
 
 **Update cadence:** When model lineups change, update this table and re-run `regen-claude-shims.sh` / `regen-codex-shims.sh` in all active child projects.
 
+## Named Profile → Persona Mapping (SHAMT-45)
+
+The four named profiles from `reference/model_selection.md` map to specific personas and Codex profiles:
+
+| Profile | Intended Use | Claude Code Persona | Codex Profile |
+|---------|-------------|---------------------|---------------|
+| `validate-cheap` | Sub-agent confirmations, mechanical checks | `shamt-validator` (cheap tier) | `shamt-validator.fragment.toml` (cheap, effort=low) |
+| `validate-careful` | Primary validation rounds 3+, stall recovery first step | `shamt-guide-auditor` or inline Opus | frontier model, effort=high |
+| `diagnose` | Error diagnosis, stall root-cause | inline Opus, fresh session | frontier model, effort=xhigh, new session |
+| `plan` | Implementation plan authoring | `shamt-architect` (reasoning tier) | `shamt-architect.fragment.toml` (frontier, effort=high) |
+
+Profiles are advisory — they describe recommended (model, cache, effort) tuples, not hard constraints. Override per-task when the workflow guide specifies differently.
+
 ## Host Translation
 
 Regen scripts translate each `.yaml` persona to host-specific formats:

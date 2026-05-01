@@ -2,3 +2,4 @@
 model = "${DEFAULT_MODEL}"
 model_reasoning_effort = "low"
 sandbox_mode = "workspace-write"
+web_search = "disabled"

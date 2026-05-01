@@ -5,6 +5,8 @@ description: >
   Executes the S1 epic Discovery Phase — reading architecture docs, brainstorming
   questions across 6 categories, conducting iterative research, and running the
   discovery validation loop until primary clean round + 2 sub-agent confirmations.
+  Supports multi-modal input (images, PDFs via Read), WebFetch/WebSearch with URL
+  citation, and the testing-approach AskUserQuestion gate (A/B/C/D options).
 triggers:
   - "start discovery"
   - "run discovery"
@@ -14,7 +16,9 @@ source_guides:
   - guides/stages/s1/s1_epic_planning.md
   - guides/stages/s1/s1_p3_discovery_phase.md
   - guides/reference/validation_loop_discovery.md
+  - guides/stages/s3/s3_epic_planning_approval.md
 master-only: false
+version: "1.1 (SHAMT-45)"
 ---
 
 ## Overview
@@ -62,6 +66,15 @@ Research the problem space:
 - Identify affected components, what exists vs. what's missing
 - Document findings in DISCOVERY.md sections: Technical Analysis, Key Findings, Solution Options
 
+**Multi-modal input:** If the user attaches a diagram or image, use the `Read` tool on the
+image/PDF file, describe its content, and integrate the observations into DISCOVERY.md's
+design-context section. Note the filename and a one-line description for reproducibility.
+
+**Web research:** `WebFetch` and `WebSearch` are permitted during Discovery for prior-art
+research. Cite every URL in DISCOVERY.md's Research Sources section so the research is
+reproducible. Use cached web search mode (`web_search="cached"` in Codex S1 profile) for
+reproducibility; switch to live only with explicit user request.
+
 **Step 5 — Extract questions using 6-category brainstorm**
 
 Work through ALL 6 categories before filling the Pending Questions table. Document each category with questions OR a one-line justification if none apply:
@@ -78,6 +91,28 @@ Work through ALL 6 categories before filling the Pending Questions table. Docume
 > CRITICAL: If you have zero questions after reading the entire epic request, stop and re-read using these 6 categories. Zero questions is a red flag indicating under-questioning.
 
 **Ask user questions BEFORE entering the validation loop.** Record answers in the Resolved Questions table.
+
+**Step 5b — Testing-approach selection gate**
+
+Before finalizing DISCOVERY.md, present the testing-approach selection gate using
+`AskUserQuestion` so the choice is recorded as a machine-readable artifact:
+
+```python
+AskUserQuestion(
+    question="S1 testing-approach selection: Which testing strategy should this epic use?",
+    options=[
+        "A — Manual end-to-end (no integration scripts)",
+        "B — Integration scripts opted in",
+        "C — Manual + smoke test plan (no integration scripts)",
+        "D — Integration scripts + smoke test plan"
+    ]
+)
+```
+
+Record the selected option in EPIC_README.md under `Testing Approach:`. S3.P1 reads this
+field to determine whether to run the full (45-60 min) or trimmed (10-15 min) process.
+
+On Codex headless: post the question as a PR comment with the four options; parse the reply.
 
 **Step 6 — Set time-box and update Agent Status**
 

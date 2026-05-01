@@ -16,7 +16,7 @@ source_guides:
   - guides/reference/severity_classification_universal.md
   - guides/composites/validation_loop_composite.md
 master-only: false
-version: "1.1 (SHAMT-44)"
+version: "1.2 (SHAMT-45)"
 ---
 
 # Skill: shamt-validation-loop
@@ -55,6 +55,7 @@ use for simple checklists or one-time reviews.
 2. Write `consecutive_clean: 0` in the log header.
 3. Identify all applicable dimensions (7 master + any scenario-specific).
 4. Document reading plan for Round 1.
+5. Check for a `STALL_ALERT.md` in the active epic folder (`.shamt/epics/<active>/STALL_ALERT.md`). If present from a prior stall, read its **Recommended Next Step** and apply the profile/effort change before Round 1 begins.
 
 ### Round Structure (Repeat Every Round)
 
@@ -177,6 +178,28 @@ Output: "CONFIRMED: Zero issues found" OR list all issues with severity.
 
 - Both confirm zero issues → EXIT validation loop.
 - Either finds an issue → fix, reset consecutive_clean to 0, continue.
+
+### S9 User-Testing Zero-Bug Confirmation Gate
+
+When this skill is used during S9 (Epic Smoke + QC) and user-testing is complete, present the
+structured zero-bug confirmation gate before proceeding to push:
+
+```python
+AskUserQuestion(
+    question="S9 user-testing confirmation: Did you find any bugs during user testing?",
+    options=["ZERO bugs found", "bugs found"]
+)
+```
+
+If the user selects **"bugs found"**: require a reason (ask as a follow-up free-text question),
+halt the push path, and route back to the appropriate fix stage. Do NOT proceed to `git push`
+until a "ZERO bugs found" response is recorded.
+
+On Codex headless: post the question as a PR comment with the two options; parse the reply.
+The `user-testing-gate.sh` hook (child-only) also guards the push path and requires this
+confirmation to be present.
+
+---
 
 ### Open Questions Protocol
 
@@ -309,13 +332,25 @@ Spawn confirmers once at the end of the primary clean round. Do not re-schedule 
 until confirmers have reported; use the confirmer results to decide whether to exit or
 continue.
 
-**Stall detection:** The `validation-stall-detector.sh` hook fires automatically on each
-validation log edit. If `consecutive_clean = 0` for ≥3 consecutive rounds, the hook
-writes a `STALL_ALERT.md` in the active epic folder. Recommended responses (in order):
-1. Review whether the validator is being too strict
-2. Switch primary agent to Opus (deeper reasoning) for the next round
-3. Decompose the artifact — validate sub-sections independently
-4. Escalate to human judgment
+**Stall detection and escalation:** The `validation-stall-detector.sh` hook fires automatically
+on each validation log edit. If `consecutive_clean = 0` for ≥3 consecutive rounds, the hook
+writes a `STALL_ALERT.md` in the active epic folder with the current model/effort and a
+recommended next step.
+
+At the start of each round after a stall alert is present, read `STALL_ALERT.md` and propose
+the escalation to the user via `AskUserQuestion`:
+
+```python
+AskUserQuestion(
+    question="Validation loop stall detected (consecutive_clean=0 for {N} rounds). "
+             "Recommended: {next_step_from_STALL_ALERT}. Proceed?",
+    options=["Apply recommended escalation", "Continue without escalation", "Decompose artifact", "Escalate to human review"]
+)
+```
+
+On Codex headless deployments, post this as a PR comment with the structured template above
+and parse the reviewer's reply. Delete `STALL_ALERT.md` after applying (or declining) the
+escalation so the alert does not re-fire on the next loop entry.
 
 ### Codex equivalent (no native `/loop`)
 

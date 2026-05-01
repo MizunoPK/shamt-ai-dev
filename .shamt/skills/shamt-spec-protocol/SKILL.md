@@ -15,7 +15,7 @@ source_guides:
   - guides/reference/validation_loop_spec_refinement.md
   - guides/reference/critical_workflow_rules.md
 master-only: false
-version: "1.0 (SHAMT-39)"
+version: "1.1 (SHAMT-45)"
 ---
 
 # Skill: shamt-spec-protocol
@@ -47,6 +47,25 @@ Use this skill when:
 
 These rules govern how you interact with the user while building the spec.
 Copy them into Agent Status at the start of S2.P1.
+
+### S1 Feature Breakdown Approval Gate
+
+After completing S1 Discovery and proposing the feature breakdown, use `AskUserQuestion`
+to present the approval gate with structured options:
+
+```python
+AskUserQuestion(
+    question="S1 feature breakdown ready for approval. Review the proposed breakdown "
+             "in DISCOVERY.md. How would you like to proceed?",
+    options=["approve as-is", "request changes", "reject scope"]
+)
+```
+
+On Codex headless: present as a PR comment with the three options; parse the reply.
+
+- **"approve as-is"**: proceed to S2.
+- **"request changes"**: apply changes, re-present.
+- **"reject scope"**: halt; re-open scope discussion at S1.
 
 ### Rule 1: ONE Question at a Time (Never Batch)
 
@@ -84,6 +103,27 @@ Research findings replace the need to ask a question only if the finding is
 objective (e.g., "the file is at this path") and not a design decision. Any
 question that involves a choice, preference, or trade-off requires explicit
 user approval even if you have a recommendation.
+
+### S2.P1.I2 Checklist Resolution Gate
+
+When the checklist reaches Iteration 2 (S2.P1.I2) and multiple plausible approaches exist
+for a question, use `AskUserQuestion` to present structured options rather than free-text prose:
+
+```python
+AskUserQuestion(
+    question="S2.P1.I2 — [Question N]: [brief restatement of the question]",
+    options=["[option A]", "[option B]", "[option C]", "other — describe"]
+)
+```
+
+For questions that are genuinely open (no predefined options make sense), fall back to a
+free-text follow-up after the user selects "other — describe."
+
+**Codex /fork variant:** When a checklist question has multiple plausible answers, on Codex
+use `/fork` to explore each branch in parallel; on Claude Code, run sequential exploration
+with explicit comparison before presenting the result to the user.
+
+On Codex headless: post the question as a PR comment with a numbered list; parse the reply.
 
 ### Rule 2: Update Spec and Checklist Immediately After Each Answer
 

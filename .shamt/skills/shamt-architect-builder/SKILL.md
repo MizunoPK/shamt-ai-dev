@@ -16,7 +16,7 @@ source_guides:
   - guides/reference/implementation_plan_format.md
   - guides/composites/architect_builder_composite.md
 master-only: false
-version: "1.1 (SHAMT-44)"
+version: "1.2 (SHAMT-45)"
 ---
 
 # Skill: shamt-architect-builder
@@ -159,7 +159,27 @@ Exit criterion: primary clean round (consecutive_clean = 1, ≤1 LOW issue fixed
 + 2 Haiku sub-agents both confirm zero issues. See shamt-validation-loop skill
 for full loop mechanics.
 
-**After validation passes:** Set plan status to "Validated."
+**After validation passes:** Set plan status to "Validated." Then present the Gate 5 approval
+gate using `AskUserQuestion`:
+
+```python
+AskUserQuestion(
+    question="Gate 5: Implementation plan validated. Review the plan at {plan_path}. "
+             "How would you like to proceed?",
+    options=["approve", "request changes", "reject"]
+)
+```
+
+On Codex headless: post as a PR comment with the three options; parse the reply.
+
+- **"approve"**: proceed to Stage 3 (handoff package + builder spawn).
+- **"request changes"**: apply changes, re-run the 9-dimension validation loop from Round 1.
+- **"reject"**: halt; return to S5 planning with user's feedback.
+
+**Codex /fork variant for S5 alternative architectures:** When plan-authoring has multiple
+plausible architectures, use `/fork` to draft each plan in a separate Codex thread; merge
+insights before the validation loop. On Claude Code, do sequential drafting with an
+intermediate comparison before choosing one approach to validate.
 
 ### Stage 3: Architect Creates Handoff Package
 

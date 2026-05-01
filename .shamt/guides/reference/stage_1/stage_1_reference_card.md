@@ -59,7 +59,7 @@ STEP 5: Epic Structure Creation (10-15 min)
     +-- Create epic_smoke_test_plan.md (PLACEHOLDER)
     +-- Create epic_lessons_learned.md
     +-- Create research/ folder (shared across features)
-    +-- Create GUIDE_ANCHOR.md (resumption instructions)
+    +-- Create GUIDE_ANCHOR.md (resumption instructions; skip if shamt_hooks=true — RESUME_SNAPSHOT.md replaces it)
     +-- Update EPIC_README.md with Epic Progress Tracker
     |
 STEP 6: Transition to S2 (5 min)

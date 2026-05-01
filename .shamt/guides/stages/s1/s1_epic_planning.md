@@ -707,6 +707,12 @@ Create this file from scratch with the following sections:
 
 **This file ensures agents can resume correctly after context window limits.**
 
+> **SHAMT-45 note:** If `features.shamt_hooks=true` is set in `.claude/settings.json`,
+> the `precompact-snapshot.sh` and `session-start-resume.sh` hooks automatically write
+> and inject `RESUME_SNAPSHOT.md` — which replaces GUIDE_ANCHOR.md for context resumption.
+> You may skip creating GUIDE_ANCHOR.md when these hooks are enabled. If hooks are NOT
+> enabled, GUIDE_ANCHOR.md remains mandatory.
+
 ### Step 5.5b: Create EPIC_METRICS.md
 
 Create `EPIC_METRICS.md` in the epic root folder alongside `EPIC_README.md`.

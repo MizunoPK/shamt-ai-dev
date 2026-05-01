@@ -70,7 +70,7 @@ Quick reference for all Shamt operations, stage flow, and sub-agent personas.
 
 ---
 
-## Active Enforcement (Hooks — SHAMT-41)
+## Active Enforcement (Hooks — SHAMT-41/44)
 
 Active when `features.shamt_hooks=true` in `.claude/settings.json`. Hooks registered by `regen-claude-shims.sh`.
 
@@ -80,14 +80,16 @@ Active when `features.shamt_hooks=true` in `.claude/settings.json`. Hooks regist
 | `commit-format.sh` | PreToolUse (Bash) | Commits not matching `feat/SHAMT-N:` or `fix/SHAMT-N:` prefix |
 | `pre-export-audit-gate.sh` *(child-only)* | UserPromptSubmit + PreToolUse | Export if audit is stale (>7 days) or `exit_criterion_met=false` |
 | `validation-log-stamp.sh` | PostToolUse (Edit on `*VALIDATION_LOG.md`) | Appends timestamp after each log edit (always passes) |
+| `validation-stall-detector.sh` | PostToolUse (Edit on `*VALIDATION_LOG.md`) | Detects `consecutive_clean=0` for ≥N rounds; writes `STALL_ALERT.md` |
 | `architect-builder-enforcer.sh` | PreToolUse (Task) | S6 Task spawns that don't use `shamt-builder` persona |
 | `user-testing-gate.sh` *(child-only)* | PreToolUse (Bash) | `git push` in S9 unless user-testing artifact shows "ZERO bugs found" |
+| `pre-push-tripwire.sh` | PreToolUse (Bash `git push`) | Blocks push if audit is stale, active validation shows `consecutive_clean=0`, or builder log has errors |
 | `precompact-snapshot.sh` | PreCompact | Writes `RESUME_SNAPSHOT.md` before auto-compaction |
 | `session-start-resume.sh` | SessionStart | Injects `RESUME_SNAPSHOT.md` as agent context on start |
 | `subagent-confirmation-receipt.sh` | SubagentStop | Writes veto flag if confirming sub-agent reports issues |
 | `stage-transition-snapshot.sh` | UserPromptSubmit | Writes `RESUME_SNAPSHOT.md` on stage-advance phrases |
 
-**MCP tools (SHAMT-41):** `shamt.next_number()` — atomic SHAMT-N reservation · `shamt.validation_round()` — round logging + consecutive_clean tracking
+**MCP tools (SHAMT-41/44):** `shamt.next_number()` · `shamt.validation_round()` · `shamt.audit_run()` · `shamt.epic_status()` · `shamt.metrics_append()` · `shamt.export_pipeline()` · `shamt.import_pipeline()`
 
 ---
 
@@ -118,6 +120,45 @@ Read the composite first; read the primitive guides for full detail.
 | Master review pipeline | Child PR review, post-merge guide audit | `composites/master_review_pipeline_composite.md` |
 | Metrics / observability | Hook emission, OTel, Grafana dashboards | `composites/metrics_observability_composite.md` |
 | Rollback / recovery | Stall detection, worktree rollback, pre-push guard | `composites/rollback_recovery_composite.md` |
+
+---
+
+## Status Line Format (SHAMT-45)
+
+Enhanced render (when `shamt-statusline.sh` is configured as `statusLine` command):
+
+```
+SHAMT-42 | S5.P2 | round 3 | effort: high | stall: none | profile: shamt-s5
+SHAMT-42 | S5.P2 | round 3 | effort: high | stall: warn | profile: shamt-s5
+```
+
+Fields: `effort` (from AGENT_STATUS.md `Reasoning:` / `Effort:` field), `stall` (`warn` when `STALL_ALERT.md` present, otherwise `none`), `profile` (from `SHAMT_ACTIVE_PROFILE` env var or derived as `shamt-s{N}` from stage).
+
+---
+
+## Gate Prompts (AskUserQuestion — SHAMT-45)
+
+Structured gates at key workflow checkpoints. On Codex headless, post as PR comment; parse reply.
+
+| Gate | Stage | Skill | Options |
+|------|-------|-------|---------|
+| Testing-approach selection | S1 | `shamt-discovery` | A — Manual e2e / B — Integration scripts / C — Manual + smoke / D — Scripts + smoke |
+| Feature breakdown approval | S1 | `shamt-spec-protocol` | `approve as-is` / `request changes` / `reject scope` |
+| Checklist resolution | S2.P1.I2 | `shamt-spec-protocol` | Per-question options (free-text fallback via "other") |
+| Plan approval (Gate 5) | S5 | `shamt-architect-builder` | `approve` / `request changes` / `reject` |
+| Stall escalation | any | `shamt-validation-loop` | `Apply recommended escalation` / `Continue without escalation` / `Decompose artifact` / `Escalate to human review` |
+| User-testing zero-bug confirmation | S9 | `shamt-validation-loop` | `ZERO bugs found` / `bugs found` (requires reason if bugs found) |
+
+---
+
+## Memory Quick Reference (SHAMT-45)
+
+**Decision rule:** Would another agent on another machine need this to continue work?
+
+- **YES** → Shamt artifact (`.shamt/epics/<active>/`) — stage, round, spec, plan, validation log
+- **NO** → Harness memory (`~/.claude/projects/<path>/memory/`) — preferences, project facts, external references
+
+Full separation rules: `.shamt/guides/reference/memory_tiers.md`
 
 ---
 

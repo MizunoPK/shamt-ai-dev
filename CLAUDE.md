@@ -263,6 +263,16 @@ Six documented workflows that assemble component primitives (hooks, MCP, skills,
 
 ---
 
+## Polish Wave (SHAMT-45)
+
+Cache-aware model selection, reasoning escalation, AskUserQuestion gates, memory tier separation, multi-modal Discovery, /fork patterns, status line enhancement, guide pruning audit.
+
+**Deferred items:**
+- `shamt-meta-orchestrator` — speculative cross-host orchestrator (Codex doc §2.16). Revisit when 3+ child projects actively use both Claude Code and Codex and ask for cross-host orchestration. Track in this section until that condition is met.
+- `TaskCreate`-based AGENT_STATUS.md replacement — conditional on Phase 8 pruning audit findings. Defer to a follow-on design doc if the audit shows AGENT_STATUS.md is over-engineered.
+
+---
+
 ## Master Dev Workflow
 
 For improving the guides directly:
@@ -316,11 +326,26 @@ See "Design Doc Lifecycle" below for the full design doc process.
 6. **Validate implementation:** Run implementation validation loop (see Implementation Validation section below)
 7. **Archive:** Move `SHAMT{N}_DESIGN.md` and validation log to `design_docs/archive/` when complete
 
-**Lifecycle states:**
+**Lifecycle states and their primitives (SHAMT-45):**
+
 - **Draft** (`active/`) — Being written, not yet validated
+  - `shamt.next_number()` — atomic SHAMT-N reservation
+  - `precompact-snapshot.sh` + `session-start-resume.sh` — context preservation across sessions
+
 - **Validated** (`active/`) — Passed 7-dimension validation, ready for implementation
+  - `validation_loop_composite.md` — assembled 7D loop with `/loop` self-pacing and stall detection
+  - `shamt.validation_round()` — tracks `consecutive_clean` across rounds
+  - `validation-log-stamp.sh` — auto-stamps each log edit
+  - `shamt-validator` sub-agents — Haiku confirmers for exit criterion
+
 - **In Progress** (`active/`) — Implementation underway on branch
+  - `architect_builder_composite.md` — optional for large implementations (>10 file ops)
+  - `validation-stall-detector.sh` — fires STALL_ALERT.md when validation is stuck
+  - `pre-push-tripwire.sh` — blocks push if audit is stale or validation shows `consecutive_clean=0`
+
 - **Implemented** (`archive/`) — Implementation complete, branch merged
+  - `shamt.audit_run()` — records guide audit result for pre-push tripwire
+  - `shamt.metrics_append()` — emit retrospective metrics to sidecar.jsonl
 
 **Validation log:** Create `SHAMT{N}_VALIDATION_LOG.md` alongside design doc when starting validation. Moves to archive with design doc.
 

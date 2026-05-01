@@ -15,8 +15,9 @@ triggers:
 source_guides:
   - guides/reference/architect_builder_pattern.md
   - guides/reference/implementation_plan_format.md
+  - guides/composites/architect_builder_composite.md
 master-only: false
-version: "1.0 (SHAMT-39)"
+version: "1.2 (SHAMT-45)"
 ---
 
 # Skill: shamt-architect-builder
@@ -46,6 +47,10 @@ S5 Phase 2: Architect validates plan (9 dimensions + 2 Haiku sub-agents)
 Gate 5: User approves validated plan
 S6: Architect creates handoff package → spawns Haiku builder → builder executes
 ```
+
+**Metrics:** The `architect-builder-enforcer.sh` hook emits a `builder_runs_total`
+metric each time a `shamt-builder` Task spawn is allowed through. The `subagent-confirmation-receipt.sh`
+hook emits a `confirmer_run` metric after sub-agent confirmation. Both are automatic.
 
 ### Optional (Master Dev / Ad-hoc Work)
 
@@ -155,7 +160,27 @@ Exit criterion: primary clean round (consecutive_clean = 1, ≤1 LOW issue fixed
 + 2 Haiku sub-agents both confirm zero issues. See shamt-validation-loop skill
 for full loop mechanics.
 
-**After validation passes:** Set plan status to "Validated."
+**After validation passes:** Set plan status to "Validated." Then present the Gate 5 approval
+gate using `AskUserQuestion`:
+
+```python
+AskUserQuestion(
+    question="Gate 5: Implementation plan validated. Review the plan at {plan_path}. "
+             "How would you like to proceed?",
+    options=["approve", "request changes", "reject"]
+)
+```
+
+On Codex headless: post as a PR comment with the three options; parse the reply.
+
+- **"approve"**: proceed to Stage 3 (handoff package + builder spawn).
+- **"request changes"**: apply changes, re-run the 9-dimension validation loop from Round 1.
+- **"reject"**: halt; return to S5 planning with user's feedback.
+
+**Codex /fork variant for S5 alternative architectures:** When plan-authoring has multiple
+plausible architectures, use `/fork` to draft each plan in a separate Codex thread; merge
+insights before the validation loop. On Claude Code, do sequential drafting with an
+intermediate comparison before choosing one approach to validate.
 
 ### Stage 3: Architect Creates Handoff Package
 
