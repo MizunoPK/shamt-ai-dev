@@ -84,6 +84,26 @@ function Add-ExcludeEntry {
     }
 }
 
+function Invoke-SetupMcp {
+    $mcpDst = Join-Path $ShamtDir "mcp"
+    if (-not (Test-Path $mcpDst)) {
+        Copy-Item -Path (Join-Path $ShamtSourceDir ".shamt\mcp") -Destination $mcpDst -Recurse -Force
+        Write-Host "  OK MCP dir copied"
+    }
+    if (Get-Command python3 -ErrorAction SilentlyContinue) {
+        Write-Host "  Setting up MCP venv (this may take a moment)..."
+        try {
+            python3 -m venv (Join-Path $mcpDst ".venv")
+            & (Join-Path $mcpDst ".venv\Scripts\pip") install -e $mcpDst -q
+            Write-Host "  OK MCP venv created and shamt-mcp installed"
+        } catch {
+            Write-Host "  WARNING: MCP setup failed — MCP will not be registered. Re-run after fixing the issue." -ForegroundColor Yellow
+        }
+    } else {
+        Write-Host "  WARNING: python3 not found — MCP setup skipped." -ForegroundColor Yellow
+    }
+}
+
 # --- AI Service Selection ----------------------------------------------------
 
 Write-Separator "AI Service"
@@ -547,6 +567,51 @@ Set-Content "$ShamtDir\project-specific-configs\init_config.md" $initConfigConte
 
 Write-Host "  OK Handoff file written to .shamt\project-specific-configs\init_config.md"
 
+# --- Optional Features -------------------------------------------------------
+
+Write-Separator "Optional Features"
+
+Write-Host "  Active enforcement (hooks) — enforces commit format, blocks --no-verify,"
+Write-Host "  guards pushes, writes session snapshots."
+$hooksChoice = Read-Host "  Enable active enforcement (hooks)? [y/N]"
+$EnableHooks = ($hooksChoice -match '^[Yy]$')
+
+Write-Host ""
+Write-Host "  Shamt MCP server — provides shamt.validation_round(), shamt.audit_run(),"
+Write-Host "  and other workflow tools. Requires Python 3."
+$mcpChoice = Read-Host "  Enable Shamt MCP server? [y/N]"
+$EnableMcp = ($mcpChoice -match '^[Yy]$')
+
+$EnableCiGhValidate  = $false
+$EnableCiGhJanitor   = $false
+$EnableCiAdoValidate = $false
+$EnableCiAdoJanitor  = $false
+
+if ($PrProvider -match "github") {
+    Write-Host ""
+    Write-Host "  CI automation (GitHub Actions) — automated PR validation and stale-work janitor."
+    Write-Host "  Requires OPENAI_API_KEY secret in your repository."
+    $ciGhVal = Read-Host "  Enable automated PR validation (GitHub Actions)? [y/N]"
+    $EnableCiGhValidate = ($ciGhVal -match '^[Yy]$')
+    $ciGhJan = Read-Host "  Enable weekly stale-work janitor (GitHub Actions)? [y/N]"
+    $EnableCiGhJanitor = ($ciGhJan -match '^[Yy]$')
+}
+
+if ($PrProvider -match "ado") {
+    Write-Host ""
+    Write-Host "  CI automation (Azure Pipelines) — automated PR validation and stale-work janitor."
+    Write-Host "  Requires OPENAI_API_KEY secret in your repository."
+    $ciAdoVal = Read-Host "  Enable automated PR validation (Azure Pipelines)? [y/N]"
+    $EnableCiAdoValidate = ($ciAdoVal -match '^[Yy]$')
+    $ciAdoJan = Read-Host "  Enable weekly stale-work janitor (Azure Pipelines)? [y/N]"
+    $EnableCiAdoJanitor = ($ciAdoJan -match '^[Yy]$')
+}
+
+$hooksStr = if ($EnableHooks) { "y" } else { "n" }
+$mcpStr   = if ($EnableMcp)   { "y" } else { "n" }
+Write-Host ""
+Write-Host "  OK Optional features: hooks=$hooksStr  mcp=$mcpStr"
+
 # --- Claude Code Host Wiring -------------------------------------------------
 
 if ($AiService -match "claude") {
@@ -557,14 +622,7 @@ if ($AiService -match "claude") {
     }
     Write-Host "  OK .claude\ directory structure created"
 
-    $RegenScript = Join-Path $ShamtDir "scripts\regen\regen-claude-shims.ps1"
-    if (Test-Path $RegenScript) {
-        & powershell -ExecutionPolicy Bypass -File $RegenScript
-        Write-Host "  OK Claude Code shims generated"
-    } else {
-        Write-Host "  WARNING: regen-claude-shims.ps1 not found — run it manually after init" -ForegroundColor Yellow
-    }
-
+    # Write starter settings.json BEFORE regen so the hooks flag is readable
     $StarterSettings = Join-Path $ShamtSourceDir ".shamt\host\claude\settings.starter.json"
     $TargetSettings  = Join-Path $TargetDir ".claude\settings.json"
     if (Test-Path $TargetSettings) {
@@ -581,6 +639,45 @@ if ($AiService -match "claude") {
         Write-Host "  OK .claude\settings.json written"
     } else {
         Write-Host "  WARNING: settings.starter.json not found — skipping settings.json creation" -ForegroundColor Yellow
+    }
+
+    # Apply hooks if enabled
+    if ($EnableHooks) {
+        $hooksDst = Join-Path $ShamtDir "hooks"
+        if (-not (Test-Path $hooksDst)) {
+            Copy-Item -Path (Join-Path $ShamtSourceDir ".shamt\hooks") -Destination $hooksDst -Recurse -Force
+            Write-Host "  OK Hooks dir copied"
+        }
+        if (Test-Path $TargetSettings) {
+            try {
+                $s = Get-Content $TargetSettings -Raw | ConvertFrom-Json
+                if (-not ($s.PSObject.Properties.Name -contains 'features')) {
+                    $s | Add-Member -MemberType NoteProperty -Name features -Value ([PSCustomObject]@{})
+                }
+                $s.features | Add-Member -MemberType NoteProperty -Name shamt_hooks -Value $true -Force
+                $s | ConvertTo-Json -Depth 20 | Set-Content $TargetSettings -Encoding UTF8
+                Write-Host "  OK features.shamt_hooks=true patched into settings.json"
+            } catch {
+                Write-Host "  WARNING: Failed to patch features.shamt_hooks — edit settings.json manually." -ForegroundColor Yellow
+            }
+        } else {
+            Write-Host "  WARNING: settings.json not found — features.shamt_hooks flag not set." -ForegroundColor Yellow
+            Write-Host "     Run regen-claude-shims.ps1 manually after creating settings.json." -ForegroundColor Yellow
+        }
+    }
+
+    # Apply MCP if enabled
+    if ($EnableMcp) {
+        Invoke-SetupMcp
+    }
+
+    # Run regen LAST — reads settings.json with hooks flag already set
+    $RegenScript = Join-Path $ShamtDir "scripts\regen\regen-claude-shims.ps1"
+    if (Test-Path $RegenScript) {
+        & powershell -ExecutionPolicy Bypass -File $RegenScript
+        Write-Host "  OK Claude Code shims generated"
+    } else {
+        Write-Host "  WARNING: regen-claude-shims.ps1 not found — run it manually after init" -ForegroundColor Yellow
     }
 
     Write-Host ""
@@ -637,6 +734,17 @@ if ($AiService -match "codex") {
         Write-Host "  WARNING: requirements.toml.template not found — skipping" -ForegroundColor Yellow
     }
 
+    # Apply hooks if enabled (guard against double-copy in dual-host)
+    if ($EnableHooks -and -not (Test-Path (Join-Path $ShamtDir "hooks"))) {
+        Copy-Item -Path (Join-Path $ShamtSourceDir ".shamt\hooks") -Destination (Join-Path $ShamtDir "hooks") -Recurse -Force
+        Write-Host "  OK Hooks dir copied"
+    }
+
+    # Apply MCP if enabled (guard against double-install in dual-host)
+    if ($EnableMcp -and -not (Test-Path (Join-Path $ShamtDir "mcp\.venv"))) {
+        Invoke-SetupMcp
+    }
+
     # Run regen script
     $RegenScript = Join-Path $ShamtDir "scripts\regen\regen-codex-shims.ps1"
     if (Test-Path $RegenScript) {
@@ -645,6 +753,65 @@ if ($AiService -match "codex") {
     } else {
         Write-Host "  WARNING: regen-codex-shims.ps1 not found — run it manually after init" -ForegroundColor Yellow
     }
+}
+
+# --- CI Automation -----------------------------------------------------------
+
+if ($EnableCiGhValidate -or $EnableCiGhJanitor -or $EnableCiAdoValidate -or $EnableCiAdoJanitor) {
+    Write-Separator "CI Automation"
+
+    $SdkDir = Join-Path $ShamtSourceDir ".shamt\sdk"
+
+    if ($EnableCiGhValidate) {
+        $wfDir = Join-Path $TargetDir ".github\workflows"
+        New-Item -ItemType Directory -Force -Path $wfDir | Out-Null
+        $src = Join-Path $SdkDir ".github\workflows\shamt-validate.yml.template"
+        if (Test-Path $src) {
+            Copy-Item $src (Join-Path $wfDir "shamt-validate.yml")
+            Write-Host "  OK .github/workflows/shamt-validate.yml written"
+        } else {
+            Write-Host "  WARNING: $src not found — skipping" -ForegroundColor Yellow
+        }
+    }
+
+    if ($EnableCiGhJanitor) {
+        $wfDir = Join-Path $TargetDir ".github\workflows"
+        New-Item -ItemType Directory -Force -Path $wfDir | Out-Null
+        $src = Join-Path $SdkDir ".github\workflows\shamt-cron-janitor.yml.template"
+        if (Test-Path $src) {
+            Copy-Item $src (Join-Path $wfDir "shamt-cron-janitor.yml")
+            Write-Host "  OK .github/workflows/shamt-cron-janitor.yml written"
+        } else {
+            Write-Host "  WARNING: $src not found — skipping" -ForegroundColor Yellow
+        }
+    }
+
+    if ($EnableCiAdoValidate) {
+        $apDir = Join-Path $TargetDir "azure-pipelines"
+        New-Item -ItemType Directory -Force -Path $apDir | Out-Null
+        $src = Join-Path $SdkDir "azure-pipelines\shamt-validate.yml.template"
+        if (Test-Path $src) {
+            Copy-Item $src (Join-Path $apDir "shamt-validate.yml")
+            Write-Host "  OK azure-pipelines/shamt-validate.yml written"
+        } else {
+            Write-Host "  WARNING: $src not found — skipping" -ForegroundColor Yellow
+        }
+    }
+
+    if ($EnableCiAdoJanitor) {
+        $apDir = Join-Path $TargetDir "azure-pipelines"
+        New-Item -ItemType Directory -Force -Path $apDir | Out-Null
+        $src = Join-Path $SdkDir "azure-pipelines\shamt-cron-janitor.yml.template"
+        if (Test-Path $src) {
+            Copy-Item $src (Join-Path $apDir "shamt-cron-janitor.yml")
+            Write-Host "  OK azure-pipelines/shamt-cron-janitor.yml written"
+        } else {
+            Write-Host "  WARNING: $src not found — skipping" -ForegroundColor Yellow
+        }
+    }
+
+    Write-Host ""
+    Write-Host "  WARNING: CI automation: add OPENAI_API_KEY secret to your repository before workflows run." -ForegroundColor Yellow
 }
 
 # --- Cloud environment setup (--with-cloud, Codex hosts only) -----------------

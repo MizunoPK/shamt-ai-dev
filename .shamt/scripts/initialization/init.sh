@@ -67,6 +67,24 @@ separator() {
     echo "------------------------------------------------------------"
 }
 
+_do_setup_mcp() {
+    if [ ! -d "$TARGET_DIR/.shamt/mcp" ]; then
+        cp -r "$SHAMT_SOURCE_DIR/.shamt/mcp" "$TARGET_DIR/.shamt/mcp"
+        echo "  ✓ MCP dir copied"
+    fi
+    if command -v python3 >/dev/null 2>&1; then
+        echo "  Setting up MCP venv (this may take a moment)..."
+        if python3 -m venv "$TARGET_DIR/.shamt/mcp/.venv" \
+           && "$TARGET_DIR/.shamt/mcp/.venv/bin/pip" install -e "$TARGET_DIR/.shamt/mcp" -q; then
+            echo "  ✓ MCP venv created and shamt-mcp installed"
+        else
+            echo "  ⚠  MCP setup failed — MCP will not be registered. Re-run after fixing the issue."
+        fi
+    else
+        echo "  ⚠  python3 not found — MCP setup skipped."
+    fi
+}
+
 # --- AI Service Selection ----------------------------------------------------
 
 separator "AI Service"
@@ -551,6 +569,55 @@ EOF
 
 echo "  ✓ Handoff file written to .shamt/project-specific-configs/init_config.md"
 
+# --- Optional Features -------------------------------------------------------
+
+separator "Optional Features"
+
+echo "  Active enforcement (hooks) — enforces commit format, blocks --no-verify,"
+echo "  guards pushes, writes session snapshots."
+read -rp "  Enable active enforcement (hooks)? [y/N]: " _hooks_choice
+_hooks_choice="${_hooks_choice:-N}"
+[[ "$_hooks_choice" =~ ^[Yy]$ ]] && ENABLE_HOOKS="y" || ENABLE_HOOKS="n"
+
+echo ""
+echo "  Shamt MCP server — provides shamt.validation_round(), shamt.audit_run(),"
+echo "  and other workflow tools. Requires Python 3."
+read -rp "  Enable Shamt MCP server? [y/N]: " _mcp_choice
+_mcp_choice="${_mcp_choice:-N}"
+[[ "$_mcp_choice" =~ ^[Yy]$ ]] && ENABLE_MCP="y" || ENABLE_MCP="n"
+
+ENABLE_CI_GH_VALIDATE="n"
+ENABLE_CI_GH_JANITOR="n"
+ENABLE_CI_ADO_VALIDATE="n"
+ENABLE_CI_ADO_JANITOR="n"
+
+if [[ "$_pr_provider" == *github* ]]; then
+    echo ""
+    echo "  CI automation (GitHub Actions) — automated PR validation and stale-work janitor."
+    echo "  Requires OPENAI_API_KEY secret in your repository."
+    read -rp "  Enable automated PR validation (GitHub Actions)? [y/N]: " _ci_gh_val
+    _ci_gh_val="${_ci_gh_val:-N}"
+    [[ "$_ci_gh_val" =~ ^[Yy]$ ]] && ENABLE_CI_GH_VALIDATE="y"
+    read -rp "  Enable weekly stale-work janitor (GitHub Actions)? [y/N]: " _ci_gh_jan
+    _ci_gh_jan="${_ci_gh_jan:-N}"
+    [[ "$_ci_gh_jan" =~ ^[Yy]$ ]] && ENABLE_CI_GH_JANITOR="y"
+fi
+
+if [[ "$_pr_provider" == *ado* ]]; then
+    echo ""
+    echo "  CI automation (Azure Pipelines) — automated PR validation and stale-work janitor."
+    echo "  Requires OPENAI_API_KEY secret in your repository."
+    read -rp "  Enable automated PR validation (Azure Pipelines)? [y/N]: " _ci_ado_val
+    _ci_ado_val="${_ci_ado_val:-N}"
+    [[ "$_ci_ado_val" =~ ^[Yy]$ ]] && ENABLE_CI_ADO_VALIDATE="y"
+    read -rp "  Enable weekly stale-work janitor (Azure Pipelines)? [y/N]: " _ci_ado_jan
+    _ci_ado_jan="${_ci_ado_jan:-N}"
+    [[ "$_ci_ado_jan" =~ ^[Yy]$ ]] && ENABLE_CI_ADO_JANITOR="y"
+fi
+
+echo ""
+echo "  ✓ Optional features: hooks=$ENABLE_HOOKS  mcp=$ENABLE_MCP"
+
 # --- Claude Code Host Wiring -------------------------------------------------
 
 if [[ "$AI_SERVICE" =~ claude ]]; then
@@ -562,16 +629,7 @@ if [[ "$AI_SERVICE" =~ claude ]]; then
     mkdir -p "$TARGET_DIR/.claude/commands"
     echo "  ✓ .claude/ directory structure created"
 
-    # Run regen script to populate .claude/ from canonical content
-    REGEN_SCRIPT="$SHAMT_DIR/scripts/regen/regen-claude-shims.sh"
-    if [ -f "$REGEN_SCRIPT" ]; then
-        bash "$REGEN_SCRIPT"
-        echo "  ✓ Claude Code shims generated"
-    else
-        echo "  ⚠  regen-claude-shims.sh not found — run it manually after init"
-    fi
-
-    # Write starter settings.json (written once; user owns it after init)
+    # Write starter settings.json BEFORE regen so the hooks flag is readable
     STARTER_SETTINGS="$SHAMT_SOURCE_DIR/.shamt/host/claude/settings.starter.json"
     TARGET_SETTINGS="$TARGET_DIR/.claude/settings.json"
     if [ -f "$TARGET_SETTINGS" ]; then
@@ -587,6 +645,41 @@ if [[ "$AI_SERVICE" =~ claude ]]; then
         echo "  ✓ .claude/settings.json written"
     else
         echo "  ⚠  settings.starter.json not found — skipping settings.json creation"
+    fi
+
+    # Apply hooks if enabled
+    if [ "$ENABLE_HOOKS" = "y" ]; then
+        if [ ! -d "$TARGET_DIR/.shamt/hooks" ]; then
+            cp -r "$SHAMT_SOURCE_DIR/.shamt/hooks" "$TARGET_DIR/.shamt/hooks"
+            echo "  ✓ Hooks dir copied"
+        fi
+        if command -v python3 >/dev/null 2>&1 && [ -f "$TARGET_SETTINGS" ]; then
+            python3 - "$TARGET_SETTINGS" <<'PYEOF'
+import json, sys
+path = sys.argv[1]
+with open(path) as f: s = json.load(f)
+s.setdefault('features', {})['shamt_hooks'] = True
+with open(path, 'w') as f: json.dump(s, f, indent=2)
+PYEOF
+            echo "  ✓ features.shamt_hooks=true patched into settings.json"
+        else
+            echo "  ⚠  python3 not found — features.shamt_hooks flag not set."
+            echo "     Run regen-claude-shims.sh manually after installing Python 3 to complete hooks setup."
+        fi
+    fi
+
+    # Apply MCP if enabled
+    if [ "$ENABLE_MCP" = "y" ]; then
+        _do_setup_mcp
+    fi
+
+    # Run regen LAST — reads settings.json with hooks flag already set
+    REGEN_SCRIPT="$SHAMT_DIR/scripts/regen/regen-claude-shims.sh"
+    if [ -f "$REGEN_SCRIPT" ]; then
+        bash "$REGEN_SCRIPT"
+        echo "  ✓ Claude Code shims generated"
+    else
+        echo "  ⚠  regen-claude-shims.sh not found — run it manually after init"
     fi
 
     echo ""
@@ -644,6 +737,17 @@ if [[ "$AI_SERVICE" =~ codex ]]; then
         echo "  ⚠  requirements.toml.template not found — skipping"
     fi
 
+    # Apply hooks if enabled (guard against double-copy in dual-host)
+    if [ "$ENABLE_HOOKS" = "y" ] && [ ! -d "$TARGET_DIR/.shamt/hooks" ]; then
+        cp -r "$SHAMT_SOURCE_DIR/.shamt/hooks" "$TARGET_DIR/.shamt/hooks"
+        echo "  ✓ Hooks dir copied"
+    fi
+
+    # Apply MCP if enabled (guard against double-install in dual-host)
+    if [ "$ENABLE_MCP" = "y" ] && [ ! -d "$TARGET_DIR/.shamt/mcp/.venv" ]; then
+        _do_setup_mcp
+    fi
+
     # Run regen script to populate .codex/ from canonical content
     REGEN_SCRIPT="$SHAMT_DIR/scripts/regen/regen-codex-shims.sh"
     if [ -f "$REGEN_SCRIPT" ]; then
@@ -652,6 +756,62 @@ if [[ "$AI_SERVICE" =~ codex ]]; then
     else
         echo "  ⚠  regen-codex-shims.sh not found — run it manually after init"
     fi
+fi
+
+# --- CI Automation -----------------------------------------------------------
+
+if [ "$ENABLE_CI_GH_VALIDATE" = "y" ] || [ "$ENABLE_CI_GH_JANITOR" = "y" ] || \
+   [ "$ENABLE_CI_ADO_VALIDATE" = "y" ] || [ "$ENABLE_CI_ADO_JANITOR" = "y" ]; then
+    separator "CI Automation"
+
+    _SDK_DIR="$SHAMT_SOURCE_DIR/.shamt/sdk"
+
+    if [ "$ENABLE_CI_GH_VALIDATE" = "y" ]; then
+        mkdir -p "$TARGET_DIR/.github/workflows"
+        _src="$_SDK_DIR/.github/workflows/shamt-validate.yml.template"
+        if [ -f "$_src" ]; then
+            cp "$_src" "$TARGET_DIR/.github/workflows/shamt-validate.yml"
+            echo "  ✓ .github/workflows/shamt-validate.yml written"
+        else
+            echo "  ⚠  $_src not found — skipping"
+        fi
+    fi
+
+    if [ "$ENABLE_CI_GH_JANITOR" = "y" ]; then
+        mkdir -p "$TARGET_DIR/.github/workflows"
+        _src="$_SDK_DIR/.github/workflows/shamt-cron-janitor.yml.template"
+        if [ -f "$_src" ]; then
+            cp "$_src" "$TARGET_DIR/.github/workflows/shamt-cron-janitor.yml"
+            echo "  ✓ .github/workflows/shamt-cron-janitor.yml written"
+        else
+            echo "  ⚠  $_src not found — skipping"
+        fi
+    fi
+
+    if [ "$ENABLE_CI_ADO_VALIDATE" = "y" ]; then
+        mkdir -p "$TARGET_DIR/azure-pipelines"
+        _src="$_SDK_DIR/azure-pipelines/shamt-validate.yml.template"
+        if [ -f "$_src" ]; then
+            cp "$_src" "$TARGET_DIR/azure-pipelines/shamt-validate.yml"
+            echo "  ✓ azure-pipelines/shamt-validate.yml written"
+        else
+            echo "  ⚠  $_src not found — skipping"
+        fi
+    fi
+
+    if [ "$ENABLE_CI_ADO_JANITOR" = "y" ]; then
+        mkdir -p "$TARGET_DIR/azure-pipelines"
+        _src="$_SDK_DIR/azure-pipelines/shamt-cron-janitor.yml.template"
+        if [ -f "$_src" ]; then
+            cp "$_src" "$TARGET_DIR/azure-pipelines/shamt-cron-janitor.yml"
+            echo "  ✓ azure-pipelines/shamt-cron-janitor.yml written"
+        else
+            echo "  ⚠  $_src not found — skipping"
+        fi
+    fi
+
+    echo ""
+    echo "  ⚠  CI automation: add OPENAI_API_KEY secret to your repository before workflows run."
 fi
 
 # --- Cloud environment setup (--with-cloud, Codex hosts only) -----------------

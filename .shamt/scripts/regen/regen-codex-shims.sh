@@ -340,71 +340,75 @@ mcp_content = '\n'.join(mcp_lines)
 # --- Build hooks block --------------------------------------------------------
 
 hooks_src = Path(project_root) / '.shamt' / 'hooks'
+hooks_content = ''
 
-def hook_cmd(name):
-    return str(hooks_src / name)
+if not hooks_src.exists():
+    print("  Hooks: skipped (.shamt/hooks/ not found)")
+else:
+    def hook_cmd(name):
+        return str(hooks_src / name)
 
-hooks_lines = []
+    hooks_lines = []
 
-# pre_tool_use: shell (Bash-equivalent)
-pre_shell = [hook_cmd('no-verify-blocker.sh'), hook_cmd('commit-format.sh'), hook_cmd('pre-push-tripwire.sh')]
-if repo_type != 'master':
-    pre_shell += [hook_cmd('user-testing-gate.sh'), hook_cmd('pre-export-audit-gate.sh')]
-hooks_lines += ['[hooks.pre_tool_use.shell]']
-hooks_lines += ['commands = [']
-for h in pre_shell:
-    hooks_lines += [f'  "{h}",']
-hooks_lines += [']', '']
+    # pre_tool_use: shell (Bash-equivalent)
+    pre_shell = [hook_cmd('no-verify-blocker.sh'), hook_cmd('commit-format.sh'), hook_cmd('pre-push-tripwire.sh')]
+    if repo_type != 'master':
+        pre_shell += [hook_cmd('user-testing-gate.sh'), hook_cmd('pre-export-audit-gate.sh')]
+    hooks_lines += ['[hooks.pre_tool_use.shell]']
+    hooks_lines += ['commands = [']
+    for h in pre_shell:
+        hooks_lines += [f'  "{h}",']
+    hooks_lines += [']', '']
 
-# pre_tool_use: agent_spawn (Task-equivalent)
-hooks_lines += [
-    '[hooks.pre_tool_use.agent_spawn]',
-    f'commands = ["{hook_cmd("architect-builder-enforcer.sh")}"]',
-    '',
-]
+    # pre_tool_use: agent_spawn (Task-equivalent)
+    hooks_lines += [
+        '[hooks.pre_tool_use.agent_spawn]',
+        f'commands = ["{hook_cmd("architect-builder-enforcer.sh")}"]',
+        '',
+    ]
 
-# post_tool_use: edit
-hooks_lines += [
-    '[hooks.post_tool_use.edit]',
-    'commands = [',
-    f'  "{hook_cmd("validation-log-stamp.sh")}",',
-    f'  "{hook_cmd("validation-stall-detector.sh")}",',
-    ']',
-    '',
-]
+    # post_tool_use: edit
+    hooks_lines += [
+        '[hooks.post_tool_use.edit]',
+        'commands = [',
+        f'  "{hook_cmd("validation-log-stamp.sh")}",',
+        f'  "{hook_cmd("validation-stall-detector.sh")}",',
+        ']',
+        '',
+    ]
 
-# user_prompt_submit
-upm_hooks = []
-if repo_type != 'master':
-    upm_hooks.append(hook_cmd('pre-export-audit-gate.sh'))
-upm_hooks.append(hook_cmd('stage-transition-snapshot.sh'))
-hooks_lines += ['[hooks.user_prompt_submit]', 'commands = [']
-for h in upm_hooks:
-    hooks_lines += [f'  "{h}",']
-hooks_lines += [']', '']
+    # user_prompt_submit
+    upm_hooks = []
+    if repo_type != 'master':
+        upm_hooks.append(hook_cmd('pre-export-audit-gate.sh'))
+    upm_hooks.append(hook_cmd('stage-transition-snapshot.sh'))
+    hooks_lines += ['[hooks.user_prompt_submit]', 'commands = [']
+    for h in upm_hooks:
+        hooks_lines += [f'  "{h}",']
+    hooks_lines += [']', '']
 
-# session_start
-hooks_lines += [
-    '[hooks.session_start]',
-    f'commands = ["{hook_cmd("session-start-resume.sh")}"]',
-    '',
-]
+    # session_start
+    hooks_lines += [
+        '[hooks.session_start]',
+        f'commands = ["{hook_cmd("session-start-resume.sh")}"]',
+        '',
+    ]
 
-# stop (SubagentStop equivalent via Stop hook with stdin-parsing)
-hooks_lines += [
-    '[hooks.stop]',
-    f'commands = ["{hook_cmd("subagent-confirmation-receipt.sh")}"]',
-    '',
-]
+    # stop (SubagentStop equivalent via Stop hook with stdin-parsing)
+    hooks_lines += [
+        '[hooks.stop]',
+        f'commands = ["{hook_cmd("subagent-confirmation-receipt.sh")}"]',
+        '',
+    ]
 
-# permission_request (Codex-only)
-hooks_lines += [
-    '[hooks.permission_request]',
-    f'commands = ["{hook_cmd("permission-router.sh")}"]',
-    '',
-]
+    # permission_request (Codex-only)
+    hooks_lines += [
+        '[hooks.permission_request]',
+        f'commands = ["{hook_cmd("permission-router.sh")}"]',
+        '',
+    ]
 
-hooks_content = '\n'.join(hooks_lines)
+    hooks_content = '\n'.join(hooks_lines)
 
 # --- Apply blocks to config ---------------------------------------------------
 
@@ -420,7 +424,8 @@ with open(config_path, 'w') as f:
 
 print(f"  Profiles: {len(fragment_files)} fragments written")
 print(f"  MCP: {mcp_status}")
-print(f"  Hooks: installed")
+if hooks_content:
+    print(f"  Hooks: installed")
 PYEOF
     # Ensure hook scripts are executable
     find "$SHAMT_DIR/hooks" -name "*.sh" -exec chmod +x {} \;
