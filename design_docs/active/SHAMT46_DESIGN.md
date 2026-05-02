@@ -224,7 +224,7 @@ ADO comment threads have a richer model than GitHub PR comments — threads have
 
 ADO also supports **PR statuses** (a lightweight check mechanism similar to GitHub status checks). The validation script posts a status via `POST .../pullrequests/{id}/statuses` with `state: succeeded|failed` and a `targetUrl` pointing to the pipeline run. This integrates with ADO branch policies that can require specific statuses to pass before merge.
 
-**Rationale:** Azure Pipelines is the natural CI/CD system for ADO-hosted repos. The template pattern (copy to project, fill in vars) matches the GitHub Actions template pattern from SHAMT-43. Using `$(System.AccessToken)` avoids requiring a separate PAT for CI — the pipeline's identity has PR comment permissions by default.
+**Rationale:** Azure Pipelines is the natural CI/CD system for ADO-hosted repos. The template pattern (copy to project, fill in vars) matches the GitHub Actions template pattern from SHAMT-43. Using `$(System.AccessToken)` avoids requiring a separate PAT for CI, but requires explicit permission setup: "Contribute to pull requests" must be granted to the build service account and "Allow scripts to access the OAuth token" must be enabled in the pipeline job. The `azure-pipelines/README.md` documents these prerequisites.
 
 **Alternatives considered:**
 - *Generic CI template (e.g., shell script only):* Loses the tight ADO-specific integration (PR triggers, system variables, access token). Rejected.
@@ -448,7 +448,7 @@ All six proposals together. They form a coherent layer: abstraction (P1), CI tem
 
 1. **ADO MCP Server: Local vs Remote?** The Remote MCP Server is in public preview and will eventually replace the local server. Should Shamt wire the local server (stable, documented) or the remote server (newer, may become the only option)? **Recommendation:** Wire the local server now with a documented migration path to remote.
 
-2. **Authentication in CI:** `$(System.AccessToken)` in Azure Pipelines has limited scope. Does it have permission to post PR comments and set PR statuses by default? **Needs verification** — if not, the template needs to document the required pipeline permissions or use a PAT secret instead.
+2. **Authentication in CI:** `$(System.AccessToken)` in Azure Pipelines has limited scope. Does it have permission to post PR comments and set PR statuses by default? **Resolved:** No — three explicit configuration steps are required: (a) grant **"Contribute to pull requests"** permission to the build service account (Project Settings → Repositories → Permissions → build service → Allow); (b) enable **"Allow scripts to access the OAuth token"** in the pipeline job settings; (c) pass the token via `env: AZURE_DEVOPS_PAT: $(System.AccessToken)` in YAML (already shown in Proposal 2 template). Without step (a), writes fail with `TF401027: You need the Git 'PullRequestContribute' permission`. The `azure-pipelines/README.md` (Files Affected) must document these steps as a prerequisite. The Status API has the same requirement. Use the project-scoped build service (not collection-scoped) for least-privilege.
 
 3. **ADO MCP Server version pinning:** Should Shamt pin a specific version of `@azure-devops/mcp` or use `@latest`? Pinning avoids breakage; `@latest` gets improvements. **Recommendation:** Pin in templates, document how to update.
 
@@ -486,3 +486,4 @@ All six proposals together. They form a coherent layer: abstraction (P1), CI tem
 | 2026-04-29 | Validation fix (Round 1 LOW): annotated Open Question 4 (thread status) as resolved — Proposal 4 already decided `active`; OQ4 retained for traceability with resolution note. |
 | 2026-05-01 | Re-validation Round 1 fix (CRITICAL): CLAUDE.md is at 39,998 chars after SHAMT-45 trimming — only 2 chars remain. Added new CREATE row for `.shamt/guides/reference/azure_devops_integration.md` to carry the full content. |
 | 2026-05-01 | Re-validation Round 2 fix (CRITICAL): "One-line pointer" to CLAUDE.md is also infeasible — a minimal reference (~103 chars) overflows the 2-char remaining capacity. Changed CLAUDE.md row from MODIFY to NO CHANGE. Removed CLAUDE.md update step from Phase 4 plan entirely. |
+| 2026-05-01 | Resolved Open Question 2: `$(System.AccessToken)` does NOT have PR comment/status permissions by default. Requires: (a) "Contribute to pull requests" permission on build service account, (b) "Allow scripts to access the OAuth token" pipeline setting, (c) token passed via env var. Updated Proposal 2 rationale and OQ2 annotation. |
