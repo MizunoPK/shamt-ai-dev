@@ -2,8 +2,9 @@
 
 **Design Doc:** [SHAMT46_DESIGN.md](./SHAMT46_DESIGN.md)
 **Validation Started:** 2026-04-28
-**Validation Completed:** 2026-04-28
-**Final Status:** Validated
+**Validation Completed:** 2026-04-28 (original)
+**Re-validation Started:** 2026-05-01 (post-SHAMT-45 merge to main)
+**Final Status:** Re-validating — consecutive_clean = 0 (Round 1 fix applied; proceeding to Round 2)
 
 ---
 
@@ -162,3 +163,112 @@ MEDIUM issue from Round 1 resolved: `requirements.txt` status changed to CREATE 
 - Round 1: Fixed `.shamt/sdk/requirements.txt` status from MODIFY to CREATE (SHAMT-43 does not create this file)
 - D-COVERAGE decision note added to `ado_pr_review_workflow.md` CREATE row (no dedicated skill warranted; ADO PR review uses `shamt-code-review` skill with ADO MCP tools wired)
 - Open Question 4 annotated with resolution (thread status = `active` per Proposal 4)
+
+<!-- stamp: 2026-05-02T00:05:34Z -->
+
+<!-- stamp: 2026-05-02T00:09:38Z -->
+
+---
+
+## Re-Validation (post-SHAMT-45 merge to main) — Started 2026-05-01
+
+SHAMT-45 merged to main on 2026-04-30. Key change affecting SHAMT-46: CLAUDE.md was trimmed from 41,488 chars to 39,998 chars — only 2 chars of capacity remain. Re-validation started from scratch with `consecutive_clean = 0`.
+
+### Re-Validation Round 1 — 2026-05-01
+
+#### Dimension 1: Completeness
+**Status:** Pass — six proposals complete and well-scoped (unchanged from original validation)
+
+#### Dimension 2: Correctness
+**Status:** Pass — prior MEDIUM fix (`requirements.txt` CREATE vs MODIFY) still in place and correct
+
+#### Dimension 3: Consistency
+**Status:** Issues Found
+
+**Issues:**
+- CLAUDE.md is at 39,998 chars after SHAMT-45's trimming — only 2 chars of capacity remain. The Files Affected table planned `CLAUDE.md | MODIFY | New section "Azure DevOps PR Integration (SHAMT-46)"`. A section of reasonable size (~1,700+ chars) would far exceed the 40,000-char hard limit (CRITICAL policy, enforced by guide audit D11). This is a CRITICAL consistency failure: the design doc proposes an action that violates a SHAMT-45 constraint now in effect. (Severity: CRITICAL)
+
+**Fix applied:**
+- Added new `CREATE` row for `.shamt/guides/reference/azure_devops_integration.md` to carry the full SHAMT-46 summary content.
+- Changed CLAUDE.md `MODIFY` row from "New full section" to "One-line pointer to `azure_devops_integration.md`".
+- Updated Phase 4 implementation plan step accordingly.
+- Recorded in Change History.
+
+#### Dimension 4: Helpfulness
+**Status:** Pass — unchanged
+
+#### Dimension 5: Improvements
+**Status:** Pass — unchanged
+
+#### Dimension 6: Missing Proposals
+**Status:** Pass — unchanged
+
+#### Dimension 7: Open Questions
+**Status:** Pass — unchanged
+
+---
+
+#### Re-Validation Round 1 Summary
+
+**Total Issues:** 1
+**Severity Breakdown:**
+- CRITICAL: 1
+- HIGH: 0
+- MEDIUM: 0
+- LOW: 0
+
+**Clean Round Status:** Not Clean ❌
+
+**consecutive_clean:** 0
+
+---
+
+### Re-Validation Round 2 — 2026-05-01
+
+#### Dimension 1: Completeness
+**Status:** Pass — unchanged
+
+#### Dimension 2: Correctness
+**Status:** Pass — unchanged
+
+#### Dimension 3: Consistency
+**Status:** Issues Found
+
+**Issues:**
+- The Round 1 fix changed CLAUDE.md row to "one-line pointer only (~103 chars)" but this is still infeasible: 39,998 + 103 = 40,101 chars, which exceeds the 40,000-char hard limit by 101 chars. Even the minimal reference overflows the 2-char remaining capacity. The design doc's actual solution (full content in `azure_devops_integration.md`) is correct, but the Files Affected row claiming a CLAUDE.md `MODIFY` is misleading and would cause implementers to attempt an impossible edit. (Severity: CRITICAL)
+
+**Fix applied:**
+- Changed CLAUDE.md row from `MODIFY | One-line pointer` to `NO CHANGE | No update — char limit prevents any addition`.
+- Removed CLAUDE.md update step from Phase 4 plan (replaced with note that no update is possible).
+- Recorded in Change History.
+
+#### Dimension 4: Helpfulness
+**Status:** Pass — unchanged
+
+#### Dimension 5: Improvements
+**Status:** Pass — unchanged
+
+#### Dimension 6: Missing Proposals
+**Status:** Pass — unchanged
+
+#### Dimension 7: Open Questions
+**Status:** Pass — unchanged
+
+---
+
+#### Re-Validation Round 2 Summary
+
+**Total Issues:** 1
+**Severity Breakdown:**
+- CRITICAL: 1
+- HIGH: 0
+- MEDIUM: 0
+- LOW: 0
+
+**Clean Round Status:** Not Clean ❌
+
+**consecutive_clean:** 0
+
+<!-- stamp: 2026-05-02T00:10:07Z -->
+
+<!-- stamp: 2026-05-02T00:12:15Z -->

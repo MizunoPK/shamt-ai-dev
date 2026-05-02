@@ -1,15 +1,14 @@
 {
-  "_schema": "shamt-audit-v1",
-  "_note": "Written by the guide audit on completion. Read by pre-export-audit-gate.sh.",
-  "timestamp": null,
-  "scope": null,
-  "severity_counts": {
+  "scope": ".shamt/guides/",
+  "consecutive_clean": 3,
+  "exit_criterion_met": true,
+  "issues_by_severity": {
     "CRITICAL": 0,
     "HIGH": 0,
     "MEDIUM": 0,
     "LOW": 0
   },
-  "unfixed_issues": [],
-  "consecutive_clean_rounds": 0,
-  "exit_criterion_met": false
+  "timestamp": "2026-05-02T00:02:16.215642Z",
+  "rounds": 5,
+  "notes": "SHAMT-45 post-implementation guide audit"
 }

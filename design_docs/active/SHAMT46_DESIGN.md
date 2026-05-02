@@ -1,6 +1,6 @@
 # SHAMT-46: Azure DevOps PR Integration — Provider Abstraction and ADO MCP Wiring
 
-**Status:** Validated
+**Status:** Re-validating (post-SHAMT-45 merge)
 **Created:** 2026-04-28
 **Branch:** `feat/SHAMT-46`
 **Validation Log:** [SHAMT46_VALIDATION_LOG.md](./SHAMT46_VALIDATION_LOG.md)
@@ -381,7 +381,8 @@ All six proposals together. They form a coherent layer: abstraction (P1), CI tem
 | `.shamt/scripts/regen/regen-codex-shims.sh` | MODIFY | Read `pr_provider.conf`, conditionally register ADO MCP |
 | `.shamt/guides/composites/master_review_pipeline_composite.md` | MODIFY | Add "ADO-hosted" and "cross-provider" variant sections |
 | `.shamt/commands/CHEATSHEET.md` | MODIFY | Add ADO PR review commands and setup instructions |
-| `CLAUDE.md` | MODIFY | New section "Azure DevOps PR Integration (SHAMT-46)" |
+| `.shamt/guides/reference/azure_devops_integration.md` | CREATE | Full SHAMT-46 summary: PR provider abstraction, ADO MCP wiring, Azure Pipelines templates, cross-provider workflow. Carries all content that would have gone into CLAUDE.md. |
+| `CLAUDE.md` | NO CHANGE | No update to CLAUDE.md — 40,000-char hard limit (SHAMT-45 D11 audit rule) prevents any additions. Even a one-line pointer (~103 chars) would overflow the 2-char remaining capacity (39,998 / 40,000). Full SHAMT-46 content lives in `.shamt/guides/reference/azure_devops_integration.md`. |
 | `.shamt/scripts/initialization/ai_services.md` | MODIFY | Add note about ADO MCP Server as a companion integration alongside AI service choice |
 
 ---
@@ -415,7 +416,8 @@ All six proposals together. They form a coherent layer: abstraction (P1), CI tem
 - [ ] Author `ado_pr_review_workflow.md` (Triggers A/B/C, thread statuses, voting, re-review).
 - [ ] Update `master_review_pipeline_composite.md` with ADO and cross-provider variants.
 - [ ] Update `CHEATSHEET.md` with ADO commands.
-- [ ] Update `CLAUDE.md` with SHAMT-46 section.
+- [ ] Author `.shamt/guides/reference/azure_devops_integration.md` with full SHAMT-46 summary (PR provider, ADO MCP wiring, pipeline templates, cross-provider).
+- [ ] No CLAUDE.md update — 40,000-char hard limit (2 chars remaining) makes any addition impossible. Content is in `azure_devops_integration.md`.
 - [ ] Update `ai_services.md` with ADO MCP Server note.
 
 ### Phase 5: Validation
@@ -482,3 +484,5 @@ All six proposals together. They form a coherent layer: abstraction (P1), CI tem
 | 2026-04-28 | Validation fix (Round 1): corrected `requirements.txt` status from MODIFY to CREATE — SHAMT-43 creates `pyproject.toml` only; `requirements.txt` is a new file required by Azure Pipelines templates |
 | 2026-04-29 | Drift/coverage sync: added D-COVERAGE decision to `ado_pr_review_workflow.md` CREATE row — no new skill warranted; ADO review uses existing `shamt-code-review` skill with ADO MCP tools wired. |
 | 2026-04-29 | Validation fix (Round 1 LOW): annotated Open Question 4 (thread status) as resolved — Proposal 4 already decided `active`; OQ4 retained for traceability with resolution note. |
+| 2026-05-01 | Re-validation Round 1 fix (CRITICAL): CLAUDE.md is at 39,998 chars after SHAMT-45 trimming — only 2 chars remain. Added new CREATE row for `.shamt/guides/reference/azure_devops_integration.md` to carry the full content. |
+| 2026-05-01 | Re-validation Round 2 fix (CRITICAL): "One-line pointer" to CLAUDE.md is also infeasible — a minimal reference (~103 chars) overflows the 2-char remaining capacity. Changed CLAUDE.md row from MODIFY to NO CHANGE. Removed CLAUDE.md update step from Phase 4 plan entirely. |
