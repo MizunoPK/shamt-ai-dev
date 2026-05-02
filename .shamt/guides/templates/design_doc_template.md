@@ -86,7 +86,7 @@ Describe how you will verify that the implementation is correct and complete. In
 - **Testing approach:** Manual testing, automated checks, or both
 - **Success criteria:** What specific outcomes prove success?
 
-**Example:** "Run design doc validation loop (7 dimensions) until 3 consecutive clean rounds. After implementation, run implementation validation (5 dimensions). Verify all files listed in 'Files Affected' were created/modified as specified."
+**Example:** "Run design doc validation loop (7 dimensions) until primary clean round (all 7 dimensions pass with ≤1 LOW-severity issue) + 2 independent sub-agent confirmations. After implementation, run implementation validation (5 dimensions) to the same exit criterion. Verify all files listed in 'Files Affected' were created/modified as specified."
 
 ---
 

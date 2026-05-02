@@ -1,0 +1,31 @@
+trigger: none
+
+pr:
+  branches:
+    include:
+      - main
+      - 'feat/*'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.11'
+    displayName: 'Use Python 3.11'
+
+  - script: |
+      pip install -r .shamt/sdk/requirements.txt
+    displayName: 'Install Shamt SDK dependencies'
+
+  - script: |
+      python .shamt/sdk/shamt-validate-pr.py --provider=ado
+    displayName: 'Run Shamt PR Validation'
+    env:
+      AZURE_DEVOPS_PAT: $(System.AccessToken)
+      SYSTEM_COLLECTIONURI: $(System.CollectionUri)
+      SYSTEM_PULLREQUEST_PULLREQUESTID: $(System.PullRequest.PullRequestId)
+      BUILD_REPOSITORY_NAME: $(Build.Repository.Name)
+      SYSTEM_TEAMPROJECT: $(System.TeamProject)
+      OPENAI_API_KEY: $(OPENAI_API_KEY)

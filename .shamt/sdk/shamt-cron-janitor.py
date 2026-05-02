@@ -2,29 +2,38 @@
 """
 shamt-cron-janitor.py — Shamt stale-work scanner via Agents SDK
 
-Runs on a weekly schedule (GitHub Actions cron). Scans for stale Shamt work:
+Runs on a weekly schedule (GitHub Actions or Azure Pipelines cron). Scans for
+stale Shamt work:
   - design_docs/incoming/  — proposals older than 30 days
   - design_docs/active/    — design docs with no commit activity in N weeks
   - Child sync timestamps  — projects that haven't imported master in N weeks
 
-Produces a digest file and optionally posts it as a GitHub issue.
+Produces a digest file and optionally posts it as a GitHub issue or ADO Work Item.
 
 Usage:
-    python shamt-cron-janitor.py
+    python shamt-cron-janitor.py [--provider=github|ado]
 
 Environment variables:
-    GITHUB_TOKEN          — GitHub Actions token (issues: write for digest posting)
+    SHAMT_PR_PROVIDER     — "github" or "ado" (auto-detected from env if not set)
+
+GitHub (provider=github):
+    GITHUB_TOKEN          — token with issues: write
     GITHUB_REPOSITORY     — owner/repo
-    OPENAI_API_KEY        — API key for Codex/OpenAI
+
+Azure DevOps (provider=ado):
+    AZURE_DEVOPS_PAT      — PAT, or SYSTEM_ACCESSTOKEN (Azure Pipelines)
+    SYSTEM_COLLECTIONURI  — ADO org URL
+    SYSTEM_TEAMPROJECT    — ADO project name
 
 Optional:
     SHAMT_INCOMING_MAX_DAYS    — max days for incoming proposals (default: 30)
     SHAMT_ACTIVE_MAX_WEEKS     — max weeks for active design docs without commits (default: 4)
     SHAMT_SYNC_MAX_WEEKS       — max weeks since last child import (default: 4)
-    SHAMT_POST_ISSUE           — set to "true" to post digest as GitHub issue (default: false)
+    SHAMT_POST_ISSUE           — set to "true" to post digest (default: false)
     SHAMT_DIGEST_PATH          — path to write digest file (default: .shamt/janitor-digest.md)
 """
 
+import argparse
 import json
 import os
 import subprocess
@@ -35,7 +44,7 @@ from pathlib import Path
 try:
     from github import Github, GithubException
 except ImportError:
-    print("ERROR: Missing dependencies. Run: pip install -e .shamt/sdk", file=sys.stderr)
+    print("ERROR: Missing dependencies. Run: pip install -r .shamt/sdk/requirements.txt", file=sys.stderr)
     sys.exit(1)
 
 # ---------------------------------------------------------------------------
@@ -208,14 +217,48 @@ def post_github_issue(digest: str) -> None:
         for issue in repo.get_issues(state="open", labels=["shamt-janitor"]):
             issue.edit(state="closed")
 
-        issue = repo.create_issue(
-            title=title,
-            body=digest,
-            labels=["shamt-janitor"],
-        )
+        issue = repo.create_issue(title=title, body=digest, labels=["shamt-janitor"])
         print(f"Created GitHub issue #{issue.number}: {issue.html_url}")
     except GithubException as e:
         print(f"WARNING: Failed to create GitHub issue: {e}", file=sys.stderr)
+
+
+def post_ado_work_item(digest: str) -> None:
+    """Post digest as an ADO Work Item (Bug type) in the configured project."""
+    import base64, urllib.request, urllib.parse, urllib.error
+
+    pat = os.environ.get("AZURE_DEVOPS_PAT") or os.environ.get("SYSTEM_ACCESSTOKEN", "")
+    org_url = os.environ.get("SYSTEM_COLLECTIONURI", "").rstrip("/")
+    project = os.environ.get("SYSTEM_TEAMPROJECT", "")
+
+    if not pat or not org_url or not project:
+        print("WARNING: ADO credentials/org/project not set — skipping work item creation", file=sys.stderr)
+        return
+
+    auth = base64.b64encode(f":{pat}".encode()).decode()
+    ts = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    title = f"Shamt Janitor: stale work digest {ts}"
+
+    import json as _json
+    url = f"{org_url}/{urllib.parse.quote(project)}/_apis/wit/workitems/$Bug?api-version=7.1"
+    payload = _json.dumps([
+        {"op": "add", "path": "/fields/System.Title", "value": title},
+        {"op": "add", "path": "/fields/System.Description", "value": digest.replace("\n", "<br>")},
+        {"op": "add", "path": "/fields/System.Tags", "value": "shamt-janitor"},
+    ]).encode()
+
+    req = urllib.request.Request(
+        url, data=payload,
+        headers={"Authorization": f"Basic {auth}",
+                 "Content-Type": "application/json-patch+json"},
+        method="POST"
+    )
+    try:
+        with urllib.request.urlopen(req) as resp:
+            item = _json.loads(resp.read().decode())
+            print(f"Created ADO Work Item #{item.get('id')}: {item.get('_links', {}).get('html', {}).get('href', '')}")
+    except urllib.error.HTTPError as e:
+        print(f"WARNING: Failed to create ADO Work Item: HTTP {e.code}: {e.read().decode(errors='replace')}", file=sys.stderr)
 
 
 # ---------------------------------------------------------------------------
@@ -223,7 +266,16 @@ def post_github_issue(digest: str) -> None:
 # ---------------------------------------------------------------------------
 
 def main():
-    print("Shamt Janitor: scanning for stale work...")
+    parser = argparse.ArgumentParser(description="Shamt stale-work scanner")
+    parser.add_argument("--provider", choices=["github", "ado"], default="",
+                        help="Issue provider (auto-detected from env if not set)")
+    args = parser.parse_args()
+
+    provider = args.provider or os.environ.get("SHAMT_PR_PROVIDER", "")
+    if not provider:
+        provider = "ado" if os.environ.get("TF_BUILD", "").lower() == "true" else "github"
+
+    print(f"Shamt Janitor: scanning for stale work [{provider}]...")
 
     findings = []
     findings.extend(scan_incoming_proposals())
@@ -232,7 +284,6 @@ def main():
 
     digest = build_digest(findings)
 
-    # Write digest file
     DIGEST_PATH.parent.mkdir(parents=True, exist_ok=True)
     DIGEST_PATH.write_text(digest, encoding="utf-8")
     print(f"Digest written to {DIGEST_PATH}")
@@ -240,12 +291,13 @@ def main():
     print(digest)
 
     if POST_ISSUE and findings:
-        post_github_issue(digest)
+        if provider == "ado":
+            post_ado_work_item(digest)
+        else:
+            post_github_issue(digest)
     elif POST_ISSUE and not findings:
         print("No stale items — skipping issue creation.")
 
-    # Exit non-zero only on errors, not on stale findings
-    # (stale work is a warning, not a CI failure)
     sys.exit(0)
 
 

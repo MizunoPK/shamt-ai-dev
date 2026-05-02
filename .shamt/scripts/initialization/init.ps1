@@ -11,12 +11,14 @@ $ShamtSourceDir = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PS
 $TargetDir = Get-Location
 $ShamtDir = Join-Path $TargetDir ".shamt"
 
-# Parse --host and --with-cloud flags
+# Parse --host, --with-cloud, and --pr-provider flags
 $HostFlag = ""
 $WithCloud = $false
+$PrProviderFlag = ""
 foreach ($arg in $args) {
-    if ($arg -match '^--host=(.+)$') { $HostFlag = $matches[1] }
-    if ($arg -eq '--with-cloud')     { $WithCloud = $true }
+    if ($arg -match '^--host=(.+)$')        { $HostFlag = $matches[1] }
+    if ($arg -eq '--with-cloud')            { $WithCloud = $true }
+    if ($arg -match '^--pr-provider=(.+)$') { $PrProviderFlag = $matches[1] }
 }
 
 Write-Host ""
@@ -287,6 +289,39 @@ if ($TargetDir -eq $ShamtSourceDir) {
 } else {
     Set-Content (Join-Path $ConfigDir "repo_type.conf") "child" -NoNewline
 }
+
+# PR provider config
+$PrProviderConfPath = Join-Path $ConfigDir "pr_provider.conf"
+$AdoOrgPath = Join-Path $ConfigDir "ado_org.txt"
+$PrProvider = if ($PrProviderFlag) { $PrProviderFlag }
+              elseif (Test-Path $PrProviderConfPath) { (Get-Content $PrProviderConfPath -Raw).Trim() }
+              else {
+                  Write-Host ""
+                  Write-Host "  PR provider (default: github):"
+                  Write-Host "    1) github  - GitHub Actions CI + GitHub PR comments"
+                  Write-Host "    2) ado     - Azure Pipelines CI + ADO PR comment threads"
+                  Write-Host "    3) both    - configure both"
+                  $choice = Read-Host "  Enter choice [1/2/3] (press Enter for github)"
+                  switch ($choice) { "2" { "ado" } "3" { "both" } default { "github" } }
+              }
+Set-Content $PrProviderConfPath $PrProvider -NoNewline
+
+if ($PrProvider -match "ado") {
+    if (-not (Get-Command npx -ErrorAction SilentlyContinue)) {
+        Write-Host ""
+        Write-Host "  WARNING: 'npx' not found. Node.js 20+ is required for the ADO MCP Server." -ForegroundColor Yellow
+        Write-Host "  Install Node.js from https://nodejs.org and re-run init, or run regen-claude-shims.ps1 after installing." -ForegroundColor Yellow
+    }
+    $existingOrg = if (Test-Path $AdoOrgPath) { (Get-Content $AdoOrgPath -Raw).Trim() } else { "" }
+    if (-not $existingOrg) {
+        $adoOrg = Read-Host "  Enter your ADO organization name (e.g. 'myorg' from dev.azure.com/myorg)"
+        Set-Content $AdoOrgPath $adoOrg -NoNewline
+        Write-Host "  OK ADO org stored in .shamt\config\ado_org.txt"
+    }
+    Write-Host ""
+    Write-Host "  ℹ  ADO MCP Server: on first use, your browser will open for Microsoft Entra authentication."
+}
+
 Write-Host "  OK Host config written to .shamt\config\"
 
 # --- Configure local git excludes --------------------------------------------

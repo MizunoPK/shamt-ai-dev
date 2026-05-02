@@ -5,5 +5,11 @@
   },
   "hooks": {},
   "mcpServers": {},
-  "_shamt_managed_blocks": ["statusLine"]
+  "_shamt_managed_blocks": ["statusLine"],
+  "_shamt_ado_mcp_template": {
+    "_note": "Uncommented by init.sh --pr-provider=ado. Do not edit manually — run regen-claude-shims.sh after changing .shamt/config/pr_provider.conf.",
+    "command": "npx",
+    "args": ["-y", "@azure-devops/mcp", "SHAMT_ADO_ORG_PLACEHOLDER", "-d", "core", "repositories"],
+    "type": "stdio"
+  }
 }

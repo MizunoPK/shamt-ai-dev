@@ -32,6 +32,8 @@ Produces a per-branch output folder under `.shamt/code_reviews/<sanitized-branch
 
 **Hard rule:** Never check out the branch. All git access is read-only.
 
+**ADO pull requests:** This skill handles the review dimensions only. For Azure DevOps PRs, the I/O layer (reading diffs via ADO MCP Server, posting findings as ADO comment threads) is handled by the calling workflow — see `.shamt/guides/reference/ado_pr_review_workflow.md`. The review dimensions themselves are provider-agnostic.
+
 ---
 
 ## When This Skill Triggers

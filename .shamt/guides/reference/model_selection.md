@@ -45,7 +45,7 @@ The binary Haiku/Sonnet/Opus decision is a starting point. Optimal selection use
 
 These profiles are advisory — agents and users override per-task as needed.
 
-```
+```text
 Profile: validate-cheap
   Model:           cheap tier (Haiku / Codex default)
   Cache:           warm  (sub-agent confirmation prompts hit cache on repeated invocation)

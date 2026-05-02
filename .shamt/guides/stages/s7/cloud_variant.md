@@ -22,7 +22,7 @@ Use the CLI variant when:
 
 ## Cloud QC Fan-Out Flow
 
-```
+```text
 Architect / Primary agent (CLI / IDE)
   ↓ reviews PR opened by S6 cloud builder
   ↓ for each validation dimension:

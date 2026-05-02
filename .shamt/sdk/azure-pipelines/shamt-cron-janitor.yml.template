@@ -1,0 +1,32 @@
+trigger: none
+
+schedules:
+  - cron: '0 8 * * 1'  # Weekly Monday 8 AM UTC
+    displayName: 'Weekly Shamt Janitor'
+    branches:
+      include:
+        - main
+    always: true
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.11'
+    displayName: 'Use Python 3.11'
+
+  - script: |
+      pip install -r .shamt/sdk/requirements.txt
+    displayName: 'Install Shamt SDK dependencies'
+
+  - script: |
+      python .shamt/sdk/shamt-cron-janitor.py --provider=ado
+    displayName: 'Run Shamt Janitor'
+    env:
+      AZURE_DEVOPS_PAT: $(System.AccessToken)
+      SYSTEM_COLLECTIONURI: $(System.CollectionUri)
+      SYSTEM_TEAMPROJECT: $(System.TeamProject)
+      SHAMT_POST_ISSUE: 'true'
+      OPENAI_API_KEY: $(OPENAI_API_KEY)

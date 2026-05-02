@@ -2,26 +2,39 @@
 """
 shamt-validate-pr.py — Shamt PR validation gate via Agents SDK
 
-Runs in GitHub Actions on pull_request events. For each changed Shamt artifact
-(specs, validation logs, design docs) drives a Codex session through the
-shamt-validation-loop skill and aggregates the results into a PR comment.
+Runs on pull_request events (GitHub Actions or Azure Pipelines). For each
+changed Shamt artifact drives a Codex session through the shamt-validation-loop
+skill and aggregates the results into a PR comment.
 
 Exits non-zero if any artifact failed validation.
 
 Usage:
-    python shamt-validate-pr.py
+    python shamt-validate-pr.py [--provider=github|ado]
 
-Environment variables (all required):
-    GITHUB_TOKEN         — GitHub Actions token with pull_requests: write
-    GITHUB_EVENT_PATH    — path to the GitHub Actions event JSON file
-    GITHUB_REPOSITORY    — owner/repo
-    OPENAI_API_KEY       — API key for Codex/OpenAI (or ANTHROPIC_API_KEY)
+Environment variables:
+    OPENAI_API_KEY            — API key for Codex/OpenAI (or ANTHROPIC_API_KEY)
+    SHAMT_PR_PROVIDER         — "github" or "ado" (auto-detected if not set)
+
+GitHub Actions (provider=github):
+    GITHUB_TOKEN              — token with pull_requests: write
+    GITHUB_EVENT_PATH         — path to the GitHub Actions event JSON
+    GITHUB_REPOSITORY         — owner/repo
+
+Azure Pipelines (provider=ado):
+    AZURE_DEVOPS_PAT          — PAT with Contribute to pull requests permission, OR
+    SYSTEM_ACCESSTOKEN        — pipeline built-in token (requires permission setup;
+                                see .shamt/sdk/azure-pipelines/README.md)
+    SYSTEM_COLLECTIONURI      — ADO org URL (set automatically by Azure Pipelines)
+    SYSTEM_TEAMPROJECT        — ADO project name (set automatically)
+    BUILD_REPOSITORY_NAME     — repository name (set automatically)
+    SYSTEM_PULLREQUEST_PULLREQUESTID — PR ID (set automatically on PR builds)
 
 Optional:
     SHAMT_VALIDATION_TIMEOUT  — max seconds per artifact validation (default: 300)
     SHAMT_SKIP_ARTIFACTS      — comma-separated glob patterns to skip
 """
 
+import argparse
 import json
 import os
 import subprocess
@@ -30,16 +43,17 @@ import textwrap
 from datetime import datetime, timezone
 from pathlib import Path
 
-# ---------------------------------------------------------------------------
-# Dependency check
-# ---------------------------------------------------------------------------
-
 try:
     from openai import OpenAI
-    from github import Github, GithubException
 except ImportError:
-    print("ERROR: Missing dependencies. Run: pip install -e .shamt/sdk", file=sys.stderr)
+    print("ERROR: Missing dependencies. Run: pip install -r .shamt/sdk/requirements.txt", file=sys.stderr)
     sys.exit(1)
+
+try:
+    from pr_provider import detect_provider, PRContext
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).parent))
+    from pr_provider import detect_provider, PRContext
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -50,7 +64,6 @@ SKIP_PATTERNS = [
     p.strip() for p in os.environ.get("SHAMT_SKIP_ARTIFACTS", "").split(",") if p.strip()
 ]
 
-# Shamt artifact patterns to validate
 ARTIFACT_PATTERNS = [
     "**/*_DESIGN.md",
     "**/*_VALIDATION_LOG.md",
@@ -60,28 +73,8 @@ ARTIFACT_PATTERNS = [
 ]
 
 # ---------------------------------------------------------------------------
-# GitHub context
+# Changed files
 # ---------------------------------------------------------------------------
-
-def load_github_context():
-    event_path = os.environ.get("GITHUB_EVENT_PATH")
-    if not event_path or not Path(event_path).exists():
-        print("ERROR: GITHUB_EVENT_PATH not set or file not found", file=sys.stderr)
-        sys.exit(1)
-
-    with open(event_path) as f:
-        event = json.load(f)
-
-    pr = event.get("pull_request", {})
-    return {
-        "pr_number": pr.get("number"),
-        "base_sha": pr.get("base", {}).get("sha", "HEAD~1"),
-        "head_sha": pr.get("head", {}).get("sha", "HEAD"),
-        "base_ref": pr.get("base", {}).get("ref", "main"),
-        "head_ref": pr.get("head", {}).get("ref", ""),
-        "repo": os.environ.get("GITHUB_REPOSITORY", ""),
-    }
-
 
 def get_changed_artifacts(base_sha: str, head_sha: str) -> list[Path]:
     """Return changed files matching ARTIFACT_PATTERNS, excluding SKIP_PATTERNS."""
@@ -103,7 +96,6 @@ def get_changed_artifacts(base_sha: str, head_sha: str) -> list[Path]:
             continue
         if any(path.match(pat) for pat in ARTIFACT_PATTERNS):
             matched.append(path)
-
     return matched
 
 
@@ -112,9 +104,7 @@ def get_changed_artifacts(base_sha: str, head_sha: str) -> list[Path]:
 # ---------------------------------------------------------------------------
 
 def validate_artifact(client: OpenAI, artifact: Path) -> dict:
-    """Drive a Codex session to validate one artifact. Returns result dict."""
     content = artifact.read_text(encoding="utf-8")
-
     prompt = textwrap.dedent(f"""
         You are running Shamt validation on a changed artifact from a pull request.
 
@@ -152,8 +142,7 @@ def validate_artifact(client: OpenAI, artifact: Path) -> dict:
             response_format={"type": "json_object"},
             timeout=TIMEOUT,
         )
-        result_text = response.choices[0].message.content
-        result = json.loads(result_text)
+        result = json.loads(response.choices[0].message.content)
         result["artifact"] = str(artifact)
         return result
     except Exception as e:
@@ -166,10 +155,10 @@ def validate_artifact(client: OpenAI, artifact: Path) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# PR comment
+# Comment formatting
 # ---------------------------------------------------------------------------
 
-def build_comment(results: list[dict], ctx: dict) -> str:
+def build_comment(results: list[dict], ctx: PRContext) -> str:
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     passed = sum(1 for r in results if r.get("status") == "PASS")
     failed = sum(1 for r in results if r.get("status") in ("FAIL", "ERROR"))
@@ -179,7 +168,7 @@ def build_comment(results: list[dict], ctx: dict) -> str:
     lines = [
         f"## {status_emoji} Shamt Validation — {passed}/{total} artifacts passed",
         f"",
-        f"**Run:** `{ctx['head_sha'][:8]}` → `{ctx['base_ref']}` — {ts}",
+        f"**Run:** `{ctx.head_sha[:8]}` → `{ctx.base_ref}` — {ts}",
         f"",
     ]
 
@@ -208,54 +197,32 @@ def build_comment(results: list[dict], ctx: dict) -> str:
     return "\n".join(lines)
 
 
-def post_pr_comment(comment: str, ctx: dict) -> None:
-    token = os.environ.get("GITHUB_TOKEN")
-    if not token:
-        print("WARNING: GITHUB_TOKEN not set — skipping PR comment", file=sys.stderr)
-        return
-
-    try:
-        gh = Github(token)
-        repo = gh.get_repo(ctx["repo"])
-        pr = repo.get_pull(ctx["pr_number"])
-
-        # Delete previous shamt-validate-pr comment if present (keep thread clean)
-        for existing in pr.get_issue_comments():
-            if "shamt-validate-pr.py" in (existing.body or ""):
-                existing.delete()
-                break
-
-        pr.create_issue_comment(comment)
-        print(f"Posted validation comment to PR #{ctx['pr_number']}")
-    except GithubException as e:
-        print(f"WARNING: Failed to post PR comment: {e}", file=sys.stderr)
-
-
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
 def main():
-    ctx = load_github_context()
-    if not ctx["pr_number"]:
+    parser = argparse.ArgumentParser(description="Shamt PR validation gate")
+    parser.add_argument("--provider", choices=["github", "ado"], default="",
+                        help="PR provider (auto-detected from env if not set)")
+    args = parser.parse_args()
+
+    provider = detect_provider(args.provider)
+    ctx = provider.get_pr_context()
+
+    if not ctx.pr_id:
         print("Not a pull_request event — nothing to validate.")
         sys.exit(0)
 
-    print(f"Shamt PR validation: PR #{ctx['pr_number']} ({ctx['head_sha'][:8]})")
+    print(f"Shamt PR validation: PR #{ctx.pr_id} ({ctx.head_sha[:8]}) [{type(provider).__name__}]")
 
-    artifacts = get_changed_artifacts(ctx["base_sha"], ctx["head_sha"])
+    artifacts = get_changed_artifacts(ctx.base_sha, ctx.head_sha)
     if not artifacts:
         print("No Shamt artifacts changed in this PR.")
-        # Post a minimal comment so the check is visible
-        gh_token = os.environ.get("GITHUB_TOKEN")
-        if gh_token and ctx["pr_number"]:
-            try:
-                gh = Github(gh_token)
-                repo = gh.get_repo(ctx["repo"])
-                pr = repo.get_pull(ctx["pr_number"])
-                pr.create_issue_comment("✅ **Shamt Validation** — no Shamt artifacts changed in this PR.")
-            except GithubException:
-                pass
+        try:
+            provider.post_pr_comment(ctx.pr_id, "✅ **Shamt Validation** — no Shamt artifacts changed in this PR.")
+        except Exception:
+            pass
         sys.exit(0)
 
     print(f"Found {len(artifacts)} artifact(s) to validate:")
@@ -273,13 +240,45 @@ def main():
         print(f"Validating {artifact}...")
         result = validate_artifact(client, artifact)
         results.append(result)
-        status = result.get("status", "ERROR")
-        print(f"  → {status}: {result.get('summary', '')}")
+        print(f"  → {result.get('status', 'ERROR')}: {result.get('summary', '')}")
 
     comment = build_comment(results, ctx)
-    post_pr_comment(comment, ctx)
+    try:
+        provider.post_pr_comment(ctx.pr_id, comment)
+        print(f"Posted validation summary comment to PR #{ctx.pr_id}")
+    except Exception as e:
+        print(f"WARNING: Failed to post PR comment: {e}", file=sys.stderr)
 
+    # ADO: also post per-artifact file-positioned threads for each failed artifact
+    # (GitHub inline comments require review context and are skipped here)
+    from pr_provider import AzureDevOpsProvider
+    if isinstance(provider, AzureDevOpsProvider):
+        for result in results:
+            if result.get("status") not in ("FAIL", "ERROR"):
+                continue
+            issues = result.get("issues", [])
+            if not issues:
+                continue
+            artifact_path = result.get("artifact", "")
+            body_lines = [f"**Shamt Validation — {result.get('status')}**", ""]
+            for issue in issues:
+                body_lines.append(f"- **{issue['severity']}**: {issue['description']}")
+            body_lines.append(f"\n_{result.get('summary', '')}_")
+            try:
+                provider.post_file_comment(ctx.pr_id, artifact_path, line=1, body="\n".join(body_lines))
+                print(f"  Posted file-positioned thread for {artifact_path}")
+            except Exception as e:
+                print(f"WARNING: Failed to post file-positioned thread for {artifact_path}: {e}", file=sys.stderr)
+
+    # Set PR status
     failed = sum(1 for r in results if r.get("status") in ("FAIL", "ERROR"))
+    try:
+        state = "failure" if failed else "success"
+        desc = f"{len(results) - failed}/{len(results)} artifacts passed"
+        provider.set_pr_status(ctx.pr_id, state, desc)
+    except Exception as e:
+        print(f"WARNING: Failed to set PR status: {e}", file=sys.stderr)
+
     if failed > 0:
         print(f"\n{failed}/{len(results)} artifact(s) failed validation.")
         sys.exit(1)

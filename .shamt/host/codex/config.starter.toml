@@ -25,6 +25,12 @@ max_depth = 1  # Codex ceiling; Shamt validation loops flatten to depth-1
 
 # (MCP server registration inserted here by regen-codex-shims.sh when venv present)
 
+# ADO MCP Server — inserted by regen-codex-shims.sh when pr_provider.conf contains "ado"
+# [mcp_servers.ado]
+# command = "npx"
+# args = ["-y", "@azure-devops/mcp", "{ado_org}", "-d", "core", "repositories"]
+# type = "stdio"
+
 # =============================================================================
 # SHAMT-MCP-END
 # =============================================================================

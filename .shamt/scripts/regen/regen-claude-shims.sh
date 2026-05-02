@@ -30,6 +30,20 @@ if [ -f "$REPO_TYPE_CONF" ]; then
     REPO_TYPE="$(tr -d '[:space:]' < "$REPO_TYPE_CONF")"
 fi
 
+# --- Determine PR provider ----------------------------------------------------
+
+PR_PROVIDER_CONF="$SHAMT_DIR/config/pr_provider.conf"
+PR_PROVIDER="github"
+if [ -f "$PR_PROVIDER_CONF" ]; then
+    PR_PROVIDER="$(tr -d '[:space:]' < "$PR_PROVIDER_CONF")"
+fi
+
+ADO_ORG_CONF="$SHAMT_DIR/config/ado_org.txt"
+ADO_ORG=""
+if [ -f "$ADO_ORG_CONF" ]; then
+    ADO_ORG="$(tr -d '[:space:]' < "$ADO_ORG_CONF")"
+fi
+
 echo ""
 echo "============================================================"
 echo "  Shamt Regen — Claude Code Shims"
@@ -323,6 +337,19 @@ if venv_python.exists():
     mcp_status = f"registered ({venv_python})"
 else:
     mcp_status = "skipped (venv not found — see .shamt/mcp/README.md)"
+
+# Register ADO MCP server if pr_provider.conf contains "ado"
+pr_provider = "$PR_PROVIDER"
+ado_org = "$ADO_ORG"
+if "ado" in pr_provider and ado_org:
+    settings.setdefault("mcpServers", {})["ado"] = {
+        "command": "npx",
+        "args": ["-y", "@azure-devops/mcp", ado_org, "-d", "core", "repositories"],
+        "type": "stdio"
+    }
+    print(f"  MCP ADO: registered (org={ado_org}, domains=core,repositories)")
+elif "ado" in pr_provider and not ado_org:
+    print(f"  MCP ADO: skipped (ado_org.txt not found — run init.sh --pr-provider=ado to set org name)")
 
 with open(settings_path, 'w') as f:
     json.dump(settings, f, indent=2)

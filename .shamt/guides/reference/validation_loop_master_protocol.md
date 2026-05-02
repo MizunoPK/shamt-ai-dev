@@ -1970,7 +1970,7 @@ After the primary agent reaches `consecutive_clean = 1` (clean primary round):
 
 ### Cloud confirmer prompt
 
-```
+```text
 You are a Shamt validation confirmer (independent sub-agent role). The primary
 validator found zero issues. Your job: verify independently across all dimensions.
 
@@ -1993,4 +1993,4 @@ Report: CONFIRMED CLEAN (0 issues) or list of issues found with severity.
 
 ### Skill body update
 
-This cloud variant content will be incorporated into the `shamt-validation-loop/SKILL.md` skill body in SHAMT-44 Phase 3.
+This cloud variant content was incorporated into the `shamt-validation-loop/SKILL.md` skill body in SHAMT-44 Phase 3.

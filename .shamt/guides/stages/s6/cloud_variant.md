@@ -22,7 +22,7 @@ Use the CLI variant when:
 
 ## Cloud Variant Flow
 
-```
+```text
 Architect (CLI / IDE)
   ↓ creates & validates implementation plan (S5, same as CLI variant)
   ↓ commits plan to feat/EPIC branch
