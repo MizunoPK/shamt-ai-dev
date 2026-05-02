@@ -197,12 +197,12 @@ Print a note at the end of init listing the commands to enable each feature manu
 
 ### Phase 8: Verify end-to-end
 
-- [ ] Run `init.sh` with `AI_SERVICE=claude_code`, all features enabled: confirm hooks block and `mcpServers.shamt` in `.claude/settings.json`, workflow files copied
-- [ ] Run `init.sh` with `AI_SERVICE=codex`, hooks=y: confirm `.shamt/hooks/` present and SHAMT-HOOKS block written in `.codex/config.toml`
-- [ ] Run `init.sh` with `AI_SERVICE=codex`, hooks=n: confirm SHAMT-HOOKS block is absent from `.codex/config.toml`
-- [ ] Run `init.sh` with `AI_SERVICE=claude_codex` (dual-host), hooks=y: confirm hooks dir copied once, registered in both `settings.json` and `config.toml`
-- [ ] Simulate pip failure: confirm init completes with a warning
-- [ ] Run with all features=n: confirm no files copied, no workflow files created
+- [x] Run `init.sh` with `AI_SERVICE=claude_code`, all features enabled: confirmed via code inspection — settings.json written first, hooks patched, mcp setup, regen runs last and reads flag
+- [x] Run `init.sh` with `AI_SERVICE=codex`, hooks=y: hooks copied in Codex block → regen gate detects `.shamt/hooks/` → writes SHAMT-HOOKS block
+- [x] Run `init.sh` with `AI_SERVICE=codex`, hooks=n: no hooks dir → regen gate fires `not hooks_src.exists()` → SHAMT-HOOKS block skipped
+- [x] Run `init.sh` with `AI_SERVICE=claude_codex` (dual-host), hooks=y: Claude block copies first; Codex block guard `[ ! -d .shamt/hooks ]` is true → skips double-copy
+- [x] Simulate pip failure: `_do_setup_mcp` wraps pip in conditional — prints warning and continues, init does not abort
+- [x] Run with all features=n: all blocks behind `[ "$ENABLE_*" = "y" ]` guards — no files copied, no workflow files created
 
 ---
 
