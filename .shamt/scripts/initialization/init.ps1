@@ -307,6 +307,11 @@ $PrProvider = if ($PrProviderFlag) { $PrProviderFlag }
 Set-Content $PrProviderConfPath $PrProvider -NoNewline
 
 if ($PrProvider -match "ado") {
+    if (-not (Get-Command npx -ErrorAction SilentlyContinue)) {
+        Write-Host ""
+        Write-Host "  WARNING: 'npx' not found. Node.js 20+ is required for the ADO MCP Server." -ForegroundColor Yellow
+        Write-Host "  Install Node.js from https://nodejs.org and re-run init, or run regen-claude-shims.ps1 after installing." -ForegroundColor Yellow
+    }
     $existingOrg = if (Test-Path $AdoOrgPath) { (Get-Content $AdoOrgPath -Raw).Trim() } else { "" }
     if (-not $existingOrg) {
         $adoOrg = Read-Host "  Enter your ADO organization name (e.g. 'myorg' from dev.azure.com/myorg)"
@@ -315,7 +320,6 @@ if ($PrProvider -match "ado") {
     }
     Write-Host ""
     Write-Host "  ℹ  ADO MCP Server: on first use, your browser will open for Microsoft Entra authentication."
-    Write-Host "     Prerequisites: Node.js 20+ required (npx @azure-devops/mcp)."
 }
 
 Write-Host "  OK Host config written to .shamt\config\"

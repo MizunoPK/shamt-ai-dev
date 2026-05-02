@@ -97,6 +97,24 @@ variables:
 
 ---
 
+## Version Pinning (Recommended)
+
+The ADO MCP Server is installed via `npx -y @azure-devops/mcp` (latest by default). To pin to a specific version and avoid unintended breakage from upstream changes:
+
+1. Find the current stable version:
+   ```bash
+   npm view @azure-devops/mcp version
+   ```
+2. Update the `args` in your host wiring (`.claude/settings.json` or `.codex/config.toml`):
+   ```json
+   "args": ["-y", "@azure-devops/mcp@0.2.0", "your-org", "-d", "core", "repositories"]
+   ```
+3. Update your regen scripts' `ado_org.txt` → re-run `regen-*-shims.sh` to propagate.
+
+To upgrade to a newer version: update the version string in `ado_org.txt` (or directly in the host settings), then re-run the regen script.
+
+---
+
 ## Troubleshooting
 
 | Error | Cause | Fix |

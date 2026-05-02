@@ -319,6 +319,11 @@ fi
 echo "$_pr_provider" > "$SHAMT_DIR/config/pr_provider.conf"
 
 if [[ "$_pr_provider" == *ado* ]]; then
+    if ! command -v npx >/dev/null 2>&1; then
+        echo ""
+        echo "  ⚠  WARNING: 'npx' not found. Node.js 20+ is required for the ADO MCP Server."
+        echo "     Install Node.js from https://nodejs.org and re-run init, or run regen-claude-shims.sh after installing."
+    fi
     if [ -z "$(cat "$SHAMT_DIR/config/ado_org.txt" 2>/dev/null)" ]; then
         read -rp "  Enter your ADO organization name (e.g. 'myorg' from dev.azure.com/myorg): " _ado_org
         echo "$_ado_org" > "$SHAMT_DIR/config/ado_org.txt"
@@ -326,7 +331,6 @@ if [[ "$_pr_provider" == *ado* ]]; then
     fi
     echo ""
     echo "  ℹ  ADO MCP Server: on first use, your browser will open for Microsoft Entra authentication."
-    echo "     Prerequisites: Node.js 20+ required (npx @azure-devops/mcp)."
 fi
 
 echo "  ✓ Host config written to .shamt/config/"

@@ -245,9 +245,30 @@ def main():
     comment = build_comment(results, ctx)
     try:
         provider.post_pr_comment(ctx.pr_id, comment)
-        print(f"Posted validation comment to PR #{ctx.pr_id}")
+        print(f"Posted validation summary comment to PR #{ctx.pr_id}")
     except Exception as e:
         print(f"WARNING: Failed to post PR comment: {e}", file=sys.stderr)
+
+    # ADO: also post per-artifact file-positioned threads for each failed artifact
+    # (GitHub inline comments require review context and are skipped here)
+    from pr_provider import AzureDevOpsProvider
+    if isinstance(provider, AzureDevOpsProvider):
+        for result in results:
+            if result.get("status") not in ("FAIL", "ERROR"):
+                continue
+            issues = result.get("issues", [])
+            if not issues:
+                continue
+            artifact_path = result.get("artifact", "")
+            body_lines = [f"**Shamt Validation — {result.get('status')}**", ""]
+            for issue in issues:
+                body_lines.append(f"- **{issue['severity']}**: {issue['description']}")
+            body_lines.append(f"\n_{result.get('summary', '')}_")
+            try:
+                provider.post_file_comment(ctx.pr_id, artifact_path, line=1, body="\n".join(body_lines))
+                print(f"  Posted file-positioned thread for {artifact_path}")
+            except Exception as e:
+                print(f"WARNING: Failed to post file-positioned thread for {artifact_path}: {e}", file=sys.stderr)
 
     # Set PR status
     failed = sum(1 for r in results if r.get("status") in ("FAIL", "ERROR"))
