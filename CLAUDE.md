@@ -229,7 +229,7 @@ Four dashboards: `shamt-overview.json`, `shamt-validation-loop.json`, `shamt-arc
 
 ### SDK CI automation
 
-`.shamt/sdk/` — two standalone Python scripts using the OpenAI Agents SDK. Both are **opt-in** — copy the workflow template manually.
+`.shamt/sdk/` — two standalone Python scripts using the OpenAI Agents SDK. Both are **opt-in** — enable during `init.sh` when prompted, or copy the workflow templates manually in an existing project.
 
 - `shamt-validate-pr.py` — PR validation gate: validates changed Shamt artifacts, posts structured comment, exits non-zero on failure. Enable: copy `shamt-validate.yml.template` → `.github/workflows/shamt-validate.yml`. Requires `OPENAI_API_KEY` secret. `GITHUB_TOKEN` is automatic. Label-gate option (`needs-shamt-review`) recommended for high-PR-volume repos.
 - `shamt-cron-janitor.py` — weekly stale-work scanner: proposals >30d old, stalled design docs, stale child syncs. Enable: copy `shamt-cron-janitor.yml.template` → `.github/workflows/shamt-cron-janitor.yml`. Creates `shamt-janitor` label as GitHub issues.

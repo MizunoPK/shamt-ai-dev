@@ -654,14 +654,18 @@ if [[ "$AI_SERVICE" =~ claude ]]; then
             echo "  ✓ Hooks dir copied"
         fi
         if command -v python3 >/dev/null 2>&1 && [ -f "$TARGET_SETTINGS" ]; then
-            python3 - "$TARGET_SETTINGS" <<'PYEOF'
+            if python3 - "$TARGET_SETTINGS" <<'PYEOF'
 import json, sys
 path = sys.argv[1]
 with open(path) as f: s = json.load(f)
 s.setdefault('features', {})['shamt_hooks'] = True
 with open(path, 'w') as f: json.dump(s, f, indent=2)
 PYEOF
-            echo "  ✓ features.shamt_hooks=true patched into settings.json"
+            then
+                echo "  ✓ features.shamt_hooks=true patched into settings.json"
+            else
+                echo "  ⚠  Failed to patch features.shamt_hooks — edit settings.json manually."
+            fi
         else
             echo "  ⚠  python3 not found — features.shamt_hooks flag not set."
             echo "     Run regen-claude-shims.sh manually after installing Python 3 to complete hooks setup."

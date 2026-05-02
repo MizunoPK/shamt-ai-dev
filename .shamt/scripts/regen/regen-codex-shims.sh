@@ -427,8 +427,10 @@ print(f"  MCP: {mcp_status}")
 if hooks_content:
     print(f"  Hooks: installed")
 PYEOF
-    # Ensure hook scripts are executable
-    find "$SHAMT_DIR/hooks" -name "*.sh" -exec chmod +x {} \;
+    # Ensure hook scripts are executable (only if hooks dir was copied)
+    if [ -d "$SHAMT_DIR/hooks" ]; then
+        find "$SHAMT_DIR/hooks" -name "*.sh" -exec chmod +x {} \;
+    fi
 else
     echo "  Profiles + Hooks + MCP: skipped (.codex/config.toml or .shamt/host/codex/profiles/ not found)"
 fi
