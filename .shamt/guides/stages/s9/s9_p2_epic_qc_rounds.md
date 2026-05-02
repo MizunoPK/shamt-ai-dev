@@ -32,11 +32,11 @@ S9.P1 (Epic Smoke Testing) →
 11. [Dimension 11: Architectural Alignment](#dimension-11-architectural-alignment)
 12. [Dimension 12: Success Criteria Completion](#dimension-12-success-criteria-completion)
 13. [Dimension 13: Mechanical Code Quality (Epic-Wide)](#dimension-13-mechanical-code-quality-epic-wide)
-15. [Issue Handling: Fix and Continue](#issue-handling-fix-and-continue)
-16. [MANDATORY CHECKPOINT 1](#mandatory-checkpoint-1)
-17. [Next Steps](#next-steps)
-18. [Summary](#summary)
-19. [Exit Criteria](#exit-criteria)
+14. [Issue Handling: Fix and Continue](#issue-handling-fix-and-continue)
+15. [MANDATORY CHECKPOINT 1](#mandatory-checkpoint-1)
+16. [Next Steps](#next-steps)
+17. [Summary](#summary)
+18. [Exit Criteria](#exit-criteria)
 
 ---
 

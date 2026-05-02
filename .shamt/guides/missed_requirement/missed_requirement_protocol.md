@@ -40,8 +40,6 @@
 - If you can write a complete spec.md for the solution → Missed Requirement
 - If you need to investigate why something isn't working → Debugging Protocol
 
-**See:** CLAUDE.md → "Decision Tree: Which Protocol to Use?" for detailed decision tree with examples
-
 ---
 
 ## 🚨 MANDATORY READING PROTOCOL

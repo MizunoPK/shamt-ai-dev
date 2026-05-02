@@ -752,7 +752,7 @@ Next: Implementation (S5-S8) will be sequential
 **Lock File System:** See `lock_file_protocol.md`
 **Communication:** See `communication_protocol.md`
 **Checkpoints:** See `checkpoint_protocol.md`
-**Escalation:** See PLAN_S2_PARALLELIZATION.md "Escalation Protocol" section
+**Escalation:** See `s2_parallel_protocol.md` "Escalation Protocol" section
 
 ---
 

@@ -114,7 +114,7 @@ Primary Agent (Opus - deep reasoning for root cause analysis):
 - If you need to ask "Why is this happening?" → Debugging Protocol
 - If you need to ask "Should we add this feature?" → Missed Requirement Protocol
 
-**See:** CLAUDE.md → "Decision Tree: Which Protocol to Use?" for detailed decision tree with examples
+**See:** missed_requirement_protocol.md for detailed comparison with examples
 
 ---
 

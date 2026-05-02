@@ -443,8 +443,8 @@ The file size reduction guide provides:
 **For EACH large file:**
 
 1. **Read reduction guide section** relevant to file type:
-   - CLAUDE.md → "CLAUDE.md Reduction Protocol"
-   - Workflow guides → "Workflow Guide Reduction Protocol"
+   - `reference/file_size_reduction_guide.md` → "CLAUDE.md Reduction Protocol" (for CLAUDE.md)
+   - `reference/file_size_reduction_guide.md` → "Workflow Guide Reduction Protocol" (for workflow guides)
 
 2. **Evaluate file** using framework:
    - Purpose analysis (what is this file for?)

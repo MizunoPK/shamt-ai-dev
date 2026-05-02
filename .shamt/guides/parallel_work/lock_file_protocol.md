@@ -355,7 +355,7 @@ acquire_lock() {
 - Lock still required (file-level), but contention reduced
 - Git handles sectioned edits cleanly
 
-**See:** `epic_readme_sectioning.md` for complete sectioning protocol
+**See:** [Sectioned EPIC_README.md](#sectioned-epic_readmemd-reduces-lock-contention) below for complete sectioning protocol
 
 ---
 

@@ -249,14 +249,14 @@
 - **File:** `VALIDATION_LOOP_LOG_S5_template.md`
 - **Created:** S5 (start of Validation Loop)
 - **Purpose:** Tracking S5 implementation planning validation loop progress across all 9 dimensions until primary clean round + sub-agent confirmation
-- **Size:** ~205 lines
+- **Size:** ~410 lines
 - **When to use:** S5 Validation Loop initialization
 
 #### Validation Loop Log
 - **File:** `VALIDATION_LOOP_LOG_template.md`
 - **Created:** Any stage requiring a validation loop
 - **Purpose:** General-purpose validation loop tracking for QC rounds in any stage
-- **Size:** ~205 lines
+- **Size:** ~180 lines
 - **When to use:** Any stage validation loop (non-S5)
 
 #### PR Review Issues
@@ -361,7 +361,7 @@ Read .shamt/guides/templates/{template_name}.md
 | Handoff Package (S2) | ~242 | No | No |
 | Handoff Package (S5) | ~197 | No | No |
 | Feature Status | ~10 | No | No |
-| Validation Loop Log | ~205 | No | No |
+| Validation Loop Log | ~180 | No | No |
 | Validation Loop Log (S5) | ~411 | No | No |
 | PR Review Issues | ~175 | No | No |
 | Guide Update Proposal | ~257 | No | No |
