@@ -4,7 +4,8 @@
 **Validation Started:** 2026-04-28
 **Validation Completed:** 2026-04-28 (original)
 **Re-validation Started:** 2026-05-01 (post-SHAMT-45 merge to main)
-**Final Status:** Re-validating — consecutive_clean = 0 (Round 1 fix applied; proceeding to Round 2)
+**Re-validation Completed:** 2026-05-01
+**Final Status:** VALIDATED ✅ — re-validation complete (3 rounds, both sub-agents confirmed clean)
 
 ---
 
@@ -272,3 +273,94 @@ SHAMT-45 merged to main on 2026-04-30. Key change affecting SHAMT-46: CLAUDE.md 
 <!-- stamp: 2026-05-02T00:10:07Z -->
 
 <!-- stamp: 2026-05-02T00:12:15Z -->
+
+---
+
+### Re-Validation Round 3 — 2026-05-01
+
+#### Dimension 1: Completeness
+**Status:** Pass — unchanged
+
+#### Dimension 2: Correctness
+**Status:** Pass — unchanged
+
+#### Dimension 3: Consistency
+**Status:** Pass
+
+Round 2 CRITICAL fix confirmed sound: CLAUDE.md row is now `NO CHANGE` and `azure_devops_integration.md` CREATE row carries the full content. No char-limit issues remain.
+
+#### Dimension 4: Helpfulness
+**Status:** Pass — unchanged
+
+#### Dimension 5: Improvements
+**Status:** Pass — unchanged
+
+#### Dimension 6: Missing Proposals
+**Status:** Pass — unchanged
+
+#### Dimension 7: Open Questions
+**Status:** Pass — unchanged
+
+**One LOW issue found and fixed:**
+- `master_review_pipeline_composite.md` MODIFY row note did not explicitly state that the new ADO sections should link to `ado_pr_review_workflow.md`. Proposal 6 cross-references "Option B/C from Proposal 4" making the intent clear, but the Files Affected note was ambiguous. Fixed: added "include link to `ado_pr_review_workflow.md` as the entrypoint guide for ADO users" to the MODIFY note. (Severity: LOW)
+
+**One false positive rejected:**
+- Sub-agent flagged `ado_pr_review_workflow.md` placement in `reference/` as a convention violation. Rejected: `reference/` already contains workflow-style guides (e.g., `validation_loop_master_protocol.md`); original sub-agents A and B confirmed this path; a single-file guide doesn't warrant its own subdirectory.
+
+---
+
+#### Re-Validation Round 3 Summary
+
+**Total Issues:** 1 (LOW, fixed)
+**Severity Breakdown:**
+- CRITICAL: 0
+- HIGH: 0
+- MEDIUM: 0
+- LOW: 1 (fixed)
+
+**Clean Round Status:** Clean ✅ (1 LOW fixed)
+
+**consecutive_clean:** 1
+
+---
+
+## Re-Validation Sub-Agent Confirmations — 2026-05-01
+
+### Sub-Agent I — 2026-05-01
+
+**Task:** Validate SHAMT-46 design doc against all 7 dimensions (independent confirmation)
+
+**Result:** Zero issues found across all 7 dimensions. CLAUDE.md `NO CHANGE` row confirmed correct (39,998/40,000 chars, 2 remaining). `azure_devops_integration.md` CREATE row confirmed as correct content carrier. Cross-reference fix to `master_review_pipeline_composite.md` MODIFY row confirmed present and sound. All API endpoints, env variable names, file paths, and provider detection logic verified accurate.
+
+**Status:** CONFIRMED CLEAN ✅
+
+---
+
+### Sub-Agent II — 2026-05-01
+
+**Task:** Validate SHAMT-46 design doc against all 7 dimensions (independent confirmation)
+
+**Result:** Zero issues found across all 7 dimensions. Six proposals verified as complete, correct, consistent, and helpful. D-COVERAGE decision note confirmed (`ado_pr_review_workflow.md` requires no new skill — uses existing `shamt-code-review` with ADO MCP tools). Thread status resolution (Open Question 4 = `active`) confirmed present. CLAUDE.md `NO CHANGE` constraint acknowledged and correctly handled. No contradictions between proposals.
+
+**Status:** CONFIRMED CLEAN ✅
+
+---
+
+## Re-Validation Final Summary — 2026-05-01
+
+**Re-Validation Rounds:** 3
+**Sub-Agent Confirmations:** 2 (both CONFIRMED CLEAN)
+**Exit Criterion Met:** YES ✅ — Round 3 primary clean + both sub-agents confirmed zero valid design content issues
+
+**Design Doc Status:** VALIDATED (re-validation complete)
+
+**Key Improvements Made During Re-Validation:**
+- Round 1: CLAUDE.md was at 39,998 chars (SHAMT-45 constraint); planned full section (~1,700 chars) was infeasible. Added CREATE row for `.shamt/guides/reference/azure_devops_integration.md` to carry full content.
+- Round 2: "One-line pointer" to CLAUDE.md also infeasible (~103 chars overflows 2-char remaining capacity). Changed CLAUDE.md row to `NO CHANGE`. Removed CLAUDE.md update from Phase 4 plan.
+- Round 3: Added explicit cross-reference note to `master_review_pipeline_composite.md` MODIFY row (link to `ado_pr_review_workflow.md` as ADO entrypoint guide). LOW severity, fixed.
+
+<!-- stamp: 2026-05-02T00:14:59Z -->
+
+<!-- stamp: 2026-05-02T00:16:14Z -->
+
+<!-- stamp: 2026-05-02T00:16:27Z -->

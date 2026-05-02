@@ -1,6 +1,6 @@
 # SHAMT-46: Azure DevOps PR Integration — Provider Abstraction and ADO MCP Wiring
 
-**Status:** Re-validating (post-SHAMT-45 merge)
+**Status:** Validated (re-validated 2026-05-01, post-SHAMT-45 merge)
 **Created:** 2026-04-28
 **Branch:** `feat/SHAMT-46`
 **Validation Log:** [SHAMT46_VALIDATION_LOG.md](./SHAMT46_VALIDATION_LOG.md)
@@ -379,7 +379,7 @@ All six proposals together. They form a coherent layer: abstraction (P1), CI tem
 | `.shamt/scripts/initialization/init.ps1` | MODIFY | Mirror |
 | `.shamt/scripts/regen/regen-claude-shims.sh` | MODIFY | Read `pr_provider.conf`, conditionally register ADO MCP |
 | `.shamt/scripts/regen/regen-codex-shims.sh` | MODIFY | Read `pr_provider.conf`, conditionally register ADO MCP |
-| `.shamt/guides/composites/master_review_pipeline_composite.md` | MODIFY | Add "ADO-hosted" and "cross-provider" variant sections |
+| `.shamt/guides/composites/master_review_pipeline_composite.md` | MODIFY | Add "ADO-hosted" and "cross-provider" variant sections; include link to `.shamt/guides/reference/ado_pr_review_workflow.md` as the entrypoint guide for ADO users |
 | `.shamt/commands/CHEATSHEET.md` | MODIFY | Add ADO PR review commands and setup instructions |
 | `.shamt/guides/reference/azure_devops_integration.md` | CREATE | Full SHAMT-46 summary: PR provider abstraction, ADO MCP wiring, Azure Pipelines templates, cross-provider workflow. Carries all content that would have gone into CLAUDE.md. |
 | `CLAUDE.md` | NO CHANGE | No update to CLAUDE.md — 40,000-char hard limit (SHAMT-45 D11 audit rule) prevents any additions. Even a one-line pointer (~103 chars) would overflow the 2-char remaining capacity (39,998 / 40,000). Full SHAMT-46 content lives in `.shamt/guides/reference/azure_devops_integration.md`. |
