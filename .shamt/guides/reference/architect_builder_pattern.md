@@ -623,4 +623,4 @@ The architect-builder pattern has a Codex Cloud variant where the builder execut
 
 **The plan format is identical** — the validated mechanical implementation plan from S5 is used verbatim in both variants. The cloud variant just changes who executes it and where.
 
-**Skill body update:** This cloud variant content will be incorporated into the `shamt-architect-builder/SKILL.md` skill body in SHAMT-44.
+**Skill body note:** The cloud variant is documented in `architect_builder_composite.md`, which is listed in `shamt-architect-builder/SKILL.md`'s `source_guides`. The composite is the canonical reference for the cloud execution path; the skill body itself covers the local/Haiku pattern.

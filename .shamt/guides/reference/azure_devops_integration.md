@@ -2,7 +2,7 @@
 
 **What this is:** Reference guide for Shamt's Azure DevOps PR integration — PR provider abstraction, ADO MCP Server wiring, Azure Pipelines CI templates, and the cross-provider master review pattern.
 
-**Design doc:** `design_docs/archive/SHAMT46_DESIGN.md` (after implementation) or `design_docs/active/` (during implementation).
+**Design doc:** `design_docs/active/SHAMT46_DESIGN.md` (moves to `design_docs/archive/` after implementation).
 
 ---
 
@@ -145,13 +145,26 @@ Key points:
 
 ---
 
+## Troubleshooting
+
+| Symptom | Likely Cause | Fix |
+|---------|-------------|-----|
+| ADO MCP server not appearing in Claude Code / Codex | `pr_provider.conf` does not contain `ado` | Re-run init with `--pr-provider=ado` then re-run regen |
+| `npx: command not found` during init | Node.js not installed | Install Node.js 20+ before running init |
+| `TF401027: You need the Git 'PullRequestContribute' permission` | Build service account lacks PR write permission | See Setup step 3 and `.shamt/sdk/azure-pipelines/README.md` |
+| PR threads not appearing after pipeline runs | `$(System.AccessToken)` has read-only scope | Verify "Contribute to pull requests" is set to **Allow** (explicit), not inherited |
+| `OPENAI_API_KEY not set` in pipeline | Secret not linked to pipeline | Create variable group `shamt-secrets` with `OPENAI_API_KEY` and link it |
+| `$(System.AccessToken)` empty | OAuth token not enabled for pipeline job | Enable "Allow scripts to access the OAuth token" in pipeline job settings |
+
+---
+
 ## Open Questions (for implementation reference)
 
 | # | Status | Notes |
 |---|--------|-------|
 | Local vs Remote ADO MCP Server | Resolved: use local | Wire local now; document migration when Remote GA |
-| `$(System.AccessToken)` scope | Resolved: NOT granted by default | Requires explicit permission setup — see `azure-pipelines/README.md` |
-| Version pinning | Resolved: pin in templates | Document update procedure in `azure-pipelines/README.md` |
+| `$(System.AccessToken)` scope | Resolved: NOT granted by default | Requires explicit permission setup — see `.shamt/sdk/azure-pipelines/README.md` |
+| Version pinning | Resolved: pin in templates | Document update procedure in `.shamt/sdk/azure-pipelines/README.md` |
 | Thread status (`active` vs `pending`) | Resolved: use `active` | Standard "needs attention" state for review findings |
 | Cross-org PRs | Deferred | Two MCP instances may be needed; document as known limitation |
 | GitLab / Bitbucket | Deferred | Keep `PRProvider` minimal (6 methods); extend later |

@@ -364,3 +364,77 @@ Round 2 CRITICAL fix confirmed sound: CLAUDE.md row is now `NO CHANGE` and `azur
 <!-- stamp: 2026-05-02T00:16:14Z -->
 
 <!-- stamp: 2026-05-02T00:16:27Z -->
+
+---
+
+## Implementation Validation — 2026-05-01
+
+Branch: `feat/SHAMT-46`
+Commits validated: `a673d0e` (main implementation) + `4da34ab` (Round 1 fixes)
+
+### Implementation Validation Round 1 — 2026-05-01
+
+**Dimension 1 — Completeness:** PASS. All 6 proposals implemented. `pr_provider.py` (P1), `shamt-validate.yml.template` + `shamt-cron-janitor.yml.template` (P2), ADO MCP wiring in regen scripts (P3), `ado_pr_review_workflow.md` + `azure_devops_integration.md` (P4), `init.sh`/`init.ps1` `--pr-provider` flag (P5), `master_review_pipeline_composite.md` ADO variant (P6).
+
+**Dimension 2 — Correctness:** Issues Found
+
+- `shamt-validate-pr.py` calls `provider.set_pr_status()` after posting aggregate summary, but `AzureDevOpsProvider.post_file_comment()` is implemented and tested in `pr_provider.py` but never invoked in the validate script. ADO-specific per-artifact file-positioned threads documented as a feature in `ado_pr_review_workflow.md` were not being posted. (Severity: MEDIUM)
+
+**Dimension 3 — Files Affected Accuracy:** Issues Found
+
+- `azure-pipelines/README.md` was listed as CREATE in Files Affected. File exists and contains Prerequisites and Troubleshooting sections. However, the "Version Pinning (Recommended)" section — which directly addresses OQ3 from the design doc — was absent. The README referenced `npx -y @azure-devops/mcp` (latest by default) but provided no instructions for pinning to a specific version. (Severity: LOW)
+
+- `init.sh`/`init.ps1` ADO MCP prerequisite check was implemented as an info note ("Node.js 20+ is required for ADO MCP wiring") but did not actively verify `npx` availability. Design doc's P5 stated init should "check for Node.js/npx". (Severity: LOW)
+
+**Dimension 4 — No Regressions:** PASS. Existing GitHub provider code and GitHub Actions templates untouched. `detect_provider()` defaults to `github`, preserving backward compatibility. `shamt-cron-janitor.py` provider routing is additive.
+
+**Dimension 5 — Documentation Sync:** PASS. `ai_services.md` updated with ADO MCP section. `CHEATSHEET.md` split into GitHub/ADO subsections. `azure_devops_integration.md` carries full SHAMT-46 reference. `master_review_pipeline_composite.md` has ADO variant section.
+
+---
+
+**Issues Fixed (committed as `4da34ab`):**
+1. Added ADO-specific post-loop in `shamt-validate-pr.py`: after posting aggregate comment, iterates failed artifacts and calls `provider.post_file_comment()` for each (ADO thread type `2` = file-level). Only fires when `isinstance(provider, AzureDevOpsProvider)`.
+2. Added "Version Pinning (Recommended)" section to `azure-pipelines/README.md` with `npm view @azure-devops/mcp version` instructions and update path via `ado_org.txt` → re-run regen scripts.
+3. Added active `npx` check to `init.sh` (`command -v npx`) and `init.ps1` (`Get-Command npx -ErrorAction SilentlyContinue`) with warning output when not found.
+
+**Round 1 Summary:**
+- CRITICAL: 0 | HIGH: 0 | MEDIUM: 1 | LOW: 2 — all fixed
+- Clean Round Status: Not Clean ❌
+- consecutive_clean: 0
+
+---
+
+### Implementation Validation Round 2 — 2026-05-01
+
+All 5 dimensions re-checked after Round 1 fixes (commit `4da34ab`):
+
+**Dimension 1 — Completeness:** PASS — unchanged
+**Dimension 2 — Correctness:** PASS — `post_file_comment()` now invoked for each failed ADO artifact
+**Dimension 3 — Files Affected Accuracy:** PASS — version pinning section present; `npx` check active
+**Dimension 4 — No Regressions:** PASS — unchanged
+**Dimension 5 — Documentation Sync:** PASS — unchanged
+
+**Round 2 Summary:**
+- CRITICAL: 0 | HIGH: 0 | MEDIUM: 0 | LOW: 0
+- Clean Round Status: Pure Clean ✅
+- consecutive_clean: 1
+
+---
+
+### Implementation Validation Sub-Agent Confirmations — 2026-05-01
+
+**Sub-Agent α:** Zero issues found across all 5 dimensions. Per-artifact ADO thread loop verified present in `shamt-validate-pr.py`. Version pinning section confirmed in `azure-pipelines/README.md`. Active `npx` checks confirmed in both init scripts. **CONFIRMED CLEAN ✅**
+
+**Sub-Agent β:** Zero issues found across all 5 dimensions. All 6 proposal implementations verified present and correctly implemented. No regressions detected in GitHub provider path. **CONFIRMED CLEAN ✅**
+
+---
+
+### Implementation Validation Final Summary — 2026-05-01
+
+**Implementation Validation Rounds:** 2
+**Sub-Agent Confirmations:** 2 (both CONFIRMED CLEAN)
+**Exit Criterion Met:** YES ✅ — Round 2 primary clean + both sub-agents confirmed zero issues
+
+**Implementation Validation Status:** COMPLETE ✅
+
+<!-- stamp: 2026-05-02T01:01:34Z -->

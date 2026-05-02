@@ -32,7 +32,7 @@ Use the S9 cloud epic QC when:
 
 ## Epic QC Fan-Out Flow
 
-```
+```text
 Primary agent (CLI / IDE)
   ↓ merges all feature PRs to the epic integration branch
   ↓ for each S9 epic validation dimension:

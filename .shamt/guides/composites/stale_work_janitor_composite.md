@@ -58,6 +58,12 @@ CronCreate(
 `.shamt/sdk/.github/workflows/shamt-cron-janitor.yml.template` to
 `.github/workflows/shamt-cron-janitor.yml`. Requires `OPENAI_API_KEY` secret.
 
+**Running on Azure Pipelines (ADO — SHAMT-46):** Copy
+`.shamt/sdk/azure-pipelines/shamt-cron-janitor.yml.template` to
+`azure-pipelines/shamt-cron-janitor.yml`. Posts stale-work digests as ADO Work Items
+(Bug type, tagged `shamt-janitor`). See `.shamt/guides/reference/azure_devops_integration.md`
+for setup prerequisites.
+
 ### Master-internal scan targets
 
 Master repo activates additional scan targets:
