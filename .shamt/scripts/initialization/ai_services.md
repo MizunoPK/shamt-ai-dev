@@ -70,6 +70,19 @@ Cursor supports two rules file formats:
 
 ---
 
+## Azure DevOps MCP Server (Companion Integration — SHAMT-46)
+
+The Azure DevOps MCP Server is not an AI service — it is a **companion MCP integration** that gives the AI agent typed access to ADO PR operations during interactive sessions. It is registered alongside the Shamt MCP server when `--pr-provider=ado` is set.
+
+- **Package:** `@azure-devops/mcp` (npm, official Microsoft package)
+- **Usage:** `npx @azure-devops/mcp <org-name> -d core repositories` (stdio transport)
+- **Authentication:** Microsoft Entra ID (browser OAuth on first use) or PAT
+- **When registered:** `init.sh --pr-provider=ado` → stored in `.shamt/config/ado_org.txt` → `regen-*-shims.sh` writes to `.claude/settings.json` or `.codex/config.toml`
+- **Domain filter:** `-d core repositories` loads only PR tools (prevents tool overload from 70+ ADO tools)
+- **Full setup:** `.shamt/guides/reference/azure_devops_integration.md`
+
+---
+
 ## Adding a New Service
 
 If your AI service is not listed above:

@@ -1,18 +1,20 @@
 # Shamt SDK
 
-Two standalone Python scripts for CI automation via the OpenAI Agents SDK.
+Two standalone Python scripts for CI automation via the OpenAI Agents SDK. Both support GitHub Actions (default) and Azure Pipelines via the `--provider` flag.
 
 | Script | Purpose |
 |--------|---------|
-| `shamt-validate-pr.py` | PR validation gate — validates changed Shamt artifacts and posts results as a PR comment |
-| `shamt-cron-janitor.py` | Stale-work scanner — finds proposals, design docs, and child syncs that have gone quiet |
+| `shamt-validate-pr.py` | PR validation gate — validates changed Shamt artifacts and posts results as a PR comment (GitHub) or PR thread (ADO) |
+| `shamt-cron-janitor.py` | Stale-work scanner — finds proposals, design docs, and child syncs that have gone quiet; posts digest as GitHub Issue or ADO Work Item |
+
+**Provider abstraction:** `pr_provider.py` defines the `PRProvider` protocol with `GitHubProvider` and `AzureDevOpsProvider` implementations. Provider is auto-detected from CI environment (`TF_BUILD=True` → ADO; `GITHUB_ACTIONS=true` → GitHub) or set via `--provider=github|ado`.
 
 ---
 
 ## Install
 
 ```bash
-pip install -e .shamt/sdk
+pip install -r .shamt/sdk/requirements.txt
 ```
 
 Requires Python 3.11+. Dependencies: `openai`, `PyGithub`, `requests`.
@@ -53,12 +55,34 @@ For each artifact: drives a Codex session through the `shamt-validation-loop` sk
 ### Running locally
 
 ```bash
+# GitHub
 export OPENAI_API_KEY=sk-...
 export GITHUB_TOKEN=ghp_...
 export GITHUB_REPOSITORY=owner/repo
 export GITHUB_EVENT_PATH=/path/to/event.json
-python .shamt/sdk/shamt-validate-pr.py
+python .shamt/sdk/shamt-validate-pr.py --provider=github
+
+# Azure Pipelines (local test)
+export AZURE_DEVOPS_PAT=...
+export SYSTEM_COLLECTIONURI=https://dev.azure.com/myorg
+export SYSTEM_TEAMPROJECT=myproject
+export BUILD_REPOSITORY_NAME=myrepo
+export SYSTEM_PULLREQUEST_PULLREQUESTID=42
+python .shamt/sdk/shamt-validate-pr.py --provider=ado
 ```
+
+---
+
+## Azure Pipelines (ADO)
+
+### Enabling
+
+```bash
+cp .shamt/sdk/azure-pipelines/shamt-validate.yml.template azure-pipelines/shamt-validate.yml
+cp .shamt/sdk/azure-pipelines/shamt-cron-janitor.yml.template azure-pipelines/shamt-cron-janitor.yml
+```
+
+**Permission prerequisites:** `$(System.AccessToken)` requires explicit "Contribute to pull requests" permission setup. See `.shamt/sdk/azure-pipelines/README.md` for full instructions.
 
 ---
 

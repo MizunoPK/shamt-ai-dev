@@ -101,3 +101,41 @@ The automated review workflow was designed in SHAMT-43. Key files:
 
 Full detail: `guides/sync/export_workflow.md` (child side) and
 `guides/sync/import_workflow.md` (post-import validation).
+
+---
+
+## ADO-Hosted Variant (SHAMT-46)
+
+For projects where the master repo and/or child projects are hosted on Azure DevOps.
+
+**Reference:** For full ADO PR review setup, trigger options, thread statuses, and voting conventions, see: `.shamt/guides/reference/ado_pr_review_workflow.md`
+
+### Scenario 1: GitHub master + ADO child
+
+The child submits a PR to the master GitHub repo (via fork or mirror). The existing GitHub-based master review pipeline works as-is:
+- Master reviewer runs on the GitHub PR (unchanged)
+- Child team reads GitHub PR comments (requires GitHub access for ADO-primary teams)
+- No changes to the review pipeline needed
+
+### Scenario 2: Fully ADO-hosted (master + child both on ADO)
+
+The master reviewer operates on ADO PRs using the ADO MCP Server instead of `@codex`:
+
+**Trigger options** (from `ado_pr_review_workflow.md`):
+- **Option B (CI pipeline):** Azure Pipelines runs `shamt-validate-pr.py --provider=ado` on PR creation. Copy `.shamt/sdk/azure-pipelines/shamt-validate.yml.template` and add a Build Validation branch policy.
+- **Option C (Service Hook):** ADO Service Hook → external endpoint → headless agent session. Closest analog to `@codex` on GitHub; requires external infrastructure.
+
+**Review execution:** The same `shamt-master-reviewer` skill, guide audit skill, and separation rule logic apply — they are provider-agnostic and operate on diffs. Only the I/O layer changes:
+1. Agent reads PR diff via `mcp_ado_repo_get_pull_request_changes`
+2. Runs separation rule check and guide audit on changed files
+3. Posts review findings as ADO comment threads (`mcp_ado_repo_create_pull_request_thread`)
+4. Casts reviewer vote (`waitForAuthor` or `approveWithSuggestions`)
+
+**Post-merge audit:** After merging a child PR, run the full guide audit (same as GitHub path):
+```
+/shamt-audit .shamt/guides/
+```
+
+### Cross-Provider Setup
+
+To support both GitHub and ADO, run init with `--pr-provider=both`. Both the ADO MCP Server and the GitHub Actions/Azure Pipelines templates will be configured. The regen scripts register both in host settings when `pr_provider.conf` contains `both`.

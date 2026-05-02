@@ -12,13 +12,15 @@ SHAMT_SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 TARGET_DIR="$(pwd)"
 SHAMT_DIR="$TARGET_DIR/.shamt"
 
-# Parse --host and --with-cloud flags
+# Parse --host, --with-cloud, and --pr-provider flags
 HOST_FLAG=""
 WITH_CLOUD=0
+PR_PROVIDER_FLAG=""
 for _arg in "$@"; do
     case "$_arg" in
-        --host=*)       HOST_FLAG="${_arg#--host=}" ;;
-        --with-cloud)   WITH_CLOUD=1 ;;
+        --host=*)           HOST_FLAG="${_arg#--host=}" ;;
+        --with-cloud)       WITH_CLOUD=1 ;;
+        --pr-provider=*)    PR_PROVIDER_FLAG="${_arg#--pr-provider=}" ;;
     esac
 done
 
@@ -294,6 +296,39 @@ if [ "$TARGET_DIR" = "$SHAMT_SOURCE_DIR" ]; then
 else
     echo "child" > "$SHAMT_DIR/config/repo_type.conf"
 fi
+
+# --- PR provider config -------------------------------------------------------
+_pr_provider="${PR_PROVIDER_FLAG:-github}"
+if [ -z "$PR_PROVIDER_FLAG" ] && [ -f "$SHAMT_DIR/config/pr_provider.conf" ]; then
+    # Re-init: preserve existing choice unless flag overrides
+    _pr_provider="$(tr -d '[:space:]' < "$SHAMT_DIR/config/pr_provider.conf")"
+fi
+if [ -z "$PR_PROVIDER_FLAG" ] && [ ! -f "$SHAMT_DIR/config/pr_provider.conf" ]; then
+    echo ""
+    echo "  PR provider (default: github):"
+    echo "    1) github  — GitHub Actions CI + GitHub PR comments"
+    echo "    2) ado     — Azure Pipelines CI + ADO PR comment threads"
+    echo "    3) both    — configure both"
+    read -rp "  Enter choice [1/2/3] (press Enter for github): " _pr_choice
+    case "$_pr_choice" in
+        2) _pr_provider="ado" ;;
+        3) _pr_provider="both" ;;
+        *) _pr_provider="github" ;;
+    esac
+fi
+echo "$_pr_provider" > "$SHAMT_DIR/config/pr_provider.conf"
+
+if [[ "$_pr_provider" == *ado* ]]; then
+    if [ -z "$(cat "$SHAMT_DIR/config/ado_org.txt" 2>/dev/null)" ]; then
+        read -rp "  Enter your ADO organization name (e.g. 'myorg' from dev.azure.com/myorg): " _ado_org
+        echo "$_ado_org" > "$SHAMT_DIR/config/ado_org.txt"
+        echo "  ✓ ADO org stored in .shamt/config/ado_org.txt"
+    fi
+    echo ""
+    echo "  ℹ  ADO MCP Server: on first use, your browser will open for Microsoft Entra authentication."
+    echo "     Prerequisites: Node.js 20+ required (npx @azure-devops/mcp)."
+fi
+
 echo "  ✓ Host config written to .shamt/config/"
 
 # --- Configure local git excludes --------------------------------------------
