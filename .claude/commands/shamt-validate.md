@@ -1,5 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
-
 # /shamt-validate
 
 **Purpose:** Run a Shamt validation loop on any artifact — spec, implementation plan, design doc, or code review file.
@@ -44,3 +42,6 @@
 - Scenario-specific dimensions are auto-detected from the artifact type (spec → D8-D10; implementation plan → D8-D12; design doc → 7 dimensions)
 - To validate a design doc, prefer `/shamt-validate` over running the design doc validation workflow manually — the skill handles dimension selection
 - For guide audits (25 dimensions: 23 core + D-DRIFT/D-COVERAGE, 3 consecutive clean rounds), use `/shamt-audit` instead
+- For very large artifacts or sessions likely to span many rounds, prefix with `/loop` to enable context-checkpoint recovery between rounds. Not required for typical use.
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

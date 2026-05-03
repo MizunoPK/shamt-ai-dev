@@ -1,4 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-discovery
 description: >
@@ -293,3 +292,5 @@ Discovery Phase is complete when ALL of the following are true:
 - Architecture pattern analysis: Sonnet
 - Problem space synthesis, DISCOVERY.md writing: Opus (primary)
 - Sub-agent confirmations: Haiku (always)
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

@@ -1,4 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-export
 description: >
@@ -236,3 +235,5 @@ Write CHANGES.md entries at the time you make changes — not at export time. Th
 - Run export script, verify files, grep for contamination: Haiku
 - Read CHANGES.md, compare rules file against template: Sonnet
 - Review changes, separation rule decisions, PR content: Opus (primary)
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

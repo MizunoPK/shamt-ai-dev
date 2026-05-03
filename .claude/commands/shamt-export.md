@@ -1,5 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
-
 # /shamt-export
 
 **Purpose:** Export generic guide and script improvements from this child project back to the Shamt master repo via pull request.
@@ -40,3 +38,5 @@ None. The export workflow is driven by `.shamt/CHANGES.md` and the separation ru
 - Only export files in `.shamt/guides/` and `.shamt/scripts/` — project-specific configs in `.shamt/project-specific-configs/` are never exported
 - The separation rule is strict: if project-specific content has leaked into generic files, the export skill will request changes before proceeding
 - Proposal docs (`.shamt/unimplemented_design_proposals/`) are exported automatically without CHANGES.md entries — they land in master's `design_docs/incoming/`
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

@@ -1,4 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-guide-auditor
 description: Guide quality audit — walks the .shamt/guides/ tree and checks all 23 audit dimensions plus D-DRIFT and D-COVERAGE for skill bodies
@@ -33,3 +32,5 @@ For each issue: SEVERITY - Dimension - File:line - Description - Recommended fix
 At end of round: Issue count by severity + consecutive_clean counter.
 
 {additional_context}
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

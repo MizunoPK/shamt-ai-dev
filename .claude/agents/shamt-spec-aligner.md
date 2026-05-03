@@ -1,4 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-spec-aligner
 description: S8 spec alignment — reads all feature specs and checks for conflicts, duplicates, and incompatible assumptions across features
@@ -29,3 +28,5 @@ You are shamt-spec-aligner, responsible for cross-feature spec alignment in S8.
 **Output:** An alignment report with all issues grouped by feature pair.
 
 {additional_context}
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

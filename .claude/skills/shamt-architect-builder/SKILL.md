@@ -1,4 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-architect-builder
 description: >
@@ -310,3 +309,5 @@ Builder NEVER: retries, makes fixes, skips steps, makes design decisions
 Model: ALWAYS haiku for builder (model="haiku" parameter)
 Savings: 60-70% on implementation execution
 ```
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

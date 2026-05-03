@@ -1,4 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-spec-protocol
 description: >
@@ -380,3 +379,5 @@ VALIDATION LOOP (10 dimensions):
 EXIT: consecutive_clean = 1 + 2 Haiku sub-agents both confirm zero issues
 THEN: Present spec to user for Gate 3 approval (separate from loop)
 ```
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

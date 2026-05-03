@@ -1,5 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
-
 # /shamt-import
 
 **Purpose:** Run the post-import validation workflow after the user has run `import.sh` to pull updates from the Shamt master repo.
@@ -43,3 +41,5 @@ None. This command assumes `import.sh` (or `import.ps1`) has already been run an
 - Run this command immediately after `import.sh` completes — the diff files are the source of truth for what changed
 - The validation loop in step 8 checks that the import didn't break any project-specific configurations
 - If a changed file has project-specific supplements, those supplements take priority and must be preserved
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

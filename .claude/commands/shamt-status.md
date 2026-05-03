@@ -1,5 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
-
 # /shamt-status
 
 **Purpose:** Print the current project state — active epic, current stage, last completed action, and any blockers.
@@ -41,3 +39,5 @@ Blockers: None
 - If multiple epics are in progress (parallel work), all active epics are listed
 - If no epic is active, reports "No active epic — use `/shamt-start-epic` to begin one"
 - This command reads files but makes no changes to any epic state
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

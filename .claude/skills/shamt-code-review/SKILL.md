@@ -1,4 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-code-review
 description: >
@@ -390,3 +389,5 @@ Primary Agent (Opus):
 - Never skip the adversarial self-check before declaring a round clean
 - Never skip Dimension 13 for S7/S9 reviews
 - Do not create overview.md for S7/S9 reviews
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

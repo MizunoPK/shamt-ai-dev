@@ -1,5 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
-
 # /shamt-resume
 
 **Purpose:** Re-hydrate agent context after a compaction event, a new session, or a context loss — restore the full picture of where the epic is and what the next action is.
@@ -44,3 +42,5 @@ Next Action: Re-read implementation_plan.md from top to bottom with fresh eyes
 - Always reads files fresh — never relies on in-context memory from before compaction
 - If `AGENT_STATUS.md` shows "Blocked: awaiting user input on [X]", the resume command surfaces the open question immediately instead of proceeding
 - For master dev work (no EPIC_TRACKER.md), reads the current design doc and validation log to determine resume point
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

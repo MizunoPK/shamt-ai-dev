@@ -1,5 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
-
 # /shamt-start-epic
 
 **Purpose:** Begin a new Shamt epic workflow — set up the epic folder structure, initialize tracking files, and enter S1 (Discovery).
@@ -44,3 +42,5 @@
 - Do not batch questions — the ONE-question-at-a-time rule is mandatory
 - If an epic request already has a folder (e.g., from a partial previous session), this command will detect that and resume from the current stage rather than re-initializing
 - For master dev work, use the master dev workflow (`design_docs/active/`) instead of this command
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

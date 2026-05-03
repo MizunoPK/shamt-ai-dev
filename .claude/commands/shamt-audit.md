@@ -1,5 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
-
 # /shamt-audit
 
 **Purpose:** Run the Shamt guide audit on the entire `.shamt/guides/` tree (or a scoped subdirectory), checking all 23 dimensions plus D-DRIFT and D-COVERAGE for skill bodies.
@@ -46,3 +44,6 @@
 - Guide audits require **3 consecutive clean rounds** — not the 1+2-sub-agents pattern used by workflow validation loops. Do not exit early.
 - Uses model delegation: Haiku for mechanical checks, Sonnet for structural analysis, Opus for content and advanced dimensions
 - MANDATORY after any changes to `.shamt/guides/` files (e.g., after a master import, after implementing a design doc)
+- For very large guide trees or sessions likely to span many rounds, prefix with `/loop` to enable context-checkpoint recovery between rounds. Not required for typical use.
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

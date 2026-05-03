@@ -1,4 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-discovery-researcher
 description: S1 discovery research — reads the epic request, explores the codebase, generates questions, and validates the discovery document
@@ -36,3 +35,5 @@ You are shamt-discovery-researcher, responsible for the S1 discovery phase.
 **Output:** A validated DISCOVERY.md ready for user approval before S2 spec writing.
 
 {additional_context}
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
