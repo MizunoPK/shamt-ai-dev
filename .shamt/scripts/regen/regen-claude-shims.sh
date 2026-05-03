@@ -57,7 +57,7 @@ echo ""
 
 is_shamt_managed() {
     local file="$1"
-    [ -f "$file" ] && head -1 "$file" | grep -q "Managed by Shamt"
+    [ -f "$file" ] && grep -q "Managed by Shamt" "$file"
 }
 
 is_master_only() {
@@ -98,8 +98,8 @@ if [ -d "$SKILLS_SRC" ]; then
 
         mkdir -p "$(dirname "$skill_dst")"
         {
-            printf '%s\n' "$MANAGED_HEADER"
             cat "$skill_src"
+            printf '\n%s\n' "$MANAGED_HEADER"
         } > "$skill_dst"
         SKILLS_WRITTEN=$((SKILLS_WRITTEN + 1))
     done < <(find "$SKILLS_SRC" -maxdepth 1 -mindepth 1 -type d -print0 | sort -z)
@@ -175,7 +175,6 @@ tier_map = {
 model = tier_map.get(model_tier, model_tier)
 
 with open(out_file, 'w') as f:
-    f.write(managed_header + '\n')
     f.write('---\n')
     f.write('name: ' + name + '\n')
     f.write('description: ' + description + '\n')
@@ -186,6 +185,7 @@ with open(out_file, 'w') as f:
             f.write('  - ' + t + '\n')
     f.write('---\n\n')
     f.write(template + '\n')
+    f.write('\n' + managed_header + '\n')
 PYEOF
         AGENTS_WRITTEN=$((AGENTS_WRITTEN + 1))
     done < <(find "$AGENTS_SRC" -maxdepth 1 -name "*.yaml" -print0 | sort -z)
@@ -216,8 +216,8 @@ if [ -d "$CMDS_SRC" ]; then
         fi
 
         {
-            printf '%s\n\n' "$MANAGED_HEADER"
             cat "$cmd_file"
+            printf '\n%s\n' "$MANAGED_HEADER"
         } > "$cmd_dst"
         CMDS_WRITTEN=$((CMDS_WRITTEN + 1))
     done < <(find "$CMDS_SRC" -maxdepth 1 -name "*.md" -print0 | sort -z)
@@ -418,8 +418,8 @@ lines.append('')
 lines.append('## Slash Commands')
 lines.append('')
 lines.append('- `/shamt-start-epic` — start a new epic')
-lines.append('- `/shamt-validate` — run validation loop (use with `/loop`)')
-lines.append('- `/shamt-audit` — run guide audit (use with `/loop`)')
+lines.append('- `/shamt-validate {artifact}` — run validation loop to completion (self-terminating)')
+lines.append('- `/shamt-audit` — run guide audit to completion (3 consecutive clean rounds)')
 lines.append('- `/shamt-status` — check current epic status')
 lines.append('- `/shamt-resume` — resume from snapshot')
 lines.append('- `/shamt-export` — export changes to master')
@@ -496,7 +496,7 @@ if 'codex' in ai_service:
 if 'claude' in ai_service:
     lines.append('## Claude Code Tips')
     lines.append('')
-    lines.append('- `/loop` with `/shamt-validate` self-paces validation rounds')
+    lines.append('- Prefix `/loop` only if context exhaustion is a risk (very large artifact, 5+ expected rounds)')
     lines.append('- Use `run_in_background=true` for builder sub-agents in S6')
     lines.append('- Status line: `EPIC-N | S{stage}.P{phase} | round {N} | blocker: {text}`')
     lines.append('')

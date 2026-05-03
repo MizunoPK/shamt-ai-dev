@@ -1,4 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-master-reviewer
 description: >
@@ -163,3 +162,5 @@ Review is complete when ALL of the following are true:
 - Approving without noticing `SHAMT-{N}` was replaced with the child's epic tag in guide files
 - Skipping the post-merge guide audit — always run it before declaring merge complete
 - Merging and allowing imports before the post-merge audit passes
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

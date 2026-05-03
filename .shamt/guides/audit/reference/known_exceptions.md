@@ -216,17 +216,18 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 ---
 
-### E1: D8 TODO/Placeholder Instances (27 Critical)
+### E1: D8 TODO/Placeholder Instances (33 Critical)
 
 **Dimension:** D8 (Documentation Quality)
 **Check:** `pre_audit_checks.sh` TODO/placeholder scan
-**Every-run count:** 27 critical, ~35 placeholder matches
+**Every-run count:** 33 critical, ~38 placeholder matches
 
 **Root Cause:** The D8 check scans all of `.shamt/guides/` including the epic workflow stage guides (s1–s10). Those guides intentionally contain TODO/TBD/placeholder text as instructional examples and checklist items — they teach users to avoid placeholders, so they must reference them.
 
 **Affected files:**
 - `stages/s1/s1_p3_discovery_phase.md` — mentions "TBD" as example of vague description to avoid
 - `stages/s1/s1_epic_planning.md` — template showing `Integration Test Convention: [TBD — will be set in S5]` and `End Date: (TBD — fill in at S10)` as instructional examples
+- `stages/s2/s2_feature_deep_dive.md` — "no 'UNKNOWN', 'TBD'" as checklist resolution exit criterion
 - `stages/s2/s2_p1_spec_creation_refinement.md` — "zero questions remain 'UNKNOWN', 'TBD'" as exit criterion
 - `stages/s3/s3_epic_planning_approval.md` — checklist item: "no TBD" as acceptance criterion
 - `stages/s5/s5_bugfix_workflow.md` — "Bug Fix TODO: Authentication Error" as a template example
@@ -235,14 +236,16 @@ follows the emoji (space → hyphen after stripping the emoji).
 - `stages/s7/s7_p3_final_review.md` — "Check: No 'TODO' comments" as review criterion
 - `stages/s8/s8_p1_cross_feature_alignment.md` — "Don't compare to original TODO or plan" (meta-content)
 - `stages/s8/s8_p2_epic_testing_update.md` — "Don't rely on specs or TODO list" / "not specs/TODOs" (meta-content, x2 lines)
+- `stages/s9/s9_p2_epic_qc_rounds.md` — grep command `TODO\|FIXME\|HACK\|XXX` and 2 example QC output lines with TODO markers
 - `stages/s10/s10_epic_cleanup.md` — "No placeholder text (e.g., 'TODO', '{fill in later}')" as checklist
+- `debugging/loop_back.md` — grep command `TODO.*debug` and "TODO comments resolved" checklist item (meta-content)
 - (multiple reference/ files — glossary, faq, stage_5 ref card, validation loop guides — all meta-content examples)
 
 **Why acceptable:** All occurrences are meta-content: teaching that real work products must not have TODOs. The stage guides themselves have no incomplete sections. The text is definitionally required to describe the standard.
 
-**Action:** When pre_audit_checks.sh reports "TODOs remaining: 27" — this is the expected baseline. Only investigate if the count rises above 27 or if new files appear in the list.
+**Action:** When pre_audit_checks.sh reports "TODOs remaining: 33" — this is the expected baseline. Only investigate if the count rises above 33 or if new files appear in the list.
 
-**Note:** Baseline updated from 23 → 24 on 2026-03-07; updated 24 → 25 on 2026-03-14; updated 25 → 27 on 2026-03-30 after SHAMT-20 audit confirmed `stages/s8/s8_p1_cross_feature_alignment.md` and `stages/s8/s8_p2_epic_testing_update.md` contribute meta-content TODO references added by SHAMT-20 changes. Full affected-file list updated to include all 27 files.
+**Note:** Baseline updated from 23 → 24 on 2026-03-07; updated 24 → 25 on 2026-03-14; updated 25 → 27 on 2026-03-30 after SHAMT-20 audit confirmed new meta-content files. Updated 27 → 33 on 2026-05-03 after SHAMT-50 audit identified 6 new meta-content occurrences in `stages/s9/s9_p2_epic_qc_rounds.md` (QC grep examples), `stages/s2/s2_feature_deep_dive.md` (exit criterion wording), and `debugging/loop_back.md` (debug TODO grep).
 
 ---
 
@@ -422,6 +425,40 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 ---
 
+## Category I: D12 Supplement Guides (Cloud Variant Files)
+
+**Purpose:** Documents cloud-variant supplement guides that intentionally lack formal Prerequisites/Exit Criteria/Overview sections.
+
+**D12 Context:** These guides explicitly state they supplement a primary guide ("This guide supplements X — read that guide first"). They describe only the delta behavior for cloud deployments. Adding formal Prerequisites/Exit Criteria sections would duplicate the primary guide's sections and add confusing redundancy to single-purpose supplements.
+
+**Files:**
+
+**I1. stages/s6/cloud_variant.md** *(Added SHAMT-43)*
+- **Type:** Cloud supplement guide (adds to s6_execution.md for Codex Cloud builder)
+- **Prerequisites:** Covered by parent guide `s6_execution.md`
+- **Exit Criteria:** Inherited from parent guide
+- **Overview:** Replaced by "**Applies to:**" front-matter header
+- **Missing Sections:** Prerequisites, Exit Criteria, Overview (all not applicable — supplement pattern)
+- **Audit Action:** SKIP D12 — cloud supplement guide, not a standalone workflow guide
+
+**I2. stages/s7/cloud_variant.md** *(Added SHAMT-43)*
+- **Type:** Cloud supplement guide (adds to s7_primary_guide.md for Codex Cloud S7 QC fan-out)
+- **Prerequisites:** Covered by parent guide
+- **Exit Criteria:** Inherited from parent guide
+- **Overview:** Replaced by "**Applies to:**" front-matter header
+- **Missing Sections:** Prerequisites, Exit Criteria, Overview (all not applicable — supplement pattern)
+- **Audit Action:** SKIP D12 — cloud supplement guide, not a standalone workflow guide
+
+**I3. stages/s9/cloud_variant.md** *(Added SHAMT-43)*
+- **Type:** Cloud supplement guide (adds to s9_primary_guide.md for Codex Cloud S9 QC fan-out)
+- **Prerequisites:** Covered by parent guide
+- **Exit Criteria:** Inherited from parent guide
+- **Overview:** Replaced by "**Applies to:**" front-matter header
+- **Missing Sections:** Prerequisites, Exit Criteria, Overview (all not applicable — supplement pattern)
+- **Audit Action:** SKIP D12 — cloud supplement guide, not a standalone workflow guide
+
+---
+
 ## How to Use This Document
 
 ### For Future Audits
@@ -435,7 +472,7 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 **When running `pre_audit_checks.sh` and seeing recurring script output:**
 
-- "TODOs remaining: 27" — expected baseline; see Category E1 above
+- "TODOs remaining: 33" — expected baseline; see Category E1 above
 - "Found 2 potential prerequisite-content conflicts" pointing at s2_p2_cross_feature_alignment.md — expected; see Category E2 above
 - "⚠️ CLAUDE.md found but no stage references detected" — known script integer-parsing bug (line 370); not a real issue
 
@@ -494,7 +531,7 @@ wc -l real_violations.txt  # Should be low count
 
 ## Summary Statistics
 
-**Total Known Exceptions:** 16 category entries (14 unique active files — s3_parallel_work_sync and s4_feature_testing_strategy appear in both C and G for different exception types)
+**Total Known Exceptions:** 19 category entries (17 unique active files — s3_parallel_work_sync and s4_feature_testing_strategy appear in both C and G for different exception types)
 
 **Active Exceptions (files that still exist):**
 - Category C (Optional/Auxiliary — Prerequisites/Exit Criteria): **2 active files**
@@ -520,6 +557,10 @@ wc -l real_violations.txt  # Should be low count
   - parallel_work/s5_secondary_agent_guide.md (task-spawned guide — no MRP needed)
   - parallel_work/s2_primary_agent_guide.md (coordination reference — no MRP needed)
   - parallel_work/s5_primary_agent_guide.md (coordination reference — no MRP needed)
+- Category I (D12 Supplement Guides — Cloud Variant Files): **3 active files**
+  - stages/s6/cloud_variant.md (cloud supplement — supplements s6_execution.md)
+  - stages/s7/cloud_variant.md (cloud supplement — supplements s7_primary_guide.md)
+  - stages/s9/cloud_variant.md (cloud supplement — supplements s9_primary_guide.md)
 
 **Inactive Exceptions (files deleted from filesystem):**
 - Category A (S5 Iteration Files): 14 files — DELETED (S5 v1 → v2 migration)
@@ -539,6 +580,6 @@ wc -l real_violations.txt  # Should be low count
 
 ---
 
-**Last Verified:** 2026-04-04 (SHAMT-30: F5 added for stages/s6/s6_execution.md architect-builder restructure, Category F count updated to 5 files; previous updates: 2026-03-30 - E1 baseline 25 → 27, F1/F2/F3 line counts, G5/H3/H4 added, Category H broadened)
+**Last Verified:** 2026-05-03 (SHAMT-50: Category I added for cloud_variant.md supplement guides; E1 baseline updated 27 → 33 for meta-content TODO occurrences in s9_p2_epic_qc_rounds.md, s2_feature_deep_dive.md, and debugging/loop_back.md; Summary Statistics updated to 19 entries / 17 unique active files; previous: 2026-04-04 - SHAMT-30 F5 added)
 **Next Review:** When new stage/iteration guides added, or if D8/D10/D22 check patterns change
 

@@ -307,14 +307,18 @@ Each clean round must have at least one tool call citation.
 
 ---
 
-## `/loop` Self-Pacing (Claude Code)
+## Advanced Options
+
+**Optional — only needed for very large artifacts or many-round sessions.** By default, the validation loop runs all rounds in a single invocation. Use `/loop` self-pacing when context exhaustion is a risk.
+
+### `/loop` Self-Pacing (Claude Code)
 
 On Claude Code, the validation loop can self-pace using the `/loop` dynamic mode so
 each round fires automatically rather than requiring a manual re-invoke.
 
-### Activating `/loop` for a validation loop
+#### Activating `/loop` for a validation loop
 
-When the user invokes `/shamt-validate` or "run validation loop" on Claude Code:
+If the session is at risk of context exhaustion, call `ScheduleWakeup` after each round to enable a session break:
 
 1. Run Round 1 normally (read artifact, check all dimensions, fix issues, update log).
 2. After the round is scored and logged, call `ScheduleWakeup` with:
@@ -353,7 +357,7 @@ On Codex headless deployments, post this as a PR comment with the structured tem
 and parse the reviewer's reply. Delete `STALL_ALERT.md` after applying (or declining) the
 escalation so the alert does not re-fire on the next loop entry.
 
-### Codex equivalent (no native `/loop`)
+#### Codex equivalent (no native `/loop`)
 
 Codex does not have a native `/loop` command. Two alternatives:
 
@@ -384,14 +388,12 @@ Run with: `bash validate-driver.sh path/to/VALIDATION_LOG.md`
 **Note on Codex `/loop` equivalent:** A native Codex equivalent to `/loop` may appear in
 a future Codex release. Until then, Option B (driver script) is the closest approximation.
 
----
-
-## Cloud-Task-as-Confirmer-Instance Variant
+### Cloud-Task-as-Confirmer-Instance Variant
 
 When running on Codex Cloud, sub-agent confirmations can be dispatched as isolated cloud
 tasks instead of in-session spawned agents. The rest of this protocol applies unchanged.
 
-### Why cloud tasks
+#### Why cloud tasks
 
 - **Container isolation:** each cloud task starts from a clean container — no shared state
   between the primary validator and the confirmers
@@ -400,7 +402,7 @@ tasks instead of in-session spawned agents. The rest of this protocol applies un
 - **Parallelism at depth-1 limit:** Codex enforces `agents.max_depth = 1`; cloud tasks
   sidestep this limit because they are separate top-level sessions, not nested sub-agents
 
-### How it works
+#### How it works
 
 After the primary agent reaches `consecutive_clean = 1`:
 
@@ -414,7 +416,7 @@ After the primary agent reaches `consecutive_clean = 1`:
    - One or both report issues → fixes apply, `consecutive_clean` resets to 0, new
      primary round begins
 
-### Cloud confirmer prompt
+#### Cloud confirmer prompt
 
 ```
 You are a Shamt validation confirmer (independent sub-agent role). The primary
@@ -426,7 +428,7 @@ Dimensions: [same list as primary round]
 Report: CONFIRMED CLEAN (0 issues) or list of issues found with severity.
 ```
 
-### When NOT to use cloud confirmers
+#### When NOT to use cloud confirmers
 
 - Small validations where CLI sub-agent confirmations are faster and cheaper
 - When Codex Cloud is not available on the project

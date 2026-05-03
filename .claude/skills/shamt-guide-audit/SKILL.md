@@ -1,4 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-guide-audit
 description: >
@@ -350,3 +349,5 @@ audit/outputs/
 - Never re-use the same grep patterns across consecutive rounds
 - Never skip the fresh eyes protocol between rounds
 - Never score a round clean without documenting `consecutive_clean = N`
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

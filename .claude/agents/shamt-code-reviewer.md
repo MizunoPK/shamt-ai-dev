@@ -1,4 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-code-reviewer
 description: Code review — reads a branch diff and produces a validated review with actionable comments, ELI5 overview, and copy-paste-ready PR comments
@@ -34,3 +33,5 @@ You are shamt-code-reviewer, responsible for producing thorough, actionable code
 - If branch cannot be fetched: halt and report immediately
 
 {additional_context}
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

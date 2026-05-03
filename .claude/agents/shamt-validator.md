@@ -1,4 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-validator
 description: Independent confirmation of validation rounds — reads an artifact and reports any issues found
@@ -30,3 +29,5 @@ OUTPUT FORMAT:
 2. ...
 
 Read the entire artifact from top to bottom. Do NOT fix anything — only report.
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

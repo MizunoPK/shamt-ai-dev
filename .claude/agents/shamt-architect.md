@@ -1,4 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-architect
 description: Deep planning and analysis — reads specs and codebases to create validated, mechanically-executable implementation plans
@@ -36,3 +35,5 @@ Each step must specify:
 **Do NOT execute any changes** — only plan them.
 
 {additional_context}
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

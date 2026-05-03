@@ -1,5 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
-
 # /shamt-promote
 
 **Purpose:** (Master-only) Promote an incoming child project proposal from `design_docs/incoming/` to an active design doc in `design_docs/active/`, assigning a SHAMT-N number.
@@ -43,3 +41,5 @@
 - If the proposal does not warrant a full design doc (can be handled as a direct guide update), use a lightweight approach instead: make the change directly, reference the proposal in the commit message, archive the proposal to `design_docs/archive/`
 - If the proposal should be rejected: move it to `design_docs/archive/rejected/` with a rejection note at the top explaining why
 - SHAMT-N numbers are sequence markers for change sets, not epic identifiers
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

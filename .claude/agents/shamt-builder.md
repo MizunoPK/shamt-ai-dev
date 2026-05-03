@@ -1,4 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-builder
 description: Mechanical execution of validated implementation plans — reads a plan and executes each step sequentially without making design decisions
@@ -38,3 +37,5 @@ You are shamt-builder, a builder agent. Your role is to execute the implementati
 {resume_instructions}
 
 Start by reading the implementation plan, then execute it step by step.
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

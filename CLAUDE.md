@@ -124,9 +124,9 @@ Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
 4. Writes `.shamt/config/ai_service.conf` (`claude_code`), `repo_type.conf` (`master` or `child`), and `epic_tag.conf` (project epic tag, e.g. `FF`)
 
 **`regen-claude-shims.sh`** — deterministic transform script at `.shamt/scripts/regen/`:
-- Skills: copies `SKILL.md` verbatim with a managed header; skips `master-only: true` skills on child projects
+- Skills: copies `SKILL.md` verbatim, managed header appended at end; skips `master-only: true` skills on child projects
 - Agents: transforms YAML → Claude Code agent markdown; maps model tiers (cheap→Haiku, balanced→Sonnet, reasoning→Opus)
-- Commands: copies markdown verbatim with a managed header; `{placeholder}` notation is documentation-style
+- Commands: copies markdown verbatim, managed header appended at end; `{placeholder}` notation is documentation-style
 - Cheat sheet (SHAMT-49): generates `.shamt/CHEATSHEET.md` filtered by ai_service, pr_provider, repo_type, and features; writes `.shamt/.gitignore`
 - Idempotent: user-authored files (no managed header) are preserved; safe to run on every import
 - Run automatically by `import.sh` when `ai_service.conf` is `claude_code`
@@ -251,7 +251,7 @@ Six documented workflows that assemble component primitives (hooks, MCP, skills,
 
 | Composite | What it assembles | Guide |
 |-----------|------------------|-------|
-| Validation loop | Skill + MCP + auto-stamp hook + stall-detector + `/loop` | `.shamt/guides/composites/validation_loop_composite.md` |
+| Validation loop | Skill + MCP + auto-stamp hook + stall-detector + `/loop` (optional) | `.shamt/guides/composites/validation_loop_composite.md` |
 | Architect–builder | Plan mode + S5/S6 guides + builder sub-agent + `run_in_background` + worktree/container | `.shamt/guides/composites/architect_builder_composite.md` |
 | Stale-work janitor | SDK cron + Claude Code CronCreate + one-shot post-event triggers | `.shamt/guides/composites/stale_work_janitor_composite.md` |
 | Master review pipeline | Label trigger + `shamt-master-reviewer` + `/loop` guide audit | `.shamt/guides/composites/master_review_pipeline_composite.md` |
@@ -303,7 +303,7 @@ Master work does **not** follow the S1-S11 epic workflow and does **not** use EP
 | `validation-stall-detector.sh` | Hook | Alerts on consecutive_clean=0 stalls |
 | `pre-push-tripwire.sh` | Hook | Guards push: audit clean + validation non-zero |
 | `architect-builder-enforcer.sh` | Hook | Enforces builder pattern in S6-equivalent work |
-| `/shamt-validate` | Slash command | Start a validation loop with `/loop` self-pacing |
+| `/shamt-validate` | Slash command | Start a self-terminating validation loop |
 | `/shamt-audit` | Slash command | Start a guide audit |
 | `composites/` | Guides | End-to-end assembled workflows (see SHAMT-44 section) |
 

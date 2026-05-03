@@ -14,7 +14,7 @@ Composites do not replace the primitive guides — they sit on top of them and a
 
 | Composite | Purpose |
 |-----------|---------|
-| [`validation_loop_composite.md`](validation_loop_composite.md) | Full validation loop with `/loop`, MCP, stall detector, sub-agent confirmers |
+| [`validation_loop_composite.md`](validation_loop_composite.md) | Full validation loop with MCP, stall detector, sub-agent confirmers; optional `/loop` self-pacing |
 | [`architect_builder_composite.md`](architect_builder_composite.md) | Planning → execution pipeline with worktree/container isolation and cloud variant |
 | [`stale_work_janitor_composite.md`](stale_work_janitor_composite.md) | SDK cron janitor + issue triage + stale proposal cleanup |
 | [`master_review_pipeline_composite.md`](master_review_pipeline_composite.md) | Master repo code/guide review: label trigger → skill → PR comment |
@@ -29,7 +29,7 @@ Composites do not replace the primitive guides — they sit on top of them and a
 Primitive home guides         Composite guides (this folder)
 ─────────────────────         ──────────────────────────────
 guides/reference/             composites/validation_loop_composite.md
-  validation_loop_master_protocol.md   ← assembles ↑ + MCP + hooks + /loop
+  validation_loop_master_protocol.md   ← assembles ↑ + MCP + hooks + optional /loop
 
 guides/reference/             composites/architect_builder_composite.md
   architect_builder_pattern.md         ← assembles ↑ + S5/S6 guides + cloud

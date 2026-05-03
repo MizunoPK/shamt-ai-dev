@@ -1,4 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
 ---
 name: shamt-lite-story
 description: >
@@ -428,3 +427,5 @@ Sub-agents get NO LOW allowance
 | Build | Code changes pass verification checklist |
 | Review | "No issues found." is a valid review |
 | Polish | Phase is a no-op if no feedback arrives |
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->

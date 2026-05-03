@@ -1,5 +1,3 @@
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
-
 # Shamt Cheat Sheet
 
 Quick reference for all Shamt operations, stage flow, and sub-agent personas.
@@ -155,6 +153,8 @@ Fields: `effort` (from AGENT_STATUS.md `Reasoning:` / `Effort:` field), `stall` 
 
 Structured gates at key workflow checkpoints. On Codex headless, post as PR comment; parse reply.
 
+> `shamt-validation-loop` is the internal skill invoked by `/shamt-validate` — use `/shamt-validate` to trigger these gates; do not invoke the skill directly.
+
 | Gate | Stage | Skill | Options |
 |------|-------|-------|---------|
 | Testing-approach selection | S1 | `shamt-discovery` | A — Manual e2e / B — Integration scripts / C — Manual + smoke / D — Scripts + smoke |
@@ -187,3 +187,5 @@ Full separation rules: `.shamt/guides/reference/memory_tiers.md`
 | LOW | Cosmetic, minimal impact | 1 allowed per round (primary agent only) |
 
 When uncertain between two levels: classify as the **higher** severity.
+
+<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
