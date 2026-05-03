@@ -1,6 +1,6 @@
 # Templates Index
 
-**Last Updated:** 2026-02-20
+**Last Updated:** 2026-05-02
 **Location:** `.shamt/guides/templates/`
 
 ---
@@ -60,6 +60,7 @@
 |----------|----------|----------|
 | [Implementation Plan](#implementation-plan) | `implementation_plan_template.md` | Creating user-approved build guide through S5 v2 Validation Loop |
 | [Validation Loop Log (S5)](#validation-loop-log-s5) | `VALIDATION_LOOP_LOG_S5_template.md` | Tracking S5 implementation planning validation loop progress |
+| [Implementation Plan Validation Log](#implementation-plan-validation-log) | `implementation_plan_validation_log_template.md` | Tracking 9-dimension validation rounds for an implementation plan |
 
 ### S6: Implementation Execution
 
@@ -100,6 +101,12 @@
 | Template | Filename | Use When |
 |----------|----------|----------|
 | [Validation Loop Log](#validation-loop-log) | `VALIDATION_LOOP_LOG_template.md` | Tracking validation loop progress for any stage |
+
+### Master Dev Workflow
+
+| Template | Filename | Use When |
+|----------|----------|----------|
+| [Design Doc](#design-doc) | `design_doc_template.md` | Creating SHAMT-{N} design docs in `design_docs/active/` for master guide changes (master repo only) |
 
 ### Bug Fix Workflow
 
@@ -259,6 +266,20 @@
 - **Size:** ~180 lines
 - **When to use:** Any stage validation loop (non-S5)
 
+#### Implementation Plan Validation Log
+- **File:** `implementation_plan_validation_log_template.md`
+- **Created:** S5 (start of Implementation Plan validation)
+- **Purpose:** Tracking validation rounds for an implementation plan's 9-dimension validation loop (issues, fixes, sub-agent confirmations)
+- **Size:** ~195 lines
+- **When to use:** S5 implementation plan validation loop
+
+#### Design Doc
+- **File:** `design_doc_template.md`
+- **Created:** Master dev workflow (large changes requiring planning)
+- **Purpose:** SHAMT-{N} design doc capturing problem statement, goals, proposals, implementation plan, and validation strategy for master guide improvements
+- **Size:** ~110 lines
+- **When to use:** Master repo only — when starting a SHAMT-{N} design doc in `design_docs/active/`
+
 #### PR Review Issues
 - **File:** `pr_review_issues_template.md`
 - **Created:** S7 or S10 PR review
@@ -363,10 +384,13 @@ Read .shamt/guides/templates/{template_name}.md
 | Feature Status | ~10 | No | No |
 | Validation Loop Log | ~180 | No | No |
 | Validation Loop Log (S5) | ~411 | No | No |
+| Implementation Plan Validation Log | ~195 | No | No |
 | PR Review Issues | ~175 | No | No |
+| PR Comment Resolution | ~75 | No | No |
 | Guide Update Proposal | ~257 | No | No |
 | Debugging Guide Updates | ~280 | No | No |
 | Cross-Feature Alignment | ~75 | No | No |
+| Design Doc | ~110 | No | No |
 
 **Immutable templates:** Epic Ticket, Spec Summary, Implementation Plan, Bug Fix Notes (after user validation)
 

@@ -93,7 +93,7 @@ Primary Agent (Opus - deep reasoning for root cause analysis):
 **See:** `reference/model_selection.md` for Task tool examples.
 
 **When NOT to use this protocol?**
-- Missing requirement where solution is known (use missed_requirement_workflow.md)
+- Missing requirement where solution is known (use missed_requirement/missed_requirement_protocol.md)
 - Example: "We forgot to add validation" ← This is a missed requirement, not a bug
 
 ---

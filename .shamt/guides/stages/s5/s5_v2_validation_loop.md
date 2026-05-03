@@ -11,6 +11,31 @@
 
 ---
 
+## 🚨 MANDATORY READING PROTOCOL
+
+Before starting this stage — including when resuming a prior session:
+1. Use Read tool to load THIS ENTIRE GUIDE — not just the overview
+   - Quick entry point: `reference/stage_5/stage_5_reference_card.md` — use for second or later features
+   - Full guide (this file): required for first feature and edge cases
+2. Verify prerequisites checklist below
+3. Update feature README.md Agent Status with guide name + timestamp
+
+DO NOT start work based on the overview alone.
+
+---
+
+## 🚫 FORBIDDEN SHORTCUTS
+
+You CANNOT:
+- Draft an implementation plan based on general knowledge — follow Steps 0–7 in Phase 1
+- Skip Phase 2 (Validation Loop) because Phase 1 is "done enough"
+- Present the plan to the user or stop before sub-agent confirmation without completing the exit sequence — see `reference/validation_loop_master_protocol.md` Exit Criteria for the required protocol
+- Proceed to S6 without Gate 5 user approval
+
+If you are about to do any of the above: STOP and re-read the relevant section.
+
+---
+
 ## Table of Contents
 
 1. [Overview](#overview)
@@ -53,31 +78,6 @@
    - [Update Agent Status](#update-agent-status)
    - [Validation Loop Log](#validation-loop-log)
 1. [📚 REFERENCE](#📚-reference)
-
----
-
-## 🚨 MANDATORY READING PROTOCOL
-
-Before starting this stage — including when resuming a prior session:
-1. Use Read tool to load THIS ENTIRE GUIDE — not just the overview
-   - Quick entry point: `reference/stage_5/stage_5_reference_card.md` — use for second or later features
-   - Full guide (this file): required for first feature and edge cases
-2. Verify prerequisites checklist below
-3. Update feature README.md Agent Status with guide name + timestamp
-
-DO NOT start work based on the overview alone.
-
----
-
-## 🚫 FORBIDDEN SHORTCUTS
-
-You CANNOT:
-- Draft an implementation plan based on general knowledge — follow Steps 0–7 in Phase 1
-- Skip Phase 2 (Validation Loop) because Phase 1 is "done enough"
-- Present the plan to the user or stop before sub-agent confirmation without completing the exit sequence — see `reference/validation_loop_master_protocol.md` Exit Criteria for the required protocol
-- Proceed to S6 without Gate 5 user approval
-
-If you are about to do any of the above: STOP and re-read the relevant section.
 
 ---
 

@@ -16,11 +16,10 @@ shamt-ai-dev/
 ├── README.md
 ├── CLAUDE.md                           (this file)
 ├── design_docs/                        # Design doc lifecycle management
-│   ├── active/                         # Design docs being worked on
-│   │   └── SHAMT{N}_DESIGN.md
+│   ├── active/                         # Design docs in progress
 │   ├── incoming/                       # Child project proposals awaiting review
-│   ├── archive/                        # Implemented design docs
-│   │   └── rejected/                   # Rejected child proposals
+│   ├── unimplemented/                  # Proposals not yet promoted
+│   ├── archive/                        # Implemented (archive/rejected/ for rejected)
 │   └── NEXT_NUMBER.txt                 # Next SHAMT-N number
 └── .shamt/
     ├── guides/                         (the canonical guide system)
@@ -122,13 +121,13 @@ Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
 1. Creates `.claude/skills/`, `.claude/agents/`, `.claude/commands/`
 2. Runs `regen-claude-shims.sh` to populate them from canonical `.shamt/` content
 3. Writes `.claude/settings.json` from `.shamt/host/claude/settings.starter.json` (with `${PROJECT}` resolved)
-4. Writes `.shamt/config/ai_service.conf` (value: `claude_code`), `.shamt/config/repo_type.conf` (value: `master` or `child`), and `.shamt/config/epic_tag.conf` (the project's epic tag, e.g. `FF`)
+4. Writes `.shamt/config/ai_service.conf` (`claude_code`), `repo_type.conf` (`master` or `child`), and `epic_tag.conf` (project epic tag, e.g. `FF`)
 
 **`regen-claude-shims.sh`** — deterministic transform script at `.shamt/scripts/regen/`:
 - Skills: copies `SKILL.md` verbatim with a managed header; skips `master-only: true` skills on child projects
 - Agents: transforms YAML → Claude Code agent markdown; maps model tiers (cheap→Haiku, balanced→Sonnet, reasoning→Opus)
 - Commands: copies markdown verbatim with a managed header; `{placeholder}` notation is documentation-style
-- Cheat sheet: generates `.shamt/CHEATSHEET.md` — a project-specific quick reference filtered by `ai_service`, `pr_provider`, `repo_type`, and optional features (hooks/MCP); also writes `.shamt/.gitignore` containing `CHEATSHEET.md` so it stays untracked (SHAMT-49)
+- Cheat sheet (SHAMT-49): generates `.shamt/CHEATSHEET.md` filtered by ai_service, pr_provider, repo_type, and features; writes `.shamt/.gitignore`
 - Idempotent: user-authored files (no managed header) are preserved; safe to run on every import
 - Run automatically by `import.sh` when `ai_service.conf` is `claude_code`
 
@@ -157,6 +156,7 @@ Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
 - Commands: deploys to `~/.codex/prompts/`; translates `{placeholder}` → `$PLACEHOLDER` (Codex prompt syntax)
 - Profiles: concatenates `.shamt/host/codex/profiles/*.fragment.toml` into `.codex/config.toml` SHAMT-PROFILES block; substitutes `${FRONTIER_MODEL}` / `${DEFAULT_MODEL}` from `.model_resolution.local.toml`
 - Hooks: writes SHAMT-HOOKS block in `.codex/config.toml` (see hook event mapping in `.shamt/hooks/README.md`)
+- Cheat sheet (SHAMT-49): generates `.shamt/CHEATSHEET.md` (config-filtered); writes `.shamt/.gitignore`
 - Run automatically by `import.sh` when `ai_service.conf` is `codex` or `claude_codex`
 
 **Stage transitions as session boundaries:** Codex profiles are loaded at session start; switching profiles mid-session requires relaunching Codex with `--profile shamt-s<N>`. Stage transitions in the Shamt workflow are therefore natural session boundaries on Codex.
@@ -325,7 +325,7 @@ See "Design Doc Lifecycle" below for the full design doc process.
 2. **Create from template:** Use `.shamt/guides/templates/design_doc_template.md` to create `design_docs/active/SHAMT{N}_DESIGN.md`
 3. **Write design:** Capture problem statement, goals, proposals, implementation plan, validation strategy
 4. **Validate:** Run 7-dimension validation loop (see Design Doc Validation section below)
-5. **Implement:** Execute implementation plan on `feat/SHAMT-N` branch. After implementing, run a D-COVERAGE pass: verify that (a) guide changes have corresponding skill body updates where warranted — if a modified source guide now diverges from its SKILL.md, update the skill body in the same commit; and (b) skill body changes have corresponding guide updates — if a skill introduces protocol content not present in any source guide, add the missing content to the appropriate guide. The D-DRIFT and D-COVERAGE audit dimensions will catch gaps that slip through, but catching them during implementation is cheaper.
+5. **Implement:** Execute plan on `feat/SHAMT-N` branch. Post-implementation: run a D-COVERAGE pass — verify guide changes have corresponding SKILL.md updates and vice versa. D-DRIFT/D-COVERAGE audit catches gaps, but fixing during implementation is cheaper.
 6. **Validate implementation:** Run implementation validation loop (see Implementation Validation section below)
 7. **Archive:** Move `SHAMT{N}_DESIGN.md` and validation log to `design_docs/archive/` when complete
 

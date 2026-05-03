@@ -12,7 +12,7 @@ This directory contains Codex-specific config sources for Shamt.
 ├── requirements.toml.template  — admin enforcement floor; copied to project root by init
 ├── .model_resolution.local.toml  (gitignored) — resolved FRONTIER_MODEL / DEFAULT_MODEL
 └── profiles/
-    ├── shamt-s1.fragment.toml  — per-stage profile fragments (s1–s10)
+    ├── shamt-s1.fragment.toml  — per-stage profile fragments (s1–s5, s7–s10; S6 is covered by shamt-s6-builder)
     ├── ...
     ├── shamt-s6-builder.fragment.toml
     ├── shamt-validator.fragment.toml

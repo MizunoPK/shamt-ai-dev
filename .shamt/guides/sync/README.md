@@ -32,7 +32,7 @@ Run export script
 Open PR to shamt-ai-dev
         |
         v
-Master maintainer reviews + runs audit on merged files
+Master maintainer reviews + runs full guide audit post-merge
         |
         v
 PR merged to master
