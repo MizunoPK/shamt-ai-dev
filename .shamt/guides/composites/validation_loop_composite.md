@@ -16,7 +16,7 @@ the primitive guides for full detail on each part.
 | `validation-log-stamp.sh` | `.shamt/hooks/` | Auto-stamps timestamp on every validation log edit |
 | `validation-stall-detector.sh` | `.shamt/hooks/` | Alerts when `consecutive_clean=0` for ≥3 rounds |
 | `/shamt-validate` command | `.shamt/commands/` | Invocation entry point |
-| `/loop` (Claude Code) | Built into Claude Code CLI | Self-paces rounds via `ScheduleWakeup` |
+| `/loop` (Claude Code) | Built into Claude Code CLI | Optional self-pacing via `ScheduleWakeup` — use when context exhaustion is a risk |
 | `shamt-validator` sub-agent | `.shamt/agents/shamt-validator.yaml` | Runs confirmation sub-tasks |
 | Codex driver script | see below | Polls log until exit condition met |
 
@@ -33,8 +33,9 @@ the primitive guides for full detail on each part.
 ### 1. Invocation
 
 **Claude Code:** Run `/shamt-validate` or type "run validation loop on {artifact}". The
-skill fires and immediately starts Round 1. After Round 1 completes, it calls
-`ScheduleWakeup(delaySeconds=30, ...)` to auto-pace the next round.
+skill fires and runs all rounds in a single invocation until exit criteria are met.
+For very large artifacts or sessions at risk of context exhaustion, prefix with `/loop`
+to enable `ScheduleWakeup` self-pacing between rounds (advanced/optional).
 
 **Codex:** Either invoke the `shamt-validation-loop` skill manually each round, or run
 the driver script (see "Codex Variant" below) which loops automatically.
@@ -122,8 +123,8 @@ Round N ────────────────────────
     ├─ Hook: validation-log-stamp fires                │
     ├─ Hook: validation-stall-detector fires           │
     │                                                  │
-    ├─ consecutive_clean = 0? ─── ScheduleWakeup(30s) ─┘
-    │
+    ├─ consecutive_clean = 0? ─── continue to Round N+1 ─┘
+    │           (if /loop active: ScheduleWakeup(30s) first)
     └─ consecutive_clean = 1?
          │
          ▼
@@ -131,7 +132,7 @@ Round N ────────────────────────
          │
     Both zero? ── YES ──▶ EXIT ✅
          │
-        NO ──▶ Fix, reset counter, ScheduleWakeup(30s) ──▶ Round N+1
+        NO ──▶ Fix, reset counter ──▶ Round N+1
 ```
 
 ---
@@ -166,7 +167,7 @@ Master repo validation loops follow the same composite, with one exception:
 - **No EPIC_TRACKER.md active epic:** The stall-detector won't write `STALL_ALERT.md`
   to an epic folder (no active epic found). It still emits the stall message to stderr.
   This is expected behavior for master work.
-- **`/loop` use:** Available and encouraged for long validation loops on large guide sets.
+- **`/loop` use:** Optional — prefix with `/loop` only if context exhaustion is a risk (very large artifact, 5+ expected rounds).
 - **Sub-agent confirmations:** Use Haiku (same as child workflow). 2 confirmers required.
 
 ---
