@@ -598,7 +598,7 @@ PYEOF
 # whether .shamt/ itself is tracked or excluded at the repo level
 printf 'CHEATSHEET.md\n' > "$SHAMT_DIR/.gitignore"
 
-echo "  Cheat sheet: generated ($CHEATSHEET_OUT)"
+echo "  Cheat sheet: generated (.shamt/CHEATSHEET.md)"
 
 echo ""
 echo "  ✓ Regen complete"

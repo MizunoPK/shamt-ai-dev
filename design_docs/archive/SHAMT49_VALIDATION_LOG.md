@@ -43,3 +43,44 @@
 **EXIT CRITERION MET:** consecutive_clean = 1 + 2 independent sub-agent confirmations ✓
 
 ---
+
+# Implementation Validation
+
+**Exit criterion:** Primary clean round (≤1 LOW-severity issue) + 2 independent sub-agent confirmations
+
+## Impl Round 1
+
+**consecutive_clean before:** 0
+
+**Findings (all LOW):**
+1. D2: Codex regen `json.JSONDecodeError` warning — accepted as intentional (warns user of malformed JSON, better than silent); no code change
+2. D2: Status line in both regen scripts printed absolute path for CHEATSHEET_OUT rather than `.shamt/CHEATSHEET.md` as specified
+3. D5: CLAUDE.md item 4 did not list `epic_tag.conf` alongside `ai_service.conf` / `repo_type.conf`
+4. D5: CLAUDE.md `regen-claude-shims.sh` bullet list did not mention Phase 5 / cheat sheet generation
+5. D5: CLAUDE.md did not mention `.shamt/CHEATSHEET.md` (the generated tailored file)
+6. D5: CLAUDE.md did not mention `.shamt/.gitignore`
+
+**Fixes applied:**
+- Both regen scripts: status line updated to `echo "  Cheat sheet: generated (.shamt/CHEATSHEET.md)"`
+- CLAUDE.md item 4 updated to include `epic_tag.conf`
+- CLAUDE.md `regen-claude-shims.sh` description updated with cheat sheet/Phase 5 bullet mentioning `.shamt/CHEATSHEET.md` and `.shamt/.gitignore`
+
+**consecutive_clean after:** 0 (6 LOWs reset)
+
+---
+
+## Impl Round 2
+
+**consecutive_clean before:** 0
+
+**Findings:** None.
+
+**consecutive_clean after:** 1 (primary clean round achieved)
+
+**Sub-agent confirmations:**
+- Sub-agent A (Haiku): CONFIRMED — Zero issues found. All 5 dimensions pass.
+- Sub-agent B (Haiku): CONFIRMED — Zero issues found. All 6 verification points pass.
+
+**IMPL EXIT CRITERION MET:** consecutive_clean = 1 + 2 independent sub-agent confirmations ✓
+
+---

@@ -122,12 +122,13 @@ Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
 1. Creates `.claude/skills/`, `.claude/agents/`, `.claude/commands/`
 2. Runs `regen-claude-shims.sh` to populate them from canonical `.shamt/` content
 3. Writes `.claude/settings.json` from `.shamt/host/claude/settings.starter.json` (with `${PROJECT}` resolved)
-4. Writes `.shamt/config/ai_service.conf` (value: `claude_code`) and `.shamt/config/repo_type.conf` (value: `master` or `child`)
+4. Writes `.shamt/config/ai_service.conf` (value: `claude_code`), `.shamt/config/repo_type.conf` (value: `master` or `child`), and `.shamt/config/epic_tag.conf` (the project's epic tag, e.g. `FF`)
 
 **`regen-claude-shims.sh`** — deterministic transform script at `.shamt/scripts/regen/`:
 - Skills: copies `SKILL.md` verbatim with a managed header; skips `master-only: true` skills on child projects
 - Agents: transforms YAML → Claude Code agent markdown; maps model tiers (cheap→Haiku, balanced→Sonnet, reasoning→Opus)
 - Commands: copies markdown verbatim with a managed header; `{placeholder}` notation is documentation-style
+- Cheat sheet: generates `.shamt/CHEATSHEET.md` — a project-specific quick reference filtered by `ai_service`, `pr_provider`, `repo_type`, and optional features (hooks/MCP); also writes `.shamt/.gitignore` containing `CHEATSHEET.md` so it stays untracked (SHAMT-49)
 - Idempotent: user-authored files (no managed header) are preserved; safe to run on every import
 - Run automatically by `import.sh` when `ai_service.conf` is `claude_code`
 
