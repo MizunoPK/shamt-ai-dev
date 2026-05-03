@@ -309,6 +309,7 @@ if ($TargetDir -eq $ShamtSourceDir) {
 } else {
     Set-Content (Join-Path $ConfigDir "repo_type.conf") "child" -NoNewline
 }
+Set-Content (Join-Path $ConfigDir "epic_tag.conf") $EpicTag -NoNewline
 
 # PR provider config
 $PrProviderConfPath = Join-Path $ConfigDir "pr_provider.conf"

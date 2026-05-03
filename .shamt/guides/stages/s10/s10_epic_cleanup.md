@@ -10,14 +10,16 @@
 ## Table of Contents
 
 1. [MANDATORY READING PROTOCOL](#-mandatory-reading-protocol)
-2. [Overview](#overview)
-3. [Critical Rules](#-critical-rules)
-4. [Prerequisites Checklist](#prerequisites-checklist)
-5. [Workflow Overview](#workflow-overview)
-6. [Quick Navigation](#quick-navigation)
-7. [Detailed Workflow](#detailed-workflow)
-8. [Exit Criteria](#exit-criteria)
-9. [Summary](#summary)
+2. [FORBIDDEN SHORTCUTS](#-forbidden-shortcuts)
+3. [Overview](#overview)
+4. [Critical Rules](#-critical-rules)
+5. [Prerequisites Checklist](#prerequisites-checklist)
+6. [Workflow Overview](#workflow-overview)
+7. [Quick Navigation](#quick-navigation)
+8. [Detailed Workflow](#detailed-workflow)
+9. [Exit Criteria](#exit-criteria)
+10. [Summary](#summary)
+11. [Next Stage](#next-stage)
 
 ---
 
@@ -251,7 +253,7 @@ Verify:
 **1b. Verify epic_lessons_learned.md Contains Insights**
 
 Read epic_lessons_learned.md and verify:
-- ✅ Insights from ALL stages present (Stages 1-6)
+- ✅ Insights from ALL stages present (Stages 1-9, where applicable per template)
 - ✅ Lessons from ALL features documented
 - ✅ "Guide Improvements Needed" sections present
 - ✅ Cross-epic insights documented

@@ -24,6 +24,7 @@ The import script has already:
 - Removed files deleted from master (only those that came from master)
 - Preserved any child-only files (never in master) without deleting them
 - Generated diff file(s): `.shamt/import_diff.md` (or `import_diff_1.md`, `import_diff_2.md`, etc.)
+- If `ai_service.conf` is `claude_code`, `codex`, or `claude_codex`: ran the matching regen script to refresh `.claude/`/`.codex/` artifacts and the project-tailored `.shamt/CHEATSHEET.md` (transparent — no agent action required)
 
 Your job: assess the impact and ensure project-specific configuration stays consistent.
 

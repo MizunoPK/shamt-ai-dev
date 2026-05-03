@@ -542,7 +542,7 @@ and why these proposals were generated}
 ## Implementation Notes
 
 - Apply all proposals as a single batch
-- Run full guide audit (3 consecutive clean rounds) before committing
+- Run full guide audit (`consecutive_clean >= 3`) before committing
 - Update `reference/guide_update_tracking.md` with implementation entry
 - Delete this file from `design_docs/incoming/` after successful implementation and commit
 ```

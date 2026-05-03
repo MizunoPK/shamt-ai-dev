@@ -314,6 +314,7 @@ if [ "$TARGET_DIR" = "$SHAMT_SOURCE_DIR" ]; then
 else
     echo "child" > "$SHAMT_DIR/config/repo_type.conf"
 fi
+echo "$EPIC_TAG" > "$SHAMT_DIR/config/epic_tag.conf"
 
 # --- PR provider config -------------------------------------------------------
 _pr_provider="${PR_PROVIDER_FLAG:-github}"

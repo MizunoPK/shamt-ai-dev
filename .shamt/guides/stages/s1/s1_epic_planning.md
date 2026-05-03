@@ -738,6 +738,7 @@ Parallel Agents Used: {e.g., "S2 parallel (3 agents), S5 sequential" or "No"}
 | S1 | {YYYY-MM-DD HH:MM} | {YYYY-MM-DD HH:MM} | {min} |
 | S2 (all features) | | | |
 | S3 | | | |
+| S4 | | | |
 | S5 (all features) | | | |
 | S6–S8 (all features) | | | |
 | S9 | | | |

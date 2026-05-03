@@ -1,3 +1,4 @@
+# S6: Implementation Execution
 
 **File:** `s6_execution.md`
 
@@ -30,8 +31,6 @@ You CANNOT:
 If you are about to do any of the above: STOP and re-read the architect-builder workflow (lines 75-137).
 
 ---
-
-# S6: Implementation Execution
 
 ## Table of Contents
 
