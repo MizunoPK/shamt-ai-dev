@@ -27,6 +27,24 @@ Shamt Lite is a lightweight quality framework for AI-assisted development. It pr
 
 ---
 
+## Host Wiring (Optional)
+
+`init_lite.sh` (and `init_lite.ps1`) accept an optional `--host=` flag that deploys host-native skills, slash commands, and sub-agent personas — turning the standalone patterns below into one-command invocations.
+
+| Flag | Result |
+|---|---|
+| (no flag) | **Default.** Writes `shamt-lite/` only. Manual: copy `SHAMT_LITE.md` into your AI service's rules file. |
+| `--host=claude` | Adds `<project>/CLAUDE.md` (canonical), and deploys `.claude/{skills,commands,agents}/` for Claude Code. Slash commands available: `/lite-story`, `/lite-spec`, `/lite-plan`, `/lite-review`, `/lite-validate`. |
+| `--host=codex` | Adds `<project>/AGENTS.md` (canonical, read by Codex automatically), prompts for `FRONTIER_MODEL` / `DEFAULT_MODEL`, deploys `.agents/skills/`, `.codex/agents/`, and 8 `SHAMT-LITE-PROFILES` blocks in `.codex/config.toml`. Per-phase profiles let you launch sessions as `codex --profile shamt-lite-spec-validate`. |
+| `--host=claude,codex` | Both. `AGENTS.md` is canonical; on Unix `CLAUDE.md` is symlinked to it, on Windows it is duplicated. |
+| `--with-mcp` | Reserved (Tier 3, deferred). Currently a no-op. |
+
+Re-running `init_lite.sh` with a different `--host=` flag is **not** idempotent for the rules-file copy (`AGENTS.md` / `CLAUDE.md` are overwritten); the regen scripts (`regen-lite-claude.sh`, `regen-lite-codex.sh`) ARE idempotent and safe to re-run.
+
+**On non-Claude / non-Codex hosts** (Cursor, Copilot, Windsurf, etc.) the standalone Tier 0 mode (no flag) remains the supported path until per-host wiring lands. SHAMT-52 covers Cursor.
+
+---
+
 ## Story Workflow Map
 
 For ticket-based work, follow `story_workflow_lite.md`. Quick reference:
@@ -127,7 +145,7 @@ Fix each issue now. Do not defer or batch.
 ```xml
 <invoke name="Task">
   <parameter name="subagent_type">general-purpose</parameter>
-  <parameter name="model">haiku</parameter>
+  <parameter name="model">{cheap-tier}</parameter>
   <parameter name="description">Sub-agent confirmation</parameter>
   <parameter name="prompt">You are confirming zero issues after primary validation.
 
@@ -140,6 +158,8 @@ If zero issues found, state "CONFIRMED: Zero issues found."
   </parameter>
 </invoke>
 ```
+
+> **`{cheap-tier}` resolves per host:** `haiku-4-5` on Claude Code; your configured `${DEFAULT_MODEL}` on Codex; `inherit` (or a configured cheap-model alias) on Cursor. If `init_lite.sh --host=...` was used at init time, the per-host wiring substitutes the correct value for you; otherwise replace the placeholder manually.
 
 **Step 8: Add validation footer**
 
@@ -450,12 +470,12 @@ Add validation footer:
 
 **Option A — Execute yourself:** Work through steps sequentially. Run verification after each step that requires it.
 
-**Option B — Haiku builder handoff (recommended for >10 mechanical steps):**
+**Option B — cheap-tier builder handoff (recommended for >10 mechanical steps):**
 
 ```xml
 <invoke name="Task">
   <parameter name="subagent_type">general-purpose</parameter>
-  <parameter name="model">haiku</parameter>
+  <parameter name="model">{cheap-tier}</parameter>
   <parameter name="description">Execute implementation plan</parameter>
   <parameter name="prompt">You are a builder executing a validated implementation plan.
 
@@ -475,6 +495,8 @@ Add validation footer:
   </parameter>
 </invoke>
 ```
+
+> **`{cheap-tier}` resolves per host:** `haiku-4-5` on Claude Code; your configured `${DEFAULT_MODEL}` on Codex; `inherit` (or a configured cheap-model alias) on Cursor. See the Pattern 1 Step 7 footnote for details.
 
 **When to use builder handoff:** Plan has >10 steps + execution is truly mechanical (no design decisions needed during execution).
 
@@ -622,6 +644,48 @@ When uncertain → classify HIGHER
 One LOW per round is OK; two LOW = not clean
 Sub-agents get NO LOW allowance
 ```
+
+---
+
+## Migration to Full Shamt
+
+Shamt Lite is the lightweight tier. Full Shamt adds: the S1–S11 epic workflow, the MCP server (`shamt.validation_round()`, `shamt.next_number()`, etc.), hook enforcement (commit-format, no-verify-blocker, pre-push-tripwire, etc.), per-stage Codex profiles, observability dashboards, and child-import sync. If you outgrow the 5 patterns and need any of those, migrate.
+
+**When to migrate**
+
+- You need atomic SHAMT-N reservation across machines (`shamt.next_number()`)
+- You want hook-enforced git conventions (commit format, `--no-verify` blocker, push tripwire)
+- You're running multi-feature epics that need cross-feature coordination (S1–S11)
+- You want OTel observability or Grafana dashboards
+- You want to sync guide improvements upstream via `import.sh` / `export.sh`
+
+**How to migrate**
+
+1. Run full-Shamt `init.sh` in the **same project root** that has your `shamt-lite/` tree. The two trees coexist:
+   - `shamt-lite/` keeps your `stories/`, `CHANGES.md`, and pattern artifacts.
+   - `.shamt/` adds full-Shamt content: epics, design docs, host wiring, MCP venv, hooks, etc.
+2. Pick `--host=` flags that match what you used in Lite (so the Lite + full regen scripts deploy to the same `.claude/` / `.codex/` paths and skill prefixes don't collide — Lite uses `shamt-lite-*`; full uses `shamt-*`).
+3. Validate that everything still works: invoke a Lite slash command (`/lite-validate`) and a full Shamt one (e.g. `/shamt-validate`).
+4. (Optional) Once you're comfortable on full Shamt and no longer reaching for the standalone patterns, you can remove `shamt-lite/`. Story artifacts in `shamt-lite/stories/` can be moved into `.shamt/epics/{epic}/features/{feature}/stories/` if you want them under the full-Shamt tree.
+
+**What's preserved**
+
+- Every story artifact in `shamt-lite/stories/`
+- Validation history (footers stay attached to artifacts)
+- `CHANGES.md` entries
+- Architecture and coding standards docs (the templates are compatible)
+
+**What's added by full Shamt**
+
+- `.shamt/epics/EPIC_TRACKER.md` and per-epic folders
+- `design_docs/` lifecycle (active / archive)
+- MCP server + 7 tools
+- Hook bundle (12 enforcement hooks)
+- Per-stage Codex profiles (separate from Lite's per-phase profiles)
+- Multi-host master review pipeline
+- Import / export sync with the master repo
+
+**Reverse direction (full Shamt → Lite)**: not a supported path. Full-Shamt projects use the canonical `.shamt/` content layer; downgrading would require dropping epic tracking and the MCP / hook surface. Stay on full Shamt.
 
 ---
 
