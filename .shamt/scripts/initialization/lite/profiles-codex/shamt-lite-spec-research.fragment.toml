@@ -1,0 +1,4 @@
+[profiles.shamt-lite-spec-research]
+model = "${DEFAULT_MODEL}"
+model_reasoning_effort = "low"
+sandbox_mode = "read-only"

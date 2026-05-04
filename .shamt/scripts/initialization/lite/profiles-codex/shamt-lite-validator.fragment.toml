@@ -1,0 +1,5 @@
+[profiles.shamt-lite-validator]
+model = "${DEFAULT_MODEL}"
+model_reasoning_effort = "low"
+sandbox_mode = "read-only"
+approval_policy = "never"

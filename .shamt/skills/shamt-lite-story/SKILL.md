@@ -146,12 +146,12 @@ Each round — re-read spec.md completely, check all 7 dimensions:
 
 Clean round: ZERO issues OR exactly ONE LOW issue (fixed). Otherwise reset to 0.
 
-When `consecutive_clean = 1` → spawn 1 Haiku sub-agent:
+When `consecutive_clean = 1` → spawn 1 cheap-tier sub-agent:
 
 ```xml
 <invoke name="Task">
   <parameter name="subagent_type">general-purpose</parameter>
-  <parameter name="model">haiku</parameter>
+  <parameter name="model">{cheap-tier}</parameter>
   <parameter name="description">Sub-agent confirmation — spec validation</parameter>
   <parameter name="prompt">Confirm zero issues in stories/{slug}/spec.md.
 
@@ -161,6 +161,8 @@ Report ANY issue found, even LOW severity.
 If zero issues: state "CONFIRMED: Zero issues found."</parameter>
 </invoke>
 ```
+
+> `{cheap-tier}` resolves to: `haiku-4-5` on Claude Code; your configured `${DEFAULT_MODEL}` on Codex; `inherit` on Cursor.
 
 Sub-agent finds issues → fix all, reset `consecutive_clean = 0`, continue. Sub-agent confirms zero → add validation footer and proceed.
 
@@ -221,7 +223,7 @@ Suggest: "Plan approved. Consider `/clear` before starting the Build phase."
 ```xml
 <invoke name="Task">
   <parameter name="subagent_type">general-purpose</parameter>
-  <parameter name="model">haiku</parameter>
+  <parameter name="model">{cheap-tier}</parameter>
   <parameter name="description">Execute implementation plan</parameter>
   <parameter name="prompt">You are a builder executing a validated implementation plan.
 
@@ -237,6 +239,8 @@ Critical rules:
 Report: "All steps completed." or "Step N failed: [describe what failed]"</parameter>
 </invoke>
 ```
+
+> `{cheap-tier}` resolves per host (see Pattern 1 sub-agent footnote).
 
 ---
 

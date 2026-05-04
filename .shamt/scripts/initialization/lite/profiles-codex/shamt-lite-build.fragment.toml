@@ -1,0 +1,4 @@
+[profiles.shamt-lite-build]
+model = "${DEFAULT_MODEL}"
+model_reasoning_effort = "minimal"
+sandbox_mode = "workspace-write"
