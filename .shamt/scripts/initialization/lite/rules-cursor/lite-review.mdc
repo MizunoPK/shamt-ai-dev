@@ -1,0 +1,118 @@
+---
+description: Shamt Lite Pattern 4 (Code Review) — full reference. Auto-attached when editing code review files.
+globs: stories/**/code_review/**, .shamt/code_reviews/**
+alwaysApply: false
+---
+
+# Pattern 4: Code Review Process
+
+**Purpose:** Structured review of branches/PRs with validated, copy-paste-ready feedback.
+
+**Two modes — determined by context:**
+
+**Story mode:** Reviewing code you/the agent just built for an active story. Output: `stories/{slug}/code_review/review_v1.md` only (no overview.md — the story folder provides context). See `story_workflow_lite.md` Phase 5.
+
+**Formal mode:** Reviewing someone else's branch or PR. Output: `.shamt/code_reviews/<branch>/overview.md` + `review_v1.md`.
+
+## Critical Rule — Never Check Out the Branch
+
+Use **read-only git commands only**. Never `git checkout` another branch — your local working tree must remain on the original branch throughout the review.
+
+## Formal Mode — 7 Steps
+
+**Step 1: Fetch branch metadata (read-only)**
+
+```bash
+git fetch origin <branch-name>
+git merge-base origin/main origin/<branch-name>
+git log origin/main..<branch-name> --oneline
+git diff --stat origin/main...<branch-name>
+git diff origin/main...<branch-name>
+```
+
+If branch cannot be fetched, halt immediately and report to user.
+
+**Step 2: Create review directory**
+
+`.shamt/code_reviews/<sanitized-branch>/` (e.g., `feat/add-export` → `feat-add-export`)
+
+**Step 3: Write overview.md (formal mode only)**
+
+Three sections:
+
+**What Does This Branch Do?** — Purpose, outcomes, what the system does differently after merge.
+
+**Why Was It Built?** — Intent from commit messages and PR description. If unclear: "inferred from commit messages / code structure."
+
+**How Does It Work?** — Technical walkthrough: files changed, key logic, component interactions. Organize by area when multiple subsystems touched.
+
+**Step 4: Validate overview.md**
+
+Run Pattern 1 (4 general dimensions). Exit: primary clean + 1 Haiku sub-agent.
+
+Add validation footer:
+```
+---
+✅ Validated {date} — N rounds, 1 sub-agent confirmed
+```
+
+**Step 5: Write review_v1.md (both modes)**
+
+Findings grouped by severity, then by category. Omit severity sections with no findings.
+
+**4 Severity Levels:** BLOCKING / CONCERN / SUGGESTION / NITPICK
+
+**12 Review Categories:**
+1. Correctness  2. Security  3. Performance  4. Maintainability  5. Testing
+6. Edge Cases  7. Naming  8. Documentation  9. Error Handling  10. Concurrency
+11. Dependencies  12. Architecture
+
+**Format each finding:**
+
+```markdown
+#### [SEVERITY] — <Category Name>
+
+**File:** `path/to/file.ext`, line N
+
+<Description: what's wrong and what the consequence is.>
+
+**Suggested fix:** <Concrete direction.>
+```
+
+If no issues found: write "No issues found." in the relevant sections. Do not fabricate findings.
+
+**Step 6: Validate review_v1.md**
+
+Run Pattern 1 (5 review dimensions). Exit: primary clean + 1 Haiku sub-agent.
+
+Add validation footer.
+
+**Step 7: Re-review versioning**
+
+On re-review, create `review_v2.md`, `review_v3.md`, etc. Never overwrite previous versions.
+
+## Story Mode (variant)
+
+Story mode is identical to formal mode **except**:
+
+- **Skip Steps 2, 3, 4** (no overview.md). The story folder provides context.
+- **Output path:** `stories/{slug}/code_review/review_v1.md` (not `.shamt/code_reviews/`).
+- **Focus during Step 5:** "Does the code match the spec and plan?" — implementation fidelity is a primary lens.
+
+Steps 1, 5, 6, 7 are unchanged.
+
+## Code Review Validation Dimensions (5)
+
+1. **Correctness** — Issues accurately described?
+2. **Completeness** — All changed files reviewed?
+3. **Helpfulness** — Suggested fixes actionable?
+4. **Severity Accuracy** — Classifications correct?
+5. **Evidence** — File paths and line numbers match the diff?
+
+## Common Mistakes
+
+- **Checking out the branch.** Read-only git only.
+- **Fabricating findings.** If the diff is clean, write "No issues found."
+- **Overwriting on re-review.** Always create `review_v2.md`, `review_v3.md`.
+- **Wrong mode.** Story mode skips overview.md. Formal mode requires it.
+- **Skipping severity classification.** Use BLOCKING / CONCERN / SUGGESTION / NITPICK.

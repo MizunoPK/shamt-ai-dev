@@ -1,0 +1,9 @@
+# Shamt Lite Cursor model resolution — example file
+# The real file (.model_resolution.local.toml) is written by init_lite.sh --host=cursor
+# and is gitignored. Copy this to .model_resolution.local.toml and set your values.
+#
+# CHEAP_MODEL: model id used for sub-agent personas and {cheap-tier} XML in skills.
+# - "inherit"         : Cursor picks based on the active model (default; avoids breakage on model renames)
+# - "claude-haiku-4-5": example specific id (use if you want to pin to a fast cheap model)
+
+CHEAP_MODEL = "inherit"

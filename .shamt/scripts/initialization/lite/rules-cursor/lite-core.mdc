@@ -1,0 +1,105 @@
+---
+description: Shamt Lite core overview — story workflow map, 5-pattern summary, and token discipline quick reference. Always loaded.
+alwaysApply: true
+---
+
+# Shamt Lite — Core Reference
+
+Shamt Lite provides **5 quality patterns** and a **six-phase story workflow** (Intake → Spec → Plan → Build → Review → Polish) for AI-assisted ticket work.
+
+**Lite validation exit criterion:** Primary clean round + **1 Haiku sub-agent** (not 2).
+
+---
+
+## Story Workflow Map
+
+| Phase | Artifact | Gate |
+|-------|----------|------|
+| 1. Intake | `stories/{slug}/ticket.md` | User confirms slug + content |
+| 2. Spec | `stories/{slug}/spec.md` | (2a) Design approved, (2b) Spec approved |
+| 3. Plan | `stories/{slug}/implementation_plan.md` | User approves validated plan |
+| 4. Build | code changes | Verification checklist in plan |
+| 5. Review | `stories/{slug}/code_review/review_v1.md` | Review is the artifact |
+| 6. Polish | commit messages + CHANGES.md entries | User signals "complete" |
+
+**Context-clear breakpoints:** After Gate 2b → `/clear` before Plan. After Gate 3 → `/clear` before Build.
+
+---
+
+## The 5 Patterns — Quick Summary
+
+**Pattern 1: Validation Loops** — Iterative self-review until quality threshold met. 8-step process; exit = primary clean round + 1 Haiku sub-agent. A "clean round" = zero issues OR exactly one LOW issue fixed.
+
+**Pattern 2: Severity Classification** — CRITICAL (blocks workflow) / HIGH (causes confusion) / MEDIUM (reduces quality) / LOW (cosmetic). When uncertain, classify higher.
+
+**Pattern 3: Spec Protocol** — 7-step: Ingest ticket → Research → Draft skeleton → Design dialog (Gate 2a) → Flesh out → Validate → Approve (Gate 2b). 7 spec dimensions.
+
+**Pattern 4: Code Review** — Story mode (no overview.md; output in `stories/{slug}/code_review/`) or Formal mode (overview.md + review_v1.md in `.shamt/code_reviews/`). 12 categories, 4 severity levels. Never check out the branch.
+
+**Pattern 5: Implementation Planning** — 5-step: Read spec → Create mechanical plan → Validate → Execute (or hand off to cheap-tier builder) → Verify completeness. 7 plan dimensions.
+
+---
+
+## Token Discipline — Quick Reference
+
+| Phase / Activity | Model | Rationale |
+|---|---|---|
+| Intake | Haiku | Mechanical |
+| Spec research | Sonnet | Code reading, structural |
+| Spec design dialog | Opus or Sonnet | Design judgment |
+| Spec validation | Opus | Multi-dimensional reasoning |
+| Plan creation | Sonnet | Structured, pattern-following |
+| Plan validation | Sonnet | 7-dimension check |
+| **Build — mechanical plan** | **Haiku (mandatory)** | Execution at Haiku rates |
+| Review — issue finding | Opus | Classification + judgment |
+| Review — git metadata | Haiku | Mechanical |
+| **Sub-agent confirmations** | **Haiku (always)** | Mechanical re-check |
+
+**Builder handoff (Pattern 5 Step 4):** Use when plan has >10 mechanical steps. Spawn a Haiku builder sub-agent; architect monitors for errors.
+
+**Context-clear breakpoints (advisory):** After Gate 2b, after Gate 3.
+
+---
+
+## Validation Loop Quick Steps
+
+```
+1. Read artifact completely (fresh every round)
+2. Find issues across relevant dimensions
+3. Classify: CRITICAL / HIGH / MEDIUM / LOW
+4. Fix ALL immediately
+5. 0 issues OR 1 LOW fixed → consecutive_clean + 1  |  otherwise → 0
+6. consecutive_clean = 1 → spawn 1 Haiku sub-agent
+7. Sub-agent finds 0 issues → DONE ✅
+8. Append footer: ✅ Validated {date} — N rounds, 1 sub-agent confirmed
+```
+
+**Sub-agent exception:** Sub-agents do NOT get the 1 LOW allowance. Any issue resets `consecutive_clean = 0`.
+
+---
+
+## Severity Quick Reference
+
+```
+CRITICAL → blocks workflow or causes failure
+HIGH     → causes confusion or wrong decisions
+MEDIUM   → reduces quality noticeably
+LOW      → cosmetic only
+
+When uncertain → classify HIGHER
+One LOW per round is OK; two LOW = not clean
+Sub-agents get NO LOW allowance
+```
+
+---
+
+## When to Use Which Pattern
+
+| Situation | Use |
+|-----------|-----|
+| Starting a story | story_workflow_lite.md |
+| Need to spec a ticket | Pattern 3: Spec Protocol (`lite-spec`) |
+| Just wrote a spec, plan, or review | Pattern 1: Validation Loops (`lite-validate`) |
+| Unsure if issue is HIGH vs MEDIUM | Pattern 2: Severity Classification |
+| About to implement after spec | Pattern 5: Implementation Planning (`lite-plan`) |
+| Review a branch or PR | Pattern 4: Code Review (`lite-review`) |
