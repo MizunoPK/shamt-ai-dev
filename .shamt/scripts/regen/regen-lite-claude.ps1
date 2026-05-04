@@ -74,7 +74,11 @@ if (Test-Path $SkillsSrc) {
         }
 
         New-Item -ItemType Directory -Force -Path (Split-Path $skillDst) | Out-Null
-        $content = (Get-Content $skillSrc -Raw) + "`n" + $ManagedHeader + "`n"
+        # Substitute {cheap-tier} ONLY inside <parameter name="model">...</parameter> XML
+        # tags so deployed XML examples are concrete on Claude Code. The explanatory
+        # footnote (which references `{cheap-tier}` as inline code) is preserved.
+        $content = (Get-Content $skillSrc -Raw) -replace '<parameter name="model">\{cheap-tier\}</parameter>', '<parameter name="model">haiku</parameter>'
+        $content = $content + "`n" + $ManagedHeader + "`n"
         $content = $content -replace "`r`n", "`n"
         [System.IO.File]::WriteAllText($skillDst, $content, [System.Text.Encoding]::UTF8)
         $SkillsWritten++

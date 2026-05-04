@@ -73,8 +73,11 @@ if [ -d "$SKILLS_SRC" ]; then
         fi
 
         mkdir -p "$(dirname "$skill_dst")"
+        # Substitute {cheap-tier} ONLY inside <parameter name="model">...</parameter> XML
+        # tags so deployed XML examples are concrete on Claude Code. The explanatory
+        # footnote (which references `{cheap-tier}` as inline code) is preserved.
         {
-            cat "$skill_src"
+            sed 's|<parameter name="model">{cheap-tier}</parameter>|<parameter name="model">haiku</parameter>|g' "$skill_src"
             printf '\n%s\n' "$MANAGED_HEADER"
         } > "$skill_dst"
         SKILLS_WRITTEN=$((SKILLS_WRITTEN + 1))

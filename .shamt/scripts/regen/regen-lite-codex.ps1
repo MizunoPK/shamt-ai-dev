@@ -79,7 +79,14 @@ if (Test-Path $SkillsSrc) {
         }
 
         New-Item -ItemType Directory -Force -Path (Split-Path $skillDst) | Out-Null
-        $content = $ManagedHeaderMd + "`n" + (Get-Content $skillSrc -Raw)
+        # Substitute {cheap-tier} ONLY inside <parameter name="model">...</parameter> XML
+        # tags so deployed XML examples carry the project's DEFAULT_MODEL. The
+        # explanatory footnote (which references `{cheap-tier}` as inline code) is
+        # preserved.
+        $xmlPattern = '<parameter name="model">\{cheap-tier\}</parameter>'
+        $xmlReplacement = "<parameter name=`"model`">$DefaultModel</parameter>"
+        $skillBody = (Get-Content $skillSrc -Raw) -replace $xmlPattern, $xmlReplacement
+        $content = $ManagedHeaderMd + "`n" + $skillBody
         $content = $content -replace "`r`n", "`n"
         [System.IO.File]::WriteAllText($skillDst, $content, [System.Text.Encoding]::UTF8)
         $SkillsWritten++

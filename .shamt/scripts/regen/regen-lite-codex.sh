@@ -99,9 +99,13 @@ if [ -d "$SKILLS_SRC" ]; then
         fi
 
         mkdir -p "$(dirname "$skill_dst")"
+        # Substitute {cheap-tier} ONLY inside <parameter name="model">...</parameter> XML
+        # tags so deployed XML examples carry the project's DEFAULT_MODEL. The
+        # explanatory footnote (which references `{cheap-tier}` as inline code) is
+        # preserved.
         {
             printf '%s\n' "$MANAGED_HEADER_MD"
-            cat "$skill_src"
+            sed "s|<parameter name=\"model\">{cheap-tier}</parameter>|<parameter name=\"model\">$DEFAULT_MODEL</parameter>|g" "$skill_src"
         } > "$skill_dst"
         SKILLS_WRITTEN=$((SKILLS_WRITTEN + 1))
     done < <(find "$SKILLS_SRC" -maxdepth 1 -mindepth 1 -type d -print0 | sort -z)

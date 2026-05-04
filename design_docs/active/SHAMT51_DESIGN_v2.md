@@ -170,7 +170,7 @@ This convergence is what makes the canonical content layer architecturally sound
 ```
 
 **`regen-lite-claude.sh` behavior:**
-1. Read all `shamt-lite-*` skills from `.shamt/skills/` and copy to `<TARGET>/.claude/skills/<name>/SKILL.md`.
+1. Read all `shamt-lite-*` skills from `.shamt/skills/` and copy to `<TARGET>/.claude/skills/<name>/SKILL.md`. Substitute `<parameter name="model">{cheap-tier}</parameter>` → `<parameter name="model">haiku</parameter>` so deployed XML examples are concrete; the explanatory footnote (which references `{cheap-tier}` as inline code) is preserved.
 2. Copy `.shamt/scripts/initialization/lite/commands/*.md` → `<TARGET>/.claude/commands/`.
 3. Transform `.shamt/scripts/initialization/lite/agents/*.yaml` → `<TARGET>/.claude/agents/<name>.md` (YAML frontmatter + body, with `model_tier: cheap` mapped to `model: haiku-4-5`).
 4. Skip hooks, skip MCP (Tier 3).
@@ -365,7 +365,7 @@ Followed by a footnote: *"Replace `{cheap-tier}` with: `haiku-4-5` on Claude Cod
 | `.shamt/skills/shamt-lite-spec/SKILL.md` | CREATE | Pattern 3 skill body |
 | `.shamt/skills/shamt-lite-plan/SKILL.md` | CREATE | Pattern 5 skill body |
 | `.shamt/skills/shamt-lite-review/SKILL.md` | CREATE | Pattern 4 skill body |
-| `.shamt/skills/shamt-lite-story/SKILL.md` | UNCHANGED | Already exists |
+| `.shamt/skills/shamt-lite-story/SKILL.md` | MODIFY | Already exists; receives Proposal-8-equivalent edits (`<parameter name="model">haiku</parameter>` → `{cheap-tier}`) for consistency with the new sibling skills. Without this edit the orchestrator skill would diverge from the four new pattern-specific skills, creating a D-DRIFT inconsistency. |
 | `.shamt/scripts/initialization/lite/commands/lite-story.md` | CREATE | Slash command |
 | `.shamt/scripts/initialization/lite/commands/lite-validate.md` | CREATE | Slash command |
 | `.shamt/scripts/initialization/lite/commands/lite-spec.md` | CREATE | Slash command |
@@ -509,3 +509,4 @@ OQs 3 and 4 were Cursor-specific and live in SHAMT-52.
 |---|---|
 | 2026-05-03 | v1 (unified Codex+Cursor) drafted and validated. |
 | 2026-05-03 | v2 created post OQ resolution: scope shrunk to foundation + Codex + Claude bridge. Cursor moved to SHAMT-52; full-Shamt Codex migration moved to SHAMT-53. |
+| 2026-05-04 | Implementation pass: Files Affected table updated — `shamt-lite-story/SKILL.md` reclassified UNCHANGED → MODIFY (Proposal-8-equivalent consistency edit). Regen scripts (`regen-lite-claude.sh/.ps1`, `regen-lite-codex.sh/.ps1`) extended to substitute `{cheap-tier}` inside `<parameter name="model">...</parameter>` XML at deploy time (Claude → `haiku`; Codex → resolved `${DEFAULT_MODEL}`); the explanatory footnote is preserved. |

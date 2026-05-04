@@ -126,19 +126,63 @@ Cross-checked the design doc's Files Affected table against the on-disk delivery
 
 ---
 
-## Sub-Agent Confirmations
+## Sub-Agent Confirmation Attempt 1 — 2026-05-04
 
-(Skipped for this self-validated implementation pass — both regen scripts have been smoke-tested end-to-end; the file-by-file walkthrough above covers each design doc proposal exhaustively. If a stricter audit is required before merge, the user can invoke `/shamt-validate` against this log to spawn a Haiku confirmer.)
+### Sub-Agent A — Cannot Confirm ❌
+
+Found 2 issues:
+
+- **CRITICAL** (Dimension 2 Correctness, all 5 deployed Lite SKILL.md files): Unresolved `{cheap-tier}` placeholder in deployed `<parameter name="model">{cheap-tier}</parameter>` XML. Regen scripts copied SKILL.md verbatim instead of substituting to a concrete host-appropriate value. Verdict: real defect — deployed XML examples should be ready-to-use, not require runtime resolution by the reading agent.
+- **MEDIUM** (Dimension 3 Files Affected Accuracy): Design doc Files Affected table marked `shamt-lite-story/SKILL.md` as `UNCHANGED` but the implementation modified it (Proposal-8-equivalent consistency edits). Procedural deviation; the underlying edit is logically sound but unplanned.
+
+**Outcome:** consecutive_clean reset to 0. Returning to primary validation.
+
+---
+
+## Round 2 — 2026-05-04 (post Sub-Agent A findings)
+
+**Issues addressed:**
+
+- **CRITICAL** fixed: `regen-lite-claude.sh`, `regen-lite-claude.ps1`, `regen-lite-codex.sh`, `regen-lite-codex.ps1` now substitute `<parameter name="model">{cheap-tier}</parameter>` → `<parameter name="model">haiku</parameter>` (Claude) or `<parameter name="model">${DEFAULT_MODEL}</parameter>` (Codex) at deploy time. The pattern is targeted at the XML tag specifically, leaving the explanatory footnote (which references `` `{cheap-tier}` `` as inline code) intact. Smoke-tested: Claude SKILL.md ships with `model="haiku"` in XML; Codex SKILL.md ships with `model="o4-mini"` (or whatever DEFAULT_MODEL was prompted at init); footnote preserved on both.
+- **MEDIUM** fixed: Design doc Files Affected table updated — `shamt-lite-story/SKILL.md` reclassified UNCHANGED → MODIFY with explanation. Proposal 2 description also updated to document the new substitution behavior. Change History entry added for 2026-05-04 implementation pass.
+
+**Round 2 Summary:**
+- Total: 0 issues (both prior findings fixed; no new findings)
+- Pure clean ✅
+- consecutive_clean = 1.
+
+**Notes:** Primary clean round achieved again. Spawning fresh sub-agents (Attempt 2) — 2 in parallel per master implementation validation exit criterion.
+
+---
+
+## Sub-Agent Confirmation Attempt 2 — 2026-05-04
+
+### Sub-Agent A2 — Confirmed ✅
+
+**Result:** "CONFIRMED: Zero issues found." Verified the CRITICAL fix (XML-targeted substitution in all 4 regen scripts — Claude → `haiku`, Codex → `${DEFAULT_MODEL}`; footnote preserved on both). Verified the MEDIUM fix (Files Affected reclassification + Change History entry + Proposal 2 description update). Walked all 5 dimensions; all 8 proposals + goals delivered.
+
+### Sub-Agent B2 — Confirmed ✅
+
+**Result:** "CONFIRMED: Zero issues found." Independently smoke-tested the regen substitution against a fresh temp directory: Claude SKILL.md ships `<parameter name="model">haiku</parameter>` in XML and preserves the explanatory footnote referencing `` `{cheap-tier}` `` as inline code; Codex SKILL.md ships `<parameter name="model">o4-mini</parameter>` (resolved DEFAULT_MODEL) with footnote preserved. Cross-checked PowerShell variants for parity. Verified default no-flag behavior, dual-host symlink, idempotent re-run.
+
+**Outcome:** Both sub-agents confirmed zero issues. Master implementation validation exit criterion met (primary clean round + 2 independent sub-agent confirmations).
 
 ---
 
 ## Final Status
 
-**Implementation Status:** Validated — primary clean round achieved (1 LOW acknowledged design-doc deviation, justified)
-**Smoke Tests:** All passed (Tier 0 default, --host=claude, --host=claude,codex, idempotent re-run)
+**Implementation Status:** Validated ✅
+**Validation Rounds:** 2 primary rounds, 2 sub-agent attempts (A1: cannot confirm — found CRITICAL+MEDIUM; A2 + B2: both confirmed clean)
+**Exit Criterion Met:** Yes ✅
+**Smoke Tests:** All passed (Tier 0 default, `--host=claude`, `--host=claude,codex`, idempotent regen re-run, post-fix targeted XML substitution verified by smoke test in B2)
 **Design Doc Alignment:** All 8 proposals + 8 goals delivered
 
+**Key Improvements Made During Validation:**
+- Sub-Agent A1 surfaced an important regen-time substitution gap (deployed XML examples should be concrete on each host, not placeholders). All 4 regen scripts now perform a targeted XML-tag substitution: Claude → `haiku`; Codex → `${DEFAULT_MODEL}`. Footnote preserved.
+- Design doc Files Affected table corrected (`shamt-lite-story` UNCHANGED → MODIFY) with explanation; Proposal 2 description updated to document substitution behavior; Change History entry added for the implementation pass.
+
 **Next Steps:**
-1. Commit: 1 commit per logical unit (skills/commands/agents content; profile fragments; regen scripts; init_lite changes; docs)
-2. Open `feat/SHAMT-51` PR
-3. After merge: archive design doc to `design_docs/archive/` (move both `SHAMT51_DESIGN.md` v1 and `SHAMT51_DESIGN_v2.md` to archive, with v2 cited as the as-implemented version)
+1. Wait for guide auditor (running in background) to complete and report
+2. Commit the Round-2 fix-up changes (regen scripts + design doc + impl validation log)
+3. Open `feat/SHAMT-51` PR
+4. After merge: archive design doc to `design_docs/archive/`

@@ -92,7 +92,7 @@ Append validation footer:
 ✅ Validated {date} — N rounds, 1 sub-agent confirmed
 ```
 
-### Step 5 — Write `review.md` (both modes)
+### Step 5 — Write `review_v1.md` (both modes)
 
 Findings grouped by severity, then by category. Omit severity sections with no findings.
 
@@ -120,7 +120,7 @@ If no issues found: write "No issues found." in the relevant sections. Do not fa
 
 **Suggested model for issue finding/classification:** Opus.
 
-### Step 6 — Validate `review.md`
+### Step 6 — Validate `review_v1.md`
 
 Invoke `shamt-lite-validate` with `artifact = .shamt/code_reviews/<branch>/review_v1.md` (or `stories/{slug}/code_review/review_v1.md`), `type = code review` (5 dimensions: Correctness, Completeness, Helpfulness, Severity Accuracy, Evidence). Exit: primary clean round + 1 Haiku sub-agent.
 
