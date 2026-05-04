@@ -36,12 +36,14 @@ Shamt Lite is a lightweight quality framework for AI-assisted development. It pr
 | (no flag) | **Default.** Writes `shamt-lite/` only. Manual: copy `SHAMT_LITE.md` into your AI service's rules file. |
 | `--host=claude` | Adds `<project>/CLAUDE.md` (canonical), and deploys `.claude/{skills,commands,agents}/` for Claude Code. Slash commands available: `/lite-story`, `/lite-spec`, `/lite-plan`, `/lite-review`, `/lite-validate`. |
 | `--host=codex` | Adds `<project>/AGENTS.md` (canonical, read by Codex automatically), prompts for `FRONTIER_MODEL` / `DEFAULT_MODEL`, deploys `.agents/skills/`, `.codex/agents/`, and 8 `SHAMT-LITE-PROFILES` blocks in `.codex/config.toml`. Per-phase profiles let you launch sessions as `codex --profile shamt-lite-spec-validate`. |
-| `--host=claude,codex` | Both. `AGENTS.md` is canonical; on Unix `CLAUDE.md` is symlinked to it, on Windows it is duplicated. |
+| `--host=cursor` | Prompts for cheap-tier model (default `inherit`), deploys `.cursor/{skills,commands,rules,agents}/`. 5 attachment-aware `.mdc` rule files load pattern-specific rules only when editing relevant files. No `AGENTS.md` written. |
+| `--host=claude,codex` | Both Claude Code + Codex. `AGENTS.md` is canonical; on Unix `CLAUDE.md` is symlinked to it, on Windows it is duplicated. |
+| `--host=cursor,codex` | Both Cursor + Codex. Independent deployments; no symlinking. `AGENTS.md` is written for Codex; `.cursor/rules/*.mdc` for Cursor. |
 | `--with-mcp` | Reserved (Tier 3, deferred). Currently a no-op. |
 
-Re-running `init_lite.sh` with a different `--host=` flag is **not** idempotent for the rules-file copy (`AGENTS.md` / `CLAUDE.md` are overwritten); the regen scripts (`regen-lite-claude.sh`, `regen-lite-codex.sh`) ARE idempotent and safe to re-run.
+Re-running `init_lite.sh` with a different `--host=` flag is **not** idempotent for the rules-file copy (`AGENTS.md` / `CLAUDE.md` are overwritten); the regen scripts (`regen-lite-claude.sh`, `regen-lite-codex.sh`, `regen-lite-cursor.sh`) ARE idempotent and safe to re-run.
 
-**On non-Claude / non-Codex hosts** (Cursor, Copilot, Windsurf, etc.) the standalone Tier 0 mode (no flag) remains the supported path until per-host wiring lands. SHAMT-52 covers Cursor.
+**On other hosts** (Copilot, Windsurf, etc.) the standalone Tier 0 mode (no flag) remains the supported path. Claude Code, Codex, and Cursor have full Lite host wiring.
 
 ---
 

@@ -4,13 +4,16 @@
 # =============================================================================
 # Run this script from the root of the project you want to initialize Shamt Lite in.
 # Usage:
-#   bash /path/to/shamt-ai-dev/.shamt/scripts/initialization/init_lite.sh [project-name] [--host=claude|codex|claude,codex] [--with-mcp]
+#   bash /path/to/shamt-ai-dev/.shamt/scripts/initialization/init_lite.sh [project-name] [--host=claude|codex|cursor|...] [--with-mcp]
 #
 # Default (no flag): writes shamt-lite/ files only — Tier 0 standalone behavior.
-# --host=claude:    additionally writes <TARGET>/CLAUDE.md + .claude/{skills,commands,agents}/
-# --host=codex:     additionally writes <TARGET>/AGENTS.md + .codex/{agents,config.toml} + .agents/skills/
-# --host=claude,codex (or codex,claude): both; AGENTS.md is canonical, CLAUDE.md symlinked
-# --with-mcp:       reserved (Tier 3, deferred — currently a no-op)
+# --host=claude:         additionally writes <TARGET>/CLAUDE.md + .claude/{skills,commands,agents}/
+# --host=codex:          additionally writes <TARGET>/AGENTS.md + .codex/{agents,config.toml} + .agents/skills/
+# --host=cursor:         additionally writes .cursor/{skills,commands,rules,agents}/; prompts for cheap-tier model
+# --host=claude,codex:   both Claude + Codex; AGENTS.md is canonical, CLAUDE.md symlinked (Unix) or duplicated
+# --host=cursor,codex:   both Cursor + Codex; independent deployments, no symlinking
+# (any comma-separated combination of claude, codex, cursor is accepted)
+# --with-mcp:            reserved (Tier 3, deferred — currently a no-op)
 # =============================================================================
 
 set -e
@@ -36,6 +39,7 @@ done
 
 WANT_CLAUDE=0
 WANT_CODEX=0
+WANT_CURSOR=0
 if [ -n "$HOST_FLAG" ]; then
     case ",$HOST_FLAG," in
         *,claude,*) WANT_CLAUDE=1 ;;
@@ -43,8 +47,11 @@ if [ -n "$HOST_FLAG" ]; then
     case ",$HOST_FLAG," in
         *,codex,*) WANT_CODEX=1 ;;
     esac
-    if [ "$WANT_CLAUDE" -eq 0 ] && [ "$WANT_CODEX" -eq 0 ]; then
-        echo "ERROR: --host=$HOST_FLAG is not recognized. Supported: claude, codex, claude,codex" >&2
+    case ",$HOST_FLAG," in
+        *,cursor,*) WANT_CURSOR=1 ;;
+    esac
+    if [ "$WANT_CLAUDE" -eq 0 ] && [ "$WANT_CODEX" -eq 0 ] && [ "$WANT_CURSOR" -eq 0 ]; then
+        echo "ERROR: --host=$HOST_FLAG is not recognized. Supported: claude, codex, cursor (comma-separated combinations OK)" >&2
         exit 1
     fi
 fi
@@ -153,7 +160,7 @@ cp "$SHAMT_SOURCE_DIR/templates/implementation_plan_lite.template.md" \
 
 # --- Host wiring (Tier 1+2) --------------------------------------------------
 
-if [ "$WANT_CLAUDE" -eq 1 ] || [ "$WANT_CODEX" -eq 1 ]; then
+if [ "$WANT_CLAUDE" -eq 1 ] || [ "$WANT_CODEX" -eq 1 ] || [ "$WANT_CURSOR" -eq 1 ]; then
     echo ""
     echo "------------------------------------------------------------"
     echo "  Host wiring"
@@ -194,6 +201,37 @@ if [ "$WANT_CODEX" -eq 1 ]; then
     # AGENTS.md = copy of SHAMT_LITE.md (Codex reads it from project root automatically)
     cp "$LITE_DIR/SHAMT_LITE.md" "$CODEX_RULES"
     echo "  ✓ AGENTS.md written ($CODEX_FRONTIER_MODEL / $CODEX_DEFAULT_MODEL)"
+fi
+
+# Cursor: prompt for cheap-tier model, write resolution file, run regen
+if [ "$WANT_CURSOR" -eq 1 ]; then
+    echo ""
+    echo "Cursor needs a cheap-tier model identifier for sub-agent personas."
+    echo "  'inherit' (default): Cursor uses whatever model is currently active."
+    echo "  Specific id (e.g. claude-haiku-4-5): pin to a fast cheap model."
+    read -rp "Cursor cheap-tier model id [inherit]: " _cm
+    CURSOR_CHEAP_MODEL="${_cm:-inherit}"
+
+    mkdir -p "$LITE_DIR/host/cursor"
+    printf 'CHEAP_MODEL = "%s"\n' "$CURSOR_CHEAP_MODEL" \
+        > "$LITE_DIR/host/cursor/.model_resolution.local.toml"
+
+    # Add gitignore entry inside shamt-lite/ to keep the resolution file out of git
+    if [ ! -f "$LITE_DIR/.gitignore" ]; then
+        printf 'host/cursor/.model_resolution.local.toml\n' > "$LITE_DIR/.gitignore"
+    elif ! grep -q 'host/cursor/.model_resolution.local.toml' "$LITE_DIR/.gitignore"; then
+        printf 'host/cursor/.model_resolution.local.toml\n' >> "$LITE_DIR/.gitignore"
+    fi
+
+    REGEN_CURSOR="$SHAMT_ROOT/.shamt/scripts/regen/regen-lite-cursor.sh"
+    if [ -f "$REGEN_CURSOR" ]; then
+        bash "$REGEN_CURSOR"
+    else
+        echo "  ⚠  regen-lite-cursor.sh not found at $REGEN_CURSOR — skipping" >&2
+    fi
+
+    echo "  ✓ Cursor wiring deployed (cheap-tier model: $CURSOR_CHEAP_MODEL)"
+    echo "    To change later: edit .cursor/agents/shamt-lite-*.md or re-run init_lite.sh --host=cursor"
 fi
 
 # Claude: write CLAUDE.md (or symlink to AGENTS.md if dual-host)
@@ -268,6 +306,14 @@ if [ "$WANT_CODEX" -eq 1 ]; then
     echo "  .codex/agents/shamt-lite-*.toml            (validator + builder personas)"
     echo "  .codex/config.toml                         (8 SHAMT-LITE-PROFILES)"
     echo "  shamt-lite/host/codex/.model_resolution.local.toml (gitignored)"
+fi
+if [ "$WANT_CURSOR" -eq 1 ]; then
+    echo ""
+    echo "  .cursor/skills/shamt-lite-*/SKILL.md       (5 Lite skills)"
+    echo "  .cursor/commands/lite-*.md                 (5 Lite slash commands)"
+    echo "  .cursor/rules/lite-*.mdc                   (5 attachment-aware rules)"
+    echo "  .cursor/agents/shamt-lite-*.md             (validator + builder personas)"
+    echo "  shamt-lite/host/cursor/.model_resolution.local.toml (gitignored)"
 fi
 
 echo ""
