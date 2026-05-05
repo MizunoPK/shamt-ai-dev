@@ -140,6 +140,7 @@ Deploys to `.claude/{skills,commands,agents}/`:
 - Skills: Lite skills (filter `shamt-lite-*`) with managed header
 - Commands: from `lite/commands/*.md`
 - Agents: from `lite/agents/*.yaml` (YAML → Claude Code agent md)
+- Cheat sheet: reads `shamt-lite/config/ai_service.conf`; generates `shamt-lite/CHEATSHEET.md` with service-specific slash commands and quick reference
 
 ## Shamt Lite: Codex (`regen-lite-codex.sh/.ps1`)
 
@@ -147,6 +148,7 @@ Deploys to `.agents/skills/`, `.codex/agents/`, and `.codex/config.toml`:
 - Skills: Lite skills (filter `shamt-lite-*`) → `.agents/skills/<name>/SKILL.md`
 - Agents: from `lite/agents/*.yaml` (YAML → TOML) → `.codex/agents/<name>.toml`
 - Profiles: from `lite/profiles-codex/*.fragment.toml` → SHAMT-LITE-PROFILES block
+- Cheat sheet: reads `shamt-lite/config/ai_service.conf`; generates `shamt-lite/CHEATSHEET.md` with service-specific quick reference
 
 ## Shamt Lite: Cursor (`regen-lite-cursor.sh/.ps1`)
 
@@ -156,6 +158,7 @@ Deploys to `.cursor/{skills,commands,rules,agents}/`:
 - Commands: from `lite/commands/*.md`
 - Rules: from `lite/rules-cursor/*.mdc` — 5 attachment-aware `.mdc` files
 - Agents: from `lite/agents/*.yaml` (YAML → Cursor agent md)
+- Cheat sheet: reads `shamt-lite/config/ai_service.conf`; generates `shamt-lite/CHEATSHEET.md` with service-specific quick reference
 
 ## Managed Header
 

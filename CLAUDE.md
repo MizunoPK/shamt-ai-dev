@@ -467,6 +467,8 @@ When a new AI service is discovered (reported by a child project or user):
 
 **Key principle:** `SHAMT_LITE.md` is standalone — all 5 patterns run from that file alone. `story_workflow_lite.md` adds the six-phase story workflow narrative.
 
+**Cheat sheet:** `init_lite.sh` writes `shamt-lite/config/ai_service.conf` (service string, e.g. `claude` or `claude_codex`), then generates `shamt-lite/CHEATSHEET.md` — a service-specific quick reference for the active host(s). All regen-lite scripts regenerate the cheat sheet on each run. Both files are gitignored (machine-specific generated artifacts).
+
 **Host wiring (`--host` flag):**
 
 | Flag | Result |
