@@ -20,7 +20,7 @@ master-only: false
 This skill runs **after** the user executes `import.sh` (or `import.ps1`). The script handles file sync mechanically; this skill covers the validation work required afterward.
 
 The import script has already:
-- Copied updated/new files from master's `guides/` and `scripts/` into your `.shamt/`
+- Copied updated/new files from master's `guides/`, `scripts/`, `skills/`, `agents/`, `commands/`, and `hooks/` into your `.shamt/`
 - Removed files deleted from master (only those that came from master)
 - Preserved any child-only files (never in master) without deleting them
 - Generated diff file(s): `.shamt/import_diff.md` (or `import_diff_1.md`, `import_diff_2.md`, etc.)
@@ -196,7 +196,7 @@ Do not leave diff files in place after import is complete — they are temporary
 Stage and commit the results:
 
 ```bash
-git add .shamt/guides/ .shamt/scripts/ .shamt/project-specific-configs/
+git add .shamt/guides/ .shamt/scripts/ .shamt/skills/ .shamt/agents/ .shamt/commands/ .shamt/hooks/ .shamt/project-specific-configs/
 git commit -m "sync: Import Shamt updates from master (YYYY-MM-DD)
 
 [Brief description of what changed]"

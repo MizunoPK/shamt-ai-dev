@@ -438,18 +438,9 @@ Read .shamt/guides/templates/{template_name}.md
 
 ---
 
-## Original Comprehensive Reference
-
-The original comprehensive reference file (`templates_v2.md`) has been archived as `templates_v2_ARCHIVE.md` for historical reference. Individual template files are now preferred for:
-- Faster access (read only what you need)
-- Clearer organization
-- Reduced context window usage
-
----
-
 ## Notes
 
-- **Prefer individual templates** over reading the entire archive
+- **Prefer individual templates** over monolithic reference files
 - **All templates use markdown format** for consistency
 - **Placeholders use `{curly_braces}`** - replace with actual values
 - **Some templates are immutable** after user validation (see table above)

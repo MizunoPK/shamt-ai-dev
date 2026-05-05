@@ -322,12 +322,12 @@ follows the emoji (space → hyphen after stripping the emoji).
 - **Split candidates:** Phase 1 (Draft), Phase 2 (Validation Loop), dimension reference sections
 - **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; 1397-line file no longer violates D11
 
-**F3. reference/validation_loop_master_protocol.md (1582 lines)**
-- **D11 Status:** RETIRED — file is 1582 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
+**F3. reference/validation_loop_master_protocol.md (1996 lines as of 2026-05-04)**
+- **D11 Status:** RETIRED — file is 1996 lines (as of 2026-05-04), does not exceed 2000-line baseline. WARNING: only 4 lines from the 2000-line threshold — monitor for growth
 - **Pre-existing:** Yes — consolidated master protocol predates SHAMT-7; grew to 1582 lines through SHAMT-20 additions
 - **Split candidates:** Could be split into protocol core + dimension-specific appendices
 - **Note:** `pre_audit_checks.sh` does not scan `reference/` for D11, so this exception was for manual audit rounds only
-- **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; 1582-line file no longer violates D11
+- **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; 1996-line file no longer violates D11 but is near-threshold; review trigger at 2000 lines
 
 **F4. stages/s10/s10_epic_cleanup.md (1316 lines)**
 - **D11 Status:** RETIRED — file is 1316 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
@@ -545,7 +545,7 @@ wc -l real_violations.txt  # Should be low count
   - ~~stages/s5/s5_v2_validation_loop.md~~ (1397 lines — RETIRED, below 2000-line threshold)
   - ~~stages/s6/s6_execution.md~~ (1267 lines — RETIRED, below 2000-line threshold)
   - ~~stages/s10/s10_epic_cleanup.md~~ (1316 lines — RETIRED, below 2000-line threshold)
-  - ~~reference/validation_loop_master_protocol.md~~ (1582 lines — RETIRED, below 2000-line threshold)
+  - ~~reference/validation_loop_master_protocol.md~~ (1996 lines — RETIRED, below 2000-line threshold; near-threshold)
 - Category G (D22 Lightweight MRP — Router and Optional Guides): **5 active files**
   - stages/s2/s2_feature_deep_dive.md (router guide — lightweight MRP only, no FS)
   - stages/s9/s9_epic_final_qc.md (router guide — lightweight MRP only, no FS)
@@ -580,6 +580,6 @@ wc -l real_violations.txt  # Should be low count
 
 ---
 
-**Last Verified:** 2026-05-03 (SHAMT-50: Category I added for cloud_variant.md supplement guides; E1 baseline updated 27 → 33 for meta-content TODO occurrences in s9_p2_epic_qc_rounds.md, s2_feature_deep_dive.md, and debugging/loop_back.md; Summary Statistics updated to 19 entries / 17 unique active files; previous: 2026-04-04 - SHAMT-30 F5 added)
+**Last Verified:** 2026-05-04 (SHAMT-53: F3 line count updated from 1582 to 1996 — file grew significantly since original exception; near 2000-line threshold; previous: 2026-05-03 SHAMT-50)
 **Next Review:** When new stage/iteration guides added, or if D8/D10/D22 check patterns change
 
