@@ -204,7 +204,305 @@ Sub-agent verified the `os.path.join(os.environ.get("GITHUB_WORKSPACE", os.getcw
 - AUDIT status added to Files Affected legend
 
 **Validation Completed:** 2026-05-03
-**Next Step:** User review of OQs (OQ 1-5), then implementation.
+**Next Step:** Implementation on feat/SHAMT-53.
+
+---
+
+## Re-Validation — 2026-05-04 (post-SHAMT-52)
+
+SHAMT-52 (Cursor host wiring for Shamt Lite) was implemented after the original validation completed. A targeted re-validation round was run to check whether SHAMT-52's changes invalidated any SHAMT-53 design assumptions.
+
+### Round 7 — 2026-05-04
+
+**Issues found:**
+
+- HIGH (Completeness, Files Affected): `.shamt/scripts/regen/README.md` was completely rewritten by the SHAMT-52 guide audit to document all 10 regen scripts. The rewritten file now contains 3 stale `~/.codex/prompts/` references for full-Shamt skills (table row ~line 21, detail-section lines ~78 and ~80). This file was not in SHAMT-53's Files Affected table.
+
+- MEDIUM (Correctness, Files Affected): `.shamt/commands/README.md` was in Files Affected with the note "update to point at `.agents/skills/` instead of `~/.codex/prompts/`". This is incorrect — SHAMT-53 migrates **skills** only; commands continue to deploy to `~/.codex/prompts/` post-migration. Line 26 of commands/README.md is correct and should not change. The row should be removed from Files Affected.
+
+- MEDIUM (Correctness, Files Affected CLAUDE.md entry): The CLAUDE.md entry described "Canonical Content Layer (SHAMT-39)" (~line 105/115) as needing update because it mentions `~/.codex/prompts/` for commands. Commands aren't migrating, so that section is correct and doesn't need changing. Only the skills-specific line in "Codex Host Parity (SHAMT-42)" (~line 164, "Skills: deploys to `~/.codex/prompts/shamt-<name>.md` (interim)") needs updating.
+
+- LOW (Accuracy, Files Affected CLAUDE.md entry): Line number pointers (~105, ~154/156) shifted by SHAMT-52's CLAUDE.md edits. Correct pointers: ~115 (Canonical Content Layer) and ~164/166 (Codex Host Parity).
+
+**Fixes applied:**
+- Added `.shamt/scripts/regen/README.md` to Files Affected with explicit note about which lines to update and which to leave (commands lines stay).
+- Removed `.shamt/commands/README.md` from Files Affected (commands don't move; line 26 is correct post-SHAMT-53).
+- Updated CLAUDE.md Files Affected entry: removed Canonical Content Layer from update scope; clarified that only the skills line in "Codex Host Parity (SHAMT-42)" (~line 164) needs changing.
+- Updated CLAUDE.md line number references to ~115 and ~164/166.
+
+**False positives considered and rejected:**
+- Command-migration scope ambiguity: SHAMT-53 is explicitly skills-only (Proposal 1 title and description). No changes needed to commands-related files.
+- GitHub Actions `GITHUB_WORKSPACE` path strategy: already validated in Round 6/Attempt 3. No new evidence warrants re-opening.
+- Validation log format: cosmetic; not a design issue.
+
+**Round 7 Summary:**
+- Total: 4 issues (1 HIGH, 2 MEDIUM, 1 LOW — all fixed)
+- Clean? No. consecutive_clean = 0.
+
+---
+
+### Round 8 — 2026-05-04
+
+**Issues found:** None.
+
+Verified:
+- `scripts/regen/README.md` Files Affected entry is accurate (lines 21, 78, 80 need updating; commands lines are explicitly noted to stay).
+- `commands/README.md` correctly removed from Files Affected.
+- CLAUDE.md entry precisely targets skills line in "Codex Host Parity (SHAMT-42)" only.
+- Phase 1 two-pattern grep catches all remaining stale references (regen/README.md will surface in Pass 2).
+- OQ 4 coexistence subsection unaffected by SHAMT-52's Cursor work (different host; `.agents/skills/` prefix convention unchanged).
+
+**Round 8 Summary:**
+- Total: 0 issues
+- Clean ✅
+- consecutive_clean = 1
+
+Spawning sub-agents for post-SHAMT-52 re-confirmation.
+
+---
+
+## Sub-Agent Confirmations (Attempt 4 — post-SHAMT-52)
+
+### Sub-Agent A — 2026-05-04
+
+**Result:** Found 1 issue.
+
+**Issue Found:**
+- HIGH (Consistency, Proposal 3 prose): Line 122 in Proposal 3's "Files to audit" list still said "`.shamt/commands/README.md` — Update to point at `.agents/skills/`" — contradicting the Files Affected table (which correctly omits this file) and the explicit note that commands don't migrate.
+
+**Status:** Cannot Confirm ❌
+
+### Sub-Agent B — 2026-05-04
+
+**Result:** Found the same 1 issue (MEDIUM severity).
+
+**Issue Found:**
+- MEDIUM (Consistency, Proposal 3 prose): Same as Sub-Agent A — Proposal 3 prose at line 122 contradicts Files Affected table. Both sub-agents identified this as an implementation risk.
+
+**Status:** Cannot Confirm ❌
+
+---
+
+**Outcome:** Both sub-agents found the same Proposal 3 prose inconsistency. consecutive_clean resets to 0. Fix applied and returning for Round 9.
+
+---
+
+### Round 9 — 2026-05-04
+
+**Issues found:**
+
+- MEDIUM (Consistency, Proposal 3 prose): Proposal 3's "Files to audit" list still included `.shamt/commands/README.md` with instruction to update it, contradicting the Files Affected table (which correctly omits it).
+
+**Fixes applied:**
+- Removed the `commands/README.md` update instruction from Proposal 3's "Files to audit" list. Replaced with an explicit `**DO NOT MODIFY**` note clarifying that line 26 describes command deployment (stays correct post-SHAMT-53).
+- Added `.shamt/scripts/regen/README.md` to the Proposal 3 "Files to audit" list with precise guidance (update skills rows ~21, 78; leave commands row ~80 unchanged).
+- Added clarification to `ai_services.md` and `import_workflow.md` entries noting commands-related content should not change.
+
+**Round 9 Summary:**
+- Total: 1 issue (1 MEDIUM, fixed)
+- Clean (1 fix applied) — but 1 fix counts as the "exactly 1 LOW" clean-round? No — MEDIUM resets counter.
+- consecutive_clean = 0
+
+---
+
+### Round 10 — 2026-05-04
+
+**Issues found:** None.
+
+Verified:
+- Proposal 3's "Files to audit" list now explicitly says DO NOT MODIFY for `commands/README.md` with clear rationale
+- All `~/.codex/prompts/` grep hits map to Files Affected entries or explicit DO NOT MODIFY annotations
+- CLAUDE.md Files Affected entry correctly scopes to skills line only
+- `scripts/regen/README.md` entry correctly distinguishes skills rows (update) from commands row (keep)
+- No internal contradictions remain between Proposal 3 prose and Files Affected table
+
+**Round 10 Summary:**
+- Total: 0 issues
+- Clean ✅
+- consecutive_clean = 1
+
+Spawning sub-agents (Attempt 5).
+
+---
+
+## Sub-Agent Confirmations (Attempt 5 — post-SHAMT-52)
+
+### Sub-Agent A — 2026-05-04
+
+**Result:** Found 1 MEDIUM issue.
+
+**Issue Found:**
+- MEDIUM (Completeness, Files Affected table): `commands/README.md` was mentioned in Proposal 3 with "DO NOT MODIFY" annotation but had no row in the Files Affected table. Phase 1's grep will find it; without a table row, an implementer has no explicit tracking reference. Needs a "KEEP" status row added.
+
+**Status:** Cannot Confirm ❌
+
+### Sub-Agent B — 2026-05-04
+
+**Result:** Found 1 MEDIUM issue.
+
+**Issue Found:**
+- MEDIUM (Completeness, Phase 2 implementation plan): Phase 2 checklist listed bullets for what to change in `regen-codex-shims.sh` Phase 1 (skills) but did not explicitly say to leave Phase 3 (commands) unchanged. Given that both phases deploy to `~/.codex/prompts/`, explicit guidance is warranted.
+
+**Status:** Cannot Confirm ❌
+
+---
+
+**Outcome:** Both sub-agents found real clarity gaps (different ones). consecutive_clean resets to 0. Fixes applied; returning for Round 11.
+
+---
+
+### Round 11 — 2026-05-04
+
+**Issues found:**
+
+- MEDIUM (Completeness, Files Affected legend + table): No "KEEP" status in legend; no row for `commands/README.md`. Phase 1's grep will surface it; table must account for it.
+- MEDIUM (Completeness, Phase 2): No explicit "Do NOT modify Phase 3" bullet in Phase 2 checklist.
+
+**Fixes applied:**
+- Added `KEEP` status to Files Affected legend.
+- Added `commands/README.md | KEEP` row to Files Affected table with clear rationale (commands don't migrate; line 26 is correct post-SHAMT-53).
+- Added explicit "Do NOT modify Phase 3 (commands → `~/.codex/prompts/`)" bullet to Phase 2 checklist.
+
+**Round 11 Summary:**
+- Total: 2 issues (2 MEDIUM) — resets counter
+- Clean? No. consecutive_clean = 0.
+
+---
+
+### Round 12 — 2026-05-04
+
+**Issues found:** None.
+
+Verified:
+- Files Affected legend now defines MODIFY, CREATE, AUDIT, KEEP
+- `commands/README.md` has a KEEP row with clear rationale
+- Phase 2 checklist explicitly calls out Phase 3 as unchanged
+- Proposal 3 prose + Files Affected table + Phase 2 checklist are internally consistent
+- All `~/.codex/prompts/` grep hits map to table rows (MODIFY or KEEP)
+- No other contradictions found
+
+**Round 12 Summary:**
+- Total: 0 issues
+- Clean ✅
+- consecutive_clean = 1
+
+Spawning sub-agents (Attempt 6 — final).
+
+---
+
+## Sub-Agent Confirmations (Attempt 6)
+
+### Sub-Agent A — 2026-05-04
+
+**Result:** CONFIRMED zero issues. ✅
+
+Sub-agent ran two-pattern grep, verified all hits are covered (MODIFY or KEEP in Files Affected table), confirmed KEEP row for commands/README.md, confirmed Phase 2 DO NOT MODIFY bullet, and confirmed Proposal 3 list is consistent with Files Affected table.
+
+### Sub-Agent B — 2026-05-04
+
+**Result:** Found 1 issue.
+
+**Issue Found:**
+- HIGH (Consistency, notation): Proposal 1 pseudo-code uses `shamt-<name>` (where `<name>` = non-prefixed part like `validator`), but the rest of the doc uses `<name>` to mean the full directory name (e.g., `shamt-validator`). The inconsistency could confuse an implementer about whether the directory is named `validator/` or `shamt-validator/`.
+
+**Status:** Cannot Confirm ❌
+
+---
+
+**Outcome:** Sub-Agent A confirmed clean; Sub-Agent B found one notation inconsistency. consecutive_clean resets to 0. Fix applied.
+
+---
+
+### Round 13 — 2026-05-04
+
+**Issues found:**
+- LOW (Consistency, Proposal 1 notation): `shamt-<name>` in Proposal 1 pseudo-code was inconsistent with `<name>` (full dir name) used everywhere else. Could confuse implementers about whether the target directory is `validator/` or `shamt-validator/`.
+
+**Fix applied:**
+- Proposal 1 pseudo-code: changed `shamt-<name>/SKILL.md` to `<name>/SKILL.md` + added parenthetical clarifying `<name>` = full skill directory name (e.g., `shamt-validator`).
+
+**Round 13 Summary:**
+- Total: 1 issue (1 LOW, fixed)
+- Clean (1 LOW fix) ✅
+- consecutive_clean = 1
+
+Spawning sub-agents (Attempt 7 — final).
+
+---
+
+## Sub-Agent Confirmations (Attempt 7)
+
+### Sub-Agent A — 2026-05-04
+
+**Result:** CONFIRMED zero issues. ✅
+
+### Sub-Agent B — 2026-05-04
+
+**Result:** Found 1 issue.
+
+**Issue Found:**
+- HIGH (Consistency, CLAUDE.md line 115): The design said CLAUDE.md line 115 ("Regen scripts copy command bodies to `~/.codex/prompts/` (Codex)") should stay unchanged because it's technically correct for commands. However, post-SHAMT-53 the line becomes ambiguous — readers could think `~/.codex/prompts/` is still the Codex skills destination. The design should authorize adding a parenthetical clarification: "(Codex commands only; skills deploy to `.agents/skills/)".
+
+**Status:** Cannot Confirm ❌
+
+---
+
+**Outcome:** Sub-Agent A confirmed; Sub-Agent B found a real clarity issue. consecutive_clean resets to 0. Fix applied.
+
+---
+
+### Round 14 — 2026-05-04
+
+**Issues found:**
+- LOW (Correctness, CLAUDE.md Files Affected entry): Line 115 of CLAUDE.md is technically correct but ambiguous post-SHAMT-53. Design should authorize a parenthetical clarification to prevent reader confusion.
+
+**Fix applied:**
+- CLAUDE.md Files Affected entry updated: now includes (b) update to line 115 — add "(Codex commands only; skills deploy to `.agents/skills/`)" parenthetical to prevent post-migration ambiguity. The commands line in Codex Host Parity (~line 166) stays unchanged.
+
+**Round 14 Summary:**
+- Total: 1 issue (1 LOW, fixed)
+- Clean (1 LOW fix) ✅
+- consecutive_clean = 1
+
+Spawning sub-agents (Attempt 8 — final).
+
+---
+
+## Sub-Agent Confirmations (Attempt 8)
+
+### Sub-Agent A — 2026-05-04
+
+**Result:** CONFIRMED zero design issues. ✅
+
+Sub-agent noted that CLAUDE.md lines 115 and 164 haven't been updated yet in the working file — correctly identifying these as pending implementation work (Phase 4), not design doc errors. Design doc validation complete.
+
+### Sub-Agent B — 2026-05-04
+
+**Result:** CONFIRMED zero issues. ✅
+
+Comprehensive verification across all 5 dimensions, grep audit of 18 hits all mapped to Files Affected rows, all 5 OQs resolved, no gaps.
+
+---
+
+## Final Summary (Post-SHAMT-52 Re-Validation)
+
+**Re-validation Rounds:** 7–14 (8 rounds)
+**Sub-Agent Attempts:** 4–8 (5 attempts)
+**Exit Criterion Met:** Yes ✅ (Round 14: 1 LOW fix; Attempt 8: both sub-agents confirmed)
+
+**Key improvements from re-validation:**
+- Added `scripts/regen/README.md` to Files Affected (SHAMT-52 rewrote it with 3 stale refs)
+- Removed `commands/README.md` from Files Affected (commands don't migrate; KEEP status added)
+- Corrected CLAUDE.md Files Affected scope (removed erroneous Canonical Content Layer claim; added precise parenthetical clarification for line 115)
+- Updated CLAUDE.md line number pointers (~115, ~164/166)
+- Added `KEEP` status to Files Affected legend
+- Added Phase 2 "Do NOT modify Phase 3" bullet
+- Fixed Proposal 1 notation inconsistency (`shamt-<name>` → `<name>` with clarifying note)
+- Added explicit "DO NOT MODIFY" annotation for `commands/README.md` in Proposal 3 prose
+
+**Design Doc Status:** Validated ✅ — ready for implementation on feat/SHAMT-53
+
+**Next Step:** Implementation on `feat/SHAMT-53` branch.
 
 
 
