@@ -98,7 +98,7 @@ Review steps:
 
 Three directories under `.shamt/` hold host-portable canonical content. These are **content-only** — no host-specific wiring. Regen scripts (SHAMT-40 for Claude Code, SHAMT-42 for Codex) deploy the content to host-specific locations at init/regen time.
 
-**`.shamt/skills/`** — Skill bodies encoding Shamt protocols (validation loop, architect-builder, spec protocol, code review, guide audit, discovery, import/export, master reviewer, lite story). Each skill lives in its own subdirectory as `SKILL.md`. Each SKILL.md is self-contained and includes `source_guides:` frontmatter listing every guide file it was distilled from.
+**`.shamt/skills/`** — Skill bodies encoding Shamt protocols (validation loop, architect-builder, spec protocol, code review, guide audit, discovery, import/export, master reviewer, lite story, lite validate, lite spec, lite plan, lite review). Each skill lives in its own subdirectory as `SKILL.md`. Each SKILL.md is self-contained and includes `source_guides:` frontmatter listing every guide file it was distilled from.
 
 **`.shamt/agents/`** — Sub-agent persona YAML definitions (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-spec-aligner`, `shamt-code-reviewer`, `shamt-discovery-researcher`). Each file declares model_tier (cheap/balanced/reasoning), reasoning_effort, sandbox, tools_allowed, and prompt_template with `{placeholder}` syntax.
 
@@ -447,35 +447,19 @@ When a new AI service is discovered (reported by a child project or user):
 
 **Target users:** Developers who want systematic quality patterns and a ticket-to-shipped workflow but don't need epic tracking or the full Shamt workflow.
 
-**Master repo storage:** All Shamt Lite files are stored in `.shamt/scripts/initialization/`:
-- `SHAMT_LITE.template.md` — Lean core: 5 patterns + token discipline (standalone executable)
-- `story_workflow_lite.template.md` — Full narrative of the six-phase story workflow
-- `CHANGES.template.md` — Template for per-project CHANGES.md (Polish-phase upstream candidates)
-- `init_lite.sh` / `init_lite.ps1` — Initialization scripts
-- `reference/` — 3 reference files (severity, validation, question brainstorming / spec categories)
-- `templates/` — 6 templates (ticket, spec, code review, implementation plan, architecture, coding standards)
+**Master repo storage:** `.shamt/scripts/initialization/` — `SHAMT_LITE.template.md`, `story_workflow_lite.template.md`, `CHANGES.template.md`, `init_lite.sh/.ps1`, `lite/commands/` (5 commands), `lite/agents/` (2 personas), `lite/profiles-codex/` (8 fragments), `reference/` (3 files), `templates/` (6 templates).
 
-**Deployed layout (after `init_lite` runs):**
-```
-shamt-lite/
-├── SHAMT_LITE.md                    # 5 patterns + token discipline
-├── story_workflow_lite.md           # Six-phase story workflow narrative
-├── CHANGES.md                       # Polish-phase upstream candidates accumulate here
-├── stories/                         # Per-story work folders (stories/{slug}/ticket.md, spec.md, etc.)
-├── reference/
-│   ├── severity_classification_lite.md
-│   ├── validation_exit_criteria_lite.md
-│   └── question_brainstorm_categories_lite.md
-└── templates/
-    ├── ticket.template.md
-    ├── spec.template.md
-    ├── code_review.template.md
-    ├── implementation_plan.template.md
-    ├── architecture.template.md
-    └── coding_standards.template.md
-```
+**Lite skills** live in `.shamt/skills/shamt-lite-*/SKILL.md` (prefixed `shamt-lite-*`; all five carry `master-only: false`).
+
+**Per-host regen scripts** (SHAMT-51): `regen-lite-claude.sh/.ps1` (deploys to `.claude/{skills,commands,agents}/`) and `regen-lite-codex.sh/.ps1` (deploys to `.agents/skills/`, `.codex/agents/`, `SHAMT-LITE-PROFILES` block). Both at `.shamt/scripts/regen/`; run automatically on `init_lite`.
+
+**Cursor support** is tracked separately in SHAMT-52.
 
 **Key principle:** `SHAMT_LITE.md` is standalone and executable. An agent can run all 5 patterns using only that file. `story_workflow_lite.md` adds the full story workflow narrative for ticket-based work.
+
+**Host wiring (Tier 1+2, SHAMT-51):** `init_lite.sh --host=claude` deploys `.claude/{skills,commands,agents}/`; `--host=codex` deploys `.agents/skills/`, `.codex/agents/`, and 8 `SHAMT-LITE-PROFILES` blocks; `--host=claude,codex` does both; no flag = standalone (`shamt-lite/` only). `--with-mcp` is reserved (Tier 3, deferred). Full details in `SHAMT_LITE.template.md`.
+
+**Tier 3 (hooks + MCP) is deferred for Lite.** Users who need MCP / hooks / S1–S11 should migrate to full Shamt.
 
 **Lite vs. full Shamt validation:** Lite validation loops use **1 sub-agent** confirmation (not 2). This applies to all Lite artifacts (specs, plans, reviews). Full Shamt retains 2 sub-agents. Lite `CHANGES.md` entries are proposals; master does not depend on any sync cadence.
 

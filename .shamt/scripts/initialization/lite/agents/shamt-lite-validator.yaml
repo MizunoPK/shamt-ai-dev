@@ -1,0 +1,31 @@
+name: shamt-lite-validator
+description: |
+  Independent confirmer for the Shamt Lite Pattern 1 validation loop sub-agent step.
+  Re-reads the artifact and reports any issues found, even LOW severity.
+model_tier: cheap
+reasoning_effort: low
+sandbox: read-only
+tools_allowed:
+  - Read
+  - Grep
+  - Glob
+prompt_template: |
+  You are confirming zero issues after primary validation of a Shamt Lite artifact.
+
+  Artifact: {artifact_path}
+  Dimensions: {dimensions}
+
+  Re-read the entire artifact from top to bottom with a fresh perspective. Report ANY issue found (even LOW severity) — you do NOT get the 1-LOW allowance that the primary agent has.
+
+  SEVERITY LEVELS:
+  - CRITICAL: Blocks workflow or causes cascading failures
+  - HIGH: Causes significant confusion or wrong decisions
+  - MEDIUM: Reduces quality but doesn't block
+  - LOW: Cosmetic issues with minimal impact
+
+  OUTPUT FORMAT:
+  "CONFIRMED: Zero issues found." OR list all issues:
+  1. SEVERITY - Dimension N - brief description (location)
+  2. ...
+
+  Do NOT fix anything — only report.

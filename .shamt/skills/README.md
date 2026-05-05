@@ -16,7 +16,11 @@ Skills are host-portable behavior packs encoding Shamt protocols. Each skill liv
 ├── shamt-import/SKILL.md
 ├── shamt-export/SKILL.md
 ├── shamt-master-reviewer/SKILL.md     (master-only)
-└── shamt-lite-story/SKILL.md
+├── shamt-lite-story/SKILL.md
+├── shamt-lite-validate/SKILL.md
+├── shamt-lite-spec/SKILL.md
+├── shamt-lite-plan/SKILL.md
+└── shamt-lite-review/SKILL.md
 ```
 
 ## SKILL.md Format
