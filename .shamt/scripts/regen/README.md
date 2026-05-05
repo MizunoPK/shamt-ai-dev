@@ -1,98 +1,125 @@
 # Regen Scripts
 
-This directory contains the Claude Code shim generator scripts that transform canonical Shamt content into Claude Code-specific host files.
+This directory contains the shim generator scripts that transform canonical Shamt content into host-specific files for Claude Code, Codex, and Cursor (Lite).
 
 ## Overview
 
-After `init.sh` or `import.sh` runs, the canonical Shamt content lives in:
+After `init.sh`, `init_lite.sh`, or `import.sh` runs, the canonical Shamt content lives in:
 - `.shamt/skills/` — skill bodies (SKILL.md files)
 - `.shamt/agents/` — agent persona definitions (YAML files)
 - `.shamt/commands/` — slash command bodies (markdown files)
+- `.shamt/scripts/initialization/lite/` — Shamt Lite commands, agents, and rules
 
-`regen-claude-shims.sh` reads from those directories and writes Claude Code-shaped equivalents under:
-- `.claude/skills/` — skills with managed header prepended
-- `.claude/agents/` — agents transformed from YAML to Claude Code agent markdown
-- `.claude/commands/` — command bodies with managed header prepended
+Each regen script reads from canonical source directories and writes host-specific equivalents.
 
 ## Scripts
 
 | Script | Platform | Description |
 |--------|----------|-------------|
-| `regen-claude-shims.sh` | Linux / Mac | Main regen script (bash) |
-| `regen-claude-shims.ps1` | Windows | PowerShell port |
+| `regen-claude-shims.sh` | Linux / Mac | Claude Code: deploys skills, agents, commands to `.claude/` |
+| `regen-claude-shims.ps1` | Windows | PowerShell port of `regen-claude-shims.sh` |
+| `regen-codex-shims.sh` | Linux / Mac | Codex: deploys skills to `~/.codex/prompts/`, agents to `.codex/agents/`, writes SHAMT-HOOKS/SHAMT-PROFILES blocks |
+| `regen-codex-shims.ps1` | Windows | PowerShell port of `regen-codex-shims.sh` |
+| `regen-lite-claude.sh` | Linux / Mac | Shamt Lite for Claude Code: deploys lite skills, commands, agents to `.claude/` |
+| `regen-lite-claude.ps1` | Windows | PowerShell port of `regen-lite-claude.sh` |
+| `regen-lite-codex.sh` | Linux / Mac | Shamt Lite for Codex: deploys lite skills, agents, and SHAMT-LITE-PROFILES block |
+| `regen-lite-codex.ps1` | Windows | PowerShell port of `regen-lite-codex.sh` |
+| `regen-lite-cursor.sh` | Linux / Mac | Shamt Lite for Cursor: deploys lite skills, commands, rules (`.mdc`), agents to `.cursor/` |
+| `regen-lite-cursor.ps1` | Windows | PowerShell port of `regen-lite-cursor.sh` |
+
+## When to Run Each Script
+
+| Script | Run automatically by | Also run manually when |
+|--------|---------------------|----------------------|
+| `regen-claude-shims.sh/.ps1` | `import.sh` (when `ai_service.conf = claude_code`) | After manually editing canonical skills/agents/commands |
+| `regen-codex-shims.sh/.ps1` | `import.sh` (when `ai_service.conf = codex` or `claude_codex`) | After manually editing canonical skills/agents/commands |
+| `regen-lite-claude.sh/.ps1` | `init_lite.sh --host=claude` | After updating Lite canonical content in master |
+| `regen-lite-codex.sh/.ps1` | `init_lite.sh --host=codex` | After updating Lite canonical content in master |
+| `regen-lite-cursor.sh/.ps1` | `init_lite.sh --host=cursor` | After updating Lite canonical content in master |
 
 ## Usage
 
-Run from any directory — the script self-locates relative to its own path:
+Run from the child project root (for full-Shamt scripts):
 
 ```bash
 bash .shamt/scripts/regen/regen-claude-shims.sh
 ```
 
-Or from the project root:
+Run from the child project root (for Lite scripts):
+
 ```bash
-bash .shamt/scripts/regen/regen-claude-shims.sh
+bash /path/to/shamt-ai-dev/.shamt/scripts/regen/regen-lite-cursor.sh
 ```
+
+All scripts are self-locating — they resolve paths relative to their own location, not the current working directory.
 
 ## Transform Conventions
 
-### Skills
+### Full Shamt — Claude Code (`regen-claude-shims.sh/.ps1`)
 
-Each `.shamt/skills/<name>/SKILL.md` becomes `.claude/skills/<name>/SKILL.md`.
+Each `.shamt/skills/<name>/SKILL.md` → `.claude/skills/<name>/SKILL.md`.
 
-- The managed header is prepended as the first line.
-- The SKILL.md content (frontmatter + body) is copied verbatim.
-- The neutral `triggers:` frontmatter is preserved — Claude Code reads it directly to auto-trigger the skill.
-- Skills with `master-only: true` frontmatter are **skipped on child projects** (not written to `.claude/skills/`). On the master repo, they are written normally.
+- Managed header prepended as first line.
+- SKILL.md content (frontmatter + body) copied verbatim.
+- Skills with `master-only: true` skipped on child projects.
 
-### Agents
+Each `.shamt/agents/<name>.yaml` → `.claude/agents/<name>.md`.
 
-Each `.shamt/agents/<name>.yaml` becomes `.claude/agents/<name>.md`.
+YAML transform:
+- `model_tier:` mapped to Claude model ID: `cheap` → `claude-haiku-4-5-20251001`, `balanced` → `claude-sonnet-4-6`, `reasoning` → `claude-opus-4-7`
+- `tools_allowed:` → `tools:` list
 
-The YAML is transformed:
-- `name:` → `name:` in Claude Code agent frontmatter
-- `description:` → `description:`
-- `model_tier:` → `model:` with the tier mapped to a model ID:
-  - `cheap` → `claude-haiku-4-5-20251001`
-  - `balanced` → `claude-sonnet-4-6`
-  - `reasoning` → `claude-opus-4-7`
-- `tools_allowed:` list → `tools:` list in Claude Code format
-- `prompt_template:` (literal block) → agent body (after the frontmatter `---`)
+Each `.shamt/commands/<name>.md` → `.claude/commands/<name>.md`. Header prepended.
 
-### Commands
+Cheat sheet (SHAMT-49): generates `.shamt/CHEATSHEET.md` filtered by ai_service, pr_provider, repo_type, and features.
 
-Each `.shamt/commands/<name>.md` becomes `.claude/commands/<name>.md`.
+### Full Shamt — Codex (`regen-codex-shims.sh/.ps1`)
 
-- The managed header is prepended (with a blank line after it).
-- The command body is copied verbatim.
-- `{placeholder}` notation in command bodies is documentation-style; Claude reads the argument from the invocation context.
+- Skills → `~/.codex/prompts/shamt-<name>.md`
+- Agents → `.codex/agents/<name>.toml` (YAML → TOML transform)
+- Commands → `~/.codex/prompts/`; translates `{placeholder}` → `$PLACEHOLDER`
+- Profiles: concatenates `.shamt/host/codex/profiles/*.fragment.toml` into `.codex/config.toml` SHAMT-PROFILES block
+- Hooks: writes SHAMT-HOOKS block in `.codex/config.toml`
+
+### Shamt Lite — Claude Code (`regen-lite-claude.sh/.ps1`)
+
+Deploys to `.claude/{skills,commands,agents}/`:
+- Skills: Lite skills (filter `shamt-lite-*`) with managed header
+- Commands: from `lite/commands/*.md`
+- Agents: from `lite/agents/*.yaml` (YAML → Claude Code agent md)
+
+### Shamt Lite — Codex (`regen-lite-codex.sh/.ps1`)
+
+Deploys to `.agents/skills/`, `.codex/agents/`, and `.codex/config.toml`:
+- Skills: Lite skills (filter `shamt-lite-*`) with managed header → `.agents/skills/<name>/SKILL.md`
+- Agents: from `lite/agents/*.yaml` (YAML → TOML) → `.codex/agents/<name>.toml`
+- Profiles: from `lite/profiles-codex/*.fragment.toml` → SHAMT-LITE-PROFILES block in `.codex/config.toml`
+
+### Shamt Lite — Cursor (`regen-lite-cursor.sh/.ps1`)
+
+Deploys to `.cursor/{skills,commands,rules,agents}/`:
+- Skills: Lite skills with `paths:` frontmatter injected for spec/plan/review; `{cheap-tier}` substituted in `<parameter name="model">` XML tags using model from `.shamt/host/cursor/.model_resolution.local.toml` (full-Shamt projects) or `shamt-lite/host/cursor/.model_resolution.local.toml` (Lite-only projects)
+- Commands: from `lite/commands/*.md`
+- Rules: from `lite/rules-cursor/*.mdc` — 5 attachment-aware `.mdc` files
+- Agents: from `lite/agents/*.yaml` (YAML → Cursor agent md via embedded Python transform)
 
 ## Managed Header
 
-Every Shamt-generated file begins with:
+Every Shamt-generated file ends with (or begins with, for Claude Code):
 ```
-<!-- Managed by Shamt — do not edit. Run regen-claude-shims.sh to regenerate. -->
+<!-- Managed by Shamt — do not edit. Run regen-<host>-shims.sh to regenerate. -->
 ```
 
-The regen script reads the first line of any existing file in `.claude/skills/`, `.claude/agents/`, `.claude/commands/`. If the first line does NOT contain "Managed by Shamt", the file is **user-authored** and is **preserved** (not overwritten).
-
-## Version Control
-
-Generated shim files in `.claude/skills/`, `.claude/agents/`, `.claude/commands/` are **committed to version control** — they behave like lock files, not build artifacts. After each `shamt import` that changes canonical content, regen runs automatically and the resulting changes in `.claude/` should be staged and committed. This ensures the exact set of deployed shims is visible in git history and child project members all use the same shims without needing to run regen themselves.
-
-`.gitignore` excludes only `.claude/settings.json` and `.claude/settings.local.json` (machine-specific) — not the generated shim directories.
+Files without the managed header are user-authored and are preserved (not overwritten).
 
 ## Idempotence
 
-Running the regen script multiple times produces identical output. Diff between two consecutive runs is always empty (assuming no changes to source content).
+All regen scripts are idempotent — running multiple times produces identical output. Safe to re-run after any update to canonical content.
 
 ## Stale Shim Files
 
-If a skill or command is removed from `.shamt/`, its previously-generated shim file in `.claude/` persists until manually removed. Stale shims are identifiable by the managed header — any Shamt-managed file whose source no longer exists in `.shamt/` is stale.
+If a skill or command is removed from `.shamt/`, its previously-generated shim file persists until manually removed. Stale shims are identifiable by the managed header — any Shamt-managed file whose source no longer exists is stale.
 
-## When to Run
+## Version Control
 
-- **After `shamt import`** — `import.sh` automatically runs regen when `ai_service.conf` records `claude_code`.
-- **After manually editing canonical content** — run regen to propagate changes to `.claude/`.
-- **After adding a new skill or agent to master** — regen picks it up on the next run.
-- **On the master repo after each SHAMT implementation** — Phase 7.5 of each SHAMT design doc that affects canonical content.
+Generated shim files in `.claude/`, `.codex/`, and `.cursor/` are committed to version control — they behave like lock files. After each `shamt import` that changes canonical content, full-Shamt regen runs automatically (see When to Run table above); Lite regen scripts are not triggered by import and must be re-run manually or via `init_lite.sh`. Stage and commit the resulting shim changes.

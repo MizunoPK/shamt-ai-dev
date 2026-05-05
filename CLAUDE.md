@@ -27,6 +27,7 @@ shamt-ai-dev/
     │   ├── reference/
     │   ├── audit/
     │   ├── code_review/                # code review workflow guides
+    │   ├── composites/                 # end-to-end assembled workflows (SHAMT-44)
     │   ├── debugging/                  # debugging and troubleshooting guides
     │   ├── design_doc_validation/      # design doc validation guides
     │   ├── master_dev_workflow/        # guide for improving master guides
@@ -49,23 +50,32 @@ shamt-ai-dev/
     │   ├── initialization/
     │   │   ├── init.sh / init.ps1                           # Full Shamt initialization
     │   │   ├── init_lite.sh / init_lite.ps1                 # Shamt Lite initialization
+    │   │   ├── shamt-add-host.sh / shamt-add-host.ps1       # Add host to existing project
     │   │   ├── RULES_FILE.template.md                       # AI rules file template (full)
     │   │   ├── SHAMT_LITE.template.md                       # Standalone lite rules file
+    │   │   ├── story_workflow_lite.template.md
+    │   │   ├── CHANGES.template.md
     │   │   ├── ARCHITECTURE.template.md                     # Full template
     │   │   ├── CODING_STANDARDS.template.md                 # Full template
     │   │   ├── EPIC_TRACKER.template.md
     │   │   ├── ai_services.md                               # Known AI service registry
+    │   │   ├── lite/                                        # commands/, agents/, profiles-codex/, rules-cursor/
     │   │   ├── reference/
     │   │   │   ├── severity_classification_lite.md
     │   │   │   ├── validation_exit_criteria_lite.md
     │   │   │   └── question_brainstorm_categories_lite.md
     │   │   └── templates/
-    │   │       ├── discovery_lite.template.md
-    │   │       ├── code_review_lite.template.md
+    │   │       ├── AGENT_STATUS.template.md
     │   │       ├── architecture_lite.template.md
-    │   │       └── coding_standards_lite.template.md
+    │   │       ├── code_review_lite.template.md
+    │   │       ├── coding_standards_lite.template.md
+    │   │       ├── implementation_plan_lite.template.md
+    │   │       ├── spec.template.md
+    │   │       └── ticket.template.md
     │   ├── export/                     # export script
     │   ├── import/                     # import script
+    │   ├── regen/                      # host shim generators (Claude Code, Codex, Cursor Lite)
+    │   ├── statusline/                 # status bar renderer
     │   └── storage/                    # store/get .shamt/ across machines
     └── epics/
         ├── EPIC_TRACKER.md             # not actively maintained for master work — see Master Dev Workflow
@@ -447,7 +457,7 @@ When a new AI service is discovered (reported by a child project or user):
 
 **Target users:** Developers who want systematic quality patterns and a ticket-to-shipped workflow but don't need epic tracking or the full Shamt workflow.
 
-**Master repo storage:** `.shamt/scripts/initialization/` — `SHAMT_LITE.template.md`, `story_workflow_lite.template.md`, `CHANGES.template.md`, `init_lite.sh/.ps1`, `lite/commands/` (5 commands), `lite/agents/` (2 personas), `lite/profiles-codex/` (8 fragments), `lite/rules-cursor/` (5 `.mdc` files; SHAMT-52), `reference/` (3 files), `templates/` (6 templates). Cursor host config at `.shamt/host/cursor/`.
+**Master repo storage:** `.shamt/scripts/initialization/` — `SHAMT_LITE.template.md`, `story_workflow_lite.template.md`, `CHANGES.template.md`, `init_lite.sh/.ps1`, `lite/commands/` (5 commands), `lite/agents/` (2 personas), `lite/profiles-codex/` (8 fragments), `lite/rules-cursor/` (5 `.mdc` files; SHAMT-52), `reference/` (3 files), `templates/` (7 templates). Cursor host config at `.shamt/host/cursor/`.
 
 **Lite skills** live in `.shamt/skills/shamt-lite-*/SKILL.md` (prefixed `shamt-lite-*`; all five carry `master-only: false`).
 

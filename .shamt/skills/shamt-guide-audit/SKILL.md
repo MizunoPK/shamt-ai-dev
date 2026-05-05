@@ -14,6 +14,8 @@ source_guides:
   - guides/audit/audit_overview.md
   - guides/reference/severity_classification_universal.md
   - guides/composites/master_review_pipeline_composite.md
+  - guides/composites/validation_loop_composite.md
+  - guides/master_dev_workflow/master_dev_workflow.md
 master-only: false
 version: "1.1 (SHAMT-44)"
 ---
