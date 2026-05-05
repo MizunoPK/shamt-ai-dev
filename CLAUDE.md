@@ -27,6 +27,7 @@ shamt-ai-dev/
     │   ├── reference/
     │   ├── audit/
     │   ├── code_review/                # code review workflow guides
+    │   ├── composites/                 # end-to-end assembled workflows (SHAMT-44)
     │   ├── debugging/                  # debugging and troubleshooting guides
     │   ├── design_doc_validation/      # design doc validation guides
     │   ├── master_dev_workflow/        # guide for improving master guides
@@ -49,23 +50,32 @@ shamt-ai-dev/
     │   ├── initialization/
     │   │   ├── init.sh / init.ps1                           # Full Shamt initialization
     │   │   ├── init_lite.sh / init_lite.ps1                 # Shamt Lite initialization
+    │   │   ├── shamt-add-host.sh / shamt-add-host.ps1       # Add host to existing project
     │   │   ├── RULES_FILE.template.md                       # AI rules file template (full)
     │   │   ├── SHAMT_LITE.template.md                       # Standalone lite rules file
+    │   │   ├── story_workflow_lite.template.md
+    │   │   ├── CHANGES.template.md
     │   │   ├── ARCHITECTURE.template.md                     # Full template
     │   │   ├── CODING_STANDARDS.template.md                 # Full template
     │   │   ├── EPIC_TRACKER.template.md
     │   │   ├── ai_services.md                               # Known AI service registry
+    │   │   ├── lite/                                        # commands/, agents/, profiles-codex/, rules-cursor/
     │   │   ├── reference/
     │   │   │   ├── severity_classification_lite.md
     │   │   │   ├── validation_exit_criteria_lite.md
     │   │   │   └── question_brainstorm_categories_lite.md
     │   │   └── templates/
-    │   │       ├── discovery_lite.template.md
-    │   │       ├── code_review_lite.template.md
+    │   │       ├── AGENT_STATUS.template.md
     │   │       ├── architecture_lite.template.md
-    │   │       └── coding_standards_lite.template.md
+    │   │       ├── code_review_lite.template.md
+    │   │       ├── coding_standards_lite.template.md
+    │   │       ├── implementation_plan_lite.template.md
+    │   │       ├── spec.template.md
+    │   │       └── ticket.template.md
     │   ├── export/                     # export script
     │   ├── import/                     # import script
+    │   ├── regen/                      # host shim generators (Claude Code, Codex, Cursor Lite)
+    │   ├── statusline/                 # status bar renderer
     │   └── storage/                    # store/get .shamt/ across machines
     └── epics/
         ├── EPIC_TRACKER.md             # not actively maintained for master work — see Master Dev Workflow
@@ -447,17 +457,29 @@ When a new AI service is discovered (reported by a child project or user):
 
 **Target users:** Developers who want systematic quality patterns and a ticket-to-shipped workflow but don't need epic tracking or the full Shamt workflow.
 
-**Master repo storage:** `.shamt/scripts/initialization/` — `SHAMT_LITE.template.md`, `story_workflow_lite.template.md`, `CHANGES.template.md`, `init_lite.sh/.ps1`, `lite/commands/` (5 commands), `lite/agents/` (2 personas), `lite/profiles-codex/` (8 fragments), `reference/` (3 files), `templates/` (6 templates).
+**Master repo storage:** `.shamt/scripts/initialization/` — `SHAMT_LITE.template.md`, `story_workflow_lite.template.md`, `CHANGES.template.md`, `init_lite.sh/.ps1`, `lite/commands/` (5 commands), `lite/agents/` (2 personas), `lite/profiles-codex/` (8 fragments), `lite/rules-cursor/` (5 `.mdc` files; SHAMT-52), `reference/` (3 files), `templates/` (7 templates). Cursor host config at `.shamt/host/cursor/`.
 
 **Lite skills** live in `.shamt/skills/shamt-lite-*/SKILL.md` (prefixed `shamt-lite-*`; all five carry `master-only: false`).
 
-**Per-host regen scripts** (SHAMT-51): `regen-lite-claude.sh/.ps1` (deploys to `.claude/{skills,commands,agents}/`) and `regen-lite-codex.sh/.ps1` (deploys to `.agents/skills/`, `.codex/agents/`, `SHAMT-LITE-PROFILES` block). Both at `.shamt/scripts/regen/`; run automatically on `init_lite`.
+**Per-host regen scripts:** `regen-lite-claude.sh/.ps1` (deploys to `.claude/{skills,commands,agents}/`), `regen-lite-codex.sh/.ps1` (deploys to `.agents/skills/`, `.codex/agents/`, `SHAMT-LITE-PROFILES` block), `regen-lite-cursor.sh/.ps1` (SHAMT-52; deploys to `.cursor/{skills,commands,rules,agents}/`). All at `.shamt/scripts/regen/`; run automatically by `init_lite.sh`.
 
-**Cursor support** is tracked separately in SHAMT-52.
+**Cursor host directory:** `.shamt/host/cursor/` — `README.md` + `.model_resolution.local.toml.example`. The per-developer gitignored resolution file (`CHEAP_MODEL = "inherit"`) is written by `init_lite.sh --host=cursor` into `<child>/shamt-lite/host/cursor/`.
 
 **Key principle:** `SHAMT_LITE.md` is standalone and executable. An agent can run all 5 patterns using only that file. `story_workflow_lite.md` adds the full story workflow narrative for ticket-based work.
 
-**Host wiring (Tier 1+2, SHAMT-51):** `init_lite.sh --host=claude` deploys `.claude/{skills,commands,agents}/`; `--host=codex` deploys `.agents/skills/`, `.codex/agents/`, and 8 `SHAMT-LITE-PROFILES` blocks; `--host=claude,codex` does both; no flag = standalone (`shamt-lite/` only). `--with-mcp` is reserved (Tier 3, deferred). Full details in `SHAMT_LITE.template.md`.
+**Host wiring (Tier 1+2, SHAMT-51 + SHAMT-52):**
+
+| Flag | Result |
+|---|---|
+| (no flag) | Standalone — `shamt-lite/` only |
+| `--host=claude` | `.claude/{skills,commands,agents}/` |
+| `--host=codex` | `.agents/skills/`, `.codex/agents/`, 8 `SHAMT-LITE-PROFILES` |
+| `--host=cursor` | `.cursor/{skills,commands,rules,agents}/`; 5 attachment-aware `.mdc` rules; prompts for `CHEAP_MODEL` |
+| `--host=claude,codex` | Both; `AGENTS.md` canonical, `CLAUDE.md` symlinked (Unix) or duplicated |
+| `--host=cursor,codex` | Both Cursor + Codex; independent, no symlinking |
+| `--with-mcp` | Reserved (Tier 3, deferred) |
+
+**Master repo storage also includes:** `lite/rules-cursor/` (5 `.mdc` rule files for Cursor). Full details in `SHAMT_LITE.template.md`.
 
 **Tier 3 (hooks + MCP) is deferred for Lite.** Users who need MCP / hooks / S1–S11 should migrate to full Shamt.
 

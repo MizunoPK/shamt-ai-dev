@@ -4,8 +4,9 @@
 # Run this script from the root of your child project.
 # Usage: & ".shamt\scripts\import\import.ps1"
 #
-# Syncs guides/ and scripts/ from the master shamt-ai-dev repo into this
-# project's .shamt/. Generates a diff file for agent review afterward.
+# Syncs guides/, scripts/, skills/, agents/, commands/, and hooks/ from the
+# master shamt-ai-dev repo into this project's .shamt/. Generates a diff file
+# for agent review afterward.
 # =============================================================================
 
 $ErrorActionPreference = "Stop"

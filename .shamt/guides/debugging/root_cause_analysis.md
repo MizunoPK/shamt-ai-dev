@@ -686,3 +686,5 @@ Are there more issues in ISSUES_CHECKLIST.md with status NOT 🟢 FIXED?
 ---
 
 **Next Phase:** Move to next issue OR Phase 5 (Loop Back to Testing)
+
+**See also:** `debugging/DEBUGGING_LESSONS_INTEGRATION.md` — explains how guide_update_recommendations.md entries flow through S11 and get applied as master guide updates.

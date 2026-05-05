@@ -457,7 +457,7 @@ grep -rn "PATTERN" ../../scripts/initialization/RULES_FILE.template.md
 ```
 
 **Also check sync scripts for D20 (all contexts):**
-The four sync scripts (`export.sh`, `export.ps1`, `import.sh`, `import.ps1`) are in scope for D20 (Script Integrity) in Sub-Round N.4. They are not markdown files; the check is a manual code review using the D20 checklist below.
+The eight sync/storage scripts (`export.sh`, `export.ps1`, `import.sh`, `import.ps1`, `store.sh`, `store.ps1`, `get.sh`, `get.ps1`) are in scope for D20 (Script Integrity) in Sub-Round N.4. They are not markdown files; the check is a manual code review using the D20 checklist below.
 
 **Master context — additional files (full dimension coverage):**
 When auditing the master repo (`.shamt/shamt_master_path.conf` absent), these master-only files are also in scope for all applicable audit dimensions:
@@ -471,7 +471,7 @@ When auditing the master repo (`.shamt/shamt_master_path.conf` absent), these ma
 
 ```bash
 # Define folder order (vary this in each round!)
-folders=("debugging" "missed_requirement" "reference" "stages" "templates" "prompts")
+folders=("code_review" "composites" "debugging" "design_doc_validation" "master_dev_workflow" "missed_requirement" "parallel_work" "prompts" "reference" "stages" "templates")
 
 # For Round 1: alphabetical order
 # For Round 2: reverse order
@@ -491,13 +491,17 @@ done
 ```
 
 **Folder Descriptions:**
+- `code_review/` - Code review workflow guides
+- `composites/` - End-to-end assembled workflows (SHAMT-44)
 - `debugging/` - Debugging protocol guides
+- `design_doc_validation/` - Design doc validation guides
+- `master_dev_workflow/` - Guide improvement workflow (master repo)
 - `missed_requirement/` - Missed requirement protocol
+- `parallel_work/` - Parallel work coordination guides
+- `prompts/` - Phase transition prompts
 - `reference/` - Reference cards and supporting materials
 - `stages/` - Core workflow guides (S1-S11 with sub-guides)
 - `templates/` - File templates for epics/features
-- `prompts/` - Phase transition prompts
-- `audit/` - Audit guides (if checking for self-references)
 
 ### Priority 3: Cross-Cutting Searches
 

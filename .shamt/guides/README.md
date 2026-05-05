@@ -1,6 +1,6 @@
 # Shamt Guides — Index
 
-**Last Updated:** 2026-04-02
+**Last Updated:** 2026-05-04
 **Version:** 1.0
 **Status:** Current
 
@@ -46,6 +46,7 @@ This directory contains the complete Shamt epic-driven development workflow guid
 | `master_dev_workflow/` | Guide for improving guides directly |
 | `code_review/` | Standalone branch/PR review workflow |
 | `composites/` | End-to-end assembled workflows (validation loop, architect-builder, stale-work janitor, master review pipeline, metrics/observability, rollback/recovery) |
+| `design_doc_validation/` | Design doc validation workflow and templates (master dev work) |
 
 ---
 

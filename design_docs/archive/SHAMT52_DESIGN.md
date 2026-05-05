@@ -1,6 +1,6 @@
 # SHAMT-52: Shamt Lite Host Wiring for Cursor
 
-**Status:** Ready for implementation (validated + all OQs resolved 2026-05-04)
+**Status:** Ready for implementation (re-validated 2026-05-04 post-SHAMT-51 impl; all OQs resolved)
 **Created:** 2026-05-03
 **Branch:** `feat/SHAMT-52`
 **Validation Log:** [SHAMT52_VALIDATION_LOG.md](./SHAMT52_VALIDATION_LOG.md)
@@ -47,7 +47,7 @@ SHAMT-51 establishes the canonical Lite content layer (skills, commands, sub-age
 
 **Description:** New script at `.shamt/scripts/regen/regen-lite-cursor.sh` (and `.ps1` for Windows). Behavior:
 
-1. Read all `shamt-lite-*` skills from `.shamt/skills/` and copy verbatim to `<TARGET>/.cursor/skills/<name>/SKILL.md`.
+1. Read all `shamt-lite-*` skills from `.shamt/skills/` and deploy to `<TARGET>/.cursor/skills/<name>/SKILL.md` with `{cheap-tier}` XML substitution: `sed 's|<parameter name="model">{cheap-tier}</parameter>|<parameter name="model">$CHEAP_MODEL</parameter>|g'` — targeted XML-tag substitution only (preserves explanatory footnote). Mirrors the pattern in `regen-lite-claude.sh` (→ `haiku`) and `regen-lite-codex.sh` (→ `$DEFAULT_MODEL`).
 2. Copy `.shamt/scripts/initialization/lite/commands/*.md` → `<TARGET>/.cursor/commands/`.
 3. Copy `.shamt/scripts/initialization/lite/rules-cursor/*.mdc` → `<TARGET>/.cursor/rules/`.
 4. Transform `.shamt/scripts/initialization/lite/agents/*.yaml` → `<TARGET>/.cursor/agents/<name>.md` (YAML frontmatter + body). Map `model_tier: cheap` to whatever the user provided during init (default `inherit`); read from `.shamt/host/cursor/.model_resolution.local.toml` (gitignored, written by init).
@@ -126,6 +126,7 @@ SHAMT-51 establishes the canonical Lite content layer (skills, commands, sub-age
 | `.shamt/scripts/initialization/ai_services.md` | MODIFY | Cursor entry → "full-wiring (Lite)"; full-Shamt-on-Cursor remains rules-file-only |
 | `.shamt/host/cursor/README.md` | CREATE | New host directory; document `.model_resolution.local.toml` schema and the no-AGENTS.md decision |
 | `.shamt/host/cursor/.model_resolution.local.toml.example` | CREATE | Example model resolution file (gitignored real version written at init) |
+| `.shamt/.gitignore` | MODIFY | Add `host/cursor/.model_resolution.local.toml` entry (mirrors Codex entry added in SHAMT-51) |
 | (deployed) `<project>/.cursor/skills/shamt-lite-*/SKILL.md` (×5) | DEPLOYED | By `regen-lite-cursor.sh` |
 | (deployed) `<project>/.cursor/commands/lite-*.md` (×5) | DEPLOYED | By `regen-lite-cursor.sh` |
 | (deployed) `<project>/.cursor/agents/shamt-lite-*.md` (×2) | DEPLOYED | By `regen-lite-cursor.sh` (validator + builder) |
@@ -158,12 +159,12 @@ SHAMT-51 establishes the canonical Lite content layer (skills, commands, sub-age
 - [ ] Bash version: skills + commands + rules + agents transformations
 - [ ] Windows variant
 - [ ] Idempotency check (re-running overwrites Shamt-managed files; non-Shamt-named files in `.cursor/` are untouched)
-- [ ] Read `CHEAP_MODEL` from `.shamt/host/cursor/.model_resolution.local.toml`; substitute into agent files
+- [ ] Read `CHEAP_MODEL` from `.shamt/host/cursor/.model_resolution.local.toml`; substitute into agent files and skill files (targeted XML-tag substitution: `<parameter name="model">{cheap-tier}</parameter>` → `<parameter name="model">$CHEAP_MODEL</parameter>`)
 - [ ] **Skill frontmatter injection (per OQ 1 + OQ 2 resolutions).** When deploying canonical SKILL.md files to `.cursor/skills/<name>/SKILL.md`, the regen script must inject Cursor-specific frontmatter:
   - `lite-spec` → `paths: stories/**/spec.md, **/ticket*.md`
   - `lite-plan` → `paths: stories/**/implementation_plan.md`
-  - `lite-review` → `paths: stories/**/code_review.md`
-  - `lite-validation` and `lite-token-discipline` → no `paths:` (always discoverable)
+  - `lite-review` → `paths: stories/**/code_review/**`
+  - `lite-validate` and `lite-story` → no `paths:` (always discoverable)
   - All five skills: do NOT inject `disable-model-invocation` (model-invokable by default; OQ 2).
 - [ ] Append a managed header to all deployed `.mdc` files (e.g., `<!-- MANAGED by regen-lite-cursor.sh — do not hand-edit; run regen-lite-cursor.sh to refresh -->`). Mirrors the managed-header pattern used by `regen-claude-shims.sh` and `regen-codex-shims.sh`.
 - [ ] Author `.shamt/host/cursor/.model_resolution.local.toml.example` showing both common values: `CHEAP_MODEL = "inherit"` (default) and `CHEAP_MODEL = "claude-haiku-4-5"` (example specific id). The committed example file is the template for the gitignored real file written at init time.
@@ -224,7 +225,7 @@ SHAMT-51 establishes the canonical Lite content layer (skills, commands, sub-age
 (All resolved 2026-05-04.)
 
 1. **Cursor `paths:` frontmatter on skills.** Cursor's SKILL.md frontmatter optionally accepts `paths:` to scope a skill to specific files. Should `lite-spec`, `lite-plan`, `lite-review` skills also carry `paths:` frontmatter (mirroring the `.mdc` globs)?
-   - **Resolved (2026-05-04): Yes, add `paths:`.** `lite-spec/SKILL.md` gets `paths: stories/**/spec.md, **/ticket*.md`; `lite-plan/SKILL.md` gets `paths: stories/**/implementation_plan.md`; `lite-review/SKILL.md` gets `paths: stories/**/code_review.md`. Mirrors the `.mdc` globs and makes skill discovery targeted. Implementation: encode the path lists in Phase 2 when SKILL.md frontmatter is updated for Cursor parity.
+   - **Resolved (2026-05-04): Yes, add `paths:`.** `lite-spec/SKILL.md` gets `paths: stories/**/spec.md, **/ticket*.md`; `lite-plan/SKILL.md` gets `paths: stories/**/implementation_plan.md`; `lite-review/SKILL.md` gets `paths: stories/**/code_review/**`. Mirrors the `.mdc` globs and makes skill discovery targeted. Implementation: encode the path lists in Phase 2 when SKILL.md frontmatter is updated for Cursor parity.
 
 2. **Cursor `disable-model-invocation` for Lite skills.** Cursor's frontmatter supports `disable-model-invocation: true` to require explicit `/skill-name` invocation only (no automatic discovery). For Lite, do we want skills to be model-invokable (the agent decides when to use them) or only explicit?
    - **Resolved (2026-05-04): Model-invokable.** Omit `disable-model-invocation` (or set `false`) on all Lite Cursor skills. Lite users benefit from automatic skill suggestion. Implementation: Phase 2 SKILL.md frontmatter does not include the field.
@@ -262,3 +263,4 @@ SHAMT-51 establishes the canonical Lite content layer (skills, commands, sub-age
 |---|---|
 | 2026-05-03 | Initial draft. Extracted from SHAMT-51 OQ resolutions (split into separate design docs). |
 | 2026-05-04 | OQ 1–3 resolved. Phase 0 spot-check scope bounded; Phase 2 path-list and model-invocation frontmatter rules added. |
+| 2026-05-04 | Re-validation (post-SHAMT-51 impl). Proposal 1 step 1: "copy verbatim" → deploy with `{cheap-tier}` XML substitution to `$CHEAP_MODEL` (mirrors regen-lite-claude/codex.sh pattern; gap surfaced by SHAMT-51 Sub-Agent A1). Phase 2: CHEAP_MODEL substitution now covers skill files AND agent files. Phase 2 `paths:` list: `code_review.md` → `code_review/**`; `lite-token-discipline` → `lite-story`. OQ 1 resolution path corrected to match. |

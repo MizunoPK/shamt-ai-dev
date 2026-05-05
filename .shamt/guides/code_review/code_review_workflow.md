@@ -4,6 +4,22 @@
 
 ---
 
+## Table of Contents
+
+1. [Mandatory Reading Protocol](#-mandatory-reading-protocol)
+2. [Overview of Steps](#overview-of-steps)
+3. [S7/S9 Variant Usage](#s7s9-variant-usage)
+4. [Step 1 — Access the Branch](#step-1--access-the-branch)
+5. [Step 2 — Create Output Directory](#step-2--create-output-directory)
+6. [Step 3 — Write overview.md](#step-3--write-overviewmd)
+7. [Step 4 — Overview Validation Loop](#step-4--overview-validation-loop)
+8. [Step 5 — Determine Review Version Number](#step-5--determine-review-version-number)
+9. [Step 6 — Write review_vN.md](#step-6--write-review_vnmd)
+10. [Step 7 — Review File Validation Loop](#step-7--review-file-validation-loop)
+11. [After the Workflow Completes](#after-the-workflow-completes)
+
+---
+
 ## 🚨 MANDATORY READING PROTOCOL
 
 **BEFORE starting, you MUST:**

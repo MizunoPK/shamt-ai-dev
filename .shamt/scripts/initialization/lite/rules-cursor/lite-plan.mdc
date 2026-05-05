@@ -1,0 +1,134 @@
+---
+description: Shamt Lite Pattern 5 (Implementation Planning) — full reference. Auto-attached when editing implementation plan files.
+globs: stories/**/implementation_plan.md
+alwaysApply: false
+---
+
+# Pattern 5: Implementation Planning
+
+**Purpose:** Create mechanical, step-by-step plans that separate planning from execution.
+
+**When to use:**
+- After spec is approved, before Build
+- Any non-trivial feature or change involving multiple file operations
+- When implementation will be delegated to a builder agent
+
+**Key benefit:** Catch design issues early; optionally delegate execution to a cheap-tier builder agent (material token savings on mechanical steps).
+
+## The 5-Step Process
+
+**Step 1: Read spec completely**
+
+Read `stories/{slug}/spec.md` (or feature brief). Confirm all design decisions are resolved before creating the plan.
+
+**Step 2: Create mechanical implementation plan**
+
+Write a step-by-step plan at `stories/{slug}/implementation_plan.md`. Each step must be **mechanical** — no design decisions left for the executor.
+
+**Plan format:**
+
+```markdown
+# Implementation Plan
+
+**Created:** [Date]
+**Feature/Task:** [Brief description]
+**Related:** stories/{slug}/spec.md
+
+---
+
+## Implementation Steps
+
+### Step N: [Clear action description]
+**Operation:** CREATE | EDIT | DELETE | MOVE
+**File:** `path/to/file.ext`
+**Details:**
+- [Operation-specific details]
+
+**Verification:** [How to verify — required when success depends on tooling]
+
+---
+
+## Notes
+
+[Optional: gotchas, constraints, reminders]
+```
+
+**Operation formats:**
+
+- **CREATE:** Specify file purpose and initial content (or reference template)
+- **EDIT:** Exact locate string (5-10 lines context) + exact replacement string
+- **DELETE:** File/section to delete + justification
+- **MOVE:** Source → destination + reason
+
+**Verification guidance:**
+
+*Required when success depends on tooling:*
+- Step compiles code, runs tests, or invokes linter
+- Step adds a new API endpoint or config value loaded at runtime
+- Step modifies a database schema or migration
+
+*Optional (omit if self-evident):*
+- Pure text replacements (typo fixes, wording changes)
+- Markdown / docs / comment edits with no code impact
+
+**Step 3: Validate plan**
+
+Run Pattern 1 (7 plan dimensions). Exit: primary clean round + 1 Haiku sub-agent.
+
+Add validation footer:
+```
+---
+✅ Validated {date} — N rounds, 1 sub-agent confirmed
+```
+
+**Step 4: Execute (or hand off to builder)**
+
+**Option A — Execute yourself:** Work through steps sequentially. Run verification after each step that requires it.
+
+**Option B — cheap-tier builder handoff (recommended for >10 mechanical steps):**
+
+Use the `shamt-lite-builder` sub-agent persona, or invoke directly:
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">inherit</parameter>
+  <parameter name="description">Execute implementation plan</parameter>
+  <parameter name="prompt">You are a builder executing a validated implementation plan.
+
+**Plan:** stories/{slug}/implementation_plan.md
+
+**Critical rules:**
+1. Follow steps exactly as written — make ZERO design decisions
+2. Execute sequentially (Step 1, then 2, then 3...)
+3. Run verification after each step that specifies one
+4. If verification fails: STOP and report to architect
+5. If any step is unclear: STOP and report to architect
+
+**Report:**
+- Success: "All steps completed."
+- Error: "Step N failed: [describe what failed]"
+- Unclear: "Step N is ambiguous: [describe ambiguity]"
+  </parameter>
+</invoke>
+```
+
+**When to use builder handoff:** Plan has >10 steps + execution is truly mechanical (no design decisions needed during execution).
+
+**Step 5: Verify completeness**
+
+Test the feature against spec requirements. Verify no unintended side effects. Confirm verifications passed.
+
+If builder reports errors: diagnose the issue, fix the plan, re-run or take over.
+
+---
+
+## Plan Validation Dimensions (7)
+
+1. **Step Clarity** — Every step has a clear action description?
+2. **Mechanical Executability** — All design decisions made, none left to executor?
+3. **File Coverage** — All affected files listed?
+4. **Operation Specificity** — EDIT steps have exact locate/replace strings?
+5. **Verification Completeness** — Steps that need it have verification methods?
+6. **Dependency Ordering** — Steps in correct sequence?
+7. **Requirements Alignment** — Plan covers all spec requirements?

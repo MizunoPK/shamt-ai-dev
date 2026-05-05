@@ -1,6 +1,6 @@
 # Templates Index
 
-**Last Updated:** 2026-05-02
+**Last Updated:** 2026-05-04
 **Location:** `.shamt/guides/templates/`
 
 ---
@@ -124,14 +124,14 @@
 - **File:** `epic_readme_template.md`
 - **Created:** S1
 - **Purpose:** Central epic tracking (Agent Status, progress, checklists)
-- **Size:** ~460 lines
+- **Size:** ~495 lines
 - **When to use:** Creating epic folder in S1
 
 #### Discovery
 - **File:** `discovery_template.md`
 - **Created:** S1.P3 (Discovery Phase)
 - **Purpose:** Epic-level source of truth for problem understanding, solution approach, and feature breakdown rationale
-- **Size:** ~350 lines
+- **Size:** ~386 lines
 - **When to use:** S1 Step 3 (Discovery Phase initialization)
 - **Critical:** Becomes reference document for all feature specs after user approval
 
@@ -183,7 +183,7 @@
 - **File:** `feature_spec_template.md`
 - **Created:** S1 Step 5 (seeded), S2 (completed)
 - **Purpose:** PRIMARY specification for implementation. Includes Discovery Context section.
-- **Size:** ~320 lines
+- **Size:** ~370 lines
 - **When to use:** Seeded with Discovery Context in S1, completed in S2
 - **Critical:** Must start with Discovery Context section referencing DISCOVERY.md
 
@@ -198,7 +198,7 @@
 - **File:** `implementation_plan_template.md`
 - **Created:** S5 (accumulated through S5 v2 Validation Loop)
 - **Purpose:** User-approved build guide with tasks, tests, edge cases, matrices
-- **Size:** ~320 lines
+- **Size:** ~55 lines (scaffold; expands to ~300+ lines as the plan is built during S5)
 - **When to use:** Throughout S5 v2 — draft in Phase 1, refined through Validation Loop (user approves after primary clean round + sub-agent confirmation)
 
 #### Implementation Checklist
@@ -298,7 +298,7 @@
 - **File:** `comment_resolution_template.md`
 - **Created:** S10 Step 5 (user-triggered, after PR receives review comments)
 - **Purpose:** Structured tracking of PR review comments, resolutions, and commit references
-- **Size:** ~75 lines
+- **Size:** ~60 lines
 - **When to use:** User directs agent to process PR review comments after PR is created
 
 #### Debugging Guide Update Recommendations
@@ -319,7 +319,7 @@
 - **File:** `handoff_package_s5_template.md`
 - **Created:** S5 parallel work setup (Primary Agent, SP2 action)
 - **Purpose:** Handoff package for secondary agents in parallel S5 work; contains context, sync point instructions, and milestone checkpoint requirements
-- **Size:** ~198 lines
+- **Size:** ~197 lines
 - **When to use:** Parallel S5 work — Primary Agent creates one per secondary agent after S3 Gate 4 approval (post-S4)
 
 #### Feature Status
@@ -364,16 +364,16 @@ Read .shamt/guides/templates/{template_name}.md
 | Template | Lines | Immutable | User Validation Required |
 |----------|-------|-----------|-------------------------|
 | Epic Request | ~187 | No | No |
-| Epic README | ~460 | No | No |
-| Discovery | ~350 | Yes (after approval)* | Yes (S1.P3) |
+| Epic README | ~495 | No | No |
+| Discovery | ~386 | Yes (after approval)* | Yes (S1.P3) |
 | Epic Ticket | ~140 | Yes (after validation) | Yes (S1) |
 | Epic Smoke Test Plan | ~280 | No | No |
 | Epic Lessons Learned | ~375 | No | No |
 | Feature README | ~165 | No | No |
 | Spec Summary | ~200 | Yes (after validation) | Yes (S2) |
-| Feature Spec | ~320 | No | No |
+| Feature Spec | ~370 | No | No |
 | Feature Checklist | ~255 | No | No |
-| Implementation Plan | ~320 | Yes (after validation) | Yes (S5) |
+| Implementation Plan | ~55 (scaffold) | Yes (after validation) | Yes (S5) |
 | Implementation Checklist | ~160 | No | No |
 | Feature Lessons Learned | ~190 | No | No |
 | Bug Fix Notes | ~87 | Yes (after validation) | Yes |
@@ -383,10 +383,10 @@ Read .shamt/guides/templates/{template_name}.md
 | Handoff Package (S5) | ~197 | No | No |
 | Feature Status | ~10 | No | No |
 | Validation Loop Log | ~180 | No | No |
-| Validation Loop Log (S5) | ~411 | No | No |
+| Validation Loop Log (S5) | ~410 | No | No |
 | Implementation Plan Validation Log | ~195 | No | No |
 | PR Review Issues | ~175 | No | No |
-| PR Comment Resolution | ~75 | No | No |
+| PR Comment Resolution | ~60 | No | No |
 | Guide Update Proposal | ~257 | No | No |
 | Debugging Guide Updates | ~280 | No | No |
 | Cross-Feature Alignment | ~75 | No | No |
@@ -435,15 +435,6 @@ Read .shamt/guides/templates/{template_name}.md
 2. ✅ Use **Bug Fix Notes** template
 3. ✅ Present to user for validation
 4. ✅ Proceed with bug fix workflow (Stages 2 → S5 → S6 → S7)
-
----
-
-## Original Comprehensive Reference
-
-The original comprehensive reference file (`templates_v2.md`) has been archived as `templates_v2_ARCHIVE.md` for historical reference. Individual template files are now preferred for:
-- Faster access (read only what you need)
-- Clearer organization
-- Reduced context window usage
 
 ---
 

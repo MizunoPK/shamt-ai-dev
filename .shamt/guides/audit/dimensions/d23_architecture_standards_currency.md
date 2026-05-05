@@ -4,10 +4,12 @@
 **Category:** Documentation Quality Dimensions
 **Automation Level:** 50% automated
 **Priority:** MEDIUM
-**Last Updated:** 2026-04-01
+**Last Updated:** 2026-05-04
 
 **Focus:** Ensure ARCHITECTURE.md and CODING_STANDARDS.md accurately reflect the codebase
 **Typical Issues Found:** 3-8 per audit
+
+> **Master repo:** `ARCHITECTURE.md` and `CODING_STANDARDS.md` are not maintained in the master Shamt repo (it is a framework repo, not a code project). Skip D23 entirely when auditing the master repo (`shamt_master_path.conf` absent from `.shamt/`).
 
 ---
 

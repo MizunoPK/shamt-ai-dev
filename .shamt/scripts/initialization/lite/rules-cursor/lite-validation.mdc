@@ -1,0 +1,161 @@
+---
+description: Shamt Lite Pattern 1 (Validation Loops) and Pattern 2 (Severity Classification) — full reference. Always loaded; validation is invoked in many contexts.
+alwaysApply: true
+---
+
+# Pattern 1: Validation Loops
+
+**Purpose:** Iterative self-review of work artifacts until quality threshold is met.
+
+**Lite exit criterion:** Primary clean round + **1 independent Haiku sub-agent confirmation**. Applies to all Lite validation loops — specs, plans, code reviews, and ad-hoc artifacts.
+
+## The 8-Step Validation Process
+
+**Step 1: Read the artifact completely with fresh perspective**
+
+Re-read the entire artifact top-to-bottom every round. Do not rely on memory of prior rounds.
+
+**Step 2: Identify issues across relevant dimensions**
+
+*For Specs (7 dimensions):*
+1. Completeness — All sections filled? Requirements gap-free?
+2. Correctness — Research accurate? File paths correct?
+3. Consistency — Design internally consistent? Aligned with ARCHITECTURE.md?
+4. Helpfulness — Does it solve the ticket?
+5. Improvements — Simpler approach available?
+6. Missing proposals — Any design element left unaddressed?
+7. Open questions — Blocking decisions unresolved?
+
+*For Implementation Plans (7 dimensions):*
+1. Step Clarity — Every step has a clear action description?
+2. Mechanical Executability — All design decisions made, none left to executor?
+3. File Coverage — All affected files listed?
+4. Operation Specificity — EDIT steps have exact locate/replace strings?
+5. Verification Completeness — Steps that need it have verification methods?
+6. Dependency Ordering — Steps in correct sequence?
+7. Requirements Alignment — Plan covers all spec requirements?
+
+*For Code Reviews (5 dimensions):*
+1. Correctness — Issues accurately described?
+2. Completeness — All changed files reviewed?
+3. Helpfulness — Suggested fixes actionable?
+4. Severity Accuracy — Classifications correct?
+5. Evidence — File paths and line numbers match the diff?
+
+*For General Artifacts (4 dimensions):*
+1. Completeness — All sections filled?
+2. Clarity — Easy to understand?
+3. Accuracy — Facts and references correct?
+4. Actionability — Can someone act on this?
+
+**Step 3: Classify each issue by severity** (see Pattern 2)
+
+Quick questions:
+1. "If not fixed, can workflow complete?" → NO = CRITICAL
+2. "Will this cause confusion?" → YES = HIGH
+3. "Does this reduce quality noticeably?" → YES = MEDIUM
+4. Otherwise = LOW
+
+**Step 4: Fix ALL issues immediately**
+
+Fix each issue now. Do not defer or batch.
+
+**Step 5: Update consecutive_clean counter**
+
+- **Clean round** = ZERO issues OR exactly ONE LOW issue (which you fixed)
+- **Not clean** = 2+ LOW issues OR any MEDIUM/HIGH/CRITICAL issue
+- If clean: `consecutive_clean = consecutive_clean + 1`
+- If not clean: `consecutive_clean = 0`
+
+**Step 6: Check exit condition**
+
+- If `consecutive_clean = 0`: return to Step 1
+- If `consecutive_clean = 1`: spawn 1 Haiku sub-agent (Step 7)
+- If sub-agent confirms zero issues: Validation complete ✅
+- If sub-agent finds issues: fix all, reset `consecutive_clean = 0`, return to Step 1
+
+**Step 7: Spawn sub-agent for independent confirmation**
+
+Use the `shamt-lite-validator` sub-agent persona, or invoke directly:
+
+```xml
+<invoke name="Task">
+  <parameter name="subagent_type">general-purpose</parameter>
+  <parameter name="model">inherit</parameter>
+  <parameter name="description">Sub-agent confirmation</parameter>
+  <parameter name="prompt">You are confirming zero issues after primary validation.
+
+**Artifact:** {artifact_path_or_description}
+**Dimensions:** {list the dimensions from Step 2 for this artifact type}
+**Task:** Re-read the entire artifact. Report ANY issue found (even LOW severity).
+If zero issues found, state "CONFIRMED: Zero issues found."
+
+{Relevant context about the artifact}
+  </parameter>
+</invoke>
+```
+
+**Step 8: Add validation footer**
+
+When validation is complete, append a single-line footer to the artifact:
+
+```
+---
+✅ Validated {date} — N rounds, 1 sub-agent confirmed
+```
+
+---
+
+# Pattern 2: Severity Classification
+
+**Purpose:** Consistent issue categorization for validation and code review.
+
+## The 4 Levels
+
+**CRITICAL** — Blocks workflow, causes failures, or creates serious risks
+- Workflow cannot complete if not fixed
+- Security vulnerability or data-loss risk
+- Broken reference or file path blocking execution
+- Missing required section in template
+
+**HIGH** — Causes confusion, significantly reduces quality, or risks problems
+- Agent or user will likely be confused or misled
+- Important information missing or incorrect
+- Inconsistency creating ambiguity
+- Misleading or unclear instructions
+
+**MEDIUM** — Reduces quality or usability in noticeable ways
+- Makes artifact harder to use
+- Suboptimal structure or organization
+- Minor factual errors that don't mislead
+- Missing helpful context
+
+**LOW** — Minor cosmetic issues, trivial improvements
+- Typos, grammar, formatting
+- Trivial wording improvements
+- Style inconsistencies
+
+## Quick Classification Decision Tree
+
+```
+Start: Is there an issue?
+│
+├─ NO → Continue reading
+│
+└─ YES →
+    ├─ Q1: "If not fixed, can workflow complete?" → NO = CRITICAL
+    │
+    ├─ Q2: "Will this cause agent or user confusion?" → YES = HIGH
+    │
+    ├─ Q3: "Does this reduce quality or usability noticeably?" → YES = MEDIUM
+    │
+    └─ Otherwise = LOW
+```
+
+**Borderline cases:** Classify higher, not lower.
+
+## The "One LOW Issue" Rule
+
+A round with exactly one LOW-severity issue (which you fix) still counts as clean. Two or more LOW issues = not clean.
+
+**Sub-agent exception:** Sub-agents do NOT get the 1 LOW allowance. ANY issue found by a sub-agent (even LOW) resets `consecutive_clean = 0`.

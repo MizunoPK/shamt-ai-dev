@@ -40,6 +40,8 @@ During initialization, the init script reads this file to determine how to name 
 
 ## Cursor
 
+**Shamt Lite wiring:** `full-wiring (Lite)` — `init_lite.sh --host=cursor` deploys skills, commands, rules, and sub-agent personas. Full-Shamt-on-Cursor remains rules-file-only (out of scope for SHAMT-52).
+
 Cursor supports two rules file formats:
 
 ### Legacy Format (still supported)
@@ -51,6 +53,13 @@ Cursor supports two rules file formats:
 - **Rules file name:** `index.mdc`
 - **Rules file location:** `.cursor/` directory
 - **Notes:** New format introduced in 2026. The `.mdc` file with Rule Type "Always" is the recommended approach. More context-aware and integrated with Cursor's newer features.
+
+### Shamt Lite Host Wiring (SHAMT-52)
+- **Skills:** `.cursor/skills/shamt-lite-*/SKILL.md` — 5 Lite skills with Cursor-specific `paths:` frontmatter for spec/plan/review
+- **Commands:** `.cursor/commands/lite-*.md` — 5 slash commands
+- **Rules:** `.cursor/rules/lite-*.mdc` — 5 attachment-aware rule files (2 `alwaysApply`, 3 glob-scoped)
+- **Agents:** `.cursor/agents/shamt-lite-*.md` — validator + builder personas
+- **Model resolution:** `shamt-lite/host/cursor/.model_resolution.local.toml` (gitignored; `CHEAP_MODEL = "inherit"` default)
 
 ---
 

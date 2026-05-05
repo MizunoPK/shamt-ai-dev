@@ -2,7 +2,7 @@
 
 **Purpose:** Documents files that intentionally lack formal "## Prerequisites" or "## Exit Criteria" sections
 
-**Last Updated:** 2026-02-25
+**Last Updated:** 2026-05-04
 
 **Why This Document Exists:**
 Audit Dimension D8 (Documentation Quality) checks for "## Prerequisites" and "## Exit Criteria" sections in workflow guides. However, certain file types intentionally use alternative patterns. This document prevents these files from being flagged as violations in future audits.
@@ -266,6 +266,20 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 ---
 
+### E3: D14 Unicode Characters in d14_character_format_compliance.md (Teaching Examples)
+
+**Check:** D14 character format compliance scan
+
+**Pattern:** `audit/dimensions/d14_character_format_compliance.md` contains Unicode ballot box characters (U+2610, U+2611, U+2612) and other banned characters as intentional teaching examples.
+
+**Root Cause:** The D14 guide documents which characters are banned. To illustrate the banned characters, it must contain them — the guide is the authoritative reference, not a content file. `pre_audit_checks.sh` has a hardcoded exclusion for this file.
+
+**Why acceptable:** Teaching material must reference the thing it describes. The file is a dimension guide, not a workflow guide or content file.
+
+**Action:** When running D14 manually (without `pre_audit_checks.sh`), skip `audit/dimensions/d14_character_format_compliance.md`. Only investigate if banned characters appear in files outside the known exceptions list.
+
+---
+
 ---
 
 ### Category E (continued): D12 Companion/Reference Files in stages/
@@ -310,37 +324,37 @@ follows the emoji (space → hyphen after stripping the emoji).
 
 **Files:**
 
-**F1. stages/s1/s1_epic_planning.md (1394 lines)**
-- **D11 Status:** RETIRED — file is 1394 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
+**F1. stages/s1/s1_epic_planning.md (1422 lines)**
+- **D11 Status:** RETIRED — file is 1422 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
 - **Pre-existing:** Yes — was 1304 lines before SHAMT-9 (~28 lines); SHAMT-20 added ~62 more lines (P2 S3 overlap note, P6 Gate 1.5, P8 S3 early start, P9 metrics references)
 - **Split candidates:** S1.P1–P3 are each large enough to warrant standalone files
-- **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; 1394-line file no longer violates D11
+- **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; 1422-line file no longer violates D11
 
-**F2. stages/s5/s5_v2_validation_loop.md (1397 lines)**
-- **D11 Status:** RETIRED — file is 1397 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
+**F2. stages/s5/s5_v2_validation_loop.md (1395 lines)**
+- **D11 Status:** RETIRED — file is 1395 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
 - **Pre-existing:** Yes — was 1327 lines before SHAMT-9; SHAMT-20 added ~5 more lines (secondary agent guide references)
 - **Split candidates:** Phase 1 (Draft), Phase 2 (Validation Loop), dimension reference sections
 - **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; 1397-line file no longer violates D11
 
-**F3. reference/validation_loop_master_protocol.md (1582 lines)**
-- **D11 Status:** RETIRED — file is 1582 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
-- **Pre-existing:** Yes — consolidated master protocol predates SHAMT-7; grew to 1582 lines through SHAMT-20 additions
+**F3. reference/validation_loop_master_protocol.md (1996 lines)**
+- **D11 Status:** RETIRED — file is 1996 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
+- **Pre-existing:** Yes — consolidated master protocol predates SHAMT-7; grew to 1582 lines through SHAMT-20 additions, to 1996 lines through subsequent guide work
 - **Split candidates:** Could be split into protocol core + dimension-specific appendices
-- **Note:** `pre_audit_checks.sh` does not scan `reference/` for D11, so this exception was for manual audit rounds only
-- **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; 1582-line file no longer violates D11
+- **Note:** `pre_audit_checks.sh` does not scan `reference/` for D11, so this exception was for manual audit rounds only. File is within 4 lines of the 2000-line threshold — watch for future additions.
+- **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; file no longer violates D11
 
-**F4. stages/s10/s10_epic_cleanup.md (1316 lines)**
-- **D11 Status:** RETIRED — file is 1316 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
+**F4. stages/s10/s10_epic_cleanup.md (1316 lines → now 657 after SHAMT-35/S10 split)**
+- **D11 Status:** RETIRED — file was 1316 lines (grew through SHAMT-25); now 657 lines after S10 was split (s10_p1_overview_workflow.md extracted). Does not exceed 2000-line baseline (was flagged under former 1250-line threshold).
 - **Pre-existing:** Yes — grew to 1316 lines through SHAMT-25 (Step 3e: Architecture/Standards Review)
 - **Split candidates:** Could be split into P1 (guide updates), P2 (overview/archive), P3 (metrics), P4 (PR/commit)
 - **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; 1316-line file no longer violates D11
 - **Review trigger:** If file exceeds 2200 lines, re-evaluate for splitting
 
-**F5. stages/s6/s6_execution.md (1267 lines)**
-- **D11 Status:** RETIRED — file is 1267 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
+**F5. stages/s6/s6_execution.md (1220 lines)**
+- **D11 Status:** RETIRED — file is 1220 lines, does not exceed 2000-line baseline (was flagged under former 1250-line threshold)
 - **Pre-existing:** No — restructured in SHAMT-30 (architect-builder pattern mandatory in S6)
 - **Split candidates:** Could be split into architect workflow + builder workflow + reference material (traditional implementation)
-- **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; 1267-line file no longer violates D11
+- **Audit Action:** EXCEPTION RETIRED — threshold raised to 2000 lines; 1220-line file no longer violates D11
 - **Review trigger:** If file exceeds 2200 lines, re-evaluate for splitting
 
 ---
@@ -442,7 +456,7 @@ follows the emoji (space → hyphen after stripping the emoji).
 - **Audit Action:** SKIP D12 — cloud supplement guide, not a standalone workflow guide
 
 **I2. stages/s7/cloud_variant.md** *(Added SHAMT-43)*
-- **Type:** Cloud supplement guide (adds to s7_primary_guide.md for Codex Cloud S7 QC fan-out)
+- **Type:** Cloud supplement guide (adds to s7_p1_smoke_testing.md, s7_p2_qc_rounds.md, s7_p3_final_review.md for Codex Cloud S7 QC fan-out)
 - **Prerequisites:** Covered by parent guide
 - **Exit Criteria:** Inherited from parent guide
 - **Overview:** Replaced by "**Applies to:**" front-matter header
@@ -450,7 +464,7 @@ follows the emoji (space → hyphen after stripping the emoji).
 - **Audit Action:** SKIP D12 — cloud supplement guide, not a standalone workflow guide
 
 **I3. stages/s9/cloud_variant.md** *(Added SHAMT-43)*
-- **Type:** Cloud supplement guide (adds to s9_primary_guide.md for Codex Cloud S9 QC fan-out)
+- **Type:** Cloud supplement guide (adds to s9_epic_final_qc.md, s9_p1_epic_smoke_testing.md, s9_p2_epic_qc_rounds.md, s9_p3_user_testing.md, s9_p4_epic_final_review.md for Codex Cloud S9 QC fan-out)
 - **Prerequisites:** Covered by parent guide
 - **Exit Criteria:** Inherited from parent guide
 - **Overview:** Replaced by "**Applies to:**" front-matter header
@@ -531,7 +545,7 @@ wc -l real_violations.txt  # Should be low count
 
 ## Summary Statistics
 
-**Total Known Exceptions:** 19 category entries (17 unique active files — s3_parallel_work_sync and s4_feature_testing_strategy appear in both C and G for different exception types)
+**Total Known Exceptions:** 20 category entries (14 unique active files — s3_parallel_work_sync and s4_feature_testing_strategy appear in both C and G for different exception types; E1/E2/E3 and D are pattern exceptions, not file-based)
 
 **Active Exceptions (files that still exist):**
 - Category C (Optional/Auxiliary — Prerequisites/Exit Criteria): **2 active files**
@@ -541,11 +555,11 @@ wc -l real_violations.txt  # Should be low count
   - stages/s5/s5_v2_example.md (worked example companion — added child-sync-20260326)
   - stages/s5/s5_v2_troubleshooting.md (troubleshooting reference companion — added child-sync-20260326)
 - Category F (D11 File Size — pre-existing, deferred splitting): **0 active files** — all retired when threshold raised to 2000 lines
-  - ~~stages/s1/s1_epic_planning.md~~ (1394 lines — RETIRED, below 2000-line threshold)
-  - ~~stages/s5/s5_v2_validation_loop.md~~ (1397 lines — RETIRED, below 2000-line threshold)
-  - ~~stages/s6/s6_execution.md~~ (1267 lines — RETIRED, below 2000-line threshold)
-  - ~~stages/s10/s10_epic_cleanup.md~~ (1316 lines — RETIRED, below 2000-line threshold)
-  - ~~reference/validation_loop_master_protocol.md~~ (1582 lines — RETIRED, below 2000-line threshold)
+  - ~~stages/s1/s1_epic_planning.md~~ (1422 lines — RETIRED, below 2000-line threshold)
+  - ~~stages/s5/s5_v2_validation_loop.md~~ (1395 lines — RETIRED, below 2000-line threshold)
+  - ~~stages/s6/s6_execution.md~~ (1220 lines — RETIRED, below 2000-line threshold)
+  - ~~stages/s10/s10_epic_cleanup.md~~ (was 1316 lines; now 657 after S10 split — RETIRED, below 2000-line threshold)
+  - ~~reference/validation_loop_master_protocol.md~~ (1996 lines — RETIRED, below 2000-line threshold)
 - Category G (D22 Lightweight MRP — Router and Optional Guides): **5 active files**
   - stages/s2/s2_feature_deep_dive.md (router guide — lightweight MRP only, no FS)
   - stages/s9/s9_epic_final_qc.md (router guide — lightweight MRP only, no FS)
@@ -559,8 +573,8 @@ wc -l real_violations.txt  # Should be low count
   - parallel_work/s5_primary_agent_guide.md (coordination reference — no MRP needed)
 - Category I (D12 Supplement Guides — Cloud Variant Files): **3 active files**
   - stages/s6/cloud_variant.md (cloud supplement — supplements s6_execution.md)
-  - stages/s7/cloud_variant.md (cloud supplement — supplements s7_primary_guide.md)
-  - stages/s9/cloud_variant.md (cloud supplement — supplements s9_primary_guide.md)
+  - stages/s7/cloud_variant.md (cloud supplement — supplements s7 stage guides)
+  - stages/s9/cloud_variant.md (cloud supplement — supplements s9 stage guides)
 
 **Inactive Exceptions (files deleted from filesystem):**
 - Category A (S5 Iteration Files): 14 files — DELETED (S5 v1 → v2 migration)
@@ -573,13 +587,12 @@ wc -l real_violations.txt  # Should be low count
 
 **Design Patterns (active only):**
 - Optional/Conditional: 1 file (s3_parallel_work_sync)
-- Reference Material: 2 files (s4_feature_testing_card, s4_test_strategy_development)
 - Router (lightweight MRP): 2 files (s2_feature_deep_dive, s9_epic_final_qc)
 - Task-Spawned (no MRP): 2 files (s2_secondary_agent_guide, s5_secondary_agent_guide)
 - Coordination Reference (no MRP): 2 files (s2_primary_agent_guide, s5_primary_agent_guide)
 
 ---
 
-**Last Verified:** 2026-05-03 (SHAMT-50: Category I added for cloud_variant.md supplement guides; E1 baseline updated 27 → 33 for meta-content TODO occurrences in s9_p2_epic_qc_rounds.md, s2_feature_deep_dive.md, and debugging/loop_back.md; Summary Statistics updated to 19 entries / 17 unique active files; previous: 2026-04-04 - SHAMT-30 F5 added)
+**Last Verified:** 2026-05-04 (SHAMT-52: E3 added for D14 ballot-box exclusion; I2/I3 parent guide names corrected; F1/F2/F3/F5 line counts updated; Summary Statistics updated to 20 entries / 14 unique active files; archived files removed from Design Patterns active section; previous: 2026-05-03 - SHAMT-50)
 **Next Review:** When new stage/iteration guides added, or if D8/D10/D22 check patterns change
 

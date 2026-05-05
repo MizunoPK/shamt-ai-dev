@@ -3,13 +3,16 @@
 # =============================================================================
 # Run this script from the root of the project you want to initialize Shamt Lite in.
 # Usage:
-#   & "C:\path\to\shamt-ai-dev\.shamt\scripts\initialization\init_lite.ps1" [project-name] [-Host claude|codex|claude,codex] [-WithMcp]
+#   & "C:\path\to\shamt-ai-dev\.shamt\scripts\initialization\init_lite.ps1" [project-name] [-Host claude|codex|cursor|...] [-WithMcp]
 #
 # Default (no host): writes shamt-lite/ files only — Tier 0 standalone behavior.
-# -Host claude:    additionally writes <TARGET>\CLAUDE.md + .claude\{skills,commands,agents}\
-# -Host codex:     additionally writes <TARGET>\AGENTS.md + .codex\{agents,config.toml} + .agents\skills\
-# -Host claude,codex: both; AGENTS.md is canonical, CLAUDE.md duplicates it
-# -WithMcp:        reserved (Tier 3, deferred — currently a no-op)
+# -Host claude:         additionally writes <TARGET>\CLAUDE.md + .claude\{skills,commands,agents}\
+# -Host codex:          additionally writes <TARGET>\AGENTS.md + .codex\{agents,config.toml} + .agents\skills\
+# -Host cursor:         additionally writes .cursor\{skills,commands,rules,agents}\; prompts for cheap-tier model
+# -Host claude,codex:   both Claude + Codex; AGENTS.md is canonical, CLAUDE.md is a duplicate
+# -Host cursor,codex:   both Cursor + Codex; independent deployments
+# (any comma-separated combination of claude, codex, cursor is accepted)
+# -WithMcp:             reserved (Tier 3, deferred — currently a no-op)
 # =============================================================================
 
 param(
@@ -29,12 +32,14 @@ $LiteDir = Join-Path $TargetDir "shamt-lite"
 
 $WantClaude = $false
 $WantCodex  = $false
+$WantCursor = $false
 if (-not [string]::IsNullOrWhiteSpace($HostFlag)) {
     $hosts = $HostFlag.Split(',') | ForEach-Object { $_.Trim().ToLower() }
     if ($hosts -contains "claude") { $WantClaude = $true }
     if ($hosts -contains "codex")  { $WantCodex  = $true }
-    if (-not $WantClaude -and -not $WantCodex) {
-        Write-Host "ERROR: -Host '$HostFlag' is not recognized. Supported: claude, codex, 'claude,codex'" -ForegroundColor Red
+    if ($hosts -contains "cursor") { $WantCursor = $true }
+    if (-not $WantClaude -and -not $WantCodex -and -not $WantCursor) {
+        Write-Host "ERROR: -Host '$HostFlag' is not recognized. Supported: claude, codex, cursor (comma-separated combinations OK)" -ForegroundColor Red
         exit 1
     }
 }
@@ -171,7 +176,7 @@ Copy-Item `
 
 # --- Host wiring (Tier 1+2) --------------------------------------------------
 
-if ($WantClaude -or $WantCodex) {
+if ($WantClaude -or $WantCodex -or $WantCursor) {
     Write-Host ""
     Write-Host "------------------------------------------------------------"
     Write-Host "  Host wiring"
@@ -210,6 +215,42 @@ if ($WantCodex) {
 
     Copy-Item -Path (Join-Path $LiteDir "SHAMT_LITE.md") -Destination $CodexRules
     Write-Host "  ✓ AGENTS.md written ($fm / $dm)"
+}
+
+# Cursor: prompt for cheap-tier model, write resolution file, run regen
+if ($WantCursor) {
+    Write-Host ""
+    Write-Host "Cursor needs a cheap-tier model identifier for sub-agent personas."
+    Write-Host "  'inherit' (default): Cursor uses whatever model is currently active."
+    Write-Host "  Specific id (e.g. claude-haiku-4-5): pin to a fast cheap model."
+    $cm = Read-Host "Cursor cheap-tier model id [inherit]"
+    if ([string]::IsNullOrWhiteSpace($cm)) { $cm = "inherit" }
+
+    $hostCursorDir = Join-Path $LiteDir "host\cursor"
+    New-Item -ItemType Directory -Force -Path $hostCursorDir | Out-Null
+    $cursorResolutionFile = Join-Path $hostCursorDir ".model_resolution.local.toml"
+    Set-Content $cursorResolutionFile -Value "CHEAP_MODEL = `"$cm`"" -NoNewline -Encoding UTF8
+
+    # gitignore inside shamt-lite/
+    $gitignore = Join-Path $LiteDir ".gitignore"
+    if (-not (Test-Path $gitignore)) {
+        Set-Content $gitignore -Value "host/cursor/.model_resolution.local.toml" -NoNewline -Encoding UTF8
+    } else {
+        $existing = Get-Content $gitignore -Raw
+        if ($existing -notmatch 'host/cursor/\.model_resolution\.local\.toml') {
+            Add-Content $gitignore -Value "`nhost/cursor/.model_resolution.local.toml" -Encoding UTF8
+        }
+    }
+
+    $regenCursor = Join-Path $ShamtRoot ".shamt\scripts\regen\regen-lite-cursor.ps1"
+    if (Test-Path $regenCursor) {
+        & $regenCursor
+    } else {
+        Write-Host "  ⚠  regen-lite-cursor.ps1 not found at $regenCursor — skipping" -ForegroundColor Yellow
+    }
+
+    Write-Host "  ✓ Cursor wiring deployed (cheap-tier model: $cm)"
+    Write-Host "    To change later: edit .cursor\agents\shamt-lite-*.md or re-run init_lite.ps1 -Host cursor"
 }
 
 if ($WantClaude) {
@@ -280,6 +321,14 @@ if ($WantCodex) {
     Write-Host "  .codex\agents\shamt-lite-*.toml            (validator + builder personas)"
     Write-Host "  .codex\config.toml                         (8 SHAMT-LITE-PROFILES)"
     Write-Host "  shamt-lite\host\codex\.model_resolution.local.toml (gitignored)"
+}
+if ($WantCursor) {
+    Write-Host ""
+    Write-Host "  .cursor\skills\shamt-lite-*\SKILL.md       (5 Lite skills)"
+    Write-Host "  .cursor\commands\lite-*.md                 (5 Lite slash commands)"
+    Write-Host "  .cursor\rules\lite-*.mdc                   (5 attachment-aware rules)"
+    Write-Host "  .cursor\agents\shamt-lite-*.md             (validator + builder personas)"
+    Write-Host "  shamt-lite\host\cursor\.model_resolution.local.toml (gitignored)"
 }
 
 Write-Host ""

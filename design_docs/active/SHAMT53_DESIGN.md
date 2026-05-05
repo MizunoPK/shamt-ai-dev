@@ -1,6 +1,6 @@
 # SHAMT-53: Full-Shamt Codex Skills Migration (`~/.codex/prompts/` → `.agents/skills/`)
 
-**Status:** Ready for implementation (validated + all OQs resolved 2026-05-04)
+**Status:** Ready for implementation (re-validated post-SHAMT-52: 2026-05-04)
 **Created:** 2026-05-03
 **Branch:** `feat/SHAMT-53`
 **Validation Log:** [SHAMT53_VALIDATION_LOG.md](./SHAMT53_VALIDATION_LOG.md)
@@ -59,9 +59,10 @@ For each shamt-<name>/SKILL.md in .shamt/skills/ (filtered by master-only):
 
 **New (canonical):**
 ```
-For each shamt-<name>/SKILL.md in .shamt/skills/ (filtered by master-only):
-  Copy verbatim to <PROJECT>/.agents/skills/shamt-<name>/SKILL.md
+For each <name>/SKILL.md in .shamt/skills/ (filtered by master-only):
+  Copy verbatim to <PROJECT>/.agents/skills/<name>/SKILL.md
 ```
+(Here `<name>` is the full skill directory name, e.g., `shamt-validator`, `shamt-builder`.)
 
 The `.agents/skills/` directory becomes git-tracked content in the child project. Teammates pull skills alongside code.
 
@@ -119,11 +120,12 @@ bash .shamt/scripts/cleanup/cleanup-codex-prompts-interim.sh
 
 **Files to audit (enumerated by Phase 1's two-pattern grep — see Phase 1 below):**
 - `.shamt/host/codex/README.md` — the primary "interim" doc; replaced wholesale per Proposal 4.
-- `.shamt/commands/README.md` — line 26 documents `~/.codex/prompts/<name>.md` as the canonical Codex command-deployment location. Update to point at `.agents/skills/`.
 - `.shamt/host/codex/master-reviewer-workflow.yml.template` — lines 73 (comment) and 82 (Python `os.path.expanduser("~/.codex/prompts/shamt-master-reviewer.md")`). NOT a simple string replacement: the Python in line 82 reads the skill file from disk for use in the workflow. Post-migration this must read from `<repo>/.agents/skills/shamt-master-reviewer/SKILL.md` (project-tree path, not user home). **Path-resolution strategy:** the workflow runs as a GitHub Actions job; the runner's working directory is `$GITHUB_WORKSPACE` (the repo root). Replacement Python: `skill_path = os.path.join(os.environ.get("GITHUB_WORKSPACE", os.getcwd()), ".agents/skills/shamt-master-reviewer/SKILL.md")`. The `os.getcwd()` fallback handles non-Actions invocation (manual runs, local testing). Update the comment on line 73 to: `# The skill is loaded from <repo>/.agents/skills/shamt-master-reviewer/SKILL.md (deployed by regen-codex-shims.sh)`.
-- `.shamt/scripts/initialization/ai_services.md` — line 29 describes the Codex entry's "Notes" with the interim path. Rewrite to say `regen-codex-shims.sh` deploys skills to `.agents/skills/` (canonical Codex Skills surface, GA Dec 2025).
-- `.shamt/guides/sync/import_workflow.md` — line 59 mentions `~/.codex/prompts/` in the post-import regen behavior summary. Update to `.agents/skills/`.
+- `.shamt/scripts/initialization/ai_services.md` — line ~29 describes the Codex entry's "Notes" with the interim path. Rewrite to say `regen-codex-shims.sh` deploys skills to `.agents/skills/` (canonical Codex Skills surface, GA Dec 2025). Note: commands still deploy to `~/.codex/prompts/`; do not remove that from the description.
+- `.shamt/guides/sync/import_workflow.md` — line ~59 mentions `~/.codex/prompts/` in the post-import regen behavior summary for skills. Update skills-specific portion to `.agents/skills/`. Commands-related references in this file (if any) stay unchanged.
 - `.shamt/scripts/regen/regen-codex-shims.sh` — has both interim path references and inline comments referencing them; updated by Proposal 1 + this audit pass.
+- `.shamt/scripts/regen/README.md` — rewritten by SHAMT-52's guide audit; skills rows (~lines 21, 78) describe deployment to `~/.codex/prompts/shamt-<name>.md`. Update to `.agents/skills/<name>/SKILL.md`. The commands row (~line 80, `Commands → ~/.codex/prompts/`) is **correct** and must NOT be changed.
+- `.shamt/commands/README.md` line 26 (`**Codex** → ~/.codex/prompts/<name>.md`) — **DO NOT MODIFY**. This describes command deployment, not skill deployment. Commands continue to deploy to `~/.codex/prompts/` after SHAMT-53; this line is correct.
 - `.shamt/guides/composites/*.md` — architect-builder composite, validation-loop composite, etc. Phase 1's grep will surface specific lines.
 - Any other file Phase 1's grep finds that isn't on this list.
 
@@ -161,6 +163,7 @@ To migrate from the previous interim (`~/.codex/prompts/shamt-<name>.md`):
 **Legend:**
 - `MODIFY` / `CREATE` apply to **master-stored** files.
 - `AUDIT` means: Phase 1's grep is authoritative; modify only if hits are found, otherwise skip. Used for files where stale references are *plausible* but not confirmed at design time.
+- `KEEP` means: Phase 1's grep will find this file, but it must **not** be changed. The reference is intentional and correct post-SHAMT-53.
 - No `DEPLOYED` files in this design — the changes affect the *master* regen logic; the *deployed* changes are handled by child projects re-running their existing import + regen.
 
 | File | Status | Notes |
@@ -170,13 +173,14 @@ To migrate from the previous interim (`~/.codex/prompts/shamt-<name>.md`):
 | `.shamt/scripts/cleanup/cleanup-codex-prompts-interim.sh` | CREATE | One-shot cleanup of orphaned per-user files (Bash) |
 | `.shamt/scripts/cleanup/cleanup-codex-prompts-interim.ps1` | CREATE | Windows variant |
 | `.shamt/host/codex/README.md` | MODIFY | Replace "Skills Surface (Interim)" with new "Skills Surface" section pointing at `.agents/skills/` |
-| `.shamt/commands/README.md` | MODIFY | Update line 26 (Codex command-deployment location) to point at `.agents/skills/` instead of `~/.codex/prompts/` |
 | `.shamt/host/codex/master-reviewer-workflow.yml.template` | MODIFY | Update line 73 (comment) and line 82 Python call. Replacement: `skill_path = os.path.join(os.environ.get("GITHUB_WORKSPACE", os.getcwd()), ".agents/skills/shamt-master-reviewer/SKILL.md")`. Comment becomes: `# The skill is loaded from <repo>/.agents/skills/shamt-master-reviewer/SKILL.md (deployed by regen-codex-shims.sh)`. Verify the workflow still runs end-to-end on a test PR. |
-| `.shamt/scripts/initialization/ai_services.md` | MODIFY | Update Codex entry "Notes" (line 29) — remove "(interim)" annotation; describe `.agents/skills/` as the canonical deployment surface |
-| `.shamt/guides/sync/import_workflow.md` | MODIFY | Update line 59's post-import regen behavior summary — remove `~/.codex/prompts/` mention |
+| `.shamt/scripts/initialization/ai_services.md` | MODIFY | Update Codex entry "Notes" (line ~29) — remove "(interim)" annotation; describe `.agents/skills/` as the canonical skill-deployment surface. Note: commands still deploy to `~/.codex/prompts/` (only skills migrate in SHAMT-53). |
+| `.shamt/guides/sync/import_workflow.md` | MODIFY | Update line ~59's post-import regen behavior summary — change `~/.codex/prompts/` mention for skills to `.agents/skills/` |
+| `.shamt/scripts/regen/README.md` | MODIFY | Updated by SHAMT-52's guide audit to document all 10 regen scripts. Now contains 3 stale `~/.codex/prompts/` references for full-Shamt skills: table row (~line 21) and two detail-section lines (~lines 78 and 80). Update to reflect `.agents/skills/<name>/SKILL.md` as the new skills destination. Note: commands still reference `~/.codex/prompts/` in this file — leave those lines as-is. |
+| `.shamt/commands/README.md` | KEEP | Line 26 (`**Codex** → ~/.codex/prompts/<name>.md`) describes **command** deployment, not skill deployment. Commands do NOT migrate in SHAMT-53. This line is correct post-migration and must not be changed. Phase 1's grep will surface it; annotate as intentional. |
 | `.shamt/guides/composites/*.md` (audit only) | AUDIT | Initial grep on these files at design time found zero hits, but they're the most likely candidates for stale slash-invocation references. Phase 1's grep is the authoritative pass; if no hits, skip. If hits found, update accordingly. |
 | (any additional files surfaced by Phase 1's two-pattern grep) | MODIFY | Phase 1 cross-checks against this table; additions go here |
-| `CLAUDE.md` (root) | MODIFY | Two sections need updates: (a) "Canonical Content Layer (SHAMT-39)" (currently mentions `~/.codex/prompts/` as the Codex command-deployment target around line 105), (b) "Codex Host Parity (SHAMT-42)" (currently mentions skills "deploys to `~/.codex/prompts/shamt-<name>.md` (interim)" around line 154 and similar for commands around line 156). Both must be reworded to reflect the canonical `.agents/skills/` surface. |
+| `CLAUDE.md` (root) | MODIFY | Two updates: (a) "Codex Host Parity (SHAMT-42)" skills line (~line 164, currently "Skills: deploys to `~/.codex/prompts/shamt-<name>.md` (interim)") → reword to reflect `.agents/skills/<name>/SKILL.md` as the canonical surface. (b) "Canonical Content Layer (SHAMT-39)" section (~line 115) currently says "Regen scripts copy command bodies verbatim to `.claude/commands/` (Claude Code) and `~/.codex/prompts/` (Codex)." — add parenthetical to prevent post-migration confusion: update to "...and `~/.codex/prompts/` (Codex commands only; skills deploy to `.agents/skills/`)". The commands line in Codex Host Parity (~line 166) stays unchanged (commands still deploy to `~/.codex/prompts/`). |
 
 ---
 
@@ -200,6 +204,7 @@ To migrate from the previous interim (`~/.codex/prompts/shamt-<name>.md`):
 - [ ] Update directory creation logic (`mkdir -p <TARGET>/.agents/skills/<name>/` per skill).
 - [ ] Verify `master-only` filtering still applies.
 - [ ] Verify idempotency.
+- [ ] **Do NOT modify Phase 3 (commands → `~/.codex/prompts/`).** Commands continue deploying to `~/.codex/prompts/` after SHAMT-53; only Phase 1 (skills) changes.
 - [ ] Same on Windows variant.
 
 ### Phase 3: Author cleanup script
