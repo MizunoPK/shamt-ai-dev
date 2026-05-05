@@ -194,13 +194,35 @@ if [ "$WANT_CODEX" -eq 1 ]; then
     # Write a .gitignore entry inside shamt-lite/ to keep the resolution file out of git
     if [ ! -f "$LITE_DIR/.gitignore" ]; then
         printf 'host/codex/.model_resolution.local.toml\n' > "$LITE_DIR/.gitignore"
-    elif ! grep -q '.model_resolution.local.toml' "$LITE_DIR/.gitignore"; then
+    elif ! grep -q 'host/codex/.model_resolution.local.toml' "$LITE_DIR/.gitignore"; then
         printf 'host/codex/.model_resolution.local.toml\n' >> "$LITE_DIR/.gitignore"
     fi
 
     # AGENTS.md = copy of SHAMT_LITE.md (Codex reads it from project root automatically)
     cp "$LITE_DIR/SHAMT_LITE.md" "$CODEX_RULES"
     echo "  ✓ AGENTS.md written ($CODEX_FRONTIER_MODEL / $CODEX_DEFAULT_MODEL)"
+fi
+
+# --- Write ai_service.conf + update gitignore --------------------------------
+
+_PARTS=()
+[ "$WANT_CLAUDE" -eq 1 ] && _PARTS+=("claude")
+[ "$WANT_CODEX"  -eq 1 ] && _PARTS+=("codex")
+[ "$WANT_CURSOR" -eq 1 ] && _PARTS+=("cursor")
+if [ "${#_PARTS[@]}" -eq 0 ]; then
+    _AI_SERVICE_CONF="none"
+else
+    _AI_SERVICE_CONF=$(IFS='_'; echo "${_PARTS[*]}")
+fi
+
+mkdir -p "$LITE_DIR/config"
+printf '%s\n' "$_AI_SERVICE_CONF" > "$LITE_DIR/config/ai_service.conf"
+
+if [ ! -f "$LITE_DIR/.gitignore" ]; then
+    printf 'config/\nCHEATSHEET.md\n' > "$LITE_DIR/.gitignore"
+else
+    grep -q '^config/$' "$LITE_DIR/.gitignore" || printf '\nconfig/\n' >> "$LITE_DIR/.gitignore"
+    grep -q '^CHEATSHEET\.md$' "$LITE_DIR/.gitignore" || printf 'CHEATSHEET.md\n' >> "$LITE_DIR/.gitignore"
 fi
 
 # Cursor: prompt for cheap-tier model, write resolution file, run regen
@@ -247,28 +269,6 @@ if [ "$WANT_CLAUDE" -eq 1 ]; then
         cp "$LITE_DIR/SHAMT_LITE.md" "$CLAUDE_RULES"
         echo "  ✓ CLAUDE.md written"
     fi
-fi
-
-# --- Write ai_service.conf + update gitignore --------------------------------
-
-_PARTS=()
-[ "$WANT_CLAUDE" -eq 1 ] && _PARTS+=("claude")
-[ "$WANT_CODEX"  -eq 1 ] && _PARTS+=("codex")
-[ "$WANT_CURSOR" -eq 1 ] && _PARTS+=("cursor")
-if [ "${#_PARTS[@]}" -eq 0 ]; then
-    _AI_SERVICE_CONF="none"
-else
-    _AI_SERVICE_CONF=$(IFS='_'; echo "${_PARTS[*]}")
-fi
-
-mkdir -p "$LITE_DIR/config"
-printf '%s\n' "$_AI_SERVICE_CONF" > "$LITE_DIR/config/ai_service.conf"
-
-if [ ! -f "$LITE_DIR/.gitignore" ]; then
-    printf 'config/\nCHEATSHEET.md\n' > "$LITE_DIR/.gitignore"
-else
-    grep -q '^config/$' "$LITE_DIR/.gitignore" || printf '\nconfig/\n' >> "$LITE_DIR/.gitignore"
-    grep -q '^CHEATSHEET\.md$' "$LITE_DIR/.gitignore" || printf 'CHEATSHEET.md\n' >> "$LITE_DIR/.gitignore"
 fi
 
 # Run regen scripts

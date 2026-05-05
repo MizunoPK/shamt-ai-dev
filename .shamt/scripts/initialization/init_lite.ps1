@@ -208,13 +208,38 @@ if ($WantCodex) {
         Set-Content $gitignore -Value "host/codex/.model_resolution.local.toml" -NoNewline -Encoding UTF8
     } else {
         $existing = Get-Content $gitignore -Raw
-        if ($existing -notmatch '\.model_resolution\.local\.toml') {
+        if ($existing -notmatch 'host/codex/\.model_resolution\.local\.toml') {
             Add-Content $gitignore -Value "`nhost/codex/.model_resolution.local.toml" -Encoding UTF8
         }
     }
 
     Copy-Item -Path (Join-Path $LiteDir "SHAMT_LITE.md") -Destination $CodexRules
     Write-Host "  ✓ AGENTS.md written ($fm / $dm)"
+}
+
+# --- Write ai_service.conf + update gitignore --------------------------------
+
+$svcParts = @()
+if ($WantClaude) { $svcParts += 'claude' }
+if ($WantCodex)  { $svcParts += 'codex' }
+if ($WantCursor) { $svcParts += 'cursor' }
+$AiServiceConf = if ($svcParts.Count -eq 0) { 'none' } else { $svcParts -join '_' }
+
+$ConfigDir = Join-Path $LiteDir "config"
+New-Item -ItemType Directory -Force -Path $ConfigDir | Out-Null
+[System.IO.File]::WriteAllText((Join-Path $ConfigDir "ai_service.conf"), "$AiServiceConf`n", [System.Text.Encoding]::UTF8)
+
+$gitignore = Join-Path $LiteDir ".gitignore"
+if (-not (Test-Path $gitignore)) {
+    [System.IO.File]::WriteAllText($gitignore, "config/`nCHEATSHEET.md`n", [System.Text.Encoding]::UTF8)
+} else {
+    $existing = Get-Content $gitignore -Raw
+    if ($existing -notmatch '(?m)^config/$') {
+        Add-Content $gitignore -Value "`nconfig/" -Encoding UTF8
+    }
+    if ($existing -notmatch '(?m)^CHEATSHEET\.md$') {
+        Add-Content $gitignore -Value "CHEATSHEET.md" -Encoding UTF8
+    }
 }
 
 # Cursor: prompt for cheap-tier model, write resolution file, run regen
@@ -261,31 +286,6 @@ if ($WantClaude) {
     } else {
         Copy-Item -Path (Join-Path $LiteDir "SHAMT_LITE.md") -Destination $ClaudeRules
         Write-Host "  ✓ CLAUDE.md written"
-    }
-}
-
-# --- Write ai_service.conf + update gitignore --------------------------------
-
-$svcParts = @()
-if ($WantClaude) { $svcParts += 'claude' }
-if ($WantCodex)  { $svcParts += 'codex' }
-if ($WantCursor) { $svcParts += 'cursor' }
-$AiServiceConf = if ($svcParts.Count -eq 0) { 'none' } else { $svcParts -join '_' }
-
-$ConfigDir = Join-Path $LiteDir "config"
-New-Item -ItemType Directory -Force -Path $ConfigDir | Out-Null
-[System.IO.File]::WriteAllText((Join-Path $ConfigDir "ai_service.conf"), "$AiServiceConf`n", [System.Text.Encoding]::UTF8)
-
-$gitignore = Join-Path $LiteDir ".gitignore"
-if (-not (Test-Path $gitignore)) {
-    [System.IO.File]::WriteAllText($gitignore, "config/`nCHEATSHEET.md`n", [System.Text.Encoding]::UTF8)
-} else {
-    $existing = Get-Content $gitignore -Raw
-    if ($existing -notmatch '(?m)^config/$') {
-        Add-Content $gitignore -Value "`nconfig/" -Encoding UTF8
-    }
-    if ($existing -notmatch '(?m)^CHEATSHEET\.md$') {
-        Add-Content $gitignore -Value "CHEATSHEET.md" -Encoding UTF8
     }
 }
 

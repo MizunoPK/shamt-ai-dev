@@ -104,7 +104,7 @@ echo ""
 # Check CLAUDE.md size
 claude_md="../../CLAUDE.md"
 if [ -f "$claude_md" ]; then
-    claude_size=$(wc -c < "$claude_md")
+    claude_size=$(python3 -c "print(len(open('$claude_md').read()))" 2>/dev/null || wc -m < "$claude_md")
     if [ $claude_size -gt 40000 ]; then
         echo -e "${RED}❌ POLICY VIOLATION:${NC} CLAUDE.md ($claude_size chars) exceeds 40,000 character limit"
         echo "   Overage: $((claude_size - 40000)) characters"

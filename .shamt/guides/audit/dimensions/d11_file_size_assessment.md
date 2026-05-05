@@ -129,11 +129,11 @@ CLAUDE.md: 40,000 characters (POLICY VIOLATION if exceeded)
 
 **Search Command:**
 ```bash
-# Check CLAUDE.md character count
-wc -c CLAUDE.md
+# Check CLAUDE.md character count (use python3 or wc -m — NOT wc -c which counts bytes)
+python3 -c "print(len(open('CLAUDE.md').read()))"
 
 # Compare to limit
-CHARS=$(wc -c < CLAUDE.md)
+CHARS=$(python3 -c "print(len(open('CLAUDE.md').read()))")
 if [ $CHARS -gt 40000 ]; then
   echo "POLICY VIOLATION: CLAUDE.md ($CHARS chars) exceeds 40,000 limit"
   echo "Overage: $((CHARS - 40000)) characters"
@@ -333,7 +333,7 @@ echo "Files >2000 lines: $TOO_LARGE"
 
 claude_md="../../CLAUDE.md"
 if [ -f "$claude_md" ]; then
-    claude_size=$(wc -c < "$claude_md")
+    claude_size=$(python3 -c "print(len(open('$claude_md').read()))" 2>/dev/null || wc -m < "$claude_md")
     if [ $claude_size -gt 40000 ]; then
         echo "❌ POLICY VIOLATION: CLAUDE.md ($claude_size chars) exceeds 40,000 limit"
         echo "   Overage: $((claude_size - 40000)) characters"
@@ -413,11 +413,11 @@ STEP 4: Decision
 **For CLAUDE.md over limit:**
 
 ```markdown
-STEP 1: Run character count
-$ wc -c CLAUDE.md
+STEP 1: Run character count (use python3 or wc -m — NOT wc -c which counts bytes)
+$ python3 -c "print(len(open('CLAUDE.md').read()))"
 
 STEP 2: If over 40,000, calculate overage
-$ CHARS=$(wc -c < CLAUDE.md)
+$ CHARS=$(python3 -c "print(len(open('CLAUDE.md').read()))")
 $ echo "Overage: $((CHARS - 40000)) characters"
 
 STEP 3: Use CLAUDE.md Reduction Protocol
@@ -434,7 +434,7 @@ STEP 5: Execute reduction
 - Verify all information still accessible
 
 STEP 6: Validate reduction
-$ wc -c CLAUDE.md  # Should be ≤40,000
+$ python3 -c "print(len(open('CLAUDE.md').read()))"  # Should be ≤40,000
 ```
 
 **For workflow guides >2000 lines:**
@@ -525,8 +525,8 @@ Fix: Split into phase files (s2_p1_spec_creation_refinement.md, s2_p2_cross_feat
 
 **Issue Found:**
 ```bash
-$ wc -c CLAUDE.md
-45786 CLAUDE.md
+$ python3 -c "print(len(open('CLAUDE.md').read()))"
+45786
 
 POLICY VIOLATION: 5,786 characters over 40,000 limit
 ```
@@ -544,8 +544,8 @@ POLICY VIOLATION: 5,786 characters over 40,000 limit
 
 **Result:**
 ```bash
-$ wc -c CLAUDE.md
-27395 CLAUDE.md
+$ python3 -c "print(len(open('CLAUDE.md').read()))"
+27395
 
 ✅ PASS: 40% reduction, 32.5% under limit
 ```
