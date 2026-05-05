@@ -1,6 +1,6 @@
 # SHAMT-54: Shamt Lite Cheat Sheet
 
-**Status:** Draft
+**Status:** Ready for implementation (validated 2026-05-04)
 **Created:** 2026-05-04
 **Branch:** `feat/SHAMT-54`
 **Depends on:** SHAMT-52 (regen-lite scripts must exist for the regen-time phases to apply)
@@ -67,9 +67,10 @@ machine-specific (like full-Shamt's `.shamt/config/`).
 
 ### Proposal 2 — Cheat sheet content (service-differentiated)
 
-The cheat sheet is a generated Markdown file. A Python script embedded in each init/regen
-script writes it. The script reads `shamt-lite/config/ai_service.conf` to determine which
-sections to include.
+The cheat sheet is a generated Markdown file. Each init/regen script contains an inline
+generator that reads `shamt-lite/config/ai_service.conf` to determine which sections to include.
+`.sh` scripts use an inline Python generator (bash heredoc); `.ps1` scripts use native
+PowerShell string building — matching the pattern established by the agent YAML transform.
 
 **Sections (all services):**
 
@@ -164,7 +165,7 @@ No host-specific commands are set up. Reference patterns by name in your prompt:
 
 ### Proposal 3 — Generation sites
 
-The cheat sheet is generated in three places:
+The cheat sheet is generated in four places:
 
 **3a. `init_lite.sh` / `init_lite.ps1`** — final phase, after all other files are written.
 Writes `shamt-lite/CHEATSHEET.md` and adds `CHEATSHEET.md` to `shamt-lite/.gitignore`.
@@ -214,6 +215,14 @@ this design only handles the generation side.
 Decision: gitignored. It's machine-specific (same reasoning as `.shamt/config/` in full-Shamt).
 The ai_service choice is inherent to the developer's machine setup, not the project itself.
 
+**OQ4 — Should regen-lite scripts update `ai_service.conf` or only read it?**
+Decision: regen-lite scripts only READ `ai_service.conf`. Only `init_lite.sh` / `init_lite.ps1`
+writes it (once, at init time, based on the `--host` flag). This matches the full-Shamt model
+where `regen-claude-shims.sh` reads `.shamt/config/ai_service.conf` but never writes it.
+This is critical for multi-host setups: a user with `claude_codex` config who runs only
+`regen-lite-claude.sh` must not have the config overwritten to `claude` only — the cheat sheet
+should still include the Codex section based on the persisted config.
+
 ---
 
 ## Files Affected
@@ -228,13 +237,14 @@ The ai_service choice is inherent to the developer's machine setup, not the proj
 | `.shamt/scripts/regen/regen-lite-codex.ps1` | MODIFY | Same |
 | `.shamt/scripts/regen/regen-lite-cursor.sh` | MODIFY | Same |
 | `.shamt/scripts/regen/regen-lite-cursor.ps1` | MODIFY | Same |
+| `.shamt/scripts/regen/README.md` | MODIFY | Document cheat sheet generation for Lite regen scripts |
 | `CLAUDE.md` | MODIFY | Note cheat sheet in Shamt Lite section |
 
 **Legend:** MODIFY = existing file changed; KEEP = file referenced but must NOT be changed.
 
-**Note on SHAMT-52 dependency:** The regen-lite-*.sh/.ps1 files exist only on `feat/SHAMT-52`.
-Implementation of this design must be applied on top of SHAMT-52 (either after it merges to
-main, or on a branch forked from feat/SHAMT-52).
+**Note on SHAMT-52 dependency:** SHAMT-52 is merged to main (2026-05-04). The regen-lite-*.sh/.ps1
+files are present on main. Implementation must be on a branch forked from main (or rebased onto
+main) to pick up those scripts.
 
 ---
 
@@ -250,14 +260,16 @@ main, or on a branch forked from feat/SHAMT-52).
 - Normalize host list (comma-separated, alphabetically sorted, underscore-joined: `claude_codex`)
 - Add `config/` and `CHEATSHEET.md` to the `.gitignore` block in both scripts
 
-### Phase 3: Implement cheat sheet generator (shared Python)
-- Write the Python script inline (heredoc) that:
-  1. Reads `shamt-lite/config/ai_service.conf`
-  2. Produces the common sections
-  3. Appends service-specific sections based on the config value
-  4. Writes `shamt-lite/CHEATSHEET.md`
-- Test logic against all service variants: `claude`, `codex`, `cursor`, `claude_codex`,
-  `claude_cursor`, `codex_cursor`, `claude_codex_cursor`, `none`
+### Phase 3: Implement cheat sheet generator
+- **`.sh` scripts:** Use Python inline via bash heredoc (`python3 - <<PYEOF ... PYEOF`),
+  matching the existing pattern used in `regen-lite-claude.sh` for agent transforms.
+  The Python script reads `ai_service.conf`, produces common sections, appends
+  service-specific sections based on the config value, and writes `CHEATSHEET.md`.
+- **`.ps1` scripts:** Implement equivalent logic in native PowerShell string building
+  (using `[System.Text.StringBuilder]` or string concatenation with conditionals),
+  matching the existing pattern in `regen-lite-claude.ps1`. No Python dependency.
+- Both implementations must handle all service variants: `claude`, `codex`, `cursor`,
+  `claude_codex`, `claude_cursor`, `codex_cursor`, `claude_codex_cursor`, `none`.
 
 ### Phase 4: Add cheat sheet phase to init_lite.sh/.ps1
 - Invoke the Phase 3 Python script as the final phase of `init_lite.sh`
@@ -266,10 +278,11 @@ main, or on a branch forked from feat/SHAMT-52).
 
 ### Phase 5: Add cheat sheet phase to each regen-lite script (8 scripts)
 - For each of the 8 regen-lite scripts: add a final cheat sheet phase
-- Each regen-lite script knows its own host (claude/codex/cursor); write or update
-  `shamt-lite/config/ai_service.conf` before generating the cheat sheet
-- The cheat sheet must reflect the currently active host (even if a different host was
-  previously configured)
+- Each regen-lite script READS `shamt-lite/config/ai_service.conf` — it does NOT write or
+  update it (only init_lite.sh writes ai_service.conf, per OQ4)
+- If `ai_service.conf` does not exist (project not yet initialized via init_lite.sh), skip
+  cheat sheet generation and print a warning
+- The cheat sheet reflects all hosts in the persisted config (multi-host aware)
 
 ### Phase 6: Update CLAUDE.md
 - Add one sentence to the Shamt Lite section noting cheat sheet generation
