@@ -112,7 +112,7 @@ Three directories under `.shamt/` hold host-portable canonical content. These ar
 
 **`.shamt/agents/`** — Sub-agent persona YAML definitions (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-spec-aligner`, `shamt-code-reviewer`, `shamt-discovery-researcher`). Each file declares model_tier (cheap/balanced/reasoning), reasoning_effort, sandbox, tools_allowed, and prompt_template with `{placeholder}` syntax.
 
-**`.shamt/commands/`** — Slash command bodies (`shamt-start-epic`, `shamt-validate`, `shamt-audit`, `shamt-export`, `shamt-import`, `shamt-status`, `shamt-resume`, `shamt-promote`) plus `CHEATSHEET.md`. Regen scripts copy command bodies verbatim to `.claude/commands/` (Claude Code) and `~/.codex/prompts/` (Codex).
+**`.shamt/commands/`** — Slash command bodies (`shamt-start-epic`, `shamt-validate`, `shamt-audit`, `shamt-export`, `shamt-import`, `shamt-status`, `shamt-resume`, `shamt-promote`) plus `CHEATSHEET.md`. Regen scripts copy command bodies verbatim to `.claude/commands/` (Claude Code) and `~/.codex/prompts/` (Codex commands only; skills deploy to `.agents/skills/`).
 
 **Child projects on prior versions** ignore these directories until they re-init or run regen — the directories are additive and backward-compatible.
 
@@ -161,7 +161,7 @@ Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
 **`--host` flag:** `init.sh --host=codex` skips the AI service menu. `--host=claude,codex` sets up both hosts (dual-host): `AGENTS.md` is the canonical rules file; `CLAUDE.md` is a symlink on Unix or a duplicate on Windows.
 
 **`regen-codex-shims.sh`** — deterministic transform script at `.shamt/scripts/regen/`:
-- Skills: deploys to `~/.codex/prompts/shamt-<name>.md` (interim; see `.shamt/host/codex/README.md` for migration path)
+- Skills: deploys to `.agents/skills/<name>/SKILL.md` (project-local, GA)
 - Agents: transforms YAML → TOML (`.codex/agents/<name>.toml`); maps model tiers (cheap→DEFAULT, balanced/reasoning→FRONTIER)
 - Commands: deploys to `~/.codex/prompts/`; translates `{placeholder}` → `$PLACEHOLDER` (Codex prompt syntax)
 - Profiles: concatenates `.shamt/host/codex/profiles/*.fragment.toml` into `.codex/config.toml` SHAMT-PROFILES block; substitutes `${FRONTIER_MODEL}` / `${DEFAULT_MODEL}` from `.model_resolution.local.toml`
@@ -457,17 +457,17 @@ When a new AI service is discovered (reported by a child project or user):
 
 **Target users:** Developers who want systematic quality patterns and a ticket-to-shipped workflow but don't need epic tracking or the full Shamt workflow.
 
-**Master repo storage:** `.shamt/scripts/initialization/` — `SHAMT_LITE.template.md`, `story_workflow_lite.template.md`, `CHANGES.template.md`, `init_lite.sh/.ps1`, `lite/commands/` (5 commands), `lite/agents/` (2 personas), `lite/profiles-codex/` (8 fragments), `lite/rules-cursor/` (5 `.mdc` files; SHAMT-52), `reference/` (3 files), `templates/` (7 templates). Cursor host config at `.shamt/host/cursor/`.
+**Master repo storage:** `.shamt/scripts/initialization/` — templates, `init_lite.sh/.ps1`, `lite/commands/` (5), `lite/agents/` (2), `lite/profiles-codex/` (8 fragments), `lite/rules-cursor/` (5 `.mdc`), `reference/` (3), `templates/` (7). Cursor host config at `.shamt/host/cursor/`.
 
 **Lite skills** live in `.shamt/skills/shamt-lite-*/SKILL.md` (prefixed `shamt-lite-*`; all five carry `master-only: false`).
 
-**Per-host regen scripts:** `regen-lite-claude.sh/.ps1` (deploys to `.claude/{skills,commands,agents}/`), `regen-lite-codex.sh/.ps1` (deploys to `.agents/skills/`, `.codex/agents/`, `SHAMT-LITE-PROFILES` block), `regen-lite-cursor.sh/.ps1` (SHAMT-52; deploys to `.cursor/{skills,commands,rules,agents}/`). All at `.shamt/scripts/regen/`; run automatically by `init_lite.sh`.
+**Per-host regen scripts:** `regen-lite-claude.sh/.ps1`, `regen-lite-codex.sh/.ps1`, `regen-lite-cursor.sh/.ps1` — all at `.shamt/scripts/regen/`; run automatically by `init_lite.sh`. See `scripts/regen/README.md` for per-host output paths.
 
-**Cursor host directory:** `.shamt/host/cursor/` — `README.md` + `.model_resolution.local.toml.example`. The per-developer gitignored resolution file (`CHEAP_MODEL = "inherit"`) is written by `init_lite.sh --host=cursor` into `<child>/shamt-lite/host/cursor/`.
+**Cursor host directory:** `.shamt/host/cursor/` — `README.md` + `.model_resolution.local.toml.example`. Resolution file written by `init_lite.sh --host=cursor`; gitignored.
 
-**Key principle:** `SHAMT_LITE.md` is standalone and executable. An agent can run all 5 patterns using only that file. `story_workflow_lite.md` adds the full story workflow narrative for ticket-based work.
+**Key principle:** `SHAMT_LITE.md` is standalone — all 5 patterns run from that file alone. `story_workflow_lite.md` adds the six-phase story workflow narrative.
 
-**Host wiring (Tier 1+2, SHAMT-51 + SHAMT-52):**
+**Host wiring (`--host` flag):**
 
 | Flag | Result |
 |---|---|
@@ -477,19 +477,11 @@ When a new AI service is discovered (reported by a child project or user):
 | `--host=cursor` | `.cursor/{skills,commands,rules,agents}/`; 5 attachment-aware `.mdc` rules; prompts for `CHEAP_MODEL` |
 | `--host=claude,codex` | Both; `AGENTS.md` canonical, `CLAUDE.md` symlinked (Unix) or duplicated |
 | `--host=cursor,codex` | Both Cursor + Codex; independent, no symlinking |
-| `--with-mcp` | Reserved (Tier 3, deferred) |
-
-**Master repo storage also includes:** `lite/rules-cursor/` (5 `.mdc` rule files for Cursor). Full details in `SHAMT_LITE.template.md`.
-
-**Tier 3 (hooks + MCP) is deferred for Lite.** Users who need MCP / hooks / S1–S11 should migrate to full Shamt.
+| `--with-mcp` | Reserved (deferred) |
 
 **Lite vs. full Shamt validation:** Lite validation loops use **1 sub-agent** confirmation (not 2). This applies to all Lite artifacts (specs, plans, reviews). Full Shamt retains 2 sub-agents. Lite `CHANGES.md` entries are proposals; master does not depend on any sync cadence.
 
-**When to update Shamt Lite:**
-- When validation loop mechanics change in the canonical guides
-- When severity classification rules are refined
-- When spec protocol, code review, or implementation planning patterns improve
-- Never copy epic-specific content into lite files
+**When to update Shamt Lite:** When canonical patterns change (validation loop, severity, spec, code review, implementation planning). Never copy epic-specific content.
 
 **Maintenance rule:** Shamt Lite files are NOT synced via import/export. They are maintained directly in the master repo and versioned independently.
 

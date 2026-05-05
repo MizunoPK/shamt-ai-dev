@@ -70,7 +70,7 @@ jobs:
           DIFF=$(git diff "$BASE_SHA" "$HEAD_SHA" -- '.shamt/guides/**' '*.md' 2>/dev/null | head -c 32000)
 
           # Drive the Codex session with the shamt-master-reviewer skill
-          # The skill is loaded from ~/.codex/prompts/shamt-master-reviewer.md
+          # The skill is loaded from .agents/skills/shamt-master-reviewer/SKILL.md
           # (deployed by regen-codex-shims.sh on the runner)
           python3 - <<'PYEOF'
           import os, json, sys
@@ -79,7 +79,7 @@ jobs:
           client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
           diff = os.environ.get("DIFF", "(diff unavailable)")
 
-          skill_path = os.path.expanduser("~/.codex/prompts/shamt-master-reviewer.md")
+          skill_path = os.path.join(os.environ.get("GITHUB_WORKSPACE", os.getcwd()), ".agents/skills/shamt-master-reviewer/SKILL.md")
           try:
               skill = open(skill_path).read()
           except FileNotFoundError:

@@ -38,14 +38,21 @@ updating the file to regenerate `.codex/config.toml`.
 
 ---
 
-## Skills Surface (Interim)
+## Skills Surface
 
-Shamt skills are currently deployed to `~/.codex/prompts/shamt-<name>.md`. This is the
-deprecated-but-functional custom-prompts directory. Invoke with `/prompts:shamt-<name>`.
+Full-Shamt skills are deployed to `.agents/skills/<name>/SKILL.md` (project-local, GA since
+December 2025). `regen-codex-shims.sh` writes each skill under a subdirectory named after its
+full canonical name (e.g., `.agents/skills/shamt-validator/SKILL.md`). Codex loads skills from
+this directory automatically at session start.
 
-When Codex's new skills surface stabilizes, the regen target will move to the canonical
-Codex skills location. The migration path: update `regen-codex-shims.sh`'s Phase 1 to
-write to the new location and stop writing to `~/.codex/prompts/`.
+**Lite+full coexistence:** Shamt Lite skills (prefixed `shamt-lite-*`) and full-Shamt skills
+share the same `.agents/skills/` directory. Each skill is isolated in its own subdirectory, so
+there is no naming conflict when both frameworks are installed in the same project.
+
+**Migration note (SHAMT-53):** Prior to December 2025, skills were deployed to the
+per-user `~/.codex/prompts/shamt-<name>.md` (interim custom-prompts location). After running
+`regen-codex-shims.sh` on SHAMT-53+, run `cleanup-codex-prompts-interim.sh` once to remove
+the stale per-user files.
 
 ---
 

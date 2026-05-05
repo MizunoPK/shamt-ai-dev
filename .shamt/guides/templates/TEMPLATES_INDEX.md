@@ -440,7 +440,7 @@ Read .shamt/guides/templates/{template_name}.md
 
 ## Notes
 
-- **Prefer individual templates** over reading the entire archive
+- **Prefer individual templates** over monolithic reference files
 - **All templates use markdown format** for consistency
 - **Placeholders use `{curly_braces}`** - replace with actual values
 - **Some templates are immutable** after user validation (see table above)

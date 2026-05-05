@@ -14,7 +14,8 @@ $ScriptDir   = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ProjectRoot = (Get-Item "$ScriptDir\..\..\..").FullName
 $ShamtDir    = Join-Path $ProjectRoot ".shamt"
 $CodexDir    = Join-Path $ProjectRoot ".codex"
-$CodexPromptsDir = Join-Path $env:USERPROFILE ".codex\prompts"
+$CodexPromptsDir  = Join-Path $env:USERPROFILE ".codex\prompts"
+$AgentsSkillsDir  = Join-Path $ProjectRoot ".agents\skills"
 
 $ManagedHeader = "# Managed by Shamt — do not edit. Run regen-codex-shims.ps1 to regenerate."
 
@@ -84,13 +85,13 @@ function Tier-To-Model {
     }
 }
 
-# --- Phase 1: Skills → %USERPROFILE%\.codex\prompts\shamt-<name>.md ----------
+# --- Phase 1: Skills → .agents\skills\<name>\SKILL.md ------------------------
+# Project-local location (Codex Skills GA, December 2025).
 
 $SkillsSrc = Join-Path $ShamtDir "skills"
 $SkillsWritten = 0; $SkillsSkipped = 0
 
 if (Test-Path $SkillsSrc) {
-    New-Item -ItemType Directory -Force -Path $CodexPromptsDir | Out-Null
     Get-ChildItem -Path $SkillsSrc -Directory | Sort-Object Name | ForEach-Object {
         $skillName = $_.Name
         $skillSrc  = Join-Path $_.FullName "SKILL.md"
@@ -100,13 +101,15 @@ if (Test-Path $SkillsSrc) {
             $script:SkillsSkipped++; return
         }
 
-        $skillDst = Join-Path $CodexPromptsDir "shamt-$skillName.md"
+        $skillDir = Join-Path $AgentsSkillsDir $skillName
+        New-Item -ItemType Directory -Force -Path $skillDir | Out-Null
+        $skillDst = Join-Path $skillDir "SKILL.md"
         $content = $ManagedHeader + "`n" + (Get-Content $skillSrc -Raw)
         $content = $content -replace "`r`n", "`n"
         [System.IO.File]::WriteAllText($skillDst, $content, [System.Text.Encoding]::UTF8)
         $script:SkillsWritten++
     }
-    Write-Host "  Skills: $SkillsWritten written to %USERPROFILE%\.codex\prompts\, $SkillsSkipped skipped (master-only on child)"
+    Write-Host "  Skills: $SkillsWritten written to .agents\skills\, $SkillsSkipped skipped (master-only on child)"
 } else {
     Write-Host "  Skills: .shamt\skills\ not found — skipping"
 }
