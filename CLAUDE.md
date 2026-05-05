@@ -102,7 +102,7 @@ Three directories under `.shamt/` hold host-portable canonical content. These ar
 
 **`.shamt/agents/`** — Sub-agent persona YAML definitions (`shamt-validator`, `shamt-builder`, `shamt-architect`, `shamt-guide-auditor`, `shamt-spec-aligner`, `shamt-code-reviewer`, `shamt-discovery-researcher`). Each file declares model_tier (cheap/balanced/reasoning), reasoning_effort, sandbox, tools_allowed, and prompt_template with `{placeholder}` syntax.
 
-**`.shamt/commands/`** — Slash command bodies (`shamt-start-epic`, `shamt-validate`, `shamt-audit`, `shamt-export`, `shamt-import`, `shamt-status`, `shamt-resume`, `shamt-promote`) plus `CHEATSHEET.md`. Regen scripts copy command bodies verbatim to `.claude/commands/` (Claude Code) and `~/.codex/prompts/` (Codex).
+**`.shamt/commands/`** — Slash command bodies (`shamt-start-epic`, `shamt-validate`, `shamt-audit`, `shamt-export`, `shamt-import`, `shamt-status`, `shamt-resume`, `shamt-promote`) plus `CHEATSHEET.md`. Regen scripts copy command bodies verbatim to `.claude/commands/` (Claude Code) and `~/.codex/prompts/` (Codex commands only; skills deploy to `.agents/skills/`).
 
 **Child projects on prior versions** ignore these directories until they re-init or run regen — the directories are additive and backward-compatible.
 
@@ -151,7 +151,7 @@ Host wiring is deployed by SHAMT-40 (Claude Code) and SHAMT-42 (Codex).
 **`--host` flag:** `init.sh --host=codex` skips the AI service menu. `--host=claude,codex` sets up both hosts (dual-host): `AGENTS.md` is the canonical rules file; `CLAUDE.md` is a symlink on Unix or a duplicate on Windows.
 
 **`regen-codex-shims.sh`** — deterministic transform script at `.shamt/scripts/regen/`:
-- Skills: deploys to `~/.codex/prompts/shamt-<name>.md` (interim; see `.shamt/host/codex/README.md` for migration path)
+- Skills: deploys to `.agents/skills/<name>/SKILL.md` (project-local, GA)
 - Agents: transforms YAML → TOML (`.codex/agents/<name>.toml`); maps model tiers (cheap→DEFAULT, balanced/reasoning→FRONTIER)
 - Commands: deploys to `~/.codex/prompts/`; translates `{placeholder}` → `$PLACEHOLDER` (Codex prompt syntax)
 - Profiles: concatenates `.shamt/host/codex/profiles/*.fragment.toml` into `.codex/config.toml` SHAMT-PROFILES block; substitutes `${FRONTIER_MODEL}` / `${DEFAULT_MODEL}` from `.model_resolution.local.toml`

@@ -26,7 +26,7 @@ During initialization, the init script reads this file to determine how to name 
 
 - **Rules file name:** `AGENTS.md`
 - **Rules file location:** Project root
-- **Notes:** Codex reads `AGENTS.md` at the project root automatically. Full-wiring: `regen-codex-shims.sh` deploys skills to `~/.codex/prompts/` (interim), agents to `.codex/agents/`, profiles and hooks to `.codex/config.toml`. Run `init.sh --host=codex` to set up. Use `--host=claude,codex` for dual-host (both `CLAUDE.md` and `AGENTS.md` generated). Model names are resolved from `.shamt/host/codex/.model_resolution.local.toml` (gitignored).
+- **Notes:** Codex reads `AGENTS.md` at the project root automatically. Full-wiring: `regen-codex-shims.sh` deploys skills to `.agents/skills/<name>/SKILL.md` (project-local, GA), agents to `.codex/agents/`, profiles and hooks to `.codex/config.toml`. Run `init.sh --host=codex` to set up. Use `--host=claude,codex` for dual-host (both `CLAUDE.md` and `AGENTS.md` generated). Model names are resolved from `.shamt/host/codex/.model_resolution.local.toml` (gitignored).
 
 ---
 

@@ -4,7 +4,7 @@
 # =============================================================================
 # Transforms canonical Shamt content in .shamt/{skills,agents,commands}/ into
 # Codex-shaped equivalents:
-#   Skills   → ~/.codex/prompts/shamt-<name>.md       (interim; see README)
+#   Skills   → .agents/skills/<name>/SKILL.md         (project-local, GA)
 #   Agents   → .codex/agents/<name>.toml              (project-local)
 #   Commands → ~/.codex/prompts/<name>.md             (interim)
 #   Profiles → .codex/config.toml SHAMT-PROFILES block
@@ -25,6 +25,7 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 SHAMT_DIR="$PROJECT_ROOT/.shamt"
 CODEX_DIR="$PROJECT_ROOT/.codex"
 CODEX_PROMPTS_DIR="$HOME/.codex/prompts"
+AGENTS_SKILLS_DIR="$PROJECT_ROOT/.agents/skills"
 
 MANAGED_HEADER="# Managed by Shamt — do not edit. Run regen-codex-shims.sh to regenerate."
 
@@ -90,21 +91,19 @@ substitute_models() {
         -e "s|\${DEFAULT_MODEL}|$DEFAULT_MODEL|g"
 }
 
-# --- Phase 1: Skills → ~/.codex/prompts/shamt-<name>.md ----------------------
-# Interim location: ~/.codex/prompts/ (custom-prompts directory).
-# Invoked as /prompts:shamt-<name> in a Codex session.
-# Migration: update this phase when Codex's skills surface stabilizes.
+# --- Phase 1: Skills → .agents/skills/<name>/SKILL.md ------------------------
+# Project-local location (Codex Skills GA, December 2025).
+# Loaded automatically by Codex from the project .agents/skills/ directory.
 
 SKILLS_SRC="$SHAMT_DIR/skills"
 SKILLS_WRITTEN=0
 SKILLS_SKIPPED=0
 
 if [ -d "$SKILLS_SRC" ]; then
-    mkdir -p "$CODEX_PROMPTS_DIR"
     while IFS= read -r -d '' skill_dir; do
         skill_name="$(basename "$skill_dir")"
         skill_src="$skill_dir/SKILL.md"
-        skill_dst="$CODEX_PROMPTS_DIR/shamt-${skill_name}.md"
+        skill_dst="$AGENTS_SKILLS_DIR/${skill_name}/SKILL.md"
 
         [ -f "$skill_src" ] || continue
 
@@ -113,13 +112,14 @@ if [ -d "$SKILLS_SRC" ]; then
             continue
         fi
 
+        mkdir -p "$AGENTS_SKILLS_DIR/${skill_name}"
         {
             printf '%s\n' "$MANAGED_HEADER"
             cat "$skill_src"
         } > "$skill_dst"
         SKILLS_WRITTEN=$((SKILLS_WRITTEN + 1))
     done < <(find "$SKILLS_SRC" -maxdepth 1 -mindepth 1 -type d -print0 | sort -z)
-    echo "  Skills: $SKILLS_WRITTEN written to ~/.codex/prompts/, $SKILLS_SKIPPED skipped (master-only on child)"
+    echo "  Skills: $SKILLS_WRITTEN written to .agents/skills/, $SKILLS_SKIPPED skipped (master-only on child)"
 else
     echo "  Skills: .shamt/skills/ not found — skipping"
 fi
